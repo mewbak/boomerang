@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.51 $
+ * $Revision: 1.52 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -38,8 +38,6 @@
 #include "cfg.h"
 #include "proc.h"
 #include "boomerang.h"
-
-#define VERBOSE Boomerang::get()->vFlag
 
 namespace CallingConvention {
 

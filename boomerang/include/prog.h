@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -180,6 +180,9 @@ public:
 
     // Convert from SSA form
     void fromSSAform();
+
+    // Type analysis
+    void typeAnalysis();
 
     // Generate dotty file
     void generateDotFile();

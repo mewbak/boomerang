@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -177,6 +177,8 @@ enum OPER
     opDEFINE,		        // Define Type of use with lexer
     opTrue,
     opFalse,
+    opTypeOf,               // Unary: takes a location, makes a type variable
+    opTypeVal,              // Wraps a Type into a type value (TypeVal)
 
     //---------------------- "The line" --------------------------//
     // All id's greater or equal to idMachSpec are assumed to be source machine
