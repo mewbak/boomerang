@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 # 21 Aug 02 - Icer: added codegen/chllcode.cpp to the build process
 #		    by adding it in STATIC_OBJ
 # 20 Aug 02 - Icer: removed test from all, test code is broken
@@ -62,7 +62,7 @@ testDyn: lib
 	cd frontend && ${MAKE} test
 
 test:	lib bigtest
-#	cd loader   && ${MAKE} test
+	cd loader   && ${MAKE} test
 	./bigtest
 
 clean:
