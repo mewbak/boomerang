@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * ELF binary file format.
  *  This file implements the class ElfBinaryFile, derived from class
@@ -36,7 +36,6 @@
 #include <sys/types.h>      // Next three for open()
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <unistd.h>         // Close()
 #include <iostream>
 #include <assert.h>
 #include "config.h"
