@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.55 $
+ * $Revision: 1.56 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1502,8 +1502,9 @@ void UserProc::propagateStatements(int memDepth) {
     getStatements(stmts);
     // propagate any statements that can be
     StmtListIter it;
+    StatementSet empty;
     for (Statement* s = stmts.getFirst(it); s; s = stmts.getNext(it))
-        s->propagateTo(memDepth);
+        s->propagateTo(memDepth, empty);
 }
 
 void UserProc::promoteSignature() {
