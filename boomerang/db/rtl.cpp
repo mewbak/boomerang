@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -531,8 +531,23 @@ void RTL::generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) {
 
 void RTL::simplify() {
     for (std::list<Statement*>::iterator it = stmtList.begin();
-      it != stmtList.end(); it++) {
-        (*it)->simplify();        
+         it != stmtList.end(); /*it++*/) {
+        Statement *s = *it;
+        s->simplify();        
+        if (s->isBranch()) {
+            Exp *cond =  ((BranchStatement*)s)->getCondExpr();
+            if (cond->getOper() == opIntConst) {
+                if (((Const*)cond)->getInt() == 0) {
+                    LOG << "removing branch with false condition at " << getAddress()  << " " << *it << "\n";
+                    it = stmtList.erase(it);
+                    continue;
+                } else {
+                    LOG << "replacing branch with true condition with goto at " << getAddress() << " " << *it << "\n";
+                    *it = new GotoStatement(((BranchStatement*)s)->getFixedDest());
+                }
+            }
+        }
+        it++;
     }
 }
 

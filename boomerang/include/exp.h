@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.72 $
+ * $Revision: 1.73 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -668,6 +668,7 @@ virtual int getNumRefs() {return 1;}
     virtual Exp*  genConstraints(Exp* restrictTo);
     virtual Exp* fromSSA(igraph& ig);
     bool    references(Statement* s) {return def == s;}
+virtual Exp* polySimplify(bool& bMod);
 };
 
 /*==============================================================================
