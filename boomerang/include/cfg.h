@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.68 $
+ * $Revision: 1.69 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -1040,6 +1040,7 @@ public:
 		Statement* findImplicitAssign(Exp* x);			// Find or create an implicit assign for x
 		Statement* findTheImplicitAssign(Exp* x);		// Find the existing implicit assign for x (if any)
 		Statement* findImplicitParamAssign(Parameter* p);// Find exiting implicit assign for parameter p
+		void	removeImplicitAssign(Exp* x);			// Remove an existing implicit assignment for x
 
 		/*
 	 	 * Dominance frontier and SSA code
