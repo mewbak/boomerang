@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.116 $
+ * $Revision: 1.117 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -185,15 +185,17 @@ void Prog::generateCode(Cluster *cluster, UserProc *proc, bool intermixRTL) {
 		os.open(m_rootCluster->getOutPath("c"));
 		if (proc == NULL) {
 			HLLCode *code = Boomerang::get()->getHLLCode();
+			bool global = false;
 			for (std::vector<Global*>::iterator it1 = globals.begin(); it1 != globals.end(); it1++) {
 				// Check for an initial value
 				Exp *e = NULL;
 				e = (*it1)->getInitialValue(this);
-				if (e)
+				if (e) {
 					code->AddGlobal((*it1)->getName(), (*it1)->getType(), e);
+					global = true;
+				}
 			}
-			code->print(os);
-			delete code;
+			if (global) code->print(os);		// Avoid blank line if no globals
 		}
 	}
 
@@ -235,7 +237,6 @@ void Prog::generateCode(Cluster *cluster, UserProc *proc, bool intermixRTL) {
 				code->print(up->getCluster()->getStream());
 			}
 		}
-		delete code;
 	}
 	os.close();
 	m_rootCluster->closeStreams();
