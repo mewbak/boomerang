@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.30 $
+ * $Revision: 1.31 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -423,6 +423,13 @@ void CHLLCode::appendExp(char *str, Exp *exp)
             break;
         default:
             // others
+            OPER op = exp->getOper();
+            if (op >= opZF) {
+                // Machine flags; can occasionally be manipulated individually
+                // Chop off the "op" part
+                strcat(str, operStrings[op]+2);
+                break;
+            }
             std::cerr << "not implemented " << operStrings[exp->getOper()] << 
                 std::endl;
             assert(false);
