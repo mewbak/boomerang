@@ -4,7 +4,7 @@
  *				tests the Type class and some utility functions
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 09 Apr 02 - Mike: Created
  * 22 Aug 03 - Mike: Extended for Constraint tests
@@ -68,7 +68,7 @@ void TypeTest::tearDown () {
 void TypeTest::testTypeLong () {
 
 	std::string expected("unsigned long long");
-	IntegerType t(64, false);
+	IntegerType t(64, -1);
 	std::string actual(t.getCtype());
 	CPPUNIT_ASSERT_EQUAL(expected, actual);
 }
@@ -79,9 +79,9 @@ void TypeTest::testTypeLong () {
  *============================================================================*/
 void TypeTest::testNotEqual () {
 
-	IntegerType t1(32, false);
-	IntegerType t2(32, false);
-	IntegerType t3(16, false);
+	IntegerType t1(32, -1);
+	IntegerType t2(32, -1);
+	IntegerType t3(16, -1);
 	CPPUNIT_ASSERT(!(t1 != t2));
 	CPPUNIT_ASSERT(t2 != t3);
 }

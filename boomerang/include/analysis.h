@@ -12,7 +12,7 @@
  * OVERVIEW:	interface for the analysis object.
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * Created by Trent
  * 07 Oct 02 - Trent: Created
  */

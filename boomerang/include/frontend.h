@@ -19,7 +19,7 @@
  *				Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.26 $
+/* $Revision: 1.27 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */

@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.49 $
+ * $Revision: 1.50 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -100,7 +100,7 @@ public:
 	std::list<Statement*> &getList() { return stmtList; }
 
 	 // Print RTL to a stream.
-	virtual void print(std::ostream& os = std::cout, bool withDF = false);
+	virtual void print(std::ostream& os = std::cout);
 
 	// Set the RTL's source address
 	void updateAddress(ADDRESS addr);
@@ -165,8 +165,8 @@ public:
 	// Print to std::cerr (mainly for debugging)
 	char* prints();
 
-	// Set all the "constant subscripts" (conscripts) in this RTL
-	int		setConscripts(int n);
+	// Set or clear all the "constant subscripts" (conscripts) in this RTL
+	int		setConscripts(int n, bool bClear);
 protected:
 
 	friend class XMLProgParser;

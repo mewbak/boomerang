@@ -12,7 +12,7 @@
  * OVERVIEW:	interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.51 $
+ * $Revision: 1.52 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -164,7 +164,6 @@ public:
 	bool noDataflow;
 	bool noDecompile;
 	bool stopBeforeDecompile;
-    bool noDecompileUp;
     bool traceDecoder;
     const char *dotFile;
     int numToPropagate;
@@ -194,6 +193,7 @@ public:
     bool overlapped;
 	bool noProve;
 	bool noChangeSignatures;
+    bool noTypeAnalysis;
 };
 
 #define VERBOSE	 (Boomerang::get()->vFlag)
