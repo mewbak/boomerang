@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.66 $
+ * $Revision: 1.67 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -879,15 +879,24 @@ void BasicBlock::emitGotoAndLabel(HLLCode *hll, int indLevel, PBB dest)
 // the block.
 void BasicBlock::WriteBB(HLLCode *hll, int indLevel)
 {
-    // allocate space for a label to be generated for this node and add this to
+    if (Boomerang::get()->debugGen)
+        LOG << "Generating code for BB at " << getLowAddr() << "\n";
+
+    // Allocate space for a label to be generated for this node and add this to
     // the generated code. The actual label can then be generated now or back 
     // patched later
     hll->AddLabel(indLevel, ord);
 
-    if (m_pRtls)
+    if (m_pRtls) {
         for (std::list<RTL*>::iterator it = m_pRtls->begin();
-          it != m_pRtls->end(); it++) 
+          it != m_pRtls->end(); it++)  {
+            if (Boomerang::get()->debugGen)
+                LOG << (*it)->getAddress() << "\t";
             (*it)->generateCode(hll, this, indLevel);
+        }
+        if (Boomerang::get()->debugGen)
+            LOG << "\n";
+    }
 
     // save the indentation level that this node was written at
     indentLevel = indLevel;

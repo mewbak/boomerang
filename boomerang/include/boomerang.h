@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -73,7 +73,7 @@ public:
     int numToPropagate;
     bool noPromote;
     bool propOnlyToAll;
-    bool debugPrintReach;
+    bool debugGen;
     bool debugPrintSSA;
     int maxMemDepth;
     bool debugSwitch;
