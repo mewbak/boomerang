@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -44,9 +44,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
-#include "prog.h"
 #include "util.h"
-#include "type.h"
 #include <unistd.h>
 #include <fcntl.h>
 

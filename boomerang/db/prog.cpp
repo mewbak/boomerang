@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.65 $
+ * $Revision: 1.66 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -816,7 +816,8 @@ void Prog::typeAnalysis() {
 }
 
 void Prog::printCallGraph() {
-    const char *fname = "callgraph.out";
+    const char *fname = (Boomerang::get()->getOutputPath() +    
+                         "callgraph.out").c_str();
     int fd = lockFileWrite(fname);
     std::ofstream f(fname);
     std::set<Proc*> seen;
@@ -850,6 +851,21 @@ void Prog::printCallGraph() {
             }
         }
     }
+    f.close();
+    unlockFile(fd);
+}
+
+void Prog::printCallGraphXML() {
+    for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end();
+         it++)
+        (*it)->clearVisited();
+    const char *fname = (Boomerang::get()->getOutputPath() +    
+                         "callgraph.xml").c_str();
+    int fd = lockFileWrite(fname);
+    std::ofstream f(fname);
+    f << "<callgraph>\n";
+    getEntryProc()->printCallGraphXML(f, 0);
+    f << "</callgraph>\n";
     f.close();
     unlockFile(fd);
 }

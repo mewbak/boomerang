@@ -4,7 +4,7 @@
  *               implemented in the util.so library
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 10 Apr 02 - Mike: Created
  */
@@ -14,9 +14,6 @@
 
 #include <sstream>
 #include <string>
-#include "types.h"
-
-class Prog;
 
 // was a workaround
 #define STR(x) (char *)(x.str().c_str())

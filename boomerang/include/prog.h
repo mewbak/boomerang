@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.42 $
+ * $Revision: 1.43 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -244,6 +244,7 @@ public:
     bool        bRegisterCall;
 
     void printCallGraph();
+    void printCallGraphXML();
 
 protected:
     // Pointer to the BinaryFile object for the program
