@@ -13,7 +13,7 @@
  *             SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.4 $
+/* $Revision: 1.5 $
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -655,7 +655,9 @@ DWord SparcDecoder::getDword(ADDRESS lc)
  * RETURNS:        N/A
  *============================================================================*/
 SparcDecoder::SparcDecoder() : NJMCDecoder()
-{}
+{
+  RTLDict.readSSLFile("frontend/machine/sparc/sparc.ssl");
+}
 
 // For now...
 int SparcDecoder::decodeAssemblyInstruction(unsigned, int)
