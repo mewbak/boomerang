@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
@@ -80,6 +80,10 @@ private: \
 "short"			{ count(); return AnsiCParser::SHORT; }
 "signed"		{ count(); return AnsiCParser::SIGNED; }
 "sizeof"		{ count(); return AnsiCParser::SIZEOF; }
+"__nodecode"		{ count(); return AnsiCParser::NODECODE; }
+"__incomplete"		{ count(); return AnsiCParser::INCOMPLETE; }
+"__cdecl"               { count(); return AnsiCParser::CDECL; }
+"__symref"              { count(); return AnsiCParser::SYMBOLREF; }
 "static"		{ count(); return AnsiCParser::STATIC; }
 "struct"		{ count(); return AnsiCParser::STRUCT; }
 "switch"		{ count(); return AnsiCParser::SWITCH; }

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -624,9 +624,20 @@ Type *Signature::getParamType(int n) {
     return params[n]->getType();
 }
 
+void Signature::setParamType(int n, Type *ty) {
+    params[n]->setType(ty);
+}
+
 int Signature::findParam(Exp *e) {
     for (int i = 0; i < getNumParams(); i++)
         if (*getParamExp(i) == *e)
+            return i;
+    return -1;
+}
+
+int Signature::findParam(const char *nam) {
+    for (int i = 0; i < getNumParams(); i++)
+        if (!strcmp(getParamName(i), nam))
             return i;
     return -1;
 }

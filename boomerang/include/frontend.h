@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.17 $
+/* $Revision: 1.18 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -71,6 +71,7 @@ protected:
     BinaryFile *pBF;
     // Public map from function name (string) to signature.
     std::map<std::string, Signature*> librarySignatures;
+    std::map<ADDRESS, std::string> refHints;
 
 public:
     /*
@@ -84,6 +85,11 @@ public:
 
     // Add a symbol to the loader
     void AddSymbol(ADDRESS addr, const char *nam) { pBF->AddSymbol(addr, nam); }
+
+    // Add a "hint" that an instruction at the given address references
+    // a named global
+    void addRefHint(ADDRESS addr, const char *nam)
+    { refHints[addr] = nam; }
 
     /**
      * Destructor. Virtual to mute a warning
