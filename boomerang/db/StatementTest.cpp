@@ -4,7 +4,7 @@
  *              tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 14 Jan 03 - Trent: Created
  * 17 Apr 03 - Mike: Added testRecursion to track down a nasty bug
@@ -674,8 +674,8 @@ void StatementTest::testRecursion () {
  * FUNCTION:        StatementTest::testExpand
  * OVERVIEW:        Test class Expand
  *============================================================================*/
-void StatementTest::testExpand () {
 #if 0
+void StatementTest::testExpand () {
     // 119 *32* r29 := m[r29{85 119}]
     Assign* ae85 = new Assign;
     ae85->setNumber(85);
@@ -695,7 +695,6 @@ void StatementTest::testExpand () {
     e.process(ae, "");
     e.print(ost);
     CPPUNIT_ASSERT_EQUAL(expected, ost.str());
-#endif
 
     FrontEnd *fe = FrontEnd::Load(FIBO_PENTIUM);
     Prog *prog = fe->decode();
@@ -740,6 +739,7 @@ void StatementTest::testExpand () {
         Boomerang::get()->vFlag = false;
     }
 }
+#endif
 
 /*==============================================================================
  * FUNCTION:        StatamentTest::testClone
