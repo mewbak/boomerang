@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.91 $
+ * $Revision: 1.92 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -720,10 +720,12 @@ void Prog::decompile() {
 
     // Just in case there are any Procs not in the call graph
     std::list<Proc*>::iterator pp;
-    for (pp = m_procs.begin(); pp != m_procs.end(); pp++) {
-        UserProc* proc = (UserProc*)(*pp);
-        if (proc->isLib()) continue;
-        proc->decompile();
+    if (!Boomerang::get()->noDecodeChildren) {
+        for (pp = m_procs.begin(); pp != m_procs.end(); pp++) {
+            UserProc* proc = (UserProc*)(*pp);
+            if (proc->isLib()) continue;
+            proc->decompile();
+        }
     }
 
     if (!Boomerang::get()->noDecompile) {
