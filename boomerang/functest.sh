@@ -1,5 +1,5 @@
 #!/bin/bash
-# functest.sh functional test script $Revision: 1.18 $
+# functest.sh functional test script $Revision: 1.19 $
 # Note: to test with data flow based type analysis, pass a parameter of -Td
 if [ -z $1 ]; then BOOMSW="--"; else BOOMSW=$1; fi
 echo Boomerang switch is $BOOMSW
@@ -41,4 +41,5 @@ rm -rf functests.out
 ./testOne.sh sparc   sumarray-O4 $BOOMSW
 ./testOne.sh pentium bswap $BOOMSW
 ./testOne.sh pentium testset -O 2 3 4
+./testOne.sh sparc   andn $BOOMSW
 echo === Done ===
