@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -147,12 +147,15 @@ public:
     virtual Exp *getParamExp(int n);
     virtual Type *getParamType(int n);
     virtual void setParamType(int n, Type *ty);
+	virtual void setParamName(int n, const char *name);
     virtual int findParam(Exp *e);
     virtual int findParam(const char *nam);
     // accessor for argument expressions
     virtual Exp *getArgumentExp(int n);
     virtual bool hasEllipsis() { return ellipsis; }
     std::list<Exp*> *getCallerSave(Prog* prog);
+
+	void renameParam(const char *oldName, const char *newName);
 
     // add a new implicit parameter
     virtual void addImplicitParameter(Exp *e);

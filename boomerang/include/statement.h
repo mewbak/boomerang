@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -771,6 +771,7 @@ public:
 
 protected:
     virtual bool doReplaceRef(Exp* from, Exp* to);
+	bool convertToDirect();
 
     friend class XMLProgParser;
     void appendArgument(Exp *e) { arguments.push_back(e); }

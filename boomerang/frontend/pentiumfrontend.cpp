@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -1245,6 +1245,8 @@ void PentiumFrontEnd::processStringInst(UserProc* proc) {
         bool noinc = false;
         PBB bb = *it;
         std::list<RTL*> *rtls = bb->getRTLs();
+		if (rtls == NULL)
+			break;
         ADDRESS prev, addr = 0;
         bool lastRtl = true;
         // For each RTL this BB

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.24 $
+ * $Revision: 1.25 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -639,7 +639,7 @@ const char *FuncType::getCtype() const
        s += signature->getParamType(i)->getCtype(); 
     }
     s += ")";
-    return s.c_str();
+    return strdup(s.c_str());
 }
 
 // As above, but split into the return and parameter parts
@@ -660,7 +660,7 @@ void FuncType::getReturnAndParam(const char*& ret, const char*& param) {
        s += signature->getParamType(i)->getCtype(); 
     }
     s += ")";
-    param = s.c_str();
+    param = strdup(s.c_str());
 }
 
 const char *IntegerType::getCtype() const
