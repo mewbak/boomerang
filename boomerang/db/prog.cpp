@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -768,7 +768,7 @@ void Prog::forwardGlobalDataflow() {
         if (proc->isLib()) continue;
         Cfg* cfg = proc->getCFG();
         // Save reaching and available defs from phase 1
-        cfg->saveForwardFlow();
+        cfg->saveForwardFlow(proc);
         // Clear the dataflow info for this proc's cfg
         // Note: leave available definitions alone; won't recalc this phase
         proc->getCFG()->clearReaches();

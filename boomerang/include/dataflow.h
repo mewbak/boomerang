@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -237,6 +237,9 @@ public:
 
     // update the statement number
     void    setNumber(int num) {number = num;}
+
+    // To/from SSA form
+    virtual void toSSAform(StatementSet& reachin) = 0;
 
 protected:
     virtual void doReplaceUse(Statement *use) = 0;

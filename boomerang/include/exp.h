@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.30 $
+ * $Revision: 1.31 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -640,6 +640,9 @@ public:
  
     // update type for expression
     virtual Type *updateType(Exp *e, Type *curType);
+
+    // to SSA form
+    virtual void toSSAform(StatementSet& reachin) {updateUses(reachin);}
 
 protected:
 	virtual void doReplaceUse(Statement *use);

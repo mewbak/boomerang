@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.39 $
+ * $Revision: 1.40 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -1632,10 +1632,10 @@ void HLCall::setNumArguments(int n) {
 }
 
 // Update the arguments to be in implicit SSA form (e.g. m[esp{1}]{2 3})
-void HLCall::updateArgUses(StatementSet& defs) {
+void HLCall::toSSAform(StatementSet& reachin) {
     int n = arguments.size();
     for (int i = 0; i < n; i++) {
-        arguments[i] = arguments[i]->updateUses(defs);
+        arguments[i] = arguments[i]->updateUses(reachin);
     }
 }
 
