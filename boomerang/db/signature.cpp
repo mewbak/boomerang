@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.49 $
+ * $Revision: 1.50 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -964,7 +964,11 @@ Signature *Signature::instantiate(const char *str, const char *nam) {
 
 void Signature::print(std::ostream &out)
 {
-    out << rettype->getCtype() << " " << name << "(";
+    if (returns.size() >= 1)
+        out << returns[0]->getType()->getCtype() << " ";
+    else
+        out << "void ";
+    out << name << "(";
     for (unsigned i = 0; i < params.size(); i++) {
         out << params[i]->getType()->getCtype() << " " << params[i]->getExp();
         if (i != params.size()-1) out << ", ";

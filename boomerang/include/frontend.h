@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.13 $
+/* $Revision: 1.14 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -121,6 +121,9 @@ virtual int     getInst(int addr);
 
     // lookup a library signature by name
     Signature *getLibSignature(const char *name);
+
+    // return a signature that matches the architecture best
+    Signature *getDefaultSignature(const char *name);
 
     /*
      * Decode all undecoded procedures and return a new program containing

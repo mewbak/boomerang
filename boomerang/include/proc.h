@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.54 $
+/* $Revision: 1.55 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -96,7 +96,8 @@ public:
     /*
      * Returns a pointer to the Signature
      */
-    Signature *getSignature();
+    Signature *getSignature() { return signature; }
+    void setSignature(Signature *sig) { signature = sig; }
 
     /*
      * Prints this procedure to an output stream.
@@ -473,7 +474,7 @@ public:
     void removeRedundantPhis();
     void trimReturns();
     void addNewParameters();
-    void trimParameters();
+    void trimParameters(int depth = -1);
     void replaceExpressionsWithGlobals();
     void replaceExpressionsWithSymbols();
     void replaceExpressionsWithParameters(int depth);   // must be in SSA form
