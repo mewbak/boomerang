@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.69 $
+ * $Revision: 1.70 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -650,6 +650,21 @@ ADDRESS BasicBlock::getCallDest() {
             return ((CallStatement*)(*it))->getFixedDest();
     }
     return (ADDRESS)-1;
+}
+
+Proc *BasicBlock::getCallDestProc() {
+    if (m_nodeType != CALL)
+        return 0;
+    if (m_pRtls->size() == 0)
+        return 0;
+    RTL* lastRtl = m_pRtls->back();
+    std::list<Statement*>::reverse_iterator it;
+    std::list<Statement*>& sl = lastRtl->getList();
+    for (it = sl.rbegin(); it != sl.rend(); it++) {
+        if ((*it)->getKind() == STMT_CALL)
+            return ((CallStatement*)(*it))->getDestProc();
+    }
+    return 0;
 }
 
 //

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.55 $
+ * $Revision: 1.56 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -271,6 +271,7 @@ public:
      * Returns -1 otherwise
      */
     ADDRESS getCallDest();
+    Proc *getCallDestProc();
 
     /*
      * Traverse this node and recurse on its children in a depth first manner.
