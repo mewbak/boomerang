@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.222 $
+ * $Revision: 1.223 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2274,7 +2274,8 @@ void UserProc::replaceExpressionsWithLocals(bool lastPass) {
 			arr->setProc(this);
 			Type *base = new IntegerType();
 			if (s->isAssign() && s->getLeft() == result)
-				base = ((Assign*)s)->getType()->clone();
+				if(((Assign*)s)->getType()->getSize() != 0)
+					base = ((Assign*)s)->getType()->clone();
 			arr->setType(new ArrayType(base, n / (base->getSize() / 8)));
 			if (VERBOSE)
 				LOG << "found a local array using " << n << " bytes\n";
