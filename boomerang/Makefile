@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 # 20 May 02 - Trent: Created
 # 31 May 02 - Mike: Make lib directory if needed
 # 15 Jul 01 - Mike: Added static target

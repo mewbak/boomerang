@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * Dec 97 - created by Mike based on Cristina's initial implementation
  * 19 Feb 98  - Cristina 
  *  changed RTLLIT for RTL_IT as this name is defined in the new rtl.h. 
@@ -96,6 +96,7 @@
 #include <set>
 #include <map>
 #include <iostream>
+#include <string>
 #include "types.h"
 
 //#include "bitset.h"     // Saves time. Otherwise, any implementation file that 
