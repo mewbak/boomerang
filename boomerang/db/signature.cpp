@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -943,7 +943,7 @@ bool Signature::usesNewParam(UserProc *p, Statement *stmt, bool checkreach,
         std::cerr << std::endl;
     }
     StatementSet reachin;
-    stmt->getReachIn(reachin);
+    stmt->getReachIn(reachin, 2);
     for (int i = getNumParams(); i < 10; i++)
         if (stmt->usesExp(getParamExp(i))) {
             bool ok = true;

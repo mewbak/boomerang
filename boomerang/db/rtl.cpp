@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -327,6 +327,11 @@ void RTL::print(std::ostream& os /*= cout*/, bool withDF /*= false*/) {
         if (bFirst) os << " ";
         else        os << std::setw(9) << " ";
         Statement *stmt = dynamic_cast<Statement*>(*p);
+        if (stmt) {
+            os << std::setw(4);
+            stmt->printNum(os);
+            os << " ";
+        }
         if (stmt && withDF)
             stmt->printWithUses(os);
         else
