@@ -15,8 +15,8 @@
  *             NJMCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.1 $
- * $Id: decoder_low.m,v 1.1 2002-08-08 05:59:31 quantumg Exp $
+/* $Revision: 1.2 $
+ * $Id: decoder_low.m,v 1.2 2004-06-24 05:41:02 emmerik Exp $
  * Created by Cristina 04 Feb 2000
  *
  * Based on: 
@@ -666,8 +666,10 @@ list<RT*>* NJMCDecoder::decodeLowLevelInstruction (ADDRESS hostPC, ADDRESS pc,
                 sslName[3] = '\0';
                 strcat(sslName, "qa");     // addqw -> addqa
             }
-            if (!b)                         // Can't use else
+            //if (!b)                       // Can't use else
+            } else {                        // Can use else if not at start
                 chop2ndLast(name);          // addqw -> addw
+            }
             RTs = instantiate (pc, sslName, DIS_I8, dst); 
             ADDBUMP;
         } 
@@ -694,8 +696,10 @@ list<RT*>* NJMCDecoder::decodeLowLevelInstruction (ADDRESS hostPC, ADDRESS pc,
                 sslName[3] = '\0';
                 strcat(sslName, "qa");      // subl -> subqa
             }
-            if (!b)                         // Can't use else
+            //if (!b)                         // Can't use else
+            } else {
                 chop2ndLast(name);          // addqw -> addw
+            }
             RTs = instantiate (pc, sslName, DIS_I8, dst); 
             ADDBUMP;
         }   
