@@ -1,3 +1,6 @@
+// this whole file needs to be replaced - trent
+
+#if 0
 /*
  * Copyright (C) 1997-2001, The University of Queensland
  *
@@ -13,7 +16,7 @@
  ******************************************************************************/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * ELF binary file format.
  *  This file implements the class ElfBinaryFile, derived from class
@@ -1376,3 +1379,4 @@ extern "C" {
         return new ElfBinaryFile;
     }    
 }
+#endif
