@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -142,7 +142,7 @@ void Prog::analyse() {
 void Prog::decompile() {
 int stmtNumber = 0;
     for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end();
-         it++) {
+      it++) {
         Proc *pProc = *it;
         if (pProc->isLib()) continue;
         UserProc *p = (UserProc*)pProc;
