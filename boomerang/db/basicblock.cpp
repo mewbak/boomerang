@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.32 $
+ * $Revision: 1.33 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -923,7 +923,7 @@ Statement* BasicBlock::getFirstStmt(rtlit& rit, elit& it, elit& cit) {
         if (k == CALL_RTL || k == JCOND_RTL || k == SCOND_RTL)
             // These are statements too, and may need special processing
             return dynamic_cast<Statement*>(rtl);
-        rtl++;
+        rit++;
     }
     return NULL;
 }
