@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.42 $
+ * $Revision: 1.43 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -341,7 +341,8 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
     INSTTYPE type;              // Cfg type of instruction (e.g. IRET)
 
     if (!pProc->getSignature()->isPromoted()) {
-        std::cerr << "adding default params for " << pProc->getName() << "\n";
+        if (VERBOSE)
+            LOG << "adding default params for " << pProc->getName() << "\n";
         std::vector<Exp*> &params = getDefaultParams();
         for (std::vector<Exp*>::iterator it = params.begin(); 
              it != params.end(); it++)
