@@ -4,13 +4,14 @@
  *              tests the analysis code
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 10 Jul 02 - Mike: Created
  */
 
 #include "AnalysisTest.h"
 #include "prog.h"
+#include "proc.h"
 #include "sparcfrontend.h"
 #include "BinaryFile.h"
 #include "BinaryFileStub.h"

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -42,7 +42,7 @@
 #include <sstream>
 #include <vector>
 #include "types.h"
-#include "dataflow.h"
+#include "statement.h"
 #include "exp.h"
 #include "cfg.h"
 #include "proc.h"

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  */
@@ -26,7 +26,6 @@
 #endif 
 
 #include "types.h"
-#include "dataflow.h"
 #include "type.h"
 #include "util.h"
 #include "exp.h"

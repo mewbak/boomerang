@@ -6,13 +6,16 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 12 Jul 02 - Trent: Created
  */
 
 #ifndef __SIGNATURE_H_
 #define __SIGNATURE_H_
+
+#include "exp.h"
+#include "type.h"
 
 class Statement;
 class BinaryFile;

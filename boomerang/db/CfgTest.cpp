@@ -4,7 +4,7 @@
  *              tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 17 Jul 03 - Mike: Created
  */
@@ -98,6 +98,8 @@ void CfgTest::testDominators () {
     BB_IT it;
     PBB bb = cfg->getFirstBB(it);
     while (bb && bb->getLowAddr() != FRONTIER_FIVE) {
+std::cerr << "bb at 0x" << std::hex << bb->getLowAddr() << "\n";
+bb->print(std::cerr);
         bb = cfg->getNextBB(it);
     }
     CPPUNIT_ASSERT(bb);

@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -75,7 +75,6 @@ enum OPER
     opTargetInst,           // Target specific instruction (Unary)
                             // See frontend.cc for details
 
-    opAssignExp,            // Assignment
     opTypedExp,             // Typed expression
 	opNamedExp,				// Named expression (binary, subExp1 = Const("name"), subExp2 = exp)
     opGuard,                // Guarded expression (should be assignment)

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -27,7 +27,7 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "dataflow.h"
+#include "statement.h"
 #include "cfg.h"
 #include "exp.h"
 #include "proc.h"
@@ -191,11 +191,6 @@ void CHLLCode::appendExp(char *str, Exp *exp)
         case opMinus:
             appendExp(str, b->getSubExp1());
             strcat(str, " - ");
-            appendExp(str, b->getSubExp2());
-            break;
-        case opAssignExp:
-            appendExp(str, b->getSubExp1());
-            strcat(str, " = ");
             appendExp(str, b->getSubExp2());
             break;
         case opMemOf:
@@ -583,11 +578,13 @@ void CHLLCode::RemoveLabel(int ord)
         }
 }
 
-void CHLLCode::AddAssignmentStatement(int indLevel, AssignExp *exp)
+void CHLLCode::AddAssignmentStatement(int indLevel, Assign *asgn)
 {
     char s[1024];
     indent(s, indLevel);
-    appendExp(s, exp);
+    appendExp(s, asgn->getLeft());
+    strcat(s, " = ");
+    appendExp(s, asgn->getRight());
     strcat(s, ";");
     lines.push_back(strdup(s));
 }
