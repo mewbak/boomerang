@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.126 $
+ * $Revision: 1.127 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1441,7 +1441,10 @@ void UserProc::addReturn(Exp *e)
     }
     for (std::vector<ReturnStatement*>::iterator it = returnStatements.begin();
          it != returnStatements.end(); it++)
-            (*it)->addReturn(e1);
+            // Each returnStatement needs a separate copy of the return
+            // expression, otherwise there will be problems when one is
+            // changed (e.g. substituted into) but another is not (yet)
+            (*it)->addReturn(e1->clone());
     Proc::addReturn(e);
 }
 
