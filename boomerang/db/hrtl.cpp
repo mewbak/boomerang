@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.38 $
+ * $Revision: 1.39 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -596,11 +596,9 @@ void HLJcond::print(std::ostream& os /*= cout*/, bool withDF) {
         uses.printNums(os);
     }
     os << std::endl;
-#if 0       // This is always %flags now
     if (pCond) {
         os << "High level: " << pCond << std::endl;
     }
-#endif
 }
 
 /*==============================================================================
@@ -1875,13 +1873,11 @@ void HLScond::print(std::ostream& os /*= cout*/, bool withDF) {
     os << ")";
     if (bFloat) os << ", float";
     os << std::endl;
-#if 0       // This is always %flags now
     if (pCond) {
         os << "High level: ";
         pCond->print(os);
         os << std::endl;
     }
-#endif
 }
 
 /*==============================================================================

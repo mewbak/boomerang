@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.38 $
+ * $Revision: 1.39 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1180,7 +1180,6 @@ void UserProc::decompile() {
         while (change) {
             change = false;
             //recalcDataflow();
-            if (VERBOSE) print(std::cerr, true);
             propagateStatements();
             if (VERBOSE) print(std::cerr, true);
             if (!Boomerang::get()->noRemoveNull) {
@@ -1620,8 +1619,6 @@ void UserProc::propagateStatements() {
                 if (e->getNumUses() == 1) {
                     // Can propagate TO this statement
                     Statement* def = ((UsesExp*)e)->getFirstUses();
-if (s->getNumber() == 5)
-    std::cerr << "Propagate to 5\n";
                     s->replaceUse(def);
                     numProp++;
                     if (VERBOSE) {
@@ -1685,5 +1682,9 @@ void UserProc::getReturnSet(LocationSet &ret)
 //
 
 void UserProc::toSSAform() {
-    getCFG()->toSSAform();
+    cfg->toSSAform();
+}
+
+void UserProc::fromSSAform() {
+    cfg->fromSSAform();
 }
