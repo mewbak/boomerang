@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.42 $
+ * $Revision: 1.43 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -248,7 +248,7 @@ public:
 
     // Parse a file containing a list of instructions definitions in SSL format
     // and build the contents of this dictionary.
-    bool readSSLFile(const std::string& SSLFileName, bool bPrint = false);
+    bool readSSLFile(const std::string& SSLFileName);
 
     // Reset the object to "undo" a readSSLFile()
     void reset();

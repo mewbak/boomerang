@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.37 $
+ * $Revision: 1.38 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -88,6 +88,7 @@ public:
     bool printAST;
     bool dumpXML;
     bool noRemoveReturns;
+    bool debugDecoder;
 };
 
 #define VERBOSE  (Boomerang::get()->vFlag)
