@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.88 $
+ * $Revision: 1.89 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -137,7 +137,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 		case opLongConst:
 			// sprintf(s, "%lld", c->getLong());
 			//strcat(str, s);
-			str << std::dec << c->getLong(); break;
+			str << std::dec << c->getLong() << "LL"; break;
 		case opFltConst:
 			// What to do with precision here?
 			str << c->getFlt(); break;
