@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.13 $
+/* $Revision: 1.14 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -336,6 +336,7 @@ public:
 
 	// code generation
 	bool generateCode(HLLCode &hll);
+        void generateCode(std::list<char*> &lines);
 
     // print this proc, mainly for debugging
     void print(std::ostream &out, bool withDF = false);
