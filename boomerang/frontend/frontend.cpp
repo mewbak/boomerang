@@ -10,14 +10,14 @@
  */
 
 /*==============================================================================
- * FILE:       frontend.cc
+ * FILE:       frontend.cpp
  * OVERVIEW:   This file contains common code for all front ends. The majority
  *              of frontend logic remains in the source dependent files such as
- *              frontsparc.cc
+ *              frontsparc.cpp
  *============================================================================*/
 
 /*
- * $Revision: 1.58 $
+ * $Revision: 1.59 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -680,6 +680,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
                         // will check for machine specific func calls
                         if (helperFunc(uNewAddr, uAddr, BB_rtls)) {
                             // We have already added to BB_rtls
+                            pRtl = NULL;       // Discard the call semantics
                             break;
                         }
 
@@ -802,7 +803,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
         
                 } // switch (s->getKind())
             }
-            if (BB_rtls)
+            if (BB_rtls && pRtl)
                 // If non null, we haven't put this RTL into a the current BB
                 // as yet
                 BB_rtls->push_back(pRtl);
