@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.61 $
+ * $Revision: 1.62 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -84,16 +84,18 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec,
     OPER op = exp->getOper();
     // First, a crude cast if unsigned
     if (uns && op != opIntConst) {
-        str << "(unsigned)(";
+        str << "(unsigned)";
+        curPrec = PREC_UNARY;
     }
 
     switch(op) {
         case opIntConst: {
             int K = c->getInt();
             if (uns && K < 0) {
-                // An unsigned constant
-                if ((unsigned)K % 100 == 0) {
-                    // A multiple of 100; use 4000000000U style
+                // An unsigned constant. Use some heuristics
+                unsigned rem = (unsigned)K % 100;
+                if (rem == 0 || rem == 99) {
+                    // A multiple of 100, or one less; use 4000000000U style
                     char num[16];
                     sprintf(num, "%u", K);
                     str << num << "U";
@@ -625,11 +627,6 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec,
             std::cerr << "not implemented " << operStrings[exp->getOper()] << 
                 std::endl;
             assert(false);
-    }
-
-    // Finally, close the crude cast if unsigned
-    if (uns && op != opIntConst) {
-        str << ")";
     }
 
 }
