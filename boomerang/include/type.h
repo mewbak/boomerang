@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -134,6 +134,8 @@ virtual bool    operator==(const Type& other) const;
 virtual bool    operator< (const Type& other) const;
 
 virtual int     getSize() const;
+        bool    isSigned() { return signd; }
+        void    setSigned(bool b) { signd = b; }
 
 virtual const char *getCtype() const;
 

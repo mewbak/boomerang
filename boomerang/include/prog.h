@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -129,12 +129,6 @@ public:
 
         // Print this program (primarily for debugging)
         void print(std::ostream &out, bool withDF = false);
-
-	// map for global symbols
-	std::map<std::string, TypedExp *> symbols;
-
-	// search for a symbol which matches an expression
-	bool findSymbolFor(Exp *e, std::string &sym, TypedExp* &sym_exp);
 
     // lookup a library procedure by name
     LibProc *getLibraryProc(const char *nam);

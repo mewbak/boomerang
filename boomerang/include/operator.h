@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -145,8 +145,6 @@ enum OPER
     opIntConst,             // integer constant
     opFltConst,             // floating point constant
     opStrConst,             // string constant
-    // FIXME: Probably won't end up using the opAddrConst
-    opAddrConst,            // address constant
     opCodeAddr,             // opAddrConst for addresses in code segment
 
 

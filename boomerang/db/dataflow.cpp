@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -173,8 +173,8 @@ bool Statement::calcAlias(Exp *e1, Exp *e2, int size) {
     Exp *e1a = e1->getSubExp1();
     Exp *e2a = e2->getSubExp1();
     // constant memory accesses
-    if (e1a->isAddrConst() && 
-        e2a->isAddrConst()) {
+    if (e1a->isIntConst() && 
+        e2a->isIntConst()) {
         ADDRESS a1 = ((Const*)e1a)->getAddr();
         ADDRESS a2 = ((Const*)e2a)->getAddr();
         int diff = a1 - a2;

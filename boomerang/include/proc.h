@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.12 $
+/* $Revision: 1.13 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -342,7 +342,9 @@ public:
 
 	// decompile this proc
 	void decompile();
-	void renameLocalVariables();
+	void nameStackLocations();
+	void nameStatementLefts();
+        void replaceExpressionsWithSymbols();
 	bool removeNullStatements();
 	bool removeDeadStatements();
     bool propagateAndRemoveStatements();
@@ -522,12 +524,6 @@ public:
      * first parameter
      */
     virtual bool isAggregateUsed() {return aggregateUsed;}
-
-	// map for local symbols
-	std::map<std::string, TypedExp *> symbols;
-	
-	// search for a symbol which matches an expression (locals, then globals searched)
-	bool findSymbolFor(Exp *e, std::string &sym, TypedExp* &sym_exp);
 
 private:
 

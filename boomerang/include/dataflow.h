@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -143,6 +143,9 @@ public:
 
     // general search and replace
     virtual void searchAndReplace(Exp *search, Exp *replace) = 0;
+
+    // update the type information for an expression in this statement
+    virtual Type *updateType(Exp *e, Type *curType) = 0;
 
 protected:
     virtual void doReplaceUse(Statement *use) = 0;
