@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.92 $
+ * $Revision: 1.93 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -2203,8 +2203,10 @@ void Cfg::renameBlockVars(int n, int memDepth, bool clearStack /* = false */ ) {
 		if (1) { //!S->isPhi()) 
 			// For each use of some variable x in S (not just assignments)
 			LocationSet locs;
+if (S->getNumber() == 22)
+  std::cerr << "HACK!\n";
 			if (S->isPhi()) {
-				if (S->getLeft()->getOper() == opMemOf)
+				if (S->getLeft()->isMemOf() || S->getLeft()->isRegOf())
 					S->getLeft()->getSubExp1()->addUsedLocs(locs);
 			}
 			else
