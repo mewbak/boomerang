@@ -4,7 +4,7 @@
  *              tests the analysis code
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 10 Jul 02 - Mike: Created
  */
@@ -78,15 +78,10 @@ void AnalysisTest::tearDown () {
  *============================================================================*/
 void AnalysisTest::testFlags () {
 
-    bool gotMain;
-    ADDRESS addr = pFE->getMainEntryPoint(gotMain);
-    CPPUNIT_ASSERT (addr != NO_ADDRESS);
-
-    std::string name("main");
-    UserProc* pProc = new UserProc(prog, name, addr);
-    std::ofstream dummy;
-    bool res = pFE->processProc(addr, pProc, dummy, false);
-	CPPUNIT_ASSERT(res);
+    Proc* p = prog->findProc("main");
+    CPPUNIT_ASSERT(p && !p->isLib());
+    UserProc *pProc = (UserProc*)p;
+    CPPUNIT_ASSERT(pProc);
 
     // Call analysis
     analysis(pProc);

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -515,33 +515,7 @@ bool Proc::deserialize_fid(std::istream &inf, int fid)
 LibProc::LibProc(Prog *prog, std::string& name, ADDRESS uNative) : 
 	Proc(prog, uNative, NULL)
 {
-    // Look up the name in the public map mapLibParam of the prog object
-    std::map<std::string, Signature* >::iterator it;
-    it = prog->mapLibParam.find(name);
-    if (it == prog->mapLibParam.end()) {
-        std::cerr << "Could not find parameters for library function " << name <<
-          std::endl;
-        // Get a default library signature
-	if (prog->isWin32())
-		signature = Signature::instantiate("-win32-pentium", name.c_str());
-	else {
-		std::string s = "-stdc-";
-		s += prog->pFE->getFrontEndId();
-		signature = Signature::instantiate(s.c_str(), name.c_str());
-	} 
-    }
-    else {
-		signature = (*it).second->clone();
-    }
-
-/*
-    // Debugging
-    cout << "signature for library procedure: `";
-    printReturnTypeAsC(cout);
-    cout << " " << name << "("; 
-    printParamsAsC(cout);
-    cout << ")'\n";
-*/
+    signature = prog->pFE->getLibSignature(name.c_str());
 }
 
 LibProc::~LibProc()
