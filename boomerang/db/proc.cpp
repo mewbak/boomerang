@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1428,4 +1428,12 @@ bool UserProc::propagateAndRemoveStatements()
 void UserProc::promoteSignature()
 {
     signature = signature->promote(this);
+}
+
+Exp* UserProc::newLocal(Type* ty) {
+    std::ostringstream os;
+    os << "local" << locals.size();
+    std::string name = os.str();
+    locals[name] = ty;
+    return new Unary(opLocal, new Const(strdup(name.c_str())));
 }
