@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -100,6 +100,12 @@ public:
     Proc*   getFirstProc(PROGMAP::const_iterator& it);
     Proc*   getNextProc(PROGMAP::const_iterator& it);
 
+    // This pair of functions allows the user to iterate through all the
+    // UserProcs
+    // The procs will appear in topdown order
+    UserProc*   getFirstUserProc(std::list<Proc*>::iterator& it);
+    UserProc*   getNextUserProc (std::list<Proc*>::iterator& it);
+
     // load/save the current program, project/location must be set.
     void        load();
     void        save();
@@ -165,9 +171,14 @@ public:
     // Remove interprocedural edges
     void removeInterprocEdges();
 
+    // Number the statements
+    void numberStatements();
+
+    // Convert to SSA form
+    void toSSAform();
+
     // Do decompilation
     void decompile();
-void decompile1();
 
     // All that used to be done in UserProc::decompile, but now done globally.
     // propagation, recalc DFA, remove null and unused statements, compressCfg,
