@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.39 $
+ * $Revision: 1.40 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3260,8 +3260,6 @@ void Assign::addUsedLocs(LocationSet& used) {
 }
 
 void Assign::fixCallRefs() {
-if (number == 28 && strcmp(proc->getName(), "main") == 0)
-  std::cerr << "HACK!\n";
     rhs = rhs->fixCallRefs();
     if (lhs->isMemOf()) {
         ((Unary*)lhs)->refSubExp1() =
