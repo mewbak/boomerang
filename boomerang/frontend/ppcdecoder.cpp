@@ -16,7 +16,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.4 $
+/* $Revision: 1.5 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -121,9 +121,9 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
   char *MATCH_name_OPCD_0[] = {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, "mulli", "subfic", (char *)0, (char *)0, (char *)0, "addic", 
-    "addic.", "addi", "addis", (char *)0, (char *)0, (char *)0, (char *)0, 
+    "addicq", "addi", "addis", (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, (char *)0, (char *)0, (char *)0, "ori", "oris", "xori", 
-    "xoris", "andi.", "andis.", (char *)0, (char *)0, "lwz", "lwzu", "lbz", 
+    "xoris", "andiq", "andisq", (char *)0, (char *)0, "lwz", "lwzu", "lbz", 
     "lbzu", "stw", "stwu", "stb", "stbu", "lhz", "lhzu", "lha", "lhau", 
     "sth", "sthu", "lmw", "stmw", 
   };
