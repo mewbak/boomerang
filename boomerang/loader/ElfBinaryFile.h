@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class ElfBinaryFile.
 */
 
-/* $Revision: 1.7 $
+/* $Revision: 1.8 $
  * 12 Sep 01 - Mike: Replaced SymTab object with map from ADDRESS to string
  * 09 Mar 02 - Mike: Changes for stand alone compilation
  * 01 Oct 02 - Mike: Removed elf library (and include file) dependencies
@@ -64,6 +64,7 @@ typedef struct {
 #define EM_386          3			// Intel 80386 or higher
 #define EM_68K			4			// Motorola 68000
 #define EM_PA_RISC		15			// HP PA-RISC
+#define EM_SPARC32PLUS	18			// Sun SPARC 32+
 
 #define ET_DYN  3       // Elf type (dynamic library)
 
