@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -2196,3 +2196,15 @@ void BasicBlock::toSSAform(int memDepth) {
     }
 }
 
+// Return the first statement number as a string.
+// Used in dotty file generation
+char* BasicBlock::getStmtNumber() {
+    static char ret[12];
+    rtlit rit; elit it, cit;
+    Statement* first = getFirstStmt(rit, it, cit);
+    if (first)
+        sprintf(ret, "%d", first->getNumber());
+    else
+        sprintf(ret, "bb%x", (unsigned)this);
+    return ret;
+} 
