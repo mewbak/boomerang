@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.53 $
+/* $Revision: 1.54 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -211,7 +211,7 @@ public:
      */
     void addCaller(CallStatement* caller) { callerSet.insert(caller); }
 
-    void removeReturn(Exp *e);
+    virtual void removeReturn(Exp *e);
     void removeParameter(Exp *e);
     void addParameter(Exp *e);
 
@@ -507,6 +507,8 @@ public:
     // get all the statements
     void getStatements(StatementList &stmts);
 
+    virtual void removeReturn(Exp *e);
+
     // remove a statement
     void removeStatement(Statement *stmt);
 
@@ -636,7 +638,9 @@ public:
      */
     virtual bool isAggregateUsed() {return aggregateUsed;}
 
-
+private:
+    
+    std::vector<ReturnStatement*> returnStatements;
 
 };      /* UserProc */
 #endif

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -651,13 +651,27 @@ void CHLLCode::AddIndCallStatement(int indLevel, Exp *exp,
 }
 
 
-void CHLLCode::AddReturnStatement(int indLevel, Exp *ret)
+void CHLLCode::AddReturnStatement(int indLevel, std::vector<Exp*> &returns)
 {
     char s[1024];
     indent(s, indLevel);
-    strcat(s, "return ");
-    appendExp(s, ret);
+    strcat(s, "return");
+    if (returns.size() >= 1) {
+        strcat(s, " ");
+        appendExp(s, returns[0]);
+    }
     strcat(s, ";");
+    if (returns.size() > 1) {
+        strcat(s, "/* ");
+    }
+    for (unsigned i = 1; i < returns.size(); i++) {
+        if (i != 1)
+            strcat(s, ", ");
+        appendExp(s, returns[i]);
+    }
+    if (returns.size() > 1) {
+        strcat(s, "*/");
+    }
     lines.push_back(strdup(s));
 }
 
