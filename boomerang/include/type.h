@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.24 $
+ * $Revision: 1.25 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -31,6 +31,7 @@
 #include <map>
 #include <functional>       // For binary_function
 #include <vector>
+#include <assert.h>
 
 class Signature;
 class VoidType;

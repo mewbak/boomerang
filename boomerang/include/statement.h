@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.42 $
+ * $Revision: 1.43 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -39,6 +39,7 @@ BranchStatement CaseStatement CallStatement ReturnStatement
 #include <map>
 #include <ostream>
 #include <iostream>     // For std::cerr
+#include <assert.h>
 //#include "exp.h"      // No! This is the bottom of the #include hierarchy
 #include "exphelp.h"    // For lessExpStar
 #include "types.h"

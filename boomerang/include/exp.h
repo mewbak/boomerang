@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.90 $
+ * $Revision: 1.91 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -37,6 +37,7 @@
 #include <list>
 #include <vector>
 #include <set>
+#include <assert.h>
 #include "operator.h"   // Declares the OPER enum
 #include "types.h"      // For ADDRESS, etc
 #include "type.h"       // The Type class for typed expressions
