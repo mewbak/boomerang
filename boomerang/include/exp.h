@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -210,6 +210,8 @@ virtual Exp* polySimplify(bool& bMod) {bMod = false; return this;}
     // Just the address simplification a[ m[ any ]]
 virtual Exp* simplifyAddr() {return this;}
 virtual Exp* fixSuccessor() {return this;}
+		// Kill any zero fill, sign extend, or truncates
+		Exp* killFill();
 
 	// serialization
 	virtual bool serialize(std::ostream &ouf, int &len) = 0;
