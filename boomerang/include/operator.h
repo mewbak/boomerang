@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -56,6 +56,8 @@ enum OPER
     opGtrUns,               // Logical greater than (unsigned)
     opLessEqUns,            // Logical <= (unsigned)
     opGtrEqUns,             // Logical >= (unsigned)
+    opUpper,                // Greater (signed or unsigned; used by switch code)
+    opLower,                // Less than signed or unsigned; used by switch code
 
     opNot,                  // Bitwise inversion
     opLNot,                 // Logical not
@@ -101,6 +103,9 @@ enum OPER
     opMemOf,                // Represents m[]
     opRegOf,                // Represents r[]
     opAddrOf,               // Represents a[]
+    opWildMemOf,            // m[wild],
+    opWildRegOf,            // r[wild],
+    opWildAddrOf,           // a[wild],
     opVar,                  // Represents l[] (recovered locations)
 	opPhi,					// Represents phi(a1, a2, a3) .. ie SSA form merging
 	opSubscript,			// Represents subscript(e, n) .. ie SSA renaming
@@ -147,6 +152,7 @@ enum OPER
     opFltConst,             // floating point constant
     opStrConst,             // string constant
     opCodeAddr,             // opAddrConst for addresses in code segment
+    opWildIntConst,         // Terminal integer constant whose value is wild
 
 
     // Terminals (zero parameter special locations)
