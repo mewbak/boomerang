@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -938,6 +938,7 @@ public:
     void appendBBs(std::list<PBB>& worklist, std::set<PBB>& workset);
     void appendBBs(std::list<PBB>& allBBs);
     void calcLiveness(igraph& ig);
+    void recoverReturnLocs();
 
     /*
      * Virtual Function Call analysis

@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -156,6 +156,9 @@ public:
     // recovered
     void insertArguments();
 
+    // Recover return locations
+    void recoverReturnLocs();
+
     // Transform out of SSA form
     void fromSSAform();
 
@@ -169,6 +172,9 @@ public:
     // propagation, recalc DFA, remove null and unused statements, compressCfg,
     // process constants, promote signature, simplify a[m[]].
     void decompileProcs();
+
+    // Remove null and unused statements
+    void removeNullUnusedStmts();
 
     // Generate dotty file
     void generateDotFile();

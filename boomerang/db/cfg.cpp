@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  * 18 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -2295,6 +2295,46 @@ void Cfg::insertArguments() {
             HLCall* call = (HLCall*)(*it)->m_pRtls->back();
             assert(call->getKind() == CALL_RTL);
             call->insertArguments();
+        }
+    }
+}
+
+void Cfg::recoverReturnLocs() {
+    // We will create a map from UserProc (dest of call) to a LocationSet
+    // The statements in this set will be the union of locations used before
+    // definition after the call
+    std::map<UserProc*, LocationSet> liveAfter;
+    BB_IT it;
+    for (it = m_listBB.begin(); it != m_listBB.end(); it++) {
+        if ((*it)->getType() == CALL) {
+            UserProc* dest = (UserProc*)(*it)->getDestProc();
+            if (dest->isLib()) continue;
+            // The first out-edge should be to the normal, intra procedural
+            // successor of the call
+            assert((*it)->m_OutEdges.size() >= 1);
+            PBB postCall = (*it)->m_OutEdges[0];
+            LocationSet& liveAfterCall = postCall->getLiveIn();
+            // Look up the map
+            liveAfter[dest].makeUnion(liveAfterCall);
+#if 0
+            std::map<UserProc*, StatementSet>::iterator it;
+            it = liveAfter.find(dest);
+            if (it == liveAfter.end()) {
+                // No entry in the map; insert one
+                liveAfter[dest] = liveAfterCall;
+            } else {
+                it->second.makeUnion(liveAfterCall)
+            }
+#endif
+        }
+    }
+    if (VERBOSE) {
+        std::cerr << "Live after call summary:\n";
+        std::map<UserProc*, LocationSet>::iterator it;
+        for (it = liveAfter.begin(); it != liveAfter.end(); it++) {
+            std::cerr << it->first->getName() << ": ";
+            it->second.prints();
+            std::cerr << "\n";
         }
     }
 }

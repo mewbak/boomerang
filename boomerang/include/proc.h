@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.30 $
+/* $Revision: 1.31 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -367,6 +367,7 @@ public:
 
     void recoverParameters();       // Find formal parameters
     void insertArguments();         // Insert actual arguments to match formals
+    void recoverReturnLocs();       // Find return locations
 
     // promote the signature if possible
     void promoteSignature();
