@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class ElfBinaryFile.
 */
 
-/* $Revision: 1.11 $
+/* $Revision: 1.12 $
  * 12 Sep 01 - Mike: Replaced SymTab object with map from ADDRESS to string
  * 09 Mar 02 - Mike: Changes for stand alone compilation
  * 01 Oct 02 - Mike: Removed elf library (and include file) dependencies
@@ -148,13 +148,6 @@ public:
   virtual ADDRESS getImageBase();
   virtual size_t getImageSize();
 
-#if 0
-                // Elf specific functions
-    Elf32_Phdr* GetProgHeader(int idx);         // Get the indicated prog hdr
-    Elf32_Shdr* GetSectionHeader(int idx);      // Get indicated section hdr
-// Mike: deprecated! Remove when possible!
-    Elf_Scn*    GetElfScn(int idx);             // Do a elf_getscn()
-#endif
 
                 // Header functions
 //virtual ADDRESS GetFirstHeaderAddress();      // Get ADDRESS of main header
