@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 14 Feb 00 - Mike: converted from front386.cc
  * 23 Feb 00 - Mike: added logic for isReturnAfterCall
  * 09 Nov 00 - Cristina: Added support to generate rtl code to a file
@@ -439,7 +439,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
             // coverage, but also will cause subtle problems like add a call
             // to the list of calls to be processed, then delete the call RTL
             // (e.g. Pentium 134.perl benchmark)
-            if (sequentialDecode && pCfg->isLabel(uAddr)) {
+            if (sequentialDecode && pCfg->existsBB(uAddr)) {
                 // Create the fallthrough BB, if there are any RTLs at all
                 if (BB_rtls) {
                     PBB pBB = pCfg->newBB(BB_rtls, FALL, 1);

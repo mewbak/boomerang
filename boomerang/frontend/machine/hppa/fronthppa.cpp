@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 14 May 01 - Mike: Created from frontsparc.cc
  * 17 May 01 - Mike: Modified SCD logic to take account of register interference
@@ -1281,7 +1281,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
             // coverage, but also will cause subtle problems like add a call
             // to the list of calls to be processed, then delete the call RTL
             // (e.g. Pentium 134.perl benchmark)
-            if (sequentialDecode && cfg->isLabel(address)) {
+            if (sequentialDecode && cfg->existsBB(address)) {
                 // Create the fallthrough BB, if there are any RTLs at all
                 if (BB_rtls) {
                     PBB pBB = cfg->newBB(BB_rtls, FALL, 1);
