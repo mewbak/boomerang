@@ -4,7 +4,7 @@
  *              tests the RTL and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  *
  * 13 May 02 - Mike: Created
  */
@@ -100,8 +100,8 @@ void RtlTest::testClone () {
                 Location::regOf(9),
                 new Const(99)));
     Assign* a2 = new Assign(new IntegerType(16),
-            new Unary(opParam, new Const("x")),
-            new Unary(opParam, new Const("y")));
+            new Location(opParam, new Const("x"), NULL),
+            new Location(opParam, new Const("y"), NULL));
     std::list<Statement*> ls;
     ls.push_back(a1);
     ls.push_back(a2);
