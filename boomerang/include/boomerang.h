@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.32 $
+ * $Revision: 1.33 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -83,6 +83,7 @@ public:
     bool debugUnusedRets;
     bool debugTA;
     std::vector<ADDRESS> entrypoints;
+    std::map<ADDRESS, std::string> symbols;
     bool decodeMain;
     bool printAST;
     bool dumpXML;

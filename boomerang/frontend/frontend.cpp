@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.32 $
+ * $Revision: 1.33 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -182,6 +182,26 @@ Prog *FrontEnd::decode(bool decodeMain)
         main->getSignature()->addParameter(new IntegerType(), "argc");
         main->getSignature()->addParameter(new PointerType(new PointerType(
                                            new CharType())), "argv");
+    }
+
+    if (gotMain && !strcmp(pBF->SymbolByAddress(a), "WinMain")) {
+        Proc *main = prog->findProc(a);
+        assert(main);
+        main->setSignature(getDefaultSignature("WinMain"));
+        main->getSignature()->addReturn(new IntegerType());
+        /* HINSTANCE hInstance,
+           HINSTANCE hPrevInstance,
+           LPSTR     lpCmdLine,
+           int       nCmdShow 
+         */
+        Type *ty = Type::getNamedType("HINSTANCE");
+        if (ty == NULL) ty = new NamedType("HINSTANCE");
+        main->getSignature()->addParameter(ty, "hInstance");
+        main->getSignature()->addParameter(ty, "hPrevInstance");
+        ty = Type::getNamedType("LPSTR");
+        if (ty == NULL) ty = new NamedType("LPSTR");
+        main->getSignature()->addParameter(ty, "lpCmdLine");
+        main->getSignature()->addParameter(new IntegerType(), "nCmdShow");
     }
 
     return prog;

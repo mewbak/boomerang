@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.4 $
+/* $Revision: 1.5 $
  * This file contains the definition of the Win32BinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
 */
@@ -162,6 +162,7 @@ public:
   virtual char* SymbolByAddress(ADDRESS dwAddr); // Get sym from addr
   virtual ADDRESS GetAddressByName(const char* name,
     bool bNoTypeOK = false);                    // Find addr given name  
+  virtual void AddSymbol(ADDRESS uNative, const char *pName);
 #endif
 
 //

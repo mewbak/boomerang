@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -1035,6 +1035,8 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint( bool &gotMain )
                                                             ->getList().back());
                                 if (toMain && toMain->getFixedDest() 
                                                             != NO_ADDRESS) {
+                                    pBF->AddSymbol(toMain->getFixedDest(), 
+                                                   "WinMain");
                                     gotMain = true;
                                     return toMain->getFixedDest();
                                 }

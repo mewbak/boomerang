@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.16 $
+/* $Revision: 1.17 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -81,6 +81,9 @@ public:
     static FrontEnd* instantiate(BinaryFile *pBF);
     // Load a binary
     static FrontEnd* Load(const char *fname);
+
+    // Add a symbol to the loader
+    void AddSymbol(ADDRESS addr, const char *nam) { pBF->AddSymbol(addr, nam); }
 
     /**
      * Destructor. Virtual to mute a warning
