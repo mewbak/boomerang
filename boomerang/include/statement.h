@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -155,7 +155,7 @@ enum STMT_KIND {
     STMT_RET,
     STMT_BRANCH,
     STMT_GOTO,
-    STMT_SET,                   // For "setCC" instructions that set destination
+    STMT_BOOL,                  // For "setCC" instructions that set destination
                                 // to 1 or 0 depending on the condition codes.
     STMT_CASE,                  // Used to represent switch statements.
 };
@@ -208,6 +208,9 @@ public:
 
     // true if this statement is a call
     bool isCall() { return kind == STMT_CALL; }
+
+    // true if this statement is a BoolStatement
+    bool isBool() { return kind == STMT_BOOL; }
 
     // true if this is a fpush/fpop
     bool isFpush();

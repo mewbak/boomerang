@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.75 $
+ * $Revision: 1.76 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1727,7 +1727,7 @@ void UserProc::removeUnusedStatements(RefCounter& refCounts) {
         change = false;
         Statement* s = stmts.getFirst(ll);
         while (s) {
-            if (s->getKind() != STMT_ASSIGN && s->getKind() != STMT_SET) {
+            if (s->getKind() != STMT_ASSIGN && s->getKind() != STMT_BOOL) {
                 // Never delete a statement other than an assignment or setstmt
                 // (e.g. nothing "uses" a Jcond)
                 s = stmts.getNext(ll);
