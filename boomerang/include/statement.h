@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -940,6 +940,8 @@ public:
     // Subscript all occurrences of e with definition def (except for top level
     // of LHS of assignment)
     virtual void subscriptVar(Exp* e, Statement* def);
+
+    virtual void doReplaceRef(Exp* from, Exp* to);
 
     int getNumBytesPopped() { return nBytesPopped; }
     void setNumBytesPopped(int n) { nBytesPopped = n; }

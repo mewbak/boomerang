@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -40,7 +40,7 @@ public:
 	return boomerang;
     }
 
-    static HLLCode *getHLLCode(UserProc *p);
+    static HLLCode *getHLLCode(UserProc *p = NULL);
 
     // performs command line operation
     int commandLine(int argc, const char **argv);
