@@ -12,7 +12,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.3 $
+/* $Revision: 1.4 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -51,6 +51,9 @@
 #define DIS_NZRB	(dis_RegLhs(rb))
 #define DIS_ADDR	(new Const(addr))
 #define DIS_RELADDR (new Const(reladdr - delta))
+#define DIS_CRBD	(new Const(crbD))
+#define DIS_CRBA	(new Const(crbA))
+#define DIS_CRBB	(new Const(crbB))
 
 // MVE: Used any more?
 #define DIS_INDEX   (new Binary(opPlus, \
@@ -123,6 +126,9 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 		result.rtl->appendStmt(new ReturnStatement);
 		unused(b0);
 		unused(b1);
+	| XLc_ (crbD, crbA, crbB) [name] =>
+		stmts = instantiate(pc, name, DIS_CRBD, DIS_CRBA, DIS_CRBB);
+		
 	| mfspr (rd, uimm) [name] =>
 		stmts = instantiate(pc, name, DIS_RD, DIS_UIMM);
 	| mtspr (uimm, rs) [name] =>
@@ -140,7 +146,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 		Exp* dest = DIS_RELADDR;
 		stmts = instantiate(pc, name, dest);
 		CallStatement* newCall = new CallStatement;
-		// Record the fact that this is a computed call
+		// Record the fact that this is not a computed call
 		newCall->setIsComputed(false);
 		// Set the destination expression
 		newCall->setDest(dest);
