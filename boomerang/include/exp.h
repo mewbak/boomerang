@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -606,10 +606,7 @@ public:
 	virtual bool serialize(std::ostream &ouf, int &len);
 
 	// new dataflow analysis
-    virtual void killReach(StatementSet &reach);
-    virtual void killAvail(StatementSet &avail)
-        { // Same as kill for reaching definitions
-          killReach(avail); }
+    virtual void killDef(StatementSet &reach);
     virtual void killLive(LocationSet &live);
     virtual void getDeadStatements(StatementSet &dead);
 	virtual bool usesExp(Exp *e);

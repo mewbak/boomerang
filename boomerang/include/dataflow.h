@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -48,6 +48,9 @@ public:
     void makeDiff (StatementSet& other);    // Set difference
     void makeIsect(StatementSet& other);    // Set intersection
     bool isSubSetOf(StatementSet& other);    // subset relation
+    // Set difference (remove all elements of this where some element of other
+    // defines same location)
+    void makeKillDiff (StatementSet& other);
 
     int size() {return sset.size();}        // Number of elements
     Statement* getFirst(StmtSetIter& it);   // Get the first Statement
@@ -118,9 +121,9 @@ public:
     // gets the reaching definitions set before this statement
     virtual void getReachIn(StatementSet &reachin, int phase);
 
-    // removes any statement from the reaching definitions set which is
-    // killed by this statement
-    virtual void killReach(StatementSet &reach) = 0;
+    // removes any statement from the reaching or available definitions set
+    // which is killed by this statement
+    virtual void killDef(StatementSet &reach) = 0;
 
     // calculates the available definitions set after this statement
     virtual void calcAvailOut(StatementSet &availout);
@@ -128,10 +131,6 @@ public:
     // get the available definitions (not reassigned on any path) before
     // this statement
     virtual void getAvailIn(StatementSet& availin, int phase);
-
-    // removes any statement from the available definitions set which is
-    // killed by this statement
-    virtual void killAvail(StatementSet &reach) = 0;
 
     // calculates the live variables (used before definition) before this stmt
     virtual void calcLiveIn(LocationSet &livein);

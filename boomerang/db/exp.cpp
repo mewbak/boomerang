@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2519,7 +2519,7 @@ bool FlagDef::serialize(std::ostream &ouf, int &len)
     return true;
 }
 
-void AssignExp::killReach(StatementSet &reach) {
+void AssignExp::killDef(StatementSet &reach) {
     StatementSet kills;
     StmtSetIter it;
     for (Statement* s = reach.getFirst(it); s; s = reach.getNext(it)) {
