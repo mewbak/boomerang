@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 06 Jun 02 - Trent: Created.
  *
  */
@@ -31,7 +31,7 @@ class SparcDecoder : public NJMCDecoder
 public:
     /* Default constructor
      */
-	SparcDecoder(Prog *prog);
+	SparcDecoder();
 
 
     /*

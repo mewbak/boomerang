@@ -4,7 +4,7 @@
  *              tests the FrontEnd and related classes
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 05 Apr 02 - Mike: Created
  */
@@ -16,7 +16,7 @@
 #define STARTER_PALM    BOOMDIR"/test/mc68328/Starter.prc"
 
 #include "FrontendTest.h"
-#include "prog.h"       // For global prog
+#include "prog.h"
 #include <sstream>
 
 /*==============================================================================

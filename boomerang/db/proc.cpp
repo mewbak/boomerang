@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -522,7 +522,7 @@ LibProc::LibProc(Prog *prog, std::string& name, ADDRESS uNative) :
         std::cerr << "Could not find parameters for library function " << name <<
           std::endl;
         // Get a default library signature
-	if (prog->pBF->GetFormat() == LOADFMT_PE)
+	if (prog->isWin32())
 		signature = Signature::instantiate("-win32-pentium", name.c_str());
 	else {
 		std::string s = "-stdc-";

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 = Mike: Changed addParameter's last param to deflt to "", not NULL

@@ -4,7 +4,7 @@
  *               implemented in the util.so library
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 10 Apr 02 - Mike: Created
  */

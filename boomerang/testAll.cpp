@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of all of Boomerang
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 15 Jul 02 - Mike: Created from testDbase
 */
 
@@ -23,7 +23,7 @@
 #include "FrontPentTest.h"
 #include "AnalysisTest.h"
 
-#include "prog.h"			// For the ugly global
+#include "prog.h"
 
 #include <sstream>
 #include <iostream>

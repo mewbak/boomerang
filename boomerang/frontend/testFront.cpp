@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of the Frontend and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 08 Apr 02 - Mike: Created
  * 23 May 02 - Mike: Added pentium tests
  */
@@ -15,7 +15,7 @@
 #include "FrontSparcTest.h"
 #include "FrontPentTest.h"
 //#include "FrontendTest.h"
-#include "prog.h"           // For the global prog (ugh)
+#include "prog.h"
 #include <iostream>
 
 int main(int argc, char** argv)

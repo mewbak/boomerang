@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  */
 
@@ -1205,7 +1205,7 @@ void HLCall::print(std::ostream& os /*= cout*/)
     else if (pDest == NULL)
             os << "*no dest*";
     else {
-        os << pDest << std::endl;
+        pDest->print(os);
     }
 
     // Print the actual arguments of the call

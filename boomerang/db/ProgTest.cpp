@@ -4,7 +4,7 @@
  *              tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 18 Apr 02 - Mike: Created
  * 18 Jul 02 - Mike: Set up prog.pFE before calling readLibParams

@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.3 $
+/* $Revision: 1.4 $
  * 11 Mar 98 - Cristina  
  *  replaced BOOL for bool type (C++'s), same for TRUE and FALSE.
  * 18 Mar 98 - Cristina 
