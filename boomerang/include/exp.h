@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.81 $
+ * $Revision: 1.82 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -20,6 +20,16 @@
 
 #ifndef __EXP_H_
 #define __EXP_H_
+
+/* Main class hierarchy:    Exp (abstract)
+                      _____/ | \
+                     /       |  \
+                  Unary    Const Terminal
+     TypedExp____/  |   \         \
+      FlagDef___/ Binary Location  TypeVal
+       RefExp__/    |
+       PhiExp_/  Ternary
+*/
 
 #include <iostream>
 #include <fstream>      // For ostream, cout etc
