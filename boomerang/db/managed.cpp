@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 26 Aug 03 - Mike: Split off from statement.cpp
  */
 
@@ -477,6 +477,24 @@ StatementVec::iterator StatementVec::remove(iterator it) {
 	return oldoldit;
 */
 	return svec.erase(it);
+}
+
+// Print only the left hand sides to stream os
+void StatementVec::printLefts(std::ostream& os) {
+	for (iterator it = svec.begin(); it != svec.end(); ) {
+		if (*it) {
+			Exp* left = (*it)->getLeft();
+			if (left) {
+				left->print(os);
+				os << "{" << std::dec << (*it)->getNumber() << "}";
+			} else 
+				os << "NUL";
+		}
+		else
+			os << "NULL";
+		if (++it != svec.end())
+			os << " ";
+	}
 }
 
 char* StatementVec::prints() {
