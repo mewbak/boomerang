@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -85,7 +85,7 @@ enum STMT_KIND {
 /* Statements define values that are used in expressions.
  * They are akin to "definition" in the Dragon Book.
  */
-class Statement : public gc {
+class Statement {
 protected:
     PBB     pbb;        // contains a pointer to the enclosing BB
     UserProc *proc;     // procedure containing this statement

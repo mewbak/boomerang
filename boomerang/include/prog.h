@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.38 $
+ * $Revision: 1.39 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -36,7 +36,7 @@ class StatementSet;
 
 typedef std::map<ADDRESS, Proc*, std::less<ADDRESS> > PROGMAP;
 
-class ProgWatcher : public gc {
+class ProgWatcher {
 public:
         ProgWatcher() { }
 
@@ -48,7 +48,7 @@ public:
         virtual void alert_progress(unsigned long off, unsigned long size) = 0;
 };
 
-class Global : public gc {
+class Global {
 private:
     Type *type;
     ADDRESS uaddr;
@@ -69,7 +69,7 @@ public:
     const char *getName() { return nam.c_str(); }
 };
 
-class Prog : public gc {
+class Prog {
     // Phase of the interprocedural DFA (0=none, 1=phase 1, 2 = phase 2)
     int     interProcDFAphase;
 

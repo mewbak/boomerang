@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  * 08 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -97,7 +97,7 @@ struct DecodeResult {
  * The NJMCDecoder class is a class that contains NJMC generated decoding
  * methods.
  *============================================================================*/
-class NJMCDecoder : public gc {
+class NJMCDecoder {
 public:
     /*
      * Constructor and destructor

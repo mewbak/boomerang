@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.65 $
+ * $Revision: 1.66 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -57,7 +57,7 @@ typedef std::map<Exp*, int, lessExpStar> igraph;
 
 // Class Exp is abstract. However, the constructor can be called from the
 // constructors of derived classes
-class Exp : public gc {
+class Exp {
 protected:
     OPER   op;             // The operator (e.g. opPlus)
 
