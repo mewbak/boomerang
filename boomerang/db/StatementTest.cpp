@@ -4,7 +4,7 @@
  *              tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * 14 Jan 03 - Trent: Created
  * 17 Apr 03 - Mike: Added testRecursion to track down a nasty bug
@@ -1079,6 +1079,16 @@ void StatementTest::testSubscriptVars () {
     ost4 << c;
     expected = "   0 SWITCH(m[r28{9} - 12])\n";
     actual = ost4.str();
+    CPPUNIT_ASSERT_EQUAL(expected, actual);
+
+    // CaseStatement (before recog) with pDest = r28, switchVar is NULL
+    c->setDest(Location::regOf(28));
+    c->setSwitchInfo(NULL);
+    std::ostringstream ost4a;
+    c->subscriptVar(srch, &s9);
+    ost4a << c;
+    expected = "   0 CASE [r28{9}]";
+    actual = ost4a.str();
     CPPUNIT_ASSERT_EQUAL(expected, actual);
     
     // CallStatement with pDest = m[r26], params = m[r27], r28,
