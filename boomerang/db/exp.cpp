@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.88 $
+ * $Revision: 1.89 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2499,9 +2499,11 @@ Exp *RefExp::fixCallRefs() {
             return e;
         } else {
             if (call->findReturn(subExp1) == -1) {
-                std::cerr << "nothing proven about " << subExp1 << 
-                    " and yet it is referenced, and not in returns of " << 
-                    std::endl << "   " << call << std::endl;
+                if (VERBOSE) {
+                    std::cerr << "nothing proven about " << subExp1 << 
+                        " and yet it is referenced, and not in returns of " << 
+                        std::endl << "   " << call << std::endl;
+                }
             }
         }
     }
@@ -2527,9 +2529,11 @@ Exp *PhiExp::fixCallRefs() {
                 }
             } else {
                 if (call->findReturn(subExp1) == -1) {
-                    std::cerr << "nothing proven about " << subExp1 << 
-                        " and yet it is referenced, and not in returns of " << 
-                        std::endl << "   " << call << std::endl;
+                    if (VERBOSE) {
+                        std::cerr << "nothing proven about " << subExp1 << 
+                            " and yet it is referenced, and not in returns of " 
+                            << std::endl << "   " << call << std::endl;
+                    }
                 }
             }
         }

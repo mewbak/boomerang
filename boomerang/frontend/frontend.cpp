@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -597,6 +597,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
                           ((Const*)call->getDest()->getSubExp1())->getAddr());
                         Proc *p = pProc->getProg()->getLibraryProc(nam);
                         call->setDestProc(p);
+                        call->setIsComputed(false);
                     }
 
                     // Treat computed and static calls seperately
