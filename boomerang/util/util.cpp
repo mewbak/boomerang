@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -46,7 +46,7 @@
 #include <stdio.h>
 #include "util.h"
 
-#ifndef _MSC_VER
+#ifndef _WIN32
 #include <unistd.h>
 #define _FLOCK_
 #else
