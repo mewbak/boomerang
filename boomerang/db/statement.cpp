@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.147 $
+ * $Revision: 1.148 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1372,17 +1372,16 @@ Exp *CallStatement::getProven(Exp *e) {
 // Used in fixCallRefs (via the CallRefsFixer). Locations defined in this call are replaced with
 // their proven values, which are in terms of the initial values at the start of the call, which
 // are the actual arguments (implicit or regular)
-Exp *CallStatement::substituteParams(Exp *e)
-{
+Exp *CallStatement::substituteParams(Exp *e) {
 	e = e->clone();
 	LocationSet locs;
 	e->addUsedLocs(locs);
 	LocationSet::iterator xx;
 	for (xx = locs.begin(); xx != locs.end(); xx++) {		// For each used location in e
 		Exp *r = findArgument(*xx);							// See if it is an argument of the call
-		if (r == NULL) continue;
 		bool change;
-		e = e->searchReplaceAll(*xx, r, change);
+		if (r)
+			e = e->searchReplaceAll(*xx, r, change);
 	}
 	return e->simplifyArith()->simplify();
 }
@@ -3136,6 +3135,11 @@ void Assign::simplifyAddr() {
 	lhs = lhs->simplifyAddr();
 	rhs = rhs->simplifyAddr();
 }
+
+void Assignment::simplifyAddr() {
+	lhs = lhs->simplifyAddr();
+}
+
 
 void Assign::fixSuccessor() {
 	lhs = lhs->fixSuccessor();
