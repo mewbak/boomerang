@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.156 $
+ * $Revision: 1.157 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1073,7 +1073,10 @@ void RefExp::print(std::ostream& os) {
 // TypeVal	//
 //	//	//	//
 void TypeVal::print(std::ostream& os) {
-	os << "<" << val->getCtype() << ">";
+	if (val)
+		os << "<" << val->getCtype() << ">";
+	else 
+		os << "<NULL>";
 }
 
 /*==============================================================================

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.83 $
+ * $Revision: 1.84 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1172,7 +1172,7 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
 			} else {
 				Exp *cond = getCond();
 				if (cType == IfElse) {
-					cond = new Unary(opNot, cond);
+					cond = new Unary(opNot, cond->clone());
 					cond = cond->simplify();
 				}
 				if (cType == IfThenElse)
@@ -1212,7 +1212,7 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
 
 					// generate the closing bracket
 					hll->AddIfElseCondEnd(indLevel);
-					   } else {
+				} else {
 					// generate the closing bracket
 					hll->AddIfCondEnd(indLevel);
 				}

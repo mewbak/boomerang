@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.14 $
+/* $Revision: 1.15 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -165,6 +165,7 @@ virtual ~BinaryFile() {}			// Virtual destructor
 	bool isReadOnly(ADDRESS uEntry) { 
 		return GetSectionInfoByAddr(uEntry)->bReadOnly;
 	}
+	virtual int readNative1(ADDRESS a) {return 0;}
 	// Read 2 bytes from given native address a; considers endianness
 	virtual int readNative2(ADDRESS a) {return 0;}
 	// Read 4 bytes from given native address a; considers endianness

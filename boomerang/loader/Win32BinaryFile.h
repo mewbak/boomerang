@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.12 $
+/* $Revision: 1.13 $
  * This file contains the definition of the Win32BinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
 */
@@ -197,6 +197,7 @@ protected:
 
 public:
 
+virtual int readNative1(ADDRESS a);         // Read 1 bytes from native addr
 virtual int readNative2(ADDRESS a);			// Read 2 bytes from native addr
 virtual int readNative4(ADDRESS a);			// Read 4 bytes from native addr
 virtual QWord readNative8(ADDRESS a);	// Read 8 bytes from native addr
