@@ -4,19 +4,15 @@
  *              tests the sparc front end
  *============================================================================*/
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  *
  * 05 Apr 02 - Mike: Created
  * 21 May 02 - Mike: Mods for gcc 3.1
  * 04 Dec 02 - Mike: Changed all r[0] to 0
  */
 
-#ifndef BOOMDIR
-#error Must define BOOMDIR
-#endif
-
-#define HELLO_SPARC     BOOMDIR "/test/sparc/hello"
-#define BRANCH_SPARC    BOOMDIR "/test/sparc/branch"
+#define HELLO_SPARC     "test/sparc/hello"
+#define BRANCH_SPARC    "test/sparc/branch"
 
 #include "types.h"
 #include "FrontSparcTest.h"

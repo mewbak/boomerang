@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.62 $
+ * $Revision: 1.63 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -53,14 +53,6 @@
 #include "signature.h"
 #include "boomerang.h"
 #include "ansi-c-parser.h"
-
-// Check that BOOMDIR is set
-#ifndef WIN32
-#ifndef BOOMDIR
-#error BOOMDIR must be set!
-#endif
-#define LIBDIR BOOMDIR "/lib"
-#endif
 
 /*==============================================================================
  * FUNCTION:      FrontEnd::FrontEnd
@@ -426,6 +418,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
             // Decode and classify the current source instruction
             if (Boomerang::get()->traceDecoder)
                 LOG << "*" << uAddr << "\t";
+
 
             // Decode the inst at uAddr.
             inst = decodeInstruction(uAddr);
@@ -1062,7 +1055,7 @@ FrontEnd* FrontEnd::getInstanceFor( const char *sName, void*& dlHandle,
 
 #ifdef DYNAMIC
     // Load the specific decoder library
-    libName = std::string(LIBDIR) + "/libfront" + machName + ".so";
+    libName = std::string("lib/libfront") + machName + ".so";
     dlHandle = dlopen(libName.c_str(), RTLD_LAZY);
     if (dlHandle == NULL) {
         LOG << "Could not open dynamic loader library " << libName << "\n";
