@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
@@ -94,7 +94,7 @@ private: \
 
 0[xX]{H}+{IS}?		{ count(); sscanf(yytext, "0x%x", &yylval.ival); return AnsiCParser::CONSTANT; }
 0{D}+{IS}?		{ count(); return AnsiCParser::CONSTANT; }
-{D}+{IS}?		{ count(); return AnsiCParser::CONSTANT; }
+{D}+{IS}?		{ count(); sscanf(yytext, "%d", &yylval.ival); return AnsiCParser::CONSTANT; }
 L?'(\\.|[^\\'])+'	{ count(); return AnsiCParser::CONSTANT; }
 
 {D}+{E}{FS}?		{ count(); return AnsiCParser::CONSTANT; }

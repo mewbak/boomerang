@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.33 $
+ * $Revision: 1.34 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -436,9 +436,29 @@ void CHLLCode::appendExp(char *str, Exp *exp)
             assert(false);
             break;
         case opMemberAccess:
-            appendExp(str, b->getSubExp1());
-            strcat(str, ".");
-            strcat(str, ((Const*)b->getSubExp2())->getStr());
+            if (b->getSubExp1()->getOper() == opGlobal) {
+                const char *nam = ((Const*)b->getSubExp1()->getSubExp1())->
+                                              getStr();
+                Type *ty = m_proc->getProg()->getGlobalType((char*)nam);
+                if (ty) {
+                    if (ty->isNamed())
+                        ty = ((NamedType*)ty)->resolvesTo();
+                    if (ty->isPointer()) {
+                        appendExp(str, b->getSubExp1());
+                        strcat(str, "->");
+                        strcat(str, ((Const*)b->getSubExp2())->getStr());
+                    } else {
+                        assert(ty->isCompound());
+                        appendExp(str, b->getSubExp1());
+                        strcat(str, ".");
+                        strcat(str, ((Const*)b->getSubExp2())->getStr());
+                    }
+                }
+            } else {
+                appendExp(str, b->getSubExp1());
+                strcat(str, ".");
+                strcat(str, ((Const*)b->getSubExp2())->getStr());
+            }
             break;
         default:
             // others

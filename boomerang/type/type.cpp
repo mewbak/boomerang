@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -36,6 +36,7 @@
 #include "cfg.h"
 #include "proc.h"
 #include "signature.h"
+#include "boomerang.h"
 
 /*==============================================================================
  * FUNCTION:        Type::Type
@@ -247,7 +248,7 @@ int BooleanType::getSize() const
 
 int CharType::getSize() const
 {
-    return 1;
+    return 8;
 }
 
 int VoidType::getSize() const

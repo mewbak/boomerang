@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.144 $
+ * $Revision: 1.145 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1796,6 +1796,39 @@ void UserProc::replaceExpressionsWithGlobals() {
                     Exp* memofCopy = memof->clone();
                     s->searchAndReplace(memofCopy, g);
                     delete memofCopy; delete g;
+                }
+            }
+            if ((*rr)->getOper() == opMemOf &&
+                (*rr)->getSubExp1()->getOper() == opPlus &&
+                (*rr)->getSubExp1()->getSubExp1()->getOper() == opGlobal &&
+                (*rr)->getSubExp1()->getSubExp2()->getOper() == opIntConst) {
+                Exp *globalExp = (*rr)->getSubExp1()->getSubExp1();
+                const char *global = ((Const*)globalExp->getSubExp1())->
+                                                         getStr();
+                Type *ty = prog->getGlobalType((char*)global);
+                if (ty->isNamed())
+                    ty = ((NamedType*)ty)->resolvesTo();
+                PointerType *pty = dynamic_cast<PointerType*>(ty);
+                Type *points_to = NULL;
+                if (pty) {
+                    points_to = pty->getPointsTo();
+                    if (points_to->isNamed())
+                        points_to = ((NamedType*)points_to)->resolvesTo();
+                }
+                if (points_to && points_to->isCompound()) {
+                    CompoundType *compound = (CompoundType*)points_to;
+                    int n = ((Const*)(*rr)->getSubExp1()->getSubExp2())->
+                                            getInt();
+                    if (compound->getSize() > n*8) {
+                        Exp *ne = new Binary(opMemberAccess, 
+                                             globalExp->clone(), 
+                                             new Const((char*)compound->
+                                                        getNameAtOffset(n*8)));
+                        if (VERBOSE) 
+                            LOG << "replacing " << *rr << " with " << ne 
+                                << "\n";
+                        s->searchAndReplace((*rr)->clone(), ne);
+                    }
                 }
             }
         }
