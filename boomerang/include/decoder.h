@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 08 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -99,9 +99,10 @@ struct DecodeResult {
 class NJMCDecoder {
 public:
     /*
-     * Constructor
+     * Constructor and destructor
      */
     NJMCDecoder();
+virtual ~NJMCDecoder() {};
 
     /*
      * Decodes the machine instruction at pc and returns an RTL instance for
