@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.6 $
+/* $Revision: 1.7 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -164,6 +164,11 @@ static FrontEnd* getInstanceFor( const char* sName, void*& dlHandle,
      * Close the library opened by getInstanceFor
      */
 static void closeInstance(void* dlHandle);
+
+	/*
+	 * Get a Prog object (for testing and not decoding)
+	 */
+	Prog* getProg();
 
 };
 
