@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 22 Jun 00 - Mike: Initial version
  * 15 May 02 - Mike: Fixed several UINT4(&...) that were needed for endianness
@@ -23,7 +23,7 @@
 
 #include <assert.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
-#pragma warning(disable:4786)
+#include "exp.h"		// For MSVC 5.00
 #endif
 
 #include "HpSomBinaryFile.h"

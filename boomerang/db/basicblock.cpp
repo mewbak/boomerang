@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.70 $
+ * $Revision: 1.71 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -45,6 +45,11 @@
 #include "util.h"
 #include "boomerang.h"
 #include "type.h"
+// For some reason, MSVC 5.00 complains about use of undefined type RTL a lot
+#if defined(_MSC_VER) && _MSC_VER <= 1100
+#include "signature.h"		// For MSVC 5.00
+#endif
+
 
 /**********************************
  * BasicBlock methods
