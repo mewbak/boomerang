@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.50 $
+ * $Revision: 1.51 $
  * 18 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -2196,7 +2196,9 @@ void Cfg::renameBlockVars(int n, int memDepth, bool clearStack /* = false */ ) {
                         S = Ybb->getNextStmt(rit, sit)) {
             Assign* ae = dynamic_cast<Assign*>(S);
             // if S is not a phi function, then quit the loop (no more phi's)
-            if (!ae || !ae->isPhi()) break;
+            // wrong: do not quit the loop, there's an optimisation that 
+            // turns phis with a single param into refs.
+            if (!ae || !ae->isPhi()) continue;
             // Suppose the jth operand of the phi is a; we just get the LHS
             Exp* a = ae->getLeft();
             // Only consider variables of the current memory depth

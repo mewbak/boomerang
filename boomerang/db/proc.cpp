@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.124 $
+ * $Revision: 1.125 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2234,8 +2234,25 @@ bool UserProc::prover(Exp *query, std::set<PhiExp*>& lastPhis,
                             query = new Terminal(opFalse);
                         change = true;
                     } else {
-                        query->setSubExp1(s->getRight()->clone());
-                        change = true;
+                        bool refloop = false;
+                        Statement *s1 = s;
+                        while (s1 &&
+                               s1->getRight() && 
+                               s1->getRight()->isSubscript()) {
+                            s1 = ((RefExp*)s1->getRight())->getRef();
+                            if (s1 == s) {
+                                refloop = true;
+                                break;
+                            }
+                        }
+                        if (refloop) {
+                            std::cerr << "ignoring ref loop to " << s 
+                                      << std::endl;
+                            assert(false);
+                        } else {
+                            query->setSubExp1(s->getRight()->clone());
+                            change = true;
+                        }
                     }
                 }
             }
