@@ -13,7 +13,7 @@
  *             SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.15 $
+/* $Revision: 1.16 $
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -213,7 +213,7 @@ DecodeResult& SparcDecoder::decodeInstruction (ADDRESS pc, int delta) {
     // The actual list of instantiated statements
     std::list<Statement*>* stmts = NULL;
 
-    ADDRESS nextPC = NO_ADDR;
+    ADDRESS nextPC = NO_ADDRESS;
 
     match [nextPC] hostPC to
 

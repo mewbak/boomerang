@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -108,7 +108,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
     std::list<Statement*>* stmts = NULL;
 
 
-    ADDRESS nextPC = NO_ADDR;
+    ADDRESS nextPC = NO_ADDRESS;
     match [nextPC] hostPC to
     
     | CALL.Evod(Eaddr) =>
