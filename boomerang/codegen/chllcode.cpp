@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -594,7 +594,7 @@ void CHLLCode::AddCallStatement(int indLevel, Proc *proc,
 {
     char s[1024];
     indent(s, indLevel);
-    if (defs.size() == 1) {
+    if (defs.size() >= 1) {
         LocSetIter it;
         appendExp(s, defs.getFirst(it));
         strcat(s, " = ");

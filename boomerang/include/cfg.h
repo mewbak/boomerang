@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -243,6 +243,11 @@ public:
      * Get the n-th out edge or 0 if it does not exist
      */
     PBB getOutEdge(unsigned int i);
+
+    /*
+     * Get the index of my in-edges is BB pred
+     */
+    int whichPred(PBB pred);
 
     /*
      * Add an in-edge
