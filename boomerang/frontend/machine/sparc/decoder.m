@@ -13,7 +13,7 @@
  *			   SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.18 $
+/* $Revision: 1.19 $
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -276,16 +276,14 @@ DecodeResult& SparcDecoder::decodeInstruction (ADDRESS pc, int delta) {
 		 */
 
 		// First, check for CBxxx branches (branches that depend on
-		// co-processor instructions). These are invalid, as far as
-		// we are concerned
+		// co-processor instructions). These are invalid, as far as we are concerned
 		if (name[0] == 'C') {
 			result.valid = false;
 			result.rtl = new RTL;
 			result.numBytes = 4;
 			return result;
 		}
-		// Instantiate a GotoStatement for the unconditional branches,
-		// HLJconds for the rest.
+		// Instantiate a GotoStatement for the unconditional branches, HLJconds for the rest.
 		// NOTE: NJMC toolkit cannot handle embedded else statements!
 		GotoStatement* jump = 0;
 		RTL* rtl;
