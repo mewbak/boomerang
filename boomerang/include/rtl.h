@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  */
@@ -397,8 +397,8 @@ public:
     virtual Type *updateType(Exp *e, Type *curType);
 
     // to/from SSA form
-    virtual void toSSAform(StatementSet& reachin) {
-        pCond = pCond->updateUses(reachin);}
+    virtual void toSSAform(StatementSet& reachin, int memDepth) {
+        pCond = pCond->updateRefs(reachin, memDepth);}
     virtual void fromSSAform(igraph& ig);
 
 protected:
@@ -588,7 +588,7 @@ public:
 
     void decompile();
 
-    virtual void toSSAform(StatementSet& reachin);
+    virtual void toSSAform(StatementSet& reachin, int memDepth);
     virtual void fromSSAform(igraph& ig);
         
 protected:
@@ -752,8 +752,8 @@ public:
     virtual Type* updateType(Exp *e, Type *curType);
     virtual void doReplaceUse(Statement *use);
     // to/from SSA form
-    virtual void toSSAform(StatementSet& reachin) {
-        pCond = pCond->updateUses(reachin);}
+    virtual void toSSAform(StatementSet& reachin, int memdepth) {
+        pCond = pCond->updateRefs(reachin, memdepth);}
     virtual void fromSSAform(igraph& ig);
 
 private:
