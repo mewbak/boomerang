@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.47 $
+/* $Revision: 1.48 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -478,7 +478,7 @@ public:
     void repairDataflow(int memDepth, StatementSet& rs);
 
     void toSSAform(int memDepth, StatementSet& rs);
-    void fromSSAform(igraph& ig);
+    void fromSSAform();
 
     // Insert actual arguments to match formals
     void insertArguments(StatementSet& rs);

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.80 $
+ * $Revision: 1.81 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1064,8 +1064,7 @@ std::set<UserProc*>* UserProc::decompile() {
         }
     }
 
-    igraph ig;      // FIXME: need to make an attempt to calculate this!
-    fromSSAform(ig);
+    fromSSAform();
 
     if (Boomerang::get()->vFlag) {
         std::cerr << "===== After transformation from SSA form =====\n";
@@ -1831,10 +1830,12 @@ void UserProc::removeUnusedStatements(RefCounter& refCounts, int depth) {
 //  SSA code
 //
 
-void UserProc::fromSSAform(igraph& ig) {
+void UserProc::fromSSAform() {
     StatementList stmts;
     getStatements(stmts);
     StmtListIter it;
+    igraph ig;
+    cfg->findInterferences(ig);
     for (Statement* s = stmts.getFirst(it); s; s = stmts.getNext(it)) {
         // FIXME: This is QUICK and DIRTY
         if (s->isPhi())

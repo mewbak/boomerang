@@ -4,7 +4,7 @@
  *              tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 14 Jan 03 - Trent: Created
  */
@@ -39,6 +39,7 @@ class StatementTest : public CppUnit::TestCase {
     void testUseKill();
     void testEndlessLoop();
     void testLocationSet();
+    void testWildLocationSet();
     void testRecursion();
     void testExpand();
     void testClone();
