@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -146,7 +146,7 @@ Exp* PentiumFrontEnd::bumpRegisterAll(Exp* e, int min, int max, int delta, int m
     Exp* exp = e;
     // Use doSearch, which is normally an internal method of Exp, to avoid
     // problems of replacing the wrong subexpression (in some odd cases)
-    Exp::doSearch(&search, exp, li, false);
+    e->doSearch(&search, exp, li, false);
     for (it = li.begin(); it != li.end(); it++) {
         int reg = ((Const*)((Unary*)**it)->getSubExp1())->getInt();
         if ((min <= reg) && (reg <= max)) {
