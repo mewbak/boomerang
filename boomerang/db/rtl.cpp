@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -124,6 +124,11 @@ RTL& RTL::operator=(RTL& other) {
         isCommented = other.isCommented;
     }
     return *this;
+}
+
+// visit this rtl
+bool RTL::accept(RTLVisitor* visitor) {
+    return visitor->visit(this);
 }
 
 /*==============================================================================

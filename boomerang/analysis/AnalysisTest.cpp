@@ -4,7 +4,7 @@
  *              tests the analysis code
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 10 Jul 02 - Mike: Created
  */
@@ -14,11 +14,9 @@
 #include "sparcfrontend.h"
 #include "BinaryFile.h"
 #include "BinaryFileStub.h"
+#include "analysis.h"
 
 #define CCX_SPARC       BOOMDIR "/test/sparc/condcodexform_gcc"
-
-// There is no .h file for analysis; there is just this prototype
-void analysis(UserProc* proc);
 
 /*==============================================================================
  * FUNCTION:        AnalysisTest::registerTests
@@ -83,8 +81,9 @@ void AnalysisTest::testFlags () {
     UserProc *pProc = (UserProc*)p;
     CPPUNIT_ASSERT(pProc);
 
+    Analysis *analysis = new Analysis();
     // Call analysis
-    analysis(pProc);
+    analysis->analyse(pProc);
 
     // Hunt for a specific BB
     Cfg* cfg = pProc->getCFG();

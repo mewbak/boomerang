@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -51,6 +51,7 @@
 #include "frontend.h"
 #include "prog.h"
 #include "signature.h"
+#include "analysis.h"
 
 Prog::Prog()
     : pBF(NULL),
@@ -108,11 +109,10 @@ bool Prog::wellForm()
 	return wellformed;
 }
 
-void analysis(UserProc *proc);
-
 // Analyse any procedures that are decoded
 void Prog::analyse()
 {
+	Analysis *analysis = new Analysis();
 	for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end(); it++) {
 		Proc *pProc = *it;
 		if (pProc->isLib()) continue;
@@ -120,7 +120,7 @@ void Prog::analyse()
 		if (!p->isDecoded()) continue;
 
 		// decoded userproc.. analyse it			
-		analysis(p);
+		analysis->analyse(p);
 	}
 }
 
