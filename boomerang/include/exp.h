@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -106,8 +106,10 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
     //   Enquiry functions  //
     //  //  //  //  //  //  //
 
-    // True if this is an assignment to the abstract flags register
+    // True if this is a call to a flag function
     bool isFlagCall() {return op == opFlagCall;}
+    // True if this is an assignment to the "flags" abstract location
+    bool isFlagAssgn();
     // True if this is an ordinary (non flags) assignment
     bool isAssign();
     // True if this is a register location
