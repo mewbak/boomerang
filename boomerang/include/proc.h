@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.63 $
+/* $Revision: 1.64 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -428,6 +428,13 @@ public:
      * it. Also nulls the internal cfg pointer (to prevent strange errors)
      */
     void deleteCFG();
+
+    /*
+     * Returns an abstract syntax tree for the procedure in the
+     * internal representation.  This function actually _calculates_
+     * this value and is expected to do so expensively.
+     */ 
+    Statement *getAST();
 
     /*
      * Returns whether or not this procedure can be decoded (i.e. has

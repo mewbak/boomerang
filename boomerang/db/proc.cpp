@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.111 $
+ * $Revision: 1.112 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -643,6 +643,30 @@ Cfg* UserProc::getCFG() {
 void UserProc::deleteCFG() {
     delete cfg;
     cfg = NULL;
+}
+
+Statement *UserProc::getAST()
+{
+    int num = 1000;
+    BlockStatement *init = new BlockStatement();
+    init->setNumber(num++);
+    BB_IT it;
+    for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it)) {
+        BlockStatement *b = new BlockStatement();
+        b->setNumber(num++);
+        std::list<RTL*> *rtls = bb->getRTLs();
+        for (std::list<RTL*>::iterator rit = rtls->begin(); rit != rtls->end();
+          rit++) {
+            RTL *rtl = *rit;
+            for (std::list<Statement*>::iterator it = rtl->getList().begin(); 
+              it != rtl->getList().end(); it++) {
+                b->addStatement(*it);
+            }
+        }
+        if (b->getNumStatements() > 0)
+            init->addStatement(b);
+    }
+    return init;
 }
 
 /*==============================================================================

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.45 $
+ * $Revision: 1.46 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -890,6 +890,13 @@ public:
      * Structures the control flow graph
      */
     void structure();
+
+    /*
+     * Resolves goto/branch destinations to statements
+     * Good to do this late, as removing statements doesn't
+     * update this information.
+     */
+    void resolveGotos();
 
     /*
      * Virtual Function Call analysis
