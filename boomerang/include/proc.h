@@ -16,7 +16,7 @@
  *			   as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.107 $
+/* $Revision: 1.108 $
 */
 
 #ifndef _PROC_H_
@@ -438,6 +438,7 @@ public:
 
     // print this proc, mainly for debugging
     void print(std::ostream &out);
+    char *prints();
     void printToLog();
 
     // simplify the statements in this proc
@@ -535,7 +536,7 @@ public:
 	void removeStatement(Statement *stmt);
 
 	// inline constants / decode function pointer constants
-	void processConstants();
+	bool processConstants();
 
 	// get internal statements
 	// Note: assignment causes shallow copy of list
