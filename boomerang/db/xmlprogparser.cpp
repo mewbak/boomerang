@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * June 2004 - Trent: created
  */
@@ -2890,6 +2890,20 @@ void XMLProgParser::persistToXML(std::ostream &out, Statement *stmt)
 	}
 	PhiAssign *p = dynamic_cast<PhiAssign*>(stmt);
 	if (p) {
+		out << "<phiassign id=\"" << (int)stmt << "\" number=\"" << p->number << "\"";
+		if (p->parent)
+			out << " parent=\"" << (int)p->parent << "\"";
+		if (p->proc)
+			out << " proc=\"" << (int)p->proc << "\"";
+		out << ">\n";
+		out << "<lhs>\n";
+		persistToXML(out, p->lhs);
+		out << "</lhs>\n";
+		PhiAssign::iterator it;
+		for (it = p->begin(); it != p->end(); p++)
+			out << "<def stmt=\"" << (int)it->def << "\" exp=\"" << (int)it->e << "\" />\n";
+		out << "</phiassign>\n";
+		return;
 	}
 	Assign *a = dynamic_cast<Assign*>(stmt);
 	if (a) {
