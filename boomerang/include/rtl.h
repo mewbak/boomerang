@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $
+ * $Revision: 1.48 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -265,11 +265,11 @@ public:
     
     // Given an instruction name and list of actual parameters, return an
     // instantiated RTL for the corresponding instruction entry.
-    std::list<Statement*>* instantiateRTL(std::string& name,
+    std::list<Statement*>* instantiateRTL(std::string& name, ADDRESS natPC,
       std::vector<Exp*>& actuals);
     // As above, but takes an RTL & param list directly rather than doing
     // a table lookup by name.
-    std::list<Statement*>* instantiateRTL(RTL& rtls,
+    std::list<Statement*>* instantiateRTL(RTL& rtls, ADDRESS natPC,
       std::list<std::string> &params, std::vector<Exp*>& actuals);
 
     // Transform the given list into another list which doesn't have
@@ -310,7 +310,7 @@ public:
     std::map<std::string, int, std::less<std::string> > RegMap;
 
     // Similar to r_map but stores more information about a register such as its
-    // size, its addresss etc (see reg.h).
+    // size, its addresss etc (see register.h).
     std::map<int, Register, std::less<int> > DetRegMap;
 
     // A map from symbolic representation of a special (non-addressable)
