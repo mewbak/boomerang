@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -59,6 +59,7 @@ class Signature {
 protected:
     std::string name;						// name of procedure
     std::vector<Parameter*> params;
+    Type *rettype;
 
 public:
     Signature(const char *nam);
