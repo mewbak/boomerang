@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 # 21 Aug 02 - Icer: added codegen/chllcode.cpp to the build process
 #		    by adding it in STATIC_OBJ
 # 20 Aug 02 - Icer: removed test from all, test code is broken
@@ -173,6 +173,7 @@ db/ExpTest.o:				EXTRA = $(BOOMSET)
 db/RtlTest.o:               EXTRA = $(BOOMSET) -Ifrontend
 db/StatementTest.o:			EXTRA = $(BOOMSET) -Ifrontend
 db/CfgTest.o:               EXTRA = $(BOOMSET) -Ifrontend
+type/TypeTest.o:            EXTRA = $(BOOMSET) -Ifrontend
 
 # Compile ordinary files
 $(STATIC_OBJS): %.o : %.cpp
