@@ -12,7 +12,7 @@
 #
 ######################################################
 
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Note: gnu make is probably required (for patsubst etc)
 # Whole make is dependent on finding the pattern *BinaryFile.cpp;
 # a lib%.so file is made for each of these
@@ -85,6 +85,8 @@ $(ALLOBJS): %.o : %.cpp
 ../lib/libElfBinaryFile.so: SymTab.o
 ../lib/libWin32BinaryFile.so: microX86dis.o
 SymTab.o:   SymTab.h
+Win32BinaryFile.o: Win32BinaryFile.h ../include/BinaryFile.h
+ElfBinaryFile.o: ElfBinaryFile.h ../include/BinaryFile.h
 
 
 
