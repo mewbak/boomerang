@@ -14,7 +14,7 @@
  * OVERVIEW:   This file contains the machine independent
  *			   decoding functionality.
  *
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  *============================================================================*/ 
 /*
  * 27 Apr 02 - Mike: Mods for boomerang
@@ -233,7 +233,7 @@ void NJMCDecoder::unconditionalJump(const char* name, int size, ADDRESS relocd, 
 	GotoStatement* jump = new GotoStatement();
 	jump->setDest(relocd-delta);
 	result.rtl->appendStmt(jump);
-	SHOW_ASM(name<<" "<<relocd)
+	SHOW_ASM(name<<" 0x"<<std::hex<<relocd-delta)
 }
 
 /*==============================================================================
