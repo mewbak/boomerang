@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.43 $
+ * $Revision: 1.44 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -2066,8 +2066,11 @@ char* BasicBlock::getStmtNumber() {
 } 
 
 // Prepend an expression (usually an assignment representing a phi function)
-void BasicBlock::prependStmt(Statement* s) {
+// Proc is the enclosing Proc
+void BasicBlock::prependStmt(Statement* s, UserProc* proc) {
     // Check the first RTL (if any)
+    s->setBB(this);
+    s->setProc(proc);
     if (m_pRtls->size()) {
         RTL* rtl = m_pRtls->front();
         if (rtl->getAddress() == 0) {
