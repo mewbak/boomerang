@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.73 $
+ * $Revision: 1.74 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -423,9 +423,9 @@ class Assign : public Assignment {
 
 public:
 	// Constructor, subexpressions
-				Assign(Exp* lhs, Exp* rhs);
+				Assign(Exp* lhs, Exp* rhs, Exp* guard = NULL);
 	// Constructor, type and subexpressions
-				Assign(Type* ty, Exp* lhs, Exp* rhs);
+				Assign(Type* ty, Exp* lhs, Exp* rhs, Exp* guard = NULL);
 	// Default constructor, for XML parser
 				Assign() : Assignment(NULL), rhs(NULL), guard(NULL) {}
 	// Copy constructor
