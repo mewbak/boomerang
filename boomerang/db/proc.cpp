@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.224 $
+ * $Revision: 1.225 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2207,10 +2207,6 @@ void UserProc::replaceExpressionsWithLocals(bool lastPass) {
 		if ((*it)->isCall()) {
 			CallStatement *call = (CallStatement*)*it;
 			for (int i = 0; i < call->getNumArguments(); i++) {
-				std::ofstream f("c:\\mydebug.txt");
-				call->getDestProc()->getSignature()->print(f);
-				f.close();
-
 				Type *ty = call->getArgumentType(i);
 				Exp *e = call->getArgumentExp(i);
 				// If a pointer type and e is of the form m[sp{0} - K]:
