@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.97 $
+ * $Revision: 1.98 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3179,6 +3179,7 @@ void Assign::genConstraints(LocationSet& cons) {
 
 void CallStatement::genConstraints(LocationSet& cons) {
     Proc* dest = getDestProc();
+    if (dest == NULL) return;
     Signature* destSig = dest->getSignature();
     // Generate a constraint for the type of each actual argument to be equal
     // to the type of each formal parameter (hopefully, these are already
