@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -2014,6 +2014,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 
     | FSUB.STi.ST(idx) =>
         stmts = instantiate(pc,  "FSUB.STi.ST", DIS_IDX);
+std::cout << "FSUB.STi.ST at 0x" << std::hex << pc << "\n";
 
     | FISUB.I32(Mem32) =>
         stmts = instantiate(pc,  "FISUB.I32", DIS_MEM32);
@@ -2035,6 +2036,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 
     | FSUBR.STi.ST(idx) =>
         stmts = instantiate(pc,  "FSUBR.STi.ST", DIS_IDX);
+std::cout << "FSUBR.STi.ST at 0x" << std::hex << pc << "\n";
 
     | FISUBR.I32(Mem32) =>
         stmts = instantiate(pc,  "FISUBR.I32", DIS_MEM32);
