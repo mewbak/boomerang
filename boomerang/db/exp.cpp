@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2583,8 +2583,6 @@ void AssignExp::doReplaceRef(Exp* from, Exp* to) {
         std::cerr << "Exp::doReplaceRef: could not change " << from << " to " <<
           to << " in " << (Exp*)this << " !!\n";
     // simplify the expression
-if (number == 27)
-  std::cerr << "HACK!\n";
     subExp2 = subExp2->simplifyArith();
     subExp1 = subExp1->simplifyArith();
     simplify();
