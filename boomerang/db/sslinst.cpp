@@ -18,7 +18,7 @@
  *============================================================================*/
  
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  *
  * 27 Apr 02 - Mike: Mods for boomerang
  * 17 Jul 02 - Mike: readSSLFile resets internal state as well
@@ -523,8 +523,8 @@ std::list<Statement*>* RTLInstDict::transformPostVars(
                     // and actually check that it's not otherwise used here.
                     std::string tmpname = el.type->getTempName() + (tmpcount++)
                       + "post" ;
-                    el.tmp = new Unary(opTemp,
-                      new Const((char*)tmpname.c_str()));
+                    el.tmp = Location::tempOf(new Const(
+                      (char*)tmpname.c_str()));
 
                     // Keep a copy of the referrent. For example, if the
                     // lhs is r[0]', base is r[0]

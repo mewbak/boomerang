@@ -16,7 +16,7 @@
  *             returns the list of SSL instruction and table definitions.
  *============================================================================*/
 
-/* $Revision: 1.21 $
+/* $Revision: 1.22 $
  * Updates:
  * Shane Sendall (original C version) Dec 1997
  * Doug Simon (C++ version) Jan 1998
@@ -863,7 +863,7 @@ exp_term:
         }
 
     |   TEMP {
-            $$ = new Unary(opTemp, new Const($1));
+            $$ = Location::tempOf(new Const($1));
         }
     
     |   '(' exp ')' {
