@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -62,6 +62,7 @@ public:
     const char *dotFile;
     int numToPropagate;
     bool noPromote;
+    bool debugDataflow;
     bool debugPrintReach;
     bool debugPrintSSA;
 };
