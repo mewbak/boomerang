@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.77 $
+ * $Revision: 1.78 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -691,6 +691,7 @@ class PhiExp : public Unary {
     // If the last few in-edges have no definitions, there need not be
     // members of stmtVec for them
     StatementVec    stmtVec;        // A vector of pointers to statements
+    Assign *stmt;
 
 public:
             PhiExp(Exp* e) : Unary(opPhi, e) {};
@@ -717,6 +718,7 @@ virtual Exp*   addSubscript(Statement* def) {assert(0); return NULL; }
     //bool    references(Statement* s) {return stmtVec.exists(s);}
     StatementVec& getRefs() {return stmtVec;}
     virtual Exp*  genConstraints(Exp* restrictTo);
+    void    setStatement(Assign *a) { stmt = a; }
 
     // polySimplify
 virtual Exp* polySimplify(bool& bMod);

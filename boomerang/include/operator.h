@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -24,6 +24,7 @@ enum OPER
     opFMinus,               // Binary subtraction(single floats)
     opFMult,                // Multiplication(single floats)
     opFDiv,                 // (single floats)
+    opFNeg,                 // Floating point negate
     opFPlusd,               // addition(double floats)
     opFMinusd,              // subtraction(double floats)
     opFMultd,               // Multiplication(double floats)

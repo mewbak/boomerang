@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.32 $
+ * $Revision: 1.33 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -175,6 +175,8 @@ static StatementList& getStdRetStmt(Prog* prog);
 
     // get anything that can be proven as a result of the signature
     virtual Exp *getProven(Exp *left) { return NULL; }
+
+    virtual bool isPromoted() { return false; }
 };
 
 #endif

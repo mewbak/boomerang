@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 26 Aug 03 - Mike: Split off from statement.cpp
  */
 
@@ -462,6 +462,18 @@ void StatementVec::putAt(int idx, Statement* s) {
     if (idx >= (int)svec.size())
         svec.resize(idx+1, NULL);
     svec[idx] = s;
+}
+
+StatementVec::iterator StatementVec::remove(iterator it) {
+/*
+    iterator oldoldit = it;
+    iterator oldit = it;
+    for (it++; it != svec.end(); it++, oldit++) 
+        *oldit = *it;
+    svec.resize(svec.size()-1);
+    return oldoldit;
+*/
+    return svec.erase(it);
 }
 
 char* StatementVec::prints() {
