@@ -4,14 +4,13 @@
  *              tests the analysis code
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 10 Jul 02 - Mike: Created
  */
 
 #include "AnalysisTest.h"
 #include "prog.h"
-#include "BinaryFile.h"
 #include "sparcfrontend.h"
 
 #define CCX_SPARC       BOOMDIR "/test/sparc/condcodexform_gcc"
