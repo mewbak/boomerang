@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  */
@@ -138,6 +138,8 @@ public:
 
      // Print RTL to a stream.
     virtual void print(std::ostream& os = std::cout, bool withDF = false);
+    virtual void printFull(std::ostream& os = std::cout, bool withDF = false) {
+        print(os, withDF); }        // Unless overridden, same as short print
 
     // Set the RTL's source address
     void updateAddress(ADDRESS addr);
@@ -312,6 +314,7 @@ public:
 
     // Make a deep copy, and make the copy a derived object if needed.
     virtual RTL* clone();
+    virtual Statement* cloneStmt();
 
     // Accept a visitor to this RTL
     virtual bool accept(RTLVisitor* visitor);
@@ -492,6 +495,7 @@ public:
 
     // Make a deep copy, and make the copy a derived object if needed.
     virtual RTL* clone();
+    virtual Statement* cloneStmt();
 
     // Accept a visitor to this RTL
     virtual bool accept(RTLVisitor* visitor);
@@ -514,7 +518,7 @@ public:
     Exp* getReturnLoc();                // Get location used for return value
 
     virtual void print(std::ostream& os = std::cout, bool withDF = false);
-    virtual void print(std::ostream& os = std::cout) { print(os, false); }
+    virtual void printFull(std::ostream& os = std::cout, bool withDF = false);
 
     // general search
     virtual bool search(Exp *search, Exp *&result);
@@ -700,6 +704,7 @@ public:
 
     // Make a deep copy, and make the copy a derived object if needed.
     virtual RTL* clone();
+    virtual Statement* cloneStmt();
 
     // Accept a visitor to this RTL
     virtual bool accept(RTLVisitor* visitor);

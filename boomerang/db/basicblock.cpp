@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -461,7 +461,7 @@ void BasicBlock::print(std::ostream& os, bool withDF) {
     if (m_pRtls) {                  // Can be zero if e.g. INVALID
         std::list<RTL*>::iterator rit;
         for (rit = m_pRtls->begin(); rit != m_pRtls->end(); rit++) {
-            (*rit)->print(os, withDF);
+            (*rit)->printFull(os, withDF);
         }
     }
     if (m_bJumpReqd) {
