@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $
+ * $Revision: 1.48 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -1294,7 +1294,7 @@ void PentiumFrontEnd::processOverlapped(UserProc* proc) {
 	StatementList::iterator it;
 	for (it = stmts.begin(); it != stmts.end(); it++) {
 		Statement* s = *it;
-		if (!s->isAssign()) continue;
+		if (!s->isAssignment()) continue;
 		Exp* lhs = s->getLeft();
 		if (!lhs->isRegOf()) continue;
 		Const* c = (Const*)((Location*)lhs)->getSubExp1();
