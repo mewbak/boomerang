@@ -13,7 +13,7 @@
  *             SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.9 $
+/* $Revision: 1.10 $
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -245,11 +245,19 @@ DecodeResult& SparcDecoder::decodeInstruction (ADDRESS pc, int delta)
 
     | ret() =>
         /*
-         * Just a ret, no restore (? not sure now)
+         * Just a ret (non leaf)
          */
         result.rtl = new HLReturn(pc, exps);
         result.type = DD;
         SHOW_ASM("ret_")
+
+    | retl() =>
+        /*
+         * Just a ret (leaf; uses %o7 instead of %i7)
+         */
+        result.rtl = new HLReturn(pc, exps);
+        result.type = DD;
+        SHOW_ASM("retl_")
 
     | branch^",a" (tgt) [name] => 
         /*
