@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 
@@ -628,7 +628,7 @@ CBW
             *16* %ax := sgnex(8, 16, %al);
 
 CWDE    
-            *32* %eax := sgnex(16,32,%eax);
+            *32* %eax := sgnex(16,32,%ax);
 
 CLC    
             *1* %CF := 0;
