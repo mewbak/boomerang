@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -71,6 +71,10 @@ void CHLLCode::appendExp(char *str, Exp *exp)
     switch(exp->getOper()) {
         case opIntConst:
             sprintf(s, "%d", c->getInt());
+            strcat(str, s);
+            break;
+        case opLongConst:
+            sprintf(s, "%lld", c->getLong());
             strcat(str, s);
             break;
         case opFltConst:

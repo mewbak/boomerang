@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -148,6 +148,7 @@ enum OPER
     opExecute,              // Execute instruction at(addr)
 
     opIntConst,             // integer constant
+    opLongConst,            // long integer constant
     opFltConst,             // floating point constant
     opStrConst,             // string constant
     opCodeAddr,             // opAddrConst for addresses in code segment
