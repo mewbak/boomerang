@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.199 $
+ * $Revision: 1.200 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2852,7 +2852,8 @@ void UserProc::removeUnusedStatements(RefCounter& refCounts, int depth) {
 				continue;
 			}
 			if (s->getLeft()->getOper() == opMemOf &&
-				!(*new RefExp(s->getLeft(), NULL) == *s->getRight())) {
+					(s->getRight() == NULL || !(*new RefExp(s->getLeft(), NULL) == *s->getRight()))) {
+				// ? Is the above right? Looking for m[x] := m[x]{0} ???
 				// assignments to memof anything must always be kept
 				ll++;
 				continue;

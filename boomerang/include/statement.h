@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.59 $
+ * $Revision: 1.60 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -996,9 +996,7 @@ virtual bool	propagateToAll() { assert(false); return false;}
 virtual bool	isDefinition();
 virtual void	getDefinitions(LocationSet &defs);
 
-	// Note: CallStatement inherits getLeft() from GotoStatement (returns NULL)
-	// Still called from (e.g.) UserProc::prover()
-	//virtual Exp* getLeft() {assert(0);}
+virtual Exp*	getLeft() {return getReturnExp(0);}
 	// get how to replace this statement in a use
 virtual Exp*	getRight() { return NULL; }
 
