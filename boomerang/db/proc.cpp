@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.100 $
+ * $Revision: 1.101 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -988,11 +988,6 @@ std::set<UserProc*>* UserProc::decompile() {
     isRecursive = cycleSet->size() != 0;
     // Remove self from the cycle list
     cycleSet->erase(this);
-
-    if (Boomerang::get()->noDecompileUp) {
-        decompiled = true;
-        return cycleSet;
-    }
 
     if (VERBOSE) {
         std::cerr << "decompiling: " << getName() << std::endl;
