@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.75 $
+ * $Revision: 1.76 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -760,6 +760,7 @@ public:
     virtual Exp* clone();
 
     void setProc(UserProc *p) { proc = p; }
+    UserProc *getProc() { return proc; }
 
     virtual Exp* polySimplify(bool& bMod);
     virtual void addUsedLocs(LocationSet& used);

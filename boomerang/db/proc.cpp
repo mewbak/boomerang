@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.149 $
+ * $Revision: 1.150 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1016,19 +1016,6 @@ std::set<UserProc*>* UserProc::decompile() {
     // Number the statements
     int stmtNumber = 0;
     numberStatements(stmtNumber); 
-
-    printXML();
-
-    // Print if requested
-    if (VERBOSE) {
-        LOG << "=== Debug Print for " << getName()
-          << " before processing float constants ===\n";
-        printToLog(true);
-        LOG << "=== End Debug Print for " <<
-          getName() << " before processing float constants ===\n\n";
-    }
- 
-    processFloatConstants();
 
     printXML();
 

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -460,6 +460,8 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
             std::list<Statement*>::iterator ss;
             for (ss = sl.begin(); ss != sl.end(); ss++) {
                 Statement* s = *ss;
+                s->setProc(pProc); // let's do this really early!
+                s->simplify();
                 GotoStatement* stmt_jump = static_cast<GotoStatement*>(s);
 
                 switch (s->getKind())
