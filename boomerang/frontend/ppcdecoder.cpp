@@ -16,7 +16,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.11 $
+/* $Revision: 1.12 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -904,23 +904,23 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 #line 174 "frontend/machine/ppc/decoder.m"
                     		// Unconditional "conditional" branch with link, test/OSX/hello has this
 
-                    		if (reladdr - delta - pc == 4) {	// Very short branch?
+                    		if (reladdr - delta - pc == 4) {	// Branch to next instr?
 
-                    			// Effectively %LR = %pc
+                    			// Effectively %LR = %pc+4, but give the actual value for %pc
 
                     			Assign* as = new Assign(
 
                     				new IntegerType,
 
-                    				new Unary(opMachFtr, new Const("LR")),
+                    				new Unary(opMachFtr, new Const("%LR")),
 
-                    				new Terminal(opPC));
+                    				new Const(pc+4));
 
                     			stmts = new std::list<Statement*>;
 
                     			stmts->push_back(as);
 
-                    			SHOW_ASM(name<<" "<<BIcr<<", .+4  %LR = %pc")
+                    			SHOW_ASM(name<<" "<<BIcr<<", .+4"<<" %LR = %pc+4")
 
                     		} else {
 
