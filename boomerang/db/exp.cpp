@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.166 $
+ * $Revision: 1.167 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -57,8 +57,6 @@
 #include "transformer.h"
 #include "visitor.h"
 #include <iomanip>			// For std::setw etc
-
-#define DEBUG_PROOF (Boomerang::get()->debugProof)
 
 /*==============================================================================
  * FUNCTION:		Const::Const etc
@@ -1935,6 +1933,9 @@ Exp* Unary::polySimplify(bool& bMod) {
 		default:
 			break;
 	}
+
+	// The following transformations are for ad-hoc type analysis only
+	if (!ADHOC_TYPE_ANALYSIS) return res;
 
 	// Replace m[x + k] where x has type pointer and k is a constant with x[k/sizeof(*x)]
 	if (op == opMemOf && subExp1->getOper() == opPlus && subExp1->getSubExp2()->isIntConst()) {

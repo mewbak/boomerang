@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.80 $
+ * $Revision: 1.81 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -39,8 +39,6 @@
 #include "boomerang.h"
 #include "type.h"
 #include <sstream>
-
-#define DFA_TYPE_ANALYSIS (Boomerang::get()->dfaTypeAnalysis)
 
 extern char *operStrings[];
 
