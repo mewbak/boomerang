@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.65 $
+ * $Revision: 1.66 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2651,12 +2651,22 @@ Exp *Ternary::fixCallRefs()
 
 Exp *RefExp::fixCallRefs() {
     CallStatement *call = dynamic_cast<CallStatement*>(def);
-    if (call && call->findReturn(subExp1) == -1) { 
-        assert(*call->getProven(subExp1) == *subExp1);
-        Exp *e = call->findArgument(subExp1);
-        assert(e);
-        delete this;
-        return e->clone();
+    if (call) {
+        if (call->findReturn(subExp1) == -1) { 
+            assert(*call->getProven(subExp1) == *subExp1);
+            Exp *e = call->findArgument(subExp1);
+            assert(e);
+            delete this;
+            return e->clone();
+        } else {
+            Exp *e = call->getProven(subExp1);
+            if (e) {
+                e = call->substituteParams(e);
+                assert(e);
+                delete this;
+                return e;
+            }
+        }
     }
     return this;
 }

@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2009,6 +2009,20 @@ int CallStatement::findReturn(Exp *e) {
 Exp *CallStatement::getProven(Exp *e) {
     assert(procDest);
     return procDest->getProven(e);
+}
+
+Exp *CallStatement::substituteParams(Exp *e)
+{
+    e = e->clone();
+    LocationSet locs;
+    e->addUsedLocs(locs);
+    LocSetIter xx;
+    for (Exp* x = locs.getFirst(xx); x; x = locs.getNext(xx)) {
+        Exp *r = findArgument(x);
+        bool change;
+        e = e->searchReplaceAll(x, r->clone(), change);
+    }
+    return e;
 }
 
 Exp *CallStatement::findArgument(Exp *e) {

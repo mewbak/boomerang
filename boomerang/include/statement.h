@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -846,6 +846,7 @@ public:
     Exp *getReturnExp(int i);
     int findReturn(Exp *e);
     Exp *getProven(Exp *e);
+    Exp *substituteParams(Exp *e);
     Exp *findArgument(Exp *e);
     Exp* getArgumentExp(int i) { return arguments[i]; }
     void setArgumentExp(int i, Exp *e) { arguments[i] = e; }
