@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.101 $
+ * $Revision: 1.102 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -95,7 +95,8 @@ virtual void printr(std::ostream& os, bool withUses = false) {
                 print(os, withUses);}       // But most classes want standard
              // Print with the "{1 2 3}" uses info
         void printWithUses(std::ostream& os) {print(os, true);}
-virtual void printx(int ind) = 0;      // For debugging: print in indented hex
+             // For debugging: print in indented hex. In gdb: "p x->printx(0)"
+virtual void printx(int ind) = 0;
 
     // Display as a dotty graph
     void    createDotFile(char* name);
