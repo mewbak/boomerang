@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -115,6 +115,10 @@ public:
     void print(std::ostream &out);
 
     virtual void getInternalStatements(std::list<Statement*> &stmts);
+
+	// Special for Mike: find the location that conventionall holds
+	// the first outgoing (actual) parameter
+	Exp* getFirstArgLoc(BinaryFile* pBF);
 };
 
 #endif
