@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -292,7 +292,7 @@ void RTL::deleteLastStmt() {
 
 void RTL::replaceLastStmt(Statement* repl) {
 	assert(stmtList.size());
-	Statement* last = stmtList.back();
+	Statement*& last = stmtList.back();
 	last = repl;
 }
 
