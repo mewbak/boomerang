@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.75 $
+ * $Revision: 1.76 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -48,6 +48,7 @@
 #include "decoder.h"
 #include "sparcfrontend.h"
 #include "pentiumfrontend.h"
+#include "ppcfrontend.h"
 #include "prog.h"
 #include "signature.h"
 #include "boomerang.h"
@@ -69,6 +70,8 @@ FrontEnd* FrontEnd::instantiate(BinaryFile *pBF) {
 		return new PentiumFrontEnd(pBF);
 	case MACHINE_SPARC:
 		return new SparcFrontEnd(pBF);
+	case MACHINE_PPC:
+		return new PPCFrontEnd(pBF);
 	default:
 		LOG << "Machine architecture not supported\n";
 	}
@@ -103,6 +106,8 @@ FrontEnd *FrontEnd::createById(std::string &str, BinaryFile *pBF) {
 		return new PentiumFrontEnd(pBF);
 	if (str == "sparc")
 		return new SparcFrontEnd(pBF);
+	if (str == "ppc")
+		return new PPCFrontEnd(pBF);
 	return NULL;
 }
 
@@ -965,6 +970,17 @@ FrontEnd* FrontEnd::getInstanceFor( const char *sName, void*& dlHandle, BinaryFi
 				return fe;
 			}
 #endif
+		}
+		else if (buf[0x13] == 20) {		// PowerPC, big endian
+			machName = "ppc"; 
+#ifndef DYNAMIC
+			{
+				PPCFrontEnd *fe = new PPCFrontEnd(pBF);
+				decoder = fe->getDecoder();
+				return fe;
+			}
+#endif
+
 		} else {
 			LOG << "Unknown ELF machine type " << (ADDRESS)buf[0x12] << (ADDRESS)buf[0x13] << "\n";
 			return NULL;
