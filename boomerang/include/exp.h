@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -574,9 +574,6 @@ public:
 
         // get how to replace this statement in a use
         virtual Exp* getRight() { return subExp2; }
-
-	// dataflow print functions
-        virtual void printWithUses(std::ostream& os);
 
 	// special print functions
         virtual void printAsUse(std::ostream &os);

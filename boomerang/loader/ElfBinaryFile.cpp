@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * ELF binary file format.
  *  This file implements the class ElfBinaryFile, derived from class
@@ -318,7 +318,7 @@ void ElfBinaryFile::AddSyms(const char* sSymSect, const char* sStrSect)
             std::map<ADDRESS, std::string>::iterator aa = m_SymA.find(val);
             // Ensure no overwriting
             if (aa == m_SymA.end()) {
-                std::cerr << "Elf AddSym: about to add " << str << " to address " << std::hex << val << std::dec << std::endl;
+                //std::cerr << "Elf AddSym: about to add " << str << " to address " << std::hex << val << std::dec << std::endl;
                 m_SymA[val] = str;
             }
 //        }

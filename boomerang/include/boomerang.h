@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -50,6 +50,13 @@ public:
     bool vFlag;
     bool printRtl;
     bool noBranchSimplify;
+    bool noRemoveInternal;
+    bool noLocals;
+    bool noRemoveLabels;
+    const char *dotFile;
 };
+
+#define VERBOSE Boomerang::get()->vFlag
+
 
 #endif

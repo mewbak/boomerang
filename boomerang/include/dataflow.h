@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -98,7 +98,7 @@ public:
     void calcUses(std::set<Statement*> &uses);
     int getNumUses() { 
         updateUses();
-	    return uses->size(); 
+        return uses->size(); 
     }
  
     // 
@@ -136,7 +136,7 @@ public:
 
     // statements should be printable (for debugging)
     virtual void print(std::ostream &os) = 0;
-    virtual void printWithUses(std::ostream& os) = 0;
+    virtual void printWithUses(std::ostream& os);
     virtual void printAsUse(std::ostream &os) = 0;
     virtual void printAsUseBy(std::ostream &os) = 0;
 

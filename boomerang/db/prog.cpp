@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -145,6 +145,17 @@ void Prog::decompile() {
 
         // decoded userproc.. decompile it          
         p->decompile();
+    }
+}
+
+void Prog::generateDotFile() {
+    for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end();
+      it++) {
+        Proc *pProc = *it;
+        if (pProc->isLib()) continue;
+        UserProc *p = (UserProc*)pProc;
+        if (!p->isDecoded()) continue;
+        p->getCFG()->generateDotFile(Boomerang::get()->dotFile);
     }
 }
 
@@ -442,28 +453,20 @@ const char *Prog::getFrontEndId() {
     return pFE->getFrontEndId();
 }
 
+bool Prog::isWin32() {
+    return pFE->isWin32();
+}
+
 const char *Prog::getGlobal(ADDRESS uaddr)
 {
-    if (globalMap == NULL) {
-        globalMap = pBF->GetDynamicGlobalMap();
-        assert(globalMap != NULL);
-        for (std::map<ADDRESS, const char*>::iterator it = globalMap->begin();
-             it != globalMap->end(); it++) {
-            std::cerr << "global: " << std::hex << (*it).first << " " <<
-                (*it).second << std::endl;
-        }
-    }
-    assert(globalMap != NULL);
-    if (globalMap->find(uaddr) != globalMap->end())
-        return (*globalMap)[uaddr];
-    return NULL;
+    return pBF->SymbolByAddress(uaddr);
 }
 
 void Prog::makeGlobal(ADDRESS uaddr, const char *name)
 {
-    if (globalMap == NULL) globalMap = pBF->GetDynamicGlobalMap();
+/*    if (globalMap == NULL) globalMap = pBF->GetDynamicGlobalMap();
     assert(globalMap && globalMap->find(uaddr) == globalMap->end());
-    (*globalMap)[uaddr] = strdup(name);
+    (*globalMap)[uaddr] = strdup(name);*/
 }
 
 // get a string constant at a give address if appropriate

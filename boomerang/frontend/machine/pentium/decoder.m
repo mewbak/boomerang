@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -112,6 +112,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
          * Register call
          */
         // Mike: there should probably be a HLNwayCall class for this!
+        Exps = instantiate(pc,  "CALL.Evod", DIS_EADDR32);
         HLCall* newCall = new HLCall(pc, 0, Exps);
         // Record the fact that this is a computed call
         newCall->setIsComputed();

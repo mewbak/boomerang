@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.16 $
+/* $Revision: 1.17 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -362,9 +362,6 @@ public:
 
 	// remove internal statements
 	void removeInternalStatements();
-
-	// fix calls
-	void fixCalls();
 
 	// erase a statement from the internal statements list
 	void eraseInternalStatement(Statement *stmt);

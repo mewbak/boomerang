@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.7 $
+/* $Revision: 1.8 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -115,9 +115,9 @@ virtual int     getInst(int addr);
     /*
      * Read library signatures from a file.
      */
-    void readLibrarySignatures(const char *sPath);
+    void readLibrarySignatures(const char *sPath, bool win32);
     // read from a catalog
-    void readLibraryCatalog(const char *sPath);
+    void readLibraryCatalog(const char *sPath, bool win32 = false);
     // read from default catalog
     void readLibraryCatalog();
 

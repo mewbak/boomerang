@@ -5,7 +5,7 @@
  *  This doesn't actually work yet.
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -149,6 +149,8 @@ type: CHAR
     { $$ = new VoidType(); }
     | type '*'
     { $$ = new PointerType($1); }
+    | IDENTIFIER
+    { $$ = new NamedType($1); }
     ;
 
 
