@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.89 $
+ * $Revision: 1.90 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -1218,10 +1218,9 @@ void Signature::addImplicitParametersFor(Parameter *pn)
 	}
 }
 
-void Signature::addImplicitParameter(Type *type, const char *nam, Exp *e, Parameter *parent)
-{
+void Signature::addImplicitParameter(Type *type, const char *nam, Exp *e, Parameter *parent) {
+	std::ostringstream os;
 	if (nam == NULL) {
-		std::ostringstream os;
 		os << "implicit" << implicitParams.size();
 		nam = os.str().c_str();
 	}
@@ -1230,13 +1229,11 @@ void Signature::addImplicitParameter(Type *type, const char *nam, Exp *e, Parame
 	addImplicitParametersFor(p);
 }
 
-void Signature::addImplicitParameter(Exp *e)
-{
+void Signature::addImplicitParameter(Exp *e) {
 	addImplicitParameter(new IntegerType(), NULL, e, NULL);
 }
 
-void Signature::removeImplicitParameter(int i)
-{
+void Signature::removeImplicitParameter(int i) {
 	for (unsigned j = i+1; j < implicitParams.size(); j++)
 		implicitParams[j-1] = implicitParams[j];
 	implicitParams.resize(implicitParams.size()-1);
