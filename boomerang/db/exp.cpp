@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.170 $
+ * $Revision: 1.171 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1109,11 +1109,11 @@ void TypeVal::print(std::ostream& os) {
  *============================================================================*/
 extern char debug_buffer[];
 char* Exp::prints() {
-	  std::ostringstream ost;
-	  print(ost);
-	  strncpy(debug_buffer, ost.str().c_str(), 199);
-	  debug_buffer[199] = '\0';
-	  return debug_buffer;
+	std::ostringstream ost;
+	print(ost);
+	strncpy(debug_buffer, ost.str().c_str(), 399);
+	debug_buffer[399] = '\0';
+	return debug_buffer;
 }
 
 
