@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.58 $
+ * $Revision: 1.59 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1010,7 +1010,7 @@ void CHLLCode::AddGlobal(const char *name, Type *type, Exp *init)
         appendType(s, type);
         s << " " << name;
     }
-    if (init) {
+    if (init && !init->isNil()) {
         s << " = ";
         if (type->isArray())
             s << "{ ";
