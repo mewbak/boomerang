@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -27,7 +27,7 @@
 
 #include <assert.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1100
-#include "statement.h"
+#include "signature.h"
 #endif
 
 #include "rtl.h"

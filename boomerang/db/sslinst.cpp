@@ -18,7 +18,7 @@
  *============================================================================*/
  
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 27 Apr 02 - Mike: Mods for boomerang
  * 17 Jul 02 - Mike: readSSLFile resets internal state as well
@@ -47,6 +47,11 @@
 #include "prog.h"
 #include "sslparser.h"
 #include "boomerang.h"
+// For some reason, MSVC 5.00 complains about use of undefined types a lot
+#if defined(_MSC_VER) && _MSC_VER <= 1100
+#include "signature.h"		// For MSVC 5.00
+#endif
+
 
 //#define DEBUG_SSLPARSER 1
 

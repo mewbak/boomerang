@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -44,6 +44,11 @@
 #include "hllcode.h"
 #include "util.h"
 #include "boomerang.h"
+// For some reason, MSVC 5.00 complains about use of undefined types a lot
+#if defined(_MSC_VER) && _MSC_VER <= 1100
+#include "signature.h"		// For MSVC 5.00
+#endif
+
 /******************************************************************************
  * RTL methods.
  * Class RTL represents low-level register transfer lists. 
