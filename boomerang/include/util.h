@@ -1,10 +1,10 @@
 /*==============================================================================
- * FILE:       util.h
+ * FILE:	   util.h
  * OVERVIEW:   Provides the definition for the miscellaneous bits and pieces
- *               implemented in the util.so library
+ *				 implemented in the util.so library
  *============================================================================*/
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  * 10 Apr 02 - Mike: Created
  */

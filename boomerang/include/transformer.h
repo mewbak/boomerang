@@ -2,11 +2,11 @@
  * Copyright (C) 2004, Trent Waddington
  */
 /*==============================================================================
- * FILE:       transformer.h
+ * FILE:	   transformer.h
  * OVERVIEW:   Provides the definition for the tranformer and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 17 Apr 04 - Trent: Created
  */
@@ -19,14 +19,14 @@
 class ExpTransformer
 {
 protected:
-    static std::list<ExpTransformer*> transformers;
+	static std::list<ExpTransformer*> transformers;
 public:
-    ExpTransformer();
+	ExpTransformer();
 
-    static void loadAll();
+	static void loadAll();
 
-    virtual Exp *applyTo(Exp *e, bool &bMod) = 0;
-    static Exp *applyAllTo(Exp *e, bool &bMod);
+	virtual Exp *applyTo(Exp *e, bool &bMod) = 0;
+	static Exp *applyAllTo(Exp *e, bool &bMod);
 };
 
 #endif
