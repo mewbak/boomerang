@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.49 $
+ * $Revision: 1.50 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -34,6 +34,7 @@ public:
 			  type(type), name(name), exp(exp)	{ }
 			~Parameter() { delete type; delete exp; }
 	bool	operator==(Parameter& other);
+	Parameter* clone();
 
 	Type *getType() { return type; }
 	void setType(Type *ty) { type = ty; }
@@ -58,6 +59,7 @@ public:
 	ImplicitParameter(Type *type, const char *name, Exp *exp, Parameter *parent) : 
 							Parameter(type, name, exp), parent(parent) { }
 	~ImplicitParameter() { }
+	ImplicitParameter* clone();
 
 	void setParent(Parameter *p) { parent = p; }
 	Parameter *getParent() { return parent; }
@@ -79,6 +81,7 @@ public:
 					Return(Type *type, Exp *exp) : type(type), exp(exp) { }
 					~Return() { delete type; delete exp; }
 		bool		operator==(Return& other);
+		Return*		clone();
 
 		Type 		*getType() { return type; }
 		void		setType(Type *ty) { type = ty; }

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.74 $
+ * $Revision: 1.75 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -294,11 +294,12 @@ Signature *FrontEnd::getLibSignature(const char *name) {
 	std::map<std::string, Signature*>::iterator it;
 	it = librarySignatures.find(name);
 	if (it == librarySignatures.end()) {
-		LOG << "unknown library function " << name << "\n";
+		LOG << "Unknown library function " << name << "\n";
 		signature = getDefaultSignature(name);
 	}
 	else {
-		signature = (*it).second->clone();
+		// Don't clone here; cloned in CallStatement::setSigArguments
+		signature = (*it).second;
 		signature->setUnknown(false);
 	}
 	return signature;
