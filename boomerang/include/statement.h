@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.70 $
+ * $Revision: 1.71 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -797,9 +797,11 @@ virtual	void	regReplace(UserProc* proc);
  *============================================================================*/
 class BranchStatement: public GotoStatement {
 	BRANCH_TYPE jtCond;			// The condition for jumping
-	Exp*		pCond;			// The Exp representation of the high level
-								// condition: e.g., r[8] == 5
+	Exp*		pCond;			// The Exp representation of the high level condition: e.g., r[8] == 5
 	bool		bFloat;			// True if uses floating point CC
+	// jtCond seems to be mainly needed for the Pentium weirdness.
+	// Perhaps bFloat, jtCond, and size could one day be merged into a type
+	int			size;			// Size of the operands, in bits
 
 public:
 				BranchStatement();
