@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.38 $
+/* $Revision: 1.39 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -450,6 +450,7 @@ public:
     bool nameRegisters();
     void replaceExpressionsWithGlobals();
     void replaceExpressionsWithSymbols();
+    void replaceExpressionsWithParameters();   // must be in SSA form
     bool removeNullStatements();
     bool removeDeadStatements();
     typedef std::map<Statement*, int> RefCounter;
