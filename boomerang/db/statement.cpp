@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.126 $
+ * $Revision: 1.127 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2053,7 +2053,7 @@ bool CallStatement::doReplaceRef(Exp* from, Exp* to) {
 	}
 	unsigned int i;
 	for (i = 0; i < returns.size(); i++)
-		if (returns[i]->getOper() == opMemOf) {
+		if (returns[i] && returns[i]->getOper() == opMemOf) {
 			Exp *e = findArgument(returns[i]->getSubExp1());
 			if (e)
 				returns[i]->refSubExp1() = e->clone();

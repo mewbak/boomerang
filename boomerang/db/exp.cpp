@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.162 $
+ * $Revision: 1.163 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1945,6 +1945,20 @@ Exp* Unary::polySimplify(bool& bMod) {
 			if ((basesz % 8) == 0 && (n % (basesz / 8)) == 0) {
 				bMod = true;
 				return new Binary(opArraySubscript, subExp1->getSubExp1()->clone(), new Const(n / (basesz / 8)));
+			}
+		}
+	}
+
+	// Replace m[x + y * k] where x has type pointer and k is a constant equal to the size of the pointed to type with x[y]
+	if (op == opMemOf && subExp1->getOper() == opPlus && subExp1->getSubExp2()->getOper() == opMult && 
+			subExp1->getSubExp2()->getSubExp2()->isIntConst()) {
+		int n = ((Const*)subExp1->getSubExp2()->getSubExp2())->getInt();
+		Type *ty = subExp1->getSubExp1()->getType();
+		if (ty && ty->isPointer()) {
+			int basesz = ((PointerType*)ty)->getPointsTo()->getSize();
+			if (basesz == n * 8) {
+				bMod = true;
+				return new Binary(opArraySubscript, subExp1->getSubExp1()->clone(), subExp1->getSubExp2()->getSubExp1()->clone());
 			}
 		}
 	}

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.81 $
+ * $Revision: 1.82 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -992,7 +992,8 @@ Type *Signature::getReturnType(int n) {
 }
 
 void Signature::setReturnType(int n, Type *ty) {
-	returns[n]->setType(ty);
+	if (n < returns.size())
+		returns[n]->setType(ty);
 }
 
 void Signature::fixReturnsWithParameters() {
