@@ -4,12 +4,13 @@
  *              tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 05 Apr 02 - Mike: Fixed problems caused by lack of clone() calls
  */
 
 #include "ExpTest.h"
+#include <strstream>        // For ostrstream
 
 /*==============================================================================
  * FUNCTION:        ExpTest::registerTests
