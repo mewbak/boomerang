@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.67 $
+ * $Revision: 1.68 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -70,9 +70,8 @@ FrontEnd* FrontEnd::instantiate(BinaryFile *pBF) {
 		return new PentiumFrontEnd(pBF);
 	case MACHINE_SPARC:
 		return new SparcFrontEnd(pBF);
-	case MACHINE_HPRISC:
-	case MACHINE_PALM:
-		LOG << "Machine not supported\n";
+	default:
+		LOG << "Machine architecture not supported\n";
 	}
 	return NULL;
 }

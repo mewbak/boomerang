@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.32 $
+ * $Revision: 1.33 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *					floats > 64 bits to be the same
@@ -125,7 +125,7 @@ virtual bool	operator< (const Type& other) const = 0;// Considers sign
 virtual Exp *match(Type *pattern);
 	// Merge one type with another, e.g. size16 with integer-of-size-0
 	// -> int16
-virtual Type*	mergeWith(Type* other) { assert(0);}
+virtual Type*	mergeWith(Type* other) { assert(0); return 0; }
 
 	// Acccess functions
 virtual int		getSize() const = 0;

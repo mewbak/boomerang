@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  *
  * ELF binary file format.
  *	This file implements the class ElfBinaryFile, derived from class
@@ -941,6 +941,7 @@ MACHINE ElfBinaryFile::GetMachine() const
 	else if (machine == EM_386)	  return MACHINE_PENTIUM;
 	else if (machine == EM_PA_RISC)return MACHINE_HPRISC;
 	else if (machine == EM_68K)	  return MACHINE_PALM;	// Unlikely
+	else if (machine == EM_PPC)	  return MACHINE_PPC;
 	// What sort of machine is this?
 	assert(false);
 	return (MACHINE)-1;
