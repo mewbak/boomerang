@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.98 $
+ * $Revision: 1.99 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1979,12 +1979,17 @@ void CallStatement::doReplaceRef(Exp* from, Exp* to) {
         pDest = pDest->searchReplaceAll(from, to, change);
         if (VERBOSE)
             LOG << "propagated into call dest " << pDest << "\n";
-        if (pDest->getOper() == opGlobal || 
-            (pDest->getOper() == opSubscript && 
-             pDest->getSubExp1()->getOper() == opGlobal)) {
-            Exp *e = pDest;
-            if (pDest->getOper() == opSubscript)
-                e = pDest->getSubExp1();
+        Exp *e = pDest;
+        if (pDest->isSubscript())
+            e = ((RefExp*)e)->getSubExp1();
+        if (e->getOper() == opArraySubscript && 
+              ((Binary*)e)->getSubExp2()->isIntConst() &&
+              ((Const*)(((Binary*)e)->getSubExp2()))->getInt() == 0)
+            e = ((Binary*)e)->getSubExp1();
+        // Can actually have name{0}[0]{0} !!
+        if (pDest->isSubscript())
+            e = ((RefExp*)e)->getSubExp1();
+        if (e->getOper() == opGlobal) {
             char *nam = ((Const*)e->getSubExp1())->getStr();
             Proc *p = proc->getProg()->findProc(nam);
             if (p == NULL)
