@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  */
@@ -522,6 +522,29 @@ void CHLLCode::AddCallStatement(int indLevel, Exp *retloc, Proc *proc,
     strcat(s, ");");
     lines.push_back(strdup(s));
 }
+
+// Ugh - almost the same as the above, but it needs to take an expression,
+// not a Proc*
+void CHLLCode::AddIndCallStatement(int indLevel, Exp *retloc, Exp *exp,
+    std::vector<Exp*> &args)
+{
+    char s[1024];
+    indent(s, indLevel);
+    if (retloc) {
+        appendExp(s, retloc);
+        strcat(s, " = ");
+    }
+    strcat(s, "(*");
+    appendExp(s, exp);
+    strcat(s, ")(");
+    for (unsigned int i = 0; i < args.size(); i++) {
+        appendExp(s, args[i]);
+        if (i < args.size() - 1) strcat(s, ", ");
+    }
+    strcat(s, ");");
+    lines.push_back(strdup(s));
+}
+
 
 void CHLLCode::AddReturnStatement(int indLevel, Exp *ret)
 {
