@@ -4,7 +4,7 @@
  *              tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 14 Jan 03 - Trent: Created
  */
@@ -46,5 +46,7 @@ class StatementTest : public CppUnit::TestCase {
     void testIsAssign();
     void testIsFlagAssgn();
     void testAddUsedLocs();
+    void testSubscriptVars();
+    void testCallRefsFixer();
 };
 
