@@ -16,7 +16,7 @@
  *			   as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.109 $
+/* $Revision: 1.110 $
 */
 
 #ifndef _PROC_H_
@@ -535,13 +535,8 @@ virtual void addReturn(Exp *e);
 	// remove a statement
 	void removeStatement(Statement *stmt);
 
-<<<<<<< proc.h
-	// inline constants / decode function pointer constants. Return true if added parameters via ellipsisProcessing
-	bool	processConstants();
-=======
 	// inline constants / decode function pointer constants
 	bool processConstants();
->>>>>>> 1.108
 
 	// get internal statements
 	// Note: assignment causes shallow copy of list

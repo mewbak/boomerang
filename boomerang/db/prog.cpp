@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.117 $
+ * $Revision: 1.118 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -923,6 +923,21 @@ void Prog::decodeExtraEntrypoint(ADDRESS a) {
 		pFE->decode(this, a);
 		analyse();
 	}
+}
+
+void Prog::fastx86decompile()
+{
+	std::list<Proc*>::iterator pp;
+	for (pp = m_procs.begin(); pp != m_procs.end(); pp++) {
+		UserProc* proc = (UserProc*)(*pp);
+		if (proc->isLib()) continue;
+		proc->fastx86decompile();
+	}
+
+    generateRTL();
+
+    // Now it is OK to transform out of SSA form
+	fromSSAform();
 }
 
 void Prog::decompile() {

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.91 $
+ * $Revision: 1.92 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -1838,6 +1838,8 @@ void Cfg::structure() {
 		unTraverse();
 		return;
 	}
+    if (findRetNode() == NULL)
+        return;
 	setTimeStamps();
 	findImmedPDom();
 	structConds();

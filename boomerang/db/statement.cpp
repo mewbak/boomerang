@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.139 $
+ * $Revision: 1.140 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2369,6 +2369,11 @@ bool CallStatement::processConstants(Prog *prog) {
 		Type *t = getArgumentType(i);
 		Exp *e = arguments[i];
 	
+        // check for a[m[constant]{?}], treat it like a constant
+        if (e->isAddrOf() && e->getSubExp1()->isSubscript() && e->getSubExp1()->getSubExp1()->isMemOf() && 
+            e->getSubExp1()->getSubExp1()->getSubExp1()->isIntConst())
+            e = e->getSubExp1()->getSubExp1()->getSubExp1();
+
 		arguments[i] = processConstant(e, t, prog, proc);
 		if (e->getOper() == opIntConst && arguments[i]->getOper() == opStrConst) {
 			for (std::vector<Exp*>::iterator it = implicitArguments.begin(); it != implicitArguments.end(); it++) {
