@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.85 $
+ * $Revision: 1.86 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -480,6 +480,14 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 				s->simplify();
 				GotoStatement* stmt_jump = static_cast<GotoStatement*>(s);
 
+                if (s->getKind() == STMT_GOTO && stmt_jump->getFixedDest() != NO_ADDRESS &&
+                    pBF->IsDynamicLinkedProc(stmt_jump->getFixedDest())) {
+                    s = *ss = new CallStatement();
+                    CallStatement *call = static_cast<CallStatement*>(s);
+                    call->setDest(stmt_jump->getFixedDest());
+                    call->setReturnAfterCall(true);
+                }
+
 				switch (s->getKind())
 				{
 
@@ -684,7 +692,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 								LOG << "p" << uNewAddr << "\t";
 						}
 
-						// Check if this is the _exit or exit function. May prevent us from attempting to decode
+ 						// Check if this is the _exit or exit function. May prevent us from attempting to decode
 						// invalid instructions, and getting invalid stack height errors
 						const char* name = pBF->SymbolByAddress(uNewAddr);
 						if (name && ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0))) {

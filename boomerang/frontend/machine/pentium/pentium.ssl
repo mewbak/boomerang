@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 # 20 Jul 04 - Mike: Fixed FISUB, FISUBR
@@ -1037,6 +1037,16 @@ PUSH.OW   reg16
 PUSH.OD   reg32 
             *32* %esp := %esp - 4
             *32* m[%esp] := reg32;
+
+# Just fix up the stack for selector pushes.
+PUSH.CS
+            *32* %esp := %esp - 4;
+	    
+PUSH.DS
+            *32* %esp := %esp - 4;
+
+PUSH.ES
+            *32* %esp := %esp - 4;
 
 OP4 := { "rlc", "rrc", "rl", "rr" };
 ROT := { "RCL", "RCR", "ROL", "ROR" };
