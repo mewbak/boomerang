@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.87 $
+/* $Revision: 1.88 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -691,6 +691,8 @@ public:
 
 
     bool searchAndReplace(Exp *search, Exp *replace);
+
+    void stripRefs();
  
 private:
     // We ensure that there is only one return statement now. See code in
