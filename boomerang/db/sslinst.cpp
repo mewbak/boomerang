@@ -18,7 +18,7 @@
  *============================================================================*/
  
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 27 Apr 02 - Mike: Mods for boomerang
  * 17 Jul 02 - Mike: readSSLFile resets internal state as well
@@ -35,6 +35,7 @@
 
 #include <algorithm>    // For remove()
 #include "types.h"
+#include "dataflow.h"
 #include "exp.h"
 #include "register.h"
 #include "type.h"

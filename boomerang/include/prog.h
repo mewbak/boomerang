@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -40,6 +40,7 @@
 #define _PROG_H_
 
 #include <map>
+#include "dataflow.h"
 #include "exp.h"
 #include "proc.h"
 #include "rtl.h"
@@ -120,6 +121,9 @@ public:
 
 	// Analyse any decoded procedures
 	void analyse();
+
+	// Do decompilation
+	void decompile();
 
         // Print this program (primarily for debugging)
         void print(std::ostream &out);

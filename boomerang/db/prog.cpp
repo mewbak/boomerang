@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -41,6 +41,7 @@
 #include <fstream>
 #include <sstream>
 #include "types.h"
+#include "dataflow.h"
 #include "exp.h"
 #include "proc.h"
 #include "cfg.h"
@@ -121,6 +122,20 @@ void Prog::analyse()
 
 		// decoded userproc.. analyse it			
 		analysis->analyse(p);
+	}
+}
+
+// Do decompilation
+void Prog::decompile()
+{
+	for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end(); it++) {
+		Proc *pProc = *it;
+		if (pProc->isLib()) continue;
+		UserProc *p = (UserProc*)pProc;
+		if (!p->isDecoded()) continue;
+
+		// decoded userproc.. decompile it			
+		p->decompile();
 	}
 }
 

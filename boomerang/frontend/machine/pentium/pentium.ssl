@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 
@@ -609,7 +609,7 @@ CALL.JVOW   reloc16
             *16* m[%esp] := truncs(32,16,%pc)
             *32* %pc := %pc + 3 + reloc16;
 
-CALL.JVOD   reloc32 
+CALL.Jvod   reloc32 
             *32* %esp := %esp - 4
             *32* m[%esp] := %pc
             *32* %pc := %pc + 5 + reloc32;

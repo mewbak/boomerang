@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 10 Jul 02 - Mike: Mods for boomerang
  */
@@ -1233,7 +1233,6 @@ void Analysis::analyseCalls(PBB pBB, UserProc *proc)
 			Proc *p = proc->getProg()->findProc(call->getFixedDest());
 			assert(p);
 			call->setDestProc(p);
-                        call->initArguments();
 		}
 	}
 }

@@ -6,13 +6,15 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 12 Jul 02 - Trent: Created
  */
 
 #ifndef __SIGNATURE_H_
 #define __SIGNATURE_H_
+
+class Statement;
 
 // Used to represent local variables (registers, stack locations, etc)
 class Local {
@@ -104,6 +106,8 @@ virtual void analyse(UserProc *p);
 	// any signature can be promoted to a higher level signature, if available
 virtual Signature *promote(UserProc *p);
         void print(std::ostream &out);
+
+virtual void getInternalStatements(std::list<Statement*> &stmts);
 };
 
 #endif

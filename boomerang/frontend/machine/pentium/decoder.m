@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -1258,7 +1258,8 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
         Exps = instantiate(pc, "NOP");
 
     | CALL.Jvod(relocd) =>
-        HLCall* newCall = new HLCall(pc, 0, 0);
+        Exps = instantiate(pc,  "CALL.Jvod", dis_Num(relocd));
+        HLCall* newCall = new HLCall(pc, 0, Exps);
 
         // Set the destination
 	// WAS: relocd-hostPC-5, which is broken? -trent
