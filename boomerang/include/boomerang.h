@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -68,6 +68,7 @@ public:
     bool debugPrintSSA;
     bool noPropMult;
     bool impSSA;
+    int maxMemDepth;
 };
 
 #define VERBOSE Boomerang::get()->vFlag

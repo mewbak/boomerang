@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.36 $
+/* $Revision: 1.37 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -199,6 +199,8 @@ public:
 
     //virtual void getInternalStatements(StatementList &internal) = 0;
 
+    Exp *getProven(Exp *left);
+
 protected:
 
     /*
@@ -229,7 +231,8 @@ protected:
      */
     int bytesPopped;
 
-
+    // all the expressions that have been proven about this proc
+    std::set<Exp*, lessExpStar> proven;
 }; 
 
 /*==============================================================================
