@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.232 $
+ * $Revision: 1.233 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -35,12 +35,12 @@
 #include <types.h>
 #include <sstream>
 #include <algorithm>		// For find()
+#include "type.h"
 #include "cluster.h"
 #include "statement.h"
 #include "exp.h"
 #include "cfg.h"
 #include "register.h"
-#include "type.h"
 #include "rtl.h"
 #include "proc.h"
 #include "prog.h"

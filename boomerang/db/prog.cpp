@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.118 $
+ * $Revision: 1.119 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -41,6 +41,7 @@
 #include <direct.h>					// For Windows mkdir()
 #endif
 
+#include "type.h"
 #include "cluster.h"
 #include "types.h"
 #include "statement.h"

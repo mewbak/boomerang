@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * June 2004 - Trent: created
  */
@@ -15,6 +15,7 @@
 extern "C" {
 #include "expat.h"
 }
+#include "type.h"
 #include "cluster.h"
 #include "prog.h"
 #include "proc.h"
