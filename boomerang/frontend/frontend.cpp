@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.77 $
+ * $Revision: 1.78 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -924,6 +924,7 @@ RTL* decodeRtl(ADDRESS address, int delta, NJMCDecoder* decoder) {
  * FUNCTION:	getInstanceFor
  * OVERVIEW:	Guess the machine required to decode this binary file;
  *				  load the library and return an instance of FrontEnd
+ * NOTE:		No longer used... replaced by similar code in class BinaryFileFactory
  * PARAMETERS:	sName: name of the binary file
  *				dlHandle: ref to a void* needed for closeInstance
  *				prog: the program to decode
