@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -101,7 +101,7 @@ public: \
 %token NODECODE
 %token INCOMPLETE
 %token SYMBOLREF
-%token CDECL PASCAL
+%token CDECL PASCAL THISCALL
 %token REGOF
 %token MEMOF
 %token CUSTOM PREFER
@@ -179,6 +179,8 @@ convention:
         { $$ = CONV_C; }
         | PASCAL
         { $$ = CONV_PASCAL; }
+        | THISCALL
+        { $$ = CONV_THISCALL; }
         ;
 
 num_list: CONSTANT ',' num_list 
