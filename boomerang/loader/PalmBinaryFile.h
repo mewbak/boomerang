@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class PalmBinaryFile.
 */
 
-/* $Revision: 1.3 $
+/* $Revision: 1.4 $
  * 02 Feb 2000 - Mike: Initial revision
  * 01 Aug 01 - Mike: GetGlobalPointerInfo() returns unsigned ints now
 */
@@ -44,7 +44,7 @@ public:
   virtual size_t getImageSize();
 
   // Get a symbol given an address
-  char*         SymbolByAddress(const ADDRESS dwAddr);
+  char*         SymbolByAddress(ADDRESS dwAddr);
   // Return true if the address matches the convention for A-line system calls
   bool          IsDynamicLinkedProc(ADDRESS uNative);
 

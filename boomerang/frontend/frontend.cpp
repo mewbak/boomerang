@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.48 $
+ * $Revision: 1.49 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -177,7 +177,7 @@ Prog *FrontEnd::decode(bool decodeMain)
         const char *name = pBF->SymbolByAddress(a);
         if (name == NULL)
             name = mainName[0];
-        for (int i = 0; i < sizeof(mainName)/sizeof(char*); i++) {
+        for (size_t i = 0; i < sizeof(mainName)/sizeof(char*); i++) {
             if (!strcmp(name, mainName[i])) {
                 Proc *proc = prog->findProc(a);
                 assert(proc);

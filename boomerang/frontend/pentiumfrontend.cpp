@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -178,7 +178,7 @@ bool PentiumFrontEnd::processProc(ADDRESS uAddr, UserProc* pProc,
     // Call the base class to do most of the work
     // Pass the address of our helperFunc function, to check for pentium
     // specific helper functions
-    if (!FrontEnd::processProc(uAddr, pProc, os, spec, helperFunc))
+    if (!FrontEnd::processProc(uAddr, pProc, os, frag, spec, helperFunc))
         return false;
 
     // Need a post-cfg pass to remove the FPUSH and FPOP instructions,
