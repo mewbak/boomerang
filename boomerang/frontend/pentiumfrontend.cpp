@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -981,6 +981,10 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint( bool &gotMain )
 	gotMain = false;
     start = pBF->GetEntryPoint();
     if( start == NO_ADDRESS ) return NO_ADDRESS;
+    
+    return start; 
+
+    // this pattern sux
 
     int instCount = 100;
     int conseq = 0;
