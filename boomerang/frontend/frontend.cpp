@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.76 $
+ * $Revision: 1.77 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -79,7 +79,7 @@ FrontEnd* FrontEnd::instantiate(BinaryFile *pBF) {
 }
 
 FrontEnd* FrontEnd::Load(const char *fname) {
-	BinaryFile *pBF = BinaryFile::Load(fname);
+	BinaryFile *pBF = BinaryFileFactory::Load(fname);
 	if (pBF == NULL) return NULL;
 	return instantiate(pBF);
 }

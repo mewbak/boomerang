@@ -4,7 +4,7 @@
  *				tests the Proc class
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 23 Apr 02 - Mike: Created
  * 10 Mar 03 - Mike: Mods to not use Prog::pBF (no longer public)
@@ -69,7 +69,7 @@ void ProcTest::tearDown () {
  *============================================================================*/
 void ProcTest::testName () {
 	std::string nm("default name");
-	BinaryFile *pBF = BinaryFile::Load(HELLO_PENTIUM);
+	BinaryFile *pBF = BinaryFileFactory::Load(HELLO_PENTIUM);
 	FrontEnd *pFE = new PentiumFrontEnd(pBF);
 	Prog* prog = new Prog(pBF, pFE);
 	CPPUNIT_ASSERT(prog);

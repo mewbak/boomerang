@@ -4,7 +4,7 @@
  *				tests the Type class and some utility functions
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 09 Apr 02 - Mike: Created
  * 22 Aug 03 - Mike: Extended for Constraint tests
@@ -91,7 +91,7 @@ void TypeTest::testNotEqual () {
  * OVERVIEW:		Test type inequality
  *============================================================================*/
 void TypeTest::testCompound() {
-	BinaryFile *pBF = BinaryFile::Load(HELLO_WINDOWS);
+	BinaryFile *pBF = BinaryFileFactory::Load(HELLO_WINDOWS);
 	FrontEnd *pFE = new PentiumFrontEnd(pBF);
 	pFE->readLibraryCatalog();				// Read definitions
 

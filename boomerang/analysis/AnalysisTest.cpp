@@ -4,7 +4,7 @@
  *				tests the analysis code
  *============================================================================*/
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  *
  * 10 Jul 02 - Mike: Created
  */
@@ -45,7 +45,7 @@ int AnalysisTest::countTestCases () const
  * RETURNS:			<nothing>
  *============================================================================*/
 void AnalysisTest::setUp () {
-	BinaryFile *pBF = BinaryFile::Load(CCX_SPARC);
+	BinaryFile *pBF = BinaryFileFactory::Load(CCX_SPARC);
 	if (pBF == NULL) 
 	   pBF = new BinaryFileStub();
 	CPPUNIT_ASSERT(pBF != 0);

@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.15 $
+/* $Revision: 1.16 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -110,20 +110,36 @@ typedef BinaryFile *(*get_library_callback_t)(char *name);
 enum LOAD_FMT {LOADFMT_ELF, LOADFMT_PE, LOADFMT_PALM, LOADFMT_PAR, LOADFMT_EXE};
 enum MACHINE {MACHINE_PENTIUM, MACHINE_SPARC, MACHINE_HPRISC, MACHINE_PALM, MACHINE_PPC};
 
-class BinaryFile {
-
-  friend class ArchiveFile;			// So can use the protected Load()
- 
-  public:
-
-virtual ~BinaryFile() {}			// Virtual destructor
+class BinaryFileFactory {
+public:
+	static BinaryFile *Load( const char *sName );
+private:
 	/*
 	 * Perform simple magic on the file by the given name in order to
 	 * determine the appropriate type, and then return an instance of
 	 * the appropriate subclass.
 	 */
-	static BinaryFile *BinaryFile::getInstanceFor(const char *sName);
-	static BinaryFile *Load( const char *sName );
+	static BinaryFile *getInstanceFor(const char *sName);
+};
+
+#ifdef _WIN32
+#ifdef BUILDING_LIBBINARYFILE
+#define IMPORT_BINARYFILE __declspec(dllexport)
+#else
+#define IMPORT_BINARYFILE __declspec(dllimport)
+#endif
+#else
+#define IMPORT_BINARYFILE
+#endif
+
+class IMPORT_BINARYFILE BinaryFile {
+
+  friend class ArchiveFile;			// So can use the protected Load()
+  friend class BinaryFileFactory;	// So can use getTextLimits
+ 
+  public:
+
+virtual ~BinaryFile() {}			// Virtual destructor
 	
 // General loader functions
 	BinaryFile(bool bArchive = false);	// Constructor
