@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
@@ -169,16 +169,16 @@ void AnsiCScanner::comment()
 
 loop:
 	while ((c = input()) != '*' && c != 0)
-		putchar(c);
+		/*putchar(c)*/;
 
 	if ((c1 = input()) != '/' && c != 0)
 	{
-		unput(c1);
+		/*unput(c1);*/
 		goto loop;
 	}
 
 	if (c != 0)
-		putchar(c1);
+		/*putchar(c1)*/;
 }
 
 void AnsiCScanner::count()
