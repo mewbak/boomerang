@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1536,7 +1536,7 @@ Exp* Unary::polySimplify(bool& bMod) {
         case opNeg: case opNot: case opLNot: case opSize: {
             OPER subOP = subExp1->getOper();
             if (subOP == opIntConst) {
-                // -k, ~k, or ~k
+                // -k, ~k, or !k
                 // Note: op is invalid after call to becomeSubExp1() since
                 // it deletes this!
                 OPER op2 = op;
@@ -1890,8 +1890,8 @@ Exp* TypedExp::polySimplify(bool& bMod) {
 
 Exp* AssignExp::polySimplify(bool& bMod) {
 	Exp *res = this;
-	OPER opSub1 = subExp1->getOper();
-	OPER opSub2 = subExp2->getOper();
+	//OPER opSub1 = subExp1->getOper();
+	//OPER opSub2 = subExp2->getOper();
 
 	subExp1 = subExp1->polySimplify(bMod);
 	subExp2 = subExp2->polySimplify(bMod);
