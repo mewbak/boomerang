@@ -2,7 +2,7 @@
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Power PC processor
 #
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 
 #### Copyright (c) 1995 Flavors Technology, Inc.
 #### This file may be distributed freely as long as this notice remains.
@@ -189,6 +189,7 @@ Xdab_ is any of [ eciwx lbzux lbzx ldarx ldux  ldx lhaux lhax lhbrx
  & ab_dx
  & Rc = 0
 
+# Floating point indexed loads
 Xdaf_ is any of [  lfdux lfdx lfsux lfsx  ],
  which is Xo1 = [   631   599  567   535  ]
  & ab_dx
@@ -197,6 +198,7 @@ Xdaf_ is any of [  lfdux lfdx lfsux lfsx  ],
 lswi   is ab_dx         & Rc = 0 & Xo1 = 597
 
 mfsrin is ab_dx & A = 0 & Rc = 0 & Xo1 = 659
+
 
 Xd_ is any of  [ mfcr mfmsr ],
  which is Xo1 = [ 19    83  ]
