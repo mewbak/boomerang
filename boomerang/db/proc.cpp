@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.141 $
+ * $Revision: 1.142 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1010,11 +1010,6 @@ std::set<UserProc*>* UserProc::decompile() {
     // Initialise statements
     initStatements();
 
-    if (Boomerang::get()->noDecompile) {
-        decompiled = true;
-        return cycleSet;
-    }
-
     // Compute dominance frontier
     cfg->dominators();
 
@@ -1025,8 +1020,13 @@ std::set<UserProc*>* UserProc::decompile() {
 
     printXML();
 
+    if (Boomerang::get()->noDecompile) {
+        decompiled = true;
+        return cycleSet;
+    }
+
     // Print if requested
-    if (Boomerang::get()->debugPrintSSA) {
+    if (VERBOSE) {
         LOG << "=== Debug Print for " << getName()
           << " before processing float constants ===\n";
         printToLog(true);
