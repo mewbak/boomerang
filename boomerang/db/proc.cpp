@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.189 $
+ * $Revision: 1.190 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -611,12 +611,7 @@ std::ostream& LibProc::put(std::ostream& os) {
 
 Exp *LibProc::getProven(Exp *left)
 {
-    for (std::set<Exp*, lessExpStar>::iterator it = proven.begin(); 
-         it != proven.end(); it++) 
-        if (*(*it)->getSubExp1() == *left)
-            return (*it)->getSubExp2();
-    // not found, try the signature
-    // Shouldn't this only be for library functions?
+    // Just use the signature information (all we have, after all)
     return signature->getProven(left);
 }
 
