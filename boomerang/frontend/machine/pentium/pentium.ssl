@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 # 20 Jul 04 - Mike: Fixed FISUB, FISUBR
@@ -800,6 +800,9 @@ IMUL.Ibow   reg16, modrm, i8
 IMUL.Ibod   reg32, modrm, i8 
             *32* reg32 := modrm{32} *! sgnex(8,32,i8)
             IMULTFLAGS32(reg32);
+
+INT3
+			_ ;			# Not expected to be seen in correct code, but decode anyway
 
 COND1 := { "~%CF & ~%ZF", "~%CF & ~%ZF", "~%CF", "~%CF", "%CF",
             "%CF", "%CF | %ZF", "%CF | %ZF", "%CF", "~%cx", "%ZF",

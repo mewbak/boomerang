@@ -14,7 +14,7 @@
  *				instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.33 $
+ * $Revision: 1.34 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -1111,10 +1111,12 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 	| INT.Ib(i8) =>
 		stmts = instantiate(pc,	 "INT.Ib", DIS_I8);
 
+	| INT3() =>
+		stmts = instantiate(pc,  "INT3");
+		LOG << "Warning: encountered INT3 instruction\n";
+
 // Removing because an invalid instruction is better than trying to
 // instantiate this. -trent
-//	  | INT3() =>
-//		  stmts = instantiate(pc,  "INT3");
 
 //	  | INSvod() =>
 //		  stmts = instantiate(pc,  "INSvod");
