@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -51,7 +51,6 @@ public:
     bool vFlag;
     bool printRtl;
     bool noBranchSimplify;
-    bool noRemoveInternal;
     bool noRemoveNull;
     bool noLocals;
     bool noRemoveLabels;

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -96,11 +96,11 @@ void Statement::calcUseLinks() {
 }
 
 // replace a use in this statement
-void Statement::replaceUse(Statement *use) {
+void Statement::replaceUse(Statement *def) {
 #if 0
     if (VERBOSE) {
         std::cerr << "replace ";
-        use->printAsUse(std::cerr);
+        def->printAsUse(std::cerr);
         std::cerr << " in ";
         printAsUse(std::cerr);
         std::cerr << std::endl;
@@ -133,7 +133,7 @@ void Statement::replaceUse(Statement *use) {
 #endif
 
     // do the replacement
-    doReplaceUse(use);
+    doReplaceUse(def);
 
 #if 0
     // remove any uses that are not actually used by this statement

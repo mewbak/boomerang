@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.34 $
+ * $Revision: 1.35 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -666,7 +666,7 @@ public:
     virtual void fromSSAform(igraph& ig);
 
 protected:
-	virtual void doReplaceUse(Statement *use);
+	virtual void doReplaceUse(Statement *def);
 };
 
 /*==============================================================================
