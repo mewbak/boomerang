@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.148 $
+ * $Revision: 1.149 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1571,7 +1571,8 @@ bool Exp::search(Exp* search, Exp*& result)
 bool Exp::searchAll(Exp* search, std::list<Exp*>& result)
 {
     std::list<Exp**> li;
-    //result.clear();   // why?
+    //result.clear();   // No! Useful when searching for more than one thing
+                        // (add to the same list)
     // The search requires a reference to a pointer to this object.
     // This isn't needed for searches, only for replacements, but we want to
     // re-use the same search routine
