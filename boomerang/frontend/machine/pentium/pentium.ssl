@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 
@@ -1878,12 +1878,12 @@ FXCH        i
             *80* i := r[tmpD];
 
 FYL2X    
-            *80* %st1 := %st1 *f log2(%st);
-            FPOP
+            *80* %st1 := %st1 *f log2(%st)
+            FPOP;
 
 FYL2XP1    
-            *80* %st1 := %st1 *f log2(%st +f 1.0);
-            FPOP
+            *80* %st1 := %st1 *f log2(%st +f 1.0)
+            FPOP;
 
 #####################################################################
 # These are the semantics for certain prologues and epilogues that we
