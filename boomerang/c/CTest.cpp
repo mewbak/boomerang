@@ -4,7 +4,7 @@
  *              tests the c parser
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 03 Dec 02 - Trent: Created
  */
@@ -58,7 +58,7 @@ void CTest::tearDown () {
  *============================================================================*/
 void CTest::test1 () {
     std::istringstream os("int printf(char *fmt);");
-    AnsiCParser *p = new AnsiCParser(os);
+    AnsiCParser *p = new AnsiCParser(os, false);
     p->yyparse();
     CPPUNIT_ASSERT(p->signatures.size() == 1);
     Signature *sig = p->signatures.front();

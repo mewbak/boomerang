@@ -5,7 +5,7 @@
  *  This doesn't actually work yet.
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -14,7 +14,7 @@
 %define DEBUG 1
 
 %define CONSTRUCTOR_PARAM \
-    std::istream &in, bool trace = false
+    std::istream &in, bool trace
 
 %define CONSTRUCTOR_INIT
 
