@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *					floats > 64 bits to be the same
@@ -512,7 +512,7 @@ virtual bool	isUnion() const { return true; }
 
 		void	addType(Type *n, const char *str);
 		int		getNumTypes() const { return types.size(); }
-		bool	findType(Type* ty);			// Return true if ty is already in the union
+		bool	findType(Type* ty);				// Return true if ty is already in the union
 		Type	*getType(int n) { assert(n < getNumTypes()); return types[n]; }
 		Type	*getType(const char *nam);
 		const char *getName(int n) { assert(n < getNumTypes()); return names[n].c_str(); }

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -122,55 +122,22 @@ UnionType::UnionType() : Type(eUnion)
  * PARAMETERS:		<none>
  * RETURNS:			<Not applicable>
  *============================================================================*/
-Type::~Type()
-{
+Type::~Type() { }
+VoidType::~VoidType() { }
+FuncType::~FuncType() { }
+IntegerType::~IntegerType() { }
+FloatType::~FloatType() { }
+BooleanType::~BooleanType() { }
+CharType::~CharType() { }
+PointerType::~PointerType() {
+	// delete points_to;		// Easier for test code (which doesn't use garbage collection)
 }
-
-VoidType::~VoidType()
-{
+ArrayType::~ArrayType() {
+	// delete base_type;
 }
-
-FuncType::~FuncType()
-{
-}
-
-IntegerType::~IntegerType()
-{
-}
-
-FloatType::~FloatType()
-{
-}
-
-BooleanType::~BooleanType()
-{
-}
-
-CharType::~CharType()
-{
-}
-
-PointerType::~PointerType()
-{
-	delete points_to;
-}
-
-ArrayType::~ArrayType()
-{
-	delete base_type;
-}
-
-NamedType::~NamedType()
-{
-}
-
-CompoundType::~CompoundType()
-{
-}
-
-UnionType::~UnionType()
-{
-}
+NamedType::~NamedType() { }
+CompoundType::~CompoundType() { }
+UnionType::~UnionType() { }
 
 /*==============================================================================
  * FUNCTION:		*Type::clone

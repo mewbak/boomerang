@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -670,3 +670,12 @@ Exp* ImplicitConverter::postVisit(RefExp* e) {
 	return e;
 }
 
+void StmtImplicitConverter::visit(PhiAssign* s, bool& recur) {
+	int n = s->getNumRefs();
+	StatementVec& refs = s->getRefs();
+	for (int i=0; i < n; i++) {
+		if (refs[i] == NULL)
+			refs.putAt(i, cfg->findImplicitAssign(s->getLeft()));
+	}
+	recur = true;
+}

@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.165 $
+ * $Revision: 1.166 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1088,8 +1088,8 @@ void RefExp::print(std::ostream& os) {
 	os << "{";
 	if (def == (Statement*)-1) os << "WILD";
 	else if (def) def->printNum(os);
-	// else os << "NUL";		// When you HAVE to tell the difference
-	else os << "0";
+	// else os << "0";
+	else os << "-";			// So you can tell the difference with {0}
 	os << "}";
 }
 

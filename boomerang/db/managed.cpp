@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 26 Aug 03 - Mike: Split off from statement.cpp
  */
 
@@ -162,7 +162,7 @@ void StatementSet::printNums(std::ostream& os) {
 		if (*it)
 			(*it)->printNum(os);
 		else
-			os << "0";				// Special case for no definition
+			os << "-";				// Special case for NULL definition
 		if (++it != sset.end())
 			os << " ";
 	}
@@ -516,7 +516,7 @@ void StatementVec::printNums(std::ostream& os) {
 		if (*it)
 			(*it)->printNum(os);
 		else
-			os << "0";				// Special case for no definition
+			os << "-";				// Special case for no definition
 		if (++it != svec.end())
 			os << " ";
 	}
