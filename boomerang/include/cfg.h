@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -621,7 +621,8 @@ class Cfg {
     /*
      * Renaming variables
      */
-    // Note: this becomes a map of stacks of Statement*s. 
+    // The stack which remembers the last definition of an expression.
+    // A map from expression (Exp*) to a stack of (pointers to) Statements
     std::map<Exp*, std::stack<Statement*>, lessExpStar> Stack;
 
 
