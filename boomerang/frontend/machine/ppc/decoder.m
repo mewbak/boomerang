@@ -12,7 +12,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.7 $
+/* $Revision: 1.8 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -177,8 +177,8 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 		stmts = instantiate(pc, name, DIS_CRFD, DIS_NZRA, DIS_UIMM);
 		unused(l);
 
-//	| bcc_(BIcr, reladdr) [name] =>
-//		stmts = instantiate(pc, name, DIS_BICR, DIS_RELADDR);
+	| bcc_(BIcr, reladdr) [name] =>
+		stmts = instantiate(pc, name, DIS_BICR, DIS_RELADDR);
 
 	else
 		stmts = NULL;
