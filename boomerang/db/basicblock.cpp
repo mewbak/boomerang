@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.89 $
+ * $Revision: 1.90 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1546,10 +1546,8 @@ void checkForOverlap(LocationSet& liveLocs, LocationSet& ls, igraph& ig, UserPro
 					ty = u->getType();
 				else
 					ty = r->getDef()->getTypeFor(r->getSubExp1());
-				Exp* local = proc->newLocal(ty);
+				Exp* local = proc->getLocalExp(u, ty);
 				ig[u->clone()] = local;
-				// We could make this new local a symbol and get rid of all the fromSSA[form] functions!
-				// proc->setLocalExp(((Const*)local->getSubExp1())->getStr(), u);
 				if (VERBOSE || DEBUG_LIVENESS) {
 					LOG << "Interference of " << dr << " with " << u << ", assigned " << local;
 					if (ty)
