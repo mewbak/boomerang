@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -1271,11 +1271,18 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 
     | CALL.Jvod(relocd) =>
         stmts = instantiate(pc,  "CALL.Jvod", dis_Num(relocd));
-        CallStatement* call = new CallStatement;
-        // Set the destination
-	// WAS: relocd-hostPC-5, which is broken? -trent
-        call->setDest(relocd-delta);
-        stmts->push_back(call);
+        if (relocd-delta == pc+5) {
+            // This is a call $+5
+            // Use the standard semantics, except for the last statement
+            // (just updates %pc)
+            stmts->pop_back();
+            // And don't make it a call statement
+        } else {
+            CallStatement* call = new CallStatement;
+            // Set the destination
+            call->setDest(relocd-delta);
+            stmts->push_back(call);
+        }
         result.rtl = new RTL(pc, stmts);
 
     | BTSiod(Eaddr, i8) =>
