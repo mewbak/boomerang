@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.211 $
+ * $Revision: 1.212 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2173,7 +2173,7 @@ Exp *UserProc::getLocalExp(Exp *le, Type *ty, bool lastPass) {
 			// early results in aliases to this local not being recognised 
 			e = newLocal(ty->clone());
 			symbolMap[le->clone()] = e;
-			e->clone();
+			e->clone();				// ? Suppsed to be e = e->clone()?
 		}
 	} else {
 		e = symbolMap[le]->clone();
