@@ -4,7 +4,7 @@
  *               implemented in the util.so library
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 10 Apr 02 - Mike: Created
  */
@@ -21,6 +21,8 @@
 void upperStr(const char* s, char* d);
 // Add string and integer
 std::string operator+(const std::string& s, int i);
+
+void escapeXMLChars(std::string &s);
 
 int lockFileRead(const char *fname);
 int lockFileWrite(const char *fname);
