@@ -16,7 +16,7 @@
  *             returns the list of SSL instruction and table definitions.
  *============================================================================*/
 
-/* $Revision: 1.8 $
+/* $Revision: 1.9 $
  * Updates:
  * Shane Sendall (original C version) Dec 1997
  * Doug Simon (C++ version) Jan 1998
@@ -871,7 +871,7 @@ exp_term:
             Ternary* t = new Ternary(opTern, $2, $4, $6);
             Exp* e = t;
             if ($8 != STD_SIZE) {
-			    e = new TypedExp(new IntegerType($8), t);                
+	        e = new TypedExp(new IntegerType($8), t);                
             }
             $$ = e;
         }

@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -606,7 +606,8 @@ public:
     Type*   getType();
     void    setType(Type* ty);
 
-    // polySimplify simply inherits from Unary (no special processing)
+    // polySimplify
+    Exp* polySimplify(bool& bMod);
 
     // serialization
     virtual bool serialize(std::ostream &ouf, int &len);
