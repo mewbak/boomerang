@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -51,7 +51,7 @@ Statement *Statement::findUse(Exp *e) {
     updateUses();
     for (std::set<Statement*>::iterator it = uses->begin(); it != uses->end();
       it++) {
-        if (*(*it)->getLeft() == *e)
+        if ((*it)->getLeft() && *(*it)->getLeft() == *e)
             return *it;
     }
     return NULL;

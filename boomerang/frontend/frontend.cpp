@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -137,9 +137,7 @@ void FrontEnd::readLibraryCatalog() {
 }
 
 Prog *FrontEnd::decode() {
-    Prog *prog = new Prog;
-    prog->pBF = pBF;
-    prog->pFE = this;
+    Prog *prog = new Prog(pBF, this);
     readLibraryCatalog();
 
     bool gotMain;
@@ -1166,9 +1164,7 @@ void FrontEnd::closeInstance(void* dlHandle) {
  * RETURNS:     Pointer to a Prog object (with pFE and pBF filled in)
  *============================================================================*/
 Prog* FrontEnd::getProg() {
-    Prog *prog = new Prog;
-    prog->pBF = pBF;
-    prog->pFE = this;
+    Prog *prog = new Prog(pBF, this);
     return prog;
 }
 

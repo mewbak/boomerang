@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -48,6 +48,7 @@ public:
 
     // Command line flags
     bool vFlag;
+    bool printRtl;
     bool noBranchSimplify;
 };
 

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -142,6 +142,9 @@ public:
 
     // inline any constants in the statement
     virtual void inlineConstants(Prog *prog) = 0;
+
+    // general search
+    virtual bool search(Exp *search, Exp *&result) = 0;
 
     // general search and replace
     virtual void searchAndReplace(Exp *search, Exp *replace) = 0;

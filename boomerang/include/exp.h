@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -157,7 +157,7 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
     
     // Search for Exp *search in this Exp. If found, return true and return
     // a ref to the matching expression in result (useful with wildcards).
-    bool    search(Exp* search, Exp*& result);
+    virtual bool search(Exp* search, Exp*& result);
 
     // Search for Exp search in this Exp. For each found, add
     // a ptr to the matching expression in result (useful with wildcards).    
@@ -584,6 +584,11 @@ public:
 
 	// inline any constants in the statement
 	virtual void inlineConstants(Prog *prog);
+
+        // general search
+        virtual bool search(Exp* search, Exp*& result) {
+            return Exp::search(search, result);
+        }
 
 	// general search and replace
 	virtual void searchAndReplace(Exp *search, Exp *replace) {

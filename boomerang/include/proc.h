@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.15 $
+/* $Revision: 1.16 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -344,6 +344,7 @@ public:
 	void decompile();
 	bool nameStackLocations();
 	bool nameRegisters();
+        void replaceExpressionsWithGlobals();
         void replaceExpressionsWithSymbols();
 	bool removeNullStatements();
 	bool removeDeadStatements();

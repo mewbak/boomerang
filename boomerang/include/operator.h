@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -107,6 +107,7 @@ enum OPER
     opParam,                // Parameter param`'
 	opArg,					// Used a temporary for arguments to calls
     opLocal,                // used to represent a local, takes a string
+    opGlobal,               // used to represent a global, takes a string
     opExpand,               // Expandable expression
     opTemp,                 // Temp register name
     opSize,                 // Size override

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -529,6 +529,13 @@ void HLJcond::setCondExpr(Exp* e)
 {
     if (pCond) delete pCond;
     pCond = e;
+}
+
+bool HLJcond::search(Exp* search, Exp*& result)
+{
+    if (pCond) return pCond->search(search, result);
+    result = NULL;
+    return false;
 }
 
 /*==============================================================================
@@ -1135,6 +1142,20 @@ void HLCall::getUseDefLocations(LocationMap& locMap,
 bool HLCall::returnsStruct()
 {
     return (returnTypeSize != 0);
+}
+
+bool HLCall::search(Exp* search, Exp*& result)
+{
+    result = NULL;
+    if (returnLoc && returnLoc->search(search, result)) return true;
+    for (unsigned i = 0; i < arguments.size(); i++)
+        if (arguments[i]->search(search, result)) return true;
+    if (postCallExpList) {
+        for (std::list<Exp*>::iterator it = postCallExpList->begin(); 
+                it != postCallExpList->end(); it++)
+            if ((*it)->search(search, result)) return true;
+    }
+    return false;
 }
 
 /*==============================================================================
