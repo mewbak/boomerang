@@ -14,7 +14,7 @@
  *				instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -2198,9 +2198,12 @@ Exp* PentiumDecoder::dis_Mem(ADDRESS pc)
 						new Const(d))));
 	| Base8 (d, base) =>
 			// m[ r[ base] + d ]
+			// Note: d should be sign extended; we do it here manually
+			signed char ds8 = d;
+			signed int ds32 = ds8;
 			expr = Location::memOf(new Binary(opPlus,
 					dis_Reg(24+base),
-					new Const(d)));
+					new Const(ds8)));
 	| Indir (base) => 
 			// m[ r[base] ]
 			expr = Location::memOf(dis_Reg(24+base));
