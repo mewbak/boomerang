@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.63 $
+ * $Revision: 1.64 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -723,9 +723,11 @@ virtual int getNumRefs() {return stmtVec.size();}
 virtual Exp*   addSubscript(Statement* def) {assert(0); return NULL; }
     Statement* getAt(int idx) {return stmtVec.getAt(idx);}
     void       putAt(int idx, Statement* d) {stmtVec.putAt(idx, d);}
-    Statement* getFirstRef(StmtVecIter& it) {return stmtVec.getFirst(it);}
-    Statement* getNextRef (StmtVecIter& it) {return stmtVec.getNext (it);}
-    bool       isLastRef(StmtVecIter& it) {return stmtVec.isLast(it);}
+    //Statement* getFirstRef(StmtVecIter& it) {return stmtVec.getFirst(it);}
+    //Statement* getNextRef (StmtVecIter& it) {return stmtVec.getNext (it);}
+    //bool       isLastRef(StmtVecIter& it) {return stmtVec.isLast(it);}
+    StatementVec::iterator begin() {return stmtVec.begin();}
+    StatementVec::iterator end()   {return stmtVec.end();}
     virtual Exp* fromSSA(igraph& ig);
     //bool    references(Statement* s) {return stmtVec.exists(s);}
     StatementVec& getRefs() {return stmtVec;}
