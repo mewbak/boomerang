@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -25,11 +25,11 @@
 #pragma warning(disable:4786)
 #endif
 
+#include "rtl.h"
 #include "decoder.h"
 #include "pentiumdecoder.h"
 #include "prog.h"
 #include "exp.h"
-#include "rtl.h"
 #include "proc.h"
 
 // The following are all dis_Num because the SSL has r[REG32], not just REG32
