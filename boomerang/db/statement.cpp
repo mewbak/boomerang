@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2441,15 +2441,13 @@ bool CallStatement::isDefinition()
     return defs.size() != 0;
 }
 
-// MVE: likely not correct to use this any more
-void CallStatement::getDefinitions(LocationSet &defs)
-{
+void CallStatement::getDefinitions(LocationSet &defs) {
     if (procDest) {
         if (procDest->isLib()) {
             Exp *e = getLeft();
             if (e) defs.insert(e);
         } else {
-            ((UserProc*)procDest)->getReturnSet(defs);
+            ((UserProc*)procDest)->getDefinitions(defs);
         }
     } else {
         // TODO: computed call

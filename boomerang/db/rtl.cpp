@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -663,6 +663,12 @@ bool RTL::isCompare(int& iReg, Exp*& expOperand) {
 }
 
 bool RTL::isGoto() {
+    if (stmtList.empty()) return false;
+    Statement* last = stmtList.back();
+    return last->getKind() == STMT_GOTO;
+}
+
+bool RTL::isBranch() {
     if (stmtList.empty()) return false;
     Statement* last = stmtList.back();
     return last->getKind() == STMT_BRANCH;
