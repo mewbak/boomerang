@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  * 18 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -1754,4 +1754,17 @@ void Cfg::setReturnVal(Exp *e)
 		(*it)->setReturnVal(e);
 		onlyOneReturnBB = false;
 	}
+}
+
+Exp *Cfg::getReturnVal()
+{
+    Exp *e = NULL;
+    bool onlyOneReturnBB = true;
+    for (std::list<PBB>::iterator it = m_listBB.begin(); it != m_listBB.end(); it++) 
+        if ((*it)->getType() == RET) {
+		assert(onlyOneReturnBB);
+		e = (*it)->getReturnVal();
+		onlyOneReturnBB = false;
+	}
+    return e;
 }

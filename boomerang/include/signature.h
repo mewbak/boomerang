@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -63,7 +63,9 @@ protected:
     Type *rettype;
     bool ellipsis;
 
-    void updateReturnValue(UserProc *p, Statement *stmt);
+    bool updateReturnValue(UserProc *p, Statement *stmt);
+    void updateParams(UserProc *p, Statement *stmt, bool checklive = true);
+    bool usesNewParam(UserProc *p, Statement *stmt, bool checklive, int &n);
 
 public:
     Signature(const char *nam);

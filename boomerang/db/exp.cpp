@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -767,11 +767,12 @@ void Unary::print(std::ostream& os) {
             return;
         case opTemp:
             // Temp: just print the string, no quotes
+        case opLocal:
         case opParam:
             // Print a more concise form than param["foo"] (just foo)
             ((Const*)p1)->printNoQuotes(os);
             return;
-		case opPhi:
+	case opPhi:
 			os << "phi(";
 			p1->print(os);
 			os << ")";
@@ -1607,6 +1608,7 @@ Exp* Unary::polySimplify(bool& bMod) {
 			break;
 		case opMemOf: case opRegOf: {
 			subExp1 = subExp1->polySimplify(bMod);
+			subExp1 = subExp1->simplifyArith();  // probably bad
 		}
 		break;
         default:

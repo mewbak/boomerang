@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
 */
@@ -958,7 +958,6 @@ Exp *BasicBlock::getCond()
 	assert(last->getKind() == JCOND_RTL);
 	HLJcond *j = (HLJcond*)last;
 	Exp *e = j->getCondExpr();	
-	assert(e != NULL);
 	return e;
 }
 

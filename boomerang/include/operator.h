@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -105,6 +105,7 @@ enum OPER
 	opSubscript,			// Represents subscript(e, n) .. ie SSA renaming
     opParam,                // Parameter param`'
 	opArg,					// Used a temporary for arguments to calls
+    opLocal,                // used to represent a local, takes a string
     opExpand,               // Expandable expression
     opTemp,                 // Temp register name
     opSize,                 // Size override

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  * Dec 97 - created by Mike based on Cristina's initial implementation
  * 19 Feb 98  - Cristina 
  *  changed RTLLIT for RTL_IT as this name is defined in the new rtl.h. 
@@ -481,6 +481,7 @@ public:
 
 	/* set the return value */
 	void setReturnVal(Exp *e);
+	Exp *getReturnVal() { return m_returnVal; }
 
 protected:
         std::set<Statement*> liveout;
@@ -792,6 +793,7 @@ public:
      * (assumes there is only one exit bb)
      */
     void setReturnVal(Exp *e);
+    Exp *getReturnVal();
 
     /*
      * Structures the control flow graph
