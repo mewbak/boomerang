@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.52 $
+ * $Revision: 1.53 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -66,6 +66,7 @@ void CHLLCode::appendExp(char *str, Exp *exp)
     if (exp == NULL) return;
 
     char s[BUFSIZE];
+    s[0] = '\0';        // Initialise the string to null, in case never used
     Const   *c = (Const*)exp;
     Unary   *u = (Unary*)exp;
     Binary  *b = (Binary*)exp;
@@ -545,6 +546,8 @@ void CHLLCode::appendExp(char *str, Exp *exp)
                 std::endl;
             assert(false);
     }
+    // We should be using std::strings and strstrings. For now, we assert that
+    // the buffers did not overflow
     assert(strlen(s) < BUFSIZE);
     assert(strlen(str) < BUFSIZE);
 }
