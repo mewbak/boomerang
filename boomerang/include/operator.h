@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -157,8 +157,9 @@ enum OPER
     opLongConst,            // long integer constant
     opFltConst,             // floating point constant
     opStrConst,             // string constant
-    opCodeAddr,             // opAddrConst for addresses in code segment
+    opFuncConst,            // a function constant (address of named function)
     opWildIntConst,         // Terminal integer constant whose value is wild
+    opWildStrConst,         // Terminal string constant whose value is wild
 
 
     // Terminals (zero parameter special locations)

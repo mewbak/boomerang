@@ -9,14 +9,14 @@
  */
 
 /*==============================================================================
- * FILE:       machine/pentium/frontendsrc.cc
+ * FILE:       frontend/pentiumfrontend.cpp
  * OVERVIEW:   This file contains routines to manage the decoding of pentium
  *             instructions and the instantiation to RTLs. These functions
  *             replace frontend.cc for decoding pentium instructions.
  *============================================================================*/
 
 /*
- * $Revision: 1.34 $
+ * $Revision: 1.35 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was

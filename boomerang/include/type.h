@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -158,6 +158,9 @@ virtual bool    operator< (const Type& other) const;
 virtual int     getSize() const;
 
 virtual const char *getCtype() const;
+
+// Split the C type into return and parameter parts
+        void    getReturnAndParam(const char*& ret, const char*& param);
 
 };
 
