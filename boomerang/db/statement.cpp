@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.79 $
+ * $Revision: 1.80 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2164,6 +2164,8 @@ Type *Statement::getTypeFor(Exp *e, Prog *prog)
     if (e->getOper() == opSubscript) {
         ty = getTypeFor(e->getSubExp1(), prog);
     }
+    // MVE: not sure if this is right
+    if (ty == NULL) ty = e->getType();  // May be m[blah].member
     return ty;
 }
 
