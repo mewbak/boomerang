@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * Dec 97 - created by Mike based on Cristina's initial implementation
  * 19 Feb 98  - Cristina 
  *  changed RTLLIT for RTL_IT as this name is defined in the new rtl.h. 
@@ -549,7 +549,10 @@ public:
 	 */
 	bool isUsedInPhi(Exp *e);
 
+	/* stuff for new data flow analysis */
 	void getLiveInAt(AssignExp *asgn, std::set<AssignExp*> &livein);
+	void getLiveIn(std::set<AssignExp*> &livein);
+	void calcLiveOut(std::set<AssignExp*> &live);
 
 protected:
 

@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -567,7 +567,7 @@ public:
 	virtual void getUsesOf(UseSet &uses, Exp* &ref, Exp *e);
 
 	// new dataflow analysis
-        void calcLive(std::set<AssignExp*> &live);
+        void calcLiveOut(std::set<AssignExp*> &live);
 	void getLiveIn(std::set<AssignExp*> &livein);
 };
 
