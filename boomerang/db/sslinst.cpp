@@ -18,7 +18,7 @@
  *============================================================================*/
  
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  *
  * 27 Apr 02 - Mike: Mods for boomerang
  * 17 Jul 02 - Mike: readSSLFile resets internal state as well
@@ -550,7 +550,8 @@ std::list<Statement*>* RTLInstDict::transformPostVars(
             // An opFlagCall is assumed to be a Binary with a string and an
             // opList of parameters
             ss = (Binary*) ((Binary*)*rt)->getSubExp2();
-        }
+        } else
+            ss = NULL;
 
         /* Look for usages of post-variables' referents
          * Trickier than you'd think, as we need to make sure to skip over
