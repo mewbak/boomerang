@@ -16,7 +16,7 @@
  *             returns the list of SSL instruction and table definitions.
  *============================================================================*/
 
-/* $Revision: 1.1 $
+/* $Revision: 1.2 $
  * Updates:
  * Shane Sendall (original C version) Dec 1997
  * Doug Simon (C++ version) Jan 1998
@@ -88,7 +88,7 @@ Exp* listStrToExp(std::list<std::string>* ls);// Convert a STL list of strings t
    sslFile(sslFile), bFloat(false)
 
 %define CONSTRUCTOR_CODE \
-    std::fstream *fin = new std::fstream(sslFile.c_str()); \
+    std::fstream *fin = new std::fstream(sslFile.c_str(), std::ios::in); \
     if (!*fin) { \
         std::cerr << "can't open `" << sslFile << "' for reading\n"; \
     } \
