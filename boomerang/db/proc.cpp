@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.136 $
+ * $Revision: 1.137 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -193,6 +193,24 @@ void UserProc::printDecodedXML()
     escapeXMLChars(s);
     out << s;
     out << "    </decoded>\n";
+    out << "</proc>\n";
+    out.close();
+}
+
+void UserProc::printAnalysedXML()
+{
+    if (!Boomerang::get()->dumpXML)
+        return;
+    std::ofstream out((Boomerang::get()->getOutputPath() + 
+                      getName() + "-analysed.xml").c_str());
+    out << "<proc name=\"" << getName() << "\">\n";
+    out << "    <analysed>\n";
+    std::ostringstream os;
+    print(os, false);
+    std::string s = os.str();
+    escapeXMLChars(s);
+    out << s;
+    out << "    </analysed>\n";
     out << "</proc>\n";
     out.close();
 }
@@ -843,6 +861,7 @@ void UserProc::initStatements() {
             s->setBB(bb);
             CallStatement* call = dynamic_cast<CallStatement*>(s);
             if (call) {
+                // I think this should be done in analysis
                 call->setSigArguments();
             }
             ReturnStatement *ret = dynamic_cast<ReturnStatement*>(s);

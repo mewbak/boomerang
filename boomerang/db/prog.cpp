@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.68 $
+ * $Revision: 1.69 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -135,6 +135,7 @@ void Prog::analyse() {
 
         // decoded userproc.. analyse it
         analysis->analyse(p);
+        p->printAnalysedXML();
     }
     delete analysis;
 }

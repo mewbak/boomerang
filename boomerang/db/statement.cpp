@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1213,6 +1213,7 @@ void CallStatement::setArguments(std::vector<Exp*>& arguments) {
 void CallStatement::setSigArguments() {
     Signature *sig;
     if (procDest == NULL) {
+        if (proc == NULL) return; // do it later
         // computed calls must have their arguments initialized to something 
         std::vector<Exp*> &params = proc->getProg()->getDefaultParams();
         arguments.resize(params.size());
