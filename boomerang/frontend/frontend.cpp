@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.50 $
+ * $Revision: 1.51 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -185,6 +185,7 @@ Prog *FrontEnd::decode(bool decodeMain)
                 assert(fty);
                 proc->setSignature(fty->getSignature()->clone());
                 proc->getSignature()->setName(name);
+                break;
             }
         }
     }
