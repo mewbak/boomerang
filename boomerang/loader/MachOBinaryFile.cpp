@@ -10,7 +10,7 @@
  */
 
 /* File: MachOBinaryFile.cc
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * Desc: This file contains the implementation of the class MachOBinaryFile.
  */
 
@@ -357,7 +357,8 @@ bool MachOBinaryFile::RealLoad(const char* sName)
     }
 
     // Give the entry point a symbol
-	ADDRESS entry = GetMainEntryPoint();
+	// ADDRESS entry = GetMainEntryPoint();
+	entrypoint = GetMainEntryPoint();
 
 	fclose(fp);
 	return true;
