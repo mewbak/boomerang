@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.14 $
+/* $Revision: 1.15 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -124,6 +124,9 @@ virtual int     getInst(int addr);
 
     // return a signature that matches the architecture best
     Signature *getDefaultSignature(const char *name);
+
+    virtual std::vector<Exp*> &getDefaultParams() = 0;
+    virtual std::vector<Exp*> &getDefaultReturns() = 0;
 
     /*
      * Decode all undecoded procedures and return a new program containing

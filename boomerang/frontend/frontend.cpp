@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -324,6 +324,15 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
     PBB pBB;                    // Pointer to the current basic block
     INSTTYPE type;              // Cfg type of instruction (e.g. IRET)
 
+    std::vector<Exp*> &params = getDefaultParams();
+    for (std::vector<Exp*>::iterator it = params.begin(); 
+         it != params.end(); it++)
+        pProc->getSignature()->addParameter((*it)->clone());
+    std::vector<Exp*> &returns = getDefaultReturns();
+    for (std::vector<Exp*>::iterator it = returns.begin(); 
+         it != returns.end(); it++)
+        pProc->getSignature()->addReturn((*it)->clone());
+    
     // Declare a queue of targets not yet processed yet. This has to be
     // individual to the procedure!
     TargetQueue targetQueue;

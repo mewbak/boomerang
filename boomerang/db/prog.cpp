@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.50 $
+ * $Revision: 1.51 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -543,6 +543,21 @@ const char *Prog::getFrontEndId() {
     return pFE->getFrontEndId();
 }
 
+Signature *Prog::getDefaultSignature(const char *name)
+{
+    return pFE->getDefaultSignature(name);
+}
+
+std::vector<Exp*> &Prog::getDefaultParams()
+{
+    return pFE->getDefaultParams();
+}
+
+std::vector<Exp*> &Prog::getDefaultReturns()
+{
+    return pFE->getDefaultReturns();
+}
+
 bool Prog::isWin32() {
     return pFE->isWin32();
 }
@@ -550,6 +565,14 @@ bool Prog::isWin32() {
 const char *Prog::getGlobal(ADDRESS uaddr)
 {
     return pBF->SymbolByAddress(uaddr);
+}
+
+ADDRESS Prog::getGlobal(char *nam)
+{
+    for (unsigned i = 0; i < globals.size(); i++)
+        if (!strcmp(globals[i]->getName(), nam))
+            return globals[i]->getAddress();
+    return pBF->GetAddressByName(nam);
 }
 
 void Prog::globalUsed(ADDRESS uaddr)
