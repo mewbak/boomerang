@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -873,6 +873,7 @@ void Statement::getDefinitions(LocationSet &def) {
 
 void Statement::propagateTo(int memDepth) {
     bool change;
+    int changes = 0;
     // Repeat substituting into s while there is a single reference
     // component in this statement
     do {
@@ -920,7 +921,7 @@ void Statement::propagateTo(int memDepth) {
                 continue;
             change = doPropagateTo(memDepth, def, false);
         }
-    } while (change);
+    } while (change && ++changes < 20);
 }
 
 bool Statement::doPropagateTo(int memDepth, Statement* def, bool twoRefs) {
