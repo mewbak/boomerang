@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.24 $
+ * $Revision: 1.25 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -976,3 +976,19 @@ Exp* e = new Unary(opMemOf, new Unary(opRegOf, new Const(28)));
     }
     return 0;
 }
+
+// A bit of a cludge. Problem is that we can't call the polymorphic
+// getReturnExp() until signature promotion has happened. For the switch
+// logic, that happens way too late. So for now, we have this cludge.
+/*static*/ Exp* Signature::getReturnExp2(BinaryFile* pBF) {
+    switch (pBF->GetMachine()) {
+        case MACHINE_SPARC: 
+            return new Unary(opRegOf, new Const(8));
+        case MACHINE_PENTIUM:
+            return new Unary(opRegOf, new Const(24));
+        default:
+            std::cerr << "getReturnSig2: machine not handled\n";
+            return NULL;
+    }
+}
+

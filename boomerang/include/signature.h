@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -84,6 +84,7 @@ public:
 
     // get the return location
     virtual Exp *getReturnExp();
+    static  Exp *getReturnExp2(BinaryFile* pBF);
     virtual Type *getReturnType();
     virtual void setReturnType(Type *t);
 
