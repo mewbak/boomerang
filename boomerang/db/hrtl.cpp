@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -744,7 +744,7 @@ void HLJcond::doReplaceUse(Statement *use)
 
 void HLJcond::simplify()
 {
-    if (pCond && !Boomerang::get()->noBranchSimplify) {
+    if (pCond) {
         Exp *e = pCond->simplifyArith()->clone();
         delete pCond;
         pCond = e->simplify();

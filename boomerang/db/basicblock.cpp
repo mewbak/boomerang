@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -670,6 +670,28 @@ void BasicBlock::addInEdge(PBB pNewInEdge) {
 void BasicBlock::deleteInEdge(std::vector<PBB>::iterator& it) {
     it = m_InEdges.erase(it);
     m_iNumInEdges--;
+}
+
+void BasicBlock::deleteInEdge(PBB edge) {
+    for (std::vector<PBB>::iterator it = m_InEdges.begin(); 
+         it != m_InEdges.end(); it++) {
+        if (*it == edge) {
+            deleteInEdge(it);
+            break;
+        }
+    }
+}
+
+void BasicBlock::deleteEdge(PBB edge) {
+    edge->deleteInEdge(this);
+    for (std::vector<PBB>::iterator it = m_OutEdges.begin(); 
+         it != m_OutEdges.end(); it++) {
+        if (*it == edge) {
+            m_OutEdges.erase(it);
+            m_iNumOutEdges--;
+            break;
+        }
+    }
 }
 
 /*==============================================================================
