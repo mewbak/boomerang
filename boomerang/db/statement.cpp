@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.112 $
+ * $Revision: 1.113 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2678,7 +2678,7 @@ void BoolStatement::setDest(std::list<Statement*>* stmts) {
 // Assign //
 //  //  //  //
 
-Assign::Assign() {
+Assign::Assign() : lhs(NULL), rhs(NULL), type(NULL), guard(NULL) {
     setKind(STMT_ASSIGN);
 }
 Assign::Assign(Exp* lhs, Exp* rhs) : lhs(lhs), rhs(rhs), type(NULL), guard(NULL)
