@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class ElfBinaryFile.
 */
 
-/* $Revision: 1.8 $
+/* $Revision: 1.9 $
  * 12 Sep 01 - Mike: Replaced SymTab object with map from ADDRESS to string
  * 09 Mar 02 - Mike: Changes for stand alone compilation
  * 01 Oct 02 - Mike: Removed elf library (and include file) dependencies
@@ -156,8 +156,11 @@ public:
 #endif
 
                 // Header functions
-//virtual ADDRESS GetFirstHeaderAddress();        // Get ADDRESS of main header
-//    ADDRESS     GetNextHeaderAddress();         // Get any other headers
+//virtual ADDRESS GetFirstHeaderAddress();      // Get ADDRESS of main header
+//    ADDRESS     GetNextHeaderAddress();       // Get any other headers
+
+    int         readNative2(ADDRESS a);         // Read 2 bytes from native addr
+    int         readNative4(ADDRESS a);         // Read 4 bytes from native addr
 
                 // Symbol functions
     char*       SymbolByAddress(ADDRESS uAddr); // Get name of symbol
