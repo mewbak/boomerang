@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.76 $
+ * $Revision: 1.77 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1042,7 +1042,7 @@ bool condToRelational(Exp*& pCond, BRANCH_TYPE jtCond) {
                             else
                                     op = opLess;
                             break;
-                        case 40:
+                        case 0x40:
                             if (condOp == opEquals && k == 0 ||
                                 condOp == opNotEqual && k == 0x40)
                                     op = opNotEqual;
