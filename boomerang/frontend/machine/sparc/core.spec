@@ -12,7 +12,7 @@
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Sparc V8 processor
 #
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 #
 # 3 Mar 98 - Cristina
 #	changed branch^a constructor to return the 'a' value as well.
@@ -80,7 +80,7 @@ patterns
    _    _      RDPSR    RETURN
    UMUL UMULcc RDWIM    Ticc
    SMUL SMULcc RDTBR    FLUSH
-   SUBX SUBXcc _        SAVE
+   SUBX SUBXcc MOVcc    SAVE
    _    _      _        RESTORE
    UDIV UDIVcc _        _
    SDIV SDIVcc _        _       ] is TABLE_F3 & op3 = {0 to 63 columns 4}
