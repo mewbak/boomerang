@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.111 $
+ * $Revision: 1.112 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -486,8 +486,6 @@ ADDRESS GotoStatement::getFixedDest() {
  * RETURNS:         Nothing
  *============================================================================*/
 void GotoStatement::setDest(Exp* pd) {
-    if (pDest != NULL)
-        ;//delete pDest;
     pDest = pd;
 }
 
