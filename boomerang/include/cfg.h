@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -290,11 +290,6 @@ public:
 	 */
 	void simplify();
 
-
-    /*
-     * Print any data flow analysis info gathered for this BB.
-     */
-    std::ostream& printDFAInfo(std::ostream& os);
 
     /*
      *  given an address, returns the outedge which corresponds to that address
@@ -718,12 +713,6 @@ public:
      * Can be type sensitive if reqd
      */
     void searchAndReplace(Exp* search, Exp* replace);
-
-    /*
-     * Print any data flow analysis info gathered so far such as
-     * the live-in and live-out sets for each BB.
-     */
-    std::ostream& printDFAInfo(std::ostream& os);
 
     /*
      * Set the return value for this CFG 
