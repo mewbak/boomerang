@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.33 $
+/* $Revision: 1.34 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -350,7 +350,8 @@ public:
     // statement removal
     void    complete(); 
     // Initialise the statements, e.g. proc, bb pointers
-    void initStatements(int& stmtNum);
+    void initStatements();
+    void numberStatements(int& stmtNum);
     bool nameStackLocations();
     bool nameRegisters();
     void replaceExpressionsWithGlobals();

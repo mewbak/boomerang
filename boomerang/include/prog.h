@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -171,8 +171,8 @@ public:
     // Remove interprocedural edges
     void removeInterprocEdges();
 
-    // Number the statements
-    void numberStatements();
+    // Initialise and number all statements globally
+    void initStatements();
 
     // Convert to SSA form
     void toSSAform();
