@@ -10,7 +10,7 @@
  */
 
 /* File: MachOBinaryFile.cc
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * Desc: This file contains the implementation of the class MachOBinaryFile.
  */
 
@@ -35,6 +35,7 @@
 #include "macho-apple.h"
 
 #include "objc/objc-class.h"
+#include <stdarg.h>					// For va_list for MinGW at least
 #include "objc/objc-runtime.h"
 
 //#define DEBUG_MACHO_LOADER
