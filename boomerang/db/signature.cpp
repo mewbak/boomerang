@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.95 $
+ * $Revision: 1.96 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -1415,7 +1415,7 @@ bool Signature::isStackLocal(Prog* prog, Exp *e) {
 bool Signature::isAddrOfStackLocal(Prog* prog, Exp *e) {
 	OPER op = e->getOper();
 	// e must be sp -/+ K or just sp
-	static Exp *sp = Location::regOf(getStackRegister());
+	static Exp *sp = Location::regOf(getStackRegister(prog));
 	if (op != opMinus && op != opPlus) {
 		// Matches if e is sp or sp{0}
 		return (*e == *sp ||

@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.140 $
+ * $Revision: 1.141 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -230,7 +230,7 @@ bool Statement::propagateTo(int memDepth, StatementSet& exclude, int toDepth, bo
 	bool change;
 	bool convert = false;
 	int changes = 0;
-	int sp = proc->getSignature()->getStackRegister();
+	int sp = proc->getSignature()->getStackRegister(proc->getProg());
 	Exp* regSp = Location::regOf(sp);
 	// Repeat substituting into this statement while there is a single reference
 	// component in it
@@ -2397,7 +2397,7 @@ bool CallStatement::ellipsisProcessing(Prog* prog) {
 
 	// Hack to remove locals that really aren't used
 	if (getDestProc() && getDestProc()->isLib()) {
-		int sp = signature->getStackRegister();
+		int sp = signature->getStackRegister(prog);
 		ignoreReturn(Location::regOf(sp));
 		unsigned int i;
 		for (i = 0; i < implicitArguments.size(); i++) {
