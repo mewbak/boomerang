@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -893,7 +893,7 @@ void AssignExp::printWithUses(std::ostream& os) {
         (*it)->printAsUseBy(os);
         os << ", ";
     }
-#if 0
+#if 0       // Note: if you change this, you need to update DataflowTest.cpp!
     os << "   live: ";
     std::set<Statement*> liveIn;
     getLiveIn(liveIn);
