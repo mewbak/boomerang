@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -124,8 +124,8 @@ void FrontEnd::readLibraryCatalog(const char *sPath)
         std::string sFile;
 	inf >> sFile;
 	size_t j = sFile.find('#');
-	if (j != -1)
-            sFile = sFile.substr(0, j);
+	if (j != (size_t)-1)
+        sFile = sFile.substr(0, j);
 	if (sFile == "") continue;
 	std::string sPath = Boomerang::get()->getProgPath() + "signatures/" + sFile;
         readLibrarySignatures(sPath.c_str());
@@ -1158,4 +1158,17 @@ void FrontEnd::closeInstance(void* dlHandle) {
 #endif
 }
 
+/*==============================================================================
+ * FUNCTION:    FrontEnd::getProg
+ * OVERVIEW:    Get a Prog object (mainly for testing and not decoding)
+ * NOTE:		Caller to destroy
+ * PARAMETERS:  None
+ * RETURNS:     Pointer to a Prog object (with pFE and pBF filled in)
+ *============================================================================*/
+Prog* FrontEnd::getProg() {
+    Prog *prog = new Prog;
+    prog->pBF = pBF;
+    prog->pFE = this;
+	return prog;
+}
 
