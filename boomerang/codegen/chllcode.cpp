@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.81 $
+ * $Revision: 1.82 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1149,7 +1149,7 @@ void CHLLCode::AddLocal(const char *name, Type *type, bool last)
 	Exp *e = m_proc->getLocalExp(name);
 	if (e) {
 	  //if (e->getOper() == opSubscript && ((RefExp*)e)->getRef() == NULL &&
-		if (e->getOper() == opSubscript && ((RefExp*)e)->getRef()->isImplicit() &&
+		if (e->getOper() == opSubscript && ((RefExp*)e)->isImplicitDef() &&
 			(e->getSubExp1()->getOper() == opParam ||
 			 e->getSubExp1()->getOper() == opGlobal)) {
 			s << " = ";
