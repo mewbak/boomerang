@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.190 $
+ * $Revision: 1.191 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -3444,7 +3444,7 @@ void UserProc::typeAnalysis(Prog* prog) {
 
 bool UserProc::searchAndReplace(Exp *search, Exp *replace)
 {
-    bool ch;
+    bool ch = false;
     StatementList stmts;
     getStatements(stmts);
     StatementList::iterator it;
