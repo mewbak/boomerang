@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.76 $
+/* $Revision: 1.77 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -317,6 +317,9 @@ class UserProc : public Proc {
      * True if this procedure has been decoded.
      */
     bool decoded;
+    
+    // true if the procedure has been analysed.
+    bool analysed;
 
     /*
      * Indicate that the procedure has had its variables converted to
@@ -438,6 +441,9 @@ public:
      * it already been decoded).
      */
     bool isDecoded();
+
+    bool isAnalysed() { return analysed; }
+    void setAnalysed() { analysed = true; }
 
     /*
      * Return the number of bytes allocated for locals on the stack.

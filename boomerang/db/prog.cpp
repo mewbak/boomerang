@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.70 $
+ * $Revision: 1.71 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -132,6 +132,9 @@ void Prog::analyse() {
         if (pProc->isLib()) continue;
         UserProc *p = (UserProc*)pProc;
         if (!p->isDecoded()) continue;
+        if (p->isAnalysed()) continue;
+
+        p->setAnalysed();
 
         // decoded userproc.. analyse it
         analysis->analyse(p);

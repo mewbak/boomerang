@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1874,6 +1874,19 @@ Exp *Statement::processConstant(Exp *e, Type *t, Prog *prog)
                         << "of type " << pt->getCtype() 
                         << ".  Decoding address " << a << "\n";
                 prog->decode(a);
+                Proc *p = prog->findProc(a);
+                if (p) {
+                    Signature *sig = ((FuncType*)points_to)->getSignature()->clone();
+                    if (sig->getName() == NULL ||
+                        strlen(sig->getName()) == 0 || 
+                        !strcmp(sig->getName(), "<ANON>") ||
+                        prog->findProc(sig->getName()) != NULL)
+                        sig->setName(p->getName());
+                    else
+                        p->setName(sig->getName());
+                    p->setSignature(sig);
+                    e = new Unary(opGlobal, new Const((char*)p->getName()));
+                }
             }
         } else if (t->isFloat()) {
             e->setOper(opFltConst);
