@@ -10,7 +10,7 @@
  * Desc: This file contains the definition of the class HpSomBinaryFile.
 */
 
-/* $Revision: 1.4 $
+/* $Revision: 1.5 $
  *
  * 22 Jun 00 - Mike: Initial revision
  * 09 May 01 - Mike: Read the imports table so can identify library functions
@@ -102,7 +102,7 @@ public:
     virtual size_t getImageSize();
 
     // Get a symbol given an address
-    virtual char*   SymbolByAddress(const ADDRESS dwAddr);
+    virtual char*   SymbolByAddress(ADDRESS dwAddr);
     // Lookup the name, return the address
     virtual ADDRESS GetAddressByName(char* pName, bool bNoTypeOK = false);
     // Return true if the address matches the convention for A-line system calls

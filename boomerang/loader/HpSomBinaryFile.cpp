@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 22 Jun 00 - Mike: Initial version
  * 15 May 02 - Mike: Fixed several UINT4(&...) that were needed for endianness
@@ -489,7 +489,7 @@ size_t HpSomBinaryFile::getImageSize()
 }
 
 // We at least need to be able to name the main function and system calls
-char* HpSomBinaryFile::SymbolByAddress(const ADDRESS dwAddr)
+char* HpSomBinaryFile::SymbolByAddress(ADDRESS dwAddr)
 {
     return symbols.Find(dwAddr);
 }
