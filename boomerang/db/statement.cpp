@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.49 $
+ * $Revision: 1.50 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -557,7 +557,7 @@ bool GotoStatement::search(Exp* search, Exp*& result) {
 bool GotoStatement::searchAndReplace(Exp* search, Exp* replace) {
     bool change = false;
     if (pDest) {
-        pDest->searchReplaceAll(search, replace, change);
+        pDest = pDest->searchReplaceAll(search, replace, change);
     }
     return change;
 }
