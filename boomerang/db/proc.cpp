@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.152 $
+ * $Revision: 1.153 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -267,8 +267,8 @@ void UserProc::printUseGraph()
             if (((Exp*)*rr)->isSubscript()) {
                 RefExp *r = (RefExp*)*rr;
                 if (r->getRef())
-                    out << s->getNumber() << " -> " 
-                        << r->getRef()->getNumber() << ";\n";
+                    out << r->getRef()->getNumber() << " -> " 
+                        << s->getNumber() << ";\n";
             }
         }
     }
