@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.58 $
+/* $Revision: 1.59 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -491,6 +491,7 @@ public:
     typedef std::map<Statement*, int> RefCounter;
     void countRefs(RefCounter& refCounts);
     void removeUnusedStatements(RefCounter& refCounts, int depth);
+    void removeUnusedLocals();
     bool propagateAndRemoveStatements();
     void propagateStatements(int memDepth);
     int  findMaxDepth();                    // Find max memory nesting depth

@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.34 $
+ * $Revision: 1.35 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -169,6 +169,7 @@ public:
     // Remove null, unused, and restored statements
     void removeNullStmts();
     void removeUnusedStmts();
+    void removeUnusedLocals();
     void removeRestoreStmts(StatementSet& rs);
 
     // Process constants
