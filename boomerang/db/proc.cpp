@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.240 $
+ * $Revision: 1.241 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1486,7 +1486,7 @@ void UserProc::trimReturns() {
 
 void UserProc::updateReturnTypes()
 {
-	if (theReturnStatement == NULL | !ADHOC_TYPE_ANALYSIS)
+	if (theReturnStatement == NULL || !ADHOC_TYPE_ANALYSIS)
 		return;
 	for (int n = 0; n < theReturnStatement->getNumReturns(); n++) {
 		Exp *e = theReturnStatement->getReturnExp(n);
