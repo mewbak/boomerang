@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -651,8 +651,13 @@ void Type::addNamedType(const char *name, Type *type)
                 namedTypes[name]->getCtype() << "\n" << std::flush;
             assert(false);
         }
-    } else
+    } else {
+#if 0
+        std::cerr << "Added named type" << name << " as " << type->getCtype()
+          << "\n";
+#endif
         namedTypes[name] = type->clone();
+    }
 }
 
 Type *Type::getNamedType(const char *name)
@@ -923,4 +928,6 @@ bool Type::resolvesToCompound()
     return ty && ty->isCompound();
 }
 
-
+bool Type::isPointerToAlpha() {
+    return isPointer() && ((PointerType*)this)->pointsToAlpha();
+}
