@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of the Frontend and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 08 Apr 02 - Mike: Created
  * 23 May 02 - Mike: Added pentium tests
  */
@@ -22,12 +22,14 @@ int main(int argc, char** argv)
 {
 	CppUnit::TestSuite suite;
 
-	FrontSparcTest fst("FrontSparcTest");
+//	FrontSparcTest fst("FrontSparcTest");
 //	  FrontendTest fet("FrontendTest");
-	FrontPentTest fpt("FrontPentTest");
+//	FrontPentTest fpt("FrontPentTest");
+	FrontPentTest fSt("FrontPentTest");
 
-	fst.registerTests(&suite);
-	fpt.registerTests(&suite);
+//	fst.registerTests(&suite);
+//	fpt.registerTests(&suite);
+	fSt.registerTests(&suite);
 
 	CppUnit::TextTestResult res;
 

@@ -17,7 +17,7 @@
  *			   SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.34 $
+/* $Revision: 1.35 $
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
