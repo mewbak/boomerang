@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -30,7 +30,6 @@
 #include <string>
 #include <map>
 #include <functional>       // For binary_function
-#include "gc_cpp.h"
 
 class Signature;
 

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * 08 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -25,7 +25,6 @@
 #include <list>
 #include "types.h"
 #include "rtl.h"
-#include "gc_cpp.h"
 
 class Exp;
 class RTL;

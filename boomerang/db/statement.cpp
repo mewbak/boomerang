@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.48 $
+ * $Revision: 1.49 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2532,7 +2532,9 @@ void Assign::processConstants(Prog* prog) {
 
 // generate constraints
 void Assign::genConstraints(LocationSet& cons) {
-    Exp* con = rhs->genConstraints(new Unary(opTypeOf, lhs->clone()));
+    Exp* con = rhs->genConstraints(
+        new Unary(opTypeOf,
+            new RefExp(lhs->clone(), this)));
     if (con) cons.insert(con);
 }
 

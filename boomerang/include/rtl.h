@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -38,7 +38,6 @@
 #include "exp.h"
 #include "register.h"
 #include "statement.h"          // At least for STMT_KIND
-#include "gc_cpp.h"
 
 class BasicBlock;
 class HLLCode;

@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -25,7 +25,6 @@
 #include "BinaryFile.h"
 #include "frontend.h"
 #include "type.h"
-#include "gc_cpp.h"
 
 class RTLInstDict;
 class Proc;
