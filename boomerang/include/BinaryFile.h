@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.12 $
+/* $Revision: 1.13 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -240,8 +240,10 @@ virtual ~BinaryFile() {}			// Virtual destructor
 
 	virtual std::map<ADDRESS, std::string> &getFuncSymbols() { return *new std::map<ADDRESS, std::string>(); }
 
-	ADDRESS getLimitTextLow() { return limitTextLow; }
-	ADDRESS getLimitTextHigh() { return limitTextHigh; }
+	virtual std::map<ADDRESS, std::string> &getSymbols() { return *new std::map<ADDRESS, std::string>(); }
+
+    ADDRESS getLimitTextLow() { return limitTextLow; }
+    ADDRESS getLimitTextHigh() { return limitTextHigh; }
 
 	int getTextDelta() { return textDelta; }
 

@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.62 $
+ * $Revision: 1.63 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -33,6 +33,7 @@ class Proc;
 class UserProc;
 class LibProc;
 class Signature;
+class Statement;
 class StatementSet;
 class Cluster;
 class XMLProgParser;
@@ -189,10 +190,14 @@ public:
 	Signature *getLibSignature(const char *name);
 	void rereadLibSignatures();
 
-	// Get the front end id used to make this prog
-	platform getFrontEndId();
+	Statement *getStmtAtLex(Cluster *cluster, unsigned int begin, unsigned int end);
 
-	Signature *getDefaultSignature(const char *name);
+    // Get the front end id used to make this prog
+    platform getFrontEndId();
+
+	std::map<ADDRESS, std::string> &getSymbols();
+
+    Signature *getDefaultSignature(const char *name);
 
 	std::vector<Exp*> &getDefaultParams();
 	std::vector<Exp*> &getDefaultReturns();

@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.11 $
+/* $Revision: 1.12 $
  * This file contains the definition of the Win32BinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
 */
@@ -205,6 +205,8 @@ virtual double readNativeFloat8(ADDRESS a); // Read 8 bytes as float
 
 virtual bool	IsDynamicLinkedProcPointer(ADDRESS uNative);
 virtual const char *GetDynamicProcName(ADDRESS uNative);
+
+	virtual std::map<ADDRESS, std::string> &getSymbols() { return dlprocptrs; }
 
   protected:
 	virtual bool  RealLoad(const char* sName); // Load the file; pure virtual

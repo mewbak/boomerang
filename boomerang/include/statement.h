@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.56 $
+ * $Revision: 1.57 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -90,11 +90,14 @@ enum STMT_KIND {
  */
 class Statement {
 protected:
-	PBB		pbb;		// contains a pointer to the enclosing BB
-	UserProc *proc;		// procedure containing this statement
-	int		number;		// Statement number for printing
-	STMT_KIND kind;		// Statement kind (e.g. STMT_BRANCH)
-	Statement *parent;	// The statement that contains this one
+    PBB     pbb;        // contains a pointer to the enclosing BB
+    UserProc *proc;     // procedure containing this statement
+    int     number;     // Statement number for printing
+    STMT_KIND kind;     // Statement kind (e.g. STMT_BRANCH)
+    Statement *parent;  // The statement that contains this one
+
+	unsigned int lexBegin, lexEnd;
+
 public:
 
 	Statement() : pbb(NULL), proc(NULL), number(0), parent(NULL) { }
@@ -112,8 +115,14 @@ public:
 	virtual bool accept(StmtExpVisitor* visitor) = 0;
 	virtual bool accept(StmtModifier* visitor) = 0;
 
-	STMT_KIND getKind() { return kind;}
-	void setKind(STMT_KIND k) {kind = k;}
+	void setLexBegin(unsigned int n) { lexBegin = n; }
+	void setLexEnd(unsigned int n) { lexEnd = n; }
+	unsigned int getLexBegin() { return lexBegin; }
+	unsigned int getLexEnd() { return lexEnd; }
+	Exp *getExpAtLex(unsigned int begin, unsigned int end);
+
+    STMT_KIND getKind() { return kind;}
+    void setKind(STMT_KIND k) {kind = k;}
 
 	// returns true if this statement defines anything
 	virtual bool isDefinition() = 0;
