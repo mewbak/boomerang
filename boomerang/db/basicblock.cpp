@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.85 $
+ * $Revision: 1.86 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1545,7 +1545,7 @@ void checkForOverlap(LocationSet& liveLocs, LocationSet& ls, igraph& ig, int& lo
 			// We have an interference. Record it, but only if new
 			igraph::iterator gg = ig.find(u);
 			if (gg == ig.end()) {
-				ig[u] = localNum++;
+				ig[u->clone()] = localNum++;
 				std::ostringstream sto;
 				sto << "local" << localNum-1;
 				std::string local = sto.str();

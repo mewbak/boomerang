@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.121 $
+ * $Revision: 1.122 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1342,7 +1342,7 @@ int CallStatement::getNumReturns() {
 }
 
 Exp *CallStatement::getReturnExp(int i) {
-	if (i > (int)returns.size()) return NULL;
+	if (i >= (int)returns.size()) return NULL;
 	return returns[i];
 }
 
@@ -1796,6 +1796,16 @@ void CallStatement::simplify() {
 	}
 	for (i = 0; i < returns.size(); i++) {
 		returns[i] = returns[i]->simplifyArith()->simplify();
+
+		// let's gather some more accurate type information
+		if (procDest && returns[i]->isLocation()) {
+			Location *loc = dynamic_cast<Location*>(returns[i]);
+			assert(loc);
+			Type *ty = procDest->getSignature()->getReturnType(i);
+			loc->setType(ty);
+			if (VERBOSE)
+				LOG << "setting type of " << loc << " to " << ty->getCtype() << " based on return type of call\n";
+		}
 	}
 }
 
