@@ -4,7 +4,7 @@
  *              tests the RTL and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * 13 May 02 - Mike: Created
  */
@@ -22,12 +22,8 @@
 #include "prog.h"
 #include "visitor.h"
 
-#ifndef BOOMDIR
-#error Must define BOOMDIR
-#endif
-
-#define SWITCH_SPARC        BOOMDIR "/test/sparc/switch_cc"
-#define SWITCH_PENT         BOOMDIR "/test/pentium/switch_cc"
+#define SWITCH_SPARC        "test/sparc/switch_cc"
+#define SWITCH_PENT         "test/pentium/switch_cc"
 
 /*==============================================================================
  * FUNCTION:        RtlTest::registerTests

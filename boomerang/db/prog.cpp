@@ -16,17 +16,12 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.102 $
+ * $Revision: 1.103 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
+ * 20 Jul 04 - Mike: Got rid of BOOMDIR
  */
-
-#ifndef BOOMDIR
-#ifndef WIN32
-#error BOOMDIR needs to be set
-#endif
-#endif
 
 /*==============================================================================
  * Dependencies.

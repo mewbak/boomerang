@@ -4,18 +4,14 @@
  *              tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 14 Jan 03 - Trent: Created
  * 17 Apr 03 - Mike: Added testRecursion to track down a nasty bug
  */
 
-#ifndef BOOMDIR
-#error Must define BOOMDIR
-#endif
-
-#define HELLO_PENTIUM       BOOMDIR "/test/pentium/hello"
-#define FIB_PENTIUM        BOOMDIR "/test/pentium/fib"
+#define HELLO_PENTIUM      "test/pentium/hello"
+#define FIB_PENTIUM        "test/pentium/fib"
 
 #include "StatementTest.h"
 #include "cfg.h"

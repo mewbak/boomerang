@@ -4,7 +4,7 @@
  *              tests the analysis code
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 10 Jul 02 - Mike: Created
  */
@@ -17,7 +17,7 @@
 #include "BinaryFileStub.h"
 #include "analysis.h"
 
-#define CCX_SPARC       BOOMDIR "/test/sparc/condcodexform_gcc"
+#define CCX_SPARC       "test/sparc/condcodexform_gcc"
 
 /*==============================================================================
  * FUNCTION:        AnalysisTest::registerTests

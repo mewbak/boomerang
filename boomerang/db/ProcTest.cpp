@@ -4,17 +4,13 @@
  *              tests the Proc class
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 23 Apr 02 - Mike: Created
  * 10 Mar 03 - Mike: Mods to not use Prog::pBF (no longer public)
  */
 
-#ifndef BOOMDIR
-#error Must define BOOMDIR
-#endif
-
-#define HELLO_PENTIUM       BOOMDIR "/test/pentium/hello"
+#define HELLO_PENTIUM       "test/pentium/hello"
 
 #include "ProcTest.h"
 #include "BinaryFile.h"

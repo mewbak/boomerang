@@ -4,18 +4,14 @@
  *              tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 17 Jul 03 - Mike: Created
  */
 
-#ifndef BOOMDIR
-#error Must define BOOMDIR
-#endif
-
-#define FRONTIER_PENTIUM		BOOMDIR "/test/pentium/frontier"
-#define SEMI_PENTIUM		    BOOMDIR "/test/pentium/semi"
-#define IFTHEN_PENTIUM		    BOOMDIR "/test/pentium/ifthen"
+#define FRONTIER_PENTIUM		"test/pentium/frontier"
+#define SEMI_PENTIUM		    "test/pentium/semi"
+#define IFTHEN_PENTIUM		    "test/pentium/ifthen"
 
 #include "CfgTest.h"
 #include <sstream>
