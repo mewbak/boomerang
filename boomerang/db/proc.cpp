@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.104 $
+ * $Revision: 1.105 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1858,8 +1858,7 @@ void UserProc::propagateStatements(int memDepth) {
     StatementSet empty;
     for (Statement* s = stmts.getFirst(it); s; s = stmts.getNext(it)) {
         if (s->isPhi()) continue;
-        // Note: commenting out the following causes main not to return int
-        // sometimes...
+        // We can propagate to ReturnStatements now, and "return 0"
         // if (s->isReturn()) continue;
         s->propagateTo(memDepth, empty);
     }
