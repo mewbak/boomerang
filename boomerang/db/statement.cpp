@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.148 $
+ * $Revision: 1.149 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3099,6 +3099,7 @@ void Assign::simplify() {
 			}
 	}
 
+	if (!ADHOC_TYPE_ANALYSIS) return;
 	// let's gather some more accurate type information
 	if (lhs->isLocation() && rhs->getType()) {
 		Location *llhs = dynamic_cast<Location*>(lhs);
