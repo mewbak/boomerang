@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.10 $
+/* $Revision: 1.11 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -222,7 +222,6 @@ virtual ~BinaryFile() {}			// Virtual destructor
     virtual bool    DisplayDetails(const char* fileName, FILE* f = stdout);
 
     // Analysis functions
-    virtual std::list<RegAddr>& GetInitialState();
     virtual bool    IsDynamicLinkedProc(ADDRESS uNative);
 	virtual bool    IsDynamicLinkedProcPointer(ADDRESS uNative);
 	virtual const char *GetDynamicProcName(ADDRESS uNative);
