@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -42,6 +42,11 @@ public: \
   #include "cfg.h"
   #include "proc.h"
   #include "signature.h"
+  // For some reason, MSVC 5.00 complains about use of undefined type RTL a lot
+  #if defined(_MSC_VER) && _MSC_VER <= 1100
+  #include "rtl.h"
+  #endif
+
   class AnsiCScanner;
 
   class TypeIdent {

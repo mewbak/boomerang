@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
@@ -20,6 +20,11 @@ IS			(u|U|l|L)*
 %header{
 #include <stdio.h>
 #include "ansi-c-parser.h"
+// For some reason, MSVC 5.00 complains about use of undefined type RTL a lot
+#if defined(_MSC_VER) && _MSC_VER <= 1100
+#include "signature.h"		// For MSVC 5.00
+#include "rtl.h"
+#endif
 #define MAX_LINE 1024      // the longest line
 %}
 
