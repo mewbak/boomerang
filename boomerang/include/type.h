@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -369,6 +369,9 @@ virtual const char *getCtype() const;
 
 };
 
+// Not part of the Type class, but logically belongs with it:
+std::ostream& operator<<(std::ostream& os, Type* t);  // Print the Type
+                                                      //  poited to by t
 
 
 #endif  // __TYPE_H__

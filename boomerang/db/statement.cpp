@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.93 $
+ * $Revision: 1.94 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2962,7 +2962,7 @@ bool Assign::searchAndReplace(Exp* search, Exp* replace) {
 
 void Assign::print(std::ostream& os, bool withUses) {
     os << std::setw(4) << std::dec << number << " ";
-    os << "*" << std::dec << type << "* ";
+    os << "*" << type << "* ";
     if (lhs) lhs->print(os, withUses);
     os << " := ";
     if (rhs) rhs->print(os, withUses);
