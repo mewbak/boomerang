@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.132 $
+ * $Revision: 1.133 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -884,7 +884,7 @@ std::set<UserProc*>* UserProc::decompile() {
     // Remove self from the cycle list
     cycleSet->erase(this);
 
-    if (VERBOSE) {
+    if (VERBOSE||1) {
         LOG << "decompiling: " << getName() << "\n";
     }
 
@@ -1847,6 +1847,9 @@ void UserProc::removeUnusedStatements(RefCounter& refCounts, int depth) {
 //
 
 void UserProc::fromSSAform() {
+    if (VERBOSE||1)
+        LOG << "transforming " << getName() << " from SSA\n";
+
     StatementList stmts;
     getStatements(stmts);
     igraph ig;

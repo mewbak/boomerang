@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.41 $
+ * $Revision: 1.42 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -100,6 +100,7 @@ public:
     // The procs will appear in order of native address
     Proc*   getFirstProc(PROGMAP::const_iterator& it);
     Proc*   getNextProc(PROGMAP::const_iterator& it);
+    Proc*   getEntryProc() { return m_procs.front(); }
 
     // This pair of functions allows the user to iterate through all the
     // UserProcs
@@ -241,6 +242,8 @@ public:
     // found, respectively
     bool        bRegisterJump;
     bool        bRegisterCall;
+
+    void printCallGraph();
 
 protected:
     // Pointer to the BinaryFile object for the program
