@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -269,9 +269,9 @@ Signature *CallingConvention::Win32Signature::promote(UserProc *p)
     return this;
 }
 
-Exp *CallingConvention::Win32Signature::getStackWildcard()
-{
-    return new Unary(opMemOf, new Binary(opPlus, new Unary(opRegOf, 
+Exp *CallingConvention::Win32Signature::getStackWildcard() {
+    // Note: m[esp + -8] is simnplified to m[esp - 8] now
+    return new Unary(opMemOf, new Binary(opMinus, new Unary(opRegOf, 
                new Const(28)), new Terminal(opWild)));
 }
 
@@ -445,9 +445,9 @@ Signature *CallingConvention::StdC::PentiumSignature::promote(UserProc *p)
     return this;
 }
 
-Exp *CallingConvention::StdC::PentiumSignature::getStackWildcard()
-{
-    return new Unary(opMemOf, new Binary(opPlus, new Unary(opRegOf, 
+Exp *CallingConvention::StdC::PentiumSignature::getStackWildcard() {
+    // Note: m[esp + -8] is simplified to m[esp - 8] now
+    return new Unary(opMemOf, new Binary(opMinus, new Unary(opRegOf, 
                new Const(28)), new Terminal(opWild)));
 }
 
