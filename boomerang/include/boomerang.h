@@ -12,7 +12,7 @@
  * OVERVIEW:	interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -174,7 +174,7 @@ static Boomerang *get() {
     bool debugSwitch;
     bool noParameterNames;
     bool debugLiveness;
-    bool debugUnusedRets;
+    bool debugUnusedRetsAndParams;
     bool debugTA;
     std::vector<ADDRESS> entrypoints;
     std::vector<std::string> symbolFiles;

@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.66 $
+ * $Revision: 1.67 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -219,7 +219,7 @@ public:
 	Type *guessGlobalType(const char *nam, ADDRESS u);
 
 	// Indicate that a given global has been seen used in the program.
-	void globalUsed(ADDRESS uaddr);
+	void globalUsed(ADDRESS uaddr, Type* knownType = NULL);
 
 	// Get the type of a global variable
 	Type *getGlobalType(char* nam);

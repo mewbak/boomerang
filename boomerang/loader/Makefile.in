@@ -12,7 +12,7 @@
 #
 ######################################################
 
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 # Note: gnu make is probably required (for patsubst etc)
 # Whole make is dependent on finding the pattern *BinaryFile.cpp;
 # a lib%.so file is made for each of these
@@ -28,8 +28,8 @@
 # 01 Oct 02 - Mike: testLoader restored; removed ElfDetails
 # 20 Jul 04 - Mike: Removed BOOMDIR (paths relative now)
 
-C = gcc -Wall -g -O4
-CC = g++ -Wall -g -O4
+C = gcc -Wall -g -O0
+CC = g++ -Wall -g -O0
 CXX=$(CC)
 
 ALLLIBSRC =  $(wildcard *BinaryFile.cpp)

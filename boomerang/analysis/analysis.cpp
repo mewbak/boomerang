@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.22 $
+ * $Revision: 1.23 $
  *
  * 10 Jul 02 - Mike: Mods for boomerang
  */
@@ -88,7 +88,7 @@ void Analysis::analyse(UserProc* proc) {
 	while (pBB)
 	{
 		// Perform final simplifications
-	   finalSimplify(pBB);
+		finalSimplify(pBB);
 
 		// analyse calls
 		analyseCalls(pBB, proc);
