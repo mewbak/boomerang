@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.69 $
+ * $Revision: 1.70 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2740,6 +2740,12 @@ Exp* Ternary::fromSSA(igraph& ig) {
     subExp2 = subExp2->fromSSA(ig);
     subExp3 = subExp3->fromSSA(ig);
     return this;
+}
+
+Exp* Exp::fromSSAleft(igraph& ig, Statement* d) {
+    RefExp* r = new RefExp(this, d);       // "Wrap" in a ref
+    return r->fromSSA(ig);
+    // Note: r will be deleted in fromSSA! Do not delete here!
 }
 
 // Return the memory nesting depth

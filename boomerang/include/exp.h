@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.50 $
+ * $Revision: 1.51 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -251,6 +251,10 @@ virtual Exp* simplifyAddr() {return this;}
 
     // Convert from SSA form
     virtual Exp* fromSSA(igraph& ig) {return this;}
+
+    // Convert from SSA form, where this is not subscripted (but defined at
+    // statement d)
+    Exp* fromSSAleft(igraph& ig, Statement* d);
 
     // Consistency check. Might be useful another day
     void check();

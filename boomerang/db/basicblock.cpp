@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $
+ * $Revision: 1.48 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1545,7 +1545,7 @@ bool BasicBlock::calcLiveness(igraph& ig, int& tempNum) {
                     // We have an interference. Record it, but only if new
                     igraph::iterator gg = ig.find(u);
                     if (gg == ig.end()) {
-                        (*gg).second = ++tempNum;
+                        ig[u] = ++tempNum;
                         if (VERBOSE)
                             std::cerr << "Interference with " << u <<
                             ", assigned temp" << std::dec << tempNum << "\n";
