@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.99 $
+ * $Revision: 1.100 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -735,6 +735,7 @@ void Terminal::print(std::ostream& os, bool withUses) {
         case opZF:      os << "%ZF";   break;
         case opOF:      os << "%OF";   break;
         case opNF:      os << "%NF";   break;
+        case opDF:      os << "%DF";   break;
         case opAFP:     os << "%afp";  break;
         case opAGP:     os << "%agp";  break;
         case opWild:    os << "WILD";  break;
