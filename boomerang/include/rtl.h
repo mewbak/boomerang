@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  */
@@ -381,7 +381,7 @@ public:
     virtual void printAsUseBy(std::ostream &os);
 
     // inline any constants in the statement
-    virtual void inlineConstants(Prog *prog);
+    virtual void processConstants(Prog *prog);
 
     // simplify all the uses/defs in this RTL
     virtual void simplify();
@@ -557,7 +557,7 @@ public:
     virtual void printAsUseBy(std::ostream &os);
 
     // inline any constants in the statement
-    virtual void inlineConstants(Prog *prog);
+    virtual void processConstants(Prog *prog);
 
     // simplify all the uses/defs in this RTL
     virtual void simplify();

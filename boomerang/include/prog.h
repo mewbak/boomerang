@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -116,6 +116,11 @@ public:
 	// Indicate that a watcher would like to be updated of status (only 1
 	// watcher allowed at the moment, old watchers will be disconnected).
 	void setWatcher(ProgWatcher *p) { m_watcher = p; }
+
+        void decode(ADDRESS a) { 
+            if (findProc(a) == NULL)
+                pFE->decode(this, a);
+        }
 
 	// Well form all the procedures/cfgs in this program
 	bool wellForm();

@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
@@ -185,7 +185,7 @@ void AnsiCScanner::count()
 		else
 			column++;
 
-	//ECHO;
+	ECHO;
 }
 
 

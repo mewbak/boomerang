@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -596,7 +596,10 @@ Exp *CallingConvention::StdC::SparcSignature::getStackWildcard()
 
 Signature::Signature(const char *nam) : rettype(new VoidType()), ellipsis(false)
 {
-    name = nam;
+    if (nam == NULL) 
+        name = "<ANON>";
+    else
+        name = nam;
 }
 
 Signature *Signature::clone()

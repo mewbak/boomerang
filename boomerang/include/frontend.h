@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.10 $
+/* $Revision: 1.11 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -127,6 +127,9 @@ virtual int     getInst(int addr);
      * them.
      */
     Prog *decode();
+
+    /* Decode starting at a given address in a given program. */
+    void decode(Prog *prog, ADDRESS a);
 
     /*
      * create a new procedure of the appropriate type in a program at

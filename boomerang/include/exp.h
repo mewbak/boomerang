@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -582,7 +582,7 @@ public:
         virtual void printAsUseBy(std::ostream &os);
 
 	// inline any constants in the statement
-	virtual void inlineConstants(Prog *prog);
+	virtual void processConstants(Prog *prog);
 
         // general search
         virtual bool search(Exp* search, Exp*& result) {

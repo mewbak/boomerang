@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -16,30 +16,6 @@
 
 class Statement;
 class BinaryFile;
-
-// Used to represent local variables (registers, stack locations, etc)
-class Local {
-protected:
-	std::string name;
-	Type* type;
-	Exp *loc;
-
-public:
-	Local(const char *nam, Type *t, Exp *e) : name(nam), type(t), loc(e) { }
-};
-
-// Used to represent global variables
-class Global {
-protected:
-	std::string name;
-	Type* type;
-	ADDRESS addr;
-
-public:
-	Global(const char *nam, Type *t, ADDRESS a) : name(nam), type(t), addr(a) { }
-};
-
-class TypedExp;
 
 class Parameter { 
 private:

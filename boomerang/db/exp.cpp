@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2582,7 +2582,7 @@ Exp* Unary::fixSuccessor() {
     return this;
 }
     
-void AssignExp::inlineConstants(Prog *prog)
+void AssignExp::processConstants(Prog *prog)
 {
     // TODO
 }
