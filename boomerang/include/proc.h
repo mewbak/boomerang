@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.7 $
+/* $Revision: 1.8 $
  * 11 Mar 98 - Cristina  
  *  replaced BOOL for bool type (C++'s), same for TRUE and FALSE.
  * 18 Mar 98 - Cristina 
@@ -391,6 +391,9 @@ public:
 
 	// remove internal statements
 	void removeInternalStatements();
+
+	// inline constants
+	void inlineConstants();
 
 	// get internal statements
         virtual void getInternalStatements(std::list<Statement*> &internal);

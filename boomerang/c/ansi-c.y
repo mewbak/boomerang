@@ -5,13 +5,16 @@
  *  This doesn't actually work yet.
  *============================================================================*/
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
 %name AnsiCParser
 
 %define DEBUG 1
+
+%define PARSE_PARAM \
+    const char *sigstr
 
 %define CONSTRUCTOR_PARAM \
     std::istream &in, bool trace
@@ -106,6 +109,8 @@ param_list: param ',' param_list
 
 param: type IDENTIFIER
      { $$ = new Parameter($1, $2); }
+     | ELLIPSIS
+     { $$ = new Parameter(new VoidType, "..."); }
      ;
 
 type_decl: TYPEDEF type IDENTIFIER ';'
@@ -113,11 +118,16 @@ type_decl: TYPEDEF type IDENTIFIER ';'
          ;
 
 func_decl: type IDENTIFIER '(' param_list ')' ';'
-         { Signature *sig = new Signature($2); 
+         { Signature *sig = Signature::instantiate(sigstr, $2); 
            sig->setReturnType($1);
            for (std::list<Parameter*>::iterator it = $4->begin();
                 it != $4->end(); it++)
-               sig->addParameter(*it);
+               if (std::string((*it)->getName()) != "...")
+                   sig->addParameter(*it);
+               else {
+                   sig->addEllipsis();
+                   delete *it;
+               }
            delete $4;
            signatures.push_back(sig);
          }

@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -31,6 +31,7 @@
 #include "prog.h"
 #include "exp.h"
 #include "proc.h"
+#include "boomerang.h"
 
 // The following are all dis_Num because the SSL has r[REG32], not just REG32
 // Else we will get r[r[24]]
@@ -2275,7 +2276,8 @@ DWord PentiumDecoder::getDword (unsigned lc)
  *============================================================================*/
 PentiumDecoder::PentiumDecoder() : NJMCDecoder()
 {
-  RTLDict.readSSLFile("frontend/machine/pentium/pentium.ssl");
+  std::string file = Boomerang::get()->getProgPath() + "frontend/machine/pentium/pentium.ssl";
+  RTLDict.readSSLFile(file.c_str());
 }
 
 // For now...

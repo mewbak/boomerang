@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -566,6 +566,9 @@ public:
 	// special print functions
         virtual void printAsUse(std::ostream &os);
         virtual void printAsUseBy(std::ostream &os);
+
+	// inline any constants in the statement
+	virtual void inlineConstants(Prog *prog);
 
 protected:
 	virtual void doReplaceUse(Statement *use);

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1700,6 +1700,8 @@ void UserProc::decompile() {
 	change |= propogateAndRemoveStatements();
     }
     removeInternalStatements();
+    inlineConstants();
+    signature = signature->promote(this);
 }
 
 bool UserProc::removeNullStatements()
@@ -1793,6 +1795,16 @@ void UserProc::removeInternalStatements()
 		internal.push_back(*it);
 	        removeStatement(*it);
 	    }
+}
+
+void UserProc::inlineConstants()
+{
+    std::set<Statement*> stmts;
+    getAllStatements(stmts);
+    // inline any constants in the statement
+    for (std::set<Statement*>::iterator it = stmts.begin(); it != stmts.end(); 
+		    it++)
+	    (*it)->inlineConstants(prog);
 }
 
 bool UserProc::propogateAndRemoveStatements()

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * 03 July 02 - Trent: Created
  */
 
@@ -71,6 +71,9 @@ void Statement::replaceUse(Statement *use)
 
     // do the replacement
     doReplaceUse(use);
+    std::cerr << "   after: ";
+    printAsUse(std::cerr);
+    std::cerr << std::endl;
     // update statements that use this statement
     std::set<Statement*> tmp_useBy;
     for (std::set<Statement*>::iterator it = useBy.begin(); 

@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.3 $
+/* $Revision: 1.4 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -159,6 +159,11 @@ virtual ~BinaryFile() {}			// Virtual destructor
     PSectionInfo GetSectionInfoByName(const char* sName);
     // Find the end of a section, given an address in the section
     PSectionInfo GetSectionInfoByAddr(ADDRESS uEntry) const;
+
+    // returns true if the given address is in a read only section
+    bool isReadOnly(ADDRESS uEntry) { 
+        return GetSectionInfoByAddr(uEntry)->bReadOnly;
+    }
 
 // Symbol table functions
     // Lookup the address, return the name, or 0 if not found
