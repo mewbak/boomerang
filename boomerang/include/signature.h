@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -116,7 +116,7 @@ public:
     virtual Signature *promote(UserProc *p);
     void print(std::ostream &out);
 
-    virtual void getInternalStatements(std::list<Statement*> &stmts);
+    virtual void getInternalStatements(StatementList &stmts);
 
     // Special for Mike: find the location that conventionall holds
     // the first outgoing (actual) parameter
