@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.49 $
+/* $Revision: 1.50 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -485,7 +485,8 @@ public:
 
     // prove any arbitary property of this procedure
     bool prove(Exp *query);
-    bool prover(Exp *query);    // helper function, should be private
+    // helper function, should be private
+    bool prover(Exp *query, PhiExp *lastPhi = NULL);    
 
     // promote the signature if possible
     void promoteSignature();

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.49 $
+ * $Revision: 1.50 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -765,6 +765,7 @@ bool BasicBlock::deserialize(std::istream &inf) {
 // Get First/Next Statement in a BB
 //
 Statement* BasicBlock::getFirstStmt(rtlit& rit, stmtlistIt& sit) {
+    if (m_pRtls == NULL) return NULL;
     rit = m_pRtls->begin();
     while (rit != m_pRtls->end()) {
         RTL* rtl = *rit;
