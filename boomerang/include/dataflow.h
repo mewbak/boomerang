@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -256,6 +256,9 @@ public:
     // (see Proc::propagateStatements, where numUses == 2)
             void specialReplaceRef(Statement* def);
 
+    // Remove refs to statements defining a restored location
+    virtual void removeRestoreRefs(StatementSet& rs) = 0;
+
     // statements should be printable (for debugging)
     virtual void print(std::ostream &os, bool withUses = false) = 0;
     virtual void printWithUses(std::ostream& os) {print(os, true);}
@@ -286,7 +289,8 @@ public:
     bool    isNullStatement();
 
     // To/from SSA form
-    virtual void   toSSAform(StatementSet& reachin, int memDepth) = 0;
+    virtual void   toSSAform(StatementSet& reachin, int memDepth,
+        StatementSet& rs) = 0;
     virtual void fromSSAform(igraph& igm) = 0;
 
     // Propagate to this statement

@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.29 $
+ * $Revision: 1.30 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  */
@@ -396,9 +396,14 @@ public:
     // update type for expression
     virtual Type *updateType(Exp *e, Type *curType);
 
+    // Remove refs to statements defining restored locations
+    virtual void removeRestoreRefs(StatementSet& rs) {
+        pCond->doRemoveRestoreRefs(rs); }
+
     // to/from SSA form
-    virtual void toSSAform(StatementSet& reachin, int memDepth) {
-        pCond = pCond->updateRefs(reachin, memDepth);}
+    virtual void toSSAform(StatementSet& reachin, int memDepth,
+      StatementSet& rs) {
+        pCond = pCond->updateRefs(reachin, memDepth, rs);}
     virtual void fromSSAform(igraph& ig);
 
 protected:
@@ -588,11 +593,15 @@ public:
 
     void decompile();
 
-    virtual void toSSAform(StatementSet& reachin, int memDepth);
+    // Remove refs to statements defining restored locations
+    virtual void removeRestoreRefs(StatementSet& rs);
+
+    virtual void toSSAform(StatementSet& reachin, int memDepth,
+        StatementSet& rs);
     virtual void fromSSAform(igraph& ig);
         
     // Insert actual arguments to match formal parameters
-    void    insertArguments();
+    void    insertArguments(StatementSet& rs);
 
 protected:
     virtual void doReplaceRef(Exp* from, Exp* to);
@@ -754,9 +763,15 @@ public:
     virtual bool searchAndReplace(Exp *search, Exp *replace);
     virtual Type* updateType(Exp *e, Type *curType);
     virtual void doReplaceRef(Exp* from, Exp* to);
+    // Remove refs to statements defining restored locations
+    virtual void removeRestoreRefs(StatementSet& rs) {
+        pCond->doRemoveRestoreRefs(rs);
+        pDest->doRemoveRestoreRefs(rs);}
     // to/from SSA form
-    virtual void toSSAform(StatementSet& reachin, int memdepth) {
-        pCond = pCond->updateRefs(reachin, memdepth);}
+    virtual void toSSAform(StatementSet& reachin, int memdepth,
+      StatementSet& rs) {
+        pCond = pCond->updateRefs(reachin, memdepth, rs);
+        pDest = pDest->updateRefs(reachin, memdepth, rs);}
     virtual void fromSSAform(igraph& ig);
 
 private:
