@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.22 $
+ * $Revision: 1.23 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -226,7 +226,7 @@ void FrontEnd::readLibrarySignatures(const char *sPath, bool win32) {
     p->yyparse(s.c_str());
 
     for (std::list<Signature*>::iterator it = p->signatures.begin();
-     it != p->signatures.end(); it++)
+         it != p->signatures.end(); it++)
         librarySignatures[(*it)->getName()] = *it;
 
     delete p;

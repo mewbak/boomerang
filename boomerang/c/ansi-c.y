@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -113,7 +113,7 @@ param: type IDENTIFIER
      { $$ = new Parameter($1, $2); }
      | type '(' '*' IDENTIFIER ')' '(' param_list ')'
      { Signature *sig = Signature::instantiate(sigstr, NULL);
-       sig->setReturnType($1);
+       sig->addReturn($1);
        for (std::list<Parameter*>::iterator it = $7->begin();
             it != $7->end(); it++)
            if (std::string((*it)->getName()) != "...")
@@ -135,7 +135,7 @@ type_decl: TYPEDEF type IDENTIFIER ';'
 
 func_decl: type IDENTIFIER '(' param_list ')' ';'
          { Signature *sig = Signature::instantiate(sigstr, $2); 
-           sig->setReturnType($1);
+           sig->addReturn($1);
            for (std::list<Parameter*>::iterator it = $4->begin();
                 it != $4->end(); it++)
                if (std::string((*it)->getName()) != "...")

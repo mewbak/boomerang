@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.52 $
+ * $Revision: 1.53 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -673,7 +673,7 @@ virtual Exp* clone();
 virtual int getNumRefs() {return stmtVec.size();}
     void    addUsedLocs(LocationSet& used);
     virtual Exp *fixCallRefs();
-virtual Exp*   addSubscript(Statement* def) {assert(0);}
+virtual Exp*   addSubscript(Statement* def) {assert(0); return NULL; }
     Statement* getAt(int idx) {return stmtVec.getAt(idx);}
     void       putAt(int idx, Statement* d) {stmtVec.putAt(idx, d);}
     Statement* getFirstRef(StmtVecIter& it) {return stmtVec.getFirst(it);}

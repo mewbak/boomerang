@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -665,7 +665,10 @@ void CHLLCode::AddProcStart(Signature *signature)
 {
     char s[1024];
     s[0] = 0;
-    appendType(s, signature->getReturnType());
+    if (signature->getNumReturns() == 0) {
+        strcat(s, "void");
+    }  else 
+        appendType(s, signature->getReturnType(0));
     strcat(s, " ");
     strcat(s, signature->getName());
     strcat(s, "(");

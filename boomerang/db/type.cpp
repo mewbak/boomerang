@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  */
@@ -381,7 +381,11 @@ const char *FuncType::getCtype() const
 {
     if (signature == NULL)
 	return "void (void)"; 
-    std::string s = signature->getReturnType()->getCtype();
+    std::string s; 
+    if (signature->getNumReturns() == 0)
+        s += "void";
+    else 
+        s += signature->getReturnType(0)->getCtype();
     s += " (";
     for (int i = 0; i < signature->getNumParams(); i++) {
        if (i != 0) s += ", ";

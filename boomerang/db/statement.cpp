@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1964,9 +1964,7 @@ void CallStatement::setSigArguments() {
             arguments.push_back(procDest->getSignature()->
                             getArgumentExp(arguments.size())->clone());
     }
-    UserProc *u = dynamic_cast<UserProc*>(procDest);
-    if (u)
-        u->addCaller(this);
+    procDest->addCaller(this);
 
     // initialize returns
     for (int i = 0; i < procDest->getSignature()->getNumReturns(); i++)
@@ -2436,6 +2434,17 @@ void CallStatement::processConstants(Prog *prog) {
                                      new Unary(opMemOf, arguments[i]));
         }
 #endif
+    }
+
+    // hack
+    if (getDestProc() && getDestProc()->isLib()) {
+        Exp *esp = Unary::regOf(28);
+        if (getDestProc()->getSignature()->getNumParams() >= 1 &&
+            *getDestProc()->getSignature()->getParamExp(0) == *esp) {
+            getDestProc()->removeParameter(esp);
+            getDestProc()->removeReturn(esp);
+        }
+        delete esp;
     }
 
     // This code was in CallStatement:doReplaceRef()
