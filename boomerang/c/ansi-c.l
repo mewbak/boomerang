@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
@@ -48,6 +48,7 @@ public: \
 private: \
     void count(); \
     void comment(); \
+    void commentEOL(); \
     int check_type();
 
 %define LEX_PARAM YY_AnsiCParser_STYPE &yylval
@@ -62,6 +63,7 @@ private: \
 ^#line                  { count(); return AnsiCParser::PRELINE; }
 
 "/*"			{ comment(); }
+"//"            { commentEOL(); }
 
 "auto"			{ count(); return AnsiCParser::AUTO; }
 "break"			{ count(); return AnsiCParser::BREAK; }
@@ -190,6 +192,13 @@ loop:
 	if (c != 0)
 		/*putchar(c1)*/;
 }
+
+void AnsiCScanner::commentEOL()
+{
+    char c;
+    while ((c = input()) != '\n')
+        ;
+} 
 
 void AnsiCScanner::count()
 {
