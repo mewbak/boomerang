@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.43 $
+ * $Revision: 1.44 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -847,7 +847,7 @@ void CHLLCode::AddProcStart(Signature *signature)
             Exp *foo = new Const("foo123412341234");
             m_proc->searchAndReplace(Location::memOf(
                                         Location::param(
-                                          signature->getParamName(i))), 
+                                          signature->getParamName(i)), NULL), 
                                      foo);
             m_proc->searchAndReplace(Location::param(
                                        signature->getParamName(i)), 
