@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -265,6 +265,7 @@ public:
 
     Cluster *getRootCluster() { return m_rootCluster; }
     Cluster *findCluster(const char *name) { return m_rootCluster->find(name); }
+    bool clusterUsed(Cluster *c);
 
 protected:
     BinaryFile* pBF;                    // Pointer to the BinaryFile object for the program
