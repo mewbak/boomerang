@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.20 $
+/* $Revision: 1.21 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -150,7 +150,7 @@ private:
 
 
 #ifdef _WIN32
-#ifdef _MSC_VER			// If don't use dllexport, get Vtable undefined!
+#if defined _MSC_VER || defined BUILDING_LIBBINARYFILE			// If don't use dllexport, get Vtable undefined!
 #define IMPORT_BINARYFILE __declspec(dllexport)
 #else
 #define IMPORT_BINARYFILE __declspec(dllimport)
