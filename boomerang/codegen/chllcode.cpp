@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.87 $
+ * $Revision: 1.88 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -38,6 +38,7 @@
 #include "signature.h"
 #include "boomerang.h"
 #include "type.h"
+#include "util.h"
 #include <sstream>
 
 extern char *operStrings[];
@@ -141,7 +142,9 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 			// What to do with precision here?
 			str << c->getFlt(); break;
 		case opStrConst:
-			str << "\"" << c->getStr() << "\""; break;
+			// escape string:
+			str << "\"" << escapeStr(c->getStr()) << "\"";
+            break;
 		case opFuncConst:
 			str << c->getFuncName(); break;
 		case opAddrOf: {

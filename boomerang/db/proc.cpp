@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.235 $
+ * $Revision: 1.236 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -3518,7 +3518,7 @@ if (!cc->first->isTypeOf()) continue;
 					char* str = prog->getStringConstant(val, true);
 					if (str) {
 						// Make a string
-						con->setStr(escapeStr(str));
+						con->setStr(str);
 						con->setOper(opStrConst);
 					}
 				}

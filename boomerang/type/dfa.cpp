@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.27 $
+ * $Revision: 1.28 $
  *
  * 24/Sep/04 - Mike: Created
  */
@@ -129,7 +129,7 @@ void UserProc::dfaTypeAnalysis() {
 					char* str = prog->getStringConstant(val, true);
 					if (str) {
 						// Make a string
-						con->setStr(escapeStr(str));
+						con->setStr(str);
 						con->setOper(opStrConst);
 					}
 				} else if (baseType->resolvesToInteger() || baseType->resolvesToFloat()) {

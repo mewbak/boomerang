@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.144 $
+ * $Revision: 1.145 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2195,7 +2195,7 @@ Exp *processConstant(Exp *e, Type *t, Prog *prog, UserProc* proc) {
 				ADDRESS u = ((Const*)e)->getAddr();
 				char *str = prog->getStringConstant(u, true);
 				if (str) {
-					e = new Const(escapeStr(str));
+					e = new Const(str);
 					// Check if we may have guessed this global incorrectly (usually as an array of char)
 					const char* nam = prog->getGlobalName(u);
 					if (nam) prog->setGlobalType(nam,
