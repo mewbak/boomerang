@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.91 $
+ * $Revision: 1.92 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1293,7 +1293,7 @@ Exp* Exp::searchReplaceAll(Exp* search, Exp* replace, bool& change,
     std::list<Exp**>::iterator it;
     for (it = li.begin(); it != li.end(); it++) {
         Exp** pp = *it;
-        if (*pp) delete *pp;        // Delete any existing
+        //if (*pp) delete *pp;        // Delete any existing
         *pp = replace->clone();     // Do the replacement
         if (once) {
             change = true;
