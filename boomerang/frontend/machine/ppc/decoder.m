@@ -12,7 +12,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.21 $
+/* $Revision: 1.22 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -61,6 +61,8 @@ Exp*	crBit(int bitNum);	// Get an expression for a CR bit access
 #define DIS_BICR	(new Const(BIcr))
 #define DIS_RS_NUM	(new Const(rs))
 #define DIS_RD_NUM	(new Const(rd))
+#define DIS_BEG		(new Const(beg))
+#define DIS_END		(new Const(end))
 
 #define PPC_COND_JUMP(name, size, relocd, cond, BIcr) \
 	result.rtl = new RTL(pc, stmts); \
@@ -175,6 +177,10 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 
 	| Xd_ (rd) [name] =>
 		stmts = instantiate(pc, name, DIS_RD);
+
+   	| M_^Rc(ra, rs, uimm, beg, end) [name] =>
+		stmts = instantiate(pc, name, DIS_RA, DIS_RS, DIS_UIMM, DIS_BEG, DIS_END);
+
 
 	| bl (reladdr) [name] =>
 		Exp* dest = DIS_RELADDR;
