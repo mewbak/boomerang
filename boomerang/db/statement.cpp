@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.32 $
+ * $Revision: 1.33 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2592,7 +2592,7 @@ void ReturnStatement::simplify() {
 
 void ReturnStatement::setSigArguments() {
     for (int i = 0; i < proc->getSignature()->getNumReturns(); i++)
-        returns.push_back(proc->getSignature()->getReturnExp(i));
+        returns.push_back(proc->getSignature()->getReturnExp(i)->clone());
 }
 
 void ReturnStatement::removeReturn(int n)

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -892,6 +892,13 @@ protected:
  * ReturnStatement: represents a high level return.
  *============================================================================*/
 class ReturnStatement: public GotoStatement {
+protected:
+    // number of bytes that this return pops
+    int nBytesPopped;
+
+    // value returned
+    std::vector<Exp*> returns;
+
 public:
     ReturnStatement();
     ~ReturnStatement();
@@ -954,13 +961,7 @@ public:
     void removeReturn(int n);
     void addReturn(Exp *e);
 
-protected:
-    // number of bytes that this return pops
-    int nBytesPopped;
-
-    // value returned
-    std::vector<Exp*> returns;
-};
+};  // class ReturnStatement
 
 
 /*==============================================================================
