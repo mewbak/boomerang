@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.105 $
+ * $Revision: 1.106 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2456,7 +2456,7 @@ bool ReturnStatement::doReplaceRef(Exp* from, Exp* to) {
  * RETURNS:          <N/a>
  *============================================================================*/
 BoolStatement::BoolStatement(int sz): jtCond((BRANCH_TYPE)0), pCond(NULL),
-  pDest(NULL), size(sz) {
+  bFloat(false), pDest(NULL), size(sz) {
     kind = STMT_BOOL;
 }
 
