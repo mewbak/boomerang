@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3292,12 +3292,12 @@ void Assign::processConstants(Prog* prog) {
 }
 
 // generate constraints
-void Assign::generateConstraints(LocationSet& cons) {
-    Exp* con = rhs->constrainTo(new Unary(opTypeOf, lhs->clone()));
+void Assign::genConstraints(LocationSet& cons) {
+    Exp* con = rhs->genConstraints(new Unary(opTypeOf, lhs->clone()));
     if (con) cons.insert(con);
 }
 
-void CallStatement::generateConstraints(LocationSet& cons) {
+void CallStatement::genConstraints(LocationSet& cons) {
     Proc* dest = getDestProc();
     Signature* destSig = dest->getSignature();
     // Generate a constraint for the type of each actual argument to be equal

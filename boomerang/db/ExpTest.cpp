@@ -4,7 +4,7 @@
  *              tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  *
  * 05 Apr 02 - Mike: Fixed problems caused by lack of clone() calls
  * 09 Apr 02 - Mike: Compare, searchReplace
@@ -650,7 +650,7 @@ void ExpTest::testSimplifyBinary() {
     CPPUNIT_ASSERT(*b == *expb2);
     delete b; delete expb2;
 
-    std::string expected("(((0 + v[a]) - 0) | 0) \\/ 0");
+    std::string expected("(((0 + v[a]) - 0) | 0) or 0");
     std::ostringstream ost;
     Exp* e =
         new Binary(opOr,

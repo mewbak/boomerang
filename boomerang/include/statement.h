@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -376,8 +376,8 @@ public:
     // Only Assign overrides at present
     virtual void fixSuccessor() {}
 
-    // generateConstraints
-    virtual void generateConstraints(LocationSet& cons) {}
+    // Generate constraints
+    virtual void genConstraints(LocationSet& cons) {}
 
 protected:
     virtual void doReplaceRef(Exp* from, Exp* to) = 0;
@@ -491,8 +491,8 @@ public:
     // fixSuccessor (succ(r2) -> r3)
     virtual void fixSuccessor();
 
-    // generateConstraints
-    virtual void generateConstraints(LocationSet& cons);
+    // generate Constraints
+    virtual void genConstraints(LocationSet& cons);
 
 protected:
     virtual void doReplaceRef(Exp* from, Exp* to);
@@ -871,8 +871,8 @@ public:
     void setDestProc(Proc* dest);
     Proc* getDestProc();
 
-    // generateConstraints
-    virtual void generateConstraints(LocationSet& cons);
+    // Generate constraints
+    virtual void genConstraints(LocationSet& cons);
 
     // serialize this rtl
     virtual bool serialize_rest(std::ostream &ouf);

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.114 $
+ * $Revision: 1.115 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2549,7 +2549,7 @@ void UserProc::typeAnalysis(Prog* prog) {
     // For each statement this proc
     for (Statement* s = stmts.getFirst(ss); s; s = stmts.getNext(ss)) {
         cons.clear();
-        s->generateConstraints(cons);
+        s->genConstraints(cons);
         consObj.addConstraints(cons);
         if (DEBUG_TA)
             std::cerr << s << "\n" << &cons << "\n";
