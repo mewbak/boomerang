@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.52 $
+ * $Revision: 1.53 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -729,8 +729,18 @@ void Unary::print(std::ostream& os, bool withUses) {
         //  //  //  //  //  //  //
         //  x[ subexpression ]  //
         //  //  //  //  //  //  //
-        case opRegOf:   case opMemOf:
-        case opAddrOf:  case opVar:
+        case opRegOf:
+            // Make a special case for the very common case of r[intConst]
+            if (p1->isIntConst()) {
+                os << "r" << ((Const*)p1)->getInt();
+                break;
+            } else if (p1->isTemp()) {
+                // Just print the temp {
+                p1->print(os, withUses);
+                break;
+            }
+            // Else fall through
+        case opMemOf: case opAddrOf:  case opVar:
             switch (op) {
                 case opRegOf: os << "r["; break;
                 case opMemOf: os << "m["; break;
