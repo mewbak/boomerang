@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.61 $
+ * $Revision: 1.62 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1747,19 +1747,19 @@ void CallStatement::doReplaceRef(Exp* from, Exp* to) {
 
 Exp* CallStatement::getArgumentExp(int i)
 {
-    assert(i < arguments.size());
+    assert(i < (int)arguments.size());
     return arguments[i];
 }
 
 Exp* CallStatement::getImplicitArgumentExp(int i)
 {
-    assert(i < implicitArguments.size());
+    assert(i < (int)implicitArguments.size());
     return implicitArguments[i];
 }
 
 void CallStatement::setArgumentExp(int i, Exp *e)
 {
-    assert(i < arguments.size());
+    assert(i < (int)arguments.size());
     arguments[i] = e->clone();
 }
 
