@@ -4,7 +4,7 @@
  *              tests the Proc class
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 23 Apr 02 - Mike: Created
  */
@@ -18,7 +18,6 @@
 
 class ProcTest : public CppUnit::TestCase {
   protected:
-    Prog*  m_prog;
     Proc*  m_proc;
     
 
