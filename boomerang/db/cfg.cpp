@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  * 18 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -988,9 +988,13 @@ bool Cfg::compressCfg()
                 }
                 if (!allReach) continue;
                 Exp *priorcond = prior->getCondExpr()->clone();
+                if (priorcond == NULL) 
+                    continue;
                 Exp *revpriorcond = new Unary(opNot,
                   prior->getCondExpr()->clone());
                 Exp *cond = jcond->getCondExpr();
+                if (cond == NULL)
+                    continue;
                 revpriorcond = revpriorcond->simplify();
                 if (bb->getOutEdges()[0] != prev) {
                     Exp *tmp = priorcond;

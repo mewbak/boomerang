@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -118,8 +118,10 @@ public:
 	void setWatcher(ProgWatcher *p) { m_watcher = p; }
 
         void decode(ADDRESS a) { 
-            if (findProc(a) == NULL)
+            if (findProc(a) == NULL) {
                 pFE->decode(this, a);
+                analyse();
+            }
         }
 
 	// Well form all the procedures/cfgs in this program

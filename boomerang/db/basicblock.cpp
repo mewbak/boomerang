@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1399,6 +1399,14 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
             // after emmitting a 'return' statement
             if (getType() == RET) {
                 hll->AddReturnStatement(indLevel, getReturnVal());
+                return;
+            }
+
+            // return if this doesn't have any out edges (emit a warning)
+            if (m_OutEdges.size() == 0) {
+                std::cerr << "WARNING: no out edge for BB: " << std::endl;
+                this->print(std::cerr, false);
+                std::cerr << std::endl;
                 return;
             }
 
