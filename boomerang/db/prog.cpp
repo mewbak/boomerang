@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.121 $
+ * $Revision: 1.122 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -133,6 +133,24 @@ bool Prog::wellForm() {
 	return wellformed;
 }
 
+// last fixes after decoding everything
+// was in analysis.cpp
+void Prog::finishDecode()
+{
+	for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end(); it++) {
+		Proc *pProc = *it;
+
+		if (pProc->isLib()) continue;
+		UserProc *p = (UserProc*)pProc;
+		if (!p->isDecoded()) continue;
+		
+		p->assignProcsToCalls();
+		p->finalSimplify();
+		
+	}
+
+}
+
 // Analyse any procedures that are decoded
 void Prog::analyse() {
 	Analysis *analysis = new Analysis();
@@ -148,7 +166,6 @@ void Prog::analyse() {
 
 		// decoded userproc.. analyse it
 		p->getCFG()->sortByAddress();
-		analysis->analyse(p);
 		p->printAnalysedXML();
 	}
 	delete analysis;

@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of all of Boomerang
  *============================================================================*/
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  * 15 Jul 02 - Mike: Created from testDbase
 */
 
@@ -23,7 +23,6 @@
 #include "TypeTest.h"
 #include "FrontSparcTest.h"
 #include "FrontPentTest.h"
-#include "AnalysisTest.h"
 #include "CTest.h"
 #include "CfgTest.h"
 
@@ -46,7 +45,6 @@ int main(int argc, char** argv)
 	FrontSparcTest fst("SPARC Frontend Test");
 //	  FrontendTest fet("FrontendTest");
 	FrontPentTest fpt("Pentium Frontend Test");
-	AnalysisTest ant("Analysis Test");
 	CTest ct("C Parser Test");
 	StatementTest stt("Statement Test");
 	CfgTest cfgt("Cfg Test");
@@ -60,7 +58,6 @@ int main(int argc, char** argv)
 	typet.registerTests(&suite);
 	fst.registerTests(&suite);
 	fpt.registerTests(&suite);
-	ant.registerTests(&suite);
 	ct.registerTests(&suite);
 	stt.registerTests(&suite);
 	cfgt.registerTests(&suite);
