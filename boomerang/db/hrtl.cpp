@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.45 $
+ * $Revision: 1.46 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -1383,6 +1383,7 @@ void HLCall::simplify() {
     }
 }
 
+#if 0
 void HLCall::decompile() {
     if (procDest) { 
         UserProc *p = dynamic_cast<UserProc*>(procDest);
@@ -1396,6 +1397,7 @@ void HLCall::decompile() {
         // TODO: indirect call
     }
 }
+#endif
 
 void HLCall::clearLiveEntry() {
     if (procDest && procDest->isLib()) return;

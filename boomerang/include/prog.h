@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.22 $
+ * $Revision: 1.23 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -164,6 +164,11 @@ public:
 
     // Do decompilation
     void decompile();
+
+    // All that used to be done in UserProc::decompile, but now done globally.
+    // propagation, recalc DFA, remove null and unused statements, compressCfg,
+    // process constants, promote signature, simplify a[m[]].
+    void decompileProcs();
 
     // Generate dotty file
     void generateDotFile();

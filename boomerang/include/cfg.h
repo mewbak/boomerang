@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.30 $
+ * $Revision: 1.31 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -487,9 +487,6 @@ public:
      */
     void toSSAform(int memDepth);
     void fromSSAform();
-
-    // Propagate, but do not remove statements
-    bool        propagateStatements(int memDepth);
 
 protected:
     // This is the set of statements whose definitions reach the end of this BB
