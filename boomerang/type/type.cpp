@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -740,7 +740,8 @@ void Type::addNamedType(const char *name, Type *type)
 {
     if (namedTypes.find(name) != namedTypes.end()) {
         if (*type != *namedTypes[name]) {
-            std::cerr << "addNamedType: type " << type->getCtype() << " != " <<
+            std::cerr << "addNamedType: name " << name <<
+                " type " << type->getCtype() << " != " <<
                 namedTypes[name]->getCtype() << "\n" << std::flush;
             assert(false);
         }
