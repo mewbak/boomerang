@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -741,6 +741,9 @@ Exp *Signature::getReturnExp()
 
 Type *Signature::getReturnType()
 {
+    if ((rettype == NULL || rettype->isVoid()) && returns.size() == 1) {
+        rettype = returns[0]->getType();
+    }
     return rettype;
 }
 
