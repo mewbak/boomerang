@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.127 $
+ * $Revision: 1.128 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -514,6 +514,11 @@ bool TypedExp::operator-=(const Exp& o) const {
 bool Const::operator< (const Exp& o) const {
     if (op < o.getOper()) return true;
     if (op > o.getOper()) return false;
+    if (conscript) {
+        if (conscript < ((Const&)o).conscript) return true;
+        if (conscript > ((Const&)o).conscript) return false;
+    } else
+        if (((Const&)o).conscript) return true;
     switch (op) {
         case opIntConst:
             return u.i < ((Const&)o).u.i;
@@ -1758,7 +1763,7 @@ Exp* Exp::simplify() {
 }
 
 /*==============================================================================
- * FUNCTION:        Unary::simplify etc
+ * FUNCTION:        Unary::polySimplify etc
  * OVERVIEW:        Do the work of simplification
  * NOTE:            User must ;//delete result
  * NOTE:            Address simplification (a[ m[ x ]] == x) is done separately
@@ -4021,4 +4026,17 @@ void RefExp::printx(int ind) {
     std::cerr << "{" << std::dec << ((def == 0) ? 0 : def->getNumber()) <<
       "}\n" << std::flush;
     child(subExp1, ind);
+}
+
+char* Exp::getAnyStrConst() {
+    Exp* e = this;
+    if (op == opAddrOf) {
+        e = ((Location*)this)->getSubExp1();
+        if (e->op == opSubscript)
+            e = ((Unary*)e)->getSubExp1();
+        if (e->op == opMemOf)
+            e = ((Location*)e)->getSubExp1();
+    }
+    if (e->op != opStrConst) return NULL;
+    return ((Const*)e)->getStr();
 }

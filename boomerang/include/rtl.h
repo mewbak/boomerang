@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -167,7 +167,7 @@ public:
     char* prints();
 
     // Set all the "constant subscripts" (conscripts) in this RTL
-    void    setConscripts();
+    int     setConscripts(int n);
 
 };
 

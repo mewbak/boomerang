@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.89 $
+ * $Revision: 1.90 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -158,6 +158,8 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
     bool isIntConst() {return op == opIntConst;}
     // True if is string const
     bool isStrConst() {return op == opStrConst;}
+    // Get string constant even if mangled
+    char* getAnyStrConst();
     // True if is flt point const
     bool isFltConst() {return op == opFltConst;}
     // True if is a post-var expression (var_op' in SSL file)
