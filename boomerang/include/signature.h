@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -15,6 +15,7 @@
 #define __SIGNATURE_H_
 
 class Statement;
+class BinaryFile;
 
 // Used to represent local variables (registers, stack locations, etc)
 class Local {
