@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.24 $
+ * $Revision: 1.25 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1031,7 +1031,8 @@ void UserProc::decompile() {
 #endif
 
     if (VERBOSE) {
-        print(std::cerr /*,true*/);
+        print(std::cerr, false);    // First time no df so it's readable!
+        print(std::cerr, true);
     }
     bool change = true;
     while (change) {
