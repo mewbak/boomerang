@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.146 $
+ * $Revision: 1.147 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3259,6 +3259,10 @@ bool Assign::searchAndReplace(Exp* search, Exp* replace) {
 bool PhiAssign::searchAndReplace(Exp* search, Exp* replace) {
 	bool change = false;
 	lhs = lhs->searchReplaceAll(search, replace, change);
+	std::vector<PhiInfo>::iterator it;
+	for (it = defVec.begin(); it != defVec.end(); it++)
+		// Assume that the definitions will also be replaced
+		it->e = it->e->searchReplaceAll(search, replace, change);
 	return change;
 }
 bool ImplicitAssign::searchAndReplace(Exp* search, Exp* replace) {
