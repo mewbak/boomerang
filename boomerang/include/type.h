@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.37 $
+ * $Revision: 1.38 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *					floats > 64 bits to be the same
@@ -354,6 +354,8 @@ virtual bool	isPointer() const { return true; }
 		Type	*getPointsTo() { return points_to; }
 static PointerType* newPtrAlpha();
 		bool	pointsToAlpha();
+		int		pointerDepth();		// Return 2 for **x
+		Type*	getFinalPointsTo();	// Return x for **x
 
 virtual Type*	clone() const;
 
