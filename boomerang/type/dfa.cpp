@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 24/Sep/04 - Mike: Created
  */
@@ -187,7 +187,7 @@ void UserProc::dfaTypeAnalysis() {
 // c) broad type only, e.g. floating point
 // d) signedness, no size
 // e) size, no signedness
-// f) broad type, size, and (for integer broad type), 
+// f) broad type, size, and (for integer broad type), signedness
 
 // ch set true if any change
 
