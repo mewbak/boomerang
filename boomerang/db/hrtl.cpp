@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -1332,17 +1332,18 @@ void HLCall::decompile()
     UserProc *p = dynamic_cast<UserProc*>(procDest);
     if (p != NULL)
             p->decompile();
-        procDest->getInternalStatements(internal);
-        // init arguments
-        assert(arguments.size() == 0);
-        arguments.resize(procDest->getSignature()->getNumParams());
-        for (int i = 0; i < procDest->getSignature()->getNumParams(); i++)
-            arguments[i] = procDest->getSignature()->getArgumentExp(i)->clone();
-        if (procDest->getSignature()->hasEllipsis()) {
+    procDest->getInternalStatements(internal);
+    // init arguments
+    assert(arguments.size() == 0);
+    arguments.resize(procDest->getSignature()->getNumParams());
+    for (int i = 0; i < procDest->getSignature()->getNumParams(); i++)
+        arguments[i] = procDest->getSignature()->getArgumentExp(i)->clone();
+    if (procDest->getSignature()->hasEllipsis()) {
+        // Just guess 10 parameters for now
         for (int i = 0; i < 10; i++)
             arguments.push_back(procDest->getSignature()->
-                getArgumentExp(arguments.size())->clone());
-        }
+              getArgumentExp(arguments.size())->clone());
+    }
     // init return location
     returnLoc = procDest->getSignature()->getReturnExp();
     if (returnLoc) returnLoc = returnLoc->clone();
