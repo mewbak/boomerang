@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.80 $
+ * $Revision: 1.81 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -911,6 +911,8 @@ void Prog::printCallGraph() {
     while (queue.size()) {
         Proc *p = queue.front();
         queue.erase(queue.begin());
+        if ((unsigned)p == NO_ADDRESS)
+            continue;
         if (seen.find(p) == seen.end()) {
             seen.insert(p);
             int n = spaces[p];
