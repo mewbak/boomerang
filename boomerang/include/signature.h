@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -57,7 +57,6 @@ protected:
 
 public:
 	Signature(const char *nam);
-	static Signature *DefaultLibrarySignature(const char *nam);
 	static Signature *instantiate(const char *str, const char *nam);
 	virtual ~Signature() { }
 

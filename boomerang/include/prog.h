@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -129,6 +129,9 @@ public:
 	// Decode any undecoded procedures
 	void decode();
 
+	// Analyse any decoded procedures
+	void analyse();
+
 	// map for global symbols
 	std::map<std::string, TypedExp *> symbols;
 
@@ -141,10 +144,6 @@ public:
     // Public map from function name (string) to signature (list of Types).
     // One day we may named library parameters).
     std::map<std::string, Signature* > mapLibParam;
-
-    // Public dictionary of instruction patterns, and other information
-    // summarised from the SSL file (e.g. source machine's endianness)
-    RTLInstDict RTLDict;
 
     // Pointer to the BinaryFile object for the program, which contains the
     // program image. Created in main()
@@ -191,6 +190,6 @@ protected:
 }; 
 
 // Declare the global Prog object
-extern Prog prog;
+//extern Prog *prog;
 
 #endif

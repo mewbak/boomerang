@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of the analysis functions
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 10 Jul 02 - Mike: Created
  */
 
@@ -14,9 +14,6 @@
 #include "AnalysisTest.h"
 #include "prog.h"
 #include <iostream>
-
-// The dreaded Prog global
-Prog prog;
 
 int main(int argc, char** argv)
 {

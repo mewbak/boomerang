@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of all of Boomerang
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 15 Jul 02 - Mike: Created from testDbase
 */
 
@@ -27,9 +27,6 @@
 
 #include <sstream>
 #include <iostream>
-
-// The ugly global
-Prog prog;
 
 int main(int argc, char** argv)
 {

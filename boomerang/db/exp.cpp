@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -41,9 +41,6 @@
 #include "operstrings.h"// Defines a large array of strings for the
                         // createDotFile functions. Needs -I. to find it
 #include "util.h"
-
-// Global (shame)
-extern Prog prog;
 
 /*==============================================================================
  * FUNCTION:        Const::Const etc
