@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 # 20 Jul 04 - Mike: Fixed FISUB, FISUBR
@@ -141,6 +141,11 @@ SUBFLAGS32(op1, op2, result)  {
             *1* %ZF := [result = 0?1:0]
 #           *1*  %PF := ??
 #           *1*  %AF := ??                  # unpacked BCD
+};
+
+SUBFLAGSFL(op1, op2) {
+			*1* %CF := op1 < op2
+			*1* %ZF := op1 = op2
 };
 
 LOGICALFLAGS8(result)  {
@@ -1908,12 +1913,23 @@ FUCOM       i
             *80* tmpD := %st -f i
             SETFFLAGS(%st, i);
 
+FUCOMI.ST.STi	i 
+			*80* tmpD := %st -f i
+			SUBFLAGSFL(%st, i);
+
 FUCOMP      i 
             *80* tmpD1 := %st
             *80* tmpD2 := i
             *80* tmpD := %st -f i
             FPOP
             SETFFLAGS(tmpD1, tmpD2);
+
+FUCOMIP.ST.STi	i 
+            *80* tmpD1 := %st
+            *80* tmpD2 := i
+            *80* tmpD := %st -f i
+            FPOP
+            SUBFLAGSFL(tmpD1, tmpD2);
 
 FUCOMPP    
             *80* tmpD1 := %st
