@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.56 $
+ * $Revision: 1.57 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -226,6 +226,17 @@ void FrontEnd::decode(Prog *prog, ADDRESS a) {
     }
     prog->wellForm();
 }
+
+// a should be the address of a UserProc
+void FrontEnd::decodeOnly(Prog *prog, ADDRESS a) {
+    UserProc* p = (UserProc*)prog->setNewProc(a);
+    assert(!p->isLib());
+    std::ofstream os;
+    if (processProc(p->getNativeAddress(), p, os))
+        p->setDecoded();
+    prog->wellForm();
+}
+
 
 void FrontEnd::decodeFragment(UserProc* proc, ADDRESS a) {
     std::ofstream os;
