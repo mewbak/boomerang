@@ -18,7 +18,7 @@
  *============================================================================*/
  
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  *
  * 27 Apr 02 - Mike: Mods for boomerang
  * 17 Jul 02 - Mike: readSSLFile resets internal state as well
@@ -452,7 +452,7 @@ std::list<Statement*>* RTLInstDict::instantiateRTL(RTL& rtl,
         }
         (*rt)->fixSuccessor();
         if (Boomerang::get()->debugDecoder)
-            std::cerr << "          " << *rt << "\n";
+            std::cout << "          " << *rt << "\n";
     }
 
     transformPostVars( newList, true );
