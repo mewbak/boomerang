@@ -14,7 +14,7 @@
 # (C) 2001 The University of Queensland, BT group
 ################################################################################
 
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 #    Apr 01 - Simon: Created
 # 01 May 01 - Mike: Worked around a problem with BORR_VAL; ARITH_CB needed {};
@@ -286,7 +286,7 @@ AND             r1, r2, t, c_c
 
                 
 ANDCM           r1, r2, t, c_c
-                *32* r[t] := r[r1] & ~r[r2];
+                *32* r[tmp1] := r[r1] & ~r[r2];
 
 add_conds := { $adds, "ADDL", "OR", "XOR", "AND", "ANDCM" };
 sub_conds := { $subs };
