@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.13 $
+/* $Revision: 1.14 $
  * This file contains the definition of the Win32BinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
 */
@@ -35,11 +35,11 @@
 // Given a little endian value x, load its value assuming little endian order
 // Note: must be able to take address of x
 // Note: Unlike the LH macro in BinaryFile.h, the paraeter is not a pointer
-#define LMMH(x) ((int)((Byte *)(&x))[0] + ((int)((Byte *)(&x))[1] << 8) + \
-	((int)((Byte *)(&x))[2] << 16) + ((int)((Byte *)(&x))[3] << 24))
-// With this one, x IS a pointer
-#define LMMH2(x) ((int)((Byte *)(x))[0] + ((int)((Byte *)(x))[1] << 8) + \
-	((int)((Byte *)(x))[2] << 16) + ((int)((Byte *)(x))[3] << 24))
+#define LMMH(x) ((unsigned)((Byte *)(&x))[0] + ((unsigned)((Byte *)(&x))[1] << 8) + \
+	((unsigned)((Byte *)(&x))[2] << 16) + ((unsigned)((Byte *)(&x))[3] << 24))
+// With this one, x IS a pounsigneder
+#define LMMH2(x) ((unsigned)((Byte *)(x))[0] + ((unsigned)((Byte *)(x))[1] << 8) + \
+	((unsigned)((Byte *)(x))[2] << 16) + ((unsigned)((Byte *)(x))[3] << 24))
 
 typedef struct {				/* exe file header, just the signature really */
 		 Byte	sigLo;			/* .EXE signature: 0x4D 0x5A	 */
