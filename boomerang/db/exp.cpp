@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.33 $
+ * $Revision: 1.34 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2610,4 +2610,12 @@ Exp* Exp::killFill() {
         **it = ((Ternary*)(**it))->becomeSubExp3();
     }
     return res;
+}
+
+bool Exp::isTemp() {
+    if (op == opTemp) return true;
+    if (op != opRegOf) return false;
+    // Some old code has r[tmpb] instead of just tmpb
+    Exp* sub = ((Unary*)this)->getSubExp1();
+    return sub->op == opTemp;
 }
