@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 = Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -520,6 +520,8 @@ Exp *CallingConvention::StdC::PentiumSignature::getArgumentExp(unsigned int n)
 {
 	assert(n < pnames.size());
 	Exp *esp = new Unary(opRegOf, new Const(28));
+        if (n == 0)
+	    return new Unary(opMemOf, esp);
 	return new Unary(opMemOf, new Binary(opPlus, esp, new Const(n * 4)));
 }
 
@@ -1012,4 +1014,14 @@ Signature *Signature::instantiate(const char *str, const char *nam)
 	// insert other conventions here
 	assert(false);
 	return NULL;
+}
+
+void Signature::print(std::ostream &out)
+{
+    out << name << "(";
+    for (int i = 0; i < pnames.size(); i++) {
+        out << pnames[i];
+        if (i != pnames.size()-1) out << ", ";
+    }
+    out << ")" << std::endl;
 }

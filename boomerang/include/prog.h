@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -120,6 +120,9 @@ public:
 
 	// Analyse any decoded procedures
 	void analyse();
+
+        // Print this program (primarily for debugging)
+        void print(std::ostream &out);
 
 	// map for global symbols
 	std::map<std::string, TypedExp *> symbols;

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -327,6 +327,9 @@ void RTL::print(std::ostream& os /*= cout*/) {
     {
         if (bFirst) os << " ";
         else        os << std::setw(9) << " ";
+        //if ((*p)->isAssign()) 
+        //    ((AssignExp*)(*p))->printWithLives(os);
+        //else
         (*p)->print(os);
         os << "\n";
         bFirst = false;

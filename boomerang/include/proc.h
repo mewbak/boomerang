@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.4 $
+/* $Revision: 1.5 $
  * 11 Mar 98 - Cristina  
  *  replaced BOOL for bool type (C++'s), same for TRUE and FALSE.
  * 18 Mar 98 - Cristina 
@@ -367,6 +367,9 @@ public:
 
 	// code generation
 	bool generateCode(HLLCode &hll);
+
+        // print this proc, mainly for debugging
+        void print(std::ostream &out);
 
 	// return true if the procedure is in ssa form
 	bool isSSAForm();

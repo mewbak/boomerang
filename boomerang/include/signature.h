@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -103,6 +103,7 @@ virtual void analyse(UserProc *p);
 
 	// any signature can be promoted to a higher level signature, if available
 virtual Signature *promote(UserProc *p);
+        void print(std::ostream &out);
 };
 
 #endif

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1629,6 +1629,12 @@ bool UserProc::generateCode(HLLCode &hll)
 	}
 
 	return true;
+}
+
+// print this userproc, maining for debugging
+void UserProc::print(std::ostream &out) {
+    signature->print(out);
+    cfg->print(out);
 }
 
 bool UserProc::isSSAForm()

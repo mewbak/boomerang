@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 10 Jul 02 - Mike: Mods for boomerang
  */
@@ -155,6 +155,8 @@ void Analysis::analyse(UserProc* proc)
 
         pBB = cfg->getNextBB(it);
     }
+
+    cfg->computeDataflow();
 }
 
 #if DEBUG_ANALYSIS
@@ -1231,6 +1233,7 @@ void Analysis::analyseCalls(PBB pBB, UserProc *proc)
 			Proc *p = proc->getProg()->findProc(call->getFixedDest());
 			assert(p);
 			call->setDestProc(p);
+                        call->initArguments();
 		}
 	}
 }

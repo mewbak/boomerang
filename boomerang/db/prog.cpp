@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -121,6 +121,20 @@ void Prog::analyse()
 
 		// decoded userproc.. analyse it			
 		analysis->analyse(p);
+	}
+}
+
+// Print this program, mainly for debugging
+void Prog::print(std::ostream &out)
+{
+	for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end(); it++) {
+		Proc *pProc = *it;
+		if (pProc->isLib()) continue;
+		UserProc *p = (UserProc*)pProc;
+		if (!p->isDecoded()) continue;
+
+		// decoded userproc.. print it
+		p->print(out);
 	}
 }
 
