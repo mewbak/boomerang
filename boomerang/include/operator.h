@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -134,6 +134,7 @@ enum OPER
     opItof,                 // Integer to floating point (and size) conversion
     opFtoi,                 // Floating point to integer (and size) conversion
     opFround,               // Floating point to nearest float conversion
+    opFtrunc,               // chop float to int, e.g. 3.01 -> 3.00
     opForceInt,             // Forcibly change current type to int/flt,
     opForceFlt,             //  without changing any of the bits
     opFpush,                // Floating point stack push

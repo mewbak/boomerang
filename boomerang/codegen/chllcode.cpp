@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -299,6 +299,11 @@ void CHLLCode::appendExp(char *str, Exp *exp)
             break;
         case opFround:
             strcat(str, "fround(");
+            appendExp(str, u->getSubExp1());
+            strcat(str, ")");
+            break;
+        case opFtrunc:
+            strcat(str, "ftrunc(");
             appendExp(str, u->getSubExp1());
             strcat(str, ")");
             break;
