@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.174 $
+ * $Revision: 1.175 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2202,8 +2202,11 @@ Exp *UserProc::getLocalExp(Exp *le, Type *ty)
             if (ty->resolvesToCompound()) {
                 CompoundType *compound = ty->asCompound();
                 if (VERBOSE)
-                    LOG << "found reference to first member of compound " << name.c_str() << ": " << le << "\n";
-                return new Binary(opMemberAccess, e, new Const((char*)compound->getName(0)));
+                    LOG << "found reference to first member of compound " <<
+                      name.c_str() << ": " << le << "\n";
+                char* nam = (char*)compound->getName(0);
+                if (nam == NULL) nam = "??";
+                return new Binary(opMemberAccess, e, new Const(nam));
             }
         }
     }

@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.134 $
+ * $Revision: 1.135 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2347,6 +2347,7 @@ Exp* Binary::polySimplify(bool& bMod) {
                 int r = c->getOffsetRemainder(n*8);
                 assert((r % 8) == 0);
                 const char *nam = c->getNameAtOffset(n*8);
+                if (nam == NULL) nam = "??";
                 res = new Binary(opPlus, 
                         new Unary(opAddrOf, 
                             new Binary(opMemberAccess, 
@@ -3709,7 +3710,13 @@ Type *Binary::getType() {
                     assert(false);
                 }
                 assert(subExp2->getOper() == opStrConst);
-                return sty->asCompound()->getType(((Const*)subExp2)->getStr());
+                char* str = ((Const*)subExp2)->getStr();
+                if (str == NULL) {
+                    LOG << "Compound type " << this << " is missing a field "
+                        "definition (check signature/*.h files)\n";
+                    return NULL;
+                }
+                return sty->asCompound()->getType(str);
             }
         default:
             break;
