@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -955,10 +955,10 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 //        Exps = instantiate(pc,  "UNIMP");
 
     | MOV.Ed.Ivod(Eaddr, i32) =>
-        Exps = instantiate(pc,  "MOV.Eb.Ivod", DIS_EADDR32, DIS_I32);
+        Exps = instantiate(pc,  "MOV.Ed.Ivod", DIS_EADDR32, DIS_I32);
 
     | MOV.Ew.Ivow(Eaddr, i16) =>
-        Exps = instantiate(pc,  "MOV.Eb.Ivow", DIS_EADDR16, DIS_I16);
+        Exps = instantiate(pc,  "MOV.Ew.Ivow", DIS_EADDR16, DIS_I16);
 
     | MOV.Eb.Ib(Eaddr, i8) =>
         Exps = instantiate(pc,  "MOV.Eb.Ib", DIS_EADDR8, DIS_I8);
