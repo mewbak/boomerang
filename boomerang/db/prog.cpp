@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.51 $
+ * $Revision: 1.52 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -838,7 +838,19 @@ void Prog::removeUnusedReturns() {
         for (it = calleeSet.begin(); it != calleeSet.end(); it++) {
             UserProc* proc = *it;
             if (proc->isLib()) continue;
+            if (Boomerang::get()->debugUnusedRets)
+                std::cerr << " @@ removeUnusedReturns: considering callee " <<
+                  proc->getName() << "\n";
             bool thisChange = proc->removeUnusedReturns(rc);
+            if (thisChange && !Boomerang::get()->noRemoveNull) {
+                // It may be that now there are more unused statements
+                // (especially for SPARC programs)
+                UserProc::RefCounter refCounts;
+                // Count the references first
+                proc->countRefs(refCounts);
+                // Now remove any that have no used
+                proc->removeUnusedStatements(refCounts, -1);
+            }
             change |= thisChange;
             if (thisChange) {
                 std::set<UserProc*> thisProcCallees;
