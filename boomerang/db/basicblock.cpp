@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.56 $
+ * $Revision: 1.57 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -256,6 +256,7 @@ BBTYPE BasicBlock::getType() {
 void BasicBlock::updateType(BBTYPE bbType, int iNumOutEdges) {
     m_nodeType = bbType;
     m_iNumOutEdges = iNumOutEdges;
+    m_OutEdges.resize(iNumOutEdges);
 }
 
 /*==============================================================================

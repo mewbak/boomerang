@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.66 $
+/* $Revision: 1.67 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -32,6 +32,7 @@
 #include "coverage.h"           // For Coverage class
 #include "exp.h"                // For lessExpStar
 #include "cfg.h"                // For cfg->simplify()
+#include "hllcode.h"
 
 class Prog;
 class UserProc;
@@ -434,7 +435,9 @@ public:
      * internal representation.  This function actually _calculates_
      * this value and is expected to do so expensively.
      */ 
-    Statement *getAST();
+    SyntaxNode *getAST();
+    // print it to a file
+    void printAST(SyntaxNode *a = NULL);
 
     /*
      * Returns whether or not this procedure can be decoded (i.e. has
