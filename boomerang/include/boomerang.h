@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -85,6 +85,7 @@ public:
     std::vector<ADDRESS> entrypoints;
     bool decodeMain;
     bool printAST;
+    bool dumpXML;
 };
 
 #define VERBOSE  (Boomerang::get()->vFlag)

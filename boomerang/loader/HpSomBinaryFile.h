@@ -10,7 +10,7 @@
  * Desc: This file contains the definition of the class HpSomBinaryFile.
 */
 
-/* $Revision: 1.2 $
+/* $Revision: 1.3 $
  *
  * 22 Jun 00 - Mike: Initial revision
  * 09 May 01 - Mike: Read the imports table so can identify library functions
@@ -94,6 +94,7 @@ public:
     virtual bool  PostLoad(void* handle);     // For archive files only
     virtual LOAD_FMT GetFormat() const;       // Get format i.e. LOADFMT_PALM
     virtual MACHINE GetMachine() const;       // Get format i.e. MACHINE_HPRISC
+    virtual const char *getFilename() const { return m_pFileName; }
 
     virtual bool isLibrary() const;
     virtual std::list<const char *> getDependencyList();
@@ -147,6 +148,7 @@ private:
     SymTab          symbols;                    // Symbol table object
 //  ADDRESS         mainExport;                 // Export entry for "main"
     std::set<ADDRESS>    imports;                    // Set of imported proc addr's
+    const char *    m_pFileName;
 };
 
 #endif      // #ifndef __HPSOMBINARYFILE_H__

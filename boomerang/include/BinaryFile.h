@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.7 $
+/* $Revision: 1.8 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -137,6 +137,7 @@ virtual ~BinaryFile() {}			// Virtual destructor
     virtual LOAD_FMT GetFormat() const = 0;
     // Get the expected machine (e.g. MACHINE_PENTIUM)
     virtual MACHINE GetMachine() const = 0;
+    virtual const char *getFilename() const = 0;
 
     // Return whether or not the object is a library file.
     virtual bool isLibrary() const = 0;

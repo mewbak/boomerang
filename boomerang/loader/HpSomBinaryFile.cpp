@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 22 Jun 00 - Mike: Initial version
  * 15 May 02 - Mike: Fixed several UINT4(&...) that were needed for endianness
@@ -117,6 +117,8 @@ bool isStub(ADDRESS hostAddr, int& offset) {
 bool HpSomBinaryFile::RealLoad(const char* sName)
 {
     FILE    *fp;
+
+    m_pFileName = sName;
 
     if ((fp = fopen(sName, "rb")) == NULL) {
         fprintf(stderr, "Could not open binary file %s\n", sName);

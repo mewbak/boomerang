@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class ElfBinaryFile.
 */
 
-/* $Revision: 1.10 $
+/* $Revision: 1.11 $
  * 12 Sep 01 - Mike: Replaced SymTab object with map from ADDRESS to string
  * 09 Mar 02 - Mike: Changes for stand alone compilation
  * 01 Oct 02 - Mike: Removed elf library (and include file) dependencies
@@ -142,6 +142,7 @@ public:
   virtual void  Close();                        // Close file opened with Open()
   virtual LOAD_FMT GetFormat() const;           // Get format (e.g. LOADFMT_ELF)
   virtual MACHINE GetMachine() const;           // Get machine (e.g. MACHINE_SPARC)
+  virtual const char *getFilename() const { return m_pFileName; }
   virtual bool isLibrary() const;
   virtual std::list<const char *> getDependencyList();
   virtual ADDRESS getImageBase();
