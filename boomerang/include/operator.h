@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -187,6 +187,7 @@ enum OPER
     opTrue,
     opFalse,
     opTypeOf,               // Unary: takes a location, makes a type variable
+    opKindOf,
     opTypeVal,              // Wraps a Type into a type value (TypeVal)
 
     //---------------------- "The line" --------------------------//
