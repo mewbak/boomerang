@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -150,11 +150,6 @@ bool StmtConscriptSetter::visit(BranchStatement* stmt) {
 void PhiStripper::visit(PhiAssign* s, bool& recur) {
 	del = true;
 	recur = true;
-}
-
-Exp* RefStripper::preVisit(RefExp* e, bool& recur) {
-	recur = false;
-	return e->getSubExp1();		// Do the actual stripping of references!
 }
 
 Exp* CallRefsFixer::postVisit(RefExp* r) {

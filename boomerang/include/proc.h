@@ -16,7 +16,7 @@
  *			   as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.106 $
+/* $Revision: 1.107 $
 */
 
 #ifndef _PROC_H_
@@ -686,8 +686,6 @@ public:
 
 	// Visitation
 
-	// Strip the refs from each expression
-	void stripRefs();
 	// Cast the constant whose conscript is num to be type ty
 	void castConst(int num, Type* ty);
  

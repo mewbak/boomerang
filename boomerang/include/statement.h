@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.71 $
+ * $Revision: 1.72 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -292,10 +292,6 @@ virtual	void		regReplace(UserProc* proc) = 0;
 		// Set or clear the constant subscripts (using a visitor)
 		int			setConscripts(int n);
 		void		clearConscripts();
-
-		// Strip all references and phis (using a visitor). Returns true if the
-		// statement was a phi (and to be deleted)
-		bool		stripRefs();
 
 		// Strip all size casts
 		void		stripSizes();

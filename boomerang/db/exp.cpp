@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.169 $
+ * $Revision: 1.170 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3755,11 +3755,6 @@ void Exp::setConscripts(int n, bool bClear) {
 	accept(&sc);
 }
 
-// Strip references from an Exp
-Exp* Exp::stripRefs() {
-	RefStripper rs;
-	return accept(&rs);
-}
 
 // Strip size casts from an Exp
 Exp* Exp::stripSizes() {

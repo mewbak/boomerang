@@ -9,7 +9,7 @@
  *			   and also to make exp.cpp and statement.cpp a little less huge
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * We have Visitor and Modifier classes separate. Visitors are more suited
  *	 for searching: they have the capability of stopping the recursion,
@@ -256,14 +256,6 @@ public:
 				PhiStripper(ExpModifier* em) : StmtModifier(em) {del = false;} 
 virtual void	visit(PhiAssign* stmt, bool& recur);
 		bool	getDelete() {return del;}
-};
-
-// This class visits subexpressions, strips references
-class RefStripper : public ExpModifier {
-public:
-				RefStripper() {}
-virtual Exp*	preVisit(RefExp* ei, bool& recur);
-		// All other virtual functions inherit and do nothing
 };
 
 class CallRefsFixer : public ExpModifier {
