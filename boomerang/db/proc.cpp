@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.83 $
+ * $Revision: 1.84 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1726,6 +1726,16 @@ Exp* UserProc::newLocal(Type* ty) {
     return new Unary(opLocal, new Const(strdup(name.c_str())));
 }
 
+// Add n local variables with name temp1 ... tempn
+void UserProc::addTemps(int n) {
+    for (int i=1; i < n; i++) {
+        std::ostringstream os;
+        os << "temp" << i;
+        std::string name = os.str();
+        locals[name] = new IntegerType();   // FIXME one day
+    }
+}
+
 #if 0
 void UserProc::recalcDataflow() {
     if (VERBOSE) std::cerr << "Recalculating dataflow\n";
@@ -1836,14 +1846,16 @@ void UserProc::fromSSAform() {
     getStatements(stmts);
     StmtListIter it;
     igraph ig;
-    cfg->findInterferences(ig);
+    int tempNum = 0;
+    cfg->findInterferences(ig, tempNum);
     for (Statement* s = stmts.getFirst(it); s; s = stmts.getNext(it)) {
         if (s->isPhi()) {
-std::cerr << "Warning: ignoring " << s << "\n";
+std::cerr << "   * * * Warning: ignoring " << s << " * * *\n";
             removeStatement(s);
         } else
             s->fromSSAform(ig);
     }
+    addTemps(tempNum);
 }
 
 void UserProc::insertArguments(StatementSet& rs) {

@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.48 $
+/* $Revision: 1.49 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -554,6 +554,11 @@ public:
      * Note: was returning TypedExp*
      */
     Exp* newLocal(Type* ty);
+
+    /*
+     * Add n new locals, called temp1 .. tempn
+     */
+    void addTemps(int n);
 
     /*
      * Print the locals declaration in C style.
