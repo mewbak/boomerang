@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.75 $
+ * $Revision: 1.76 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -293,14 +293,14 @@ bool BasicBlock::isJumpReqd() {
  * PARAMETERS:      <none>
  * RETURNS:         Address of the static buffer
  *============================================================================*/
-char debug_buffer[1000];
+char debug_buffer[5000];
 char* BasicBlock::prints() {   
     std::ostringstream ost; 
-    print(ost);       
-    // Static buffer may overflow; that's OK, we just copy and print the first
-    // 999 bytes
-    strncpy(debug_buffer, ost.str().c_str(), 999);
-    debug_buffer[999] = '\0';
+    print(ost, true);       
+    // Static buffer might have overflowed if we used it directly, hence we
+    // just copy and print the first 4999 bytes
+    strncpy(debug_buffer, ost.str().c_str(), 4999);
+    debug_buffer[4999] = '\0';
     return debug_buffer; 
 }
 
