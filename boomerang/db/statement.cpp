@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.83 $
+ * $Revision: 1.84 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1765,7 +1765,16 @@ void CallStatement::generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) {
     LOG << " in proc " << proc->getName() << "\n";
 #endif
     assert(p);
-    hll->AddCallStatement(indLevel, p, arguments, defs);
+    if (p->isLib() && *p->getSignature()->getPreferedName()) {
+        std::vector<Exp*> args;
+        for (unsigned int i = 0; i < p->getSignature()->getNumPreferedParams();
+             i++)
+            args.push_back(arguments[p->getSignature()->getPreferedParam(i)]);
+        hll->AddCallStatement(indLevel, p,  
+                              p->getSignature()->getPreferedName(),
+                              args, defs);
+    } else
+        hll->AddCallStatement(indLevel, p, p->getName(), arguments, defs);
 }
 
 void CallStatement::simplify() {

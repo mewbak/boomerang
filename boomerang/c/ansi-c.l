@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
@@ -87,6 +87,7 @@ private: \
 "__pascal"              { count(); return AnsiCParser::PASCAL; }
 "__stdcall"             { count(); return AnsiCParser::PASCAL; }
 "__custom"              { count(); return AnsiCParser::CUSTOM; }
+"PREFER"                { count(); return AnsiCParser::PREFER; }
 "__withstack("          { count(); return AnsiCParser::WITHSTACK; }
 "__symref"              { count(); return AnsiCParser::SYMBOLREF; }
 "static"		{ count(); return AnsiCParser::STATIC; }
