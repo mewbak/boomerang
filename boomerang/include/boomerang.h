@@ -12,7 +12,7 @@
  * OVERVIEW:	interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.59 $
+ * $Revision: 1.60 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -201,6 +201,8 @@ static Boomerang *get() {
 	bool dfaTypeAnalysis;
 	bool noLimitPropagations;
     bool fastx86;
+    bool generateCallGraph;
+	bool generateSymbols;
 };
 
 #define VERBOSE				(Boomerang::get()->vFlag)

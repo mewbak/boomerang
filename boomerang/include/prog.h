@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.70 $
+ * $Revision: 1.71 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -269,7 +269,8 @@ public:
 
 	void	setNextIsEntry() {nextIsEntry = true;}
 
-	void 	printCallGraph();
+	void 	printSymbols();
+    void 	printCallGraph();
 	void	printCallGraphXML();
 
 	Cluster *getRootCluster() { return m_rootCluster; }
