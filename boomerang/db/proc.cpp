@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.207 $
+ * $Revision: 1.208 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -871,7 +871,7 @@ void UserProc::generateCode(HLLCode *hll) {
 	hll->AddProcStart(signature);
 	
 	std::map<std::string, Type*>::iterator last = locals.end();
-	last--;
+	if (locals.size()) last--;
 	for (std::map<std::string, Type*>::iterator it = locals.begin(); it != locals.end(); it++)
 		hll->AddLocal((*it).first.c_str(), (*it).second, it == last);
 
