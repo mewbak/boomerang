@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -1899,10 +1899,10 @@ Type* HLScond::getLeftType()
 
 bool HLScond::usesExp(Exp *e)
 {
-    Exp *tmp;
-    if (getDest() && getDest()->search(e, tmp)) return true;
-    if (pCond && pCond->search(e, tmp)) return true;
-    return false;
+    assert(pDest && pCond);
+    Exp *where = 0;
+    return (pCond->search(e, where) || (pDest->isMemOf() && 
+        ((Unary*)pDest)->getSubExp1()->search(e, where)));
 }
 
 void HLScond::printAsUse(std::ostream &os)
