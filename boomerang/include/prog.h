@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.39 $
+ * $Revision: 1.40 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -111,11 +111,6 @@ public:
     // load/save the current program, project/location must be set.
     void        load();
     void        save();
-
-    // serialize the program
-    bool serialize(std::ostream &ouf, int &len);
-    // deserialize the program
-    void deserialize(std::istream &inf);
 
     // clear the prog object NOTE: deletes everything!
     void        clear();

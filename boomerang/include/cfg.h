@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.50 $
+ * $Revision: 1.51 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -354,16 +354,6 @@ private:
      * link for a call instruction to its enclosing BB.
      */
     void setRTLs(std::list<RTL*>* rtls);
-
-	// serialize the basic block
-	bool serialize(std::ostream &ouf, int &len);
-
-	// deserialize a basic block
-	bool deserialize(std::istream &inf);
-
-	// used during serialization
-	std::vector<int> m_nOutEdges;     // numerical outedges
-	int m_nindex;					// numerical index of this bb in list of bbs in CFG.
 
 public:
 
@@ -908,12 +898,6 @@ public:
     void virtualFunctionCalls(Prog* prog);
 
     std::vector<PBB> m_vectorBB; // faster access
-
-    // serialize the CFG
-    bool serialize(std::ostream &ouf, int &len);
-
-    // deserialize a CFG
-    bool deserialize(std::istream &inf);
 
     /* return a bb given an address */
     PBB bbForAddr(ADDRESS addr) { return m_mapBB[addr]; }

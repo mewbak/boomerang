@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.39 $
+ * $Revision: 1.40 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -146,14 +146,6 @@ public:
     // Searches for all instances of "search" and adds them to "result" in
     // reverse nesting order. The search is optionally type sensitive.
     virtual bool searchAll(Exp* search, std::list<Exp*> &result);
-
-    // serialize this rtl
-    bool serialize(std::ostream &ouf, int &len);
-    virtual bool serialize_rest(std::ostream &ouf);
-
-    // deserialize an rtl
-    static RTL *deserialize(std::istream &inf);
-    virtual bool deserialize_fid(std::istream &inf, int fid);
 
     // code generation
     virtual void generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel);

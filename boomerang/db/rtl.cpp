@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -520,91 +520,6 @@ bool RTL::areFlagsAffected() {
     Statement *e = *it;
     // If it is a flag call, then the CCs are affected
     return e->isFlagAssgn();
-}
-
-
-// serialize this rtl
-bool RTL::serialize(std::ostream &ouf, int &len) {
-    std::streampos st = ouf.tellp();
-
-    saveValue(ouf, nativeAddr, false);
-
-
-    for (std::list<Statement*>::iterator it = stmtList.begin();
-      it != stmtList.end(); it++) {
-        saveFID(ouf, FID_RTL_EXP);
-        std::streampos pos = ouf.tellp();
-        int len = -1;
-        saveLen(ouf, -1, true);
-        std::streampos posa = ouf.tellp();
-
-        // FIXME: Statement doesn't seem to have a serialize()
-        //assert((*it)->serialize(ouf, len));
-
-        std::streampos now = ouf.tellp();
-        assert((int)(now - posa) == len);
-        ouf.seekp(pos);
-        saveLen(ouf, len, true);
-        ouf.seekp(now);
-    }
-
-    serialize_rest(ouf);
-
-    saveFID(ouf, FID_RTL_END);
-    saveLen(ouf, 0);
-
-    len = ouf.tellp() - st;
-    return true;
-}
-
-bool RTL::serialize_rest(std::ostream &ouf)
-{
-    return true;
-}
-
-// deserialize an rtl
-RTL *RTL::deserialize(std::istream &inf)
-{
-    RTL *rtl = NULL;
-    ADDRESS a;
-    loadValue(inf, a, false);
-    rtl = new RTL(a);
-    if (rtl) {
-        int fid;
-
-        while ((fid = loadFID(inf)) != -1 && fid != FID_RTL_END)
-            rtl->deserialize_fid(inf, fid);
-        assert(loadLen(inf) == 0);
-    }
-
-    return rtl;
-}
-
-bool RTL::deserialize_fid(std::istream &inf, int fid)
-{
-    // This probably needs a lot of work
-    switch (fid) {
-        case FID_RTL_EXP:
-            {
-                int len = loadLen(inf);
-                std::streampos pos = inf.tellg();
-                // Oops: no deserialize()
-                Statement *s /*= Statement::deserialize(inf)*/;
-                if (s) {
-                    assert((int)(inf.tellg() - pos) == len);
-                    stmtList.push_back(s);
-                } else {
-                    // unknown exp type, skip it
-                    inf.seekg(pos + (std::streamoff)len);
-                }
-            }
-            break;
-        default:
-            skipFID(inf, fid);
-            return false;
-    }
-
-    return true;
 }
 
 void RTL::generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) {
