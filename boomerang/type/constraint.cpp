@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 22 Aug 03 - Mike: Created
  */
@@ -462,8 +462,9 @@ void Constraints::alphaSubst() {
         Exp* temp = (*it)->clone();
         Exp* term;
         bool found = false;
-        Exp* trm1, *trm2;
-        Type* t1, *t2;
+        Exp* trm1 = NULL;
+        Exp* trm2 = NULL;
+        Type* t1 = NULL, *t2;
         while ((term = nextConjunct(temp)) != NULL) {
             if (!term->isEquality())
                 continue;
