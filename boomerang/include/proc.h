@@ -16,7 +16,7 @@
  *			   as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.114 $
+/* $Revision: 1.115 $
 */
 
 #ifndef _PROC_H_
@@ -112,7 +112,7 @@ public:
 	/*
 	 * Modify actuals so that it is now the list of locations that must
 	 * be passed to this procedure. The modification will be to either add
-	 * dummp locations to actuals, delete from actuals, or leave it
+	 * dummy locations to actuals, delete from actuals, or leave it
 	 * unchanged.
 	 * Add "dummy" params: this will be required when there are
 	 *	 less live outs at a call site than the number of parameters
