@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.135 $
+ * $Revision: 1.136 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1446,9 +1446,8 @@ void CallStatement::addArgument(Exp *e)
 
 Type *CallStatement::getArgumentType(int i) {
 	assert(i < (int)arguments.size());
-	if (procDest)
-		return procDest->getSignature()->getParamType(i);
-	return NULL;
+	if (signature == NULL) return NULL;
+	return signature->getParamType(i);
 }
 
 /*==============================================================================
