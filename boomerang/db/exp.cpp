@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1408,6 +1408,7 @@ void Exp::partitionTerms(std::list<Exp*>& positives, std::list<Exp*>& negatives,
                 positives.push_back(this);
     }
 }
+
 /*==============================================================================
  * FUNCTION:        [Unary|Binary]::simplifyArith
  * OVERVIEW:        This method simplifies an expression consisting of + and -
@@ -1430,23 +1431,15 @@ Exp* Unary::simplifyArith()
 Exp* AssignExp::simplifyArith() {
     subExp1 = subExp1->simplifyArith();
     subExp2 = subExp2->simplifyArith();
-#if 0
-    Exp* res = new AssignExp(op, getSubExp1()->simplifyArith()->clone(),
-      getSubExp2()->simplifyArith()->clone());
-    delete this;
-    return res;
-#else
     return this;
-#endif
 }
 
 Exp* Binary::simplifyArith() {
-	if (op == opSubscript) {
-		Exp* res = new Binary(op, getSubExp1()->simplifyArith()->clone(),
-          getSubExp2()->clone());
-        delete this;
-        return res;
-	}
+    if ((op != opPlus) && (op != opMinus)) {
+        subExp1 = subExp1->simplifyArith();
+        subExp2 = subExp2->simplifyArith();
+        return this;
+    }
 
     // Partition this expression into positive non-integer terms, negative
     // non-integer terms and integer terms.
