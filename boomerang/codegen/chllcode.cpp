@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.85 $
+ * $Revision: 1.86 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -123,8 +123,12 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 					else
 						str << "'" << (char)c->getInt() << "'";
 				} else {
-					// Just a plain vanilla int
-					str << std::dec << c->getInt();
+					// More heuristics
+					int K = c->getInt();
+					if (-2048 <= K && K <= 2048)
+						str << std::dec << K; 			// Just a plain vanilla int
+					else
+						str << "0x" << std::hex << K;	// 0x2000 style
 				}
 			}
 			break;
