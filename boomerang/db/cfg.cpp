@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.76 $
+ * $Revision: 1.77 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -2015,12 +2015,10 @@ void Cfg::dominators() {
         PBB bb = BBs[n];
         std::vector<PBB>::iterator it;
         for (it = bb->m_InEdges.begin(); it != bb->m_InEdges.end(); it++) {
-if (indices.find(*it) == indices.end()) {
-  std::cerr << "BB not in indices: "; (*it)->print(std::cerr);
-  std::list<PBB>::iterator zz;
-  for (zz=m_listBB.begin(); zz != m_listBB.end(); zz++)
-   std::cerr << std::hex << (unsigned)*zz << " "; std::cerr << "\n";
-}
+            if (indices.find(*it) == indices.end()) {
+                std::cerr << "BB not in indices: "; (*it)->print(std::cerr);
+                assert(false);
+            }
             int v = indices[*it];
             int sdash;
             if (dfnum[v] <= dfnum[n])
