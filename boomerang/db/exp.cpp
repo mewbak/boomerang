@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.104 $
+ * $Revision: 1.105 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -661,6 +661,13 @@ void Binary::print(std::ostream& os, bool withUses) {
             p1->print(os, withUses);
             os << ".";
             ((Const*)p2)->printNoQuotes(os, withUses);
+            return;
+
+        case opArraySubscript:
+            p1->print(os, withUses);
+            os << "[";
+            p2->print(os, withUses);
+            os << "]";
             return;
 
         default:

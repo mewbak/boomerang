@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.34 $
+ * $Revision: 1.35 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -459,6 +459,12 @@ void CHLLCode::appendExp(char *str, Exp *exp)
                 strcat(str, ".");
                 strcat(str, ((Const*)b->getSubExp2())->getStr());
             }
+            break;
+        case opArraySubscript:
+            appendExp(str, b->getSubExp1());
+            strcat(str, "[");
+            appendExp(str, b->getSubExp2());
+            strcat(str, "]");
             break;
         default:
             // others
