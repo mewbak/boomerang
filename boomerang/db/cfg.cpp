@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.84 $
+ * $Revision: 1.85 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -2279,7 +2279,7 @@ void Cfg::renameBlockVars(int n, int memDepth, bool clearStack /* = false */ ) {
 			if (a->getOper() == opLocal) {
 				a = S->getProc()->getLocalExp(((Const*)a->getSubExp1())->
 				  getStr());
-				// Note: used to assert(d) here. However, with switch
+				// Note: used to assert(a) here. However, with switch
 				// statements and in other cases, a local may be created which
 				// does not represent memory at all (created with
 				// UserProc::newLocal()), and so there is no entry in symbolMap,

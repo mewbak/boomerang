@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -148,11 +148,11 @@ public:
 
 	// add a new parameter to this signature
 	virtual void addParameter(const char *nam = NULL);
-	virtual void addParameter(Type *type, const char *nam = NULL, 
-							  Exp *e = NULL);
+	virtual void addParameter(Type *type, const char *nam = NULL, Exp *e = NULL);
 	virtual void addParameter(Exp *e);
 	virtual void addParameter(Parameter *param);
-	virtual void addEllipsis() { ellipsis = true; }
+			void addEllipsis() { ellipsis = true; }
+			void killEllipsis() {ellipsis = false; }
 	virtual void removeParameter(Exp *e);
 	virtual void removeParameter(int i);
 	// set the number of parameters using defaults

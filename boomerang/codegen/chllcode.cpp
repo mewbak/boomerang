@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.75 $
+ * $Revision: 1.76 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -481,7 +481,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec,
 		case opSize:
 			{
 				/*Type *ty = new IntegerType(((Const*)b->getSubExp1())->getInt(), 1);
-				str << "*(" << ty->getCtype() << " *)";
+				str << "*(" << ty->getCtype(true) << " *)";
 				appendExp(str, new Unary(opAddrOf, b->getSubExp2()), PREC_UNARY);*/
 				appendExp(str, b->getSubExp2(), PREC_UNARY);
 			}

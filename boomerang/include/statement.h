@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.61 $
+ * $Revision: 1.62 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -1048,7 +1048,9 @@ virtual void	fromSSAform(igraph& ig);
 
 virtual	Type*	getType() {return returnType;}		// MVE: TEMPORARY
 virtual	void	setType(Type* t) { returnType = t;}	// MVE: TEMPORARY
-		void	ellipsisTruncation();		// E.g. remove excess arguments from printf etc
+		// Process this call for ellipsis parameters. If found, in a printf/scanf call, truncate the
+		// number of parameters if needed, and return true if any signature parameters added
+		bool	ellipsisProcessing();
 
 protected:
 virtual bool	doReplaceRef(Exp* from, Exp* to);
