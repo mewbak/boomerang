@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -879,8 +879,11 @@ void Signature::analyse(UserProc *p)
             }
             p->getCFG()->setReturnVal((*it)->getLeft()->clone());
             HLCall *call = dynamic_cast<HLCall*>(*it);
+            Type *ty = NULL;
             if (call)
-                setReturnType(call->getLeftType()->clone());
+                ty = call->getLeftType();
+            if (call && ty)
+                setReturnType(ty->clone());
             else
                 setReturnType(new IntegerType());
         }

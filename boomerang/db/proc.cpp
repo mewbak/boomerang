@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1103,7 +1103,7 @@ void UserProc::replaceExpressionsWithGlobals()
     for (std::map<Exp*, Exp*>::iterator it1 = symbolMap.begin();
       it1 != symbolMap.end(); it1++) {
         bool change;
-        Exp *e = cfg->getReturnVal();
+        Exp *e = cfg->getReturnVal()->clone();
         if (e == NULL) break;
         if (VERBOSE) {
             std::cerr << "return value: ";
@@ -1150,7 +1150,7 @@ void UserProc::replaceExpressionsWithSymbols()
     for (std::map<Exp*, Exp*>::iterator it1 = symbolMap.begin();
       it1 != symbolMap.end(); it1++) {
         bool change;
-        Exp *e = cfg->getReturnVal();
+        Exp *e = cfg->getReturnVal()->clone();
         if (e == NULL) break;
         if (VERBOSE) {
             std::cerr << "return value: ";
