@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -994,8 +994,10 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint( bool &gotMain )
     ADDRESS dest;
     do {
         DecodeResult inst = decodeInstruction(addr);
-        CallStatement* cs = (CallStatement*)(inst.rtl->getList().back());
-        if ((cs->getKind() == STMT_CALL) &&
+        CallStatement* cs = NULL;
+        if (inst.rtl->getList().size())
+            cs = (CallStatement*)(inst.rtl->getList().back());
+        if ((cs && cs->getKind() == STMT_CALL) &&
           ((dest = (cs->getFixedDest())) != NO_ADDRESS)) {
             if (++conseq == 3) {
                 // Success. Return the target of the last call
