@@ -4,7 +4,7 @@
  *              tests the RTL and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 13 May 02 - Mike: Created
  */
@@ -20,7 +20,7 @@
 #include "decoder.h"
 #include "proc.h"
 #include "prog.h"
-
+#include "visitor.h"
 
 #ifndef BOOMDIR
 #error Must define BOOMDIR
