@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.122 $
+ * $Revision: 1.123 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1122,6 +1122,7 @@ void UserProc::removeRedundantPhis()
             StatementVec::iterator it;
             bool allsame = true;
             it = p->begin();
+            assert(it != p->end());
             Statement* s1 = *it;
             Statement* noncall = s1;
             if (it != p->end())
