@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -252,6 +252,9 @@ public:
 
     // Generate constraints
     virtual void genConstraints(LocationSet& cons) {}
+
+    // Set the constant subscripts
+    void    setConscripts();
 
 protected:
     virtual void doReplaceRef(Exp* from, Exp* to) = 0;
