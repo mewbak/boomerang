@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.22 $
+ * $Revision: 1.23 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -161,7 +161,7 @@ Exp* CallRefsFixer::postVisit(RefExp* r) {
 	Statement* def = r->getDef();
 	CallStatement *call = dynamic_cast<CallStatement*>(def);
 	if (call) {
-		// Get the left had side of the proven expression (e.g. from r28 = r28 + 4, get r28)
+		// Get the right had side of the proven expression (e.g. from r28 = r28 + 4, get r28 + 4)
 		Exp *e = call->getProven(r->getSubExp1());
 		if (e) {
 			// Express e in terms of the arguments passed to this call
