@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.145 $
+ * $Revision: 1.146 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1475,8 +1475,9 @@ void CallStatement::setImpArguments(std::vector<Exp*>& arguments) {
  * RETURNS:		  <nothing>
  *============================================================================*/
 void CallStatement::setSigArguments() {
+	if (signature) return;				// Already done
 	if (procDest == NULL) {
-		if (proc == NULL) return; // do it later
+		if (proc == NULL) return; 		// do it later
 		// computed calls must have their arguments initialized to something 
 		std::vector<Exp*> &params = proc->getProg()->getDefaultParams();
 		implicitArguments.resize(params.size(), NULL);
