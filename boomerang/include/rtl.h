@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  */
@@ -495,7 +495,7 @@ public:
     int  getNumArguments() { return arguments.size(); }
     void setNumArguments(int i);
     Type *getArgumentType(int i);
-    void updateArgUses(Statement* def, Exp* left);  // Update arguments to {1 2} format
+    void updateArgUses(StatementSet& defs);  // Update arguments to {1 2} format
     void truncateArguments();
     void clearLiveEntry();
 
