@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -24,6 +24,9 @@
 #include "cfg.h"
 #include "proc.h"
 #include "hllcode.h"
+#include "log.h"
+
+#define LOG Boomerang::get()->log()
 
 class Boomerang {
 private:
@@ -40,7 +43,9 @@ public:
 	return boomerang;
     }
 
-    static HLLCode *getHLLCode(UserProc *p = NULL);
+    Log &log();
+
+    HLLCode *getHLLCode(UserProc *p = NULL);
 
     // performs command line operation
     int commandLine(int argc, const char **argv);
