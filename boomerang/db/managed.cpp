@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  * 26 Aug 03 - Mike: Split off from statement.cpp
  */
 
@@ -170,8 +170,7 @@ void StatementSet::printNums(std::ostream& os) {
 bool StatementSet::operator<(const StatementSet& o) const {
     if (sset.size() < o.sset.size()) return true;
     if (sset.size() > o.sset.size()) return false;
-    iterator it1;
-    std::set<Statement*>::const_iterator it2;
+    std::set<Statement*>::const_iterator it1, it2;
     for (it1 = sset.begin(), it2 = o.sset.begin(); it1 != sset.end();
       it1++, it2++) {
         if (*it1 < *it2) return true;

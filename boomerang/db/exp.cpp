@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.128 $
+ * $Revision: 1.129 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -66,7 +66,7 @@
 // Derived class constructors
 
 Const::Const(int i)     : Exp(opIntConst),    conscript(0) {u.i = i;}
-Const::Const(long long ll): Exp(opLongConst), conscript(0) {u.ll= ll;}
+Const::Const(QWord ll): Exp(opLongConst), conscript(0) {u.ll= ll;}
 Const::Const(double d)  : Exp(opFltConst),    conscript(0) {u.d = d;}
 Const::Const(char* p)   : Exp(opStrConst),    conscript(0) {u.p = p;}
 Const::Const(Proc* p)   : Exp(opFuncConst),   conscript(0) {u.pp = p;}

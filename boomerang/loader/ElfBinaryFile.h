@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class ElfBinaryFile.
 */
 
-/* $Revision: 1.12 $
+/* $Revision: 1.13 $
  * 12 Sep 01 - Mike: Replaced SymTab object with map from ADDRESS to string
  * 09 Mar 02 - Mike: Changes for stand alone compilation
  * 01 Oct 02 - Mike: Removed elf library (and include file) dependencies
@@ -155,7 +155,7 @@ public:
 
     int         readNative2(ADDRESS a);         // Read 2 bytes from native addr
     int         readNative4(ADDRESS a);         // Read 4 bytes from native addr
-    long long   readNative8(ADDRESS a);         // Read 8 bytes from native addr
+    QWord       readNative8(ADDRESS a);         // Read 8 bytes from native addr
     float       readNativeFloat4(ADDRESS a);    // Read 4 bytes as float
     double      readNativeFloat8(ADDRESS a);    // Read 8 bytes as float
 
