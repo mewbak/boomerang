@@ -12,7 +12,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.14 $
+/* $Revision: 1.15 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -178,6 +178,9 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 		newCall->setDest(dest);
 		result.rtl = new RTL(pc, stmts);
 		result.rtl->appendStmt(newCall);
+
+	| b (reladdr) =>
+		unconditionalJump("b", 4, reladdr, delta, pc, stmts, result);
 
 	| buul (BIcr, reladdr) [name] =>		// Unconditional "conditional" branch with link, test/OSX/hello has this
 		if (reladdr - delta - pc == 4) {	// Branch to next instr?
