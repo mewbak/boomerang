@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.48 $
+ * $Revision: 1.49 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -35,6 +35,7 @@ public:
 
 		virtual void alert_complete() { }
 		virtual void alert_new(Proc *p) { }
+		virtual void alert_update_signature(Proc *p) { }
 		virtual void alert_decode(ADDRESS pc, int nBytes) { }
 		virtual void alert_baddecode(ADDRESS pc) { }
 		virtual void alert_start_decode(ADDRESS start, int nBytes) { }
@@ -94,6 +95,10 @@ public:
 	void alert_new(Proc *p) {
 		for (std::set<Watcher*>::iterator it = watchers.begin(); it != watchers.end(); it++)
 			(*it)->alert_new(p);
+	}
+	void alert_update_signature(Proc *p) { 
+		for (std::set<Watcher*>::iterator it = watchers.begin(); it != watchers.end(); it++)
+			(*it)->alert_update_signature(p);
 	}
 	void alert_decode(ADDRESS pc, int nBytes) {
 		for (std::set<Watcher*>::iterator it = watchers.begin(); it != watchers.end(); it++)

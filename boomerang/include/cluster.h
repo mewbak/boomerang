@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  * 03 May 04 - Trent: Created
  */
 
@@ -29,10 +29,12 @@
 #include <set>
 #include <string>
 #include <fstream>
+#include "memo.h"
 
 class XMLProgParser;
+class Cluster;
 
-class Cluster
+class Cluster : public Memoisable
 {
 protected:
     std::string name;
@@ -59,6 +61,9 @@ public:
     const char *makeDirs();
     const char *getOutPath(const char *ext);
     Cluster *find(const char *nam);
+
+	virtual Memo *makeMemo(int mId);
+	virtual void readMemo(Memo *m, bool dec);
 
     void printTree(std::ostream &out);
 protected:
