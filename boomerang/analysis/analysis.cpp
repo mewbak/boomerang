@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 10 Jul 02 - Mike: Mods for boomerang
  */
@@ -156,7 +156,6 @@ void Analysis::analyse(UserProc* proc)
     }
 
     cfg->simplify();
-	cfg->virtualFunctionCalls(proc->getProg());
 }
 
 #if DEBUG_ANALYSIS
