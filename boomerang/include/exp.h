@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.58 $
+ * $Revision: 1.59 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -722,7 +722,7 @@ virtual Exp* clone();
     bool    operator< (const Exp& o) const;
     void    print(std::ostream& os, bool withUses = false);
     bool    constrainTo(Exp* con, std::list<Exp*>& cons) {
-        assert(0);}         // Should not be constraining constraints
+        assert(0); return false;} // Should not be constraining constraints
 };
     
 #endif // __EXP_H__

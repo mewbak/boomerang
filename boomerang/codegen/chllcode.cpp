@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.27 $
+ * $Revision: 1.28 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -362,10 +362,10 @@ void CHLLCode::appendExp(char *str, Exp *exp)
             break;
         case opZfill:
             // MVE: this is a temporary hack... needs cast?
-            sprintf(s, "/* zfill %d->%d */ ",
-              ((Const*)t->getSubExp1())->getInt(),
-              ((Const*)t->getSubExp2())->getInt());
-            strcat(str, s);
+            //sprintf(s, "/* zfill %d->%d */ ",
+            //  ((Const*)t->getSubExp1())->getInt(),
+            //  ((Const*)t->getSubExp2())->getInt());
+            //strcat(str, s); */
             appendExp(str, t->getSubExp3());
             break;
         case opTypedExp:
