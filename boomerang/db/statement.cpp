@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.29 $
+ * $Revision: 1.30 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -302,8 +302,7 @@ bool Statement::isFlagAssgn() {
 bool Statement::isPhi() {
     if (kind != STMT_ASSIGN)
         return false;
-    OPER op = ((Assign*)this)->getRight()->getOper();
-    return (op == opPhi);
+    return ((Assign*)this)->getRight()->isPhi();
 }
     
 

@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.57 $
+/* $Revision: 1.58 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -211,6 +211,11 @@ public:
      * Add to the set of callers
      */
     void addCaller(CallStatement* caller) { callerSet.insert(caller); }
+
+    /*
+     * Add to a set of caller Procs
+     */
+    void addCallers(std::set<UserProc*>& callers);
 
     virtual void removeReturn(Exp *e);
     void removeParameter(Exp *e);
@@ -489,12 +494,16 @@ public:
     bool propagateAndRemoveStatements();
     void propagateStatements(int memDepth);
     int  findMaxDepth();                    // Find max memory nesting depth
-    // Recalculate dataflow
-    void repairDataflow(int memDepth, StatementSet& rs);
 
     void toSSAform(int memDepth, StatementSet& rs);
     void fromSSAform();
     void insertAssignAfter(Statement* s, int tempNum, Exp* right);
+
+    // For the final pass of removing returns that are never used
+    typedef std::map<UserProc*, std::set<Exp*, lessExpStar> > ReturnCounter;
+    void countUsedReturns(ReturnCounter& rc);
+    bool removeUnusedReturns(ReturnCounter& rc);
+    void doCountReturns(Statement* def, ReturnCounter& rc, Exp* loc);
 
     // Insert actual arguments to match formals
     void insertArguments(StatementSet& rs);
@@ -631,6 +640,11 @@ public:
      * Add to the set of callees
      */
     void setCallee(Proc* callee); 
+
+    /*
+     * Add to a set of callee Procs
+     */
+    void addCallees(std::set<UserProc*>& callees);
 
     /*
      * return true if this procedure contains the given address

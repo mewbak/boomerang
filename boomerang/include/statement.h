@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -209,6 +209,7 @@ public:
 
     bool        operator==(Statement& o);
     void        setProc(UserProc *p) { proc = p; }
+    UserProc*   getProc() {return proc;}
 
     virtual Statement*  clone() = 0;            // Make copy of self
 

@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.53 $
+ * $Revision: 1.54 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -153,7 +153,7 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
     // True if this is a subscripted expression (SSA)
     bool isSubscript() {return op == opSubscript;}
     // True if this is a phi assignmnet (SSA)
-    bool isPhi();
+    bool isPhi() {return op == opPhi;}
     // Get the index for this var
     int getVarIndex();
     // True if this is a terminal
