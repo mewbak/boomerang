@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.32 $
+ * $Revision: 1.33 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1684,8 +1684,8 @@ Exp* Unary::polySimplify(bool& bMod) {
         case opAddrOf:
             // check for a[m[x]], becomes x
             if (subExp1->getOper() == opMemOf) {
-                res = ((Binary*)res)->becomeSubExp1();
-                res = ((Binary*)res)->becomeSubExp1();
+                res = ((Unary*)res)->becomeSubExp1();
+                res = ((Unary*)res)->becomeSubExp1();
                 bMod = true;
                 return res;
             }   

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.27 $
+ * $Revision: 1.28 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -901,7 +901,7 @@ void Signature::analyse(UserProc *p)
     p->getStatements(stmts);
     StmtListIter si;
     for (Statement* s = stmts.getFirst(si); s; s = stmts.getNext(si)) {
-        if (VERBOSE) std::cerr << "updateParameters for " << *it << std::endl;
+        if (VERBOSE) std::cerr << "updateParameters for " << s << std::endl;
         updateParams(p, s);
     }
 /*    std::cerr << "searching for arguments in internals" << std::endl;
