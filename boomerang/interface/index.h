@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 05 Apr 02 - Mike: Created
  */
@@ -142,6 +142,15 @@ enum INDEX
     idFGF,                   // floating point greater flag
     idCTI,                   // Control transfer instruction (boolean)
     idNEXT,                  // Next PC pseudo-register
+
+    // Highlevel expr types - trent
+    
+    idArrayOf,               // Binary takes a base and an index
+    idFuncCall,              // Unary takes a list of params
+    idMember,                // Access a member in a structure
+    idMemberThru,            // Access a member through a structure pointer
+    idPostInc,               // Post increment
+    idPostDec,               // Post decrement
     
     // ALWAYS LAST!
     idNumOf                  // Special index: MUST BE LAST!
