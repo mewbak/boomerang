@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.149 $
+ * $Revision: 1.150 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2293,7 +2293,7 @@ Type *Statement::getTypeFor(Exp *e, Prog *prog)
 		}
 		case opMemberAccess: {
 			Type *tsubexp1 = getTypeFor(e->getSubExp1(), prog);
-			if (tsubexp1->resolvesToCompound()) {
+			if (tsubexp1 && tsubexp1->resolvesToCompound()) {
 				CompoundType *compound = tsubexp1->asCompound();
 				const char *nam = ((Const*)e->getSubExp2())->getStr();
 				ty = compound->getType((char*)nam);
