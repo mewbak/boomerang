@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.51 $
+ * $Revision: 1.52 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2805,7 +2805,12 @@ Exp* AssignExp::updateRefs(StatementSet& defs, int memDepth) {
 Exp* RefsExp::updateRefs(StatementSet& defs, int memDepth) {
     // The left of any definition can't be a RefsExp
     // (LHS not subscripted any more)
-    subExp1 = subExp1->updateRefs(defs, memDepth);
+    // Note: we don't want to double subscript, so only subscript if
+    // our subexpression is a m[] or a[]
+    // This is important if toSSAform gets called more than once
+    if (subExp1->getOper() == opMemOf || subExp1->getOper() == opAddrOf)
+        ((Unary*)subExp1)->setSubExp1ND(subExp1->getSubExp1()->
+          updateRefs(defs, memDepth));
     return this;
 }
 
