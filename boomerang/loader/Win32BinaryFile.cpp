@@ -10,7 +10,7 @@
  */
 
 /* File: Win32BinaryFile.cc
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  * Desc: This file contains the implementation of the class Win32BinaryFile.
  */
 
@@ -33,6 +33,7 @@
 #include "config.h"
 #include <iostream>
 #include <sstream>
+#include <assert.h>
 
 extern "C" {
 	int microX86Dis(void* p);			// From microX86dis.c
