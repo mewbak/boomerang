@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -258,7 +258,8 @@ char* escapeStr(char* str) {
 			}
 			if(!escapedSucessfully) {
  				// it isn't so just use the \xhh escape
- 				out << "\\x" << std::hex << std::setw(2) << (int)*str;
+ 				out << "\\x" << std::hex << std::setfill('0') << std::setw(2) << (int)*str;
+				out << std::setfill(' ');
 			}
 		}
     }
