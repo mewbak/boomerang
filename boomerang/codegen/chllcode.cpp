@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.64 $
+ * $Revision: 1.65 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -427,7 +427,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec,
         case opFtoi:
             // Should check size!
             str << "(int)";
-            appendExp(str, u->getSubExp1(), PREC_UNARY);
+            appendExp(str, u->getSubExp3(), PREC_UNARY);
             break;
         case opFMultsd:
         case opFMultdq:
