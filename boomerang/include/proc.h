@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.91 $
+/* $Revision: 1.92 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -473,6 +473,8 @@ public:
     void toSSAform(int memDepth, StatementSet& rs);
     void fromSSAform();
     void insertAssignAfter(Statement* s, int tempNum, Exp* right);
+    // Insert statement a after statement s
+    void insertStatementAfter(Statement* s, Statement* a);
     void typeAnalysis(Prog* prog);
 
     // For the final pass of removing returns that are never used

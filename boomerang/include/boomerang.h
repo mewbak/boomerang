@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.46 $
+ * $Revision: 1.47 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -99,6 +99,7 @@ public:
     bool debugUnusedStmt;
     bool loadBeforeDecompile;
     bool saveBeforeDecompile;
+    bool overlapped;
 };
 
 #define VERBOSE  (Boomerang::get()->vFlag)

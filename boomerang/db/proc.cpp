@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.191 $
+ * $Revision: 1.192 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1021,6 +1021,29 @@ void UserProc::insertAssignAfter(Statement* s, int tempNum, Exp* right) {
         right);
     stmts->insert(it, as);
     return;
+}
+
+void UserProc::insertStatementAfter(Statement* s, Statement* a) {
+    // Note: this procedure is designed for the front end, where enclosing
+    // BBs are not set up yet
+    // So this is an inefficient linear search!
+    BB_IT bb;
+    for (bb = cfg->begin(); bb != cfg->end(); bb++) {
+        std::list<RTL*>::iterator rr;
+        std::list<RTL*>* rtls = (*bb)->getRTLs();
+        for (rr = rtls->begin(); rr != rtls->end(); rr++) {
+            std::list<Statement*>& stmts = (*rr)->getList();
+            std::list<Statement*>::iterator ss;
+            for (ss = stmts.begin(); ss != stmts.end(); ss++) {
+                if (*ss == s) {
+                    ss++;       // This is the point to insert before
+                    stmts.insert(ss, a);
+                    return;
+                }
+            }
+        }
+    }
+    assert(false);          // Should have found this statement in this BB
 }
 
 // Decompile this UserProc
