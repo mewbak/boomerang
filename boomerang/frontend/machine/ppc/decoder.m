@@ -12,7 +12,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.20 $
+/* $Revision: 1.21 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -172,6 +172,10 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 				std::cerr << "ERROR: MTSPR instruction with invalid S field: " << uimm << "\n";
 		}
 		::unused(name);
+
+	| Xd_ (rd) [name] =>
+		stmts = instantiate(pc, name, DIS_RD);
+
 	| bl (reladdr) [name] =>
 		Exp* dest = DIS_RELADDR;
 		stmts = instantiate(pc, name, dest);
