@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -973,14 +973,15 @@ public:
      */
     void simplify();
 
-//
-//  SSA
-//
-
     /**
-     * Transform the CFG to/from SSA form.
+     * Transform the CFG to SSA form.
      */
     void toSSAform(int memDepth);
+
+    /*
+     * Insert actual arguments to match formal parameters
+     */
+    void insertArguments();
 
 private:
 

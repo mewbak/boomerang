@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.19 $
+ * $Revision: 1.20 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -110,6 +110,8 @@ public:
 
     // Get a wildcard to find stack locations
     virtual Exp *getStackWildcard() { return NULL; }
+    virtual int  getStackRegister(          ) {return 0; };
+            int  getStackRegister(Prog* prog);
 
     // Quick and dirty hack
 static StatementList& getStdRetStmt(Prog* prog);

@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.48 $
+ * $Revision: 1.49 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1346,6 +1346,13 @@ bool Exp::searchAll(Exp* search, std::list<Exp*>& result)
         result.push_back(**it);
     }
     return li.size() != 0;
+}
+
+bool AssignExp::searchAndReplace(Exp* search, Exp* replace) {
+    bool change = false;
+    Exp *e = searchReplaceAll(search, replace, change);
+    assert(e == this);
+    return change;
 }
 
 // These simplifying functions don't really belong in class Exp, but they know

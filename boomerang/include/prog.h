@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -148,6 +148,19 @@ public:
     // dead locations, as one large dataflow problem).
     // Very similar to the [SW93] paper
     void reverseGlobalDataflow();
+
+    // Recover parameters. Uses liveness from reverseGlobalDataflow
+    void recoverParameters();
+
+    // Insert arguments. Assumes all procedures have their formal parameters
+    // recovered
+    void insertArguments();
+
+    // Transform out of SSA form
+    void fromSSAform();
+
+    // Remove interprocedural edges
+    void removeInterprocEdges();
 
     // Do decompilation
     void decompile();

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -391,16 +391,17 @@ bool RTL::getCommented() {
  *                  replace - ptr to the expression with which to replace it
  * RETURNS:         <nothing>
  *============================================================================*/
-void RTL::searchAndReplace(Exp* search, Exp* replace) {
+bool RTL::searchAndReplace(Exp* search, Exp* replace) {
+    bool ch = false;
     for (std::list<Exp*>::iterator it = expList.begin(); it != expList.end();
       it++) {
         Exp* pSrc = dynamic_cast<Exp*>(*it);
         if (pSrc == NULL) continue;
-        bool ch;
         pSrc = pSrc->searchReplaceAll(search, replace, ch);
         // If the top level changed, must update the list
         if (pSrc != *it) *it = pSrc;
     }
+    return ch;
 }
 
 /*==============================================================================
