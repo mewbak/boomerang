@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -361,15 +361,14 @@ symbol_mods: NODECODE symbol_mods
            ;
 
 custom_options: exp ':'
-           { $$->exp = $1;
+           { $$ = new CustomOptions(); $$->exp = $1;
            }
            | WITHSTACK CONSTANT ')'
-           { $$->sp = $2;
+           { $$ = new CustomOptions(); $$->sp = $2;
            }
            | /* */
            { $$ = new CustomOptions(); }
            ;
-          
 
 array_modifier: '[' CONSTANT ']'
           { $$ = new ArrayType(NULL, $2);
