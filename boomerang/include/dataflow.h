@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -92,7 +92,9 @@ public:
     // 
     void updateUses() {
         if (uses == NULL) {
-            uses = new std::set<Statement*>; calcUses(*uses); } }
+            uses = new std::set<Statement*>; calcUses(*uses); 
+        } 
+    }
     void calcUses(std::set<Statement*> &uses);
     int getNumUses() { 
         updateUses();
