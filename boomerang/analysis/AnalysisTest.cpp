@@ -4,7 +4,7 @@
  *				tests the analysis code
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 10 Jul 02 - Mike: Created
  */
@@ -55,7 +55,8 @@ void AnalysisTest::setUp () {
 	pFE = new SparcFrontEnd(pBF);
 
 	// Set up the prog
-	prog = pFE->decode();
+	prog = new Prog(pFE->getBinaryFile(), pFE);
+	pFE->decode(prog);
 }
 
 /*==============================================================================

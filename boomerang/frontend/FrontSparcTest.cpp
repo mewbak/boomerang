@@ -4,7 +4,7 @@
  *				tests the sparc front end
  *============================================================================*/
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 05 Apr 02 - Mike: Created
  * 21 May 02 - Mike: Mods for gcc 3.1
@@ -291,7 +291,8 @@ void FrontSparcTest::testDelaySlot() {
 	// decode calls readLibraryCatalog(), which needs to have definitions
 	// for non-sparc architectures cleared
 	Type::clearNamedTypes();
-	Prog *prog = pFE->decode();
+	Prog *prog = new Prog(pFE->getBinaryFile(), pFE);
+	pFE->decode(prog);
 
 	bool gotMain;
 	ADDRESS addr = pFE->getMainEntryPoint(gotMain);
