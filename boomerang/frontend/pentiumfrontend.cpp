@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -980,9 +980,7 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint( bool &gotMain )
 
 	gotMain = false;
     start = pBF->GetEntryPoint();
-    //if( start == NO_ADDRESS ) return NO_ADDRESS;  // This is just the CRT
-
-	// return start;  // dont use this pattern
+    if( start == NO_ADDRESS ) return NO_ADDRESS;
 
     int instCount = 100;
     int conseq = 0;
@@ -1004,7 +1002,8 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint( bool &gotMain )
 	            gotMain = true;
                 return cs->getFixedDest();
             }
-            if (strcmp(pBF->SymbolByAddress(dest), "__libc_start_main") == 0) {
+            if (pBF->SymbolByAddress(dest) &&
+                strcmp(pBF->SymbolByAddress(dest), "__libc_start_main") == 0) {
                 // This is a gcc 3 pattern. The first parameter will be
                 // a pointer to main. Assume it's the 5 byte push
                 // immediately preceeding this instruction

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.29 $
+ * $Revision: 1.30 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -162,6 +162,8 @@ Prog *FrontEnd::decode(bool decodeMain)
 
     bool gotMain;
     ADDRESS a = getMainEntryPoint(gotMain);
+    if (VERBOSE)
+        std::cerr << "start: " << a << " gotmain: " << gotMain << std::endl;
     if (a == NO_ADDRESS) return false;
 
     decode(prog, a);
