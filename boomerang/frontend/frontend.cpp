@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -214,10 +214,12 @@ void FrontEnd::decode(Prog *prog, ADDRESS a) {
                 p->setDecoded();
             else
                 break;
-            // Break out of the loop if not decoding children
+            // Break out of the loops if not decoding children
             if (Boomerang::get()->noDecodeChildren)
                 break;
         }
+        if (Boomerang::get()->noDecodeChildren)
+            break;
     }
     prog->wellForm();
 }
