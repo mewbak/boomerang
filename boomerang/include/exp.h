@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.103 $
+ * $Revision: 1.104 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -758,6 +758,7 @@ virtual Exp* polySimplify(bool& bMod);
     virtual bool accept(ExpVisitor* v);
     virtual Exp* accept(ExpModifier* v);
 protected:
+    RefExp() : Unary(opSubscript), def(NULL) { }
     friend class XMLProgParser;
 };  // Class RefExp
 

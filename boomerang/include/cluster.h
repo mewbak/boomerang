@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 03 May 04 - Trent: Created
  */
 
@@ -47,6 +47,7 @@ public:
     Cluster *getChild(int n) { return children[n]; }
     void addChild(Cluster *n) { children.push_back(n); n->parent = this; }
     const char *makeDirs();
+    Cluster *find(const char *nam);
 protected:
 
     friend class XMLProgParser;

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -339,6 +339,7 @@ virtual const char *getCtype() const;
 
 protected:
 	friend class XMLProgParser;
+	ArrayType() : Type(eArray), base_type(NULL), length(0) { }
 };
 
 class NamedType : public Type {
