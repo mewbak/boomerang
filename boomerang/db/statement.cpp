@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.59 $
+ * $Revision: 1.60 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2327,6 +2327,15 @@ bool BoolStatement::search(Exp *search, Exp *&result)
     if (pDest->search(search, result)) return true;
     assert(pCond);
     return pCond->search(search, result);
+}
+
+bool BoolStatement::searchAll(Exp* search, std::list<Exp*>& result)
+{
+    bool ch = false;
+    assert(pDest);
+    if (pDest->searchAll(search, result)) ch = true;
+    assert(pCond);
+    return pCond->searchAll(search, result) || ch;
 }
 
 bool BoolStatement::searchAndReplace(Exp *search, Exp *replace) {

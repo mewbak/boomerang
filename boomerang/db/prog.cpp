@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.72 $
+ * $Revision: 1.73 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -41,6 +41,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <math.h>
 
 #include "types.h"
 #include "statement.h"
@@ -517,6 +518,20 @@ char *Prog::getStringConstant(ADDRESS uaddr) {
     if (si && si->bReadOnly)
         return (char*)(uaddr + si->uHostAddr - si->uNativeAddr);
     return NULL;
+}
+
+double Prog::getFloatConstant(ADDRESS uaddr, bool &ok, int bits) {
+    ok = true;
+    SectionInfo* si = pBF->GetSectionInfoByAddr(uaddr);
+    if (si && si->bReadOnly)
+        if (bits == 64)
+            return *(double*)(uaddr + si->uHostAddr - si->uNativeAddr);
+        else {
+            assert(bits == 32);
+            return *(float*)(uaddr + si->uHostAddr - si->uNativeAddr);
+        }
+    ok = false;
+    return 0.0;
 }
 
 /*==============================================================================

@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -226,6 +226,7 @@ public:
 
     // get a string constant at a give address if appropriate
     char *getStringConstant(ADDRESS uaddr);
+    double getFloatConstant(ADDRESS uaddr, bool &ok, int bits = 64);
 
     // Hacks for Mike
     MACHINE getMachine()                // Get a code for the machine

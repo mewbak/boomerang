@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.78 $
+/* $Revision: 1.79 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -491,6 +491,7 @@ public:
     void addNewReturns(int depth);
     // Trim parameters. If depth not given or == -1, perform at all depths
     void trimParameters(int depth = -1);
+    void processFloatConstants();
     void replaceExpressionsWithGlobals();
     void replaceExpressionsWithSymbols();
     void replaceExpressionsWithParameters(int depth);   // must be in SSA form
