@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.84 $
+# $Revision: 1.85 $
 # 23 Nov 04 - Mike: Added PPC files
 # 20 Jul 04 - Mike: Removed BOOMDIR
 # 21 Aug 02 - Icer: added codegen/chllcode.cpp to the build process
@@ -52,12 +52,13 @@ LDL=-ldl
 EXEEXT=
 DLLEXT=.so
 WININCLUDE=
+COPYDLL=
+endif
+
 ifeq ($(HOST_GNU_LD), yes)
 RUNPATH=-Wl,-rpath -Wl,"lib"
 else # Assume Solaris
 RUNPATH=-R"lib"
-endif
-COPYDLL=
 endif
 
 # NOTE: "win32make/include" should be after "include" because if there
