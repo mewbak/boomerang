@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -666,3 +666,8 @@ bool StmtConstCaster::visit(BoolAssign *stmt) {
 	return !ecc->isChanged();
 }
 
+// This is the code (apart from definitions) to find all constants in a Statement
+bool ConstFinder::visit(Const* e) {
+	lc.push_back(e);
+	return true;
+}

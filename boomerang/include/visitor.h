@@ -9,7 +9,7 @@
  *			   and also to make exp.cpp and statement.cpp a little less huge
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * We have Visitor and Modifier classes separate. Visitors are more suited
  *	 for searching: they have the capability of stopping the recursion,
@@ -346,7 +346,7 @@ public:
 	// not to be considered for the final pass just before code generation.
 	// For example, implicit parameters and returns in CallStatements are
 	// ignored (not considered used).
-	bool final;
+	bool	final;
 			UsedLocsVisitor(ExpVisitor* v, bool f = false) : StmtExpVisitor(v)
 			  {final = f;}
 	virtual ~UsedLocsVisitor() {}
@@ -421,6 +421,20 @@ public:
 	virtual bool visit(CaseStatement *stmt);
 	virtual bool visit(CallStatement *stmt);
 	virtual bool visit(ReturnStatement *stmt);
+};
+
+class ConstFinder : public ExpVisitor {
+		std::list<Const*>& lc;
+public:
+				ConstFinder(std::list<Const*>& lc) : lc(lc) {}
+virtual			~ConstFinder() {}
+
+virtual bool	visit(Const *e);
+};
+
+class StmtConstFinder : public StmtExpVisitor {
+public:
+				StmtConstFinder(ConstFinder* v) : StmtExpVisitor(v) {}
 };
 
 #endif	// #ifndef __VISITOR_H__
