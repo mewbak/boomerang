@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Transformer and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 17 Apr 04 - Trent: Created
  */
 
@@ -90,7 +90,7 @@ void ExpTransformer::loadAll()
     ifs.open(sPath.c_str());
 
     if (!ifs.good()) {
-        LOG << "can't open `" << sPath.c_str() << "'\n";
+		std::cerr << "can't open `" << sPath.c_str() << "'\n";
         exit(1);
     }
 
