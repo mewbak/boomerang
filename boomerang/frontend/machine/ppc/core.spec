@@ -2,7 +2,7 @@
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Power PC processor
 #
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 
 #### Copyright (c) 1995 Flavors Technology, Inc.
 #### This file may be distributed freely as long as this notice remains.
@@ -667,8 +667,9 @@ patterns
  bns is BO = 4  & BIcc = 3		# f, so
  bun is BO = 12 & BIcc = 3		# t, un
  bnu is BO = 4  & BIcc = 3		# f, un
+ buu is BO = 20 & BIcc = 3      # un, un
 
-bcc_ is blt | ble | beq | bge | bgt | bnl | bne | bng | bso | bns | bun | bnu
+bcc_ is blt | ble | beq | bge | bgt | bnl | bne | bng | bso | bns | bun | bnu | buu
 
 constructors
 
