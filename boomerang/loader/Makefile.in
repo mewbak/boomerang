@@ -12,7 +12,7 @@
 #
 ######################################################
 
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 # Note: gnu make is probably required (for patsubst etc)
 # Whole make is dependent on finding the pattern *BinaryFile.cpp;
 # a lib%.so file is made for each of these
@@ -65,7 +65,7 @@ microX86dis.o: microX86dis.c
 
 # Extra object files, etc
 # Only ElfBinaryFile needs libelf. These are target specific variables.
-../lib/libElfBinaryFile.so: EXTRAS = -lelf SymTab.o
+../lib/libElfBinaryFile.so: EXTRAS = SymTab.o
 ../lib/libHpSomBinaryFile.so: EXTRAS = SymTab.o
 ../lib/libBinaryFile.so: EXTRAS = -ldl
 ../lib/libWin32BinaryFile.so: EXTRAS = microX86dis.o
