@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -872,19 +872,6 @@ bool PentiumFrontEnd::helperFunc(ADDRESS dest, ADDRESS addr, std::list<RTL*>* lr
         // Will be other cases in future
     }
     return false;
-}
-
-/*==============================================================================
- * FUNCTION:      fetch4
- * OVERVIEW:      Fetch 4 bytes in little endian format. Needed by the switch
- *                logic. Here because it's source machine specific
- * PARAMETERS:    ptr -
- * RETURNS:       the four byte value at the given location
- *============================================================================*/
-unsigned PentiumFrontEnd::fetch4(unsigned char* ptr)
-{
-    // We need to read the bytes in little endian format
-    return ptr[0] + (ptr[1] << 8) + (ptr[2] << 16) + (ptr[3] << 24);
 }
 
 /*==============================================================================
