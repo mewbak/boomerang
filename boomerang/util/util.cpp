@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -219,6 +219,7 @@ void escapeXMLChars(std::string &s)
 }
 
 // Turn things like newline, return, tab into \n, \r, \t etc
+// Note: assumes a C or C++ back end...
 char* escapeStr(char* str) {
     std::ostringstream out;
     for (char* p = str; *p; p++) {
@@ -234,7 +235,7 @@ char* escapeStr(char* str) {
             }
         } else out << c;
     }
-    char* ret = new char[out.str().size()];
+    char* ret = new char[out.str().size()+1];
     strcpy(ret, out.str().c_str());
     return ret;
 }
