@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.34 $
+/* $Revision: 1.35 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -366,7 +366,8 @@ public:
     int  findMaxDepth();                    // Find max memory nesting depth
     // Recalculate dataflow
     void repairDataflow(int memDepth, StatementSet& rs);
-    void findRestoreSet(StatementSet& rs);  // Find set of restoring statements
+    void findRestoreSet_issa(StatementSet& rs);  // Find set of restoring stmts
+    void findRestoreSet(StatementSet& rs);      // Find set of restoring stmts
     void removeRestoreRefs(StatementSet& rs);  // Remove refs to resore stmts
 
     void toSSAform(int memDepth, StatementSet& rs);

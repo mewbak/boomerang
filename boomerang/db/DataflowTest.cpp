@@ -4,7 +4,7 @@
  *              tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  *
  * 14 Jan 03 - Trent: Created
  * 17 Apr 03 - Mike: Added testRecursion to track down a nasty bug
@@ -679,7 +679,7 @@ void DataflowTest::testExpand () {
     FrontEnd *fe = FrontEnd::Load(FIBO_PENTIUM);
     Prog *prog = fe->decode();
     prog->analyse();
-    prog->numberStatements();
+    prog->initStatements();
     prog->forwardGlobalDataflow();
     prog->toSSAform();
     std::list<Proc*>::iterator pp;

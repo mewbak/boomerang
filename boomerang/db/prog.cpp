@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.39 $
+ * $Revision: 1.40 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -1249,7 +1249,7 @@ void Prog::findRestoreSet(StatementSet& restoreSet) {
     for (pp = m_procs.begin(); pp != m_procs.end(); pp++) {
         proc = (UserProc*)(*pp);
         if (proc->isLib()) continue;
-        proc->findRestoreSet(restoreSet);
+        proc->findRestoreSet_issa(restoreSet);
     }
 }
 
@@ -1320,6 +1320,21 @@ void Prog::decompile() {
                   " at depth " << depth << " ===\n\n";
             }
         }
+
+        // Find the "restore set"
+        StatementSet restoreSet;
+        proc->findRestoreSet(restoreSet);
+        if (VERBOSE) {
+            std::cerr << "=== Restore set for " << proc->getName() << " ===\n";
+            StmtSetIter rr;
+            for (Statement* r = restoreSet.getFirst(rr); r;
+              r = restoreSet.getNext(rr))
+                std::cerr << std::dec << r->getNumber() << " ";
+            std::cerr << "\n\n";
+        }
+
+
+
         delete d;
     }
 }
