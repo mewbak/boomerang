@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -38,6 +38,7 @@
 #include "exp.h"
 #include "register.h"
 #include "statement.h"          // At least for STMT_KIND
+#include "gc_cpp.h"
 
 class BasicBlock;
 class HLLCode;
@@ -56,7 +57,7 @@ class RTLVisitor;
  * Class RTL: describes low level register transfer lists (actually lists of
  * expressions)
  *============================================================================*/
-class RTL {
+class RTL : public gc {
     ADDRESS nativeAddr;             // RTL's source program instruction address
     std::list<Statement*> stmtList; // List of expressions in this RTL.
 public:
@@ -186,7 +187,7 @@ public:
  * header file...
  *============================================================================*/
 
-class TableEntry {
+class TableEntry : public gc {
 public:
     TableEntry();
     TableEntry(std::list<std::string>& p, RTL& rtl);
@@ -213,7 +214,7 @@ public:
  *============================================================================*/
 typedef enum {PARAM_SIMPLE, PARAM_ASGN, PARAM_LAMBDA, PARAM_VARIANT} ParamKind;
 
-class ParamEntry {
+class ParamEntry : public gc {
  public:
     ParamEntry() {
         asgn = NULL;
@@ -252,7 +253,7 @@ class PartialType;
  * instruction name and list of actual parameters. 
  *============================================================================*/
 
-class RTLInstDict {
+class RTLInstDict : public gc {
 public:
     RTLInstDict();
     ~RTLInstDict();

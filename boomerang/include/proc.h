@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.67 $
+/* $Revision: 1.68 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -33,6 +33,7 @@
 #include "exp.h"                // For lessExpStar
 #include "cfg.h"                // For cfg->simplify()
 #include "hllcode.h"
+#include "gc_cpp.h"
 
 class Prog;
 class UserProc;
@@ -53,7 +54,7 @@ class Signature;
 /*==============================================================================
  * Procedure class.
  *============================================================================*/
-class Proc {
+class Proc : public gc {
 public:
 
     /*

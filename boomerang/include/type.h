@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -30,13 +30,14 @@
 #include <string>
 #include <map>
 #include <functional>       // For binary_function
+#include "gc_cpp.h"
 
 class Signature;
 
 enum eType {eVoid, eFunc, eBoolean, eChar, eInteger, eFloat, ePointer,
     eArray, eNamed};    // For operator< only
 
-class Type {
+class Type : public gc {
 protected:
     eType id;
 private:
