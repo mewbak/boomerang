@@ -2,7 +2,7 @@
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Power PC processor
 #
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 #### Copyright (c) 1995 Flavors Technology, Inc.
 #### This file may be distributed freely as long as this notice remains.
@@ -428,8 +428,8 @@ constructors
 #    when { AA = 0, reloc = $pc + LI * 4 } is b & LK & AA & LI
 #    when { AA = 1, reloc =       LI * 4 } is b & LK & AA & LI
 
-   b^LK     reloc { reloc = L + LI * 4 } is L: b & LK & LI & AA = 0
-   b^LK^"a" reloc { reloc =     LI * 4 } is    b & LK & LI & AA = 1
+   b^LK     reloc { reloc = L + LI! * 4 } is L: b & LK & LI & AA = 0
+   b^LK^"a" reloc { reloc =     LI! * 4 } is    b & LK & LI & AA = 1
 
 ## B-Form
 
