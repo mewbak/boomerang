@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.58 $
+ * $Revision: 1.59 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1585,6 +1585,7 @@ void CallStatement::addUsedLocs(LocationSet& used) {
 }
 
 void CallStatement::fixCallRefs() {
+    LOG << "fixing call refs for " << this << "\n";
     if (pDest)
         pDest = pDest->fixCallRefs();
     for (unsigned i = 0; i < arguments.size(); i++)

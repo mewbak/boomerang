@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -244,10 +244,13 @@ private:
 
 public:
 	ArrayType(Type *p, unsigned length);
+	ArrayType(Type *p);
 virtual ~ArrayType();
 virtual bool isArray() const { return true; }
         Type *getBaseType() { return base_type; }
         unsigned getLength() { return length; }
+        void setLength(unsigned n) { length = n; }
+        bool isUnbounded();
 
 virtual Type* clone() const;
 

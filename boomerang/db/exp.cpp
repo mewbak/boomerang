@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.98 $
+ * $Revision: 1.99 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -1436,7 +1436,7 @@ void Exp::partitionTerms(std::list<Exp*>& positives, std::list<Exp*>& negatives,
  *============================================================================*/
 Exp* Unary::simplifyArith()
 {
-    if (op == opMemOf || op == opRegOf || op == opAddrOf) {
+    if (op == opMemOf || op == opRegOf || op == opAddrOf || op == opSubscript) {
         // assume we want to simplify the subexpression
         subExp1 = subExp1->simplifyArith();
     }
@@ -2548,6 +2548,7 @@ Exp *Ternary::fixCallRefs()
 }
 
 Exp *RefExp::fixCallRefs() {
+    subExp1 = subExp1->fixCallRefs();
     CallStatement *call = dynamic_cast<CallStatement*>(def);
     if (call) {
         Exp *e = call->getProven(subExp1);

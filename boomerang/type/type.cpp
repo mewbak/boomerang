@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -79,6 +79,21 @@ PointerType::PointerType(Type *p) : Type(ePointer), points_to(p)
 ArrayType::ArrayType(Type *p, unsigned length) : Type(eArray), base_type(p),
   length(length)
 {
+}
+
+// we actually want unbounded arrays to still work correctly when
+// computing aliases.. as such, we give them a very large bound
+// and hope that no-one tries to alias beyond them
+#define NO_BOUND 8*1024*1024
+
+ArrayType::ArrayType(Type *p) : Type(eArray), base_type(p),
+  length(NO_BOUND)
+{
+}
+
+bool ArrayType::isUnbounded()
+{
+    return length == NO_BOUND;
 }
 
 NamedType::NamedType(const char *name) : Type(eNamed), name(name)
