@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.93 $
+ * $Revision: 1.94 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -415,7 +415,7 @@ bool PhiExp::operator==(const Exp& o) const {
 bool TypeVal::operator==(const Exp& o) const {
     if (op == opWild) return true;
     if (((TypeVal&)o).op == opWild) return true;
-    if (((TypeVal&)o).op != opPhi) return false;
+    if (((TypeVal&)o).op != opTypeVal) return false;
     return *val == *((TypeVal&)o).val;
 }
 
