@@ -4,7 +4,7 @@
  *				tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.29 $
+ * $Revision: 1.30 $
  *
  * 05 Apr 02 - Mike: Fixed problems caused by lack of clone() calls
  * 09 Apr 02 - Mike: Compare, searchReplace
@@ -775,7 +775,7 @@ void ExpTest::testSimpConstr() {
 			new TypeVal(new PointerType(new CharType())),
 			new TypeVal(PointerType::newPtrAlpha())));
 	e = e->simplifyConstraint();
-	std::string expected("<char*> = <alpha0*>");
+	std::string expected("<char *> = <alpha0 *>");
 	std::ostringstream ost;
 	e->print(ost);
 	std::string actual = ost.str();
@@ -796,7 +796,7 @@ void ExpTest::testSimpConstr() {
 			new Unary(opTypeOf, new Const(123456)),
 			new TypeVal(new PointerType(new CharType()))));
 	e = e->simplifyConstraint();
-	expected = "T[123456] = <char*>";
+	expected = "T[123456] = <char *>";
 	std::ostringstream ost2;
 	e->print(ost2);
 	actual = ost2.str();
