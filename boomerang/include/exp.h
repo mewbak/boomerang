@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -141,6 +141,8 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
     bool isPostVar() {return op == opPostVar;}
     // True if this is an opSize (size case; deprecated)
     bool isSizeCast() { return op == opSize;}
+    // True if this is a phi operation (SSA)
+    bool isPhi() {return op == opPhi;}
     // Get the index for this var
     int getVarIndex();
     // True if this is a terminal

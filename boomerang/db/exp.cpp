@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2497,7 +2497,7 @@ void AssignExp::killReach(StatementSet &reach) {
     StatementSet kills;
     StmtSetIter it;
     for (Statement* s = reach.getFirst(it); s; s = reach.getNext(it)) {
-        if (s->getLeft() == NULL) continue;
+        if (s->getLeft() == NULL) continue;     // Should never happen?
         bool isKilled = false;
         if (*s->getLeft() == *subExp1)
             isKilled = true;

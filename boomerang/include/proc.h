@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.21 $
+/* $Revision: 1.22 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -382,6 +382,21 @@ public:
     // get internal statements
     // Note: assignment causes shallow copy of list
     virtual void getInternalStatements(StatementList &sl) {sl = internal;}
+
+//
+//  SSA
+//
+    // return true if the procedure is in ssa form
+    bool isSSAForm();
+
+    // transform the procedure to ssa form
+    void transformToSSAForm();
+
+    // transform the procedure from ssa form
+    void transformFromSSAForm();
+
+    // minimise the SSA form, returns true if anything changed
+    bool minimiseSSAForm();
 
 private:
     /*
