@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.106 $
+ * $Revision: 1.107 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3241,7 +3241,8 @@ bool CallStatement::accept(StmtExpVisitor* v) {
     std::vector<Exp*>::iterator it;
     for (it = arguments.begin(); ret && it != arguments.end(); it++)
         ret = (*it)->accept(v->ev);
-    for (it = implicitArguments.begin(); ret && it != implicitArguments.end(); it++)
+    for (it = implicitArguments.begin(); ret && it != implicitArguments.end();
+      it++)
         ret = (*it)->accept(v->ev);
     for (it = returns.begin(); ret && it != returns.end(); it++)
         ret = (*it)->accept(v->ev);
