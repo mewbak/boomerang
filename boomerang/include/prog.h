@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.46 $
+ * $Revision: 1.47 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -198,7 +198,7 @@ public:
     Signature *getLibSignature(const char *name);
 
     // Get the front end id used to make this prog
-    const char *getFrontEndId();
+    platform getFrontEndId();
 
     Signature *getDefaultSignature(const char *name);
 
