@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.92 $
+ * $Revision: 1.93 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -931,4 +931,7 @@ public:
     virtual bool visit(Location* e);
     // All other virtual functions inherit from ExpVisitor: just recurse
 };
+
+// This class visits subexpressions, and performs alpha substitution
+
 #endif // __EXP_H__

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.59 $
+ * $Revision: 1.60 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -808,10 +808,11 @@ void CHLLCode::AddAssignmentStatement(int indLevel, Assign *asgn)
 {
     std::ostringstream s;
     indent(s, indLevel);
-    if (asgn->getLeft()->getOper() == opMemOf && asgn->getSize() != 32) 
+    if (asgn->getLeft()->getOper() == opMemOf &&
+      asgn->getType()->getSize() != 32) 
         appendExp(s,
             new TypedExp(
-                new IntegerType(asgn->getSize()),
+                new IntegerType(asgn->getType()->getSize()),
                 asgn->getLeft()), PREC_ASSIGN);
     else if (asgn->getLeft()->getOper() == opGlobal &&
              ((Location*)asgn->getLeft())->getType()->isArray())

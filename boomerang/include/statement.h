@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -279,15 +279,16 @@ std::ostream& operator<<(std::ostream& os, LocationSet* p);
 class Assign : public Statement {
     Exp*    lhs;        // The left hand side
     Exp*    rhs;        // The right hand side
-    int     size;       // The size
+    //int     size;       // The size
+    Type*   type;       // The assignmet type
     Exp*    guard;      // Guard expression (if not NULL)
 public:
     // Constructor
             Assign();
     // Constructor, subexpression
             Assign(Exp* lhs, Exp* rhs);
-    // Constructor, size, and subexpressions.
-            Assign(int sz, Exp* lhs, Exp* rhs);
+    // Constructor, type, and subexpression
+            Assign(Type* ty, Exp* lhs, Exp* rhs);
     // Copy constructor
             Assign(Assign& o);
 
@@ -304,9 +305,9 @@ public:
     virtual void print(std::ostream& os, bool withUses = false);
     void    appendDotFile(std::ofstream& of);
 
-    // Get and set the size
-    int     getSize();
-    void    setSize(int sz);
+    // Get and set the type
+    Type*   getType();
+    void    setType(Type* ty);
 
     // Guard
     void setGuard(Exp* g) {guard = g;}
