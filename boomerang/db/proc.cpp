@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.73 $
+ * $Revision: 1.74 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1939,3 +1939,11 @@ bool UserProc::prover(Exp *query)
     return query->getOper() == opTrue;
 }
 
+// Get the set of locations defined by this proc. In other words, the define set,
+// currently called returns
+void UserProc::getDefinitions(LocationSet& ls) {
+    int n = signature->getNumReturns();
+    for (int j=0; j < n; j++) {
+        ls.insert(signature->getReturnExp(j));
+    }
+}

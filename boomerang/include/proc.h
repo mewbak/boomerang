@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.43 $
+/* $Revision: 1.44 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -501,11 +501,16 @@ public:
     // Calculate uses info
     void computeUses();
 
+#if 0
     // get the set of locations "defined" in this procedure
     void getDefinitions(LocationSet &defs) {defs = definesSet;}
 
     // get the set of locations "returned" by this procedure
     void getReturnSet(LocationSet &ret) {ret = returnsSet;}
+
+#endif
+
+    void getDefinitions(LocationSet &defs);
 
 private:
     /*
