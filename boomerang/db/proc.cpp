@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.169 $
+ * $Revision: 1.170 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1640,7 +1640,7 @@ void UserProc::trimParameters(int depth) {
     int nparams = signature->getNumParams() + signature->getNumImplicitParams();
     std::vector<Exp*> params;
     bool referenced[32];
-		assert(nparams < sizeof(referenced)/sizeof(bool));
+		assert(nparams < (int)(sizeof(referenced)/sizeof(bool)));
 	int i;
     for (i = 0; i < signature->getNumParams(); i++) {
         referenced[i] = false;
