@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.45 $
+ * $Revision: 1.46 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -255,7 +255,7 @@ void FrontEnd::readLibrarySignatures(const char *sPath, bool win32) {
 
     for (std::list<Signature*>::iterator it = p->signatures.begin();
            it != p->signatures.end(); it++) {
-#if 1
+#if 0
         std::cerr << "readLibrarySignatures from " << sPath << ": " <<
           (*it)->getName() << "\n";
 #endif
