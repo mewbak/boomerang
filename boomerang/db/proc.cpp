@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.74 $
+ * $Revision: 1.75 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1166,7 +1166,7 @@ void UserProc::trimReturns() {
     }
     for (std::set<Exp*>::iterator it = preserved.begin(); 
          it != preserved.end(); it++)
-        signature->removeReturn(*it);
+        removeReturn(*it);
     StatementList stmts;
     getStatements(stmts);
     StmtListIter it;
@@ -1211,6 +1211,14 @@ void UserProc::trimParameters() {
                           << std::endl;
             removeParameter(params[i]);
         }
+}
+
+void UserProc::removeReturn(Exp *e)
+{
+    signature->removeReturn(e);
+    for (std::set<CallStatement*>::iterator it = callerSet.begin();
+         it != callerSet.end(); it++)
+            (*it)->removeReturn(e);
 }
 
 void UserProc::removeParameter(Exp *e)
