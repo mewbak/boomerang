@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.43 $
+ * $Revision: 1.44 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -1499,3 +1499,10 @@ void LowerType::setSize(int size) {
 	assert(0);
 }
 
+Type* Type::newIntegerLikeType(int size, int signedness) {
+	if (size == 1)
+		return new BooleanType();
+	if (size == 8 && signedness >= 0)
+		return new CharType();
+	return new IntegerType(size, signedness);
+}
