@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.123 $
+ * $Revision: 1.124 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -55,7 +55,6 @@
 #include "frontend.h"
 #include "prog.h"
 #include "signature.h"
-#include "analysis.h"
 #include "boomerang.h"
 #include "ansi-c-parser.h"
 #include "config.h"
@@ -152,8 +151,8 @@ void Prog::finishDecode()
 }
 
 // Analyse any procedures that are decoded
+#if 1
 void Prog::analyse() {
-	Analysis *analysis = new Analysis();
 	for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end(); it++) {
 		Proc *pProc = *it;
 		pProc->printDetailsXML();
@@ -168,8 +167,8 @@ void Prog::analyse() {
 		p->getCFG()->sortByAddress();
 		p->printAnalysedXML();
 	}
-	delete analysis;
 }
+#endif
 
 void Prog::generateDotFile() {
 	assert(Boomerang::get()->dotFile);

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.97 $
+ * $Revision: 1.98 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -965,6 +965,15 @@ Type *Signature::getParamType(int n) {
 
 void Signature::setParamType(int n, Type *ty) {
 	params[n]->setType(ty);
+}
+
+void Signature::setParamType(const char* nam, Type* ty) {
+	int idx = findParam(nam);
+	if (idx == -1) {
+		LOG << "Could not set type for unknown parameter " << nam << "\n";
+		return;
+	}
+	params[idx]->setType(ty);
 }
 
 void Signature::setParamName(int n, const char *name)
