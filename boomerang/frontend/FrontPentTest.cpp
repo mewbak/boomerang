@@ -4,7 +4,7 @@
  *				tests the sparc front end
  *============================================================================*/
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 05 Apr 02 - Mike: Created
  * 21 May 02 - Mike: Mods for gcc 3.1
@@ -127,7 +127,7 @@ void FrontPentTest::test2() {
 	expected = std::string(
 		"08048345    0 *32* tmp1 := r28\n"
 		"            0 *32* r28 := r28 + 16\n"
-		"            0 ** %flags := ADDFLAGS32( tmp1, 16, r28 )\n");
+		"            0 *v* %flags := ADDFLAGS32( tmp1, 16, r28 )\n");
 	CPPUNIT_ASSERT_EQUAL(expected, std::string(o1.str()));
 
 	std::ostringstream o2;
