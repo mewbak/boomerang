@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.72 $
+ * $Revision: 1.73 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -701,7 +701,7 @@ void BranchStatement::setCondType(BRANCH_TYPE cond, bool usesFloat /*= false*/) 
             break;
     }
 #else
-    p = new Terminal(opFlags);
+    p = new Terminal(usesFloat ? opFflags : opFlags);
 #endif
     assert(p);
     setCondExpr(p);
