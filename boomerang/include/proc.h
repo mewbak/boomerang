@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.79 $
+/* $Revision: 1.80 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -604,6 +604,7 @@ public:
 
     // return a local's type
     Type *getLocalType(const char *nam);
+    void setLocalType(const char *nam, Type *ty);
 
     // return a local's exp
     Exp *getLocalExp(const char *nam);
