@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.75 $
+/* $Revision: 1.76 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -568,6 +568,12 @@ private:
      */
     void    checkMemSize(Exp* e);
 
+    /* 
+     * Return an expression that is equivilent to e in terms of local variables.
+     * Creates new locals as needed.
+     */
+    Exp *getLocalExp(Exp *le, Type *ty = NULL);
+
 public:
 
     /*
@@ -587,6 +593,9 @@ public:
      * Note: was returning TypedExp*
      */
     Exp* newLocal(Type* ty);
+
+    // return a local's type
+    Type *getLocalType(const char *nam);
 
     /*
      * Add new locals, local<next available> to local<n-1>
@@ -642,7 +651,7 @@ public:
     /*
      * Add to the set of callees
      */
-    void setCallee(Proc* callee); 
+    void addCallee(Proc* callee); 
 
     /*
      * Add to a set of callee Procs

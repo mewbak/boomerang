@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 22 Aug 03 - Mike: Created
  */
@@ -263,7 +263,7 @@ std::cerr << "Soln now: " << soln.prints() << "\n";
         //if (soln.size() == 0)
             // Awkward. There is a trivial solution, but we have no constraints
             // So make a constraint of always-true
-            //soln.insert(new Terminal(opTrue));\
+            //soln.insert(new Terminal(opTrue));
         // Copy the fixed constraints
         soln.makeUnion(fixed);
         solns.push_back(soln);

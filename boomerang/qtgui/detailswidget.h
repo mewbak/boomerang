@@ -2,7 +2,7 @@
 ** Form interface generated from reading ui file 'detailswidget.ui'
 **
 ** Created: Thu Sep 4 19:50:37 2003
-**      by: The User Interface Compiler ($Id: detailswidget.h,v 1.1 2003-09-13 02:28:53 quantumg Exp $)
+**      by: The User Interface Compiler ($Id: detailswidget.h,v 1.2 2003-09-24 07:55:55 quantumg Exp $)
 **
 ** WARNING! All changes made in this file will be lost!
 ****************************************************************************/
@@ -31,7 +31,7 @@ public:
 
     void clear();
     void setName(const QString &nam);
-    void addParam(const QString &nam, const QString &ty, const QString &e);
+    void addParam(const QString &nam, const QString &ty, const QString &e, bool implicit = false);
     void addReturn(const QString &ty, const QString &e);
 
 protected:

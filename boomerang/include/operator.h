@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -113,6 +113,7 @@ enum OPER
     opLocal,                // used to represent a local, takes a string
     opGlobal,               // used to represent a global, takes a string
     opExpand,               // Expandable expression
+    opMemberAccess,         // . and -> in C
     opTemp,                 // Temp register name
     opSize,                 // Size override
     opCastIntStar,          // Cast to int*
