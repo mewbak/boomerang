@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -126,7 +126,7 @@ public:
 	void decompile();
 
         // Print this program (primarily for debugging)
-        void print(std::ostream &out);
+        void print(std::ostream &out, bool withDF = false);
 
 	// map for global symbols
 	std::map<std::string, TypedExp *> symbols;

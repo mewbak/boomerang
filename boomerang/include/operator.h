@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -157,6 +157,8 @@ enum OPER
     opAGP,                  // abstract global pointer
     // This is a "nil list" terminal (e.g. no parameters)
     opNil,                  // Nil list
+    // This is the abstracted flags register terminal
+    opFlags,                // Flags
 
     // This is an abstract boolean that if true causes the following instruction
     // to be anulled

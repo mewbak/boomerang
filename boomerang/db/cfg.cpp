@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * 18 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -1496,9 +1496,13 @@ void Cfg::updateLiveness()
             (*it)->calcLiveOut(out);
             if (out != (*it)->liveout) {
                 (*it)->liveout.clear();
+		if ((*it)->getType() == RET)
+		    liveout.clear();
                 for (std::set<Statement*>::iterator it1 = out.begin();
                      it1 != out.end(); it1++) {
                     (*it)->liveout.insert(*it1);
+		    if ((*it)->getType() == RET)
+		        liveout.insert(*it1);
                 }
                 change = true;
             }
@@ -1739,7 +1743,7 @@ void Cfg::simplify()
 }
 
 // print this cfg, mainly for debugging
-void Cfg::print(std::ostream &out) {
+void Cfg::print(std::ostream &out, bool withDF) {
     for (std::list<PBB>::iterator it = m_listBB.begin(); it != m_listBB.end(); it++) 
-        (*it)->print(out);
+        (*it)->print(out, withDF);
 }
