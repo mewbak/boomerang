@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -727,6 +727,16 @@ Type *NamedType::resolvesTo() const
     if (ty && ty->isNamed())
         return ((NamedType*)ty)->resolvesTo();
     return ty;
+}
+
+void ArrayType::fixBaseType(Type *b)
+{
+    if (base_type == NULL)
+        base_type = b;
+    else {
+        assert(base_type->isArray());
+        ((ArrayType*)base_type)->fixBaseType(b);
+    }
 }
 
 #endif  // #ifndef __TYPE_H__

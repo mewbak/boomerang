@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.38 $
+ * $Revision: 1.39 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -390,7 +390,9 @@ void CHLLCode::appendExp(char *str, Exp *exp)
             //  ((Const*)t->getSubExp1())->getInt(),
             //  ((Const*)t->getSubExp2())->getInt());
             //strcat(str, s); */
+            strcat(str, "(");
             appendExp(str, t->getSubExp3());
+            strcat(str, ")");
             break;
         case opTypedExp:
             if (u->getSubExp1()->getOper() == opTypedExp &&
@@ -833,7 +835,23 @@ void CHLLCode::AddProcStart(Signature *signature)
     strcat(s, signature->getName());
     strcat(s, "(");
     for (int i = 0; i < signature->getNumParams(); i++) {
-        appendType(s, signature->getParamType(i));
+        Type *ty = signature->getParamType(i); 
+        if (ty->isPointer() && ((PointerType*)ty)->getPointsTo()->isArray()) {
+            // C does this by default when you pass an array
+            ty = ((PointerType*)ty)->getPointsTo();
+            Exp *foo = new Const("foo123412341234");
+            m_proc->searchAndReplace(Location::memOf(
+                                        Location::param(
+                                          signature->getParamName(i))), 
+                                     foo);
+            m_proc->searchAndReplace(Location::param(
+                                       signature->getParamName(i)), 
+                                     foo);
+            m_proc->searchAndReplace(foo, 
+                                     Location::param(
+                                       signature->getParamName(i)));
+        }
+        appendType(s, ty);
         strcat(s, " ");
         strcat(s, signature->getParamName(i));
         if (i != signature->getNumParams() - 1)
@@ -857,7 +875,21 @@ void CHLLCode::AddLocal(const char *name, Type *type)
     appendType(s, type);
     strcat(s, " ");
     strcat(s, name);
-    strcat(s, ";");
+    Exp *e = m_proc->getLocalExp(name);
+    if (e) {
+        if (e->getOper() == opSubscript && ((RefExp*)e)->getRef() == NULL &&
+            (e->getSubExp1()->getOper() == opParam ||
+             e->getSubExp1()->getOper() == opGlobal)) {
+            strcat(s, " = ");
+            appendExp(s, e->getSubExp1());
+            strcat(s, ";");
+        } else {
+            strcat(s, "; // ");
+            std::ostringstream os;
+            e->print(os, true);
+            strcat(s, os.str().c_str());
+        }
+    }
     lines.push_back(strdup(s));
     locals[name] = type->clone();
 }
