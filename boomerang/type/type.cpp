@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -230,6 +230,19 @@ Type *SizeType::clone() const
 	SizeType *t = new SizeType(size);
 	return t;
 }
+
+Type* UpperType::clone() const
+{
+	UpperType* t = new UpperType(base_type->clone());
+	return t;
+}
+
+Type* LowerType::clone() const
+{
+	LowerType* t = new LowerType(base_type->clone());
+	return t;
+}
+
 
 /*==============================================================================
  * FUNCTION:		*Type::getSize
