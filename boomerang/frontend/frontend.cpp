@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.41 $
+ * $Revision: 1.42 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -280,7 +280,6 @@ Signature *FrontEnd::getLibSignature(const char *name) {
         signature = getDefaultSignature(name);
     }
     else {
-std::cerr << "Library signature match: " << name << "\n";
         signature = (*it).second->clone();
     }
     return signature;
