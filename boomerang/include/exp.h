@@ -7,7 +7,7 @@
  *			   subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.115 $
+ * $Revision: 1.116 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -59,7 +59,7 @@ class ExpVisitor;
 class ExpModifier;
 class XMLProgParser;
 typedef BasicBlock* PBB;
-typedef std::map<Exp*, int, lessExpStar> igraph;
+
 
 /*==============================================================================
  * Exp is an expression class, though it will probably be used to hold many
@@ -811,7 +811,7 @@ virtual bool	operator*=(Exp& o);
 virtual void	print(std::ostream& os);
 virtual void	printx(int ind);
 //virtual int		getNumRefs() {return 1;}
-	Statement*	getRef() {return def;}		// Ugh should be called getDef()
+	Statement*	getDef() {return def;}		// Ugh was called getRef()
 		Exp*	addSubscript(Statement* def) {this->def = def; return this;}
 		void	setDef(Statement* def) {this->def = def;}
 virtual Exp*	genConstraints(Exp* restrictTo);

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.67 $
+ * $Revision: 1.68 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -522,7 +522,7 @@ public:
 	void	prependStmt(Statement* s, UserProc* proc);
 
 	// Liveness
-	bool	calcLiveness(igraph& ig, int& tempNum, UserProc* proc);
+	bool	calcLiveness(igraph& ig, UserProc* proc);
 	void	getLiveOut(LocationSet& live, LocationSet& phiLocs);
 
 	// Find indirect jumps and calls
@@ -1062,7 +1062,7 @@ public:
 		int		getSemi(int node) {return semi[node];}
 		std::set<int>& getA_phi(Exp* e) {return A_phi[e];}
 
-		void	findInterferences(igraph& ig, int& tempNum);
+		void	findInterferences(igraph& ig);
 		void	appendBBs(std::list<PBB>& worklist, std::set<PBB>& workset);
 
 		void removeUsedGlobals(std::set<Global*> &unusedGlobals);
