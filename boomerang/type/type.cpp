@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.38 $
+ * $Revision: 1.39 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -1358,6 +1358,8 @@ void UnionType::readMemo(Memo *mm, bool dec)
 }
 
 void UnionType::addType(Type *n, const char *str) {
+if (n->isFloat() && isCompatibleWith(n))
+ std::cerr << "HACK!\n";
 	if (n->isUnion()) {
 		UnionType* utp = (UnionType*)n;
 		// Note: need to check for name clashes eventually
