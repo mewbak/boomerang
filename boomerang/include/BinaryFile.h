@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.5 $
+/* $Revision: 1.6 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -172,7 +172,7 @@ virtual ~BinaryFile() {}			// Virtual destructor
 // Symbol table functions
     // Lookup the address, return the name, or 0 if not found
     virtual char* SymbolByAddress(ADDRESS uNative);
-    // Lookup the name, return the address
+    // Lookup the name, return the address. If not found, return NO_ADDRESS
     virtual ADDRESS GetAddressByName(const char* pName,
                                      bool bNoTypeOK = false);
     // Lookup the name, return the size
