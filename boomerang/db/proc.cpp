@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.225 $
+ * $Revision: 1.226 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1342,18 +1342,7 @@ void UserProc::trimReturns() {
 		// also check for any locals that slipped into the returns
 		for (int i = 0; i < signature->getNumReturns(); i++) {
 			Exp *e = signature->getReturnExp(i);
-#if 1
 			if (signature->isStackLocal(prog, e))
-#else	// HACK!
-            if ((signature->isLocalOffsetNegative() && e->getOper() == opMemOf
-                    && e->getSubExp1()->getOper() == opMinus && *e->getSubExp1()->getSubExp1() == *regsp
-                    && e->getSubExp1()->getSubExp2()->isIntConst()) ||
-                  (signature->isLocalOffsetPositive() && e->getOper() == opMemOf
-                    && e->getSubExp1()->getOper() == opPlus && *e->getSubExp1()->getSubExp1() == *regsp
-                    && e->getSubExp1()->getSubExp2()->isIntConst()) ||
-                  (signature->isLocalOffsetNegative() && signature->isLocalOffsetPositive()
-                    && e->getOper() == opMemOf && *e->getSubExp1() == *regsp))
-#endif
 				preserved.insert(e);
 			else if (*e == *regsp) {
 				assert(theReturnStatement);
