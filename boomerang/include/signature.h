@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.27 $
+ * $Revision: 1.28 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -142,6 +142,7 @@ public:
     virtual Exp *getStackWildcard() { return NULL; }
     virtual int  getStackRegister(          ) {return 0; };
             int  getStackRegister(Prog* prog);
+            bool isStackLocal(Prog* prog, Exp *e);
 
     // Quick and dirty hack
 static Exp* getReturnExp2(BinaryFile* pBF);

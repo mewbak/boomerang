@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.24 $
+ * $Revision: 1.25 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -489,11 +489,13 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
                           func.c_str());
                         assert(lp);
                         call->setDestProc(lp);
-                        pRtl->appendStmt(call);
+                        std::list<Statement*>* stmt_list = new std::list<Statement*>;
+                        stmt_list->push_back(call);
+                        BB_rtls->push_back(new RTL(pRtl->getAddress(), stmt_list));
                         pBB = pCfg->newBB(BB_rtls, CALL, 1);
                         ReturnStatement *ret = new ReturnStatement();
                         std::list<RTL*> *ret_rtls = new std::list<RTL*>();
-                        std::list<Statement*>* stmt_list = new std::list<Statement*>;
+                        stmt_list = new std::list<Statement*>;
                         stmt_list->push_back(ret);
                         ret_rtls->push_back(new RTL(pRtl->getAddress()+1,
                           stmt_list));
@@ -511,7 +513,8 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
                             lp->setName(func.c_str());
                         }
                         callSet.insert(call);
-                        continue;                   
+                        ss = sl.end(); ss--;  // get out of the loop
+                        break;
                     }
                     BB_rtls->push_back(pRtl);
                     // We create the BB as a COMPJUMP type, then change
@@ -572,7 +575,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
 
                 case STMT_CALL: {
                     CallStatement* call = static_cast<CallStatement*>(s);
-
+                    
                     if (call->getDest()->getOper() == opMemOf &&
                       call->getDest()->getSubExp1()->getOper() == opIntConst &&
                       pBF->IsDynamicLinkedProcPointer(((Const*)call->getDest()

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -182,6 +182,7 @@ bool PentiumFrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream 
     sig->addParameter(Unary::regOf(29/*ebp*/));
     sig->addParameter(Unary::regOf(30/*esi*/));
     sig->addParameter(Unary::regOf(31/*edi*/));
+    sig->addParameter(new Unary(opMemOf, Unary::regOf(28)));
     sig->addReturn(Unary::regOf(24/*eax*/));
     sig->addReturn(Unary::regOf(25/*ecx*/));
     sig->addReturn(Unary::regOf(26/*edx*/));
@@ -190,6 +191,7 @@ bool PentiumFrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream 
     sig->addReturn(Unary::regOf(29/*ebp*/));
     sig->addReturn(Unary::regOf(30/*esi*/));
     sig->addReturn(Unary::regOf(31/*edi*/));
+    sig->addReturn(new Terminal(opPC));
 
     // Call the base class to do most of the work
     // Pass the address of our helperFunc function, to check for pentium

@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1901,6 +1901,11 @@ void CallStatement::removeReturn(Exp *e)
     }
 }
 
+void CallStatement::addReturn(Exp *e)
+{
+    returns.push_back(e);
+}
+
 Exp *CallStatement::getProven(Exp *e) {
     assert(procDest);
     return procDest->getProven(e);
@@ -2536,6 +2541,11 @@ void ReturnStatement::removeReturn(int n)
             returns[j-1] = returns[j];
         returns.resize(returns.size()-1);
     }
+}
+
+void ReturnStatement::addReturn(Exp *e)
+{
+    returns.push_back(e);
 }
 
 // Convert from SSA form
