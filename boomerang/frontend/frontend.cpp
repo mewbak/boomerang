@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.71 $
+ * $Revision: 1.72 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -543,7 +543,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 						// replace with a call ret
 						std::string func = pBF->GetDynamicProcName(
 							((Const*)stmt_jump->getDest()->getSubExp1())->getAddr());
-						CallStatement *call = new CallStatement(pRtl->getAddress());
+						CallStatement *call = new CallStatement;
 						call->setDest(stmt_jump->getDest()->clone());
 						LibProc *lp = pProc->getProg()->getLibraryProc(func.c_str());
 						assert(lp);

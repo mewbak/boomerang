@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.164 $
+ * $Revision: 1.165 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -455,7 +455,10 @@ bool RefExp::operator==(const Exp& o) const {
 	if (!( *subExp1 == *((RefExp&)o).subExp1)) return false;
 	// Allow a def of (Statement*)-1 as a wild card
 	if ((int)def == -1) return true;
+	// Allow a def of NULL to match a def of an implicit assignment
 	if ((int)((RefExp&)o).def == -1) return true;
+	if (def == NULL && ((RefExp&)o).isImplicitDef()) return true;
+	if (((RefExp&)o).def == NULL && def && def->isImplicit()) return true;
 	return def == ((RefExp&)o).def;
 }
 
@@ -1085,6 +1088,7 @@ void RefExp::print(std::ostream& os) {
 	os << "{";
 	if (def == (Statement*)-1) os << "WILD";
 	else if (def) def->printNum(os);
+	// else os << "NUL";		// When you HAVE to tell the difference
 	else os << "0";
 	os << "}";
 }

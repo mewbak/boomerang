@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.39 $
+ * $Revision: 1.40 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *					floats > 64 bits to be the same
@@ -196,6 +196,7 @@ virtual bool isFunc() const { return true; }
 virtual Type *clone() const;
 
 		Signature *getSignature() { return signature; }
+		void	setSignature(Signature* sig) {signature = sig;}
 
 virtual bool	operator==(const Type& other) const;
 //virtual bool	  operator-=(const Type& other) const;

@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -589,6 +589,16 @@ void StmtSubscripter::visit(ImplicitAssign* s, bool& recur) {
 		Exp*& child = ((Location*)lhs)->refSubExp1();
 		child = child->accept(mod);
 	}
+	recur = false;
+}
+void StmtSubscripter::visit(BoolAssign* s, bool& recur) {
+	Exp* lhs = s->getLeft();
+	if (lhs->isMemOf()) {
+		Exp*& child = ((Location*)lhs)->refSubExp1();
+		child = child->accept(mod);
+	}
+	Exp* rhs = s->getCondExpr();
+	s->setCondExpr(rhs->accept(mod));
 	recur = false;
 }
 
