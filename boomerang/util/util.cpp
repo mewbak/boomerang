@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -47,6 +47,7 @@
 #include "util.h"
 #include <unistd.h>
 #include <fcntl.h>
+#include <iomanip>          // For setw
 
 /*==============================================================================
  * FUNCTION:      string::operator+(string, int)
@@ -211,4 +212,26 @@ void escapeXMLChars(std::string &s)
         }
     }
 }
+
+// Turn things like newline, return, tab into \n, \r, \t etc
+char* escapeStr(char* str) {
+    std::ostringstream out;
+    for (char* p = str; *p; p++) {
+        char c = *p;
+        if (c < ' ') {
+            switch (c) {
+                case '\n': out << "\\n"; break;
+                case '\r': out << "\\r"; break;
+                case '\t': out << "\\t"; break;
+                case '\b': out << "\\b"; break;
+                case '\f': out << "\\f"; break;
+                default:   out << "\\x" << std::hex << std::setw(2) << (int)c;
+            }
+        } else out << c;
+    }
+    char* ret = new char[out.str().size()];
+    strcpy(ret, out.str().c_str());
+    return ret;
+}
+
 
