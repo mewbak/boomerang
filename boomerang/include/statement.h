@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -916,10 +916,6 @@ public:
     // update type for expression
     virtual Type *updateType(Exp *e, Type *curType);
 
-    // add statements internal to the called procedure
-    // for interprocedural analysis
-    StatementList &getInternalStatements() { return internal; }
-
     void setIgnoreReturnLoc(bool b);
 
     void decompile();
@@ -957,10 +953,8 @@ private:
     // to standard ("phase 0")
     PBB returnBlock;
 
-    // For old code
-    Exp *returnLoc;
+    Exp *returnLoc;             // For old code
     std::vector<Exp*> returnLocs;
-    StatementList internal;
 
     // Somewhat experimental. Keep a copy of the proc's liveEntry info, and
     // substitute it as needed
