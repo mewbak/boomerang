@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.41 $
+ * $Revision: 1.42 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -165,7 +165,7 @@ public:
     Statement* getHlStmt();
 
     // Print to std::cerr (mainly for debugging)
-    void prints();
+    char* prints();
 
 };
 
