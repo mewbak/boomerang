@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.71 $
+ * $Revision: 1.72 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -185,6 +185,8 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
                                  op == opGtrEqUns || op == opLessEqUns; }
     // True if this is a TypeVal
     bool isTypeVal() { return op == opTypeVal;}
+    // True if this is a machine feature
+    bool isMachFtr() {return op == opMachFtr;}
            
                  
 
