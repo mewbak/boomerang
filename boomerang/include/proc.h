@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.35 $
+/* $Revision: 1.36 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -377,6 +377,10 @@ public:
     // Insert actual arguments to match formals
     void insertArguments(StatementSet& rs);
     void recoverReturnLocs();       // Find return locations
+
+    // prove any arbitary property of this procedure
+    bool prove(Exp *query);
+    bool prover(Exp *query);    // helper function, should be private
 
     // promote the signature if possible
     void promoteSignature();

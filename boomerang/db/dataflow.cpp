@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.41 $
+ * $Revision: 1.42 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -563,6 +563,10 @@ Statement* StatementSet::getNext(StmtSetIter& it) {
         // No more elements
         return NULL;
     return *it;         // Else return the next element
+}
+
+bool StatementSet::isLast(StmtSetIter& it) {
+    return it == sset.end();
 }
 
 // Remove this Statement. Return false if it was not found

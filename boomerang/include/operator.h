@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -175,6 +175,8 @@ enum OPER
     // Added for type analysis
     opHLCTI,		        // High level Control transfer instruction
     opDEFINE,		        // Define Type of use with lexer
+    opTrue,
+    opFalse,
 
     //---------------------- "The line" --------------------------//
     // All id's greater or equal to idMachSpec are assumed to be source machine
