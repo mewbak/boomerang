@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -139,7 +139,7 @@ public:
 	 * Don't use = std::cout, because gdb doesn't know about std::
      */
     void print(std::ostream& os, bool withDF = false);
-    void print() {print(std::cout);}
+    char* prints();                     // For debugging
 
     /*
      * Set the type of the basic block.
