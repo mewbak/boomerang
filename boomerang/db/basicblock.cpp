@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.93 $
+ * $Revision: 1.94 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -719,6 +719,27 @@ Exp *BasicBlock::getCond() {
 	BranchStatement* bs = (BranchStatement*)last->getHlStmt();
 	if (bs && bs->getKind() == STMT_BRANCH)
 		return bs->getCondExpr();
+	return NULL;
+}
+
+/* Get the destiantion, if any */
+Exp *BasicBlock::getDest() {
+	// The destianation will be in the last rtl
+	assert(m_pRtls);
+	RTL *lastRtl = m_pRtls->back();
+	// It should contain a GotoStatement or derived class
+	Statement* lastStmt = lastRtl->getHlStmt();
+	CaseStatement* cs = static_cast<CaseStatement*>(lastStmt);
+	if (cs) {
+		// Get the expression from the switch info
+		SWITCH_INFO* si = cs->getSwitchInfo();
+		if (si)
+			return si->pSwitchVar;
+	} else {
+		GotoStatement* gs = (GotoStatement*)lastStmt;
+		if (gs)
+			return gs->getDest();
+	}
 	return NULL;
 }
 
