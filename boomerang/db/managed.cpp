@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  * 26 Aug 03 - Mike: Split off from statement.cpp
  */
 
@@ -488,10 +488,10 @@ void StatementVec::printLefts(std::ostream& os) {
 				left->print(os);
 				os << "{" << std::dec << (*it)->getNumber() << "}";
 			} else 
-				os << "NUL";
+				os << "-";
 		}
 		else
-			os << "NULL";
+			os << "-";
 		if (++it != svec.end())
 			os << " ";
 	}
