@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 
@@ -1465,7 +1465,7 @@ F2XM1
             *80* %st := (2.0 pow %st) -f 1.0;
 
 FABS    
-            *80* %st := [%st < 0.0 ? (0.0 -f %st) : %st];
+            *80* %st := fabs(%st);
 
 OP3 := { "+f", "-f" };
 FARIT := { "FADD", "FSUB" };

@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.114 $
+ * $Revision: 1.115 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -897,6 +897,11 @@ void Unary::print(std::ostream& os, bool withUses) {
             return;
         case opFtrunc:
             os << "ftrunc(";
+            p1->print(os, withUses);
+            os << ")";
+            return;
+        case opFabs:
+            os << "fabs(";
             p1->print(os, withUses);
             os << ")";
             return;
