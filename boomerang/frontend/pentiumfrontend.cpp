@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.33 $
+ * $Revision: 1.34 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -164,14 +164,16 @@ void PentiumFrontEnd::bumpRegisterAll(Exp* e, int min, int max, int delta, int m
  * PARAMETERS:    address - the address at which the procedure starts
  *                pProc - the procedure object
  *                os - output stream for rtl output
+ *                frag - true if decoding only a fragment of the proc
  *                spec - true if a speculative decode
  *                helperFunc - this parameter is only here to agree with the
  *                  base class definition (so the virtual function mechanism
  *                  will work). Do not use
  * RETURNS:       True if successful decode
  *============================================================================*/
-bool PentiumFrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
-    bool spec /* = false */, PHELPER helperFunc /* = NULL */) {
+bool PentiumFrontEnd::processProc(ADDRESS uAddr, UserProc* pProc,
+    std::ofstream &os, bool frag /* = false */, bool spec /* = false */,
+    PHELPER helperFunc /* = NULL */) {
 
     // Call the base class to do most of the work
     // Pass the address of our helperFunc function, to check for pentium
