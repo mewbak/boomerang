@@ -1,8 +1,8 @@
-# FILE:     ppc.spec
+# FILE:     core.spec
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Power PC processor
 #
-# $Revision: 1.2 $
+# $Revision: 1.1 $
 
 #### Copyright (c) 1995 Flavors Technology, Inc.
 #### This file may be distributed freely as long as this notice remains.
@@ -22,8 +22,7 @@
 # PPC 620, isn't ready yet. I'm now working on the synthetic instructions.
 
 # No testing has been done yet, but my visual inspection of the generators
-# and the prototypes indicates that all is well. Let me know when you want to
-# see the PowerPC source.
+# and the prototypes indicates that all is well.
 
 
 fields of instruction (32)
