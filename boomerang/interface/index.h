@@ -4,13 +4,15 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 05 Apr 02 - Mike: Created
  */
 
 // The index (and integer representation) of predefined semantic items
 // (expression types)
+//
+// Cant we typedef this? - trent 9/4/2002
 enum INDEX
 {
     // Operators
