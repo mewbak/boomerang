@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.104 $
+ * $Revision: 1.105 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -225,6 +225,7 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
 
     // Search for Exp search in this Exp. For each found, add
     // a ptr to the matching expression in result (useful with wildcards).    
+    // Does NOT clear result on entry
     bool    searchAll(Exp* search, std::list<Exp*>& result);
 
     // Search this Exp for *search; if found, replace with *replace
