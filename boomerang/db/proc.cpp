@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.237 $
+ * $Revision: 1.238 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1176,7 +1176,7 @@ std::set<UserProc*>* UserProc::decompile() {
 		for (int i = maxDepth; i >= 0; i--) {
 			replaceExpressionsWithParameters(i);
 			replaceExpressionsWithLocals(true);
-			cfg->renameBlockVars(0, i, true);		// MVE: is this really needed?
+			//cfg->renameBlockVars(0, i, true);		// MVE: is this really needed?
 		}
 		trimReturns();
 		fixCallRefs();
@@ -1200,8 +1200,7 @@ std::set<UserProc*>* UserProc::decompile() {
 
 	printXML();
 
-	decompiled = true;			// Now fully decompiled (apart from one final
-								// pass, and transforming out of SSA form)
+	decompiled = true;			// Now fully decompiled (apart from one final pass, and transforming out of SSA form)
 	Boomerang::get()->alert_end_decompile(this);
 	return cycleSet;
 }
@@ -1763,12 +1762,13 @@ void UserProc::trimParameters(int depth) {
 					pe = signature->getImplicitParamExp(i - nparams);
 				}
 				if (!referenced[i] && excluded.find(s) == excluded.end() && 
-						// Search for the named parameter (e.g. param1), and just
-						// in case, also for the expression (e.g. r8{0})
+						// Search for the named parameter (e.g. param1), and just in case, also for the expression
+						// (e.g. r8{0})
 						(s->usesExp(p) || s->usesExp(params[i]))) {
 					referenced[i] = true;
 					if (DEBUG_UNUSED_RETS_PARAMS) {
-						LOG << "Parameter " << p << " used by statement " << s->getNumber() << " : " << s->getKind() << "\n";
+						LOG << "Parameter " << p << " used by statement " << s->getNumber() << " : " << s->getKind() <<
+							"\n";
 					}
 				}
 				if (!referenced[i] && excluded.find(s) == excluded.end() &&
