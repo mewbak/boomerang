@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -93,6 +93,7 @@ enum OPER
     // index, and a list of expressions to operate on. This actually allows
     // more generality, e.g. unary or ternary operators int the table
     opOpTable,              // A table of operators
+	opSuccessor,			// Get the successor register of this parameter
 
     opTern,                 // Ternary (i.e. ? : )
     opAt,                   // Bit extraction (expr@first:last in that order)
