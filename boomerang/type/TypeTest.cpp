@@ -4,7 +4,7 @@
  *				tests the Type class and some utility functions
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 09 Apr 02 - Mike: Created
  * 22 Aug 03 - Mike: Extended for Constraint tests
@@ -90,20 +90,12 @@ void TypeTest::testNotEqual () {
  * FUNCTION:		TypeTest::testNotEqual
  * OVERVIEW:		Test type inequality
  *============================================================================*/
-class ErrLogger : public Log {
-public:
-	virtual Log &operator<<(const char *str) {
-		std::cerr << str;
-		return *this;
-	}
-	virtual ~ErrLogger() {};
-};
 void TypeTest::testCompound() {
 	BinaryFile *pBF = BinaryFile::Load(HELLO_WINDOWS);
 	FrontEnd *pFE = new PentiumFrontEnd(pBF);
 	pFE->readLibraryCatalog();				// Read definitions
 
-	Boomerang::get()->setLogger(new ErrLogger());
+	Boomerang::get()->setLogger(new FileLogger());
 	Signature* paintSig = pFE->getLibSignature("BeginPaint");
 	// Second argument should be an LPPAINTSTRUCT
 	Type* ty = paintSig->getParamType(1);
