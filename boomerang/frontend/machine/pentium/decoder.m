@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -1519,7 +1519,11 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
         Exps = instantiate(pc,  "SUBiowb", DIS_EADDR16, DIS_I8);
 
     | ANDiodb(Eaddr, i8) =>
-        Exps = instantiate(pc,  "ANDiodb", DIS_EADDR32, DIS_I8);
+        // Special hack to ignore and $0xfffffff0, %esp
+        Exp* oper = dis_Eaddr(Eaddr, 32);
+        static Unary esp(opRegOf, new Const(28));
+        if (i8 != -16 || *oper != esp) 
+            Exps = instantiate(pc,  "ANDiodb", DIS_EADDR32, DIS_I8);
 
     | ANDiowb(Eaddr, i8) =>
         Exps = instantiate(pc,  "ANDiowb", DIS_EADDR16, DIS_I8);
