@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -585,7 +585,6 @@ void CHLLCode::RemoveLabel(int ord)
 
 void CHLLCode::AddAssignmentStatement(int indLevel, AssignExp *exp)
 {
-    Exp *match;
     char s[1024];
     indent(s, indLevel);
     appendExp(s, exp);

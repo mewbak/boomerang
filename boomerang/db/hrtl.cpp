@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.48 $
+ * $Revision: 1.49 $
  * 17 May 02 - Mike: Split off from rtl.cc (was getting too large)
  * 26 Nov 02 - Mike: Generate code for HlReturn with semantics (eg SPARC RETURN)
  * 26 Nov 02 - Mike: In getReturnLoc test for null procDest
@@ -598,10 +598,6 @@ void HLJcond::print(std::ostream& os /*= cout*/, bool withDF) {
         case HLJCOND_JPAR:  os << "parity"; break;
     }
     if (bFloat) os << " float";
-    if (withDF) {
-        os << "\tuses: ";
-        uses.printNums(os);
-    }
     os << std::endl;
     if (pCond) {
         os << "High level: " << pCond << std::endl;
