@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -71,9 +71,6 @@ public:
 };  // class Global
 
 class Prog {
-    // Phase of the interprocedural DFA (0=none, 1=phase 1, 2 = phase 2)
-    int     interProcDFAphase;
-
 public:
             Prog();                     // Default constructor
             Prog(BinaryFile *pBF, FrontEnd *pFE);
