@@ -4,7 +4,7 @@
  *				tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  *
  * 14 Jan 03 - Trent: Created
  * 17 Apr 03 - Mike: Added testRecursion to track down a nasty bug
@@ -1242,7 +1242,8 @@ void StatementTest::testCallRefsFixer () {
 	BinaryFile *pBF = BinaryFileFactory::Load(FIB_PENTIUM);
 	FrontEnd *pFE = new PentiumFrontEnd(pBF);
 	Type::clearNamedTypes();
-	Prog *prog = pFE->decode();
+	Prog *prog = new Prog(pFE->getBinaryFile(), pFE);
+	pFE->decode(prog);
 	bool gotMain;
 	ADDRESS addr = pFE->getMainEntryPoint(gotMain);
 	CPPUNIT_ASSERT (addr != NO_ADDRESS);
