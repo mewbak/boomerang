@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -332,10 +332,22 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
     | NOP() =>
         stmts = instantiate(pc,  "NOP");
 
+    | SEG.CS() =>        // For now, treat as a 1 byte NOP
+        stmts = instantiate(pc,  "NOP");
+
+    | SEG.DS() =>        // For now, treat as a 1 byte NOP
+        stmts = instantiate(pc,  "NOP");
+
+    | SEG.ES() =>        // For now, treat as a 1 byte NOP
+        stmts = instantiate(pc,  "NOP");
+
     | SEG.FS() =>        // For now, treat as a 1 byte NOP
         stmts = instantiate(pc,  "NOP");
 
-    | SEG.GS() =>
+    | SEG.GS() =>        // For now, treat as a 1 byte NOP
+        stmts = instantiate(pc,  "NOP");
+
+    | SEG.SS() =>
         stmts = instantiate(pc,  "NOP");
 
     | XCHGeAXod(r32) =>
