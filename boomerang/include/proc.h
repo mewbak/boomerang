@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.60 $
+/* $Revision: 1.61 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -494,7 +494,7 @@ public:
     void removeUnusedStatements(RefCounter& refCounts, int depth);
     void removeUnusedLocals();
     bool propagateAndRemoveStatements();
-    void propagateStatements(int memDepth);
+    void propagateStatements(int memDepth, int toDepth = -1);
     int  findMaxDepth();                    // Find max memory nesting depth
 
     void toSSAform(int memDepth, StatementSet& rs);
