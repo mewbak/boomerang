@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -178,7 +178,8 @@ while (workList.size()) {
 }
 
     
-    //int stmtNumber = 0;
+    if (Boomerang::get()->noDecompile)
+        std::cerr << "----- begin ssa form -----" << std::endl;
     for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end();
       it++) {
         Proc *pProc = *it;
@@ -188,6 +189,14 @@ while (workList.size()) {
 
         // Put this proc into implicit SSA form
         p->toSSAform();
+
+        if (Boomerang::get()->noDecompile)
+            p->print(std::cerr, true);
+    }
+
+    if (Boomerang::get()->noDecompile) {
+        std::cerr << "----- end ssa form -----" << std::endl;
+        return;
     }
 
 #if 0

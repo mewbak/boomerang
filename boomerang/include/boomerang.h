@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -56,6 +56,7 @@ public:
     bool noLocals;
     bool noRemoveLabels;
     bool noDataflow;
+    bool noDecompile;
     bool noDecompileUp;
     bool traceDecoder;
     const char *dotFile;
