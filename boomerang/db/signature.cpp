@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.38 $
+ * $Revision: 1.39 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -818,6 +818,14 @@ Type *Signature::getParamType(int n)
 // With recursion, parameters not set yet. Hack for now:
     if (n >= (int)params.size()) return &def;
     return params[n]->getType();
+}
+
+int Signature::findParam(Exp *e)
+{
+    for (int i = 0; i < getNumParams(); i++)
+        if (*getParamExp(i) == *e)
+            return i;
+    return -1;
 }
 
 void Signature::addReturn(Type *type, Exp *exp)

@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.22 $
+ * $Revision: 1.23 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -106,6 +106,7 @@ public:
     virtual const char *getParamName(int n);
     virtual Exp *getParamExp(int n);
     virtual Type *getParamType(int n);
+    virtual int findParam(Exp *e);
     // accessor for argument expressions
     virtual Exp *getArgumentExp(int n);
     virtual bool hasEllipsis() { return ellipsis; }
