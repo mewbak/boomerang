@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.142 $
+ * $Revision: 1.143 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -914,13 +914,15 @@ bool condToRelational(Exp*& pCond, BRANCH_TYPE jtCond) {
 	OPER condOp = pCond->getOper();
 	if (condOp == opFlagCall && !strncmp(((Const*)pCond->getSubExp1())->getStr(), "SUBFLAGS", 8)) {
 		OPER op = opWild;
+		// Special for PPC unsigned compares; may be other cases in the future
+	    bool makeUns = strncmp(((Const*)pCond->getSubExp1())->getStr(), "SUBFLAGSNL", 10) == 0;
 		switch (jtCond) {
 			case BRANCH_JE:	   op = opEquals; break;
 			case BRANCH_JNE:   op = opNotEqual; break;
-			case BRANCH_JSL:   op = opLess; break;
-			case BRANCH_JSLE:  op = opLessEq; break;
-			case BRANCH_JSGE:  op = opGtrEq; break;
-			case BRANCH_JSG:   op = opGtr; break;
+			case BRANCH_JSL:   if (makeUns) op = opLessUns; else op = opLess; break;
+			case BRANCH_JSLE:  if (makeUns) op = opLessEqUns; else op = opLessEq; break;
+			case BRANCH_JSGE:  if (makeUns) op = opGtrEqUns; else op = opGtrEq; break;
+			case BRANCH_JSG:   if (makeUns) op = opGtrUns; else op = opGtr; break;
 			case BRANCH_JUL:   op = opLessUns; break;
 			case BRANCH_JULE:  op = opLessEqUns; break;
 			case BRANCH_JUGE:  op = opGtrEqUns; break;
