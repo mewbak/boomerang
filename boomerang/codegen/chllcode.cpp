@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.82 $
+ * $Revision: 1.83 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -151,8 +151,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 				Prog* prog = m_proc->getProg();
 				Const* con = (Const*)((Unary*)sub)->getSubExp1();
 				Type* gt = prog->getGlobalType(con->getStr());
-				if (gt && gt->isArray() || gt->isPointer() &&
-					  gt->asPointer()->getPointsTo()->isChar()) {
+				if (gt && (gt->isArray() || (gt->isPointer() && gt->asPointer()->getPointsTo()->isChar()))) {
 					// Special C requirement: don't emit "&" for address of
 					// an array or char*
 					appendExp(str, sub, curPrec);
