@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -369,8 +369,23 @@ void CHLLCode::appendExp(char *str, Exp *exp)
             appendExp(str, t->getSubExp3());
             break;
         case opTypedExp:
-            strcat(str, "/* typed exp */ ");
-            appendExp(str, u->getSubExp1());
+            if (u->getSubExp1()->getOper() == opTypedExp &&
+                *((TypedExp*)u)->getType() ==
+                *((TypedExp*)u->getSubExp1())->getType()) {
+                appendExp(str, u->getSubExp1());
+            } else if (u->getSubExp1()->getOper() == opMemOf) {
+                strcat(str, "*(");
+                appendType(str, ((TypedExp*)u)->getType());
+                strcat(str, "*)(");
+                appendExp(str, u->getSubExp1()->getSubExp1());
+                strcat(str, ")");
+            } else {
+                strcat(str, "(");
+                appendType(str, ((TypedExp*)u)->getType());
+                strcat(str, ")(");
+                appendExp(str, u->getSubExp1());
+                strcat(str, ")");
+            }
             break;
         case opSgnEx: {
             strcat(str, "/* opSgnEx */ (int) ");

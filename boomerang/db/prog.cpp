@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -829,8 +829,10 @@ void Prog::removeUnusedReturns() {
         // good, becuase if it's not a C program, then it won't have a main,
         // and it probably (?) won't return an int
         UserProc* m = (UserProc*) findProc("main");
-        Exp* r = m->getSignature()->getReturnExp(0);
-        rc[m].insert(r);
+        if (m) {
+            Exp* r = m->getSignature()->getReturnExp(0);
+            rc[m].insert(r);
+        }
 
         newCalleeSet.clear();
         callerSet.clear();
