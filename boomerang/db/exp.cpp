@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.119 $
+ * $Revision: 1.120 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3203,7 +3203,7 @@ int Binary::getMemDepth() {
 int Ternary::getMemDepth() {
     int d1 = subExp1->getMemDepth();
     int d2 = subExp2->getMemDepth();
-    int d3 = subExp2->getMemDepth();
+    int d3 = subExp3->getMemDepth();
     return std::max(std::max(d1, d2), d3);
 }
 
