@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.30 $
+ * $Revision: 1.31 $
  *
  * 24/Sep/04 - Mike: Created
  */
@@ -740,7 +740,7 @@ Type* Binary::ascendType() {
 			return deltaDifference(ta, tb);
 		case opMult: case opDiv:
 			return new IntegerType(ta->getSize(), -1);
-		case opMults: case opDivs: opShiftRA:
+		case opMults: case opDivs: case opShiftRA:
 			return new IntegerType(ta->getSize(), +1);
 		case opBitAnd: case opBitOr: case opBitXor: case opShiftR: case opShiftL:
 			return new IntegerType(ta->getSize(), 0);
