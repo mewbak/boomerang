@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.27 $
+ * $Revision: 1.28 $
  * 18 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -1479,23 +1479,6 @@ void Cfg::appendBBs(std::list<PBB>& worklist, std::set<PBB>& workset) {
 void Cfg::appendBBs(std::list<PBB>& allBBs) {
     // Append my list of BBs to the worklist
     allBBs.insert(allBBs.end(), m_listBB.begin(), m_listBB.end());
-}
-
-bool Cfg::computeAvailable(int phase) {
-    bool change, anychange = false;
-    do {
-        change = false;
-        for (std::list<PBB>::iterator it = m_listBB.begin(); 
-          it != m_listBB.end(); it++) {
-            StatementSet out;
-            (*it)->calcAvailOut(out, phase);
-            if (!(out == (*it)->availOut)) {
-                (*it)->availOut = out;      // Copy the set
-                change = anychange = true;
-            }
-        }
-    } while (change);
-    return anychange;
 }
 
 void Cfg::setCallInterprocEdges() {
