@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 # 21 Aug 02 - Icer: added codegen/chllcode.cpp to the build process
 #		    by adding it in STATIC_OBJ
 # 20 Aug 02 - Icer: removed test from all, test code is broken
@@ -152,7 +152,7 @@ $(TEST_OBJS): %.o : %.cpp
 	$(CC) -c -o $@ -Iinclude $(EXTRA) $<
 
 driver.o: driver.cpp include/boomerang.h
-	$(CC) -c -o $@ -Iinclude $(EXTRA) $<
+	$(CC) -c -o $@ -Iinclude -Icodegen $(EXTRA) $<
 
 testAll.o: testAll.cpp
 	$(CC) -c -o $@ -Iinclude $(EXTRA) $< -Idb -Ifrontend -Ianalysis -Ic
