@@ -12,7 +12,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.19 $
+/* $Revision: 1.20 $
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  **/
@@ -69,7 +69,7 @@ Exp*	crBit(int bitNum);	// Get an expression for a CR bit access
 	result.numBytes = size; \
 	jump->setDest(relocd-delta); \
 	jump->setCondType(cond); \
-	SHOW_ASM(name<<" "<<BIcr<<", "<<std::hex<<relocd-delta)
+	SHOW_ASM(name<<" "<<BIcr<<", 0x"<<std::hex<<relocd-delta)
 
 /*==============================================================================
  * FUNCTION:	   unused
@@ -134,7 +134,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) {
 			stmts = instantiate(pc, name, DIS_RD, DIS_RAZ, DIS_SIMM);
 		} else
 			stmts = instantiate(pc, name, DIS_RD, DIS_RA , DIS_SIMM);
-	| Xsabx_ (rd, ra, rb) [name] =>
+	| Xsabx_^Rc (rd, ra, rb) [name] =>
 		stmts = instantiate(pc, name, DIS_RD, DIS_RA, DIS_RB);
 	| Xdab_ (rd, ra, rb) [name] =>
 		stmts = instantiate(pc, name, DIS_RD, DIS_INDEX);
