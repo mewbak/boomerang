@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -158,5 +158,8 @@ protected:
     bool calcAlias(Exp *e1, Exp *e2, int size);
     bool mayAlias(Exp *e1, Exp *e2, int size);
 };
+
+// Print the Statement poited to by p
+std::ostream& operator<<(std::ostream& os, Statement* s);
 
 #endif // DATAFLOW
