@@ -3,14 +3,15 @@
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 10 Apr 02 - Trent: Created
  */
 %name AnsiCScanner
 
 
 D			[0-9]
-L			[a-zA-Z_]
+/* ALlow ? and @ in identifiers, so we can use mangled names */
+L			[a-zA-Z_?@]
 H			[a-fA-F0-9]
 E			[Ee][+-]?{D}+
 FS			(f|F|l|L)
