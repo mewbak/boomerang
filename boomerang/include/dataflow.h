@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -285,6 +285,10 @@ public:
     // To/from SSA form
     virtual void   toSSAform(StatementSet& reachin, int memDepth) = 0;
     virtual void fromSSAform(igraph& igm) = 0;
+
+    // Propagate to this statement
+    void propagateTo(int memDepth);
+
 protected:
     virtual void doReplaceRef(Exp* from, Exp* to) = 0;
     bool calcMayAlias(Exp *e1, Exp *e2, int size);
