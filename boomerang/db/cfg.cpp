@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 18 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -1653,6 +1653,13 @@ void Cfg::simplify()
 void Cfg::print(std::ostream &out, bool withDF) {
     for (std::list<PBB>::iterator it = m_listBB.begin(); it != m_listBB.end(); it++) 
         (*it)->print(out, withDF);
+    out << "cfg liveout: ";
+    for (std::set<Statement*>::iterator it = liveout.begin(); 
+         it != liveout.end(); it++) {
+        (*it)->printAsUse(out);
+        out << ", ";
+    }
+    out << std::endl;
 }
 
 void Cfg::setReturnVal(Exp *e)
