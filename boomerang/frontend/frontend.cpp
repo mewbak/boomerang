@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.60 $
+ * $Revision: 1.61 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -777,7 +777,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
                         if (popped != 0)
                             // This also gives us information about the calling
                             // convention
-                            pProc->setBytesPopped(popped);
+                            ; //pProc->setBytesPopped(popped);
                     } else {
                         ADDRESS retAddr = pProc->getTheReturnAddr();
                         std::list<Statement*> *stmt_list =

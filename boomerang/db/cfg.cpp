@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.72 $
+ * $Revision: 1.73 $
  * 18 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -139,6 +139,10 @@ void Cfg::setEntryBB(PBB bb) {
         }
     }
     // It is possible that there is no exit BB
+}
+
+void Cfg::setExitBB(PBB bb) {
+    exitBB = bb;
 }
 
 /*==============================================================================

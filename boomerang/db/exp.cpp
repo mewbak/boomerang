@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.147 $
+ * $Revision: 1.148 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -84,7 +84,7 @@ Terminal::Terminal(Terminal& o) : Exp(o.op) {}      // Copy constructor
 Unary::Unary(OPER op)
     : Exp(op) {
     subExp1 = 0;        // Initialise the pointer
-    assert(op != opRegOf);
+    //assert(op != opRegOf);
 }
 Unary::Unary(OPER op, Exp* e)
     : Exp(op) {

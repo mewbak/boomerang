@@ -19,7 +19,7 @@
  *              Also has some prototypes and structs for switch.cc
  *============================================================================*/
 
-/* $Revision: 1.23 $
+/* $Revision: 1.24 $
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  */
@@ -107,6 +107,8 @@ public:
     static FrontEnd *createById(std::string &str, BinaryFile *pBF);
 
     bool    isWin32();                  // Is this a win32 frontend?
+
+    BinaryFile *getBinaryFile() { return pBF; }
 
     /*
      * Function to fetch the smallest machine instruction

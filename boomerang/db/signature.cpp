@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.73 $
+ * $Revision: 1.74 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -88,6 +88,8 @@ namespace CallingConvention {
         virtual Exp *getProven(Exp *left);
 
         virtual bool isPromoted() { return true; }
+	virtual platform getPlatform() { return PLAT_PENTIUM; }
+	virtual callconv getConvention() { return CONV_PASCAL; }
     };
 
     class Win32TcSignature : public Win32Signature {
@@ -101,6 +103,8 @@ namespace CallingConvention {
         virtual Exp *getArgumentExp(int n);
         virtual Exp *getProven(Exp* left);
         virtual Signature *clone();
+	virtual platform getPlatform() { return PLAT_PENTIUM; }
+	virtual callconv getConvention() { return CONV_THISCALL; }
     };
 
 
@@ -125,6 +129,8 @@ namespace CallingConvention {
             virtual int  getStackRegister() {return 28; }
             virtual Exp *getProven(Exp *left);
             virtual bool isPromoted() { return true; }
+	    virtual platform getPlatform() { return PLAT_PENTIUM; }
+	    virtual callconv getConvention() { return CONV_C; }
         };      
 
         class SparcSignature : public Signature {
@@ -147,6 +153,8 @@ namespace CallingConvention {
             // Stack offsets can be negative (inherited) or positive:
             virtual bool  isLocalOffsetPositive() {return true;}
             virtual bool isPromoted() { return true; }
+	    virtual platform getPlatform() { return PLAT_SPARC; }
+	    virtual callconv getConvention() { return CONV_C; }
         };
     };
 };
