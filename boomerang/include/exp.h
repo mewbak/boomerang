@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.79 $
+ * $Revision: 1.80 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -587,6 +587,8 @@ virtual Exp* polySimplify(bool& bMod);
 
     // Convert from SSA form
     virtual Exp* fromSSA(igraph& ig);
+
+    virtual Type*   getType();
 
 };  // class Ternary
 

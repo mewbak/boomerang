@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -300,7 +300,7 @@ Type *CompoundType::getTypeAtOffset(int n)
     int offset = 0;
     for (unsigned i = 0; i < types.size(); i++) {
         if (offset >= n && n < offset + types[i]->getSize())
-            return getType(i);
+            return getType(offset == n ? i : i - 1);
         offset += types[i]->getSize();
     }
     return NULL;
@@ -311,7 +311,7 @@ const char *CompoundType::getNameAtOffset(int n)
     int offset = 0;
     for (unsigned i = 0; i < types.size(); i++) {
         if (offset >= n && n < offset + types[i]->getSize())
-            return getName(i);
+            return getName(offset == n ? i : i - 1);
         offset += types[i]->getSize();
     }
     return NULL;

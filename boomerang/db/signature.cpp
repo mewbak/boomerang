@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.59 $
+ * $Revision: 1.60 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -195,7 +195,10 @@ void CallingConvention::Win32Signature::addReturn(Type *type, Exp *e)
     if (type->isVoid())
         return;
     if (e == NULL) {
-        e = Location::regOf(24);
+        if (type->isFloat())
+            e = Location::regOf(32);
+        else 
+            e = Location::regOf(24);
     }
     Signature::addReturn(type, e);
 }
@@ -359,7 +362,10 @@ void CallingConvention::StdC::PentiumSignature::addReturn(Type *type, Exp *e)
     if (type->isVoid())
         return;
     if (e == NULL) {
-        e = Location::regOf(24);
+        if (type->isFloat())
+            e = Location::regOf(32);
+        else 
+            e = Location::regOf(24);
     }
     Signature::addReturn(type, e);
 }
