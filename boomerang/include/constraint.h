@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 22 Aug 03 - Mike: Created
  */
@@ -36,5 +36,8 @@ typedef std::list<Exp*>::iterator handle;
     std::list<Exp*>& getConstraints() {return conList;}
     handle  getPos();
     void    printSince(handle);
-    void    solve();
+    // Solve the constraints. If they can be solved, return true and put
+    // a copy of the solution (in the form of a list of T<location> = <type>)
+    // into soln
+    bool    solve(std::list<Exp*>& soln);
 };

@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 
@@ -1163,7 +1163,7 @@ SETB.NS   modrm
             *8* modrm := [~%NF?1:0];
 
 SETB.Z   modrm 
-            *8* modrm := [%ZF?1:0];
+            *8*  modrm := [%ZF?1:0];
 
 SETB.NZ   modrm 
             *8* modrm := [~%ZF?1:0];

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 22 Aug 03 - Mike: Created
  */
@@ -41,5 +41,11 @@ void Constraints::printSince(handle h) {
         std::cerr << *ii << "\n";
     }
     std::cerr << "\n";
+}
+
+bool Constraints::solve(std::list<Exp*>& soln) {
+    // For now:
+    soln = conList;
+    return true;
 }
 

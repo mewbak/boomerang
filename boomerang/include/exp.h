@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.59 $
+ * $Revision: 1.60 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -156,6 +156,8 @@ virtual int getArity() {return 0;}      // Overridden for Unary, Binary, etc
     bool isPhi() {return op == opPhi;}
     // True if this is a local variable
     bool isLocal() {return op == opLocal;}
+    // True if this is a global variable
+    bool isGlobal() {return op == opGlobal;}
     // Get the index for this var
     int getVarIndex();
     // True if this is a terminal

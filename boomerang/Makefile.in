@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.43 $
+# $Revision: 1.44 $
 # 21 Aug 02 - Icer: added codegen/chllcode.cpp to the build process
 #		    by adding it in STATIC_OBJ
 # 20 Aug 02 - Icer: removed test from all, test code is broken
@@ -88,7 +88,7 @@ TEST_OBJS = util/UtilTest.o db/ExpTest.o db/ParserTest.o \
     c/CTest.o type/TypeTest.o 
 
 # Needed because the test header files are in all these different directories
-INCLUDEALL = -Idb -Ifrontend -Ianalysis -Ic
+INCLUDEALL = -Idb -Ifrontend -Ianalysis -Ic -Itype
 
 UTIL_OBJS = 	  util/util.o
 DB_OBJS = db/basicblock.o db/proc.o db/sslscanner.o db/cfg.o db/prog.o \
