@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.6 $
+/* $Revision: 1.7 $
  * This file contains the definition of the Win32BinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
 */
@@ -206,4 +206,7 @@ virtual const char *GetDynamicProcName(ADDRESS uNative);
 
 };
 
+//#ifdef WIN32
+#pragma pack()
+//#endif
 #endif          // ifndef __WIN32BINARYFILE_H__
