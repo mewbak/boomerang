@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.83 $
+ * $Revision: 1.84 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -809,9 +809,9 @@ protected:
     UserProc *proc;
     Type *ty;
 
+public:
     // Constructor with ID, subexpression, and UserProc*
             Location(OPER op, Exp* e, UserProc *proc);
-public:
     // Copy constructor
             Location(Location& o);
     // Custom constructor
