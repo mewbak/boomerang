@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.81 $
+ * $Revision: 1.82 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1002,6 +1002,10 @@ std::set<UserProc*>* UserProc::decompile() {
         if (depth == 0) {
             trimReturns();
         }
+        if (depth == maxDepth) {
+            complete();
+            removeRedundantPhis();
+        }
         addNewParameters();
         cfg->renameBlockVars(0, depth);
         trimParameters();
@@ -1041,9 +1045,6 @@ std::set<UserProc*>* UserProc::decompile() {
               "statements =====\n\n";
         }
     }
-
-    // Now all the other things that were in UserProc::decompile()
-    complete();
 
     // Remove null statements
     if (!Boomerang::get()->noRemoveNull)
