@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.92 $
+# $Revision: 1.93 $
 # 03 Feb 05 - Mike: Removed analysis/ related files
 # 23 Nov 04 - Mike: Added PPC files
 # 20 Jul 04 - Mike: Removed BOOMDIR
@@ -145,8 +145,14 @@ STATIC_OBJS = ${CODEGEN} ${UTIL_OBJS} ${DB_OBJS} ${TRANSFORM_OBJS} ${FRONT_OBJS}
 $(LOADERDLLS): lib
 	cd loader && make
 
+# This SSL file is generated (m4 macro expanded) from a .m file
+GENSSL = frontend/machine/st20/st20.ssl
 
-boomerang$(EXEEXT): driver.o ${STATIC_OBJS} $(LOADERDLLS)
+frontend/machine/st20/st20.ssl: frontend/machine/st20/st20.ssl.m
+	m4 < frontend/machine/st20/st20.ssl.m > frontend/machine/st20/st20.ssl
+
+
+boomerang$(EXEEXT): driver.o ${STATIC_OBJS} $(LOADERDLLS) $(GENSSL)
 	$(CXX) -o $@ driver.o $(STATIC_OBJS) $(LOADERLIBS) $(RUNPATH) -Llib -lgc -lexpat $(LDL)
 
 bigtest$(EXEEXT): testAll.o ${STATIC_OBJS} ${TEST_OBJS} $(LOADERDLLS)
