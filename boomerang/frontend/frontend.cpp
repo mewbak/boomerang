@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.53 $
+ * $Revision: 1.54 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -214,6 +214,9 @@ void FrontEnd::decode(Prog *prog, ADDRESS a) {
                 p->setDecoded();
             else
                 break;
+            // Break out of the loop if not decoding children
+            if (Boomerang::get()->noDecodeChildren)
+                break;
         }
     }
     prog->wellForm();
@@ -366,10 +369,10 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os,
     // individual to the procedure!
     TargetQueue targetQueue;
 
-    // Similarly, we have a set of CallStatement pointers. These may be disregarded
-    // if this is a speculative decode that fails (i.e. an illegal instruction
-    // is found). If not, this set will be used to add to the set of calls to
-    // be analysed in the cfg, and also to call newProc()
+    // Similarly, we have a set of CallStatement pointers. These may be
+    // disregarded if this is a speculative decode that fails (i.e. an illegal
+    // instruction is found). If not, this set will be used to add to the set
+    // of calls to be analysed in the cfg, and also to call newProc()
     std::set<CallStatement*> callSet;
 
     // Indicates whether or not the next instruction to be decoded is the
