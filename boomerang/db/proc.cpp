@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1564,7 +1564,6 @@ void UserProc::removeUnusedStatements() {
         }
     }
     for (Statement* s = stmts.getFirst(ll); s; s = stmts.getNext(ll)) {
-std::cerr << "Statement " << s->getNumber() << " used " << useCounts[s] << " times\n";
         if (useCounts[s] == 0) {
             if (VERBOSE)
                 std::cerr << "Removing unused statement " << s->getNumber() <<
