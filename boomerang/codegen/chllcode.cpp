@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.46 $
+ * $Revision: 1.47 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -496,7 +496,9 @@ void CHLLCode::appendExp(char *str, Exp *exp)
                     strcat(str, "/* type failure */ ");
                     break;
                 }
-                assert(ty->resolvesToCompound());
+                // Trent: what were you thinking here? Fails for things like
+                // local11.lhHeight (where local11 is a register)
+                //assert(ty->resolvesToCompound());
                 if (b->getSubExp1()->getOper() == opMemOf) {
                     appendExp(str, b->getSubExp1()->getSubExp1());
                     strcat(str, "->");
