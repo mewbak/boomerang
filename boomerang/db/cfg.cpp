@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.83 $
+ * $Revision: 1.84 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -2202,7 +2202,7 @@ void Cfg::placePhiFunctions(int memDepth, UserProc* proc) {
 					// a := phi()
 			// MVE: Needs work here!
 					// Type* Ta = defStmts[a]->getTypeFor(a, prog);
-					Statement* as = new PhiAssign(/*Ta*/NULL, a->clone());
+					Statement* as = new PhiAssign(/*Ta,*/ a->clone());
 					PBB Ybb = BBs[y];
 					Ybb->prependStmt(as, proc);
 					// A_phi[a] <- A_phi[a] U {y}
