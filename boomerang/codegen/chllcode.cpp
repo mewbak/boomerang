@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.53 $
+ * $Revision: 1.54 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -37,6 +37,10 @@
 #include "signature.h"
 #include "boomerang.h"
 #include "type.h"
+// For some reason, MSVC 5.00 complains about use of undefined type RTL a lot
+#if defined(_MSC_VER) && _MSC_VER <= 1100
+#include "rtl.h"
+#endif
 
 #include <sstream>
 
