@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.90 $
+ * $Revision: 1.91 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2525,7 +2525,9 @@ Exp *PhiExp::fixCallRefs() {
                     *e->getSubExp1() == *subExp1) {
                     stmtVec.putAt(i, ((RefExp*)e)->getRef());
                 } else {
-                    std::cerr << "cant update phi ref to " << e << std::endl;
+                    if (VERBOSE)
+                        std::cerr << "cant update phi ref to " << e 
+                                  << std::endl;
                 }
             } else {
                 if (call->findReturn(subExp1) == -1) {
