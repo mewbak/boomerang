@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -189,6 +189,7 @@ enum OPER
     opCF,                   // carry flag
     opNF,                   // negative flag
     opOF,                   // overflow flag
+    opDF,                   // pentium Direction (=Down) flag
     opFZF,                  // floating point zero flag
     opFLF,                  // floating point less flag
     opFGF,                  // floating point greater flag
