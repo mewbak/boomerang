@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.30 $
+ * $Revision: 1.31 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -799,6 +799,13 @@ bool StatementList::remove(Statement* s) {
         }
     }
     return false;
+}
+
+Statement* StatementList::remove(StmtListIter& it) {
+    it = slist.erase(it);
+    if (it == slist.end())
+        return NULL;
+    return *it;
 }
 
 void StatementList::append(StatementList& sl) {

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.30 $
+ * $Revision: 1.31 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -91,9 +91,8 @@ public:
     void append(StatementSet& sl);          // Append whole StatementSet
     bool remove(Statement* s);              // Removal; rets false if not found
     // This one is needed where you remove in the middle of a loop
-    // Use like this: elem = mystatementlist.remove(it);
-    Statement* StatementList::remove(StmtListIter& it) {
-        it = slist.erase(it); return *it;}
+    // Use like this: s = mystatementlist.remove(it);
+    Statement* StatementList::remove(StmtListIter& it);
     bool exists(Statement* s);  // Find; returns false if not found
     void prints();                          // Print to cerr (for debugging)
 };
