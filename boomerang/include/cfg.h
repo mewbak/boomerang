@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.66 $
+ * $Revision: 1.67 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -56,6 +56,7 @@ class RTL;
 struct DOM;
 class XMLProgParser;
 class Global;
+class Parameter;
 
 #define BTHEN 0
 #define BELSE 1
@@ -1038,6 +1039,7 @@ public:
 		 */
 		Statement* findImplicitAssign(Exp* x);			// Find or create an implicit assign for x
 		Statement* findTheImplicitAssign(Exp* x);		// Find the existing implicit assign for x (if any)
+		Statement* findImplicitParamAssign(Parameter* p);// Find exiting implicit assign for parameter p
 
 		/*
 	 	 * Dominance frontier and SSA code
