@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.88 $
+/* $Revision: 1.89 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -192,8 +192,13 @@ public:
 
     Exp *getProven(Exp *left);
 
+    // Set an equation as proven. Useful for some sorts of testing
+    void setProven(Exp* fact) {proven.insert(fact);}
+
     /*
      * Get the callers
+     * Note: the callers will be in a random order (determined by memory
+     * allocation)
      */
     std::set<CallStatement*>& getCallers() { return callerSet; }
 
