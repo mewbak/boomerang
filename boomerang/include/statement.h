@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $
+ * $Revision: 1.48 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -749,7 +749,7 @@ public:
     virtual void subscriptVar(Exp* e, Statement* def);
 
     // dataflow related functions
-    virtual bool propagateToAll() { assert(false); }
+    virtual bool propagateToAll() { assert(false); return false;}
 
     virtual bool isDefinition();
     virtual void getDefinitions(LocationSet &defs);
@@ -959,7 +959,7 @@ public:
     void setBasicBlock(PBB bb) { pBB = bb; }
 
     // visitor functions, 
-    // returns true to continue iteratoring the container
+    // returns true to continue iterating the container
     virtual bool visit(RTL *rtl);   // By default, visits all statements
     virtual bool visit(Assign *stmt) = 0;
     virtual bool visit(GotoStatement *stmt) = 0;
