@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.79 $
+ * $Revision: 1.80 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -748,7 +748,7 @@ Signature *CustomSignature::clone()
 
 bool Signature::operator==(Signature& other)
 {
-	if (name != other.name) return false;
+	if (name != other.name) return false;		// MVE: should the name be significant? I'm thinking no
 	if (params.size() != other.params.size()) return false;
 	// Only care about the first return location (at present)
 	if ((returns.size() != 0) != (other.returns.size() != 0)) return false;
