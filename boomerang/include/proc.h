@@ -16,7 +16,7 @@
  *			   as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.96 $
+/* $Revision: 1.97 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *				locals for a procedure.
 */
@@ -30,7 +30,6 @@
 #include <set>
 #include <string>
 #include <assert.h>
-#include "coverage.h"			// For Coverage class
 #include "exp.h"				// For lessExpStar
 #include "cfg.h"				// For cfg->simplify()
 #include "hllcode.h"
