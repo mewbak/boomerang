@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.42 $
+ * $Revision: 1.43 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -1239,10 +1239,12 @@ Type* SizeType::mergeWith(Type* other) {
 
 Type* UpperType::mergeWith(Type* other) {
 	// FIXME: TBC
+	return this;
 }
 
 Type* LowerType::mergeWith(Type* other) {
 	// FIXME: TBC
+	return this;
 }
 
 
