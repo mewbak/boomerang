@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.46 $
+ * $Revision: 1.47 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -543,11 +543,23 @@ const char *Prog::getGlobal(ADDRESS uaddr)
 
 void Prog::globalUsed(ADDRESS uaddr)
 {
+    for (unsigned i = 0; i < globals.size(); i++)
+        if (globals[i]->getAddress() == uaddr)
+            return;
     const char *nam = getGlobal(uaddr);
     assert(nam);
     int sz = pBF->GetSizeByName(nam);
-    Type *ty = new IntegerType(sz*8);
-    if (sz == 0) ty = new IntegerType();
+    Type *ty;
+    switch(sz) {
+        case 1:
+        case 2:
+        case 4:
+        case 8:
+            ty = new IntegerType(sz*8);
+            break;
+        default:
+            ty = new ArrayType(new CharType(), sz);
+    }
     globals.push_back(new Global(ty, uaddr, nam));
 }
 
