@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.72 $
+ * $Revision: 1.73 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2713,7 +2713,7 @@ Exp* RefExp::fromSSA(igraph& ig) {
 }
 
 Exp* PhiExp::fromSSA(igraph& ig) {
-    // FIXME: More required
+    // Nothing to be done yet; see UserProc::fromSSAform()
     return this;
 }
 

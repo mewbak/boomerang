@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.22 $
+ * $Revision: 1.23 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2929,6 +2929,11 @@ int Assign::getMemDepth() {
 void Assign::fromSSAform(igraph& ig) {
     lhs = lhs->fromSSAleft(ig, this);
     rhs = rhs->fromSSA(ig);
+}
+
+void Assign::setRight(Exp* e) {
+    if (rhs) delete rhs;
+    rhs = e;
 }
 
 bool Assign::serialize(std::ostream &ouf, int &len) {

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -425,6 +425,9 @@ public:
 
     // get how to replace this statement in a use
     virtual Exp* getRight() { return rhs; }
+
+    // set the rhs to something new
+    void         setRight(Exp* e);
 
     // inline any constants in the statement
     virtual void processConstants(Prog *prog);
