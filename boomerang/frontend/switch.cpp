@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- *  $Revision: 1.13 $
+ *  $Revision: 1.14 $
  *  Switch statements are generally one of the following three
  *  forms, when reduced to high level representation, where var is the
  *  switch variable, numl and numu are the lower and upper bounds of that
@@ -1154,8 +1154,8 @@ void processSwitch(PBB pBB, int delta, Cfg* pCfg, TargetQueue& tq,
           " with table at 0x" << std::hex << si->uTable << ", ";
         if (si->iNumTable)
             std::cerr << std::dec << si->iNumTable << " entries, ";
-        std::cerr << "lo= " << std::dec << si->iLower << ", hi= " << si->iUpper <<
-          "\n";
+        std::cerr << "lo= " << std::dec << si->iLower << ", hi= " << si->iUpper
+          << "\n";
     }
     ADDRESS uSwitch;
     int iNumOut, iNum;

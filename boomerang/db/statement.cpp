@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.52 $
+ * $Revision: 1.53 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -42,7 +42,7 @@
 #include "signature.h"
 #include <sstream>
 
-static char debug_buffer[200];      // For prints functions
+extern char debug_buffer[];      // For prints functions
 
 // replace a use in this statement
 void Statement::replaceRef(Statement *def) {
@@ -1116,7 +1116,8 @@ bool CaseStatement::searchAndReplace(Exp* search, Exp* replace) {
     GotoStatement::searchAndReplace(search, replace);
     bool ch = false;
     if (pSwitchInfo && pSwitchInfo->pSwitchVar)
-        pSwitchInfo->pSwitchVar->searchReplaceAll(search, replace, ch);
+        pSwitchInfo->pSwitchVar =
+          pSwitchInfo->pSwitchVar->searchReplaceAll(search, replace, ch);
     return ch;
 }
 

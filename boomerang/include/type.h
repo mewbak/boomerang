@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -220,7 +220,8 @@ public:
 virtual ~PointerType();
 virtual bool isPointer() const { return true; }
         Type *getPointsTo() { return points_to; }
-static  PointerType* getPtrAlpha();
+static  PointerType* newPtrAlpha();
+        bool pointsToAlpha();
 
 virtual Type* clone() const;
 
