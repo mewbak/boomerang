@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.110 $
+ * $Revision: 1.111 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1242,7 +1242,7 @@ void CaseStatement::print(std::ostream& os /*= cout*/, bool withDF) {
         if (pDest == NULL)
             os << "*no dest*";
         else os << pDest;
-        os << "] ";
+        os << "]";
     } else
         os << "SWITCH(" << pSwitchInfo->pSwitchVar << ")\n";
 }
@@ -3296,6 +3296,8 @@ bool BranchStatement::accept(StmtModifier* v) {
 bool CaseStatement::accept(StmtModifier* v) {
     bool recur;
     v->visit(this, recur);
+    if (pDest && recur)
+        pDest = pDest->accept(v->mod);
     if (pSwitchInfo && pSwitchInfo->pSwitchVar && recur)
         pSwitchInfo->pSwitchVar = pSwitchInfo->pSwitchVar->accept(v->mod);
     return true;
