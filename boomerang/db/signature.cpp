@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $
+ * $Revision: 1.48 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -289,7 +289,7 @@ void CallingConvention::Win32Signature::getInternalStatements(StatementList &stm
 
 CallingConvention::StdC::PentiumSignature::PentiumSignature(const char *nam) : Signature(nam)
 {
-    addReturn(Unary::regOf(24));
+    addReturn(Unary::regOf(24));   // actually, what about void?
 }
 
 CallingConvention::StdC::PentiumSignature::PentiumSignature(Signature &old) : Signature(old)

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.86 $
+ * $Revision: 1.87 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1777,14 +1777,17 @@ void UserProc::countRefs(RefCounter& refCounts) {
                 refCounts[ref]++;
             }
         }
-        if (s->getLeft() && signature->findReturn(s->getLeft()) != -1)
-            lastDef[s->getLeft()] = s;
-        if (s->isCall()) {
-            CallStatement *call = (CallStatement*)s;
-            for (int i = 0; i < signature->getNumReturns(); i++)
-                for (int j = 0; j < call->getNumReturns(); j++)
-                    if (*call->getReturnExp(j) == *signature->getReturnExp(i))
-                        lastDef[call->getReturnExp(j)] = s;
+        if (s->getBB()->getType() == RET) {
+            if (s->getLeft() && signature->findReturn(s->getLeft()) != -1)
+                lastDef[s->getLeft()] = s;
+            if (s->isCall()) {
+                CallStatement *call = (CallStatement*)s;
+                for (int i = 0; i < signature->getNumReturns(); i++)
+                    for (int j = 0; j < call->getNumReturns(); j++)
+                        if (*call->getReturnExp(j) == 
+                            *signature->getReturnExp(i))
+                            lastDef[call->getReturnExp(j)] = s;
+            }
         }
     }
     // Returned locations are used (outside this proc)
@@ -1911,8 +1914,16 @@ bool UserProc::prove(Exp *query)
         StmtListIter it;
         Statement *def = NULL;
         for (Statement *s = stmts.getFirst(it); s; s = stmts.getNext(it))
-            if (s->getLeft() && *s->getLeft() == *x) 
-                def = s;
+            if (s->getBB()->getType() == RET) {
+                if (s->getLeft() && *s->getLeft() == *x) 
+                    def = s;
+                if (s->isCall()) {
+                    CallStatement *call = (CallStatement*)s;
+                    for (int i = 0; i < call->getNumReturns(); i++)
+                        if (*call->getReturnExp(i) == *x)
+                            def = s;
+                }
+            }
         query->refSubExp1() = query->getSubExp1()->expSubscriptVar(x, def);
     }
 
