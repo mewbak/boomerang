@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.18 $
+/* $Revision: 1.19 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -97,6 +97,32 @@ typedef struct reg_addr_tag
 	REG_ENUM	Register;			// A register
 	ADDRESS		uValue;				// Its initial value
 } RegAddr;
+
+// Objective-C stuff
+class ObjcIvar {
+public:
+    std::string name, type;
+    unsigned offset;
+};
+
+class ObjcMethod {
+public:
+    std::string name, types;
+    ADDRESS addr;
+};
+
+class ObjcClass {
+public:
+    std::string name;
+    std::map<std::string, ObjcIvar> ivars;
+    std::map<std::string, ObjcMethod> methods;
+};
+
+class ObjcModule {
+public:
+    std::string name;
+    std::map<std::string, ObjcClass> classes;
+};
 
 /*
  * callback function, which when given the name of a library, should return
@@ -259,6 +285,8 @@ virtual size_t	getImageSize() = 0;
 	virtual std::map<ADDRESS, std::string> &getFuncSymbols() { return *new std::map<ADDRESS, std::string>(); }
 
 	virtual std::map<ADDRESS, std::string> &getSymbols() { return *new std::map<ADDRESS, std::string>(); }
+
+    virtual std::map<std::string, ObjcModule> &getObjcModules() { return *new std::map<std::string, ObjcModule>(); }
 
     ADDRESS getLimitTextLow() { return limitTextLow; }
     ADDRESS getLimitTextHigh() { return limitTextHigh; }
