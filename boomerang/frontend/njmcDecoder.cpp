@@ -14,7 +14,7 @@
  * OVERVIEW:   This file contains the machine independent
  *             decoding functionality.
  *
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  *============================================================================*/ 
 /*
  * 27 Apr 02 - Mike: Mods for boomerang
@@ -183,6 +183,7 @@ void DecodeResult::reset()
     type = NCT;
     valid = true;
     rtl = NULL;
+    reDecode = false;
     forceOutEdge = 0;   
 }
 
