@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -251,7 +251,7 @@ public:
     virtual void propagateToAll();
 
     // replaces a use of the given statement with an expression
-            void replaceUse(Statement *use);
+            void replaceRef(Statement *use);
 
     // statements should be printable (for debugging)
     virtual void print(std::ostream &os, bool withUses = false) = 0;
@@ -283,7 +283,7 @@ public:
     virtual void   toSSAform(StatementSet& reachin, int memDepth) = 0;
     virtual void fromSSAform(igraph& igm) = 0;
 protected:
-    virtual void doReplaceUse(Statement *def) = 0;
+    virtual void doReplaceRef(Exp* from, Exp* to) = 0;
     bool calcMayAlias(Exp *e1, Exp *e2, int size);
     bool mayAlias(Exp *e1, Exp *e2, int size);
 };
