@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $
+ * $Revision: 1.41 $
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
  * 27 Nov 02 - Mike: Fixed a bug in the floating point fixup code, which was
@@ -1209,6 +1209,10 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint( bool &gotMain )
             addr += inst.numBytes;
         } while (--instCount);
 #endif
+
+    // Last chance check: look for _main (e.g. Borland programs)
+    ADDRESS umain = pBF->GetAddressByName("_main");
+    if (umain != NO_ADDRESS) return umain;
 
     // Not ideal; we must return start
     std::cerr << "main function not found\n";
