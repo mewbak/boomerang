@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.37 $
+ * $Revision: 1.38 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -186,7 +186,6 @@ public:
  * This class plus ParamEntry and RTLInstDict should be moved to a separate
  * header file...
  *============================================================================*/
-
 class TableEntry : public gc {
 public:
     TableEntry();
@@ -241,8 +240,6 @@ class ParamEntry : public gc {
     int mark;                   /* Traversal mark. (free temporary use,
                                    basically) */
 };
-
-class PartialType;
 
 
 /*==============================================================================
