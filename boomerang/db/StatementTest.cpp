@@ -4,7 +4,7 @@
  *				tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 14 Jan 03 - Trent: Created
  * 17 Apr 03 - Mike: Added testRecursion to track down a nasty bug
@@ -1028,8 +1028,8 @@ void StatementTest::testAddUsedLocs () {
 	Assign s372(base, new Const(0));
 	s372.setNumber(372);
 	PhiAssign* pa = new PhiAssign(base);
-	pa->putAt(0, NULL);
-	pa->putAt(1, &s372);
+	pa->putAt(0, NULL, base);
+	pa->putAt(1, &s372, base);
 	pa->addUsedLocs(l);
 	// Note: phis were not considered to use blah if they ref m[blah],
 	// so local21 was not considered used
