@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.48 $
+ * $Revision: 1.49 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -946,9 +946,9 @@ void CHLLCode::print(std::ostream &os)
 
 void CHLLCode::AddLineComment(char* cmt) {
     char s[BUFSIZE];
-    s[0] = '/'; s[1] = '*';
-    strcat(&s[2], cmt);
-    strcat(s, "*/");
+    s[0] = '/'; s[1] = '*'; s[2] = ' ';
+    strcat(&s[3], cmt);
+    strcat(s, " */");
     lines.push_back(strdup(s));
 }
 
