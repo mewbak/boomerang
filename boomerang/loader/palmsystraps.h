@@ -14,7 +14,7 @@
  *             Based on code from the Metrowerks Compiler, PalmOS 2.0 support
  *============================================================================*/
 
-/* $Revision: 1.1 $
+/* $Revision: 1.2 $
  *    Mar 00 - Cristina: Created
  * 31 Mar 00 - Mike: Removed "sysTrap" from function names
  */

@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class ElfBinaryFile.
 */
 
-/* $Revision: 1.1 $
+/* $Revision: 1.2 $
  * This object provides 3 pseudo-sections:
  *  $HEADER is the main (elf) header of the file (Elf32_Ehdr)
  *  $PHEADER is the program header of the file (array of Elf32_Phdr structs)
@@ -77,6 +77,7 @@ public:
   virtual bool  Open(const char* sName);        // Open the file for r/w; pv
   virtual void  Close();                        // Close file opened with Open()
   virtual LOAD_FMT GetFormat() const;           // Get format (e.g. LOADFMT_ELF)
+  virtual MACHINE GetMachine() const;           // Get machine (e.g. MACHINE_SPARC)
   virtual bool isLibrary() const;
   virtual std::list<const char *> getDependencyList();
   virtual ADDRESS getImageBase();

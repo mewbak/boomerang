@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * To use:
     - Instantiate an object.
     - Call Init() with the number of entries in the table. If

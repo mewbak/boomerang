@@ -11,7 +11,7 @@
  * Desc: This file contains the definition of the class PalmBinaryFile.
 */
 
-/* $Revision: 1.1 $
+/* $Revision: 1.2 $
  * 02 Feb 2000 - Mike: Initial revision
  * 01 Aug 01 - Mike: GetGlobalPointerInfo() returns unsigned ints now
 */
@@ -35,6 +35,7 @@ public:
   virtual void  Close();                        // Close file opened with Open()
   virtual bool  PostLoad(void* handle);         // For archive files only
   virtual LOAD_FMT GetFormat() const;           // Get format i.e. LOADFMT_PALM
+  virtual MACHINE GetMachine() const;           // Get machine i.e. MACHINE_PALM
 
   virtual bool isLibrary() const;
   virtual std::list<const char *> getDependencyList();

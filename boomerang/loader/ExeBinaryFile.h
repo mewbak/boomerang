@@ -12,7 +12,7 @@
  * Desc: This file contains the definition of the class ExeBinaryFile.
 */
 
-/* $Revision: 1.1 $
+/* $Revision: 1.2 $
  * This file contains the definition of the ExeBinaryFile class, and some other
     definitions specific to the exe version of the BinaryFile object/
    At present, there is no support for a symbol table. Exe files do
@@ -76,6 +76,7 @@ public:
   virtual void  Close();                        // Close file opened with Open()
   virtual bool  PostLoad(void* handle);         // For archive files only
   virtual LOAD_FMT GetFormat() const;           // Get format (i.e. LOADFMT_EXE)
+  virtual MACHINE GetMachine() const;           // Get machine (i.e. MACHINE_PENTIUM)
 
   virtual bool isLibrary() const;
   virtual std::list<const char *> getDependencyList();

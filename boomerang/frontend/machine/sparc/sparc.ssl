@@ -15,7 +15,7 @@
 # SPARC RTL
 # --------------------------------------------------------------------------
  
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Jun-Dec 97 - Shane: Created
 #    Dec 98 - Shawn: Added floating points
 # 05 Mar 99 - Mike: FiTOs_ etc are no longer unary operators; use itof etc

@@ -14,7 +14,7 @@
 #   compact parameter information.
 ################################################################################
 
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Format: <function name> <return type> <parameter type> ...
 # where the function mame is just the name in ascii. All types are one of these:
 #  v	void (return type only)

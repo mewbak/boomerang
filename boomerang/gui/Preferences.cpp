@@ -4,7 +4,7 @@
  *              displays, loads, and saves preferences
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 03 Apr 02 - Mike: Added code to size the dialog box, space controls
  */
 

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 28 Apr 02 - Mike: Mods for boomerang
  */
@@ -53,7 +53,7 @@ class Register {
   void *g_address() const {return address;}
 
   int g_size() const {return size;}
-  Type g_type() const;
+  Type* g_type() const;
 
   /* Set the mapped index. For COVERS registers, this is the lower register
    * of the set that this register covers. For example, if the current register

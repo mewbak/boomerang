@@ -4,7 +4,7 @@
 // Author:      Julian Smart
 // Modified by:
 // Created:     04/01/98
-// RCS-ID:      $Id: boomerang.h,v 1.1.1.1 2002-03-17 06:17:24 quantumg Exp $
+// RCS-ID:      $Id: boomerang.h,v 1.2 2002-08-08 05:55:25 quantumg Exp $
 // Copyright:   (c) Julian Smart and Markus Holzem
 // Licence:     wxWindows license
 /////////////////////////////////////////////////////////////////////////////

@@ -11,7 +11,7 @@
  * Desc: This file contains definitions for various verbose functions
 */
 
-/* $Revision: 1.1 $
+/* $Revision: 1.2 $
  * 3 Feb 98 - Cristina
  *	added RTL dictionary argument to dumpShdr().
  * 2 Jun 98 - Mike
