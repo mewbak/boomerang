@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.53 $
+ * $Revision: 1.54 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -791,11 +791,12 @@ void Prog::decompile() {
     // A final pass to remove return locations not used by any caller
     removeUnusedReturns();
 
-    // A final pass to remove unused locals
-    removeUnusedLocals();
-
     // Now it is OK to transform out of SSA form
     fromSSAform();
+
+    // A final pass to remove unused locals
+    // Now in UserProc::generateCode()
+    //removeUnusedLocals();
 }
 
 void Prog::removeUnusedReturns() {
@@ -870,6 +871,7 @@ void Prog::removeUnusedReturns() {
     } while (change);
 }
 
+#if 0       // For time being, this is in UserProc::generateCode()
 void Prog::removeUnusedLocals() {
     std::list<Proc*>::iterator pp;
     for (pp = m_procs.begin(); pp != m_procs.end(); pp++) {
@@ -878,6 +880,7 @@ void Prog::removeUnusedLocals() {
         proc->removeUnusedLocals();
     }
 }
+#endif
 
 // Have to transform out of SSA form after the above final pass
 void Prog::fromSSAform() {
