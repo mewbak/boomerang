@@ -16,7 +16,7 @@
  *             returns the list of SSL instruction and table definitions.
  *============================================================================*/
 
-/* $Revision: 1.13 $
+/* $Revision: 1.14 $
  * Updates:
  * Shane Sendall (original C version) Dec 1997
  * Doug Simon (C++ version) Jan 1998
@@ -1306,6 +1306,9 @@ OPER SSLParser::strToOper(const char* s) {
         case 'o':
             // or
             return opOr;
+        case 'p':
+            // pow
+            return opPow;
         case 'r':
             // rlc, rrc, rl, rr
             if (s[1] == 'l') {
