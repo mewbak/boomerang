@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.126 $
+ * $Revision: 1.127 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3332,9 +3332,10 @@ Exp* Const::genConstraints(Exp* result) {
         }
         if (match) {
             // This constant may require a cast or a change of format.
-            // So we generate a constraint
+            // So we generate a constraint.
+            // Don't clone 'this', so it can be co-erced after type analysis
             return new Binary(opEquals,
-                new Unary(opTypeOf, this->clone()),
+                new Unary(opTypeOf, this),
                 result->clone());
         } else
             // Doesn't match

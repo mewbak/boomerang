@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.164 $
+ * $Revision: 1.165 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -3175,6 +3175,7 @@ void UserProc::typeAnalysis(Prog* prog) {
                 if (ty->isFloat()) {
                     // Need heavy duty cast here
                     con->setFlt(*(float*)&val);
+                    con->setOper(opFltConst);
                 } else if (ty->isPointer() &&
                   ((PointerType*)ty)->getPointsTo()->resolvesToChar()) {
                     // Convert to a string
