@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -44,6 +44,7 @@ BranchStatement CaseStatement CallStatement ReturnStatement    /           |
 //#include "exp.h"      // No! This is the bottom of the #include hierarchy
 #include "exphelp.h"    // For lessExpStar
 #include "types.h"
+#include "managed.h"
 
 
 class BasicBlock;
@@ -61,6 +62,7 @@ class HLLCode;
 class Assign;
 class RTL;
 typedef std::map<Exp*, int, lessExpStar> igraph;
+
 /*==============================================================================
  * Kinds of Statements, or high-level register transfer lists.
  * changing the order of these will result in save files not working - trent

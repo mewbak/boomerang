@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.84 $
+ * $Revision: 1.85 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -40,7 +40,7 @@
 #include <numeric>      // For accumulate
 #include <algorithm>    // For std::max()
 #include <map>          // In decideType()
-#include <sstream>      // Yes, you need gcc 3.0 or better
+#include <sstream>      // Need gcc 3.0 or better
 #include "types.h"
 #include "statement.h"
 #include "cfg.h"

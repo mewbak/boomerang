@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.117 $
+ * $Revision: 1.118 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -876,7 +876,7 @@ void UserProc::print(std::ostream &out, bool withDF) {
 // initialise all statements
 void UserProc::initStatements() {
     BB_IT it;
-    BasicBlock::rtlit rit; stmtlistIt sit;
+    BasicBlock::rtlit rit; StmtListIter sit;
     for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it)) {
         for (Statement* s = bb->getFirstStmt(rit, sit); s;
               s = bb->getNextStmt(rit, sit)) {
@@ -897,7 +897,7 @@ void UserProc::initStatements() {
 
 void UserProc::numberStatements(int& stmtNum) {
     BB_IT it;
-    BasicBlock::rtlit rit; stmtlistIt sit;
+    BasicBlock::rtlit rit; StmtListIter sit;
     for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it)) {
         for (Statement* s = bb->getFirstStmt(rit, sit); s;
           s = bb->getNextStmt(rit, sit))
@@ -907,7 +907,7 @@ void UserProc::numberStatements(int& stmtNum) {
 
 void UserProc::numberPhiStatements(int& stmtNum) {
     BB_IT it;
-    BasicBlock::rtlit rit; stmtlistIt sit;
+    BasicBlock::rtlit rit; StmtListIter sit;
     for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it)) {
         for (Statement* s = bb->getFirstStmt(rit, sit); s;
              s = bb->getNextStmt(rit, sit))
