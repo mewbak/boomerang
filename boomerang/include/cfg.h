@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -757,7 +757,7 @@ public:
 	/*
 	 * Virtual Function Call analysis
 	 */
-	void virtualFunctionCalls();
+	void virtualFunctionCalls(Prog* prog);
 
     std::vector<PBB> m_vectorBB; // faster access
 
