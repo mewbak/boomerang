@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  *
  * June 2004 - Trent: created
  */
@@ -1279,7 +1279,7 @@ void XMLProgParser::addToContext_callstmt(Context *c, int e)
 	}
 	return;
 	}
-	Exp* returnExp;
+	Exp* returnExp = NULL;
 	switch(e) {
 	case e_dest:
 		call->setDest(stack.front()->exp);
