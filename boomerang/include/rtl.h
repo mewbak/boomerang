@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.34 $
+ * $Revision: 1.35 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -165,6 +165,9 @@ public:
 
     // Is this RTL a call instruction?
     bool isCall();
+
+    // Is this RTL a branch instruction?
+    bool isBranch();
 
     // Get the "special" (High Level) Statement this RTL (else NULL)
     Statement* getHlStmt();

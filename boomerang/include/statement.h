@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -769,6 +769,7 @@ typedef struct {
 } SWITCH_INFO;
 
 class CaseStatement: public GotoStatement {
+    SWITCH_INFO* pSwitchInfo;   // Ptr to struct with info about the switch
 public:
     CaseStatement();
     virtual ~CaseStatement();
@@ -811,9 +812,6 @@ public:
     // simplify all the uses/defs in this RTL
     virtual void simplify();
 
-private:    
-    SWITCH_INFO* pSwitchInfo;   // Exp representation of the switch variable:
-                                // e.g., r[8]
 };          // class CaseStatement
 
 /*==============================================================================
