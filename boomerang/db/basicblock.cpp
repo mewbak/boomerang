@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.76 $
+ * $Revision: 1.77 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -2043,3 +2043,18 @@ void BasicBlock::processSwitch(UserProc* proc, SWITCH_INFO* swi) {
     // this can change now as a result of bad table entries
     updateType(NWAY, iNumOut);
 }
+
+// Change the BB enclosing stmt from type COMPCALL to CALL
+bool BasicBlock::undoComputedBB(Statement* stmt) {
+    RTL* last = m_pRtls->back();
+    std::list<Statement*>& list = last->getList();
+    std::list<Statement*>::reverse_iterator rr;
+    for (rr = list.rbegin(); rr != list.rend(); rr++) {
+        if (*rr == stmt) {
+            m_nodeType = CALL;
+            return true;
+        }
+    }
+    return false;
+}
+

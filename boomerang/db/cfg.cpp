@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.69 $
+ * $Revision: 1.70 $
  * 18 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -2517,4 +2517,13 @@ bool Cfg::decodeIndirectJmp(UserProc* proc) {
         res |= (*it)->decodeIndirectJmp(proc);
     }
     return res;
+}
+
+void Cfg::undoComputedBB(Statement* stmt) {
+    std::list<PBB>::iterator it;
+    for (it = m_listBB.begin(); it != m_listBB.end(); it++) {
+        if ((*it)->undoComputedBB(stmt))
+            break;
+    }
+
 }

@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.84 $
+/* $Revision: 1.85 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -662,6 +662,12 @@ public:
      * return true if this procedure contains the given address
      */
     bool containsAddr(ADDRESS uAddr);
+
+    /*
+     * Change BB containing this statement from a COMPCALL to a CALL
+     */
+    void undoComputedBB(Statement* stmt) {
+        cfg->undoComputedBB(stmt); }
 
     /*
      * Return true if this proc uses the special aggregate pointer as the
