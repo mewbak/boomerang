@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.42 $
+ * $Revision: 1.43 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -490,9 +490,7 @@ void CHLLCode::appendExp(char *str, Exp *exp)
                 if (ty == NULL)
                     LOG << "no type for subexp1 of " << b << "\n";
                 assert(ty);
-                if (ty->isNamed())
-                    ty = ((NamedType*)ty)->resolvesTo();
-                assert(ty->isCompound());
+                assert(ty->resolvesToCompound());
                 if (b->getSubExp1()->getOper() == opMemOf) {
                     appendExp(str, b->getSubExp1()->getSubExp1());
                     strcat(str, "->");
