@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -116,6 +116,9 @@ virtual const char *getCtype() const = 0;   // Get the C type, e.g. "unsigned in
 
 virtual std::string getTempName() const; // Get a temporary name for the type
 
+    // Clear the named type map. This is necessary when testing; the
+    // type for the first parameter to 'main' is different for sparc and pentium
+static void     clearNamedTypes() { namedTypes.clear(); }
 };
 
 class VoidType : public Type {
