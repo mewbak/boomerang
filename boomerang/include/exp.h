@@ -7,7 +7,7 @@
  *             subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.94 $
+ * $Revision: 1.95 $
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -868,9 +868,12 @@ public:
     static Location* regOf(Exp *e) {return new Location(opRegOf, e, NULL);}
     static Location* memOf(Exp *e, UserProc* p = NULL) {
         return new Location(opMemOf, e, p);}
-    static Location* global(const char *nam, UserProc *p) {return new Location(opGlobal, new Const((char*)nam), p);}
-    static Location* local(const char *nam, UserProc *p) {return new Location(opLocal, new Const((char*)nam), p);}
-    static Location* param(const char *nam, UserProc *p = NULL) {return new Location(opParam, new Const((char*)nam), p);}
+    static Location* global(const char *nam, UserProc *p) {
+        return new Location(opGlobal, new Const((char*)nam), p);}
+    static Location* local(const char *nam, UserProc *p) {
+        return new Location(opLocal, new Const((char*)nam), p);}
+    static Location* param(const char *nam, UserProc *p = NULL) {
+        return new Location(opParam, new Const((char*)nam), p);}
     // Clone
     virtual Exp* clone();
 
