@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.45 $
+ * $Revision: 1.46 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -165,6 +165,8 @@ public:
     // Adds (inserts) all locations (registers or memory) used by this
     // statement
     virtual void addUsedLocs(LocationSet& used) = 0;
+    virtual void addUsedLocsFinal(LocationSet& used) {
+        addUsedLocs(used); }        // For most cases, use standard addUsedLocs
 
     virtual void fixCallRefs() = 0;
 
@@ -741,6 +743,7 @@ public:
     // dataflow analysis
     virtual bool usesExp(Exp *e);
     virtual void addUsedLocs(LocationSet& used);
+            void addUsedLocsFinal(LocationSet& used);
     virtual void fixCallRefs();
     virtual void subscriptVar(Exp* e, Statement* def);
 
