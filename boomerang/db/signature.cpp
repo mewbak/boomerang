@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -948,8 +948,8 @@ bool Signature::usesNewParam(UserProc *p, Statement *stmt, bool checklive,
 
 // Special for Mike: find the location where the first outgoing (actual)
 // parameter is conventionally held
-Exp* Signature::getFirstArgLoc(BinaryFile* pBF) {
-    MACHINE mach = pBF->GetMachine();
+Exp* Signature::getFirstArgLoc(Prog* prog) {
+    MACHINE mach = prog->getMachine();
     switch (mach) {
         case MACHINE_SPARC: {
             CallingConvention::StdC::SparcSignature sig("");
