@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.100 $
+ * $Revision: 1.101 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2586,6 +2586,7 @@ bool PhiExp::hasGlobalFuncParam(Prog *prog)
     unsigned n = stmtVec.size();
     for (unsigned i = 0; i < n; i++) {
         Statement* u = stmtVec.getAt(i);
+        if (u == NULL) continue;
         Exp *right = u->getRight();
         if (right == NULL)
             continue;
