@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -372,6 +372,11 @@ void CHLLCode::appendExp(char *str, Exp *exp)
             appendExp(str, s);
             break;
         }
+        case opSubscript:
+            appendExp(str, u->getSubExp1());
+            std::cerr << "subscript in code generation of proc " << m_proc->getName() << " exp (without subscript): " << str << std::endl;
+            assert(false);
+            break;
         default:
             // others
             std::cerr << "not implemented " << operStrings[exp->getOper()] << 
