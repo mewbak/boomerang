@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -34,6 +34,12 @@
 #include "proc.h"
 #include "signature.h"
 #include "boomerang.h"
+// For some reason, MSVC 5.00 complains about use of undefined type RTL a lot
+#if defined(_MSC_VER) && _MSC_VER <= 1100
+#include "signature.h"		// For MSVC 5.00
+#include "rtl.h"
+#endif
+
 
 /*==============================================================================
  * FUNCTION:        Type::Type
