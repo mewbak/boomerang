@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -225,11 +225,8 @@ void BasicBlock::setRTLs(std::list<RTL*>* rtls) {
     // should we delete old ones here?  breaks some things - trent
     m_pRtls = rtls;
 
-    // Set the link between the last instruction (a call) and this BB
+    // Used to set the link between the last instruction (a call) and this BB
     // if this is a call BB
-    CallStatement* call = (CallStatement*)*(m_pRtls->rbegin());
-    if (call->getKind() == STMT_CALL)
-        call->setBB(this);
 }
 
 void BasicBlock::setReturnVal(Exp *e) {
