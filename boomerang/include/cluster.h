@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 03 May 04 - Trent: Created
  */
 
@@ -50,7 +50,7 @@ public:
     void addChild(Cluster *n);
     void removeChild(Cluster *n);
     Cluster *getParent() { return parent; }
-    bool hasChildren() { return children.size(); }
+    bool hasChildren() { return children.size() > 0; }
     void openStream(const char *ext);
     void openStreams(const char *ext);
     void closeStreams();
