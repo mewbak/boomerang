@@ -12,7 +12,7 @@
  * OVERVIEW:	interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.56 $
+ * $Revision: 1.57 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -195,6 +195,7 @@ static Boomerang *get() {
 	bool noChangeSignatures;
 	bool conTypeAnalysis;
 	bool dfaTypeAnalysis;
+	bool noLimitPropagations;
 };
 
 #define VERBOSE				(Boomerang::get()->vFlag)
@@ -209,6 +210,7 @@ static Boomerang *get() {
 #define DUMP_XML			(Boomerang::get()->dumpXML)
 #define DEBUG_SWITCH		(Boomerang::get()->debugSwitch)
 #define DEBUG_UNUSED_RETS_PARAMS (Boomerang::get()->debugUnusedRetsAndParams)
+
 
 
 
