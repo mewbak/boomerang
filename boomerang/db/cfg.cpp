@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.82 $
+ * $Revision: 1.83 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -60,7 +60,7 @@ void erase_lrtls(std::list<RTL*>* pLrtl, std::list<RTL*>::iterator begin,
  * RETURNS:			<nothing>
  *============================================================================*/
 Cfg::Cfg()
-  : entryBB(NULL), exitBB(NULL), m_bWellFormed(false), lastLabel(0), structured(false)
+  : entryBB(NULL), exitBB(NULL), m_bWellFormed(false), structured(false), lastLabel(0)
 {}
 
 /*==============================================================================
