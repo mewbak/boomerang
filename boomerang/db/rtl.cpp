@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -332,6 +332,10 @@ void RTL::print(std::ostream& os /*= cout*/, bool withDF /*= false*/) {
         bFirst = false;
     }
     if (stmtList.empty()) os << std::endl;     // New line for NOP
+}
+
+void RTL::prints() {
+    print(std::cerr, true);
 }
 
 /*==============================================================================
