@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 
@@ -1508,7 +1508,7 @@ FIADD.i64   modrm
             *80* %st := %st +f itof(64,80,modrm);
 
 FCHS    
-            *80* %st := 0.0 -f %st;
+            *80* %st := ~f %st;
 
 FCLEX    
             *8* %fsw@[0:7] := 0
