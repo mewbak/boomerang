@@ -14,7 +14,7 @@
  *              instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -1849,7 +1849,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
         stmts = instantiate(pc,  "FILD.lsI32", DIS_MEM32);
 
     | FILD64(Mem64) =>
-        stmts = instantiate(pc,  "FILD64", DIS_MEM64);
+        stmts = instantiate(pc,  "FILD.lsI64", DIS_MEM64);
 
     | FINIT() =>
         stmts = instantiate(pc,  "FINIT");
