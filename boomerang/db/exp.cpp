@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.149 $
+ * $Revision: 1.150 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2018,8 +2018,14 @@ Exp* Binary::polySimplify(bool& bMod) {
 
     if (((op == opBitXor) || (op == opMinus)) && (*subExp1 == *subExp2)) {
         // x ^ x or x - x: result is zero
-        ;//delete this;
         res = new Const(0);
+        bMod = true;
+        return res;
+    }
+        
+    if (((op == opBitOr) || (op == opBitAnd)) && (*subExp1 == *subExp2)) {
+        // x | x or x & x: result is x
+        res = subExp1;      // With GC, don't need becomeSubExp1 any more
         bMod = true;
         return res;
     }
@@ -2681,7 +2687,6 @@ Exp* Ternary::polySimplify(bool& bMod) {
 
 Exp* TypedExp::polySimplify(bool& bMod) {
     Exp *res = this;
-    Exp *subExp1 = getSubExp1();
     
     if (subExp1->getOper() == opRegOf) {
         // type cast on a reg of.. hmm.. let's remove this
@@ -2690,6 +2695,7 @@ Exp* TypedExp::polySimplify(bool& bMod) {
         return res;
     }
 
+    subExp1 = subExp1->simplify();
     return res;
 }
 
