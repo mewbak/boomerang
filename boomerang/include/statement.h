@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -852,6 +852,7 @@ public:
     void setArgumentExp(int i, Exp *e) { arguments[i] = e; }
     int  getNumArguments() { return arguments.size(); }
     void setNumArguments(int i);
+    void removeArgument(int i);
     Type *getArgumentType(int i);
     void truncateArguments();
     void clearLiveEntry();

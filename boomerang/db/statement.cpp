@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2069,6 +2069,9 @@ void CallStatement::setSigArguments() {
             arguments.push_back(procDest->getSignature()->
                             getArgumentExp(arguments.size())->clone());
     }
+    UserProc *u = dynamic_cast<UserProc*>(procDest);
+    if (u) 
+        u->addCaller(this);
 }
 
 /*==============================================================================
@@ -2540,6 +2543,13 @@ void CallStatement::setNumArguments(int n) {
     for (int i = oldSize; i < n; i++) {
         arguments[i] = procDest->getSignature()->getArgumentExp(i)->clone();
     }
+}
+
+void CallStatement::removeArgument(int i)
+{
+    for (int j = i; j < arguments.size(); j++)
+        arguments[j-1] = arguments[j];
+    arguments.resize(arguments.size()-1);
 }
 
 // Update the arguments to be in implicit SSA form (e.g. m[esp{1}]{2 3})
