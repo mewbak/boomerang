@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * 03 May 04 - Trent: Created
  */
 
@@ -58,6 +58,8 @@ public:
     const char *makeDirs();
     const char *getOutPath(const char *ext);
     Cluster *find(const char *nam);
+
+    void printTree(std::ostream &out);
 protected:
 
     friend class XMLProgParser;

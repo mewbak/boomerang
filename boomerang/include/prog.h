@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.58 $
+ * $Revision: 1.59 $
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -282,7 +282,6 @@ protected:
     Cluster *m_rootCluster;		// Root of the cluster tree
 
     friend class XMLProgParser;
-    void addProc(Proc *p) { m_procs.push_back(p); }
     void setFrontEnd(FrontEnd *p) { pFE = p; }
     void setBinaryFile(BinaryFile *p) { pBF = p; }
  

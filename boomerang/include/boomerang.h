@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.45 $
+ * $Revision: 1.46 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -38,7 +38,9 @@ private:
     void usage();
     void help();
     void helpcmd();
-    int parseCmd(int argc, const char **argv, int n);
+    int splitLine(char *line, char ***pargv);
+    int parseCmd(int argc, const char **argv);
+    int cmdLine();
 
     Boomerang();
 public:
