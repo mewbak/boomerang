@@ -16,7 +16,7 @@
  *             returns the list of SSL instruction and table definitions.
  *============================================================================*/
 
-/* $Revision: 1.10 $
+/* $Revision: 1.11 $
  * Updates:
  * Shane Sendall (original C version) Dec 1997
  * Doug Simon (C++ version) Jan 1998
@@ -85,7 +85,8 @@ Exp* listStrToExp(std::list<std::string>* ls);// Convert a STL list of strings t
 
 %define DEBUG 1 
 
-%define INHERIT : public gc
+// %define INHERIT : public gc  // This is how to force the parser class to
+                                // be declared as derived from class gc
 
 %define PARSE_PARAM \
     RTLInstDict& Dict
