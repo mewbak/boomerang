@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -247,7 +247,7 @@ int FuncType::getSize() const
 
 int PointerType::getSize() const
 {
-    return points_to->getSize();
+    return 4; //points_to->getSize(); // yes, it was a good idea at the time
 }
 
 int ArrayType::getSize() const
