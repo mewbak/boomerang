@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # 05 Apr 02 - Mike: Created. Added "test" target
 
 CC = g++ -g -I../interface
@@ -14,7 +14,7 @@ CXX = $(CC)
 all: testExp
 
 testExp: testExp.o exp.o ExpTest.o 
-	$(CC) -o $@ -Wl,-R../bin $^ -lcppunit
+	$(CC) -o $@ $^ -lcppunit
 
 ExpTest.o: ExpTest.h
 
