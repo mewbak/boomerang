@@ -10,12 +10,12 @@
  */
 
 /*==============================================================================
- * FILE:       type.cc
+ * FILE:       type.cpp
  * OVERVIEW:   Implementation of the Type class: low level type information
  *============================================================================*/
 
 /*
- * $Revision: 1.22 $
+ * $Revision: 1.23 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
