@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.107 $
+ * $Revision: 1.108 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2227,6 +2227,16 @@ Exp* Ternary::polySimplify(bool& bMod) {
 
     if (op == opFsize && subExp3->getOper() == opFltConst) {
         res = this->becomeSubExp3();
+        bMod = true;
+        return res;
+    }
+
+    if (op == opItof && subExp3->getOper() == opIntConst &&
+        subExp2->getOper() == opIntConst &&
+        ((Const*)subExp2)->getInt() == 32) {
+        unsigned n = ((Const*)subExp3)->getInt();
+        res = new Const(*(float*)&n);
+        LOG << "bit pattern for " << res << " is " << n << "\n";
         bMod = true;
         return res;
     }

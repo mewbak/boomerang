@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.148 $
+ * $Revision: 1.149 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1522,6 +1522,11 @@ void UserProc::addNewParameters() {
                 if (e->getOper() == opGlobal) {
                     if (VERBOSE)
                         LOG << "ignoring global " << e << "\n";
+                    continue;
+                }
+                if (e->getMemDepth() > 1) {
+                    if (VERBOSE)
+                        LOG << "ignoring complex " << e << "\n";
                     continue;
                 }
                 if (VERBOSE)
