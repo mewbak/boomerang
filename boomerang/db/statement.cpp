@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.60 $
+ * $Revision: 1.61 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -562,8 +562,6 @@ BranchStatement::~BranchStatement() {
 void BranchStatement::setCondType(BRANCH_TYPE cond, bool usesFloat /*= false*/) {
     jtCond = cond;
     bFloat = usesFloat;
-
-    if (bFloat) return;
 
     // set pCond to a high level representation of this type
     Exp* p = NULL;
