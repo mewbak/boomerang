@@ -14,12 +14,13 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  * 26 Aug 03 - Mike: Split off from statement.cpp
  */
 
 #include <sstream>
 
+#include "types.h"
 #include "managed.h"
 #include "statement.h"
 #include "exp.h"

@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.129 $
+ * $Revision: 1.130 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3138,7 +3138,8 @@ Exp *PhiExp::fixCallRefs() {
 
     bool oneIsGlobalFunc = false;
     Prog *prog = NULL;
-    for (unsigned i=0; i < n; i++) {
+	unsigned int i;
+    for (i=0; i < n; i++) {
         Statement* u = stmtVec.getAt(i);
         if (u) {
             CallStatement *call = dynamic_cast<CallStatement*>(u);
@@ -3149,7 +3150,7 @@ Exp *PhiExp::fixCallRefs() {
     if (prog) 
         oneIsGlobalFunc = hasGlobalFuncParam(prog);
 
-    for (unsigned i=0; i < n; i++) {
+    for (i=0; i < n; i++) {
         Statement* u = stmtVec.getAt(i);
         CallStatement *call = dynamic_cast<CallStatement*>(u);
         if (call) {
@@ -3271,14 +3272,17 @@ int Unary::getMemDepth() {
 int Binary::getMemDepth() {
     int d1 = subExp1->getMemDepth();
     int d2 = subExp2->getMemDepth();
-    return std::max(d1, d2);
+	if (d1 > d2) return d1;
+	return d2;
 }
 
 int Ternary::getMemDepth() {
     int d1 = subExp1->getMemDepth();
     int d2 = subExp2->getMemDepth();
     int d3 = subExp3->getMemDepth();
-    return std::max(std::max(d1, d2), d3);
+	if (d1 >= d2 && d1 >= d3) return d1;
+	if (d2 >= d3) return d2;
+	return d3;
 }
 
 int Location::getMemDepth() {
