@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.43 $
+ * $Revision: 1.44 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -1003,6 +1003,7 @@ public:
     std::set<int>& getA_phi(Exp* e) {return A_phi[e];}
 
     void findInterferences(igraph& ig, int& tempNum);
+    void appendBBs(std::list<PBB>& worklist, std::set<PBB>& workset);
 };              /* Cfg */
 
 #endif
