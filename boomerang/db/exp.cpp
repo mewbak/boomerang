@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.70 $
+ * $Revision: 1.71 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2711,7 +2711,7 @@ Exp* RefExp::fromSSA(igraph& ig) {
         // It is in the map. Delete the current expression, and replace
         // with a new local
         std::ostringstream os;
-        os << "temp" << ig[this];
+        os << "local" << ig[this];
         std::string name = os.str();
         delete this;
         return new Unary(opLocal, new Const(strdup(name.c_str())));
