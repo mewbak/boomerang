@@ -13,7 +13,7 @@
  *             SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.8 $
+/* $Revision: 1.9 $
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -32,11 +32,11 @@
 #pragma warning(disable:4786)
 #endif
 
+#include "exp.h"
 #include "proc.h"
 #include "prog.h"
 #include "decoder.h"
 #include "sparcdecoder.h"
-#include "exp.h"
 #include "rtl.h"
 #include "BinaryFile.h"		// For SymbolByAddress()
 #include "boomerang.h"

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * Dec 97 - created by Mike based on Cristina's initial implementation
  * 19 Feb 98  - Cristina 
  *  changed RTLLIT for RTL_IT as this name is defined in the new rtl.h. 
@@ -477,7 +477,6 @@ public:
 	void getLiveIn(std::set<Statement*> &livein);
 	void calcLiveOut(std::set<Statement*> &live);
         std::set<Statement*> &getLiveOut() { return liveout; }
-        void calcUses();
 
 	/* set the return value */
 	void setReturnVal(Exp *e);

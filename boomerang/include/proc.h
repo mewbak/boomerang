@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.9 $
+/* $Revision: 1.10 $
  * 11 Mar 98 - Cristina  
  *  replaced BOOL for bool type (C++'s), same for TRUE and FALSE.
  * 18 Mar 98 - Cristina 
@@ -385,7 +385,7 @@ public:
 	void promoteSignature();
 
 	// get all the statements
-	void getAllStatements(std::set<Statement*> &stmts);
+	void getStatements(std::set<Statement*> &stmts);
 
 	// remove a statement
 	void removeStatement(Statement *stmt);
@@ -617,7 +617,7 @@ private:
      * A map between machine dependent locations and their corresponding
      * symbolic, machine independent representations.
      */
-    std::map<Exp*,Exp*> symbolMap;
+    std::map<Exp*,Exp*,lessExpStar> symbolMap;
 
     /* 
      * An object that represents a set of ranges, which gives the coverage
