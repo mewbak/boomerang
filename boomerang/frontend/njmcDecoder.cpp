@@ -14,7 +14,7 @@
  * OVERVIEW:   This file contains the machine independent
  *             decoding functionality.
  *
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *============================================================================*/ 
 /*
  * 27 Apr 02 - Mike: Mods for boomerang
@@ -198,7 +198,7 @@ void DecodeResult::reset()
  *============================================================================*/
 Exp* NJMCDecoder::dis_Reg(int regNum)
 {
-      Exp* expr = new Unary(opRegOf, new Const(regNum));
+      Exp* expr = Location::regOf(regNum);
       return expr;
 }
 
