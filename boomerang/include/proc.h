@@ -16,7 +16,7 @@
  *			   as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.98 $
+/* $Revision: 1.99 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *				locals for a procedure.
 */
@@ -568,7 +568,7 @@ private:
 	 * Return an expression that is equivilent to e in terms of local variables.
 	 * Creates new locals as needed.
 	 */
-	Exp *getLocalExp(Exp *le, Type *ty = NULL);
+	Exp *getLocalExp(Exp *le, Type *ty = NULL, bool lastPass = false);
 
 public:
 

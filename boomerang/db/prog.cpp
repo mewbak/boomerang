@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.108 $
+ * $Revision: 1.109 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -1228,6 +1228,8 @@ Exp* Global::getInitialValue(Prog* prog) {
 	if (si && si->bBss)
 		// This global is in the BSS, so it can't be initialised
 		return NULL;
+	if (si == NULL)
+		return NULL;
 	if (type->isPointer() &&
 	  ((PointerType*)type)->getPointsTo()->resolvesToChar()) {
 		char* str = prog->getStringConstant(uaddr, true);
@@ -1261,6 +1263,8 @@ Exp *Prog::readNativeAs(ADDRESS uaddr, Type *type)
 {
 	Exp *e = NULL;
 	PSectionInfo si = getSectionInfoByAddr(uaddr);
+	if (si == NULL)
+		return NULL;
 	switch(type->getSize()) {
 	case 8:
 		e = new Const(

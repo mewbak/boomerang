@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.64 $
+ * $Revision: 1.65 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -585,7 +585,7 @@ class Cfg {
 	/*
 	 * True if well formed.
 	 */
-	bool m_bWellFormed;
+	bool m_bWellFormed, structured;
 
 	/*
 	 * Set of the call instructions in this procedure.
