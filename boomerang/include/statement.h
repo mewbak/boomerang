@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.37 $
+ * $Revision: 1.38 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -620,8 +620,18 @@ public:
     // code generation
     virtual void generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel);
     
+    // dataflow analysis
+    virtual bool usesExp(Exp *e);
+    virtual void addUsedLocs(LocationSet& used);
+    virtual void subscriptVar(Exp* e, Statement* def);
+protected:
+    virtual void doReplaceRef(Exp* from, Exp* to);
+public:
+
     // simplify all the uses/defs in this RTL
     virtual void simplify();
+
+    virtual void fromSSAform(igraph& ig);
 
 };          // class CaseStatement
 

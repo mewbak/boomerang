@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.73 $
+ * $Revision: 1.74 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1231,8 +1231,38 @@ void CaseStatement::generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) {
     // dont generate any code for switches, they will be handled by the bb
 }
 
+bool CaseStatement::usesExp(Exp *e) {
+    return *pSwitchInfo->pSwitchVar == *e;
+}
+
+void CaseStatement::addUsedLocs(LocationSet& used) {
+    if (pSwitchInfo && pSwitchInfo->pSwitchVar)
+        pSwitchInfo->pSwitchVar->addUsedLocs(used);
+}
+
+void CaseStatement::subscriptVar(Exp* e, Statement* def) {
+    if (pSwitchInfo && pSwitchInfo->pSwitchVar)
+        pSwitchInfo->pSwitchVar = pSwitchInfo->pSwitchVar->expSubscriptVar(
+          e, def);
+}
+
+void CaseStatement::doReplaceRef(Exp* from, Exp* to) {
+    bool change;
+    assert(pSwitchInfo && pSwitchInfo->pSwitchVar);
+    pSwitchInfo->pSwitchVar = pSwitchInfo->pSwitchVar->searchReplaceAll(
+      from, to, change);
+    pSwitchInfo->pSwitchVar = pSwitchInfo->pSwitchVar->simplify();
+}
+
+// Convert from SSA form
+void CaseStatement::fromSSAform(igraph& ig) {
+    if (pSwitchInfo && pSwitchInfo->pSwitchVar)
+        pSwitchInfo->pSwitchVar = pSwitchInfo->pSwitchVar->fromSSA(ig); 
+}
+
 void CaseStatement::simplify() {
-    // TODO
+    if (pSwitchInfo && pSwitchInfo->pSwitchVar)
+        pSwitchInfo->pSwitchVar = pSwitchInfo->pSwitchVar->simplify();
 }
 
 /**********************************

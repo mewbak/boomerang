@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -287,7 +287,7 @@ int RTL::getNumStmt() {
  * FUNCTION:        RTL::at
  * OVERVIEW:        Provides indexing on a list. Changed from operator[] so that
  *                  we keep in mind it is linear in its execution time.
- * PARAMETERS:      i - the index of the element we want
+ * PARAMETERS:      i - the index of the element we want (0 = first)
  * RETURNS:         the element at the given index or NULL if the index is out
  *                  of bounds
  *============================================================================*/
