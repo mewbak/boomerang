@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -428,7 +428,6 @@ bool Statement::canPropagateToAll() {
     }
     return true;
 }
-#endif
 
 // assumes canPropagateToAll has returned true
 // assumes this statement will be removed by the caller
@@ -438,6 +437,7 @@ void Statement::propagateToAll() {
         s->replaceRef(this);
     }
 }
+#endif
 
 // Update the dataflow for this stmt. This stmt is about to be deleted.
 // Don't assume the statement being erased has no dataflow; it could be

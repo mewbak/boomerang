@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1328,6 +1328,7 @@ bool UserProc::removeNullStatements() {
     return change;
 }
 
+#if 0
 bool UserProc::removeDeadStatements() {
     bool change = false;
     StatementList stmts;
@@ -1415,6 +1416,7 @@ bool UserProc::removeDeadStatements() {
         print(std::cerr, true);
     return change;
 }
+#endif
 
 void UserProc::processConstants() {
     if (VERBOSE)

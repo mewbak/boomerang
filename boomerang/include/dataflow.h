@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.33 $
+ * $Revision: 1.34 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -138,7 +138,7 @@ protected:
     UserProc *proc; // procedure containing this statement
     // The following 2 are soon to be deleted!
     //StatementSet uses;          // ud chain: my uses' defs
-    StatementSet usedBy;        // du chain: my def's uses
+    //StatementSet usedBy;        // du chain: my def's uses
     int     number;             // Statement number for printing
 public:
 
@@ -186,7 +186,7 @@ public:
 
     // creates a set of statements that are killed by this statement
     // and have no uses
-    virtual void getDeadStatements(StatementSet &dead) = 0;
+    //virtual void getDeadStatements(StatementSet &dead) = 0;
 
     // calculates the uses/usedBy links for this statement
     //virtual void calcUseLinks();
@@ -233,11 +233,11 @@ public:
     // 
     // usedBy: du chain (my def's uses)
     //
-    void calcUsedBy(StatementSet &usedBy);
-    int getNumUsedBy() { return usedBy.size(); }
+    //void calcUsedBy(StatementSet &usedBy);
+    //int getNumUsedBy() { return usedBy.size(); }
 
     // update my data flow (I'm about to be deleted)
-    void updateDfForErase();
+    //void updateDfForErase();
 
     // get/set the enclosing BB
     PBB getBB() { return pbb; }
@@ -248,7 +248,7 @@ public:
     //virtual bool canPropagateToAll();
 
     // propagates this statement to all its uses, caller must remove
-    virtual void propagateToAll();
+    //virtual void propagateToAll();
 
     // replaces a use of the given statement with an expression
             void replaceRef(Statement *use);
