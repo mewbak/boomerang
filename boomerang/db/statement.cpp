@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.109 $
+ * $Revision: 1.110 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1784,8 +1784,6 @@ void CallStatement::setDestProc(Proc* dest) {
 }
 
 void CallStatement::generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) {
-    LocationSet defs;
-    getDefinitions(defs);
 
     Proc *p = getDestProc();
 
@@ -1805,10 +1803,10 @@ void CallStatement::generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) {
              i++)
             args.push_back(arguments[p->getSignature()->getPreferedParam(i)]);
         hll->AddCallStatement(indLevel, p,  
-                              p->getSignature()->getPreferedName(),
-                              args, defs);
+          p->getSignature()->getPreferedName(), args, getReturns());
     } else
-        hll->AddCallStatement(indLevel, p, p->getName(), arguments, defs);
+        hll->AddCallStatement(indLevel, p, p->getName(), arguments,
+          getReturns());
 }
 
 void CallStatement::simplify() {
