@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $
+ * $Revision: 1.10 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2547,7 +2547,7 @@ void CallStatement::setNumArguments(int n) {
 
 void CallStatement::removeArgument(int i)
 {
-    for (int j = i; j < arguments.size(); j++)
+    for (int j = i+1; j < arguments.size(); j++)
         arguments[j-1] = arguments[j];
     arguments.resize(arguments.size()-1);
 }

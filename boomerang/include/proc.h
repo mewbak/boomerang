@@ -16,7 +16,7 @@
  *             as parameters and locals.
  *============================================================================*/
 
-/* $Revision: 1.41 $
+/* $Revision: 1.42 $
  * 20 Sep 01 - Brian: Added getSymbolicLocals() to return the list of symbolic
  *              locals for a procedure.
 */
@@ -456,7 +456,7 @@ public:
     void removeRedundantPhis();
     void trimReturns();
     void trimParameters();
-    void removeParameter(int i);
+    void removeParameter(Exp *e);
     void replaceExpressionsWithGlobals();
     void replaceExpressionsWithSymbols();
     void replaceExpressionsWithParameters();   // must be in SSA form
