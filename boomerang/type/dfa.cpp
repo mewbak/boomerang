@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *
  * 24/Sep/04 - Mike: Created
  */
@@ -25,7 +25,7 @@
 
 static int nextUnionNumber = 0;
 
-bool max(int a, int b) {		// Faster to write than to find the #include for
+int max(int a, int b) {		// Faster to write than to find the #include for
 	return a>b ? a : b;
 }
 
