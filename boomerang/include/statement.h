@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.52 $
+ * $Revision: 1.53 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -684,6 +684,7 @@ public:
     int findReturn(Exp *e);
     void removeReturn(Exp *e);
     void addReturn(Exp *e);
+    std::vector<Exp*>& getReturns() {return returns;}
     Exp *getProven(Exp *e);
     Exp *substituteParams(Exp *e);
     void addArgument(Exp *e);
@@ -701,7 +702,6 @@ public:
     void truncateArguments();
     void clearLiveEntry();
 
-    //Exp* getReturnLoc();                // FIXME Get location used for return value
 
     virtual void print(std::ostream& os = std::cout, bool withDF = false);
 
