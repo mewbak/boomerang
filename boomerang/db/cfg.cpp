@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.80 $
+ * $Revision: 1.81 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -2369,7 +2369,7 @@ void Cfg::findInterferences(igraph& ig, int& tempNum) {
 		workList.erase(--workList.end());
 		workSet.erase(currBB);
 		// Calculate live locations and interferences
-		change = currBB->calcLiveness(ig, tempNum);
+		change = currBB->calcLiveness(ig, tempNum, myProc);
 		if (change) {
 			if (DEBUG_LIVENESS) {
 				LOG << "Revisiting BB ending with stmt ";
