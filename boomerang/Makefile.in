@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.37 $
+# $Revision: 1.38 $
 # 21 Aug 02 - Icer: added codegen/chllcode.cpp to the build process
 #		    by adding it in STATIC_OBJ
 # 20 Aug 02 - Icer: removed test from all, test code is broken
@@ -175,7 +175,8 @@ db/prog.o: include/prog.h include/exp.h include/cfg.h include/proc.h \
 db/proc.o: include/proc.h include/hllcode.h include/dataflow.h include/exp.h \
     include/cfg.h include/rtl.h include/prog.h include/signature.h
 db/cfg.o: include/cfg.h include/dataflow.h include/exp.h
-db/dom.o: include/cfg.h include/dom.h
+db/dom.o: include/cfg.h include/dom.h include/cfg.h include/exphelp.h \
+    include/exp.h
 db/basicblock.o: include/cfg.h include/hllcode.h include/dataflow.h \
     include/exp.h include/types.h include/rtl.h include/proc.h include/prog.h \
     include/util.h

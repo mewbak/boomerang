@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.27 $
+ * $Revision: 1.28 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -178,6 +178,7 @@ public:
     void toSSAform();
 
     // Do decompilation
+    void decompile_issa();
     void decompile();
 
     // All that used to be done in UserProc::decompile, but now done globally.

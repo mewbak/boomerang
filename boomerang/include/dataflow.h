@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -214,11 +214,13 @@ public:
     // returns true if this statement uses the given expression
     virtual bool usesExp(Exp *e) = 0;
 
-    // Adds (inserts) all locations (registers or memory) used by this statement
+    // Adds (inserts) all locations (registers or memory) used by this
+    // statement
     virtual void addUsedLocs(LocationSet& used) = 0;
 
-    // Subscript the left hand side to "point to self"
-    virtual void subscriptLeft(Statement* self) {};
+    // Subscript all occurrences of e with definition def (except for top level
+    // of LHS of assignment)
+    virtual void subscriptVar(Exp* e, Statement* def) = 0;
 
     // returns the statement which is used by this statement and has a
     // left like the given expression
