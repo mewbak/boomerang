@@ -4,7 +4,7 @@
  *              tests the sparc front end
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 05 Apr 02 - Mike: Created
  * 21 May 02 - Mike: Mods for gcc 3.1
@@ -178,7 +178,7 @@ void FrontPentTest::test3() {
     expected = std::string(
       "0804892d    0 *32* %pc := m[r28]\n"
       "            0 *32* r28 := r28 + 4\n"
-      "            0 RET\n");
+      "            0 RET \n");
     CPPUNIT_ASSERT_EQUAL(expected, std::string(o2.str()));
 
     delete pFE;

@@ -4,7 +4,7 @@
  *              tests the sparc front end
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  *
  * 05 Apr 02 - Mike: Created
  * 21 May 02 - Mike: Mods for gcc 3.1
@@ -202,7 +202,7 @@ void FrontSparcTest::test3() {
     std::ostringstream o2;
     inst = pFE->decodeInstruction(0x10a74);
     inst.rtl->print(o2);
-    expected = std::string("00010a74    0 RET\n");
+    expected = std::string("00010a74    0 RET \n");
     CPPUNIT_ASSERT_EQUAL(expected, std::string(o2.str()));
 
     std::ostringstream o3;
