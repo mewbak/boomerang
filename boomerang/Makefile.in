@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 # 21 Aug 02 - Icer: added codegen/chllcode.cpp to the build process
 #		    by adding it in STATIC_OBJ
 # 20 Aug 02 - Icer: removed test from all, test code is broken
@@ -191,4 +191,6 @@ frontend/FrontPentTest.o:  frontend/FrontPentTest.h
 frontend/njmcDecoder.o: frontend/njmcDecoder.cpp include/decoder.h
 c/CTest.o:  c/ansi-c-parser.h
 boomerang.o: include/boomerang.h include/prog.h include/BinaryFile.h include/frontend.h
+analysis.o: db/rtl.o db/hrtl.o db/cfg.o db/basicblock.o db/proc.o db/prog.o \
+    frontend/frontend.o include/analysis.h db/exp.o
 
