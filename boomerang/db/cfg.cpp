@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.52 $
+ * $Revision: 1.53 $
  * 18 Apr 02 - Mike: Mods for boomerang
  */
 
@@ -1384,6 +1384,13 @@ void Cfg::print(std::ostream &out, bool withDF) {
       it++) 
         (*it)->print(out, withDF);
     out << std::endl;
+}
+
+void Cfg::printToLog(bool withDF) {
+    for (std::list<PBB>::iterator it = m_listBB.begin(); it != m_listBB.end();
+      it++) 
+        (*it)->printToLog(withDF);
+    LOG << "\n";
 }
 
 void Cfg::setTimeStamps() {

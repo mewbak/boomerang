@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.54 $
+ * $Revision: 1.55 $
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -741,6 +741,25 @@ void Signature::print(std::ostream &out)
         if (i != returns.size()-1) out << ", ";
     }
     out << " }" << std::endl;
+}
+
+void Signature::printToLog()
+{
+    if (returns.size() >= 1)
+        LOG << returns[0]->getType()->getCtype() << " ";
+    else
+        LOG << "void ";
+    LOG << name.c_str() << "(";
+    for (unsigned i = 0; i < params.size(); i++) {
+        LOG << params[i]->getType()->getCtype() << " " << params[i]->getExp();
+        if (i != params.size()-1) LOG << ", ";
+    }
+    LOG << ") { "; 
+    for (unsigned i = 0; i < returns.size(); i++) {
+        LOG << returns[i]->getExp();
+        if (i != returns.size()-1) LOG << ", ";
+    }
+    LOG << " }" << "\n";
 }
 
 void Signature::getInternalStatements(StatementList &stmts)

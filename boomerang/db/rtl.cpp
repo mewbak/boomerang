@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.15 $
+ * $Revision: 1.16 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -97,7 +97,7 @@ RTL::~RTL() {
     std::list<Statement*>::iterator it;
     for (it = stmtList.begin(); it != stmtList.end(); it++) {
         if (*it != NULL) {
-            delete *it;
+            //delete *it;
         }
     }
 }
@@ -256,7 +256,7 @@ void RTL::updateStmt(Statement *s, unsigned i) {
     // statement (because it's also the one we are updating!)
     if (*pp != s) {
         // Do the update
-        if (*pp) delete *pp;
+        if (*pp) ;//delete *pp;
         *pp = s;
     }
 }

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.51 $
+ * $Revision: 1.52 $
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -185,6 +185,7 @@ public:
 	 * Don't use = std::cout, because gdb doesn't know about std::
      */
     void print(std::ostream& os, bool withDF = false);
+    void printToLog(bool withDF = false);
     char* prints();                     // For debugging
 
     /*
@@ -980,6 +981,7 @@ public:
      * print this cfg, mainly for debugging
      */
     void print(std::ostream &out, bool withDF = false);
+    void printToLog(bool withDF = false);
 
     /*
      * Domonator frontier code
