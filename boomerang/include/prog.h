@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -215,8 +215,6 @@ protected:
     ProgWatcher *m_watcher;             // used for status updates
     // Next numbered proc will use this
     int m_iNumberedProc;
-    // A map to make fixing dataflow much easier/faster
-    std::map<Exp*, Statement*, lessExpStar> memOfAssigns;
 }; 
 
 #endif
