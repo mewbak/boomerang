@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.86 $
+ * $Revision: 1.87 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -754,6 +754,10 @@ void CHLLCode::appendTypeIdent(std::ostringstream& str, Type *typ, const char *i
 		if (!a->isUnbounded())
 			str << a->getLength();
 		str << "]";
+	} else if (typ->isVoid()) {
+		// Can happen in e.g. twoproc, where really need global parameter and return analysis
+		LOG << "Warning: replacing type void with int for " << ident << "\n";
+		str << "int " << ident;
 	} else {
 		appendType(str, typ);
 		str << " " << ident;
