@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.11 $
+ * $Revision: 1.12 $
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  */
@@ -253,7 +253,6 @@ void CHLLCode::appendExp(char *str, Exp *exp)
         case opPostVar:
         case opTruncu:
         case opTruncs:
-        case opZfill:
         case opItof:
         case opFtoi:
         case opFround:
@@ -282,12 +281,21 @@ void CHLLCode::appendExp(char *str, Exp *exp)
         case opFlagCall:
             strcat(str, "/* flag call */ ");    
             break;
-        case opTypedExp: {
-            strcat(str, "/* typed exp */ ");
-            Exp* s = u->getSubExp1();
-            appendExp(str, s);
+        case opFlags:
+            strcat(str, "/* flags */ ");    
             break;
-        }
+        case opZfill:
+            // MVE: this is a temporary hack... needs cast?
+            sprintf(s, "/* zfill %d->%d */ ",
+              ((Const*)t->getSubExp1())->getInt(),
+              ((Const*)t->getSubExp2())->getInt());
+            strcat(str, s);
+            appendExp(str, t->getSubExp3());
+            break;
+        case opTypedExp:
+            strcat(str, "/* typed exp */ ");
+            appendExp(str, u->getSubExp1());
+            break;
         case opSgnEx: {
             strcat(str, "/* opSgnEx */ (int) ");
             Exp* s = u->getSubExp1();
@@ -608,6 +616,14 @@ void CHLLCode::print(std::ostream &os)
 {
     for (std::list<char*>::iterator it = lines.begin(); it != lines.end();
          it++) os << *it << std::endl;
+}
+
+void CHLLCode::AddLineComment(char* cmt) {
+    char s[1024];
+    s[0] = '/'; s[1] = '*';
+    strcat(&s[2], cmt);
+    strcat(s, "*/");
+    lines.push_back(strdup(s));
 }
 
 

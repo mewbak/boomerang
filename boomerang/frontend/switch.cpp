@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- *  $Revision: 1.6 $
+ *  $Revision: 1.7 $
  *  Switch statements are generally one of the following three
  *  forms, when reduced to high level representation, where var is the
  *  switch variable, numl and numu are the lower and upper bounds of that

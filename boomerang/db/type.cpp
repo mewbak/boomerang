@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  */
@@ -738,8 +738,8 @@ bool FuncType::deserialize_fid(std::istream &inf, int fid)
     switch (fid) {
 		case FID_TYPE_SIGNATURE:
 			{
-				signature = Signature::deserialize(inf);
-				assert(signature);
+				//signature = Signature::deserialize(inf);  // HACK!
+                assert(signature);
 			}
 			break;
 		default:

@@ -4,7 +4,7 @@
  *              tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  *
  * 14 Jan 03 - Trent: Created
  */
@@ -38,5 +38,6 @@ class DataflowTest : public CppUnit::TestCase {
     void testUseOverBB ();
     void testUseKill();
     void testEndlessLoop();
+    void testLocationSet();
 };
 
