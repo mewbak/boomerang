@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.20 $
+ * $Revision: 1.21 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -611,8 +611,9 @@ void StatementSet::print() {
 LocationSet& LocationSet::operator=(const LocationSet& o) {
     sset.clear();
     std::set<Exp*, lessExpStar>::const_iterator it;
-    for (it = o.sset.begin(); it != o.sset.end(); it++)
+    for (it = o.sset.begin(); it != o.sset.end(); it++) {
         sset.insert((*it)->clone());
+    }
     return *this;
 }
 
@@ -835,3 +836,6 @@ char* Statement::prints() {
       return debug_buffer;
 }
 
+void Statement::getDefinitions(LocationSet &def) {
+    assert(false);
+}

@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -37,6 +37,7 @@ public: \
   #include <string>
   #include "exp.h"
   #include "type.h"
+  #include "cfg.h"
   #include "proc.h"
   #include "signature.h"
   class AnsiCScanner;
@@ -129,7 +130,7 @@ param: type IDENTIFIER
      ;
 
 type_decl: TYPEDEF type IDENTIFIER ';'
-         { }
+         { Type::addNamedType($3, $2); }
          ;
 
 func_decl: type IDENTIFIER '(' param_list ')' ';'
@@ -161,13 +162,16 @@ type: CHAR
     | FLOAT 
     { $$ = new FloatType(32); }
     | DOUBLE 
-    { $$ = new FloatType(32); }
+    { $$ = new FloatType(64); }
     | VOID
     { $$ = new VoidType(); }
     | type '*'
     { $$ = new PointerType($1); }
     | IDENTIFIER
-    { $$ = new NamedType($1); }
+    { $$ = Type::getNamedType($1); 
+      if ($$ == NULL)
+          $$ = new NamedType($1);
+    }
     | CONST type
     { $$ = $2; }
     ;

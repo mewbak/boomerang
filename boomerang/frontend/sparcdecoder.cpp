@@ -17,7 +17,7 @@
  *             SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.14 $
+/* $Revision: 1.15 $
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -37,6 +37,7 @@
 #endif
 
 #include "exp.h"
+#include "cfg.h"
 #include "proc.h"
 #include "prog.h"
 #include "decoder.h"

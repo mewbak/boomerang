@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -42,6 +42,7 @@
 #include <map>
 #include "dataflow.h"
 #include "exp.h"
+#include "cfg.h"
 #include "proc.h"
 #include "rtl.h"
 #include "BinaryFile.h"
@@ -116,6 +117,10 @@ public:
 	// Indicate that a watcher would like to be updated of status (only 1
 	// watcher allowed at the moment, old watchers will be disconnected).
 	void setWatcher(ProgWatcher *p) { m_watcher = p; }
+
+        const char *getRegName(int idx) {
+            return pFE->getRegName(idx);
+        }
 
         void decode(ADDRESS a) { 
             if (findProc(a) == NULL) {

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -43,8 +43,8 @@
 #include "types.h"
 #include "dataflow.h"
 #include "exp.h"
-#include "proc.h"
 #include "cfg.h"
+#include "proc.h"
 #include "util.h"                   // For str()
 #include "register.h"
 #include "rtl.h"

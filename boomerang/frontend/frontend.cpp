@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness
@@ -40,8 +40,8 @@
 
 #include "types.h"
 #include "exp.h"
-#include "proc.h"
 #include "cfg.h"
+#include "proc.h"
 #include "register.h"
 #include "rtl.h"
 #include "BinaryFile.h"
@@ -93,6 +93,15 @@ FrontEnd* FrontEnd::Load(const char *fname) {
 
 // destructor
 FrontEnd::~FrontEnd() {
+}
+
+const char *FrontEnd::getRegName(int idx) { 
+    std::map<std::string, int, std::less<std::string> >::iterator it;
+    for (it = decoder->getRTLDict().RegMap.begin();  
+         it != decoder->getRTLDict().RegMap.end(); it++)
+        if ((*it).second == idx) 
+            return (*it).first.c_str();
+    return NULL;
 }
 
 bool FrontEnd::isWin32() {
@@ -153,6 +162,13 @@ Prog *FrontEnd::decode()
     if (a == NO_ADDRESS) return false;
 
     decode(prog, a);
+
+    if (gotMain && pBF->SymbolByAddress(a) == NULL) {
+        Proc *main = prog->findProc(a);
+        assert(main);
+        main->setName("main");
+    }
+
     return prog;
 }
 

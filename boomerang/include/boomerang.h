@@ -12,7 +12,7 @@
  * OVERVIEW:    interface for the boomerang singleton object
  *============================================================================*/
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  * 04 Dec 2002: Trent: Created
  */
 
@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <string>
+#include "cfg.h"
 #include "proc.h"
 #include "hllcode.h"
 
@@ -55,8 +56,11 @@ public:
     bool noLocals;
     bool noRemoveLabels;
     bool noDataflow;
+    bool noDecompileUp;
     bool traceDecoder;
     const char *dotFile;
+    int numToPropogate;
+    bool noPromote;
 };
 
 #define VERBOSE Boomerang::get()->vFlag

@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  */
@@ -372,6 +372,8 @@ public:
     virtual bool canPropagateToAll() { return false; }
     virtual void propagateToAll() { assert(false); }
 
+    virtual bool isDefinition() { return false; }
+
     // get how to access this value
     virtual Exp* getLeft() { return NULL; }
     virtual Type* getLeftType() { return NULL; }
@@ -546,6 +548,9 @@ public:
     virtual bool canPropagateToAll() { return false; }
     virtual void propagateToAll() { assert(false); }
 
+    virtual bool isDefinition();
+    virtual void getDefinitions(LocationSet &defs);
+
     // get how to access this value
     virtual Exp* getLeft() { return getReturnLoc(); }
     virtual Type* getLeftType();
@@ -719,6 +724,8 @@ public:
     virtual void killLive (LocationSet &kill );
     virtual void addUsedLocs(LocationSet& used);
     virtual void getDeadStatements(StatementSet &dead);
+    virtual bool isDefinition() { return true; }
+    virtual void getDefinitions(LocationSet &def);
     virtual Exp* getLeft() { return getDest(); }
     virtual Type* getLeftType();
     virtual Exp* getRight() { return getCondExpr(); }

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -149,8 +149,14 @@ public:
     // calculates the uses/usedBy links for this statement
     virtual void calcUseLinks();
 
+    // returns true if this statement defines anything
+    virtual bool isDefinition() = 0;
+
+    // returns a set of locations defined by this statement
+    virtual void getDefinitions(LocationSet &def);
+
     // returns an expression that would be used to reference the value
-    // defined by this statement
+    // defined by this statement (if this statement is propogatable)
     virtual Exp* getLeft() = 0;
 
     // returns a type for the left

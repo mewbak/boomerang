@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision: 1.7 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all
  *                  floats > 64 bits to be the same
@@ -28,16 +28,23 @@
 #define __TYPE_H__
 
 #include <string>
+#include <map>
 #include <functional>       // For binary_function
 
 class Signature;
 
 class Type
 {
+private:
+    static std::map<std::string, Type*> namedTypes;
+
 public:
     // Constructors
                 Type();
 virtual		~Type();
+
+    static void addNamedType(const char *name, Type *type);
+    static Type *getNamedType(const char *name);
 
     // Return type for given temporary variable name
     static Type* getTempType(const std::string &name);

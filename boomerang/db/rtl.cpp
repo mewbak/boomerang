@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -36,6 +36,7 @@
 #include "exp.h"
 #include "type.h"
 #include "register.h"
+#include "cfg.h"
 #include "proc.h"           // For printing proc names
 #include "rtl.h"
 #include "prog.h"

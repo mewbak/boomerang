@@ -14,7 +14,7 @@
  * OVERVIEW:   This file contains the machine independent
  *             decoding functionality.
  *
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  *============================================================================*/ 
 /*
  * 27 Apr 02 - Mike: Mods for boomerang
@@ -30,6 +30,7 @@
 #include "decoder.h"
 #include "exp.h"
 #include "register.h"
+#include "cfg.h"
 #include "proc.h"
 #include "prog.h"
 #include "BinaryFile.h"
