@@ -8,7 +8,7 @@ dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things. Needed to deal with the
 dnl nightmare of elf include files, for one thing
 dnl
-dnl $Revision: 1.4 $
+dnl $Revision: 1.5 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
@@ -76,7 +76,9 @@ dnl Checks for cppunit library
 AC_LANG_PUSH(C++)
 CPPFLAGS="-Iinclude ${CPPFLAGS}"
 AC_CHECK_HEADER(cppunit/TestSuite.h,, 
-  [AC_MSG_ERROR("library 'cppunit' not found")])
+  [AC_MSG_WARN("library 'cppunit' not found: will not be able to run")]
+  [AC_MSG_WARN("'make test'. Remember to create a soft link from ")]
+  [AC_MSG_WARN("include/cppunit to the cppunit include/cppunit directory")])
 AC_LANG_POP(C++)
 
 dnl Checks for header files.
