@@ -4,7 +4,7 @@
  *              denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.14 $
+ * $Revision: 1.15 $
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -145,6 +145,7 @@ enum OPER
     opLog2,                 // logarithm to base 2
     opLog10,                // logarithm to base 10
     opLoge,                 // logarithm to base e
+    opPow,                  // raise to a power
     opSqrt,                 // square root
     opExecute,              // Execute instruction at(addr)
 
