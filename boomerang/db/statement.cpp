@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.85 $
+ * $Revision: 1.86 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3206,5 +3206,67 @@ void CallStatement::genConstraints(LocationSet& cons) {
         }
     }
 }
+
+// By default, visit all children (statements)
+bool StmtVisitor::visit(RTL* rtl) {
+    std::list<Statement*>::iterator it;
+    std::list<Statement*>& list = rtl->getList();
+    for (it = list.begin(); it != list.end(); it++) {
+        if (! (*it)->accept(this)) return false;
+    }
+    return true;
+} 
+
+bool StmtSetConscripts::visit(Assign* stmt) {
+    SetConscripts sc(curConscript);
+    stmt->getLeft()->accept(&sc);
+    stmt->getRight()->accept(&sc);
+    curConscript = sc.getLast();
+    return true;
+}
+
+bool StmtSetConscripts::visit(CallStatement* stmt) {
+    SetConscripts sc(curConscript);
+    std::vector<Exp*> args;
+    args = stmt->getArguments();
+    int i, n = args.size();
+    for (i=0; i < n; i++)
+        args[i]->accept(&sc);
+    n = stmt->getNumReturns();
+    for (i=0; i < n; i++) {
+        Exp* r = stmt->getReturnExp(i);
+        r->accept(&sc);
+    }
+    curConscript = sc.getLast();
+    return true;
+}
+
+bool StmtSetConscripts::visit(CaseStatement* stmt) {
+    SetConscripts sc(curConscript);
+    SWITCH_INFO* si = stmt->getSwitchInfo();
+    si->pSwitchVar->accept(&sc);
+    curConscript = sc.getLast();
+    return true;
+}
+
+bool StmtSetConscripts::visit(ReturnStatement* stmt) {
+    SetConscripts sc(curConscript);
+    int n = stmt->getNumReturns();
+    for (int i=0; i < n; i++) {
+        Exp* r = stmt->getReturnExp(i);
+        r->accept(&sc);
+    }
+    curConscript = sc.getLast();
+    return true;
+}
+
+bool StmtSetConscripts::visit(BoolStatement* stmt) {
+    SetConscripts sc(curConscript);
+    stmt->getCondExpr()->accept(&sc);
+    stmt->getDest()->accept(&sc);
+    curConscript = sc.getLast();
+    return true;
+}
+
 
 

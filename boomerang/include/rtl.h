@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.43 $
+ * $Revision: 1.44 $
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
  * 25 Jul 03 - Mike: RTL now a list of Statements
@@ -49,7 +49,6 @@ class UseSet;
 class Type;
 class Register;
 class Proc;
-class RTLVisitor;
 
 
 /*==============================================================================
@@ -166,6 +165,9 @@ public:
 
     // Print to std::cerr (mainly for debugging)
     char* prints();
+
+    // Set all the "constant subscripts" (conscripts) in this RTL
+    void    setConscripts();
 
 };
 
