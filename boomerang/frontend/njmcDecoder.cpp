@@ -14,7 +14,7 @@
  * OVERVIEW:   This file contains the machine independent
  *			   decoding functionality.
  *
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  *============================================================================*/ 
 /*
  * 27 Apr 02 - Mike: Mods for boomerang
@@ -83,7 +83,14 @@ std::list<Statement*>* NJMCDecoder::instantiate(ADDRESS pc, const char* name, ..
 		std::cout << std::hex << pc << std::dec << ": " << name << " ";
 		for (std::vector<Exp*>::iterator itd = actuals.begin();
 		  itd != actuals.end(); itd++) {
-			(*itd)->print(std::cout);
+			if ((*itd)->isIntConst()) {
+				int val = ((Const*)(*itd))->getInt();
+				if (val > 100 || val < -100)
+					std::cout << std::hex << "0x" << val << std::dec;
+				else
+					std::cout << val;
+			} else
+				(*itd)->print(std::cout);
 			if (itd != actuals.end()-1)
 				std::cout << ", ";
 		}
