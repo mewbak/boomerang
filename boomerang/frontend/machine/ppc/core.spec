@@ -2,7 +2,7 @@
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Power PC processor
 #
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 #### Copyright (c) 1995 Flavors Technology, Inc.
 #### This file may be distributed freely as long as this notice remains.
@@ -675,7 +675,7 @@ constructors
 #
 # "b"^Bo^LK^AA   BIcr    is bc & AA & LK & BIcr & Bo
 
-  "b"^BO^"lr"^LK BIcr    is bclr    & LK & BIcr & BO
+#  "b"^BO^"lr"^LK BIcr    is bclr    & LK & BIcr & BO		# See bcc_^"lr"... below
 
 # Table F-8
 
