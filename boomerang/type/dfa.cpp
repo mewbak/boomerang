@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  *
  * 24/Sep/04 - Mike: Created
  */
@@ -299,6 +299,8 @@ Type* CharType::meetWith(Type* other, bool& ch) {
 		ch = true;
 		return other->clone();
 	}
+	if (other->isSize() && ((SizeType*)other)->getSize() == 8)
+		return this;
 	return createUnion(other, ch);
 }
 
@@ -1147,6 +1149,7 @@ bool CharType::isCompatibleWith(Type* other) {
 	if (other->isVoid()) return true;
 	if (other->isChar()) return true;
 	if (other->isInteger()) return true;
+	if (other->isSize() && ((SizeType*)other)->getSize() == 8) return true;
 	if (other->isUnion()) return other->isCompatibleWith(this);
 	return false;
 }
