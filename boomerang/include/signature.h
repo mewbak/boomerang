@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision: 1.14 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -119,7 +119,7 @@ public:
 
     // Special for Mike: find the location that conventionall holds
     // the first outgoing (actual) parameter
-    Exp* getFirstArgLoc(BinaryFile* pBF);
+    Exp* getFirstArgLoc(Prog* prog);
 
     // Get a wildcard to find stack locations
     virtual Exp *getStackWildcard() { return NULL; }

@@ -14,7 +14,7 @@
  * OVERVIEW:    interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * Created by Mike
  * 24 Mar 98 - Cristina
  *  Changed m_procs to be a list of procedure objects rather than pointers
@@ -44,8 +44,8 @@
 #include "exp.h"
 #include "proc.h"
 #include "rtl.h"
+#include "BinaryFile.h"
 
-class BinaryFile;
 class FrontEnd;
 class RTLInstDict;
 class Proc;
@@ -155,6 +155,12 @@ public:
 
     // get a string constant at a give address if appropriate
     char *getStringConstant(ADDRESS uaddr);
+
+    // Hacks for Mike
+    MACHINE getMachine()                // Get a code for the machine
+        { return pBF->GetMachine();}    // e.g. MACHINE_SPARC
+    char* symbolByAddress(ADDRESS dest) // Get a symbol from an address
+        { return pBF->SymbolByAddress(dest);}
 
     // Public object that keeps track of the coverage of the source program's
     // text segment
