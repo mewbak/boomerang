@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.64 $
+ * $Revision: 1.65 $
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2626,6 +2626,39 @@ void RefExp::addUsedLocs(LocationSet& used) {
 
 void PhiExp::addUsedLocs(LocationSet& used) {
     // Not sure if we need to see these "uses"
+}
+
+Exp *Unary::fixCallRefs()
+{
+    subExp1 = subExp1->fixCallRefs();
+    return this;
+}
+
+Exp *Binary::fixCallRefs()
+{
+    subExp1 = subExp1->fixCallRefs();
+    subExp2 = subExp2->fixCallRefs();
+    return this;
+}
+
+Exp *Ternary::fixCallRefs()
+{
+    subExp1 = subExp1->fixCallRefs();
+    subExp2 = subExp2->fixCallRefs();
+    subExp3 = subExp3->fixCallRefs();
+    return this;
+}
+
+Exp *RefExp::fixCallRefs() {
+    CallStatement *call = dynamic_cast<CallStatement*>(def);
+    if (call && call->findReturn(subExp1) == -1) { 
+        assert(*call->getProven(subExp1) == *subExp1);
+        Exp *e = call->findArgument(subExp1);
+        assert(e);
+        delete this;
+        return e->clone();
+    }
+    return this;
 }
 
 Exp* Exp::addSubscript(Statement* def) {

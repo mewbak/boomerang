@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 12 Jul 02 - Trent: Created
  */
@@ -83,9 +83,11 @@ public:
     virtual void addReturn(Type *type, Exp *e = NULL);
     virtual void addReturn(Exp *e);
     virtual void addReturn(Return *ret) { returns.push_back(ret); }
+    virtual void removeReturn(Exp *e);
     virtual int getNumReturns();
     virtual Exp *getReturnExp(int n);
     virtual Type *getReturnType(int n);
+    virtual int findReturn(Exp *e);
 
     // get/set the name
     virtual const char *getName();
