@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.38 $
+ * $Revision: 1.39 $
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -625,7 +625,10 @@ void StatementSet::printNums(std::ostream& os) {
     StmtSetIter it;
     os << std::dec;
     for (it = sset.begin(); it != sset.end(); ) {
-        (*it)->printNum(os);
+        if (*it)
+            (*it)->printNum(os);
+        else
+            os << "0";              // Special case for no definition
         if (++it != sset.end())
             os << " ";
     }
