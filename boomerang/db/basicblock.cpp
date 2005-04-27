@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.94 $
+ * $Revision: 1.95 $
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1913,7 +1913,7 @@ void findConstantValues(Statement* s, std::list<int>& dests) {
 
 // Find any BBs of type COMPJUMP or COMPCALL. If found, analyse, and if possible decode extra code and return true
 bool BasicBlock::decodeIndirectJmp(UserProc* proc) {
-#define CHECK_REAL_PHI_LOOPS 0
+#define CHECK_REAL_PHI_LOOPS 1
 #if CHECK_REAL_PHI_LOOPS
 	rtlit rit; StatementList::iterator sit;
 	Statement* s = getFirstStmt(rit, sit);
