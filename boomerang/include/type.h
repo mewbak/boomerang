@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.45 $
+ * $Revision: 1.46 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI
@@ -76,6 +76,8 @@ static Type			*getNamedType(const char *name);
 					// Return type for given temporary variable name
 static Type*		getTempType(const std::string &name);
 static Type*		parseType(const char *str); // parse a C type
+
+bool	isCString();
 
 					// runtime type information
 virtual bool		isVoid()		const { return false; }

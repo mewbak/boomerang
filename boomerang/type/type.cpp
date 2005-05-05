@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $
+ * $Revision: 1.45 $
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -43,6 +43,18 @@
 #include "rtl.h"
 #endif
 
+bool Type::isCString()
+{
+	if (!resolvesToPointer())
+		return false;
+	Type *p = asPointer()->getPointsTo();
+	if (p->resolvesToChar())
+		return true;
+	if (!p->resolvesToArray())
+		return false;
+	p = p->asArray()->getBaseType();
+	return p->resolvesToChar();
+}
 
 /*==============================================================================
  * FUNCTION:		Type::Type
