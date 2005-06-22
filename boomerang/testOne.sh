@@ -1,5 +1,5 @@
 #!/bin/bash
-# testOne.sh functional test script $Revision: 1.10 $
+# testOne.sh functional test script $Revision: 1.11 $
 # Call with test platform, test-program test-set [,option [,arguments]]
 # test-set is a char usually 1-9 for the various .out files, usually use 1 for .out1
 # e.g. "./testOne.sh pentium hello"
@@ -12,7 +12,7 @@
 # 06 Feb 05 - Mike: Pass the test-set parameter to testOne.sh
 
 echo $* > functest.res
-rm -f functest/$2.c
+rm -f functest/$2/$2.c
 ./boomerang -o functest $4 test/$1/$2 2>/dev/null >/dev/null
 ret=$?
 if [[ ret -ge 128 ]]; then
