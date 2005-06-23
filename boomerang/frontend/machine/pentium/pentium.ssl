@@ -12,7 +12,7 @@
 #       processors. 
 #
 
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 # 16 Oct 98 - Mike: lower case register names to be consistent with sparc
 # 20 Nov 02 - Mike: Fixed MOV.ED.IVOD and MOV.EW.IVOW
 # 20 Jul 04 - Mike: Fixed FISUB, FISUBR
@@ -1023,12 +1023,12 @@ PUSH.EVOD   modrm
 
 PUSH.IXOB   i8 
             *32* %esp := %esp - 4
-            *32* m[%esp] := i8;
+            *32* m[%esp] := sgnex(8, 32, i8);
 
 # Note: 66 6A nn: 8 bit immediate operand (nn), but 16 bit push!
 PUSH.IXOW   i8
             *16* %esp := %esp - 2
-            *16* m[%esp] := i8;
+            *16* m[%esp] := sgnex(8, 16, i8);
 
 PUSH.IVOW   i16 
             *32* %esp := %esp - 2
