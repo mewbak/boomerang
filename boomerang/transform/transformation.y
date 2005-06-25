@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 17 Apr 02 - Trent: Created
  */
 %name TransformationParser
@@ -121,6 +121,9 @@ exp: REGOF CONSTANT ']'
     | exp '&' exp
     { $$ = new Binary(opBitAnd, $1, $3);
     }
+    | exp '|' exp
+    { $$ = new Binary(opBitOr, $1, $3);
+    }
     | exp '^' exp
     { $$ = new Binary(opBitXor, $1, $3);
     }
@@ -129,6 +132,9 @@ exp: REGOF CONSTANT ']'
     }
     | exp AND_OP exp
     { $$ = new Binary(opAnd, $1, $3);
+    }
+    | exp OR_OP exp
+    { $$ = new Binary(opOr, $1, $3);
     }
     | exp EQ_OP exp
     { $$ = new Binary(opEquals, $1, $3);
