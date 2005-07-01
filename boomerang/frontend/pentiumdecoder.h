@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  * 06 Jun 02 - Trent: Created.
  *
  */
@@ -31,7 +31,7 @@ class PentiumDecoder : public NJMCDecoder
 public:
 	/* Default constructor
 	 */
-	PentiumDecoder();
+	PentiumDecoder(Prog* prog);
 
 	/*
 	 * Decodes the machine instruction at pc and returns an RTL instance for

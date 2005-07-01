@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Transformer and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 17 Apr 04 - Trent: Created
  */
 
@@ -29,6 +29,7 @@
 #include "boomerang.h"
 #include "transformer.h"
 #include "rdi.h"
+#include "log.h"
 #include "transformation-parser.h"
 
 std::list<ExpTransformer*> ExpTransformer::transformers;

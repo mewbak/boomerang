@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the GenericExpTransformer and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 17 Apr 04 - Trent: Created
  */
 
@@ -29,6 +29,7 @@
 #include "boomerang.h"
 #include "transformer.h"
 #include "generic.h"
+#include "log.h"
 
 extern char* operStrings[];
 
