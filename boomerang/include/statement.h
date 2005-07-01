@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.77 $	// 1.76.2.30
+ * $Revision: 1.78 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -54,7 +54,6 @@
 #include "types.h"
 #include "managed.h"
 #include "dataflow.h"	// For embedded objects DefCollector and UseCollector
-#include "left.h"
 
 class BasicBlock;
 typedef BasicBlock *PBB;
