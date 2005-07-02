@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.55 $	// 1.53.2.11
+ * $Revision: 1.56 $	// 1.53.2.11
  *
  * 12 Jul 02 - Trent: Created
  *
@@ -226,7 +226,7 @@ virtual Signature *promote(UserProc *p);
 		// Get a wildcard to find stack locations
 virtual Exp			*getStackWildcard() { return NULL; }
 virtual int			getStackRegister(			) {
-						assert(0); }
+						assert(0); return 0; }
 static	int			getStackRegister(Prog* prog);
 		// Does expression e represent a local stack-based variable?
 		// Result can be ABI specific, e.g. sparc has locals in the parent's stack frame, at POSITIVE offsets from the
