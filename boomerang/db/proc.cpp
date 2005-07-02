@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.244 $	// 1.238.2.44
+ * $Revision: 1.245 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -5003,8 +5003,6 @@ void UserProc::typeAnalysis() {
 	printXML();
 }
 
-#define GC_DEBUG 1
-#include "gc.h"
 // Copy the RTLs for the already decoded Indirect Control Transfer instructions
 RTL* globalRtl = 0;
 void UserProc::copyDecodedICTs() {
@@ -5014,7 +5012,6 @@ void UserProc::copyDecodedICTs() {
 		Statement* last = bb->getLastStmt(rrit, srit);
 		if (!last->isHL_ICT()) continue;
 		RTL* rtl = bb->getLastRtl();
-globalRtl = rtl;
 		if (DEBUG_SWITCH)
 			LOG << "Saving high level switch statement " << rtl << "\n";
 		prog->addDecodedRtl(bb->getHiAddr(), rtl);
