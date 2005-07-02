@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.130 $	// 1.126.2.14
+ * $Revision: 1.131 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -920,7 +920,7 @@ void Prog::decodeEverythingUndecoded() {
 		if (up == NULL) continue;	// Probably not needed
 		if (up->isLib()) continue;
 		if (up->isDecoded()) continue;
-		pFE->decode(this, up);
+		pFE->decode(this, up->getNativeAddress());
 	}
 	finishDecode();
 }
