@@ -19,7 +19,7 @@
  *==============================================================================================*/
 
 /*
- * $Revision: 1.12 $	// 1.11.2.15
+ * $Revision: 1.13 $	// 1.11.2.15
  *
  * 26/Aug/03 - Mike: Split off from statement.h
  */
@@ -80,7 +80,7 @@ class AssignSet {
 
 public:
 typedef std::set<Assign*, lessAssignment>::iterator iterator;
-typedef std::set<Assign*, lessAssignment>::iterator const_iterator;
+typedef std::set<Assign*, lessAssignment>::const_iterator const_iterator;
 
 virtual				~AssignSet() {}
 		void		makeUnion(AssignSet& other);		// Set union
