@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.152 $	// 1.148.2.38
+ * $Revision: 1.153 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4271,6 +4271,13 @@ void ReturnStatement::print(std::ostream& os) {
 bool lessAssignment::operator()(const Assignment* x, const Assignment* y) const {
 	Assignment* xx = const_cast<Assignment*>(x);
 	Assignment* yy = const_cast<Assignment*>(y);
+	return (*xx->getLeft() < *yy->getLeft());		// Compare the LHS expressions
+}
+
+// Repeat the above for Assign's; sometimes the compiler doesn't (yet) understand that Assign's are Assignment's
+bool lessAssign::operator()(const Assign* x, const Assign* y) const {
+	Assign* xx = const_cast<Assign*>(x);
+	Assign* yy = const_cast<Assign*>(y);
 	return (*xx->getLeft() < *yy->getLeft());		// Compare the LHS expressions
 }
 
