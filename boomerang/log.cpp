@@ -1,5 +1,5 @@
 /*
- *$Revision: 1.7 $	// 1.6.6.1
+ *$Revision: 1.8 $	// 1.6.6.1
  */
 #include "log.h"
 #include <sstream>
@@ -71,3 +71,10 @@ Log &Log::operator<<(ADDRESS a)
 	return *this;
 }
 
+void Log::tail() {
+}
+
+void FileLogger::tail() {
+	out.seekp(-200, std::ios::end);
+	std::cerr << out;
+}

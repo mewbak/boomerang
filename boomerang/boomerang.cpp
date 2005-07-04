@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.118 $	// 1.115.2.5
+ * $Revision: 1.119 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -1012,4 +1012,7 @@ Prog *Boomerang::loadFromXML(const char *fname)
 	LOG << "loading persistable state...\n";
 	XMLProgParser *p = new XMLProgParser();
 	return p->parse(fname);
+}
+void Boomerang::logTail() {
+	logger->tail();
 }

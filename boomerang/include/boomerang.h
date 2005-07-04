@@ -10,7 +10,7 @@
 /** \file	boomerang.h
  * \brief	Interface for the boomerang singleton object
  *
- * $Revision: 1.63 $	// 1.61.2.2
+ * $Revision: 1.64 $	// 1.61.2.2
  * 04 Dec 2002: Trent: Created
  */
 
@@ -45,6 +45,7 @@ class HLLCode;
 class ObjcModule;
 
 #define LOG Boomerang::get()->log()
+#define LOGTAIL Boomerang::get()->logTail()
 
 class Watcher {
 public:
@@ -207,6 +208,9 @@ virtual void		alert_end_decompile(UserProc *p) {
 						for (std::set<Watcher*>::iterator it = watchers.begin(); it != watchers.end(); it++)
 							(*it)->alert_end_decompile(p);
 			}
+
+		// List the last few lines of the LOG to standard error
+		void		logTail();
 
 		// Command line flags
 		bool		vFlag;
