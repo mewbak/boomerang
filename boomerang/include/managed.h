@@ -19,7 +19,7 @@
  *==============================================================================================*/
 
 /*
- * $Revision: 1.13 $	// 1.11.2.15
+ * $Revision: 1.14 $	// 1.11.2.15
  *
  * 26/Aug/03 - Mike: Split off from statement.h
  */
@@ -76,11 +76,11 @@ virtual				~StatementSet() {}
 
 // As above, but the Statements are known to be Assigns, and are sorted sensibly
 class AssignSet {
-		std::set<Assign*, lessAssignment> aset;			// For now, use use standard sets
+		std::set<Assign*, lessAssign> aset;			// For now, use use standard sets
 
 public:
-typedef std::set<Assign*, lessAssignment>::iterator iterator;
-typedef std::set<Assign*, lessAssignment>::const_iterator const_iterator;
+typedef std::set<Assign*, lessAssign>::iterator iterator;
+typedef std::set<Assign*, lessAssign>::const_iterator const_iterator;
 
 virtual				~AssignSet() {}
 		void		makeUnion(AssignSet& other);		// Set union
