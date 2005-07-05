@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.103 $	// 1.98.2.12
+ * $Revision: 1.104 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -1123,13 +1123,13 @@ bool Signature::operator==(Signature& other)
 	//if (name != other.name) return false;		// MVE: should the name be significant? I'm thinking no
 	if (params.size() != other.params.size()) return false;
 	// Only care about the first return location (at present)
-	if ((returns.size() != 0) != (other.returns.size() != 0)) return false;
 	std::vector<Parameter*>::iterator it1, it2;
 	for (it1 = params.begin(), it2 = other.params.begin(); it1 != params.end(); it1++, it2++)
 		if (!(**it1 == **it2)) return false; 
-	if (returns.size())
-		// Compare the first return type only (?!!)
-		if (!(*returns.begin() == *other.returns.begin())) return false; 
+	if (returns.size() != other.returns.size()) return false;
+	std::vector<Return*>::iterator rr1, rr2;
+	for (rr1 = returns.begin(), rr2 = other.returns.begin(); rr1 != returns.end(); ++rr1, ++rr2)
+		if (!(**rr1 == **rr2)) return false; 
 	return true;
 }
 

@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.155 $	// 1.148.2.38
+ * $Revision: 1.156 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1682,7 +1682,7 @@ Proc* CallStatement::getDestProc() {
 
 void CallStatement::setDestProc(Proc* dest) { 
 	assert(dest);
-	assert(procDest == NULL);
+	// assert(procDest == NULL);		// No: not convenient for unit testing
 	procDest = dest;
 }
 
