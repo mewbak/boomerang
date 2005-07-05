@@ -4,7 +4,7 @@
  *				tests the Type class and some utility functions
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision: 1.8 $
  *
  * 09 Apr 02 - Mike: Created
  * 22 Aug 03 - Mike: Extended for Constraint tests
@@ -19,6 +19,7 @@
 #include "signature.h"
 #include "boomerang.h"
 #include "log.h"
+#include "prog.h"
 
 /*==============================================================================
  * FUNCTION:		TypeTest::registerTests
@@ -92,10 +93,10 @@ void TypeTest::testNotEqual () {
  *============================================================================*/
 void TypeTest::testCompound() {
 	BinaryFile *pBF = BinaryFileFactory::Load(HELLO_WINDOWS);
-	FrontEnd *pFE = new PentiumFrontEnd(pBF);
+	FrontEnd *pFE = new PentiumFrontEnd(pBF, new Prog);
+	Boomerang::get()->setLogger(new FileLogger());		// May try to output some messages to LOG
 	pFE->readLibraryCatalog();				// Read definitions
 
-	Boomerang::get()->setLogger(new FileLogger());
 	Signature* paintSig = pFE->getLibSignature("BeginPaint");
 	// Second argument should be an LPPAINTSTRUCT
 	Type* ty = paintSig->getParamType(1);

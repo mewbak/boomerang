@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.46 $
+ * $Revision: 1.47 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI
@@ -154,6 +154,7 @@ virtual const char	*getCtype(bool final = false) const = 0;
 					// Print in *i32* format
 		void		starPrint(std::ostream& os);
 		const char*	prints();			// For debugging
+static	void		dumpNames();		// For debugging
 
 virtual std::string getTempName() const; // Get a temporary name for the type
 

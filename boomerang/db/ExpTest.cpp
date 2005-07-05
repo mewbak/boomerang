@@ -4,7 +4,7 @@
  *				tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.31 $
+ * $Revision: 1.32 $
  *
  * 05 Apr 02 - Mike: Fixed problems caused by lack of clone() calls
  * 09 Apr 02 - Mike: Compare, searchReplace
@@ -15,6 +15,7 @@
  */
 
 #include "ExpTest.h"
+#include "statement.h"
 #include <map>
 #include <sstream>		// Gcc >= 3.0 needed
 

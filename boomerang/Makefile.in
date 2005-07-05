@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.96 $		// 1.91.2.10
+# $Revision: 1.97 $		// 1.91.2.10
 # 05 Jul 05 - Mike: Big merge with boomerang.pole branch
 # 03 Feb 05 - Mike: Removed analysis/ related files
 # 23 Nov 04 - Mike: Added PPC files
@@ -120,7 +120,7 @@ distclean: clean
 
 TEST_OBJS = util/UtilTest.o db/ExpTest.o db/ParserTest.o db/ProcTest.o db/ProgTest.o db/RtlTest.o db/StatementTest.o \
 	db/CfgTest.o db/DfaTest.o frontend/FrontSparcTest.o frontend/FrontPentTest.o loader/BinaryFileStub.o c/CTest.o \
-	type/TypeTest.o db/DataFlowTest.o 
+	type/TypeTest.o
 
 # Needed because the test header files are in all these different directories
 INCLUDEALL = -Idb -Ifrontend -Ic -Itype
@@ -195,7 +195,6 @@ db/ProgTest.o:				EXTRA = -Ifrontend
 db/ProcTest.o:				EXTRA = -Ifrontend
 db/RtlTest.o:               EXTRA = -Ifrontend
 db/StatementTest.o:			EXTRA = -Ifrontend
-db/DataFlowTest.o:			EXTRA = -Ifrontend
 db/CfgTest.o:               EXTRA = -Ifrontend
 type/TypeTest.o:            EXTRA = -Ifrontend
 frontend/pentiumdecoder.o:	EXTRA = -fno-exceptions

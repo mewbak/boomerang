@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $	// 1.44.2.1
+ * $Revision: 1.48 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -862,10 +862,11 @@ std::map<std::string, Type*> Type::namedTypes;
 void Type::addNamedType(const char *name, Type *type)
 {
 	if (namedTypes.find(name) != namedTypes.end()) {
-		if (*type != *namedTypes[name]) {
+		if (!(*type == *namedTypes[name])) {
 			LOG << "addNamedType: name " << name << " type " << type->getCtype() << " != " <<
 				namedTypes[name]->getCtype() << "\n";// << std::flush;
 			LOGTAIL;
+*type == *namedTypes[name];
 			assert(false);
 		}
 	} else {
@@ -878,6 +879,12 @@ Type *Type::getNamedType(const char *name)
 	if (namedTypes.find(name) != namedTypes.end())
 		return namedTypes[name];
 	return NULL;
+}
+
+void Type::dumpNames() {
+	std::map<std::string, Type*>::iterator it;
+	for (it = namedTypes.begin(); it != namedTypes.end(); ++it)
+		std::cerr << it->first << " -> " << it->second->getCtype() << "\n";
 }
 
 /*==============================================================================
