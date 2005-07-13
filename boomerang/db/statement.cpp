@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.156 $	// 1.148.2.38
+ * $Revision: 1.157 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2971,7 +2971,7 @@ void Assign::simplify() {
 		assert(llhs);
 		Type *ty = rhs->getType();
 		llhs->setType(ty);
-		if (VERBOSE)
+		if (DEBUG_TA)
 			LOG << "setting type of " << llhs << " to " << ty->getCtype() << "\n";
 	}
 
@@ -2984,7 +2984,7 @@ void Assign::simplify() {
 		else
 			ty = new IntegerType();
 		llhs->setType(ty);
-		if (VERBOSE)
+		if (DEBUG_TA)
 			LOG << "setting type of " << llhs << " to " << ty->getCtype() << "\n";
 	}
 
