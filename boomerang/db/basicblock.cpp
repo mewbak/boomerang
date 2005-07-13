@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.97 $	// 1.93.2.8
+ * $Revision: 1.98 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -2055,7 +2055,8 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc) {
 				Exp* e = ((Binary*)lhs)->getSubExp1();
 				Exp* CK1 = ((Binary*)lhs)->getSubExp2();
 				int K1 = ((Const*)CK1)->getInt();
-std::cerr << "From statement " << lastStmt << " get e = " << e << ", K1 = " << K1 << ", K2 = " << K2 << "\n";
+//std::cerr << "From statement " << lastStmt << " get e = " << e << ", K1 = " << K1 << ", K2 = " << K2 << "\n";
+// To be completed
 			}
 		}			 
 			
