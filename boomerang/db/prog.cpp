@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.131 $	// 1.126.2.14
+ * $Revision: 1.132 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -402,7 +402,7 @@ Proc* Prog::setNewProc(ADDRESS uAddr) {
 	if (pProc)
 		// Yes, we are done
 		return pProc;
-	char* pName = pBF->SymbolByAddress(uAddr);
+	const char* pName = pBF->SymbolByAddress(uAddr);
 	bool bLib = pBF->IsDynamicLinkedProc(uAddr);
 	if (pName == 0) {
 		// No name. Give it a numbered name

@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.75 $	// 1.73.2.5
+ * $Revision: 1.76 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -232,7 +232,7 @@ public:
 		// Hacks for Mike
 		MACHINE		getMachine()				// Get a code for the machine
 						{ return pBF->GetMachine();}	// e.g. MACHINE_SPARC
-		char*		symbolByAddress(ADDRESS dest) // Get a symbol from an address
+		const char*	symbolByAddress(ADDRESS dest) // Get a symbol from an address
 						{ return pBF->SymbolByAddress(dest);}
 		PSectionInfo getSectionInfoByAddr(ADDRESS a)
 						{ return pBF->GetSectionInfoByAddr(a);}

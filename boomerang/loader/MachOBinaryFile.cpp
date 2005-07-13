@@ -10,7 +10,7 @@
  */
 
 /* File: MachOBinaryFile.cc
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  * Desc: This file contains the implementation of the class MachOBinaryFile.
  */
 
@@ -374,8 +374,7 @@ bool MachOBinaryFile::PostLoad(void* handle)
 	return false;
 }
 
-char* MachOBinaryFile::SymbolByAddress(ADDRESS dwAddr)
-{
+const char* MachOBinaryFile::SymbolByAddress(ADDRESS dwAddr) {
 	std::map<ADDRESS, std::string>::iterator it = m_SymA.find(dwAddr);
     if (it == m_SymA.end())
 		    return 0;
