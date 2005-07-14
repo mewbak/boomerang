@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.246 $	// 1.238.2.44
+ * $Revision: 1.247 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -4912,7 +4912,8 @@ void UserProc::updateForUseChange(std::set<UserProc*>& removeRetSet) {
 		// Note: we may have removed some statements, so there may no longer be a last statement!
 		if (c == NULL || !c->isCall()) continue;
 		UserProc* dest = (UserProc*)c->getDestProc();
-		if (dest->isLib()) continue;			// Not interested in calls to lib procs
+		// Not interested in unanalysed indirect calls (not sure) or calls to lib procs
+		if (dest == NULL || dest->isLib()) continue;
 		callLiveness[c].makeCloneOf(*c->getUseCollector());
 	}
 
