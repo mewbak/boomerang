@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.24 $
+/* $Revision: 1.25 $
  * This class attempts to provide a relatively machine independent
  * interface for programs that read binary files. For details on
  * usage, see the bintrans tex file (bintrans/tex/bintrans/loader.tex)
@@ -90,14 +90,6 @@ typedef struct sectioninfo_tag
 
 typedef SectionInfo* PSectionInfo;
 	
-// Required by GetInitialState()
-enum REG_ENUM {REG_PC, REG_SP};
-typedef struct reg_addr_tag
-{
-	REG_ENUM	Register;			// A register
-	ADDRESS		uValue;				// Its initial value
-} RegAddr;
-
 // Objective-C stuff
 class ObjcIvar {
 public:
