@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.158 $	// 1.148.2.38
+ * $Revision: 1.159 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4665,7 +4665,7 @@ StatementList* CallStatement::calcResults() {
 				}
 			}
 		} else {
-			Exp* rsp = Location::regOf(sig->getStackRegister());
+			Exp* rsp = Location::regOf(proc->getSignature()->getStackRegister());
 			StatementList::iterator dd;
 			for (dd = defines.begin(); dd != defines.end(); ++dd) {
 				Exp* lhs = ((Assign*)*dd)->getLeft();

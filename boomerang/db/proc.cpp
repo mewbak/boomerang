@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.248 $	// 1.238.2.44
+ * $Revision: 1.249 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -4814,6 +4814,7 @@ bool UserProc::isLocal(Exp* e) {
 bool UserProc::isLocalOrParam(Exp* e) {
 	if (!e->isMemOf()) return false;			// Don't want say a register
 	Exp* addr = ((Location*)e)->getSubExp1();
+	if (!signature->isPromoted()) return false;	// Prevent an assert failure if using -E
 	int sp = signature->getStackRegister();
 	Exp* initSp = new RefExp(Location::regOf(sp), NULL);	// sp{-}
 	if (*addr == *initSp) return true;			// Accept m[sp{-}]
