@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.99 $	// 1.93.2.8
+ * $Revision: 1.100 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -2036,7 +2036,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc) {
 					bool newFunc =	prog->findProc(pfunc) == NULL;
 					if (Boomerang::get()->noDecodeChildren)
 						return false;
-					prog->decodeExtraEntrypoint(pfunc);
+					prog->decodeEntryPoint(pfunc);
 					// If this was not decoded, then this is a significant change, and we want to redecode the present
 					// function once that callee has been decoded
 					return newFunc;

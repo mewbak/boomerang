@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.249 $	// 1.238.2.44
+ * $Revision: 1.250 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -870,6 +870,7 @@ void UserProc::insertStatementAfter(Statement* s, Statement* a) {
 
 // Decompile this UserProc
 CycleSet* UserProc::decompile(CycleList* path) {
+	std::cout << "decompiling " << getName() << "\n";
 	if (VERBOSE)
 		LOG << "decompiling " << getName() << "\n";
 	// Prevent infinite loops when there are cycles in the call graph

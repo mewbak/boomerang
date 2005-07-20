@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.159 $	// 1.148.2.38
+ * $Revision: 1.160 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2079,7 +2079,7 @@ Exp *processConstant(Exp *e, Type *t, Prog *prog, UserProc* proc) {
 					LOG << "found function pointer with constant value " << "of type " << pt->getCtype() 
 						<< ".  Decoding address " << a << "\n";
 				if (!Boomerang::get()->noDecodeChildren)
-					prog->decodeExtraEntrypoint(a);
+					prog->decodeEntryPoint(a);
 				Proc *p = prog->findProc(a);
 				if (p) {
 					Signature *sig = points_to->asFunc()->getSignature()->clone();
