@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.36 $	// 1.35.2.5
+ * $Revision: 1.37 $	// 1.35.2.5
  *
  * 17 May 02 - Mike: Mods for boomerang
  * 22 Nov 02 - Mike: Added check for invalid instructions; prints opcode
@@ -743,24 +743,6 @@ std::vector<Exp*> &SparcFrontEnd::getDefaultReturns()
  *============================================================================*/
 bool SparcFrontEnd::processProc(ADDRESS address, UserProc* proc, std::ofstream &os, bool fragment /* = false */,
 		bool spec /* = false */) {
-
-#if 0
-	if (!fragment && !proc->getSignature()->isFullSignature()) {
-		if (VERBOSE)
-			LOG << "adding default params and returns for " << proc->getName() << "\n";
-		std::vector<Exp*>::iterator it;
-#if 0
-		std::vector<Exp*> &params = getDefaultParams();
-		for (it = params.begin(); it != params.end(); it++)
-			proc->getSignature()->addImplicitParameter((*it)->clone());
-#endif
-		std::vector<Exp*> &returns = getDefaultReturns();
-		for (it = returns.begin();
-			 it != returns.end(); it++)
-			proc->getSignature()->addReturn((*it)->clone());
-	}
-#endif
-
 
 	// Declare an object to manage the queue of targets not yet processed yet.
 	// This has to be individual to the procedure! (so not a global)

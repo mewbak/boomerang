@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.105 $	// 1.98.2.12
+ * $Revision: 1.106 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -1064,8 +1064,8 @@ Exp *CallingConvention::StdC::SparcLibSignature::getProven(Exp* left) {
 
 
 
-Signature::Signature(const char *nam) : rettype(new VoidType()), ellipsis(false), unknown(true), bFullSig(false),
-		forced(false), preferedReturn(NULL) {
+Signature::Signature(const char *nam) : rettype(new VoidType()), ellipsis(false), unknown(true), forced(false),
+		preferedReturn(NULL) {
 	if (nam == NULL) 
 		name = "<ANON>";
 	else

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.92 $	// 1.89.2.7
+ * $Revision: 1.93 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -188,7 +188,8 @@ void FrontEnd::decode(Prog* prog, bool decodeMain, const char *pname) {
 				else {
 					proc->setSignature(fty->getSignature()->clone());
 					proc->getSignature()->setName(name);
-					proc->getSignature()->setFullSig(true);		// Don't add or remove parameters
+					//proc->getSignature()->setFullSig(true);		// Don't add or remove parameters
+					proc->getSignature()->setForced(true);			// Don't add or remove parameters
 				}
 				break;
 			}

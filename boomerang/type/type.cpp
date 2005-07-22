@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.48 $	// 1.44.2.1
+ * $Revision: 1.49 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -287,6 +287,7 @@ int NamedType::getSize() const {
 int CompoundType::getSize() const {
 	int n = 0;
 	for (unsigned i = 0; i < types.size(); i++)
+		// NOTE: this assumes no padding... perhaps explicit padding will be needed
 		n += types[i]->getSize();
 	return n;
 }

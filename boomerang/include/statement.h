@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.79 $	// 1.76.2.30
+ * $Revision: 1.80 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -384,7 +384,7 @@ virtual void		setTypeFor(Exp* e, Type* ty); 		// Set the type for this assignmen
 
 		// Get and set the type. Not polymorphic (any more)
 		Type*		getType();
-		void		setType(Type* ty) {type = ty;}
+		void		setType(Type* ty);
 
 virtual bool		usesExp(Exp *e);	   // PhiAssign and ImplicitAssign don't override
 
