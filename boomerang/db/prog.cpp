@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.133 $	// 1.126.2.14
+ * $Revision: 1.134 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -948,6 +948,7 @@ void Prog::decompile() {
 		for (pp = m_procs.begin(); pp != m_procs.end(); pp++) {
 			UserProc* proc = (UserProc*)(*pp);
 			if (proc->isLib()) continue;
+			if (proc->isDecompiled()) continue;
 			proc->decompile(new CycleList);
 		}
 	}
