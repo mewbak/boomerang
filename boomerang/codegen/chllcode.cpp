@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.93 $	// 1.90.2.16
+ * $Revision: 1.94 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1201,8 +1201,12 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open) {
 		s << "void ";
 	else {
 		Assign* firstRet = (Assign*)*returns->begin();
-		appendType(s, firstRet->getType());
-		if (!firstRet->getType() || !firstRet->getType()->isPointer())	// NOTE: assumes type *proc( style
+		Type* retType = firstRet->getType();
+		if (retType == NULL || retType->isVoid())
+			// There is a real return; make it integer (Remove with AD HOC type analysis)
+			retType = new IntegerType();
+		appendType(s, retType);
+		if (!firstRet->getType()->isPointer())	// NOTE: assumes type *proc( style
 			s << " ";
 	}
 	s << proc->getName() << "(";
