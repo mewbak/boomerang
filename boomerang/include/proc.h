@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.119 $	// 1.115.2.27
+ *	$Revision: 1.120 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -369,6 +369,11 @@ public:
 		typedef std::map<Exp*,Exp*,lessExpStar> SymbolMapType;
 private:
 		SymbolMapType symbolMap;
+
+		/*
+		 * The local "symbol table", which is aware of overlaps
+		 */
+		DataIntervalMap	localTable;
 
 		/*
 		 * Set of callees (Procedures that this procedure calls). Used for call graph, among other things

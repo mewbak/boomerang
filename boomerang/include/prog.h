@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.77 $	// 1.73.2.5
+ * $Revision: 1.78 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -285,7 +285,8 @@ protected:
 		std::list<Proc*> m_procs;			// list of procedures
 		PROGMAP		m_procLabels;			// map from address to Proc*
 		std::set<Global*> globals;			// globals to print at code generation time
-		std::map<ADDRESS, const char*> *globalMap; // Map of addresses to global symbols
+		//std::map<ADDRESS, const char*> *globalMap; // Map of addresses to global symbols
+		DataIntervalMap globalMap;			// Map from address to DataInterval (has size, name, type)
 		int			m_iNumberedProc;		// Next numbered proc will use this
 		Cluster		*m_rootCluster;			// Root of the cluster tree
 
