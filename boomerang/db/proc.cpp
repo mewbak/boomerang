@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.252 $	// 1.238.2.44
+ * $Revision: 1.253 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2611,7 +2611,7 @@ void UserProc::replaceExpressionsWithGlobals() {
 						continue;					// sp can't base an array
 					Exp *memof = r1;
 					// K1 is the stride
-					int stride = ((Const*)memof->getSubExp1()->getSubExp1()->getSubExp2())->getInt();
+					unsigned stride = ((Const*)memof->getSubExp1()->getSubExp1()->getSubExp2())->getInt();
 					// u is K2
 					ADDRESS u = ((Const*)memof->getSubExp1()->getSubExp2())->getInt();
 					if (VERBOSE)
