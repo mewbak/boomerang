@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.120 $	// 1.115.2.27
+ *	$Revision: 1.121 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -491,8 +491,8 @@ virtual				~UserProc();
 		void		printDFG();
 		void		symbolMapToLog();			// Print just the symbol map
 		void		dumpSymbolMap();			// For debugging
-		void		dumpSymbols(std::ostream& os);
-		void		dumpSymbols();
+		void		dumpLocals(std::ostream& os);
+		void		dumpLocals();
 		void		dumpIgraph(igraph& ig);
 
 		// simplify the statements in this proc
