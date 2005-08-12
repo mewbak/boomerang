@@ -1,5 +1,5 @@
 /*
- *$Revision: 1.8 $	// 1.6.6.1
+ *$Revision: 1.9 $	// 1.6.6.1
  */
 #include "log.h"
 #include <sstream>
@@ -70,6 +70,16 @@ Log &Log::operator<<(ADDRESS a)
 	*this << st.str().c_str();
 	return *this;
 }
+
+#if 0		// Mac OS/X possibly needs this
+Log &Log::operator<<(size_t s)
+{
+	std::ostringstream st;
+	st << st;
+	*this << st.str().c_str();
+	return *this;
+}
+#endif
 
 void Log::tail() {
 }
