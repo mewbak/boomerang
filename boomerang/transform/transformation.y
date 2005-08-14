@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 17 Apr 02 - Trent: Created
  */
 %name TransformationParser
@@ -63,7 +63,7 @@ public: \
 %token SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
 %token XOR_ASSIGN OR_ASSIGN TYPE_NAME
 %token STRUCT UNION ENUM ELLIPSIS
-%token TRUE FALSE
+%token BOOL_TRUE BOOL_FALSE
 
 
 %union {
@@ -179,10 +179,10 @@ exp: REGOF CONSTANT ']'
     | exp ',' exp
     { $$ = new Binary(opList, $1, new Binary(opList, $3, new Terminal(opNil)));
     }
-    | TRUE
+    | BOOL_TRUE
     { $$ = new Terminal(opTrue);
     }
-    | FALSE
+    | BOOL_FALSE
     { $$ = new Terminal(opFalse);
     }
     ;

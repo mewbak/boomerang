@@ -3,7 +3,7 @@
  * OVERVIEW:   Scanner for transformation language.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * 17 Apr 04 - Trent: Created
  */
 %name TransformationScanner
@@ -66,8 +66,8 @@ private: \
 "r["                    { count(); return TransformationParser::REGOF; }
 "m["                    { count(); return TransformationParser::MEMOF; }
 "a["                    { count(); return TransformationParser::ADDROF; }
-"true"                  { count(); return TransformationParser::TRUE; }
-"false"                 { count(); return TransformationParser::FALSE; }
+"true"                  { count(); return TransformationParser::BOOL_TRUE; }
+"false"                 { count(); return TransformationParser::BOOL_FALSE; }
 {L}({L}|{D})*\(         { count(); yylval.str = strdup(yytext); yylval.str[strlen(yylval.str)-1] = 0; return TransformationParser::FUNC; }
 
 {L}({L}|{D})*		{ count(); yylval.str = strdup(yytext); return TransformationParser::IDENTIFIER; }
