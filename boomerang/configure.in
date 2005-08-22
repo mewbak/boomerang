@@ -7,7 +7,7 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.19 $
+dnl $Revision: 1.20 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
@@ -94,9 +94,11 @@ AC_MSG_CHECKING( [if host is OS X] )
 case $host in
  *-apple-darwin*)
    HOST_OSX=yes
+   AC_DEFINE(HOST_OSX, 1, [Non zero if host machine is Mac OS X])
    ;;
  *)
    HOST_OSX=no
+   AC_DEFINE(HOST_OSX, 0, [Non zero if host machine is Mac OS X])
    ;;
 esac
 AC_MSG_RESULT( $HOST_OSX )
