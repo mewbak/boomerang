@@ -7,7 +7,7 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.20 $
+dnl $Revision: 1.21 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
@@ -156,6 +156,7 @@ AC_CHECK_SIZEOF(long,4)
 AC_CHECK_SIZEOF(long long,8)
 AC_CHECK_SIZEOF(float,4)
 AC_CHECK_SIZEOF(double,8)
+AC_CHECK_SIZEOF(int *,4)
 dnl AC_CHECK_SIZEOF(long double,16)
 
 
