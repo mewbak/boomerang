@@ -9,14 +9,13 @@
 
 /*==============================================================================
  * FILE:	   chllcode.cpp
- * OVERVIEW:   Concrete class for the "C" high level language
- *			   This class is provides methods which are specific for the C
- *			   language binding.  I guess this will be the most popular output
- *			   language unless we do C++.
+ * OVERVIEW:   Concrete backend class for the "C" high level language
+ *			   This class is provides methods which are specific for the C language binding.
+ *			   I guess this will be the most popular output language unless we do C++.
  *============================================================================*/
 
 /*
- * $Revision: 1.94 $	// 1.90.2.16
+ * $Revision: 1.95 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
