@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.254 $	// 1.238.2.44
+ * $Revision: 1.255 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -4145,7 +4145,8 @@ void UserProc::conTypeAnalysis() {
 		if (!ret)
 			LOG << "** could not solve type constraints for proc " << getName() << "!\n";
 		else if (solns.size() > 1)
-			LOG << "** " << solns.size() << " solutions to type constraints for proc " << getName() << "!\n";
+			// Note: require cast to unsigned for OS X and 64-bit hosts
+			LOG << "** " << (unsigned)solns.size() << " solutions to type constraints for proc " << getName() << "!\n";
 	}
 		
 	std::list<ConstraintMap>::iterator it;
