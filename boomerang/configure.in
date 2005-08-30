@@ -7,7 +7,7 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.24 $
+dnl $Revision: 1.25 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
@@ -249,7 +249,7 @@ AC_CHECK_LIB(cppunit, _ZN7CppUnit8TestCase3runEv, ,
     [AC_CHECK_FILE(lib/libcppunit.a, ,
 		[AC_PATH_PROG(CPPUNIT_PATH, libcppunit.a, :, [/usr/lib:/usr/local/lib:/opt/local/lib:/sw/lib])]
 		if test "${CPPUNIT_PATH}" != :; then
-			[AC_MSG_WARN(Found libdl.a; linking to lib/)]
+			[AC_MSG_WARN(Found libcppunit.a; linking to lib/)]
 			ln -s ${CPPUNIT_PATH} lib
         else
 			[AC_MSG_NOTICE()]
