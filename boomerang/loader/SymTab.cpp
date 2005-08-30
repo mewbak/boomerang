@@ -13,7 +13,7 @@
  *				so that symbols can be accessed by symbol or by name
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision: 1.5 $
  *
  * 12 Jul 05 - Mike: threw out the bsearch() code and implemented dual maps instead
 */
@@ -82,3 +82,7 @@ char* SymTab::FindAfter(ADDRESS& dwAddr)
     return m_pEnt[bot].pName;
 }
 #endif
+
+// Make sure this is the last data definition in the last file linked into the final executable
+char last_static_data[1];		// For garbage collection hack
+

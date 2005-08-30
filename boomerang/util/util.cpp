@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.16 $
+ * $Revision: 1.17 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -63,10 +63,9 @@
  *				  i: the integer whose ascii representation is to be appended
  * RETURNS:       A copy of the modified string
  *============================================================================*/
-// Don't make this one static; may want to use for garbage collecting
-char buf[50];
 std::string operator+(const std::string& s, int i)
 {
+	static char buf[50];
 	std::string ret(s);
 
 	sprintf(buf,"%d",i);
