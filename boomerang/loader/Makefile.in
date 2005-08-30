@@ -11,7 +11,7 @@
 #
 ######################################################
 
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 # Note: gnu make is probably required (for patsubst etc)
 # Whole make is dependent on finding the pattern *BinaryFile.cpp;
 # a lib%.so file is made for each of these
@@ -67,7 +67,7 @@ endif
 endif
 
 ifeq ($(HOST_OSX), yes)
-SHARED=-dynamiclib -flat_namespace
+SHARED=-dynamiclib #-flat_namespace
 DLLEXT=.dylib
 RUNPATH=
 else # Non-OS X
