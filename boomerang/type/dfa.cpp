@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.35 $	// 1.30.2.11
+ * $Revision: 1.36 $	// 1.30.2.11
  *
  * 24/Sep/04 - Mike: Created
  */
@@ -45,7 +45,8 @@ static Exp* scaledArrayPat = Location::memOf(
 			new Terminal(opWildIntConst)),
 		new Terminal(opWildIntConst)));
 // idx + K; leave idx wild
-static Exp* unscaledArrayPat = new Binary(opPlus,
+// Don't make this one static; may want to use for garbage collection (end of static data)
+Exp* unscaledArrayPat = new Binary(opPlus,
 		new Terminal(opWild),
 		new Terminal(opWildIntConst));
 
