@@ -7,7 +7,7 @@
 #
 ######################################################
 
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 # 05 Apr 02 - Mike: Created. Added "test" target
 # 10 Apr 02 - Mike: More dependencies; interface -> include
 # 26 Apr 02 - Mike: Create the libdb.so library, from .o files
@@ -124,11 +124,11 @@ sslscanner.cpp sslscanner.h: sslscanner.l sslparser.y
 
 
 clean:
-	rm -f testDbase *.o $(DB_LIB)
+	-rm -f testDbase *.o $(DB_LIB)
 
 # Clean up generated files
 cleangen:
-	rm -f $(GENFILES)
+	-rm -f $(GENFILES)
 
 # Remote: for when making remotely from bison++/flex++ facilities, or just
 # can't be bothered installing these.

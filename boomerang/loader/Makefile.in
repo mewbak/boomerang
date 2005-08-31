@@ -11,7 +11,7 @@
 #
 ######################################################
 
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 # Note: gnu make is probably required (for patsubst etc)
 # Whole make is dependent on finding the pattern *BinaryFile.cpp;
 # a lib%.so file is made for each of these
@@ -131,7 +131,7 @@ ExeBinaryFile.o: SymTab.o
 MachOBinaryFile.o: SymTab.o
 
 clean:
-	rm -f *.o $(ALLDLLS) $(COPYDLL) testLoader$(EXEEXT) $(BASEIMPLIB)
+	-rm -f *.o $(ALLDLLS) $(COPYDLL) testLoader$(EXEEXT) $(BASEIMPLIB)
 
 # Because of the relative paths, testLoader will only work from the parent
 # directory...

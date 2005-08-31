@@ -8,7 +8,7 @@
 #
 ######################################################
 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # 08 Apr 02 - Mike: Created.
 # 10 Apr 02 - Mike: interface -> include
 
@@ -87,13 +87,12 @@ $(MACH_OBJS) $(MACH_FE_OBJ): %.o : %.cpp ../include/decoder.h
 
 
 clean:
-	rm -f testFront *.o $(FRONTEND_LIB) $(MACH_OBJS) $(MACH_FE_OBJS) \
-      $(MACH_LIBS)
-	find . -name *.o -exec rm {} \;
+	-rm -f testFront *.o $(FRONTEND_LIB) $(MACH_OBJS) $(MACH_FE_OBJS) $(MACH_LIBS)
+	-find . -name *.o -exec rm {} \;
 
 # Clean up generated files
 cleangen:
-	rm -f $(GENFILES)
+	-rm -f $(GENFILES)
 
 # Remote: for when making remotely from bison++/flex++ facilities, or just
 # can't be bothered installing these.

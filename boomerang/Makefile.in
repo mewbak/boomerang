@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.100 $		// 1.91.2.10
+# $Revision: 1.101 $		// 1.91.2.10
 # 05 Jul 05 - Mike: Big merge with boomerang.pole branch
 # 03 Feb 05 - Mike: Removed analysis/ related files
 # 23 Nov 04 - Mike: Added PPC files
@@ -119,10 +119,10 @@ clean:
 	cd db       && ${MAKE} clean
 	cd frontend && ${MAKE} clean
 	cd transform && ${MAKE} clean
-	rm -f *.o codegen/*.o log.o boomerang.o driver.o boomerang$(EXEEXT) bigtest$(EXEEXT) testAll.o c/*.o type/*.o
+	-rm -f *.o codegen/*.o log.o boomerang.o driver.o boomerang$(EXEEXT) bigtest$(EXEEXT) testAll.o c/*.o type/*.o
 
 distclean: clean
-	rm -f Makefile util/Makefile loader/Makefile db/Makefile frontend/Makefile transform/Makefile include/config.h \
+	-rm -f Makefile util/Makefile loader/Makefile db/Makefile frontend/Makefile transform/Makefile include/config.h \
 		config.log config.status frontend/mltk.sh
 
 TEST_OBJS = util/UtilTest.o db/ExpTest.o db/ParserTest.o db/ProcTest.o db/ProgTest.o db/RtlTest.o db/StatementTest.o \

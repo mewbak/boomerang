@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 # 09 Apr 02 - Mike: Created.
 # 10 Apr 02 - Mike: interface -> include; added util.cpp (for str())
 # 11 Apr 02 - Mike: target is now ../lib/libutil so can use -lutil
@@ -49,7 +49,7 @@ $(LIB_OBJS): %.o : %.cpp
 	$(CC) -c -I../include -o $@ $<
 
 clean:
-	rm -f testUtil *.o $(LIB)
+	-rm -f testUtil *.o $(LIB)
 
 test: all
 	./testUtil
