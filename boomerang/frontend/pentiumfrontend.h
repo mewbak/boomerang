@@ -1,5 +1,5 @@
 /*
- *	$Revision: 1.13 $ // 1.12.6.1
+ *	$Revision: 1.14 $ // 1.12.6.1
  */
 #ifndef PENTFRONTEND_H
 #define PENTFRONTEND_H
@@ -19,7 +19,7 @@ public:
 	/*
 	 * Constructor. Takes some parameters to save passing these around a lot
 	 */
-					PentiumFrontEnd(BinaryFile *pBF, Prog* prog);
+					PentiumFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
 
 virtual 			~PentiumFrontEnd();
 

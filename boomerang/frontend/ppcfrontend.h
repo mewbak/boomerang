@@ -1,5 +1,5 @@
 /*
- *$Revision: 1.2 $	// 1.1.2.1
+ *$Revision: 1.3 $	// 1.1.2.1
  */
 #ifndef PPCFRONTEND_H
 #define PPCFRONTEND_H
@@ -20,7 +20,7 @@ class CallStatement;
 class PPCFrontEnd : public FrontEnd
 {
 public:
-				PPCFrontEnd(BinaryFile *pBF, Prog* prog);
+				PPCFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
 	/**
 	 * Virtual destructor.
 	 */
