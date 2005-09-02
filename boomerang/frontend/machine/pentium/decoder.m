@@ -13,7 +13,7 @@
  *				etc. Ordinary instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.35 $	// 1.33.2.2
+ * $Revision: 1.36 $	// 1.33.2.2
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -22,6 +22,7 @@
  * 07 May 03 - Mike: Fixed several arithmetic and logical "iodb" instructions
  *				that had 8 bit instead of 32 bit modrm sizes
  * 24 Oct 03 - Mike: Fixed DIS_IDXP1: did not have +32 in macro
+ * 02 Sep 05 - Mike: POP.Evod/w take Eaddr now, not Mem
 */
 
 #include <assert.h>
@@ -873,11 +874,11 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 	| POPow(r32) =>
 		stmts = instantiate(pc,	 "POPow", DIS_R32);	  // Check!
 
-	| POP.Evod(Mem) =>
-		stmts = instantiate(pc,	 "POP.Evod", DIS_MEM);
+	| POP.Evod(Eaddr) =>
+		stmts = instantiate(pc,	 "POP.Evod", DIS_EADDR32);
 
-	| POP.Evow(Mem) =>
-		stmts = instantiate(pc,	 "POP.Evow", DIS_MEM);
+	| POP.Evow(Eaddr) =>
+		stmts = instantiate(pc,	 "POP.Evow", DIS_EADDR16);
 
 //	  | OUTSvod() =>
 //		  stmts = instantiate(pc,  "OUTSvod");
