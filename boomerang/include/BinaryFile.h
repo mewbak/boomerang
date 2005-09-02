@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.26 $
+/* $Revision: 1.27 $
  * This class attempts to provide a relatively machine independent interface for programs that read binary files.
  * Created by Mike, 97
  * 01 Aug 01 - Mike: Changed the definition of GetGlobalPointerInfo()
@@ -33,6 +33,8 @@
 #include <map>
 #include <string>
 #include <stdio.h>		// For FILE
+
+// Note: #including windows.h causes problems later in the objective C code.
 
 // Given a pointer p, returns the 16 bits (halfword) in the two bytes
 // starting at p.
@@ -98,7 +100,9 @@ enum MACHINE {MACHINE_PENTIUM, MACHINE_SPARC, MACHINE_HPRISC, MACHINE_PALM, MACH
 
 class BinaryFileFactory {
 #ifdef _WIN32
-		HINSTANCE	hModule;
+// The below should be of type HINSTANCE, but #including windows.h here causes problems later compiling the objective C
+// code. So just cast as needed.
+		void*		hModule;
 #else
 		void*		dlHandle;		// Needed for UnLoading the library
 #endif
