@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.37 $	// 1.35.2.5
+ * $Revision: 1.38 $	// 1.35.2.5
  *
  * 17 May 02 - Mike: Mods for boomerang
  * 22 Nov 02 - Mike: Added check for invalid instructions; prints opcode
@@ -1504,7 +1504,7 @@ extern "C" {
  * PARAMETERS:	  Same as the FrontEnd constructor
  * RETURNS:		  <N/A>
  *============================================================================*/
-SparcFrontEnd::SparcFrontEnd(BinaryFile *pBF, Prog* prog) : FrontEnd(pBF, prog) {
+SparcFrontEnd::SparcFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff) : FrontEnd(pBF, prog, pbff) {
 	decoder = new SparcDecoder(prog);
 	nop_inst.numBytes = 0;			// So won't disturb coverage
 	nop_inst.type = NOP;
