@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.39 $	// 1.30.2.11
+ * $Revision: 1.40 $	// 1.30.2.11
  *
  * 24/Sep/04 - Mike: Created
  */
@@ -32,9 +32,11 @@
 
 static int nextUnionNumber = 0;
 
+#ifndef max
 int max(int a, int b) {		// Faster to write than to find the #include for
 	return a>b ? a : b;
 }
+#endif
 
 #define DFA_ITER_LIMIT 20
 
