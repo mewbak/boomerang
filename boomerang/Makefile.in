@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.101 $		// 1.91.2.10
+# $Revision: 1.102 $		// 1.91.2.10
 # 05 Jul 05 - Mike: Big merge with boomerang.pole branch
 # 03 Feb 05 - Mike: Removed analysis/ related files
 # 23 Nov 04 - Mike: Added PPC files
@@ -39,6 +39,9 @@ HOST_WINDOWS = @HOST_WINDOWS@
 
 # HOST_OSX is true if the host OS is Mac OS X
 HOST_OSX = @HOST_OSX@
+
+# UNDERSCORE_NEEDED is true if an underscore is needed in front of names for dlopen()
+UNDERSORE_NEEDED = @UNDERSORE_NEEDED@
 
 # LDL is -ldl if needed (Windows does not)
 # EXEEXT is .exe for Windows
