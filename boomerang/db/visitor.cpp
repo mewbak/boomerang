@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.24 $
+ * $Revision: 1.25 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -145,6 +145,13 @@ bool StmtConscriptSetter::visit(BoolAssign* stmt) {
 bool StmtConscriptSetter::visit(BranchStatement* stmt) {
 	SetConscripts sc(curConscript, bClear);
 	stmt->getCondExpr()->accept(&sc);
+	curConscript = sc.getLast();
+	return true;
+}
+
+bool StmtConscriptSetter::visit(ImpRefStatement* stmt) {
+	SetConscripts sc(curConscript, bClear);
+	stmt->getAddressExp()->accept(&sc);
 	curConscript = sc.getLast();
 	return true;
 }
