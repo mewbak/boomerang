@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.98 $	// 1.89.2.7
+ * $Revision: 1.99 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -791,7 +791,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 				case STMT_ASSIGN:
 				case STMT_PHIASSIGN:
 				case STMT_IMPASSIGN:
-				//case STMT_IMPREF:
+				case STMT_IMPREF:
 					// Do nothing
 					break;
 		
