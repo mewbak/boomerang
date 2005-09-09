@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.95 $	// 1.90.2.16
+ * $Revision: 1.96 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -633,7 +633,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 				Type* tt = ((TypedExp*)u)->getType();
 				Exp* b = u->getSubExp1();
 				if (dynamic_cast<PointerType*>(tt)) {
-					char* sym = m_proc->lookupSym(b);
+					char* sym = m_proc->lookupSym(Location::memOf(b));
 					if (sym) {
 						openParen(str, curPrec, PREC_UNARY);
 						str << "&" << sym;
