@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.98 $	// 1.95.2.5
+ * $Revision: 1.99 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -2066,8 +2066,11 @@ Statement* Cfg::findImplicitAssign(Exp* x) {
 		// Remember it for later so we don't insert more than one implicit assignment for any one location
 		// We don't clone the copy in the map. So if the location is a m[...], the same type information is available in
 		// the definition as at all uses
-		//implicitMap[x] = def;
-		implicitMap[x->clone()]=def;	// Hmmm... seems to fix a nasty intermittent problem with test/sparc/minmax2...
+#if 1
+		implicitMap[x] = def;
+#else
+		implicitMap[x->clone()]=def;	// Not sure if this is good or not. Sometimes seems to fix test/sparc/minmax2
+#endif
 	} else {
 		// Use an existing implicit assignment
 		def = it->second;
