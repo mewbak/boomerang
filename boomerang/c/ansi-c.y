@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.28 $
+ * $Revision: 1.29 $
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */
@@ -473,6 +473,10 @@ type: CHAR
 	| UNSIGNED SHORT
 	{ $$ = new IntegerType(16, 0); }
 	| UNSIGNED INT 
+	{ $$ = new IntegerType(32, 0); }
+	| UNSIGNED LONG 
+	{ $$ = new IntegerType(32, 0); }
+	| UNSIGNED 
 	{ $$ = new IntegerType(32, 0); }
 	| LONG 
 	{ $$ = new IntegerType(32, 1); }
