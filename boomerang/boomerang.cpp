@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.124 $	// 1.115.2.5
+ * $Revision: 1.125 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -153,7 +153,7 @@ void Boomerang::help() {
 	std::cout << "  -nD              : No decompilation (at all!)\n";
 	std::cout << "  -nl              : No creation of local variables\n";
 	std::cout << "  -nL              : No limit propagations using the self-referencing heuristic\n";
-	std::cout << "  -nm              : No decoding of the 'main' procedure\n";
+//	std::cout << "  -nm              : No decoding of the 'main' procedure\n";
 	std::cout << "  -nn              : No removal of NULL and unused statements\n";
 	std::cout << "  -np              : No replacement of expressions with Parameter names\n";
 	std::cout << "  -ng              : No replacement of expressions with Globals\n";
