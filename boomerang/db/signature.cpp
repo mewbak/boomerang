@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.106 $	// 1.98.2.12
+ * $Revision: 1.107 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -404,10 +404,9 @@ Exp *CallingConvention::Win32Signature::getProven(Exp *left) {
 	if (left->isRegOfK()) {
 		switch (((Const*)left->getSubExp1())->getInt()) {
 			case 28:	// esp
+				// Note: assumes callee pop... not true for cdecl functions!
 				return new Binary(opPlus, Location::regOf(28), 
 					new Const(4 + nparams*4));
-			//case 26:	// edx !!! This is not library function preserved!
-				//return Location::regOf(26);
 			case 27:	// ebx
 				return Location::regOf(27);
 			case 29:	// ebp
