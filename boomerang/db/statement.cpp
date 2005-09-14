@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.167 $	// 1.148.2.38
+ * $Revision: 1.168 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3895,8 +3895,6 @@ bool BoolAssign::accept(StmtPartModifier* v) {
 
 // Fix references to the returns of call statements
 void Statement::bypassAndPropagate() {
-if (number == 147)
- std::cerr << "HACK!\n";
 	BypassingPropagator bp(this);
 	StmtPartModifier sm(&bp);			// Use the Part modifier so we don't change the top level of LHS of assigns etc
 	accept(&sm);
