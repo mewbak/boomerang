@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.17 $	// 1.16.2.2
+ * $Revision: 1.18 $	// 1.16.2.2
  *
  * 08 Apr 02 - Mike: Mods for boomerang
  */
@@ -124,6 +124,9 @@ virtual int decodeAssemblyInstruction (ADDRESS pc, int delta) = 0;
 		RTLInstDict& getRTLDict() { return RTLDict; }
 
 		void		computedJump(const char* name, int size, Exp* dest, ADDRESS pc, std::list<Statement*>* stmts,
+						DecodeResult& result);
+
+		void		computedCall(const char* name, int size, Exp* dest, ADDRESS pc, std::list<Statement*>* stmts,
 						DecodeResult& result);
 
 		Prog*		getProg() {return prog;}
