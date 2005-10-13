@@ -17,7 +17,7 @@
  *			    RTLs.
  *============================================================================*/
 
-/* $Revision: 1.31 $	// 1.29.2.2
+/* $Revision: 1.32 $	// 1.29.2.2
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 28 Jun 05 - Mike: Added a map of previously decoded indirect jumps and calls needed when restarting the cfg
@@ -244,6 +244,14 @@ static	void		closeInstance(void* dlHandle);
 		 *					ReturnStatement as the last statement)
 		 */
 		PBB			createReturnBlock(UserProc* pProc, std::list<RTL*>* BB_rtls, RTL* pRtl);
+
+		/*
+		 * Add a synthetic return instruction and basic block (or a branch to the existing return instruction).
+		 * PARAMETERS:	pCallBB: a pointer to the call BB that will be followed by the return or jump
+		 *				pProc: pointer to the enclosing UserProc
+		 *				pRtl: pointer to the current RTL with the call instruction
+		 */
+		void		appendSyntheticReturn(PBB pCallBB, UserProc* pProc, RTL* pRtl);
 
 		/*
 		 * Add an RTL to the map from native address to previously-decoded-RTLs. Used to restore case statements and
