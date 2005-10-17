@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $	// 1.43.2.24
+ * $Revision: 1.45 $	// 1.43.2.24
  * 15 Mar 05 - Mike: Separated from cfg.cpp
  */
 
@@ -350,7 +350,7 @@ void DataFlow::renameBlockVars(UserProc* proc, int n, int memDepth, bool clearSt
 				// Replace the use of x with x{def} in S
 				if (S->isPhi()) {
 					Exp* phiLeft = ((PhiAssign*)S)->getLeft();
-					phiLeft->refSubExp1() = phiLeft->getSubExp1()->expSubscriptVar(x, def /*, this*/);
+					phiLeft->setSubExp1(phiLeft->getSubExp1()->expSubscriptVar(x, def /*, this*/));
 				} else
 					S->subscriptVar(x, def /*, this */);
 			}

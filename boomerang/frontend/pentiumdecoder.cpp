@@ -17,7 +17,7 @@
  *				etc. Ordinary instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.60 $	// 1.33.2.2
+ * $Revision: 1.61 $	// 1.33.2.2
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -14448,7 +14448,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 
                     		Assign* last = (Assign*)stmts->back();
 
-                    		Const*& reloc = (Const*&)((Binary*)last->getRight())->refSubExp2();
+                    		Const* reloc = (Const*)((Binary*)last->getRight())->getSubExp2();
 
                     		assert(reloc->isIntConst());
 
