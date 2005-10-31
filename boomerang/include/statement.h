@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.81 $	// 1.76.2.30
+ * $Revision: 1.82 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -1300,7 +1300,7 @@ virtual void		generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel);
 virtual void		dfaTypeAnalysis(bool& ch);
 
 		// From SSA form
-virtual void		fromSSAform(igraph& igm);
+virtual void		fromSSAform(igraph& ig);
 
 		// Remove the stack pointer and return a statement list
 		StatementList* getCleanReturns();

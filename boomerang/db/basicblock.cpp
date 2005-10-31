@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.103 $	// 1.93.2.8
+ * $Revision: 1.104 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -2053,7 +2053,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc) {
 			}
 			case 1: {
 				// Typical pattern: e = m[m[r27{25} + 8]{-} + 8]{-}
-#if 0	// To be completed; suppress unused variable warnings
+#if 1	// To be completed; suppress unused variable warnings
 				if (e->isSubscript())
 					e = ((RefExp*)e)->getSubExp1();
 				e = ((Location*)e)->getSubExp1();		// e = m[r27{25} + 8]{-} + 8
@@ -2066,10 +2066,10 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc) {
 				Exp* e = ((Binary*)lhs)->getSubExp1();
 				Exp* CK1 = ((Binary*)lhs)->getSubExp2();
 				int K1 = ((Const*)CK1)->getInt();
-std::cerr << "From statement " << lastStmt << " get e = " << e << ", K1 = " << K1 << ", K2 = " << K2 << "\n";
+std::cerr << "Form 1: from statement " << lastStmt << " get e = " << e << ", K1 = " << K1 << ", K2 = " << K2 << "\n";
 #endif
 			}
-		}			 
+		}
 			
 		return false;
 	}
