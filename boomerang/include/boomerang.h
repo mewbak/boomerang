@@ -10,7 +10,7 @@
 /** \file	boomerang.h
  * \brief	Interface for the boomerang singleton object
  *
- * $Revision: 1.65 $	// 1.61.2.2
+ * $Revision: 1.66 $	// 1.61.2.2
  * 04 Dec 2002: Trent: Created
  */
 
@@ -260,6 +260,7 @@ virtual void		alert_end_decompile(UserProc *p) {
 		bool		generateCallGraph;
 		bool		generateSymbols;
 		bool		noGlobals;
+		bool		assumeABI;			// Assume ABI compliance
 };
 
 #define VERBOSE				(Boomerang::get()->vFlag)

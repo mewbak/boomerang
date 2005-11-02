@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.43 $	// 1.30.2.11
+ * $Revision: 1.44 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -918,6 +918,10 @@ Type* Terminal::ascendType() {
 			return new IntegerType(STD_SIZE, -1);
 		case opCF: case opZF:
 			return new BooleanType;
+		case opDefineAll:
+			return new VoidType;
+		case opFlags:
+			return new IntegerType(STD_SIZE, -1);
 		default:
 			std::cerr << "ascendType() for terminal " << this << " not implemented!\n";
 			return new VoidType;

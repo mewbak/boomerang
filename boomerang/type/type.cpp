@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.52 $	// 1.44.2.1
+ * $Revision: 1.53 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -441,7 +441,10 @@ bool VoidType::operator==(const Type& other) const {
 }
 
 bool FuncType::operator==(const Type& other) const {
-	return other.isFunc() && (*signature == *((FuncType&)other).signature);
+	if (!other.isFunc()) return false;
+	// Note: some functions don't have a signature (e.g. indirect calls that have not yet been successfully analysed)
+	if (signature == NULL) return ((FuncType&)other).signature == NULL;
+	return *signature == *((FuncType&)other).signature;
 }
 
 static int pointerCompareNest = 0;

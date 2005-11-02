@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.26 $
+ * $Revision: 1.27 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -214,6 +214,8 @@ Exp* BypassingPropagator::postVisit(Location *e)	   {
 	mask >>= 1;
 	return ret;
 }
+
+
 Exp* SimpExpModifier::postVisit(Location *e)	   {
 	Exp* ret = e;
 	if (!(unchanged & mask)) ret = e->simplify();
