@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.46 $	// 1.43.2.24
+ * $Revision: 1.47 $	// 1.43.2.24
  * 15 Mar 05 - Mike: Separated from cfg.cpp
  */
 
@@ -313,8 +313,6 @@ void DataFlow::renameBlockVars(UserProc* proc, int n, int memDepth, bool clearSt
 			for (xx = locs.begin(); xx != locs.end(); xx++) {
 				Exp* x = *xx;
 				// Ignore variables of the wrong memory depth
-if (x->isRegN(30))
- std::cerr << "HACK (U)!!\n";
 				if (x->getMemDepth() != memDepth) continue;
 				Statement* def = NULL;
 				if (x->isSubscript()) {					// Already subscripted?
@@ -372,8 +370,6 @@ if (x->isRegN(30))
 
 		// For each definition of some variable a in S
 		LocationSet defs;
-if (S->getNumber() == 43)
- std::cerr << "HACK!\n";
 		S->getDefinitions(defs);
 		LocationSet::iterator dd;
 		for (dd = defs.begin(); dd != defs.end(); dd++) {
