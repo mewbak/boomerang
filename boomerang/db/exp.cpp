@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.180 $	// 1.172.2.20
+ * $Revision: 1.181 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2587,6 +2587,7 @@ Exp* Ternary::polySimplify(bool& bMod) {
 	subExp2 = subExp2->polySimplify(bMod);
 	subExp3 = subExp3->polySimplify(bMod);
 
+	// p ? 1 : 0 -> p
 	if (	op == opTern &&
 			subExp2->getOper() == opIntConst && 
 			subExp3->getOper() == opIntConst) {
@@ -2600,6 +2601,7 @@ Exp* Ternary::polySimplify(bool& bMod) {
 		}
 	}	
 	
+	// 1 ? x : y -> x
 	if (	op == opTern &&
 			subExp1->getOper() == opIntConst &&
 			((Const*)subExp1)->getInt() == 1) {
@@ -2608,6 +2610,7 @@ Exp* Ternary::polySimplify(bool& bMod) {
 		return res;
 	}
 
+	// 0 ? x : y -> y
 	if (	op == opTern &&
 			subExp1->getOper() == opIntConst &&
 			((Const*)subExp1)->getInt() == 0) {
