@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $	// 1.43.2.24
+ * $Revision: 1.48 $	// 1.43.2.24
  * 15 Mar 05 - Mike: Separated from cfg.cpp
  */
 
@@ -631,3 +631,4 @@ void DefCollector::insert(Assign* a) {
 	if (existsOnLeft(l)) return;
 	defs.insert(a);
 }
+

@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.122 $	// 1.115.2.27
+ *	$Revision: 1.123 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -799,6 +799,10 @@ public:
 
 		// Find and if necessary insert an implicit reference before s whose address expression is a and type is t
 		void		setImplicitRef(Statement* s, Exp* a, Type* ty);
+
+		// Experiments with CSE
+		void		commonSubexpressions();
+
 protected:
 		friend class XMLProgParser;
 					UserProc();

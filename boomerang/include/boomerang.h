@@ -10,7 +10,7 @@
 /** \file	boomerang.h
  * \brief	Interface for the boomerang singleton object
  *
- * $Revision: 1.66 $	// 1.61.2.2
+ * $Revision: 1.67 $	// 1.61.2.2
  * 04 Dec 2002: Trent: Created
  */
 
@@ -246,6 +246,7 @@ virtual void		alert_end_decompile(UserProc *p) {
 		bool		noRemoveReturns;
 		bool		debugDecoder;
 		bool		decodeThruIndCall;
+		std::ofstream* ofsIndCallReport;
 		bool		noDecodeChildren;
 		bool		debugProof;
 		bool		debugUnused;
@@ -261,6 +262,7 @@ virtual void		alert_end_decompile(UserProc *p) {
 		bool		generateSymbols;
 		bool		noGlobals;
 		bool		assumeABI;			// Assume ABI compliance
+		bool		performCSE;			// Perform CSE
 };
 
 #define VERBOSE				(Boomerang::get()->vFlag)

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.257 $	// 1.238.2.44
+ * $Revision: 1.258 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1356,6 +1356,15 @@ void UserProc::middleDecompile() {
 			LOG << "=== end after replacing expressions, trimming params and returns for " << getName() << " ===\n";
 		}
 	}
+
+	if (Boomerang::get()->performCSE) {
+		if (VERBOSE)
+			LOG << "--- common subexpression elimination ---\n";
+		commonSubexpressions();
+		if (VERBOSE)
+			LOG << "=== end common subexpression elimination ===\n";
+	}
+
 	if (VERBOSE)
 		LOG << "===== end initial decompile for " << getName() << " =====\n\n";
 	status = PROC_INITDONE;
@@ -5119,4 +5128,21 @@ void UserProc::setImplicitRef(Statement* s, Exp* a, Type* ty) {
 		}
 	}
 	assert(0);				// Could not find s withing its enclosing BB
+}
+
+void UserProc::commonSubexpressions() {
+
+	CSEExpModifier cseem;
+	CSEModifier csem(&cseem);
+	StatementList stmts;
+	getStatements(stmts);
+	StatementList::iterator it;
+	for (it = stmts.begin(); it != stmts.end(); it++) {
+		Statement* s = *it;
+if (s->getNumber()==103)
+ std::cerr << "HACK!\n";
+		cseem.setCurStmt(s);
+		s->accept(&csem);
+	}
+	cseem.dump();
 }

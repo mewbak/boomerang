@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.82 $	// 1.76.2.30
+ * $Revision: 1.83 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -671,9 +671,8 @@ virtual bool		accept(StmtPartModifier* visitor);
 };		// class ImplicitAssign
 
 /*==============================================================================
- * BoolAssign represents "setCC" type instructions, where some destination is
- * set (to 1 or 0) depending on the condition codes. It has a condition
- * Exp, similar to the BranchStatement class.
+ * BoolAssign represents "setCC" type instructions, where some destination is set (to 1 or 0) depending on the
+ * condition codes. It has a condition Exp, similar to the BranchStatement class.
  * *==========================================================================*/
 class BoolAssign: public Assignment {
 		BRANCH_TYPE jtCond;		// the condition for setting true
