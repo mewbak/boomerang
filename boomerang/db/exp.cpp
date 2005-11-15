@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.181 $	// 1.172.2.20
+ * $Revision: 1.182 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -4107,4 +4107,10 @@ Exp* Exp::bypassAndPropagate() {
 void Exp::bypassAndPropagateComp() {
 	if (op != opMemOf) return;
     ((Location*)this)->setSubExp1(((Location*)this)->getSubExp1()->bypassAndPropagate());
+}
+
+int Exp::getComplexityDepth() {
+	ComplexityFinder cf;
+	accept(&cf);
+	return cf.getDepth();
 }

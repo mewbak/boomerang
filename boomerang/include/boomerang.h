@@ -10,7 +10,7 @@
 /** \file	boomerang.h
  * \brief	Interface for the boomerang singleton object
  *
- * $Revision: 1.67 $	// 1.61.2.2
+ * $Revision: 1.68 $	// 1.61.2.2
  * 04 Dec 2002: Trent: Created
  */
 
@@ -257,7 +257,7 @@ virtual void		alert_end_decompile(UserProc *p) {
 		bool		noChangeSignatures;
 		bool		conTypeAnalysis;
 		bool		dfaTypeAnalysis;
-		bool		noLimitPropagations;
+		int			propMaxDepth;		// Max depth of expression that will be propagated to more than one dest
 		bool		generateCallGraph;
 		bool		generateSymbols;
 		bool		noGlobals;
