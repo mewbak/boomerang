@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the Exp class and its subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.124 $	// 1.119.2.11
+ * $Revision: 1.125 $	// 1.119.2.11
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -158,7 +158,7 @@ virtual int getArity() {return 0;}		// Overridden for Unary, Binary, etc
 		bool		isAnull() {return op == opAnull;}
 		// True if this is the Nil Terminal (terminates lists; "NOP" expression)
 		bool		isNil() {return op == opNil;}
-		// Trye if this is %pc
+		// True if this is %pc
 		bool		isPC() {return op == opPC;}
 		// True if is %afp, %afp+k, %afp-k, or a[m[<any of these]]
 		bool		isAfpTerm();

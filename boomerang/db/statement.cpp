@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.173 $	// 1.148.2.38
+ * $Revision: 1.174 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -235,8 +235,8 @@ if (ret)
 
 // Return true if can propagate to Exp* e
 bool Statement::canPropagateToExp(Exp*e, int memDepth, int toDepth, Assign*& adef) {
-	if (toDepth != -1 && e->getMemDepth() != toDepth)
-		return false;
+//	if (toDepth != -1 && e->getMemDepth() != toDepth)
+//		return false;
 	if (!e->isSubscript()) return false;
 	// Can propagate TO this (if memory depths are suitable)
 	if (((RefExp*)e)->isImplicitDef())
