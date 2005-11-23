@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.183 $	// 1.172.2.20
+ * $Revision: 1.184 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -4104,18 +4104,28 @@ bool RefExp::isImplicitDef() {
 	return def == NULL || def->getKind() == STMT_IMPASSIGN;
 }
 
-Exp* Exp::bypassAndPropagate() {
-	BypassingPropagator bp(NULL);
-	return accept(&bp);
+Exp* Exp::bypass() {
+	CallBypasser cb(NULL);
+	return accept(&cb);
 }
 
-void Exp::bypassAndPropagateComp() {
+void Exp::bypassComp() {
 	if (op != opMemOf) return;
-    ((Location*)this)->setSubExp1(((Location*)this)->getSubExp1()->bypassAndPropagate());
+    ((Location*)this)->setSubExp1(((Location*)this)->getSubExp1()->bypass());
 }
 
 int Exp::getComplexityDepth() {
 	ComplexityFinder cf;
 	accept(&cf);
 	return cf.getDepth();
+}
+
+// Propagate all possible statements to this expression
+Exp* Exp::propagateAll(int maxDepth) {
+	Exp* ret = this;
+	for (int i=0; i < maxDepth; ++i) {
+		ExpPropagator ep(i);
+		ret = ret->accept(&ep);
+	}
+	return ret;
 }

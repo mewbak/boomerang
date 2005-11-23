@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.97 $	// 1.90.2.16
+ * $Revision: 1.98 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -79,6 +79,13 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 
 	if (exp == NULL) return;
 
+	OPER op = exp->getOper();
+	// First, a crude cast if unsigned
+	if (uns && op != opIntConst /* && !DFA_TYPE_ANALYSIS */) {
+		str << "(unsigned)";
+		curPrec = PREC_UNARY;
+	}
+
 	// Check if it's mapped to a symbol
 	if (m_proc) {
 		char* sym = m_proc->lookupSym(exp);
@@ -93,13 +100,6 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 	Binary	*b = (Binary*)exp;
 	Ternary *t = (Ternary*)exp;
 	
-	OPER op = exp->getOper();
-	// First, a crude cast if unsigned
-	if (uns && op != opIntConst /* && !DFA_TYPE_ANALYSIS */) {
-		str << "(unsigned)";
-		curPrec = PREC_UNARY;
-	}
-
 	switch(op) {
 		case opIntConst: {
 			int K = c->getInt();

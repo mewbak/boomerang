@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.125 $	// 1.115.2.27
+ *	$Revision: 1.126 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -531,6 +531,7 @@ virtual				~UserProc();
 		void		doRenameBlockVars(int depth, bool clearStacks);
 		void		updateBlockVars();
 		void		updateBlockVars(int minDepth);
+		int			getMaxDepth() {return maxDepth;}
 
 		Statement	*getStmtAtLex(unsigned int begin, unsigned int end);
 
@@ -588,8 +589,8 @@ typedef std::map<Statement*, int> RefCounter;
 		void		remUnusedStmtEtc(RefCounter& refCounts, int depth);
 		void		removeUnusedLocals();
 		bool		propagateAndRemoveStatements();
-		/// Propagate statemtents; return true if an indirect call is converted to direct.
-		bool		propagateStatements(int memDepth, int toDepth = -1);
+		/// Propagate statemtents; return true if an indirect call is converted to direct
+		bool		propagateStatements(int memDepth);
 		void		propagateToCollector(int depth);
 		void		clearUses();					///< Clear the useCollectors (in this Proc, and all calls).
 		int			findMaxDepth();					///< Find max memory nesting depth.
