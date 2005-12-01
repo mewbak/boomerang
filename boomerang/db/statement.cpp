@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.175 $	// 1.148.2.38
+ * $Revision: 1.176 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -307,7 +307,7 @@ bool Statement::doPropagateTo(Exp* e, Assign* def, bool& convert) {
 	}
 
 	if (VERBOSE)
-		LOG << "Propagating " << def << "\n" << "	   into " << this << "\n";
+		LOG << "propagating " << def << "\n" << "	   into " << this << "\n";
 
 	bool change = replaceRef(e, def, convert);
 	
