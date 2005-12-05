@@ -3,11 +3,11 @@
  * OVERVIEW:   Command line test of all of Boomerang
  *============================================================================*/
 /*
- * $Revision: 1.12 $
+ * $Revision: 1.13 $
  * 15 Jul 02 - Mike: Created from testDbase
 */
 
-
+#include "string"
 #include "cppunit/TextTestResult.h"
 #include "cppunit/TestSuite.h"
 

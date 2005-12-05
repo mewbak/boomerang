@@ -4,7 +4,7 @@
  *              tests the BinaryFile and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision: 1.11 $
  *
  * 05 Apr 02 - Mike: Created
  * 14 Jun 02 - Mike: Added windows test for calc.exe
@@ -26,6 +26,7 @@
 #define SWITCH_BORLAND	"test/windows/switch_borland.exe"
 #define ELFBINFILE		"lib/libElfBinaryFile.so"
 
+#include "string"
 #include "LoaderTest.h"
 //#include "util.h"           // For str()
 #include <iostream>         // For cout
