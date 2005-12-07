@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.108 $	// 1.93.2.8
+ * $Revision: 1.109 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1934,7 +1934,8 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc) {
 		CaseStatement* lastStmt = (CaseStatement*)lastRtl->elementAt(lastRtl->getNumStmt()-1);
 		// Note: some programs might not have the case expression propagated to, because of the -l switch (?)
 		Exp* e = lastStmt->getDest();
-		lastStmt->propagateTo(-1);
+		bool convert;
+		lastStmt->propagateTo(convert);
 		e = lastStmt->getDest();
 		int n = sizeof(hlForms) / sizeof(Exp*);
 		char form = 0;

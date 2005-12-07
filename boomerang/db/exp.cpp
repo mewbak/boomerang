@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.184 $	// 1.172.2.20
+ * $Revision: 1.185 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -4121,11 +4121,17 @@ int Exp::getComplexityDepth() {
 }
 
 // Propagate all possible statements to this expression
-Exp* Exp::propagateAll(int maxDepth) {
-	Exp* ret = this;
-	for (int i=0; i < maxDepth; ++i) {
-		ExpPropagator ep(i);
-		ret = ret->accept(&ep);
-	}
-	return ret;
+Exp* Exp::propagateAll() {
+	ExpPropagator ep;
+	return accept(&ep);
 }
+
+// Return true for non-mem-ofs, or mem-ofs that have primitive address expressions
+bool Exp::canRename() {
+	if (op != opMemOf) return true;
+	Exp* addressExp = ((Location*)this)->getSubExp1();
+	PrimitiveTester pt;
+	addressExp->accept(&pt);
+	return pt.getResult();
+}
+

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.98 $	// 1.90.2.16
+ * $Revision: 1.99 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -405,7 +405,9 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 			}
 			break;
 		case opTemp:
-			str << "tmp";		// Should never see this
+			// Should never see this; temps should be mapped to locals now so that they get declared
+			// Emit the temp name, e.g. "tmp1"
+			str << ((Const*)u->getSubExp1())->getStr();
 			break;
 		case opItof:
 			// MVE: needs work: float/double/long double.

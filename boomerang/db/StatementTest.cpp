@@ -4,7 +4,7 @@
  *				tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.34 $
+ * $Revision: 1.35 $
  *
  * 14 Jan 03 - Trent: Created
  * 17 Apr 03 - Mike: Added testRecursion to track down a nasty bug
@@ -370,7 +370,7 @@ void StatementTest::testUseOverKill () {
 	pRtls = new std::list<RTL*>();
 	rtl = new RTL(0x123);
 	ReturnStatement* rs = new ReturnStatement;
-	rs->setNumber(2);
+	rs->setNumber(4);
 	rs->addReturn(new Assign(Location::regOf(24), new Const(0)));
 	rtl->appendStmt(rs);
 	pRtls->push_back(rtl);
@@ -1334,8 +1334,8 @@ void StatementTest::testBypass () {
 	// Compute dominance frontier
 	proc->getDataFlow()->dominators(cfg);
 	// Number the statements
-	int stmtNumber = 0;
-	proc->numberStatements(stmtNumber);
+	//int stmtNumber = 0;
+	proc->numberStatements();
 	proc->getDataFlow()->renameBlockVars(proc, 0, 0);		// Block 0, mem depth 0
 	proc->getDataFlow()->renameBlockVars(proc, 0, 1);		// Block 0, mem depth 1
 	// Find various needed statements

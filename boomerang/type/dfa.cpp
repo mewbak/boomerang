@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.44 $	// 1.30.2.11
+ * $Revision: 1.45 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -241,8 +241,7 @@ void UserProc::dfaTypeAnalysis() {
 			}
 		}
 
-		// 2) Search for the scaled array pattern and replace it with an array use
-		// m[idx*K1 + K2]
+		// 2) Search for the scaled array pattern and replace it with an array use m[idx*K1 + K2]
 		std::list<Exp*> result;
 		s->searchAll(scaledArrayPat, result);
 		for (std::list<Exp*>::iterator rr = result.begin(); rr != result.end(); rr++) {
@@ -257,17 +256,30 @@ void UserProc::dfaTypeAnalysis() {
 			// Replace with the array expression
 			const char* nam = prog->getGlobalName(K2);
 			if (nam == NULL)
-				nam = prog->newGlobal(K2);
+				nam = prog->newGlobalName(K2);
 			Exp* arr = new Binary(opArrayIndex,
 				Location::global(nam, this),
 				idx);
 			s->searchAndReplace(scaledArrayPat, arr);
 		}
 
-		// 3) Change the type of any parameters. The types for these will be stored in an ImplicitAssign
-		Exp* lhs;
-		if (s->isImplicit() && (lhs = ((ImplicitAssign*)s)->getLeft(), lhs->isParam())) {
-			setParamType(((Const*)((Location*)lhs)->getSubExp1())->getStr(), ((ImplicitAssign*)s)->getType());
+		// 3) Check implicit assigns for parameter and global types.
+		if (s->isImplicit()) {
+			Exp* lhs = ((ImplicitAssign*)s)->getLeft();
+			Type* iType = ((ImplicitAssign*)s)->getType();
+			if (lhs->isParam()) {
+				setParamType(((Const*)((Location*)lhs)->getSubExp1())->getStr(), iType);
+			} else if (lhs->isMemOf()) {
+				Exp* sub = ((Location*)lhs)->getSubExp1();
+				if (sub->isIntConst()) {
+					// We have a m[K] := -
+					int K = ((Const*)sub)->getInt();
+					prog->globalUsed(K, iType);
+				}
+			} else if (lhs->isGlobal()) {
+				char* gname = ((Const*)((Location*)lhs)->getSubExp1())->getStr();
+				prog->setGlobalType(gname, iType);
+			}
 		}
 
 		// 4) Add the locals (soon globals as well) to the localTable, to sort out the overlaps
@@ -303,6 +315,7 @@ void UserProc::dfaTypeAnalysis() {
 				localTable.addItem(addr, lookupSym(Location::memOf(addrExp)), typeExp);
 			}
 		}
+
 	}
 
 
@@ -616,6 +629,16 @@ Type* LowerType::meetWith(Type* other, bool& ch, bool bHighestPtr) {
 	}
 	// Needs work?
 	return createUnion(other, ch, bHighestPtr);
+}
+
+Type* Statement::meetWithFor(Type* ty, Exp* e, bool& ch) {
+	bool thisCh = false;
+	Type* newType = getTypeFor(e)->meetWith(ty, thisCh);
+	if (thisCh) {
+		ch = true;
+		setTypeFor(e, newType);
+	}
+	return newType;
 }
 
 Type* Type::createUnion(Type* other, bool& ch, bool bHighestPtr /* = false */) {
