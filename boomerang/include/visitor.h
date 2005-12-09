@@ -18,7 +18,7 @@
  *				StmtPartModifier (as above specialised for propagation)
  *============================================================================*/
 /*
- * $Revision: 1.19 $	// 1.13.2.11
+ * $Revision: 1.20 $	// 1.13.2.11
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  *
@@ -326,7 +326,9 @@ virtual Exp*		postVisit(TypeVal *e);
 };
 
 // A modifying visitor to process all references in an expression, bypassing calls (and phi statements if they have been
-// replaced by copy assignments), and performing simplification as needed.
+// replaced by copy assignments), and performing simplification on the direct parent of the expression that is modified.
+// NOTE: this is sometimes not enough! Consider changing (r+x)+K2) where x gets changed to K1. Now you have (r+K1)+K2,
+// but simplifying only the parent doesn't simplify the K1+K2.
 // Used to also propagate, but this became unwieldy with -l propagation limiting
 class CallBypasser : public SimpExpModifier {
 		Statement*	enclosingStmt;		// Statement that is being modified at present, for debugging only
@@ -540,4 +542,11 @@ public:
 		bool	 	visit(Location *e, bool& override);
 };
 
+class ConstGlobalConverter : public ExpModifier {
+		Prog*		prog;									// Pointer to the Prog object, for reading memory
+public:
+					ConstGlobalConverter(Prog* pg) : prog(pg) {}
+virtual Exp*		preVisit(RefExp		*e, bool& recur);
+virtual Exp*		preVisit(Location	*e, bool& recur);
+};
 #endif	// #ifndef __VISITOR_H__
