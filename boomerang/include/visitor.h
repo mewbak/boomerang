@@ -18,7 +18,7 @@
  *				StmtPartModifier (as above specialised for propagation)
  *============================================================================*/
 /*
- * $Revision: 1.20 $	// 1.13.2.11
+ * $Revision: 1.21 $	// 1.13.2.11
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  *
@@ -547,6 +547,5 @@ class ConstGlobalConverter : public ExpModifier {
 public:
 					ConstGlobalConverter(Prog* pg) : prog(pg) {}
 virtual Exp*		preVisit(RefExp		*e, bool& recur);
-virtual Exp*		preVisit(Location	*e, bool& recur);
 };
 #endif	// #ifndef __VISITOR_H__
