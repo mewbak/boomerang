@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.178 $	// 1.148.2.38
+ * $Revision: 1.179 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3073,7 +3073,7 @@ bool ImplicitAssign::searchAll(Exp* search, std::list<Exp*>& result) {
 }
 
 bool Assign::searchAndReplace(Exp* search, Exp* replace, bool cc) {
-	bool chl, chr, chg;
+	bool chl, chr, chg = false;
 	lhs = lhs->searchReplaceAll(search, replace, chl);
 	rhs = rhs->searchReplaceAll(search, replace, chr);
 	if (guard)
