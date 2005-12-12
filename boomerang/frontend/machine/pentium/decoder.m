@@ -13,7 +13,7 @@
  *				etc. Ordinary instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.36 $	// 1.33.2.2
+ * $Revision: 1.37 $	// 1.33.2.2
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -1284,7 +1284,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 		stmts = instantiate(pc,	 "CALL.Jvod", dis_Num(relocd));
 		// Fix the last assignment, which is now %pc := %pc + (K + hostPC)
 		Assign* last = (Assign*)stmts->back();
-		Const*& reloc = (Const*&)((Binary*)last->getRight())->refSubExp2();
+		Const* reloc = (Const*)((Binary*)last->getRight())->getSubExp2();
 		assert(reloc->isIntConst());
 		// Subtract off the host pc
 		reloc->setInt(reloc->getInt() - hostPC);
