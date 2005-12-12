@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.80 $	// 1.73.2.5
+ * $Revision: 1.81 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -184,7 +184,7 @@ public:
 		// Print this program (primarily for debugging)
 		void		print(std::ostream &out);
 
-		// lookup a library procedure by name
+		// lookup a library procedure by name; create if does not exist
 		LibProc		*getLibraryProc(const char *nam);
 
 		// Get a library signature for a given name (used when creating a new library proc.

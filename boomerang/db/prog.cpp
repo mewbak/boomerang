@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.137 $	// 1.126.2.14
+ * $Revision: 1.138 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -516,7 +516,7 @@ Proc* Prog::findProc(const char *name) const {
 	return NULL;
 }
 
-// get a library procedure by name
+// get a library procedure by name; create if does not exist
 LibProc *Prog::getLibraryProc(const char *nam) {
 	Proc *p = findProc(nam);
 	if (p && p->isLib())
