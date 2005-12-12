@@ -7,13 +7,14 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.27 $
+dnl $Revision: 1.28 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
 dnl 06 Mar 03 - Mike: Removed need for libelf
 dnl 27 Jun 04 - Mike: Added XMLWF for eXpat XML parser
 dnl 22 Aug 05 - Mike: Some improvements for OS X, and finding things like libexpat.a
+dnl 12 Dec 05 - Mike: Apply Emmanuel Fleury's changes for auto "make remote"
 
 AC_PREREQ(2.52)
 AC_INIT(LICENSE.TERMS)
@@ -26,8 +27,8 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP
-AC_PATH_PROG( BISONPP, bison++, BISONPP_NOT_INSTALLED )
-AC_PATH_PROG( FLEXPP, flex++, FLEXPP_NOT_INSTALLED )
+AC_PATH_PROG( BISONPP, bison++, [] )
+AC_PATH_PROG( FLEXPP, flex++, [] )
 AC_SUBST( BISONPP )
 AC_SUBST( FLEXPP )
 
