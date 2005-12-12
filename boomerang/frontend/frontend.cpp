@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.101 $	// 1.89.2.7
+ * $Revision: 1.102 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -501,11 +501,15 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 				s->simplify();
 				GotoStatement* stmt_jump = static_cast<GotoStatement*>(s);
 
-				if (s->getKind() == STMT_GOTO && stmt_jump->getFixedDest() != NO_ADDRESS &&
-						pBF->IsDynamicLinkedProc(stmt_jump->getFixedDest())) {
+				ADDRESS dest;
+				if (s->getKind() == STMT_GOTO && 
+						(dest = stmt_jump->getFixedDest(), dest != NO_ADDRESS) &&
+						pBF->IsDynamicLinkedProc(dest)) {
 					s = *ss = new CallStatement();
+					Proc* proc = prog->setNewProc(dest);
 					CallStatement *call = static_cast<CallStatement*>(s);
-					call->setDest(stmt_jump->getFixedDest());
+					call->setDest(dest);
+					call->setDestProc(proc);
 					call->setReturnAfterCall(true);
 				}
 
