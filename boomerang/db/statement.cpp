@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.181 $	// 1.148.2.38
+ * $Revision: 1.182 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1128,7 +1128,7 @@ void CaseStatement::setSwitchInfo(SWITCH_INFO* psi) {
  *============================================================================*/
 bool CaseStatement::searchAndReplace(Exp* search, Exp* replace, bool cc) {
 	bool ch = GotoStatement::searchAndReplace(search, replace, cc);
-	bool ch2;
+	bool ch2 = false;
 	if (pSwitchInfo && pSwitchInfo->pSwitchVar)
 		pSwitchInfo->pSwitchVar = pSwitchInfo->pSwitchVar->searchReplaceAll(search, replace, ch2);
 	return ch | ch2;
