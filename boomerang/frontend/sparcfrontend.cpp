@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.39 $	// 1.35.2.5
+ * $Revision: 1.40 $	// 1.35.2.5
  *
  * 17 May 02 - Mike: Mods for boomerang
  * 22 Nov 02 - Mike: Added check for invalid instructions; prints opcode
@@ -445,9 +445,9 @@ bool SparcFrontEnd::case_DD(ADDRESS& address, int delta, DecodeResult& inst, Dec
 			bRet = false;
 			Exp* pDest = ((CaseStatement*)lastStmt)->getDest();
 			if (pDest == NULL) {				// Happens if already analysed (we are now redecoding)
-				SWITCH_INFO* psi = ((CaseStatement*)lastStmt)->getSwitchInfo();
+				//SWITCH_INFO* psi = ((CaseStatement*)lastStmt)->getSwitchInfo();
 				// processSwitch will update the BB type and number of outedges, decode arms, set out edges, etc
-				newBB->processSwitch(proc, psi);
+				newBB->processSwitch(proc);
 			}
 			break;
 		}

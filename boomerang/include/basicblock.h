@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $	// 1.1.2.2
+ * $Revision: 1.4 $	// 1.1.2.2
  *
  * 28 Jun 05 - Mike: Split off from cfg.h
  */
@@ -31,7 +31,7 @@ class BasicBlock;
 class RTL;
 class Proc;
 class UserProc;
-struct SWITCH_INFO;
+struct SWITCH_INFO;				// Declared in include/statement.h
 
 typedef BasicBlock* PBB;
 
@@ -502,7 +502,7 @@ public:
 
 		// Find indirect jumps and calls
 		bool		decodeIndirectJmp(UserProc* proc);
-		void		processSwitch(UserProc* proc, SWITCH_INFO* swi);
+		void		processSwitch(UserProc* proc);
 		int			findNumCases();
 
 		/*

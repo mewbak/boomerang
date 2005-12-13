@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.86 $	// 1.76.2.30
+ * $Revision: 1.87 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -219,6 +219,8 @@ virtual bool		isBranch() { return kind == STMT_BRANCH; }
 		// true if this statement is a decoded ICT.
 		// NOTE: for now, it only represents decoded indirect jump instructions
 		bool		isHL_ICT() {return kind == STMT_CASE; }
+
+		bool		isCase() {return kind == STMT_CASE; }
 
 		// true if this is a fpush/fpop
 		bool		isFpush();

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.102 $	// 1.89.2.7
+ * $Revision: 1.103 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -550,10 +550,10 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 				case STMT_CASE: {
 					Exp* pDest = stmt_jump->getDest();
 					if (pDest == NULL) {				// Happens if already analysed (now redecoding)
-						SWITCH_INFO* psi = ((CaseStatement*)stmt_jump)->getSwitchInfo();
+						// SWITCH_INFO* psi = ((CaseStatement*)stmt_jump)->getSwitchInfo();
 						BB_rtls->push_back(pRtl);
 						pBB = pCfg->newBB(BB_rtls, NWAY, 0);	// processSwitch will update num outedges
-						pBB->processSwitch(pProc, psi);	// decode arms, set out edges, etc
+						pBB->processSwitch(pProc);		// decode arms, set out edges, etc
 						sequentialDecode = false;		// Don't decode after the jump
 						BB_rtls = NULL;					// New RTLList for next BB
 						break;							// Just leave it alone
