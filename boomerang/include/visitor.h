@@ -18,7 +18,7 @@
  *				StmtPartModifier (as above specialised for propagation)
  *============================================================================*/
 /*
- * $Revision: 1.21 $	// 1.13.2.11
+ * $Revision: 1.22 $	// 1.13.2.11
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  *
@@ -461,6 +461,7 @@ virtual void		visit(  CallStatement *s, bool& recur);
 virtual void		visit(BranchStatement *s, bool& recur);
 virtual void		visit(ReturnStatement *s, bool& recur);
 virtual void		visit(ImpRefStatement *s, bool& recur);
+virtual void		visit(  CaseStatement *s, bool& recur);
 };
 
 // Convert any exp{-} (with null definition) so that the definition points instead to an implicit assignment (exp{0})
