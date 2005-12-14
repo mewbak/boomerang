@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.182 $	// 1.148.2.38
+ * $Revision: 1.183 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4622,6 +4622,12 @@ StatementList* CallStatement::calcResults() {
 			int n = sig->getNumReturns();
 			for (int i=1; i < n; i++) {						// Ignore first (stack pointer) return
 				Exp* sigReturn = sig->getReturnExp(i);
+				// But we have translated out of SSA form, so some registers have had to have been replaced with locals
+				// So wrap the return register in a ref to this and check the locals
+				RefExp* wrappedRet = new RefExp(sigReturn, this);
+				char* locName = proc->findLocal(wrappedRet);	// E.g. r24{16}
+				if (locName)
+					sigReturn = Location::local(locName, proc);	// Replace e.g. r24 with local19
 				if (useCol.exists(sigReturn)) {
 					ImplicitAssign* as = new ImplicitAssign(sig->getReturnType(i), sigReturn);
 					ret->append(as);
