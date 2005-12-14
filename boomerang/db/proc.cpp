@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.265 $	// 1.238.2.44
+ * $Revision: 1.266 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -864,8 +864,6 @@ void UserProc::insertStatementAfter(Statement* s, Statement* a) {
 static int indent = 0;
 CycleSet* UserProc::decompile(CycleList* path) {
 	std::cout << std::setw(++indent) << " " << "considering " << getName() << "\n";
-if (strcmp("Perl_saferealloc", getName()) == 0)
- std::cerr << "   status = " << (int)status << "\n";
 	if (VERBOSE)
 		LOG << "begin decompile(" << getName() << ")\n";
 	// Prevent infinite loops when there are cycles in the call graph
