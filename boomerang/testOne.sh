@@ -1,5 +1,5 @@
 #!/bin/bash
-# testOne.sh functional test script $Revision: 1.13 $ # 1.10.2.1
+# testOne.sh functional test script $Revision: 1.14 $ # 1.10.2.1
 # Call with test platform, test-program test-set [,option [,arguments]]
 # test-set is a char usually 1-9 for the various .out files, usually use 1 for .out1
 # e.g. "./testOne.sh pentium hello"
@@ -51,7 +51,8 @@ else
 				diff -c test/source/$2.out$3 functest.out > functest.tmp
 				ret=$?
 				# Filter out control chars that may happen due to bad decomp.
-				tr -s -d < functest.tmp [:cntrl:] >> functest.res
+				# tr -s -d < functest.tmp [:cntrl:] >> functest.res
+				sed -e "s/[[:cntrl:]]//g" functest.tmp >> functest.res
 				if [[ ret -ne 0 ]]; then
 					echo Result for $1 $2: FAILED diff set $3 >> functest.res
 				else
