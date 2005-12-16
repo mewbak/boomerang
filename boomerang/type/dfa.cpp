@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.46 $	// 1.30.2.11
+ * $Revision: 1.47 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -715,13 +715,16 @@ void PhiAssign::dfaTypeAnalysis(bool& ch) {
 	Type* meetOfArgs = defVec[0].def->getTypeFor(lhs);
 	assert(defVec.size() > 1);
 	for (it = ++defVec.begin(); it != defVec.end(); it++) {
+		if (it->e == NULL) continue;
 		assert(it->def);
 		Type* typeOfDef = it->def->getTypeFor(it->e);
 		meetOfArgs = meetOfArgs->meetWith(typeOfDef, ch);
 	}
 	type = type->meetWith(meetOfArgs, ch);
-	for (it = defVec.begin(); it != defVec.end(); it++)
+	for (it = defVec.begin(); it != defVec.end(); it++) {
+		if (it->e == NULL) continue;
 		it->def->meetWithFor(type, it->e, ch);
+	}
 	Assignment::dfaTypeAnalysis(ch);			// Handle the LHS
 }
 

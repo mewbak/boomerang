@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.34 $
+ * $Revision: 1.35 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -584,9 +584,11 @@ void StmtImplicitConverter::visit(PhiAssign* s, bool& recur) {
 	// The LHS could be a m[x] where x has a null subscript; must do first
 	s->setLeft(s->getLeft()->accept(mod));
 	PhiAssign::iterator uu;
-	for (uu = s->begin(); uu != s->end(); uu++)
+	for (uu = s->begin(); uu != s->end(); uu++) {
+		if (uu->e == NULL) continue;
 		if (uu->def == NULL)
 			uu->def = cfg->findImplicitAssign(uu->e);
+	}
 	recur = false;		// Already done LHS
 }
 
