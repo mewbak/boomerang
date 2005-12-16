@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.138 $	// 1.126.2.14
+ * $Revision: 1.139 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -948,7 +948,8 @@ void Prog::decompile() {
 	for (ee = entryProcs.begin(); ee != entryProcs.end(); ++ee) {
 		std::cerr << "decompiling entry point " << (*ee)->getName() << "\n";
 		LOG		  << "decompiling entry point " << (*ee)->getName() << "\n";
-		(*ee)->decompile(new CycleList);
+		int indent = 0;
+		(*ee)->decompile(new CycleList, indent);
 	}
 
 	// Just in case there are any Procs not in the call graph. 
@@ -958,7 +959,8 @@ void Prog::decompile() {
 			UserProc* proc = (UserProc*)(*pp);
 			if (proc->isLib()) continue;
 			if (proc->isDecompiled()) continue;
-			proc->decompile(new CycleList);
+			int indent = 0;
+			proc->decompile(new CycleList, indent);
 		}
 	}
 
