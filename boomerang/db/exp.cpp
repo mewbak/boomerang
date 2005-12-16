@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.185 $	// 1.172.2.20
+ * $Revision: 1.186 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2390,7 +2390,8 @@ Exp* Binary::polySimplify(bool& bMod) {
 	// check for exp + n where exp is a pointer to a compound type
 	// becomes &m[exp].m + r where m is the member at offset n and r is n - the offset to member m
 	// MVE: Fix for DFA type analysis; at present, calls getType which is deprecated
-	if (	DFA_TYPE_ANALYSIS &&
+	//if (	DFA_TYPE_ANALYSIS &&
+	if (	ADHOC_TYPE_ANALYSIS &&
 			op == opPlus &&
 			subExp1->getType() &&
 			opSub2 == opIntConst) {
@@ -3489,6 +3490,8 @@ Type *RefExp::getType()
 	// variable in SSA!
 	//if (subExp1 && subExp1->getType())
 	//	return subExp1->getType();
+	if (!ADHOC_TYPE_ANALYSIS)
+		return NULL;			// Desperate attempt to avoid phi loops
 	if (def && def->isAssign() && ((Assign*)def)->getRight()->getType())
 		return ((Assign*)def)->getRight()->getType();
 	if (def && def->isCall()) {
