@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.53 $	// 1.51.2.3
+ * $Revision: 1.54 $	// 1.51.2.3
  *
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
@@ -280,7 +280,7 @@ void PentiumFrontEnd::processFloatCode(Cfg* pCfg)
 						Location::regOf(32)), i++);
 					(*rit)->insertStmt(new Assign(new FloatType(80),
 						Location::regOf(32), 
-							Location::tempOf(new Const("tmpD9"))), i++);
+						Location::tempOf(new Const("tmpD9"))), i++);
 					// Remove the FPUSH
 					(*rit)->deleteStmt(i);
 					i--;
@@ -288,8 +288,7 @@ void PentiumFrontEnd::processFloatCode(Cfg* pCfg)
 				}
 				else if (st->isFpop()) {
 					(*rit)->insertStmt(new Assign(new FloatType(80),
-						Location::regOf(
-							Location::tempOf(new Const("tmpD9"))), 
+						Location::tempOf(new Const("tmpD9")), 
 						Location::regOf(32)), i++);
 					(*rit)->insertStmt(new Assign(new FloatType(80),
 						Location::regOf(32), 
@@ -314,7 +313,7 @@ void PentiumFrontEnd::processFloatCode(Cfg* pCfg)
 						Location::regOf(39)), i++);
 					(*rit)->insertStmt(new Assign(new FloatType(80),
 						Location::regOf(39), 
-						   Location::tempOf(new Const("tmpD9"))), i++);
+						Location::tempOf(new Const("tmpD9"))), i++);
 					// Remove the FPOP
 					(*rit)->deleteStmt(i);
 					i--;
