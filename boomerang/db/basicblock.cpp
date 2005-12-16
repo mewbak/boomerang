@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.111 $	// 1.93.2.8
+ * $Revision: 1.112 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1871,7 +1871,7 @@ int BasicBlock::findNumCases() {
 		if (op == opLessEq || op == opLessEqUns)
 			return k+1;
 	}
-	std::cerr << "Could not find number of cases for n-way at address " << std::hex << getLowAddr() << "\n";
+	LOG << "Could not find number of cases for n-way at address " << getLowAddr() << "\n";
 	return 3;		 // Bald faced guess if all else fails
 }
 
