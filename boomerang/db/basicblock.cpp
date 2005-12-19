@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.113 $	// 1.93.2.8
+ * $Revision: 1.114 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1879,6 +1879,7 @@ int BasicBlock::findNumCases() {
 
 // Find all the possible constant values that the location defined by s could be assigned with
 void findConstantValues(Statement* s, std::list<int>& dests) {
+	if (s == NULL) return;
 	if (s->isPhi()) {
 		// For each definition, recurse
 		PhiAssign::Definitions::iterator it;
