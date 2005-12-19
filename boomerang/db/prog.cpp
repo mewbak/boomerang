@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.139 $	// 1.126.2.14
+ * $Revision: 1.140 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -494,7 +494,7 @@ Proc* Prog::getProc(int idx) const {
 
 /*==============================================================================
  * FUNCTION:	Prog::findProc
- * OVERVIEW:	Return a pointer to the associated Proc object, or 0 if none
+ * OVERVIEW:	Return a pointer to the associated Proc object, or NULL if none
  * NOTE:		Could return -1 for a deleted Proc
  * PARAMETERS:	Native address of the procedure entry point
  * RETURNS:		Pointer to the Proc object, or 0 if none, or -1 if deleted
@@ -503,7 +503,7 @@ Proc* Prog::findProc(ADDRESS uAddr) const {
 	PROGMAP::const_iterator it;
 	it = m_procLabels.find(uAddr);
 	if (it == m_procLabels.end())
-		return 0;
+		return NULL;
 	else
 		return (*it).second;
 }
