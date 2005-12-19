@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.103 $	// 1.89.2.7
+ * $Revision: 1.104 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -493,7 +493,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 				s->setProc(pProc);		// let's do this really early!
 				if (refHints.find(pRtl->getAddress()) != refHints.end()) {
 					const char *nam = refHints[pRtl->getAddress()].c_str();
-					ADDRESS gu = pProc->getProg()->getGlobalAddr((char*)nam);
+					ADDRESS gu = prog->getGlobalAddr((char*)nam);
 					if (gu != NO_ADDRESS) {
 						s->searchAndReplace(new Const((int)gu), new Unary(opAddrOf, Location::global(nam, pProc)));
 					}
@@ -501,12 +501,13 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 				s->simplify();
 				GotoStatement* stmt_jump = static_cast<GotoStatement*>(s);
 
+				// Check for a call to an already existing procedure (including self recursive jumps)
 				ADDRESS dest;
+				Proc* proc;
 				if (s->getKind() == STMT_GOTO && 
 						(dest = stmt_jump->getFixedDest(), dest != NO_ADDRESS) &&
-						pBF->IsDynamicLinkedProc(dest)) {
+						(proc = prog->findProc(dest), proc != NULL && proc != (Proc*)-1)) {
 					s = *ss = new CallStatement();
-					Proc* proc = prog->setNewProc(dest);
 					CallStatement *call = static_cast<CallStatement*>(s);
 					call->setDest(dest);
 					call->setDestProc(proc);
