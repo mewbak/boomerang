@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.114 $	// 1.93.2.8
+ * $Revision: 1.115 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -839,7 +839,8 @@ void BasicBlock::simplify() {
 			std::vector<PBB> rinedges = redundant->m_InEdges;
 			redundant->m_InEdges.clear();
 			for (unsigned i = 0; i < rinedges.size(); i++) {
-				LOG << rinedges[i]->getLowAddr() << " ";
+				if (VERBOSE)
+					LOG << rinedges[i]->getLowAddr() << " ";
 				if (rinedges[i] != this)
 					redundant->m_InEdges.push_back(rinedges[i]);
 				else {
