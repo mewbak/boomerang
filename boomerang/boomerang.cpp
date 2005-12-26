@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.131 $	// 1.115.2.5
+ * $Revision: 1.132 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -146,7 +146,7 @@ void Boomerang::help() {
 	std::cout << "  -x               : Dump XML files\n";
 	std::cout << "  -r               : Print RTL for each proc to log before code generation\n";
 	std::cout << "  -gd <dot file>   : Generate a dotty graph of the program's CFG and DFG\n";
-	std::cout << "  -gc              : Generate a call graph (callgraph.out)\n";
+	std::cout << "  -gc              : Generate a call graph (callgraph.out and callgraph.dot)\n";
 	std::cout << "  -gs              : Generate a symbol file (symbols.h)\n";
 	std::cout << "  -iw              : Write indirect call report to output/indirect.txt\n";
 	std::cout << "Misc.\n";
