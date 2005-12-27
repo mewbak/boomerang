@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.105 $	// 1.89.2.7
+ * $Revision: 1.106 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -488,7 +488,14 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 			// For each Statement in the RTL
 			std::list<Statement*>& sl = pRtl->getList();
 			std::list<Statement*>::iterator ss;
-			for (ss = sl.begin(); ss != sl.end(); ss++) {
+#if 1
+			for (ss = sl.begin(); ss != sl.end(); ss++) { // }
+#else
+			// The counter is introduced because ss != sl.end() does not work as it should
+			// FIXME: why? Does this really fix the problem?
+			int counter = sl.size();
+			for (ss = sl.begin(); counter > 0; ss++, counter--) {
+#endif
 				Statement* s = *ss;
 				s->setProc(pProc);		// let's do this really early!
 				if (refHints.find(pRtl->getAddress()) != refHints.end()) {
