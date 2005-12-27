@@ -17,7 +17,7 @@
  *			   SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.38 $	// 1.20.2.2
+/* $Revision: 1.39 $	// 1.20.2.2
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -2102,7 +2102,7 @@ DecodeResult& SparcDecoder::decodeInstruction (ADDRESS pc, int delta) {
 
       		GotoStatement* jump = 0;
 
-      		RTL* rtl;
+      		RTL* rtl = NULL;
 
       		if (strcmp(name,"BA,a") == 0 || strcmp(name,"BN,a") == 0) {
 
