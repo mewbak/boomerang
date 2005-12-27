@@ -13,7 +13,7 @@
  *			   SparcDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.21 $	// 1.20.2.2
+/* $Revision: 1.22 $	// 1.20.2.2
  *
  * 26 Apr 02 - Mike: Mods for boomerang
  * 19 May 02 - Mike: Added many (int) casts: variables from toolkit are unsgnd
@@ -285,7 +285,7 @@ DecodeResult& SparcDecoder::decodeInstruction (ADDRESS pc, int delta) {
 		// Instantiate a GotoStatement for the unconditional branches, HLJconds for the rest.
 		// NOTE: NJMC toolkit cannot handle embedded else statements!
 		GotoStatement* jump = 0;
-		RTL* rtl;
+		RTL* rtl = NULL;					// Init to NULL to suppress a warning
 		if (strcmp(name,"BA,a") == 0 || strcmp(name,"BN,a") == 0) {
 			jump = new GotoStatement;
 			rtl = new RTL(pc, stmts);
