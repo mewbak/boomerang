@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.132 $	// 1.115.2.5
+ * $Revision: 1.133 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -33,6 +33,9 @@
 #include "boomerang.h"
 #include "xmlprogparser.h"
 #include "log.h"
+
+// For the -nG switch to disable the garbage collector
+#include "gc.h"
 
 Boomerang *Boomerang::boomerang = NULL;
 
@@ -180,6 +183,7 @@ void Boomerang::help() {
 	std::cout << "  -l <depth>       : Limit multi-propagations to expressions with depth <depth>\n";
 	std::cout << "  -p <num>         : Only do num propagations\n";
 	std::cout << "  -m <num>         : Max memory depth\n";
+	std::cout << "  -nG              : No garbage collection\n";
 	exit(1);
 }
 		
@@ -752,6 +756,9 @@ int Boomerang::commandLine(int argc, const char **argv)
 						break;
 					case 'g':
 						noGlobals = true;
+						break;
+					case 'G':
+						GC_disable();
 						break;
 					default:
 						help();
