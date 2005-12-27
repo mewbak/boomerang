@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.108 $	// 1.98.2.12
+ * $Revision: 1.109 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -317,7 +317,7 @@ bool CallingConvention::Win32Signature::qualified(UserProc *p, Signature &candid
 	if (VERBOSE)
 		LOG << "consider promotion to stdc win32 signature for " << p->getName() << "\n";
 
-	bool gotcorrectret1, gotcorrectret2;
+	bool gotcorrectret1, gotcorrectret2 = false;
 	Exp *provenPC = p->getProven(new Terminal(opPC));
 	gotcorrectret1 = provenPC && (*provenPC == *savedReturnLocation);
 	if (gotcorrectret1) {
