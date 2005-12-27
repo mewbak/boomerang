@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.47 $	// 1.30.2.11
+ * $Revision: 1.48 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -1070,7 +1070,7 @@ LOG << "ARRAY HACK for " << this << "\n";
 				case opMult: case opDiv:
 					signedness = -1; break;
 				default:
-					break;
+					signedness = 0; break;
 			}
 
 			int parentSize = parentType->getSize();

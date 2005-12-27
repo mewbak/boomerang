@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.40 $	// 1.35.2.5
+ * $Revision: 1.41 $	// 1.35.2.5
  *
  * 17 May 02 - Mike: Mods for boomerang
  * 22 Nov 02 - Mike: Added check for invalid instructions; prints opcode
@@ -452,6 +452,7 @@ bool SparcFrontEnd::case_DD(ADDRESS& address, int delta, DecodeResult& inst, Dec
 			break;
 		}
 		default:
+			newBB = NULL;
 			break;
 	}
 	if (newBB == NULL) return false;
