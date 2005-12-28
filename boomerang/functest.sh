@@ -1,5 +1,5 @@
 #!/bin/bash
-# functest.sh functional test script $Revision: 1.30 $	# 1.23.2.1
+# functest.sh functional test script $Revision: 1.31 $	# 1.23.2.1
 # Note: to test with data flow based type analysis, pass a parameter of -Td
 #
 # 02 Feb 05 - Mike: Conditional tests for no type analysis. So all tests should pass whether -Td is passed or not
@@ -7,7 +7,7 @@
 # 24 Dec 05 - Gerard: Support for more than one switch added
 #
 TESTONE=./testOne.sh
-#TESTONE=sh testOne.sh	# For MinGW (configure me one day)
+#TESTONE="sh testOne.sh"	# For MinGW (configure me one day)
 BOOMSW=$*
 TYPEANALYSIS=""
 # look for -Td to see if type analysis is enabled
