@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.136 $	// 1.115.2.5
+ * $Revision: 1.137 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -656,8 +656,11 @@ int Boomerang::commandLine(int argc, const char **argv)
 #ifdef _MSC_VER						// For the console mode version; Windows GUI will override in windows.cpp
 	// As a special case for MSVC testing, make the program path the parent of the dir with the .exe
 	j = progPath.find("Debug\\", progPath.length() - (5+1));
-	if (j == std::string::npos)
-           j = progPath.rfind("Release\\", progPath.length() - (7+1));
+	if (j == std::string::npos) {
+			j = progPath.rfind("elease\\", progPath.length() - (6+1));
+			if (j != std::string::npos)
+				j--;			// Point to the 'r' or 'R'
+	}
 	if (j != std::string::npos)
 		progPath = progPath.substr(0, j);			// Chop off "Release\" or "Debug\"
 	SetCurrentDirectory(progPath.c_str());			// Note: setcwd() doesn't seem to work
