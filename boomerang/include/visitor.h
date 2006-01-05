@@ -18,7 +18,7 @@
  *				StmtPartModifier (as above specialised for propagation)
  *============================================================================*/
 /*
- * $Revision: 1.22 $	// 1.13.2.11
+ * $Revision: 1.23 $	// 1.13.2.11
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  *
@@ -494,9 +494,10 @@ public:
 
 
 class ComplexityFinder : public ExpVisitor {
-		int		count;
+		int			count;
+		UserProc*	proc;
 public:
-				ComplexityFinder() : count(0) {}
+				ComplexityFinder(UserProc* p) : count(0), proc(p) {}
 		int		getDepth() {return count;}
 
 virtual bool	visit(Unary *e,		bool& override);

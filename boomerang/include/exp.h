@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the Exp class and its subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.128 $	// 1.119.2.11
+ * $Revision: 1.129 $	// 1.119.2.11
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -279,7 +279,7 @@ virtual void		setSubExp3(Exp* e) {};
 virtual int			getMemDepth() {return 0;}
 virtual bool		isMemDepth(int d) {return d == 0;}
 		// Get the complexity depth. Basically, add one for each unary, binary, or ternary
-		int			getComplexityDepth();
+		int			getComplexityDepth(UserProc* proc);
 
 		//	//	//	//	//	//	//
 		//	Guarded assignment	//

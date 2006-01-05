@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.184 $	// 1.148.2.38
+ * $Revision: 1.185 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -254,7 +254,8 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
 			Exp* lhs = def->getLeft();
 			if (destCounts && !lhs->isFlags()) {			// Always propagate to %flags
 				std::map<Exp*, int, lessExpStar>::iterator ff = destCounts->find(e);
-				if (ff != destCounts->end() && ff->second > 1 && def->getRight()->getComplexityDepth() >= propMaxDepth)
+				if (ff != destCounts->end() && ff->second > 1 &&
+						def->getRight()->getComplexityDepth(proc) >= propMaxDepth)
 					// This propagation is prevented by the -l limit
 					continue;
 			}

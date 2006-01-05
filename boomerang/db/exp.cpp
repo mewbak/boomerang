@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.187 $	// 1.172.2.20
+ * $Revision: 1.188 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3934,8 +3934,8 @@ void Exp::bypassComp() {
     ((Location*)this)->setSubExp1(((Location*)this)->getSubExp1()->bypass());
 }
 
-int Exp::getComplexityDepth() {
-	ComplexityFinder cf;
+int Exp::getComplexityDepth(UserProc* proc) {
+	ComplexityFinder cf(proc);
 	accept(&cf);
 	return cf.getDepth();
 }
