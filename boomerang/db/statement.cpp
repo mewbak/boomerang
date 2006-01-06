@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.185 $	// 1.148.2.38
+ * $Revision: 1.186 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3077,6 +3077,7 @@ bool Assign::searchAll(Exp* search, std::list<Exp*>& result) {
 		result.push_back(*it);
 	return res;
 }
+// FIXME: is this the right semantics for searching a phi statement, disregarding the RHS?
 bool PhiAssign::searchAll(Exp* search, std::list<Exp*>& result) {
 	return lhs->searchAll(search, result);
 }
@@ -4861,3 +4862,10 @@ void CallStatement::eliminateDuplicateArgs() {
 	}
 }
 
+void PhiAssign::enumerateParams(std::list<Exp*>& le) {
+	iterator it;
+	for (it = begin(); it != end(); ++it) {
+		RefExp* r = new RefExp(it->e, it->def);
+		le.push_back(r);
+	}
+}

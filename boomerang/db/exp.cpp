@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.188 $	// 1.172.2.20
+ * $Revision: 1.189 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2918,8 +2918,8 @@ bool Exp::isTemp() {
 	return sub->op == opTemp;
 }
 
-Exp *Exp::removeSubscripts(bool& allZero)
-{
+// allZero is set if all subscripts in the whole expression are null or implicit; otherwise cleared
+Exp *Exp::removeSubscripts(bool& allZero) {
 	Exp *e = this;
 	LocationSet locs;
 	e->addUsedLocs(locs);
@@ -2928,11 +2928,12 @@ Exp *Exp::removeSubscripts(bool& allZero)
 	for (xx = locs.begin(); xx != locs.end(); xx++) {
 		if ((*xx)->getOper() == opSubscript) {
 			RefExp *r1 = (RefExp*)*xx;
-			if (!(r1->getDef() == NULL || r1->getDef()->getNumber() == 0)) {
+			Statement* def = r1->getDef();
+			if (!(def == NULL || def->getNumber() == 0)) {
 				allZero = false;
 			}
 			bool change; 
-			e = e->searchReplaceAll(*xx, r1->getSubExp1()->clone(), change);
+			e = e->searchReplaceAll(*xx, r1->getSubExp1()/*->clone()*/, change);
 		}
 	}
 	return e;

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.87 $	// 1.76.2.30
+ * $Revision: 1.88 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -624,6 +624,9 @@ virtual	int			getNumDefs() {return defVec.size();}
 
 		// Convert this phi assignment to an ordinary assignment
 		void		convertToAssign(Exp* rhs);
+
+		// Generate a list of references for the parameters
+		void		enumerateParams(std::list<Exp*>& le);
 
 protected:
 		friend class XMLProgParser;
