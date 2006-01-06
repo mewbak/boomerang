@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.274 $	// 1.238.2.44
+ * $Revision: 1.275 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -645,45 +645,45 @@ void UserProc::printToLog() {
 }
 
 void UserProc::printDFG() { 
-    char fname[1024];
-    sprintf(fname, "%s%s-%i-dfg.dot", Boomerang::get()->getOutputPath().c_str(), getName(), DFGcount);
-    DFGcount++;
-    if (VERBOSE)
-	LOG << "outputing DFG to " << fname << "\n";
-    std::ofstream out(fname);
-    out << "digraph " << getName() << " {\n";
-    StatementList stmts;
-    getStatements(stmts);
-    StatementList::iterator it;
-    for (it = stmts.begin(); it != stmts.end(); it++) {
-        Statement *s = *it;
-	if (s->isPhi())
-	    out << s->getNumber() << " [shape=\"triangle\"];\n";
-	if (s->isCall())
-	    out << s->getNumber() << " [shape=\"box\"];\n";
-	if (s->isBranch())
-	    out << s->getNumber() << " [shape=\"diamond\"];\n";
-	LocationSet refs;
-	s->addUsedLocs(refs);
-	LocationSet::iterator rr;
-	for (rr = refs.begin(); rr != refs.end(); rr++) {
-	    RefExp* r = dynamic_cast<RefExp*>(*rr);
-	    if (r) {
-		if (r->getDef())
-	            out << r->getDef()->getNumber();
-		else
-		    out << "input";
-		out << " -> ";
-		if (s->isReturn())
-		    out << "output";
-		else
-		    out << s->getNumber();
-		out << ";\n";
-	    }
+	char fname[1024];
+	sprintf(fname, "%s%s-%i-dfg.dot", Boomerang::get()->getOutputPath().c_str(), getName(), DFGcount);
+	DFGcount++;
+	if (VERBOSE)
+		LOG << "outputing DFG to " << fname << "\n";
+	std::ofstream out(fname);
+	out << "digraph " << getName() << " {\n";
+	StatementList stmts;
+	getStatements(stmts);
+	StatementList::iterator it;
+	for (it = stmts.begin(); it != stmts.end(); it++) {
+		Statement *s = *it;
+		if (s->isPhi())
+			out << s->getNumber() << " [shape=\"triangle\"];\n";
+		if (s->isCall())
+			out << s->getNumber() << " [shape=\"box\"];\n";
+		if (s->isBranch())
+			out << s->getNumber() << " [shape=\"diamond\"];\n";
+		LocationSet refs;
+		s->addUsedLocs(refs);
+		LocationSet::iterator rr;
+		for (rr = refs.begin(); rr != refs.end(); rr++) {
+			RefExp* r = dynamic_cast<RefExp*>(*rr);
+			if (r) {
+				if (r->getDef())
+					out << r->getDef()->getNumber();
+				else
+					out << "input";
+				out << " -> ";
+				if (s->isReturn())
+					out << "output";
+				else
+					out << s->getNumber();
+				out << ";\n";
+			}
+		}
 	}
-    }
-    out << "}\n";
-    out.close();
+	out << "}\n";
+	out.close();
 }
 
 // initialise all statements
