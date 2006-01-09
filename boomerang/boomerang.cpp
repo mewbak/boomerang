@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.138 $	// 1.115.2.5
+ * $Revision: 1.139 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -1017,6 +1017,7 @@ Prog *Boomerang::loadAndDecode(const char *fname, const char *pname)
 		}
 	}
 
+	std::cerr << "finishing decode...\n";
 	prog->finishDecode();
 
 	Boomerang::get()->alert_end_decode();
