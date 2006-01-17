@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.188 $	// 1.148.2.38
+ * $Revision: 1.189 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4869,6 +4869,7 @@ void CallStatement::eliminateDuplicateArgs() {
 void PhiAssign::enumerateParams(std::list<Exp*>& le) {
 	iterator it;
 	for (it = begin(); it != end(); ++it) {
+		if (it->e == NULL) continue;
 		RefExp* r = new RefExp(it->e, it->def);
 		le.push_back(r);
 	}
