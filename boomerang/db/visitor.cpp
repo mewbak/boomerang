@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -764,4 +764,11 @@ Exp* ConstGlobalConverter::preVisit(RefExp* e, bool& recur) {
 	}
 	recur = true;
 	return e;
+}
+
+bool ExpDestCounter::visit(RefExp *e, bool& override) {
+	if (Statement::canPropagateToExp(e))
+		destCounts[e]++;
+	override = false;		// Continue searching my children
+	return true;			// Continue visiting the rest of Exp* e
 }
