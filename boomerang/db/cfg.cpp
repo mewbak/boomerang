@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.100 $	// 1.95.2.5
+ * $Revision: 1.101 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -1844,8 +1844,6 @@ void Cfg::appendBBs(std::list<PBB>& worklist, std::set<PBB>& workset) {
 		workset.insert(*it);
 }
 
-#define DEBUG_SPLIT_FOR_BRANCH 0
-#if DEBUG_SPLIT_FOR_BRANCH
 void dumpBB(PBB bb) {
 	std::cerr << "For BB at " << std::hex << bb << ":\nIn edges: ";
 	int i, n;
@@ -1860,7 +1858,6 @@ void dumpBB(PBB bb) {
 	  std::cerr << outs[i] << " ";
 	std::cerr << "\n";
 }
-#endif	  
 
 /*	pBB-> +----+	+----+ <-pBB
  * Change | A  | to | A	 | where A and B could be empty. S is the string
