@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.187 $	// 1.148.2.38
+ * $Revision: 1.188 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -206,8 +206,7 @@ bool Statement::canPropagateToExp(Exp*e) {
 		// Don't propagate to self! Can happen with %pc's (?!)
 //		return false;
 	if (def->isNullStatement())
-		// Don't propagate a null statement! Can happen with %pc's
-		// (this would have no effect, and would infinitely loop)
+		// Don't propagate a null statement! Can happen with %pc's (would have no effect, and would infinitely loop)
 		return false;
 	if (!def->isAssign()) return false;		// Only propagate ordinary assignments (so far)
 #if 0
@@ -4872,5 +4871,13 @@ void PhiAssign::enumerateParams(std::list<Exp*>& le) {
 	for (it = begin(); it != end(); ++it) {
 		RefExp* r = new RefExp(it->e, it->def);
 		le.push_back(r);
+	}
+}
+
+// For debugging
+void dumpDestCounts(std::map<Exp*, int, lessExpStar>* destCounts) {
+	std::map<Exp*, int, lessExpStar>::iterator it;
+	for (it = destCounts->begin(); it != destCounts->end(); ++it) {
+		std::cerr << std::setw(4) << std::dec << it->second << " " << it->first << "\n";
 	}
 }
