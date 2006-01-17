@@ -18,7 +18,7 @@
  *				StmtPartModifier (as above specialised for propagation)
  *============================================================================*/
 /*
- * $Revision: 1.24 $	// 1.13.2.11
+ * $Revision: 1.25 $	// 1.13.2.11
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  *
@@ -375,6 +375,7 @@ class ExpSubscripter : public ExpModifier {
 public:
 					ExpSubscripter(Exp* s, Statement* d) : search(s), def(d) { }
 virtual Exp*		preVisit(Location *e, bool& recur);
+virtual Exp*		preVisit(Binary *e, bool& recur);
 virtual Exp*		preVisit(Terminal *e);
 virtual Exp*		preVisit(RefExp *e,   bool& recur);
 };
