@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.83 $	// 1.73.2.5
+ * $Revision: 1.84 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -235,6 +235,7 @@ virtual				~Prog();
 						{ return pBF->SymbolByAddress(dest);}
 		PSectionInfo getSectionInfoByAddr(ADDRESS a)
 						{ return pBF->GetSectionInfoByAddr(a);}
+		ADDRESS		getLimitTextLow() {return pBF->getLimitTextLow();}
 		ADDRESS		getLimitTextHigh() {return pBF->getLimitTextHigh();}
 		// Read 2, 4, or 8 bytes given a native address
 		int			readNative1(ADDRESS a) {return pBF->readNative1(a);}
