@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.189 $	// 1.172.2.20
+ * $Revision: 1.190 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -634,6 +634,12 @@ void Const::print(std::ostream& os) {
 				os << "0x" << std::hex << u.i << std::dec;
 			else
 				os << std::dec << u.i;
+			break;
+		case opLongConst:
+			if ((long long)u.ll < -1000LL || (long long)u.ll > 1000LL)
+				os << "0x" << std::hex << u.ll << std::dec << "LL";
+			else
+				os << std::dec << u.ll << "LL";
 			break;
 		case opFltConst:
 			char buf[64];
@@ -3048,10 +3054,10 @@ Exp* Const::genConstraints(Exp* result) {
 		Type* t = ((TypeVal*)result)->getType();
 		bool match = false;
 		switch (op) {
-			case opIntConst:
 			case opLongConst:
-				// An integer constant is compatible with any size of integer, as long is it is in the right range (not
-				// checked yet)
+				// An integer constant is compatible with any size of integer, as long is it is in the right range
+				// (no test yet) FIXME: is there an endianness issue here?
+			case opIntConst:
 				match = t->isInteger();
 				// An integer constant can also match a pointer to something.  Assume values less than 0x100 can't be a
 				// pointer
