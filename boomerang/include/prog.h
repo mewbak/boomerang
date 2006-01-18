@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.84 $	// 1.73.2.5
+ * $Revision: 1.85 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -155,8 +155,9 @@ virtual				~Prog();
 		// Type analysis
 		void		globalTypeAnalysis();
 
-		// Remove unused return locations
-		void		removeUnusedReturns();
+		/// Remove unused return locations
+		/// \return true if any returns are removed
+		bool		removeUnusedReturns();
 
 		// Convert from SSA form
 		void		fromSSAform();

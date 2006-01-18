@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.88 $	// 1.76.2.30
+ * $Revision: 1.89 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -1291,8 +1291,8 @@ virtual void		fromSSAform(igraph& ig);
 		// Remove the stack pointer and return a statement list
 		StatementList* getCleanReturns();
 
-		// Temporary hack
-		void		specialProcessing();
+		// Temporary hack (not neccesary anymore)
+		// void		specialProcessing();
 
 	friend class XMLProgParser;
 };	// class ReturnStatement
