@@ -4,7 +4,7 @@
  *				tests the RTL and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.21 $
+ * $Revision: 1.22 $
  *
  * 13 May 02 - Mike: Created
  */
@@ -277,8 +277,9 @@ void RtlTest::testSetConscripts() {
 	// "printf("max is %d", (local0 > 0) ? local0 : global1)
 	CallStatement* s2 = new CallStatement();
 	std::string name("printf");
-	Proc* proc = new UserProc(new Prog(), name, 0x2000);
+	Proc* proc = new UserProc(new Prog(), name, 0x2000);	// Making a true LibProc is problematic
 	s2->setDestProc(proc);
+	s2->setCalleeReturn(new ReturnStatement);		// So it's not a childless call
 	Exp* e1 = new Const("max is %d");
 	Exp* e2 = new Ternary(opTern,
 		new Binary(opGtr,
