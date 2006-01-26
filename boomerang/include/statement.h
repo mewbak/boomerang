@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.89 $	// 1.76.2.30
+ * $Revision: 1.90 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -1202,6 +1202,8 @@ protected:
 
 		/// A list of assignments that represents the locations modified by the enclosing procedure
 		/// These transmit type information to callers
+		/// Note that these include preserved locations at this stage, so it might be more sensible to call them
+		/// assignees.
 		StatementList modifieds;
 
 		/// A list of assignments of locations to expressions. A list is used to facilitate ordering. (A set would
