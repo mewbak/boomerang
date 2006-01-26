@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.41 $	// 1.39.2.19
+ * $Revision: 1.42 $	// 1.39.2.19
  *
  * 15 Mar 05 - Mike: Separated from cfg.h
  */
@@ -68,6 +68,8 @@ class DataFlow {
 		std::vector<std::set<Exp*, lessExpStar> > A_orig;
 		// Map from expression to set of block numbers
 		std::map<Exp*, std::set<int>, lessExpStar > defsites;
+		// Set of block numbers defining all variables
+		std::set<int> defallsites;
 		// Array of sets of BBs needing phis
 		std::map<Exp*, std::set<int>, lessExpStar> A_phi;
 		// A Boomerang requirement: Statements defining particular subscripted locations
@@ -112,6 +114,8 @@ public:
 
 		// For debugging:
 		void		dumpStacks();
+		void		dumpDefsites();
+		void		dumpA_orig();
 
 };
 
@@ -169,6 +173,7 @@ public:
 		 */
 		char*		prints();
 		void		dump();
+Assign* dumpAddrOfFourth();
 
 		/*
 		 * begin() and end() so we can iterate through the locations
