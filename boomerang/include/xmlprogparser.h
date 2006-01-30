@@ -12,7 +12,7 @@
  * OVERVIEW:	parses persisted XML output and creates a new prog.
  *============================================================================*/
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  * 13 Jun 04 - Trent: Created.
  */
 
@@ -69,7 +69,7 @@ class XMLProgParser
 	TAGD(local) 
 	TAGD(symbol) 
 	TAGD(secondexp)
-	TAGD(proven) 
+	TAGD(proven_true) 
 	TAGD(callee) 
 	TAGD(caller) 
 	TAGD(defines)
