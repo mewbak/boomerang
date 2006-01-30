@@ -1,5 +1,5 @@
 #!/bin/bash
-# functest.sh functional test script $Revision: 1.35 $	# 1.23.2.1
+# functest.sh functional test script $Revision: 1.36 $	# 1.23.2.1
 # Note: to test with data flow based type analysis, pass a parameter of -Td
 #
 # 02 Feb 05 - Mike: Conditional tests for no type analysis. So all tests should pass whether -Td is passed or not
@@ -121,8 +121,10 @@ echo === Known faillures ===
 $TESTONE pentium stattest		1 "$BOOMSW"
 $TESTONE sparc   stattest		1 "$BOOMSW"
 $TESTONE sparc	elfhashtest		1 "$BOOMSW"
-# pentium recursion was working until moderately recently...
+# pentium recursion has some weird dataflow issues
 $TESTONE pentium recursion		2 "$BOOMSW" 2
+# Special for Mike
+$TESTONE pentium recursion2		1 "$BOOMSW"
 
 echo
 echo === Done ===
