@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.192 $	// 1.148.2.38
+ * $Revision: 1.193 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4766,8 +4766,7 @@ Exp* CallStatement::bypassRef(RefExp* r, bool& ch) {
 			return r;				// Childless callees transmit nothing
 		//if (procDest->isLocal(base))					// ICK! Need to prove locals and parameters through calls...
 		// FIXME: temporary HACK! Ignores alias issues.
-		if (!procDest->isLib() &&
-				((UserProc*)procDest)->isLocalOrParam(base)) {
+		if (!procDest->isLib() && ((UserProc*)procDest)->isLocalOrParam(base)) {
 			Exp* ret = localiseExp(base->clone());	// Assume that it is proved as preserved
 			ch = true;
 			if (VERBOSE)
