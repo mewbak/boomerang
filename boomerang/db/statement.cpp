@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.193 $	// 1.148.2.38
+ * $Revision: 1.194 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4744,6 +4744,9 @@ void CallStatement::removeDefine(Exp* e) {
 bool CallStatement::isChildless() {
 	if (procDest == NULL) return true;
 	if (procDest->isLib()) return false;
+	// Early in the decompile process, recursive calls are treated as childless, so they use and define all
+	if (((UserProc*)procDest)->isEarlyRecursive())
+		return true;
 	return calleeReturn == NULL;
 }
 
