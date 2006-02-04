@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.283 $	// 1.238.2.44
+ * $Revision: 1.284 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1023,7 +1023,11 @@ if (child->size())
 	}
 
 	// Remove last element (= this) from path
-	path->erase(--path->end());
+	// The if should not be neccesary, but nestedswitch needs it
+	if (path->size())
+		path->erase(--path->end());
+	else
+		LOG << "WARNING: UserProc::decompile: empty path when trying to remove last proc\n";
 
 	--indent;
 	if (VERBOSE)
