@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.107 $	// 1.89.2.7
+ * $Revision: 1.108 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -1171,7 +1171,7 @@ PBB FrontEnd::createReturnBlock(UserProc* pProc, std::list<RTL*>* BB_rtls, RTL* 
 	if (BB_rtls == NULL) BB_rtls = new std::list<RTL*>;		// In case no other semantics
 	BB_rtls->push_back(pRtl);
 	ADDRESS retAddr = pProc->getTheReturnAddr();
-	LOG << "retAddr = " << retAddr << " rtl = " << pRtl->getAddress() << "\n";
+	// LOG << "retAddr = " << retAddr << " rtl = " << pRtl->getAddress() << "\n";
 	if (retAddr == NO_ADDRESS) {
 		// Create the basic block
 		pBB = pCfg->newBB(BB_rtls, RET, 0);
