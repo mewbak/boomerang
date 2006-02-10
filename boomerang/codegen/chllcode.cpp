@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.101 $	// 1.90.2.16
+ * $Revision: 1.102 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1273,7 +1273,7 @@ void CHLLCode::AddCallStatement(int indLevel, Proc *proc, const char *name, Stat
 	s << ");";
 	if (results->size() > 1) {
 		bool first = true;
-		s << " /* OUT: ";
+		s << " /* Warning: also results in ";
 		for (ss = ++results->begin(); ss != results->end(); ++ss) {
 			if (first)
 				first = false;
