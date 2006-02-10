@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.285 $	// 1.238.2.44
+ * $Revision: 1.286 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -4970,8 +4970,6 @@ bool UserProc::removeUnusedParameters() {
 				break;
 		}
 		// Checked every statement, and no non-fake use was found
-std::cerr << " %%% Removing unused parameters for " << getName() << ": parameter " << param << " " << (nonFakeUse ?
-"CAN NOT" : "can") << " be removed\n";
 		if (!nonFakeUse) {
 			// Remove the parameter
 			ret = true;
