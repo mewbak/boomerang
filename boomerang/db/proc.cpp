@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.288 $	// 1.238.2.44
+ * $Revision: 1.289 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -4913,7 +4913,7 @@ bool UserProc::removeUnusedParameters() {
 						continue;			// Ignore this call
 				}
 				// Check if there is a parameter that chains to the current parameter, param
-				if (!dest->isLib() && dest->doesRecurseTo(this)) {
+				if (dest && !dest->isLib() && dest->doesRecurseTo(this)) {
 					ProcSet* visited = new ProcSet;
 					visited->insert(this);
 					if (doesParamChainToCall(param, this, visited))
