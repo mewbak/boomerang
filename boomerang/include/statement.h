@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.90 $	// 1.76.2.30
+ * $Revision: 1.91 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -547,6 +547,9 @@ virtual	void		regReplace(UserProc* proc);
 // The below could almost be a RefExp. But we could not at one stage #include exp.h as part of statement,h; that's since
 // changed so it is now possible, and arguably desirable.  However, it's convenient to have these members public
 struct PhiInfo {
+		// A default constructor is required because CFG changes (?) can cause access to elements of the vector that
+		// are beyond the current end, creating gaps which have to be initialised to zeroes so that they can be skipped
+		PhiInfo() : def(0), e(0) {}
 		Statement*	def;		// The defining statement
 		Exp*		e;			// The expression for the thing being defined (never subscripted)
 };
