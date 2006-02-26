@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.101 $	// 1.95.2.5
+ * $Revision: 1.102 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -1809,7 +1809,12 @@ void Cfg::findInterferences(igraph& ig) {
 	appendBBs(workList, workSet);
 
 	bool change;
+	int progress = 500;
 	while (workList.size()) {
+		if (--progress <= 0) {
+			std::cout << ":" << std::flush;
+			progress = 500;
+		}
 		PBB currBB = workList.back();
 		workList.erase(--workList.end());
 		workSet.erase(currBB);

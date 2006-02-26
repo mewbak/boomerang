@@ -19,7 +19,7 @@
  *==============================================================================================*/
 
 /*
- * $Revision: 1.14 $	// 1.11.2.15
+ * $Revision: 1.15 $	// 1.11.2.15
  *
  * 26/Aug/03 - Mike: Split off from statement.h
  */
@@ -205,6 +205,7 @@ virtual				~LocationSet() {}						// virtual destructor kills warning
 		void		print(std::ostream& os);				// Print to os
 		char*		prints();								// Print to string for debugging
 		void		dump();
+		void		diff(LocationSet* o);					// Diff 2 location sets to std::cerr
 		bool		exists(Exp* e); 						// Return true if the location exists in the set
 		Exp*		findNS(Exp* e);							// Find location e (no subscripts); NULL if not found
 		// Return an iterator to the found item (or end() if not). Only really makes sense if e has a wildcard
