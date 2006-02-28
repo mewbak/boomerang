@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.290 $	// 1.238.2.44
+ * $Revision: 1.291 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -363,7 +363,7 @@ bool LibProc::isPreserved(Exp* e) {
 UserProc::UserProc() : Proc(), cfg(NULL), status(PROC_UNDECODED),
 		// decoded(false), analysed(false),
 		nextLocal(0),	// decompileSeen(false), decompiled(false), isRecursive(false)
-		theReturnStatement(NULL) {
+		cycleGrp(NULL), theReturnStatement(NULL) {
 }
 UserProc::UserProc(Prog *prog, std::string& name, ADDRESS uNative) :
 		// Not quite ready for the below fix:
@@ -371,7 +371,7 @@ UserProc::UserProc(Prog *prog, std::string& name, ADDRESS uNative) :
 		Proc(prog, uNative, new Signature(name.c_str())),
 		cfg(new Cfg()), status(PROC_UNDECODED),
 		nextLocal(0), // decompileSeen(false), decompiled(false), isRecursive(false),
-		theReturnStatement(NULL), DFGcount(0)
+		cycleGrp(NULL), theReturnStatement(NULL), DFGcount(0)
 {
 	cfg->setProc(this);				 // Initialise cfg.myProc
 }
