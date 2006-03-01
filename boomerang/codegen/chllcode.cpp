@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.103 $	// 1.90.2.16
+ * $Revision: 1.104 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -650,11 +650,35 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 			} 
 			break;
 		case opList:
+#if 1
+			// TMN: Stack overflow is a problem, especially for large initialized arrays.
+			// This is an attempt to make that process iterative instead of recursive.
+            {
+				int elems_on_line = 0; // try to limit line lengths
+				Exp* e2 = b->getSubExp2();
+				while (e2->getOper() == opList)
+				{
+					appendExp(str, b->getSubExp1(), PREC_NONE, uns);
+					++elems_on_line;
+					if (elems_on_line >= 16 /* completely arbitrary, but better than nothing*/)
+					{
+						str << ",\n ";
+						elems_on_line = 0;
+					} else {
+						str << ", ";
+					}
+					b = static_cast<Binary*>(e2);
+					e2 = b->getSubExp2();
+				}
+				appendExp(str, b->getSubExp1(), PREC_NONE, uns);
+			}
+#else
 			appendExp(str, b->getSubExp1(), PREC_NONE, uns);
 			if (b->getSubExp2()->getOper() == opList) {
 				str << ", ";
 				appendExp(str, b->getSubExp2(), PREC_NONE, uns);
 			}
+#endif
 			break;
 		case opFlags:
 			str << "flags"; break;
