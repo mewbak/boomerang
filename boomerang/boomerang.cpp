@@ -6,12 +6,12 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.144 $	// 1.115.2.5
+ * $Revision: 1.145 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
 
-#define VERSION "alpha 0.2 02/Mar/2006"
+#define VERSION "alpha 0.2 03/Mar/2006"
 
 #include <iostream>
 #include <fstream>
