@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.105 $	// 1.90.2.16
+ * $Revision: 1.106 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -159,7 +159,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 			if ((__int64)c->getLong() < -1000i64 || (__int64)c->getLong() > 1000i64)
 				str << "0x" << std::hex << c->getLong() << std::dec << "i64";
 			else
-				str << std::dec << u.ll << "i64";
+				str << std::dec << c->getLong() << "i64";
 #else
 			if ((long long)c->getLong() < -1000LL || (long long)c->getLong() > 1000LL)
 				str << "0x" << std::hex << c->getLong() << std::dec << "LL";
