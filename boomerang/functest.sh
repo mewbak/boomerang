@@ -1,5 +1,5 @@
 #!/bin/bash
-# functest.sh functional test script $Revision: 1.39 $	# 1.23.2.1
+# functest.sh functional test script $Revision: 1.40 $	# 1.23.2.1
 # Note: to test with data flow based type analysis, pass a parameter of -Td
 #
 # 02 Feb 05 - Mike: Conditional tests for no type analysis. So all tests should pass whether -Td is passed or not
@@ -114,6 +114,14 @@ else
 	echo === Double handling tests ===
 	$TESTONE pentium printpi		1 "$BOOMSW"
 	$TESTONE sparc   printpi		1 "$BOOMSW"
+
+	echo
+	echo === Pentium floating point handling ===
+	# Note: these have a .sed file, for 2 known problems: 1) "%f" in scanf means float, not double
+	# 2) Don't handle two halves of a double properly for printf
+	$TESTONE pentium fbranch		4 $BOOMSW < test/source/fbranch.in4
+	$TESTONE pentium fbranch		5 $BOOMSW < test/source/fbranch.in4
+	$TESTONE pentium fbranch		6 $BOOMSW < test/source/fbranch.in4
 fi
 
 echo
