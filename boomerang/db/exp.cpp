@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.190 $	// 1.172.2.20
+ * $Revision: 1.191 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3962,6 +3962,17 @@ bool Exp::canRename() {
 	return pt.getResult();
 }
 
+bool Exp::containsFlags() {
+	FlagsFinder ff;
+	accept(&ff);
+	return ff.isFound();
+}
+
+bool Exp::containsBareMemof() {
+	BareMemofFinder bmf;
+	accept(&bmf);
+	return bmf.isFound();
+}
 
 
 #ifdef USING_MEMO

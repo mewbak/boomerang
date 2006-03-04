@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the Exp class and its subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.129 $	// 1.119.2.11
+ * $Revision: 1.130 $	// 1.119.2.11
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -351,7 +351,9 @@ virtual Exp*		accept(ExpModifier* v) = 0;
 		// Perform call bypass and simple (assignment only) propagation to this exp
 		// Note: can change this, so often need to clone before calling
 		Exp*		bypass();
-		void		bypassComp();		// As above, but only the xxx of m[xxx]
+		void		bypassComp();			// As above, but only the xxx of m[xxx]
+		bool		containsFlags();		// Check if this exp contains any flag calls
+		bool		containsBareMemof();	// Check if this Exp contains a bare (non subscripted) memof
 
 		// Data flow based type analysis (implemented in type/dfa.cpp)
 		// Pull type information up the expression tree
