@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.291 $	// 1.238.2.44
+ * $Revision: 1.292 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -817,6 +817,8 @@ void UserProc::insertStatementAfter(Statement* s, Statement* a) {
 	for (bb = cfg->begin(); bb != cfg->end(); bb++) {
 		std::list<RTL*>::iterator rr;
 		std::list<RTL*>* rtls = (*bb)->getRTLs();
+		if (rtls == NULL)
+			continue;			// e.g. *bb is (as yet) invalid
 		for (rr = rtls->begin(); rr != rtls->end(); rr++) {
 			std::list<Statement*>& stmts = (*rr)->getList();
 			std::list<Statement*>::iterator ss;
