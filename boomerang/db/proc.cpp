@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.293 $	// 1.238.2.44
+ * $Revision: 1.294 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -3453,10 +3453,10 @@ void UserProc::removeUnusedLocals() {
 			char* tmpName = ((Const*)((Location*)mapsTo)->getSubExp1())->getStr();
 			if (removes.find(tmpName) != removes.end()) {
 				symbolMap.erase(sm++);
+				continue;
 			}
 		}
-		else
-			++sm;			// sm is itcremented with the erase, or here
+		++sm;			// sm is itcremented with the erase, or here
 	}
 }
 
@@ -4717,7 +4717,10 @@ void UserProc::markAsNonChildless(ProcSet* cs) {
 void UserProc::propagateToCollector() {
 	UseCollector::iterator it;
 	for (it = col.begin(); it != col.end(); ) {
-		if (!(*it)->isMemOf()) continue;
+		if (!(*it)->isMemOf()) {
+			++it;
+			continue;
+		}
 		Exp* addr = ((Location*)*it)->getSubExp1();
 		LocationSet used;
 		LocationSet::iterator uu;
@@ -4743,7 +4746,7 @@ void UserProc::propagateToCollector() {
 				((Location*)*it)->setSubExp1(res);	// Change the child of the memof
 			}
 		}
-		++it;			// it is iterated either with the erase, or here
+		++it;			// it is iterated either with the erase, or the continue, or here
 	}
 }
 
