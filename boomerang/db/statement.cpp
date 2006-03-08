@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.196 $	// 1.148.2.38
+ * $Revision: 1.197 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3884,12 +3884,24 @@ void Statement::findConstants(std::list<Const*>& lc) {
 void PhiAssign::convertToAssign(Exp* rhs) {
 	// I believe we always want to propagate to these ex-phi's; check!:
 	rhs = rhs->propagateAll();
+#if 0		// TMN: Bad, bad, bad 
 	Assign* a = new Assign(type, lhs, rhs);
 	a->setNumber(number);
 	a->setProc(proc);
 	a->setBB(pbb);
 	assert(sizeof(Assign) <= sizeof(PhiAssign));
 	memcpy(this, a, sizeof(Assign));
+#else // Better, but still very ugly. 
+	assert(sizeof(Assign) <= sizeof(PhiAssign)); 
+	int n = number;									// These three items disappear with the destructor below
+	PBB bb = pbb;
+	UserProc* p = proc;
+	this->~PhiAssign(); 							// Explicitly destroy this, but keep the memory allocated.
+	Assign* a = new(this) Assign(type, lhs, rhs);	// construct in-place. Note that 'a' == 'this' 
+	a->setNumber(n); 
+	a->setProc(p); 
+	a->setBB(bb); 
+#endif 
 }
 
 
