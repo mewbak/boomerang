@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.85 $	// 1.73.2.5
+ * $Revision: 1.86 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -131,9 +131,6 @@ virtual				~Prog();
 
 		// Remove interprocedural edges
 		void		removeInterprocEdges();
-
-		// Initialise and number all statements globally
-		void		initStatements();
 
 		// Do the main non-global decompilation steps
 		void		decompile();
