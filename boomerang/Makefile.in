@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.111 $		// 1.91.2.10
+# $Revision: 1.112 $		// 1.91.2.10
 # 13 Mar 06 - Mike: Prevent going to the loader directory 5 or 6 times
 # 05 Jul 05 - Mike: Big merge with boomerang.pole branch
 # 03 Feb 05 - Mike: Removed analysis/ related files
@@ -100,7 +100,7 @@ LOADERLIBS=$(patsubst %,-l%,$(LOADERS))
 .PHONY: test clean all static distclean mostclean depend depend.in loaders
 #19 Aug 02 icer: should read lib static test
 #20 Aug 02 icer: should read lib static , the test code is broken
-all: $(REMOTE) lib static loaders
+all: $(REMOTE) lib loaders static
 static: boomerang$(EXEEXT)
 
 # Make the lib directory if needed
@@ -113,7 +113,7 @@ testDyn: lib
 	cd db       && ${MAKE} test
 	cd frontend && ${MAKE} test
 
-test:	lib bigtest$(EXEEXT) loaders
+test:	lib loaders bigtest$(EXEEXT)
 	cd loader   && ${MAKE} test
 	./bigtest$(EXEEXT)
 
