@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the Exp class and its subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.130 $	// 1.119.2.11
+ * $Revision: 1.131 $	// 1.119.2.11
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -257,6 +257,7 @@ virtual void		doSearchChildren(Exp* search, std::list<Exp**>& li, bool once);
 
 		/// Propagate all possible assignments to components of this expression.
 		Exp*		propagateAll();
+		Exp*		propagateAllRpt(bool& changed);		// As above, but keep propagating until no change
 
 		//	//	//	//	//	//	//
 		//	  Sub expressions	//
@@ -304,8 +305,8 @@ virtual Exp*		simplifyConstraint() {return this;}
 		// Kill any zero fill, sign extend, or truncates
 		Exp*		killFill();
 
-		// Do the work of finding used locations
-		void		addUsedLocs(LocationSet& used);
+		// Do the work of finding used locations. If memOnly set, only look inside m[...]
+		void		addUsedLocs(LocationSet& used, bool memOnly = false);
 
 		Exp 		*removeSubscripts(bool& allZero);
 

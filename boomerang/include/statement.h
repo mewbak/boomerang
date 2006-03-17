@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.91 $	// 1.76.2.30
+ * $Revision: 1.92 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -296,7 +296,7 @@ virtual	void		regReplace(UserProc* proc) = 0;
 
 		// Adds (inserts) all locations (registers or memory etc) used by this statement
 		// Set cc to true to count the uses in collectors
-		void		addUsedLocs(LocationSet& used, bool cc = false);
+		void		addUsedLocs(LocationSet& used, bool cc = false, bool memOnly = false);
 		// Bypass calls for references in this statement
 		void		bypass();
 
@@ -1205,8 +1205,7 @@ protected:
 
 		/// A list of assignments that represents the locations modified by the enclosing procedure
 		/// These transmit type information to callers
-		/// Note that these include preserved locations at this stage, so it might be more sensible to call them
-		/// assignees.
+		/// Note that these include preserved locations early on, so it might be more sensible to call them assignees.
 		StatementList modifieds;
 
 		/// A list of assignments of locations to expressions. A list is used to facilitate ordering. (A set would
