@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.192 $	// 1.172.2.20
+ * $Revision: 1.193 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -934,6 +934,10 @@ void Unary::print(std::ostream& os) {
 			// Print a more concise form than param["foo"] (just foo)
 			((Const*)p1)->printNoQuotes(os);
 			return;
+		case opInitValueOf:
+			p1->printr(os);
+			os << "'";
+			return;
 		case opPhi:
 			os << "phi(";
 			p1->print(os);
@@ -1402,7 +1406,8 @@ void Exp::doSearchChildren(Exp* search, std::list<Exp**>& li, bool once) {
 	return;			// Const and Terminal do not override this
 }
 void Unary::doSearchChildren(Exp* search, std::list<Exp**>& li, bool once) {
-	doSearch(search, subExp1, li, once);
+	if (op != opInitValueOf)		// don't search child
+		doSearch(search, subExp1, li, once);
 }
 void Binary::doSearchChildren(Exp* search, std::list<Exp**>& li, bool once) {
     assert(subExp1 && subExp2);

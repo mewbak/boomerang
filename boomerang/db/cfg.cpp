@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.102 $	// 1.95.2.5
+ * $Revision: 1.103 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -832,6 +832,12 @@ bool Cfg::joinBB(PBB pb1, PBB pb2)
 	BB_IT bbit = std::find(m_listBB.begin(), m_listBB.end(), pb1);
 	m_listBB.erase(bbit);
 	return true;
+}
+
+void Cfg::removeBB( PBB bb)
+{
+	BB_IT bbit = std::find(m_listBB.begin(), m_listBB.end(), bb);
+	m_listBB.erase(bbit);
 }
 
 /*==============================================================================
@@ -1684,6 +1690,31 @@ void Cfg::structure() {
 	structured = true;
 }
 
+void Cfg::addJunctionStatements()
+{
+	std::list<PBB>::iterator it;
+	for (it = m_listBB.begin(); it != m_listBB.end(); it++) {
+		PBB pbb = *it;
+		if (pbb->getNumInEdges() > 1 && (pbb->getFirstStmt() == NULL || !pbb->getFirstStmt()->isJunction())) {
+			assert(pbb->getRTLs());
+			JunctionStatement *j = new JunctionStatement();
+			j->setBB(pbb);
+			pbb->getRTLs()->front()->prependStmt(j);
+		}
+	}
+}
+
+void Cfg::removeJunctionStatements()
+{
+	std::list<PBB>::iterator it;
+	for (it = m_listBB.begin(); it != m_listBB.end(); it++) {
+		PBB pbb = *it;
+		if (pbb->getFirstStmt() && pbb->getFirstStmt()->isJunction()) {
+			assert(pbb->getRTLs());
+			pbb->getRTLs()->front()->deleteStmt(0);
+		}
+	}
+}
 void Cfg::removeUnneededLabels(HLLCode *hll) {
 	hll->RemoveUnusedLabels(Ordering.size());
 }

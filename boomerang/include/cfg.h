@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.72 $	// 1.69.2.7
+ * $Revision: 1.73 $	// 1.69.2.7
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -30,6 +30,10 @@
 #include <map>
 #include <iostream>
 #include <string>
+
+#if defined(_MSC_VER)
+#pragma warning(disable:4290)
+#endif
 
 #include "types.h"
 #include "exphelp.h"	// For lessExpStar
@@ -337,6 +341,11 @@ public:
 		bool		joinBB( PBB pb1, PBB pb2);
 
 		/*
+		 * Completely remove a BB from the CFG.
+		 */
+		void		removeBB( PBB bb);
+
+		/*
 		 * Resets the DFA sets of all the BBs.
 		 */
 		void		resetDFASets();
@@ -367,6 +376,12 @@ public:
 		 * Structures the control flow graph
 		 */
 		void		structure();
+
+		/*
+		 * Add/Remove Junction statements
+		 */
+		void		addJunctionStatements();
+		void		removeJunctionStatements();
 
 		/*
 		 * Resolves goto/branch destinations to statements

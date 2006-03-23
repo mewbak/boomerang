@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.61 $	// 1.53.2.11
+ * $Revision: 1.62 $	// 1.53.2.11
  *
  * 12 Jul 02 - Trent: Created
  *
@@ -19,6 +19,10 @@
 
 #ifndef __SIGNATURE_H_
 #define __SIGNATURE_H_
+
+#if defined(_MSC_VER)
+#pragma warning(disable:4290)
+#endif
 
 #include "exp.h"
 #include "type.h"

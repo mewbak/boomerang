@@ -1,5 +1,5 @@
 /*
- *$Revision: 1.10 $	// 1.6.6.1
+ *$Revision: 1.11 $	// 1.6.6.1
  */
 #include "log.h"
 #include <sstream>
@@ -20,6 +20,38 @@ Log &Log::operator<<(Exp *e)
 {
 	std::ostringstream st;
 	e->print(st);
+	*this << st.str().c_str();
+	return *this;
+}
+
+Log &Log::operator<<(Type *ty)
+{
+	std::ostringstream st;
+	st << ty;
+	*this << st.str().c_str();
+	return *this;
+}
+
+Log &Log::operator<<(Range *r)
+{
+	std::ostringstream st;
+	r->print(st);
+	*this << st.str().c_str();
+	return *this;
+}
+
+Log &Log::operator<<(Range &r)
+{
+	std::ostringstream st;
+	r.print(st);
+	*this << st.str().c_str();
+	return *this;
+}
+
+Log &Log::operator<<(RangeMap &r)
+{
+	std::ostringstream st;
+	r.print(st);
 	*this << st.str().c_str();
 	return *this;
 }

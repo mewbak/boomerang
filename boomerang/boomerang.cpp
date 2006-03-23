@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.150 $	// 1.115.2.5
+ * $Revision: 1.151 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -144,6 +144,7 @@ void Boomerang::help() {
 	std::cout << "  -LD              : Load before decompile (<program> becomes xml input file)\n";
 	std::cout << "  -SD              : Save before decompile\n";
 	std::cout << "  -a               : Assume ABI compliance\n";
+	std::cout << "  -W               : Windows specific decompilation mode (requires pdb information)\n";
 //	std::cout << "  -pa              : only propagate if can propagate to all\n";
 	std::cout << "Output\n";
 	std::cout << "  -v               : Verbose\n";

@@ -4,7 +4,7 @@
  *				denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.26 $	// 1.25.6.3
+ * $Revision: 1.27 $	// 1.25.6.3
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER
@@ -189,6 +189,9 @@ enum OPER
 	opTypeOf,				// Unary: takes a location, makes a type variable
 	opKindOf,
 	opTypeVal,				// Wraps a Type into a type value (TypeVal)
+
+	// Added for range analysis
+	opInitValueOf,			// The initial value of a location, typically the stack pointer
 
 	//---------------------- "The line" --------------------------//
 	// All id's greater or equal to idMachSpec are assumed to be source machine

@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.106 $	// 1.90.2.16
+ * $Revision: 1.107 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -405,7 +405,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 		case opMemOf:
 			if (Boomerang::get()->noDecompile) {
 				str << "MEMOF(";
-				appendExp(str, u->getSubExp1(), PREC_UNARY);
+				appendExp(str, u->getSubExp1(), PREC_NONE);
 				str << ")";
 				break;
 			}
@@ -478,7 +478,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 					str << "FLOAT_MEMOF(";
 				else
 					str << "DOUBLE_MEMOF(";
-				appendExp(str, t->getSubExp3()->getSubExp1(), curPrec);
+				appendExp(str, t->getSubExp3()->getSubExp1(), PREC_NONE);
 				str << ")";
 				break;
 			}
@@ -1437,7 +1437,7 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open) {
 			// There is a real return; make it integer (Remove with AD HOC type analysis)
 			retType = new IntegerType();
 		appendType(s, retType);
-		if (!firstRet->getType()->isPointer())	// NOTE: assumes type *proc( style
+		if (!retType->isPointer())	// NOTE: assumes type *proc( style
 			s << " ";
 	}
 	s << proc->getName() << "(";
