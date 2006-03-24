@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.17 $
+ * $Revision: 1.18 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -244,7 +244,7 @@ char* escapeStr(char* str) {
 	// test each character
 	for(;*str;str++)
 	{
-		if( isprint(*str) && *str != '\"' ) {
+		if(isprint((unsigned char)*str) && *str != '\"' ) {
     		// it's printable, so just print it
     		out << *str;
 		} else { // in fact, this shouldn't happen, except for "
