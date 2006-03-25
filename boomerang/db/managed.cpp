@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.18 $	// 1.15.2.13
+ * $Revision: 1.19 $	// 1.15.2.13
  *
  * 26 Aug 03 - Mike: Split off from statement.cpp
  * 21 Jun 05 - Mike: Added AssignSet
@@ -951,7 +951,8 @@ void RangeMap::killAllMemOfs()
 {
 	for (std::map<Exp*, Range, lessExpStar>::iterator it = ranges.begin(); it != ranges.end(); it++) {
 		if ((*it).first->isMemOf()) {
-			(*it).second.unionWith(Range());
+			Range empty;
+			(*it).second.unionWith(empty);
 		}
 	}
 }

@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.296 $	// 1.238.2.44
+ * $Revision: 1.297 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -894,8 +894,6 @@ void UserProc::insertStatementAfter(Statement* s, Statement* a) {
 	remove last element (= this) from path
 	return child
  */
-
-Type *typeFromDebugInfo(int index, DWORD64 ModBase);
 
 // assumes range analysis has been done
 void UserProc::windowsModeDecompile()
