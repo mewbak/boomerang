@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.21 $	// 1.17.2.8
+ * $Revision: 1.22 $	// 1.17.2.8
  *
  * June 2004 - Trent: created
  * NOTE: As of early 2006, this file has likely fallen behind changes to class members, and so probably needs some major
@@ -2788,7 +2788,7 @@ void XMLProgParser::persistToXML(std::ostream &out, Statement *stmt)
 	}
 	ReturnStatement *r = dynamic_cast<ReturnStatement*>(stmt);
 	if (r) {
-		out << "<returnstmt id=\"" << (int)stmt << "\" number=\"" << r->number;
+		out << "<returnstmt id=\"" << (int)stmt << "\" number=\"" << r->number << "\"";
 		if (r->parent)
 			out << " parent=\"" << (int)r->parent << "\"";
 		if (r->proc)
