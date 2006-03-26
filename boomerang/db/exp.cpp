@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.193 $	// 1.172.2.20
+ * $Revision: 1.194 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3451,9 +3451,11 @@ Type *Binary::getType() {
 			if (subExp1->getType()) {
 				Type *sty = subExp1->getType();
 				if (!sty->resolvesToArray() && !sty->resolvesToPointer()) {
-					LOG << "subExp1 not of array/ptr type: " << this << "\n";
-					if (sty)
-						LOG << "it has a type: " << sty->getCtype() << "\n";
+					if (VERBOSE) {
+						LOG << "subExp1 not of array/ptr type: " << this << "\n";
+						if (sty)
+							LOG << "it has a type: " << sty->getCtype() << "\n";
+					}
 					return NULL;
 				}
 				if (sty->resolvesToArray())
@@ -3466,7 +3468,8 @@ Type *Binary::getType() {
 			if (subExp1->getType()) {
 				Type *sty = subExp1->getType();
 				if (!sty->resolvesToCompound()) {
-					LOG << "subExp1 not of compound type: " << this << "\n";
+					if (VERBOSE)
+						LOG << "subExp1 not of compound type: " << this << "\n";
 					assert(false);
 				}
 				assert(subExp2->getOper() == opStrConst);

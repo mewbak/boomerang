@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.122 $	// 1.93.2.8
+ * $Revision: 1.123 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1357,7 +1357,7 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
 			if (child->traversed == DFS_CODEGEN || 
 					((child->loopHead != loopHead) && (!child->allParentsGenerated() || 
 					isIn(followSet, child))) ||
-					(latch && latch->loopHead->loopFollow == child) ||
+					(latch && latch->loopHead && latch->loopHead->loopFollow == child) ||
 					!(caseHead == child->caseHead || 
 					(caseHead && child == caseHead->condFollow)))
 				emitGotoAndLabel(hll, indLevel, m_OutEdges[0]);
@@ -2337,6 +2337,7 @@ bool BasicBlock::undoComputedBB(Statement* stmt) {
 	for (rr = list.rbegin(); rr != list.rend(); rr++) {
 		if (*rr == stmt) {
 			m_nodeType = CALL;
+			LOG << "undoComputedBB for statement " << stmt << "\n";
 			return true;
 		}
 	}

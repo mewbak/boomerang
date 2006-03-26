@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the GenericExpTransformer and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision: 1.3 $
  * 17 Apr 04 - Trent: Created
  */
 
@@ -135,7 +135,8 @@ bool GenericExpTransformer::checkCond(Exp *cond, Exp *bindings)
                     Type *ty = lhs->getSubExp1()->getType();
                     if (ty == NULL) {
 #if 0
-                        LOG << "no type for typeof " << lhs << "\n";
+						if (VERBOSE)
+							LOG << "no type for typeof " << lhs << "\n";
 #endif
                         return false;
                     }
