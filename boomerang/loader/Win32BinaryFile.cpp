@@ -10,7 +10,7 @@
  */
 
 /* File: Win32BinaryFile.cc
- * $Revision: 1.29 $
+ * $Revision: 1.30 $
  * Desc: This file contains the implementation of the class Win32BinaryFile.
  */
 
@@ -260,6 +260,7 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint() {
 	int pushes = 0;
 	p = LMMH(m_pPEHeader->EntrypointRVA);
 	while (count > 0) {
+		count--;
 		op1 = *(unsigned char*)(p + base);
 		if (op1 == 0xE8) {			// CALL opcode
 			if (pushes == 3) {
@@ -289,6 +290,7 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint() {
 			// Follow the jump
 			int off = LMMH(*(p + base + 1));
 			p += off+5;
+			continue;
 		}
 
 
