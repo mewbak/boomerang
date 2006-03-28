@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.108 $	// 1.90.2.16
+ * $Revision: 1.109 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1107,7 +1107,7 @@ void CHLLCode::AddGoto(int indLevel, int ord) {
  */
 void CHLLCode::RemoveUnusedLabels(int maxOrd) {
 	for (std::list<char *>::iterator it = lines.begin(); it != lines.end();) {
-		if ((*it)[0] == 'L') {
+		if ((*it)[0] == 'L' && strchr(*it, ':')) {
 			char *s = strdup(*it);
 			*strchr(s, ':') = 0;
 			int n = atoi(s+1);

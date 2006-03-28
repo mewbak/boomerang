@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.87 $	// 1.73.2.5
+ * $Revision: 1.88 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -115,7 +115,7 @@ virtual				~Prog();
 		void		decodeEntryPoint(ADDRESS a);
 		void		setEntryPoint(ADDRESS a);			// As per the above, but don't decode
 		void		decodeEverythingUndecoded();
-		void		decodeFragment(UserProc* proc, ADDRESS a) { pFE->decodeFragment(proc, a); }
+		void		decodeFragment(UserProc* proc, ADDRESS a);
 
 		// Re-decode this proc from scratch
 		void		reDecode(UserProc* proc);

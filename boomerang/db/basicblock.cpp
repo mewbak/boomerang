@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.124 $	// 1.93.2.8
+ * $Revision: 1.125 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1454,7 +1454,7 @@ void BasicBlock::setCaseHead(PBB head, PBB follow)
 	// if this is a nested case header, then it's member nodes will already have been tagged so skip straight to its
 	// follow
 	if (getType() == NWAY && this != head) {
-		if (condFollow->traversed != DFS_CASE && condFollow != follow)
+		if (condFollow && condFollow->traversed != DFS_CASE && condFollow != follow)
 			condFollow->setCaseHead(head, follow);
 	} else
 		// traverse each child of this node that:
