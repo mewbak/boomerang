@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.105 $	// 1.95.2.5
+ * $Revision: 1.106 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -1315,8 +1315,11 @@ PBB Cfg::commonPDom(PBB curImmPDom, PBB succImmPDom) {
 		return succImmPDom;
 	if (!succImmPDom)
 		return curImmPDom;
+	if (curImmPDom->revOrd == succImmPDom->revOrd)
+		return curImmPDom;  // ordering hasn't been done
 
 	PBB oldCurImmPDom = curImmPDom;
+	PBB oldSuccImmPDom = succImmPDom;
 
 	int giveup = 0;
 	while (giveup < 10000 && curImmPDom && succImmPDom && (curImmPDom != succImmPDom)) {
@@ -1327,8 +1330,11 @@ PBB Cfg::commonPDom(PBB curImmPDom, PBB succImmPDom) {
 		giveup++;
 	}
 
-	if (giveup)
+	if (giveup) {
+		if (VERBOSE)
+			LOG << "failed to find commonPDom for " << oldCurImmPDom->getLowAddr() << " and " << oldSuccImmPDom->getLowAddr() << "\n";
 		return oldCurImmPDom;  // no change
+	}
 
 	return curImmPDom;
 }
