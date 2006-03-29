@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.299 $	// 1.238.2.44
+ * $Revision: 1.300 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1682,7 +1682,8 @@ void UserProc::finalDecompile() {
 			printToLog();
 			LOG << "=== end after replacing expressions, trimming params and returns ===\n";
 			LOG << "===== end after replacing params =====\n\n";
-			printDFG();
+			if (Boomerang::get()->dotFile)
+				printDFG();
 		}
 	}
 #endif
@@ -3569,6 +3570,13 @@ void UserProc::fromSSAform() {
 		if (!s->isPhi()) continue;
 		// Check that the base variables are all the same
 		PhiAssign* pa = (PhiAssign*)s;
+		if (pa->begin() == pa->end()) {
+			// no params to this phi, just remove it
+			if (VERBOSE)
+				LOG << "phi with no params, removing: " << s << "\n";
+			removeStatement(s);
+			continue;
+		}
 		LocationSet refs;
 		pa->addUsedLocs(refs);
 		Exp* first = pa->begin()->e;
@@ -4986,8 +4994,8 @@ bool UserProc::removeUnusedParameters() {
 			} else if (cycleGrp && s->isPhi()) {
 				// Check if this phi is a direct reference from a return
 				ReturnStatement::iterator rr;
-				assert(theReturnStatement);
 				bool phiDefinesRet = false;
+				if (theReturnStatement)  // can be NULL
 				for (rr = theReturnStatement->begin(); rr != theReturnStatement->end(); ++rr) {
 					Exp* rhs = ((Assign*)*rr)->getRight();
 					if (!rhs->isSubscript())

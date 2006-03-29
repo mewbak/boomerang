@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.151 $	// 1.126.2.14
+ * $Revision: 1.152 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -1462,7 +1462,8 @@ void Prog::fromSSAform() {
 			LOG << "===== Before transformation from SSA form for " << proc->getName() << " =====\n";
 			proc->printToLog();
 			LOG << "===== End before transformation from SSA for " << proc->getName() << " =====\n\n";
-			proc->printDFG();
+			if (Boomerang::get()->dotFile)
+				proc->printDFG();
 		}
 		proc->fromSSAform();
 		if (Boomerang::get()->vFlag) {
