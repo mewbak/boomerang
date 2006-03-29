@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.202 $	// 1.148.2.38
+ * $Revision: 1.203 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1196,8 +1196,7 @@ void BranchStatement::setCondType(BRANCH_TYPE cond, bool usesFloat /*= false*/) 
 		case BRANCH_JPAR:
 			// Can't handle (could happen as a result of a failure of Pentium
 			// floating point analysis)
-			assert(false);
-			break;
+			return;
 	}
 	// this is such a hack.. preferably we should actually recognise 
 	// SUBFLAGS32(..,..,..) > 0 instead of just SUBFLAGS32(..,..,..)
@@ -2670,7 +2669,8 @@ Type *Statement::getTypeFor(Exp *e, Prog *prog)
 		}
 		case opSubscript: {
 			Statement* def = ((RefExp*)e)->getDef();
-			ty = def->getTypeFor(e->getSubExp1(), prog);
+			if (def)
+				ty = def->getTypeFor(e->getSubExp1(), prog);
 			break;
 		}
 		default:

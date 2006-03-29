@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.35 $	// 1.33.2.3
+ * $Revision: 1.36 $	// 1.33.2.3
  * 
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -568,7 +568,7 @@ void RTL::simplify() {
 		s->simplify();		  
 		if (s->isBranch()) {
 			Exp *cond =	 ((BranchStatement*)s)->getCondExpr();
-			if (cond->getOper() == opIntConst) {
+			if (cond && cond->getOper() == opIntConst) {
 				if (((Const*)cond)->getInt() == 0) {
 					if (VERBOSE)
 						LOG << "removing branch with false condition at " << getAddress()  << " " << *it << "\n";

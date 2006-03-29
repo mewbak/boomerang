@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.194 $	// 1.172.2.20
+ * $Revision: 1.195 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3513,7 +3513,8 @@ Type *RefExp::getType()
 		CallStatement *call = (CallStatement*)def;
 		return call->getTypeFor(subExp1);
 	}
-	if (def && def->isPhi()) {
+	if (def && def->isPhi() && 0) {
+		// TODO: review this code and/or remove.
 		PhiAssign *phi = (PhiAssign*)def;
 		if (DEBUG_TA)
 			LOG << "checking statements in " << phi << " for type of " << this << "\n";
@@ -3523,13 +3524,15 @@ Type *RefExp::getType()
 			Assign* as = (Assign*)s;
 			if (as && as->isAssign() && 
 					(as->getRight()->getOper() != opSubscript || ((RefExp*)as->getRight())->getDef() == NULL)) {
-				if (as->getRight()->getType()) {
+				Type *ty = as->getRight()->getType();
+				if (ty) {
 #if 1
 					if (VERBOSE)
-						LOG << "returning type " << as->getRight()->getType()->getCtype() << " for " << this << "\n";
+						LOG << "returning type " << ty->getCtype() << " for " << this << "\n";
 #endif
-					return as->getRight()->getType();
-				} else break;
+					return ty;
+				} else 
+					break;
 			}
 		}
 	}

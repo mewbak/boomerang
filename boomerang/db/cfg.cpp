@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.106 $	// 1.95.2.5
+ * $Revision: 1.107 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -1856,7 +1856,9 @@ void Cfg::findInterferences(igraph& ig) {
 
 	bool change;
 	int progress = 500;
-	while (workList.size()) {
+	int count = 0;
+	while (workList.size() && count < 100000) {
+		count++;  // prevent infinite loop
 		if (--progress <= 0) {
 			std::cout << ":" << std::flush;
 			progress = 500;

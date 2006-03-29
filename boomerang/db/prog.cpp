@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.152 $	// 1.126.2.14
+ * $Revision: 1.153 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -619,7 +619,8 @@ Proc* Prog::newProc (const char* name, ADDRESS uNative, bool bLib /*= false*/) {
 		sym->MaxNameLen = 1000;
 		sym->Name[0] = 0;
 		BOOL got = dbghelp::SymFromAddr(hProcess, uNative, 0, sym);
-		if (got && *sym->Name) {
+		DWORD retType;
+		if (got && *sym->Name && dbghelp::SymGetTypeInfo(hProcess, sym->ModBase, sym->TypeIndex, dbghelp::TI_GET_TYPE, &retType)) {
 			DWORD d;
 			// get a calling convention
 			got = dbghelp::SymGetTypeInfo(hProcess, sym->ModBase, sym->TypeIndex, dbghelp::TI_GET_CALLING_CONVENTION, &d);
@@ -632,9 +633,7 @@ Proc* Prog::newProc (const char* name, ADDRESS uNative, bool bLib /*= false*/) {
 			}
 
 			// get a return type
-			got = dbghelp::SymGetTypeInfo(hProcess, sym->ModBase, sym->TypeIndex, dbghelp::TI_GET_TYPE, &d);
-			assert(got);
-			Type *rtype = typeFromDebugInfo(d, sym->ModBase);
+			Type *rtype = typeFromDebugInfo(retType, sym->ModBase);
 			if (!rtype->isVoid()) {
 				pProc->getSignature()->addReturn(rtype, Location::regOf(24));
 			}
