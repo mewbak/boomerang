@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.203 $	// 1.148.2.38
+ * $Revision: 1.204 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -825,7 +825,8 @@ bool Statement::replaceRef(Exp* e, Assign *def, bool& convert) {
 	// Could be propagating %flags into %CF
 	Exp* lhs = def->getLeft();
 	if (base->getOper() == opCF && lhs->isFlags()) {
-		assert(rhs->isFlagCall());
+		if (!rhs->isFlagCall())
+			return false;
 		char* str = ((Const*)((Binary*)rhs)->getSubExp1())->getStr();
 		if (strncmp("SUBFLAGS", str, 8) == 0) {
 			/* When the carry flag is used bare, and was defined in a subtract of the form lhs - rhs, then CF has
@@ -5257,10 +5258,12 @@ StatementList* CallStatement::calcResults() {
 }
 
 Type* Assignment::getType() {
-	if (ADHOC_TYPE_ANALYSIS)
-		return lhs->getType();
-	else
-		return type;
+	if (ADHOC_TYPE_ANALYSIS) {
+		Type *t = lhs->getType();
+		if (t)
+			return t;
+	}
+	return type;
 }
 
 void Assignment::setType(Type* ty) {

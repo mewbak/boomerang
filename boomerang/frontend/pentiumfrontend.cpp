@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.55 $	// 1.51.2.3
+ * $Revision: 1.56 $	// 1.51.2.3
  *
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
@@ -728,6 +728,9 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint(bool& gotMain) {
 
 	// Not ideal; we must return start
 	std::cerr << "main function not found\n";
+
+	this->AddSymbol(start, "_start");
+
 	return start;
 }
 

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.113 $	// 1.89.2.7
+ * $Revision: 1.114 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -782,7 +782,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 						callList.push_back(call);
 
 						// Record the called address as the start of a new procedure if it didn't already exist.
-						if (uNewAddr && pProc->getProg()->findProc(uNewAddr) == NULL) {
+						if (uNewAddr && uNewAddr != NO_ADDRESS && pProc->getProg()->findProc(uNewAddr) == NULL) {
 							callList.push_back(call);
 							//newProc(pProc->getProg(), uNewAddr);
 							if (Boomerang::get()->traceDecoder)
@@ -792,7 +792,13 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
  						// Check if this is the _exit or exit function. May prevent us from attempting to decode
 						// invalid instructions, and getting invalid stack height errors
 						const char* name = pBF->SymbolByAddress(uNewAddr);
-						if (name && ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0))) {
+						if (name == NULL && call->getDest()->isMemOf() && 
+											call->getDest()->getSubExp1()->isIntConst()) {
+							ADDRESS a = ((Const*)call->getDest()->getSubExp1())->getInt();
+							if (pBF->IsDynamicLinkedProcPointer(a))
+								name = pBF->GetDynamicProcName(a);
+						}	
+						if (name && ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0) || (strcmp(name, "ExitProcess") == 0))) {
 							// Make sure it has a return appended (so there is only one exit from the function)
 							//call->setReturnAfterCall(true);		// I think only the Sparc frontend cares
 							// Create the new basic block
