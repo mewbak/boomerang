@@ -7,7 +7,7 @@
  *			   classes.
  *============================================================================*/
 /*
- * $Revision: 1.42 $
+ * $Revision: 1.43 $
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  */
@@ -903,7 +903,6 @@ Exp* ExpCastInserter::postVisit(Const *e) {
 		bool naturallySigned = e->getInt() < 0;
 		Type* ty = e->getType();
 		if (naturallySigned && ty->isInteger() && !ty->asInteger()->isSigned()) {
-std::cerr << "const needs (unsigned): " << e << "\n";
 			return new TypedExp(new IntegerType(ty->asInteger()->getSize(), -1), e);
 		}
 	}
