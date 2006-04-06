@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.112 $	// 1.90.2.16
+ * $Revision: 1.113 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -722,7 +722,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 					t->getSubExp1()->isIntConst() &&
 					t->getSubExp2()->isIntConst() &&
 					((Const*)t->getSubExp2())->getInt() == 32) {
-				int sz = ((Const*)t->getSubExp1())->getInt();
+				unsigned sz = (unsigned)((Const*)t->getSubExp1())->getInt();
 				if (sz == 8 || sz == 16) {
 					bool close = false;
 					str << "*";
@@ -1311,7 +1311,8 @@ void CHLLCode::AddAssignmentStatement(int indLevel, Assign *asgn) {
 		if (rhs->getSubExp2()->isIntConst() && 
 				(((Const*)rhs->getSubExp2())->getInt() == 1 ||
 				 (lhs->getType() && lhs->getType()->isPointer() && 
-				 lhs->getType()->asPointer()->getPointsTo()->getSize() == ((Const*)rhs->getSubExp2())->getInt() * 8)))
+				 lhs->getType()->asPointer()->getPointsTo()->getSize() ==
+					(unsigned) ((Const*)rhs->getSubExp2())->getInt() * 8)))
 			s << "++";
 		else {
 			s << " += ";
