@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI
@@ -492,7 +492,10 @@ public:
 virtual				~CompoundType();
 virtual bool		isCompound() const { return true; }
 
-		void		addType(Type *n, const char *str) { 
+		void		addType(Type *n, const char *str) {
+						// check if it is a user defined type (typedef)
+						Type *t=getNamedType(n->getCtype());
+						if ( t ) n = t;
 						types.push_back(n); 
 						names.push_back(str);
 					}
