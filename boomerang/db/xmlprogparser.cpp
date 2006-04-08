@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.24 $	// 1.17.2.8
+ * $Revision: 1.25 $	// 1.17.2.8
  *
  * June 2004 - Trent: created
  * NOTE: As of early 2006, this file has likely fallen behind changes to class members, and so probably needs some major
@@ -1570,7 +1570,7 @@ void XMLProgParser::start_sizetype(const char **attr)
 	addId(attr, ty);
 	const char *n = getAttr(attr, "size");
 	if (n)
-		ty->setSize(atoi(n));
+		ty->size = atoi(n);
 }
 
 void XMLProgParser::addToContext_sizetype(Context *c, int e)
