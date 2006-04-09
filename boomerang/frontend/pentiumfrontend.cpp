@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.56 $	// 1.51.2.3
+ * $Revision: 1.57 $	// 1.51.2.3
  *
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
@@ -680,13 +680,14 @@ ADDRESS PentiumFrontEnd::getMainEntryPoint(bool& gotMain) {
 				return cs->getFixedDest();
 			}
 			if (pBF->SymbolByAddress(dest) &&
-				strcmp(pBF->SymbolByAddress(dest), "__libc_start_main") == 0) {
+					strcmp(pBF->SymbolByAddress(dest), "__libc_start_main") == 0) {
 				// This is a gcc 3 pattern. The first parameter will be a pointer to main.
 				// Assume it's the 5 byte push immediately preceeding this instruction
+				// Note: the RTL changed recently from esp = esp-4; m[esp] = K tp m[esp-4] = K; esp = esp-4
 				inst = decodeInstruction(addr-5);
 				assert(inst.valid);
 				assert(inst.rtl->getNumStmt() == 2);
-				Assign* a = (Assign*) inst.rtl->elementAt(1);
+				Assign* a = (Assign*) inst.rtl->elementAt(0);		// Get m[esp-4] = K
 				Exp* rhs = a->getRight();
 				assert(rhs->isIntConst());
 				gotMain = true;
