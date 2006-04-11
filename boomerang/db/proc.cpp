@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.302 $	// 1.238.2.44
+ * $Revision: 1.303 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -57,9 +57,11 @@
 #ifdef _WIN32
 #undef NO_ADDRESS
 #include <windows.h>
+#ifndef __MINGW32__
 namespace dbghelp {
 #include <dbghelp.h>
 };
+#endif
 #undef NO_ADDRESS
 #define NO_ADDRESS ((ADDRESS)-1)
 #endif
