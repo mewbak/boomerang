@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.115 $		// 1.91.2.10
+# $Revision: 1.116 $		// 1.91.2.10
 # 12 Apr 06 - Gerard: Restructured, added conditional rules, added generated dependencies
 # 13 Mar 06 - Mike: Prevent going to the loader directory 5 or 6 times
 # 05 Jul 05 - Mike: Big merge with boomerang.pole branch
@@ -216,13 +216,13 @@ ifdef MAKEDEPEND
  depend: ${MAKEDEPEND} lib
 	-mv include/gc*.h lib
 	${MAKEDEPEND} -w120 -Y -Iinclude -I. -Ic -Icodegen -Ifrontend ${CPPFILES} > /dev/null 2>&1
-	cd loader && ${MAKEDEPEND} -w120 -Y -I../include -I. -I../c -I../codegen -I../frontend *.cpp > /dev/null 2>&1
+	cd loader && ${MAKE} depend
 	-mv lib/gc*.h include
 
  depend.in: ${MAKEDEPEND} lib
 	-mv include/gc*.h lib
 	${MAKEDEPEND} -fMakefile.in -w120 -Y -Iinclude -I. -Ic -Icodegen -Ifrontend ${CPPFILES} > /dev/null 2>&1
-	cd loader && ${MAKEDEPEND} -fMakefile.in -w120 -Y -I../include -I. -I../c -I../codegen -I../frontend *.cpp > /dev/null 2>&1
+	cd loader && ${MAKE} depend
 	-mv lib/gc*.h include
 	
 else
