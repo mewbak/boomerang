@@ -11,7 +11,7 @@
 #
 ######################################################
 
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 # Note: gnu make is probably required (for patsubst etc)
 # Whole make is dependent on finding the pattern *BinaryFile.cpp;
 # a lib%.so file is made for each of these
@@ -72,7 +72,7 @@ ifeq ($(HOST_WINDOWS), yes)
  WININCLUDE=-Iwin32make/include
  # RUNPATH is not needed on Windows 
  RUNPATH=
- COPYDLL=libBinaryFile$(DLLEXT)
+ COPYDLL=../libBinaryFile$(DLLEXT)
 else # Non-Windows
  LDL=-ldl
  EXEEXT=
