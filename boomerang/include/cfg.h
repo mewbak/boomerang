@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.73 $	// 1.69.2.7
+ * $Revision: 1.74 $	// 1.69.2.7
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -478,7 +478,7 @@ public:
 		/*
 		 * print this cfg, mainly for debugging
 		 */
-		void		print(std::ostream &out);
+		void		print(std::ostream &out, bool html = false);
 		void		printToLog();
 		void		dump();				// Dump to std::cerr
 

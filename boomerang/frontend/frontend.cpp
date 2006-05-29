@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.115 $	// 1.89.2.7
+ * $Revision: 1.116 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -160,6 +160,43 @@ void FrontEnd::readLibraryCatalog() {
 		sList = Boomerang::get()->getProgPath() + "signatures/win32.hs";
 		readLibraryCatalog(sList.c_str());
 	}
+}
+
+std::vector<ADDRESS> FrontEnd::getEntryPoints()
+{
+	std::vector<ADDRESS> entrypoints;
+	bool gotMain = false;
+	ADDRESS a = getMainEntryPoint(gotMain);
+	if (a != NO_ADDRESS)
+		entrypoints.push_back(a);
+	else {  // try some other tricks
+		const char *fname = pBF->getFilename();
+		if (!strcmp(fname + strlen(fname) - 6, "_drv.o")) {
+			// Could be an X11 Module
+			const char *p = fname + strlen(fname) - 6;
+			while (*p != '/' && *p != '\\' && p != fname)
+				p--;
+			if (p != fname) {
+				p++;
+				char *name = (char*)malloc(strlen(p) + 30);
+				strcpy(name, p);
+				name[strlen(name)-6] = 0;
+				strcat(name, "ModuleData");
+				ADDRESS a = pBF->GetAddressByName(name, true);
+				if (a != NO_ADDRESS) {
+					ADDRESS vers, setup, teardown;
+					vers = pBF->readNative4(a);
+					setup = pBF->readNative4(a+4);
+					teardown = pBF->readNative4(a+8);
+					if (setup)
+						entrypoints.push_back(setup);
+					if (teardown)
+						entrypoints.push_back(teardown);
+				}
+			}
+		}
+	}
+	return entrypoints;
 }
 
 void FrontEnd::decode(Prog* prog, bool decodeMain, const char *pname) {
@@ -838,6 +875,8 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 							}
 						}
 					}
+
+					extraProcessCall(call, BB_rtls);
 
 					// Create the list of RTLs for the next basic block and continue with the next instruction.
 					BB_rtls = NULL;

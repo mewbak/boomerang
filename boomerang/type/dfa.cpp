@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.52 $	// 1.30.2.11
+ * $Revision: 1.53 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -58,9 +58,11 @@ static Exp* unscaledArrayPat = new Binary(opPlus,
 // This is particularly important for OS X where it is known that the collector can't see global variables, but it is
 // suspected that this is actually important for other architectures as well
 void init_dfa() {
+#ifndef NO_GARBAGE_COLLECTOR
 	static Exp** gc_pointers = (Exp**) GC_MALLOC_UNCOLLECTABLE(2*sizeof(Exp*));
 	gc_pointers[0] = scaledArrayPat;
 	gc_pointers[1] = unscaledArrayPat;
+#endif
 }
 
 

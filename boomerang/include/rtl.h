@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.53 $	// 1.51.2.1
+ * $Revision: 1.54 $	// 1.51.2.1
  *
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer
@@ -107,7 +107,7 @@ virtual bool		accept(StmtVisitor* visitor);
 		std::list<Statement*> &getList() { return stmtList; }
 
 		 // Print RTL to a stream.
-virtual void		print(std::ostream& os = std::cout);
+virtual void		print(std::ostream& os = std::cout, bool html = false);
 
 		void		dump();
 

@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.62 $	// 1.53.2.11
+ * $Revision: 1.63 $	// 1.53.2.11
  *
  * 12 Jul 02 - Trent: Created
  *
@@ -187,7 +187,7 @@ virtual int			findImplicitParam(Exp *e);
 
 		// any signature can be promoted to a higher level signature, if available
 virtual Signature *promote(UserProc *p);
-		void		print(std::ostream &out);
+		void		print(std::ostream &out, bool html = false);
 		char*		prints();			// For debugging
 		void		printToLog();
 

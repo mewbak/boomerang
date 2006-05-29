@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.111 $	// 1.98.2.12
+ * $Revision: 1.112 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -1437,7 +1437,7 @@ Signature *Signature::instantiate(platform plat, callconv cc, const char *nam) {
 	return NULL;
 }
 
-void Signature::print(std::ostream &out)
+void Signature::print(std::ostream &out, bool html)
 {
 	if (returns.size() >= 1)
 		out << (*returns.begin())->type->getCtype() << " ";
