@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.139 $	// 1.115.2.27
+ *	$Revision: 1.140 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -288,7 +288,6 @@ protected:
 
 		friend class XMLProgParser;
 					LibProc() : Proc() { }
-
 };		// class LibProc
 
 enum ProcStatus {

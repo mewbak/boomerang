@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /* 
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  * 06 Jun 02 - Trent: Created.
  *
  */
@@ -52,6 +52,7 @@ private:
 	 */
 	Exp*	dis_Eaddr(ADDRESS pc, int size = 0);
 	Exp*	dis_Mem(ADDRESS ps);
+	Exp*	addReloc(Exp *e);
 
 	void	unused(int x);
 	bool	isFuncPrologue(ADDRESS hostPC);
@@ -59,6 +60,8 @@ private:
 	Byte	getByte(unsigned lc);
 	SWord	getWord(unsigned lc);
 	DWord	getDword(unsigned lc);
+
+	unsigned lastDwordLc;
 };
 
 #endif
