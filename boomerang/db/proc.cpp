@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.305 $	// 1.238.2.44
+ * $Revision: 1.306 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -942,7 +942,7 @@ void UserProc::insertStatementAfter(Statement* s, Statement* a) {
 
 // Decompile this UserProc
 ProcSet* UserProc::decompile(ProcList* path, int& indent) {
-	Boomerang::get()->alert_considering(path->back(), this);
+	Boomerang::get()->alert_considering(path->empty() ? NULL : path->back(), this);
 	std::cout << std::setw(++indent) << " " << (status >= PROC_VISITED ? "re" : "") << "considering " << getName() <<
 		"\n";
 	if (VERBOSE)

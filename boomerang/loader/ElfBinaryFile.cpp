@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * $Revision: 1.43 $
+ * $Revision: 1.44 $
  *
  * ELF binary file format.
  *	This file implements the class ElfBinaryFile, derived from class BinaryFile.
@@ -42,7 +42,8 @@
 typedef std::map<std::string, int, std::less<std::string> >		StrIntMap;
 
 ElfBinaryFile::ElfBinaryFile(bool bArchive /* = false */)
-	: BinaryFile(bArchive)		// Initialise base class
+	: BinaryFile(bArchive),	// Initialise base class
+	  next_extern(0)
 {
 	m_fd = 0;
 	m_pFileName = 0;
