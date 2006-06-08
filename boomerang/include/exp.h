@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the Exp class and its subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.132 $	// 1.119.2.11
+ * $Revision: 1.133 $	// 1.119.2.11
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors
@@ -104,7 +104,7 @@ virtual void		print(std::ostream& os, bool html = false) = 0;
 		char*		prints();		// Print to string (for debugging and logging)
 		void		dump();			// Print to standard error (for debugging)
 		// Recursive print: don't want parens at the top level
-virtual void printr(std::ostream& os) { print(os);}	   // But most classes want standard
+virtual void printr(std::ostream& os, bool html = false) { print(os, html);}	   // But most classes want standard
 		// For debugging: print in indented hex. In gdb: "p x->printx(0)"
 virtual void		printx(int ind) = 0;
 
@@ -590,7 +590,7 @@ virtual				~Binary();
 
 		// Print
 virtual void		 print(std::ostream& os, bool html = false);
-virtual void		 printr(std::ostream& os);
+virtual void		 printr(std::ostream& os, bool html = false);
 virtual void		 appendDotFile(std::ofstream& of);
 virtual void		 printx(int ind);
 
@@ -668,7 +668,7 @@ virtual				~Ternary();
 
 		// Print
 virtual void		 print(std::ostream& os, bool html = false);
-virtual void		 printr(std::ostream& os);
+virtual void		 printr(std::ostream& os, bool html = false);
 virtual void		 appendDotFile(std::ofstream& of);
 virtual void		 printx(int ind);
 

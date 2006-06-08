@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.140 $	// 1.115.2.27
+ *	$Revision: 1.141 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -260,14 +260,6 @@ public:
 	
 					LibProc(Prog *prog, std::string& name, ADDRESS address);
 virtual				~LibProc();
-
-#if 0
-		/*
-		 * See comment for Proc::matchParams.
-		 */
-		void		matchParams(std::list<Exp*>& actuals, UserProc& caller, const Parameters* outgoing,
-						const Exp** intRetLoc) const;
-#endif
 
 		/**
 		 * Return true, since is a library proc
@@ -662,6 +654,7 @@ virtual	void		removeReturn(Exp *e);
 
 		/// inline constants / decode function pointer constants
 		bool		processConstants();
+		void		processTypes();
 
 		/// Calculate uses info
 		void		computeUses();

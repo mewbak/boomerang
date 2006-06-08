@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.57 $	// 1.44.2.1
+ * $Revision: 1.58 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -313,16 +313,6 @@ Type *CompoundType::getType(const char *nam)
 			return types[i];
 	return NULL;
 }
-
-#if 0
-Type *UnionType::getType(const char *nam)
-{
-	for (unsigned i = 0; i < types.size(); i++)
-		if (names[i] == nam)
-			return types[i];
-	return NULL;
-}
-#endif
 
 // Note: n is a BIT offset
 Type *CompoundType::getTypeAtOffset(unsigned n)

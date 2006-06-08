@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.42 $	// 1.39.2.19
+ * $Revision: 1.43 $	// 1.39.2.19
  *
  * 15 Mar 05 - Mike: Separated from cfg.h
  */
@@ -166,7 +166,7 @@ public:
 		/*
 		 * Print the collected locations to stream os
 		 */
-		void		print(std::ostream& os);
+		void		print(std::ostream& os, bool html = false);
 
 		/*
 		 * Print to string or stdout (for debugging)
@@ -241,7 +241,7 @@ public:
 		/*
 		 * Print the collected locations to stream os
 		 */
-		void		print(std::ostream& os);
+		void		print(std::ostream& os, bool html = false);
 
 		/*
 		 * Print to string or stderr (for debugging)

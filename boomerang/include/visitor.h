@@ -18,7 +18,7 @@
  *				StmtPartModifier (as above specialised for propagation)
  *============================================================================*/
 /*
- * $Revision: 1.29 $	// 1.13.2.11
+ * $Revision: 1.30 $	// 1.13.2.11
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  *
@@ -525,17 +525,6 @@ public:
 		void		clearChanged() {change = false;}
 		Exp*		postVisit(RefExp* e);
 };
-
-#if 0
-class AllSubscriptedTester : public ExpVisitor {
-		bool		result;
-public:
-					AllSubscriptedTester() : result(true) {}
-		bool		getResult() {return result;}
-		bool	 	visit(RefExp *e, bool& override) {override = true; return true;}	// Don't recurse inside RefExps
-		bool	 	visit(Location *e, bool& override);
-};
-#endif
 
 // Test an address expression (operand of a memOf) for primitiveness (i.e. if it is possible to SSA rename the memOf
 // without problems). Note that the PrimitiveTester is not used with the memOf expression, only its address expression

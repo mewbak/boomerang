@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.18 $
+ * $Revision: 1.19 $
  *
  * 05 Sep 00 - Mike: moved getCodeInfo here from translate2c.cc
  * 21 Sep 00 - Mike: getTempType handles tmph, tmpb now
@@ -222,21 +222,6 @@ void escapeXMLChars(std::string &s)
 // Note: assumes a C or C++ back end...
 char* escapeStr(char* str) {
     std::ostringstream out;
-#if 0
-    for (char* p = str; *p; p++) {
-        char c = *p;
-        if (c < ' ') {
-            switch (c) {
-                case '\n': out << "\\n"; break;
-                case '\r': out << "\\r"; break;
-                case '\t': out << "\\t"; break;
-                case '\b': out << "\\b"; break;
-                case '\f': out << "\\f"; break;
-                default:   out << "\\x" << std::hex << std::setw(2) << (int)c;
-            }
-        } else out << c;
-    }
-#endif
 	char unescaped[]="ntvbrfa\"";
 	char escaped[]="\n\t\v\b\r\f\a\"";
 	bool escapedSucessfully;

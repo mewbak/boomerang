@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.41 $	// 1.35.2.5
+ * $Revision: 1.42 $	// 1.35.2.5
  *
  * 17 May 02 - Mike: Mods for boomerang
  * 22 Nov 02 - Mike: Added check for invalid instructions; prints opcode
@@ -490,21 +490,6 @@ bool SparcFrontEnd::case_DD(ADDRESS& address, int delta, DecodeResult& inst, Dec
 		// Add this call to the list of calls to analyse. We won't be able to analyse its callee(s), of course.
 		callList.push_back(call_stmt);
 	}
-#if 0
-	else if(last->getKind() == STMT_CASE) {
-
-		// Attempt to process this jmpl as a switch statement.
-		// NOTE: the isSwitch and processSwitch methods should arguably be merged into one
-		CaseStatement*	 stmt_jump	 = static_cast<CaseStatement*>(
-			inst.rtl->getList().back());
-		if (isSwitch(newBB, stmt_jump->getDest(), proc, pBF))
-			processSwitch(newBB, delta, cfg, tq, pBF);
-		else
-		{
-			std::cerr << "Warning: COMPUTED JUMP at " << std::hex << address-8 << std::endl;
-		}
-	}
-#endif
 
 	// Set the address of the lexical successor of the call that is to be decoded next and create a new list of
 	// RTLs for the next basic block.

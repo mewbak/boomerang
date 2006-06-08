@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.64 $	// 1.53.2.11
+ * $Revision: 1.65 $	// 1.53.2.11
  *
  * 12 Jul 02 - Trent: Created
  *
@@ -170,19 +170,6 @@ virtual Exp			*getArgumentExp(int n);
 virtual bool		hasEllipsis() { return ellipsis; }
 
 		void		renameParam(const char *oldName, const char *newName);
-
-#if 0
-	// add a new implicit parameter
-virtual void		addImplicitParameter(Exp *e);
-virtual void		removeImplicitParameter(int i);
-
-	// accessors for implicit params
-virtual int			getNumImplicitParams();
-virtual const char	*getImplicitParamName(int n);
-virtual Exp			*getImplicitParamExp(int n);
-virtual Type		*getImplicitParamType(int n);
-virtual int			findImplicitParam(Exp *e);
-#endif
 
 		// analysis determines parameters / return type
 		//virtual void analyse(UserProc *p);
