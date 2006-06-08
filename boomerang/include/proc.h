@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.141 $	// 1.115.2.27
+ *	$Revision: 1.142 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -709,6 +709,8 @@ public:
 		/// return a local's type
 		Type		*getLocalType(const char *nam);
 		void		setLocalType(const char *nam, Type *ty);
+		
+		Type		*getParamType(const char *nam);
 
 		/// return a symbol's exp (note: the original exp, like r24, not local1)
 		Exp			*expFromSymbol(const char *nam);

@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.198 $	// 1.172.2.20
+ * $Revision: 1.199 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3594,7 +3594,17 @@ Type *Location::getType()
 		proc = ((Location*)subExp1->getSubExp1())->getProc();
 	if (proc == NULL)
 		return ty;
-	char *nam = NULL;
+	char *nam = proc->lookupSym(this);
+	if (nam) {
+		Type *ty = proc->getLocalType(nam);
+		if (ty)
+			return ty;
+		ty = proc->getParamType(nam);
+		if (ty)
+			return ty;		
+	}
+	
+	nam = NULL;
 	if (subExp1->getOper() == opStrConst)
 		nam = ((Const*)subExp1)->getStr();
 	
@@ -4237,5 +4247,3 @@ void Location::readMemo(Memo *mm, bool dec)
 	// LocationMemo *m = dynamic_cast<LocationMemo*>(mm);
 }
 #endif		// #ifdef USING_MEMO
-
-

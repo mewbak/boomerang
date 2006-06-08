@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.118 $	// 1.89.2.7
+ * $Revision: 1.119 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -243,7 +243,12 @@ void FrontEnd::decode(Prog* prog, bool decodeMain, const char *pname) {
 	ADDRESS a = getMainEntryPoint(gotMain);
 	if (VERBOSE)
 		LOG << "start: " << a << " gotmain: " << (gotMain ? "true" : "false") << "\n";
-	if (a == NO_ADDRESS) return;
+	if (a == NO_ADDRESS) {
+		std::vector<ADDRESS> entrypoints = getEntryPoints();
+		for (std::vector<ADDRESS>::iterator it = entrypoints.begin(); it != entrypoints.end(); it++)
+			decode(prog, *it);
+		return;
+	}
 
 	decode(prog, a);
 	prog->setEntryPoint(a);

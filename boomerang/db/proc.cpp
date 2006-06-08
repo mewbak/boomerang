@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.307 $	// 1.238.2.44
+ * $Revision: 1.308 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -3147,6 +3147,14 @@ void UserProc::setLocalType(const char *nam, Type *ty)
 	locals[nam] = ty;
 	if (VERBOSE)
 		LOG << "setLocalType: updating type of " << nam << " to " << ty->getCtype() << "\n";
+}
+
+Type *UserProc::getParamType(const char *nam)
+{
+	for (unsigned int i = 0; i < signature->getNumParams(); i++)
+		if (std::string(nam) == signature->getParamName(i))
+			return signature->getParamType(i);
+	return NULL;
 }
 
 void UserProc::setExpSymbol(const char *nam, Exp *e, Type* ty)

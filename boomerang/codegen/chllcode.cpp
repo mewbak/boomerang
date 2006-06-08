@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.114 $	// 1.90.2.16
+ * $Revision: 1.115 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1455,7 +1455,9 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open) {
 		Exp *e = proc->getSignature()->getReturnExp(0);
 		if (e->isRegN(Signature::getStackRegister(proc->getProg())))
 			n = 1;
-		Type *retType = proc->getSignature()->getReturnType(n);
+		Type *retType = NULL;
+		if (n < proc->getSignature()->getNumReturns())
+			retType = proc->getSignature()->getReturnType(n);
 		if (retType == NULL)
 			s << "void ";
 		else {
@@ -1608,4 +1610,3 @@ void CHLLCode::AddLineComment(char* cmt) {
 	s << "/* " << cmt << "*/";
 	lines.push_back(strdup(s.str().c_str()));
 }
-
