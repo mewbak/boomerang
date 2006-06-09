@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.115 $	// 1.90.2.16
+ * $Revision: 1.116 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -865,6 +865,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 			{
 				Type *ty = b->getSubExp1()->getType();
 				if (ty == NULL) {
+					ty = b->getSubExp1()->getType();
 					if (VERBOSE)
 						LOG << "no type for subexp1 of " << b << "\n";
 					str << "/* type failure */ ";
