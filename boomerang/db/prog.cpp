@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.157 $	// 1.126.2.14
+ * $Revision: 1.158 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -1988,7 +1988,6 @@ Exp	*Prog::addReloc(Exp *e, ADDRESS lc)
 			if (str)
 				e = new Const(str);
 			else {
-				LOG << "checking for access to middle of symbol c=" << c << " lc=" << lc << "\n";
 				// check for accesses into the middle of symbols
 				for (std::map<ADDRESS, std::string>::iterator it = symbols.begin(); it != symbols.end(); it++)
 					if ((*it).first < (ADDRESS)c->getInt() && (*it).first + pBF->GetSizeByName((*it).second.c_str()) > (ADDRESS)c->getInt()) {

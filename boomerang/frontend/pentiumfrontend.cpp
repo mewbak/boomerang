@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.60 $	// 1.51.2.3
+ * $Revision: 1.61 $	// 1.51.2.3
  *
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
@@ -1078,7 +1078,6 @@ void PentiumFrontEnd::extraProcessCall(CallStatement *call, std::list<RTL*> *BB_
 				RTL *rtl = *itr;
 				for (int n = rtl->getNumStmt() - 1; n >= 0; n--) {
 					Statement *stmt = rtl->elementAt(n);
-					LOG << "stmt " << stmt << " pushcount = " << pushcount << "\n";
 					if (stmt->isAssign()) {
 						Assign *asgn = (Assign*)stmt;
 						if (asgn->getLeft()->isRegN(28) && asgn->getRight()->getOper() == opMinus)

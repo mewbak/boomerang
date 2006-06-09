@@ -10,7 +10,7 @@
 /** \file	boomerang.h
  * Interface for the boomerang singleton object.
  *
- * $Revision: 1.73 $	// 1.61.2.2
+ * $Revision: 1.74 $	// 1.61.2.2
  * 04 Dec 2002: Trent: Created
  */
 
@@ -227,11 +227,7 @@ virtual void		alert_decompiling(UserProc *p) {
 						for (std::set<Watcher*>::iterator it = watchers.begin(); it != watchers.end(); it++)
 							(*it)->alert_decompiling(p);
 					}
-virtual void		alert_decompile_debug_point(UserProc *p, const char *description) {
-						for (std::set<Watcher*>::iterator it = watchers.begin(); it != watchers.end(); it++)
-							(*it)->alert_decompile_debug_point(p, description);
-					}
-
+virtual void		alert_decompile_debug_point(UserProc *p, const char *description);
 
 		void		logTail();
 
@@ -256,6 +252,7 @@ virtual void		alert_decompile_debug_point(UserProc *p, const char *description) 
 		bool		debugSwitch;
 		bool		noParameterNames;
 		bool		debugLiveness;
+		bool		stopAtDebugPoints;
 		bool		debugTA;
 		/// A vector which contains all know entrypoints for the Prog.
 		std::vector<ADDRESS> entrypoints;
