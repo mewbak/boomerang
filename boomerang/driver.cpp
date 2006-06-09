@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 30 Aug 05 - Mike: Added init_dfa() etc for garbage collection safety
  */
@@ -66,3 +66,4 @@ void operator delete(void* p) {
 }
 #endif
 #endif
+

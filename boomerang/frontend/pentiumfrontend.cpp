@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.61 $	// 1.51.2.3
+ * $Revision: 1.62 $	// 1.51.2.3
  *
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
@@ -1003,7 +1003,7 @@ void PentiumFrontEnd::extraProcessCall(CallStatement *call, std::list<RTL*> *BB_
 			// count pushes backwards to find arg
 			Exp *found = NULL;
 			std::list<RTL*>::reverse_iterator itr;
-			int pushcount = 0;
+			unsigned int pushcount = 0;
 			for (itr = BB_rtls->rbegin(); itr != BB_rtls->rend() && !found; itr++) {
 				RTL *rtl = *itr;
 				for (int n = rtl->getNumStmt() - 1; n >= 0; n--) {
