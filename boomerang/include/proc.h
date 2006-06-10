@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.143 $	// 1.115.2.27
+ *	$Revision: 1.144 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -516,6 +516,8 @@ virtual				~UserProc();
 		void		markAsNonChildless(ProcSet* cs);
 		// Update the defines and arguments in calls.
 		void		updateCalls();
+		// Fix any ugly branch statements (from propagating too much)
+		void		fixUglyBranches();
 		// Place the phi functions
 		void		placePhiFunctions() {df.placePhiFunctions(this);}
 

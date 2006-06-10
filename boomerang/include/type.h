@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.58 $
+ * $Revision: 1.59 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI
@@ -505,6 +505,7 @@ virtual bool		isCompound() const { return true; }
 		const char	*getName(unsigned n) { assert(n < getNumTypes()); return names[n].c_str(); }
 		void		setTypeAtOffset(unsigned n, Type* ty);
 		Type		*getTypeAtOffset(unsigned n);
+		void		setNameAtOffset(unsigned n, const char *nam);
 		const char	*getNameAtOffset(unsigned n);
 		unsigned	getOffsetTo(unsigned n);
 		unsigned	getOffsetTo(const char *member);
