@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.202 $	// 1.172.2.20
+ * $Revision: 1.203 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2620,7 +2620,7 @@ Exp* Binary::polySimplify(bool& bMod) {
 						new Unary(opAddrOf, 
 							new Binary(opMemberAccess, 
 								l,
-								new Const((char*)nam))),
+								new Const(strdup(nam)))),
 						new Const(r / 8));
 					if (VERBOSE)
 						LOG << "(trans1) replacing " << this << " with " << res << "\n";
