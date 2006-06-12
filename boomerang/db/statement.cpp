@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.211 $	// 1.148.2.38
+ * $Revision: 1.212 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3667,6 +3667,25 @@ void Assignment::processTypes()
 	}
 }
 
+bool Assign::match(const char *pattern, std::map<std::string, Exp*> &bindings)
+{
+	if (strstr(pattern, ":=") == NULL)
+		return false;
+	char *left = strdup(pattern);
+	char *right = strstr(left, ":=");
+	*right++ = 0;
+	right++;
+	while (*right == ' ')
+		right++;
+	char *endleft = left + strlen(left) - 1;
+	while (*endleft == ' ') {
+		*endleft = 0;
+		endleft--;
+	}
+
+	return lhs->match(left, bindings) && rhs->match(right, bindings);
+}
+
 void Assign::processTypes()
 {
 	if (!ADHOC_TYPE_ANALYSIS)
@@ -3707,6 +3726,18 @@ void Assign::processTypes()
 				LOG << "replacing " << old << " with " << rhs << "\n";
 		}
 	}
+
+
+	/* Would be nice to be able to write the below this way:
+	 *
+	 * std::map<std::string, Exp*> b;
+	 * if (this->match("x.n := m[a[y] + c]{-}", b) && b["c"]->isIntConst()) {
+	 *		Type *ty = b["y"]->getType();
+	 *		if (ty && (ty->isSize() || ty->isCompound())) {
+	 *		   ...
+	 *		}
+	 * }
+	 */
 
 	/* Pattern:
 	 *    x.n := m[&y + c]{-}
