@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.114 $	// 1.98.2.12
+ * $Revision: 1.115 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -622,15 +622,16 @@ bool CallingConvention::StdC::PentiumSignature::isPreserved(Exp* e) {
 void CallingConvention::StdC::PentiumSignature::setLibraryDefines(StatementList* defs) {
 	if (defs->size()) return;					// Do only once
 	Location* r24 = Location::regOf(24);		// eax
+	Type *ty = new VoidType();
 	if (returns.size() > 1) {					// Ugh - note the stack pointer is the first return still
-		Type* ty = returns[1]->type;
+		ty = returns[1]->type;
 		if (ty->isFloat()) {
 			Location* r32 = Location::regOf(32);			// Top of FP stack
 			r32->setType(ty);
 		} else
 			r24->setType(ty);									// All others return in r24 (check!)
 	}
-	defs->append(new ImplicitAssign(r24));						// eax
+	defs->append(new ImplicitAssign(ty, r24));					// eax
 	defs->append(new ImplicitAssign(Location::regOf(25)));		// ecx
 	defs->append(new ImplicitAssign(Location::regOf(26)));		// edx
 	defs->append(new ImplicitAssign(Location::regOf(28)));		// esp
