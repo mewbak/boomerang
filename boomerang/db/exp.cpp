@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.203 $	// 1.172.2.20
+ * $Revision: 1.204 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -3710,7 +3710,8 @@ Type *Binary::getType() {
 						RefExp *r = (RefExp*)subExp1->getSubExp1();
 						LOG << r->getDef() << "\n";
 					}
-					assert(false);
+					return new VoidType();
+					//assert(false);
 				}
 				assert(subExp2->getOper() == opStrConst);
 				char* str = ((Const*)subExp2)->getStr();
