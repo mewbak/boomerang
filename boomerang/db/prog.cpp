@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.160 $	// 1.126.2.14
+ * $Revision: 1.161 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -464,6 +464,8 @@ Proc* Prog::setNewProc(ADDRESS uAddr) {
 		std::ostringstream ost;
 		ost << "proc" << m_iNumberedProc++;
 		pName = strdup(ost.str().c_str());
+		if (VERBOSE)
+			LOG << "assigning name " << pName << " to addr " << uAddr << "\n";
 	}
 	pProc = newProc(pName, uAddr, bLib);
 	return pProc;

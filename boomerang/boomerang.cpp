@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.163 $	// 1.115.2.5
+ * $Revision: 1.164 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
 */
@@ -1212,7 +1212,11 @@ void Boomerang::alert_decompile_debug_point(UserProc *p, const char *description
 				fgets(line, 1024, stdin);
 				if (!strncmp(line, "print", 5))
 					p->print(std::cout);
-				else if (!strncmp(line, "run ", 4)) {
+				else if (!strncmp(line, "fprint", 6)) {
+					std::ofstream of("out.proc");
+					p->print(of);
+					of.close();
+				} else if (!strncmp(line, "run ", 4)) {
 					stopAt = strdup(line + 4);
 					if (strchr(stopAt, '\n'))
 						*strchr(stopAt, '\n') = 0;
