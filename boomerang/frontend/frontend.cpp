@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.119 $	// 1.89.2.7
+ * $Revision: 1.120 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -105,6 +105,12 @@ const char *FrontEnd::getRegName(int idx) {
 		if ((*it).second == idx) 
 			return (*it).first.c_str();
 	return NULL;
+}
+
+int FrontEnd::getRegSize(int idx) {
+	if (decoder->getRTLDict().DetRegMap.find(idx) == decoder->getRTLDict().DetRegMap.end())
+		return 32;
+	return decoder->getRTLDict().DetRegMap[idx].g_size();
 }
 
 bool FrontEnd::isWin32() {

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.116 $	// 1.98.2.12
+ * $Revision: 1.117 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -426,7 +426,7 @@ bool CallingConvention::Win32Signature::isPreserved(Exp* e) {
 void CallingConvention::Win32Signature::setLibraryDefines(StatementList* defs) {
 	if (defs->size()) return;					// Do only once
 	Location* r24 = Location::regOf(24);		// eax
-	Type* ty = new VoidType();
+	Type* ty = new SizeType(32);
 	if (returns.size() > 1) {					// Ugh - note the stack pointer is the first return still
 		ty = returns[1]->type;
 		if (ty->isFloat()) {
@@ -623,7 +623,7 @@ bool CallingConvention::StdC::PentiumSignature::isPreserved(Exp* e) {
 void CallingConvention::StdC::PentiumSignature::setLibraryDefines(StatementList* defs) {
 	if (defs->size()) return;					// Do only once
 	Location* r24 = Location::regOf(24);		// eax
-	Type* ty = new VoidType();
+	Type* ty = new SizeType(32);
 	if (returns.size() > 1) {					// Ugh - note the stack pointer is the first return still
 		ty = returns[1]->type;
 		if (ty->isFloat()) {

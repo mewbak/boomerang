@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.118 $	// 1.90.2.16
+ * $Revision: 1.119 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1481,7 +1481,7 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open) {
 		s << "void ";
 	} else {
 		Assign* firstRet = (Assign*)*returns->begin();
-		Type* retType = firstRet->getType();
+		retType = firstRet->getType();
 		if (retType == NULL || retType->isVoid())
 			// There is a real return; make it integer (Remove with AD HOC type analysis)
 			retType = new IntegerType();

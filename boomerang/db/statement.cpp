@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.214 $	// 1.148.2.38
+ * $Revision: 1.215 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -3251,7 +3251,17 @@ void BoolAssign::setLeftFromList(std::list<Statement*>* stmts) {
 // Assign //
 //	//	//	//
 
-Assignment::Assignment(Exp* lhs) : TypingStatement(new VoidType), lhs(lhs) {}
+Assignment::Assignment(Exp* lhs) : TypingStatement(new VoidType), lhs(lhs) {
+	if (lhs->isMemOf())
+		type = new SizeType(32);
+	else if (lhs->isRegOf()) {
+		int n = ((Const*)lhs->getSubExp1())->getInt();
+		if (((Location*)lhs)->getProc()) {
+			type = new SizeType(((Location*)lhs)->getProc()->getProg()->getRegSize(n));
+		}
+	}
+
+}
 Assignment::Assignment(Type* ty, Exp* lhs) : TypingStatement(ty), lhs(lhs) {
 	if (ADHOC_TYPE_ANALYSIS) {
 		Location* loc = dynamic_cast<Location*>(lhs);

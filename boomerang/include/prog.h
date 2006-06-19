@@ -14,7 +14,7 @@
  * OVERVIEW:	interface for the program object.
  *============================================================================*/
 /*
- * $Revision: 1.91 $	// 1.73.2.5
+ * $Revision: 1.92 $	// 1.73.2.5
  * 16 Apr 01 - Mike: Mods for boomerang
  */
 
@@ -113,6 +113,7 @@ virtual				~Prog();
 		const void* getCodeInfo(ADDRESS uAddr, const char*& last, int& delta);
 
 		const char *getRegName(int idx) { return pFE->getRegName(idx); }
+		int getRegSize(int idx) { return pFE->getRegSize(idx); }
 
 		void		decodeEntryPoint(ADDRESS a);
 		void		setEntryPoint(ADDRESS a);			// As per the above, but don't decode
