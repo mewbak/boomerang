@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.59 $	// 1.44.2.1
+ * $Revision: 1.60 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -331,12 +331,12 @@ void CompoundType::setTypeAtOffset(unsigned n, Type* ty) {
 	unsigned offset = 0;
 	for (unsigned i = 0; i < types.size(); i++) {
 		if (offset <= n && n < offset + types[i]->getSize()) {
-			int oldsz = types[i]->getSize();
+			unsigned oldsz = types[i]->getSize();
 			types[i] = ty;
 			if (ty->getSize() < oldsz) {
 				types.push_back(types[types.size()-1]);
 				names.push_back(names[names.size()-1]);
-				for (int n = types.size() - 1; n > i; n--) {
+				for (unsigned n = types.size() - 1; n > i; n--) {
 					types[n] = types[n-1];
 					names[n] = names[n-1];
 				}
