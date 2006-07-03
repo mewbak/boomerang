@@ -13,7 +13,7 @@
  *				etc. Ordinary instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.38 $	// 1.33.2.2
+ * $Revision: 1.39 $	// 1.33.2.2
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -2144,7 +2144,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 Exp* PentiumDecoder::dis_Mem(ADDRESS pc)
 {
 	Exp* expr = NULL;
-	lastDwordLc = -1;
+	lastDwordLc = (unsigned)-1;
 
 	match pc to 
 	| Abs32 (a) =>
@@ -2437,7 +2437,7 @@ void genBSFR(ADDRESS pc, Exp* dest, Exp* modrm, int init, int size,
 
 Exp *PentiumDecoder::addReloc(Exp *e)
 {
-	if (lastDwordLc != -1)
+	if (lastDwordLc != (unsigned)-1)
 		e = prog->addReloc(e, lastDwordLc);
 	return e;
 }
