@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.117 $	// 1.98.2.12
+ * $Revision: 1.118 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -189,7 +189,9 @@ namespace CallingConvention {
 			virtual	bool		isPreserved(Exp* e);		// Return whether e is preserved by this proc
 			virtual void		setLibraryDefines(StatementList* defs);	// Set list of locations def'd by library calls
             virtual bool		isLocalOffsetPositive() {return true;}
-            //virtual	bool	isAddrOfStackLocal(Prog* prog, Exp* e);
+			virtual bool		isPromoted() { return true; }
+			virtual platform	getPlatform() { return PLAT_PPC; }
+			virtual callconv	getConvention() { return CONV_C; }
 		};
 		class ST20Signature : public Signature {
 		public:
