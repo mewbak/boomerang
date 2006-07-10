@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.315 $	// 1.238.2.44
+ * $Revision: 1.316 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -676,7 +676,7 @@ char* UserProc::prints() {
 	std::ostringstream ost;
 	print(ost);
 	strncpy(debug_buffer, ost.str().c_str(), DEBUG_BUFSIZE);
-	debug_buffer[DEBUG_BUFSIZE] = '\0';
+	debug_buffer[DEBUG_BUFSIZE-1] = '\0';
 	return debug_buffer;
 }
 
