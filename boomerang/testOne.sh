@@ -1,5 +1,5 @@
 #!/bin/bash
-# testOne.sh functional test script $Revision: 1.19 $ # 1.10.2.1
+# testOne.sh functional test script $Revision: 1.20 $ # 1.10.2.1
 # Call with test platform, test-program test-set [,options [,arguments]]
 # test-set is a char usually 1-9 for the various .out files, usually use 1 for .out1
 # e.g. "./testOne.sh pentium hello"
@@ -14,7 +14,7 @@
 #
 
 echo $* > functest.res
-rm -f functest/$2/$2.c
+rm -f functest/$2/*
 
 SPACES="                                                 "
 RES="Result for $1"
@@ -36,7 +36,7 @@ else
 	if [[ ! -f functest/$2/$2.c ]]; then
 		RESULT="NO BOOMERANG OUTPUT set $3!"
 	else
-		cp functest/$2/$2.c functest.c
+		cat functest/$2/*.c > functest.c
 		# if test/$1/$2.sed exists, use it to make "known error" corrections to the source code
 		if [[ -f test/$1/$2.sed ]]; then
 			echo Warning... $1/$2.sed used >> functest.res
