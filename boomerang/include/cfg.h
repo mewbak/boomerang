@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.74 $	// 1.69.2.7
+ * $Revision: 1.75 $	// 1.69.2.7
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -481,6 +481,7 @@ public:
 		void		print(std::ostream &out, bool html = false);
 		void		printToLog();
 		void		dump();				// Dump to std::cerr
+		void		dumpImplicitMap();	// Dump the implicit map to std::cerr
 
 		/*
 		 * Check for indirect jumps and calls. If any found, decode the extra code and return true
