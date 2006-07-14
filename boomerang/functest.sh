@@ -1,5 +1,5 @@
 #!/bin/bash
-# functest.sh functional test script $Revision: 1.41 $	# 1.23.2.1
+# functest.sh functional test script $Revision: 1.42 $	# 1.23.2.1
 # Note: to test with data flow based type analysis, pass a parameter of -Td
 #
 # 02 Feb 05 - Mike: Conditional tests for no type analysis. So all tests should pass whether -Td is passed or not
@@ -77,12 +77,12 @@ $TESTONE pentium uns			1 "$BOOMSW" '2 3'
 $TESTONE sparc   uns			1 "$BOOMSW" '2 3'
 $TESTONE pentium fromssa2		1 "$BOOMSW"
 $TESTONE sparc   fromssa2		1 "$BOOMSW"
-$TESTONE pentium sumarray-O4	1 "$BOOMSW"
 $TESTONE pentium bswap			1 "$BOOMSW"
-$TESTONE pentium testset		1 -O '2 3 4'
+$TESTONE pentium testset		1 "$BOOMSW" '2 3 4'
 $TESTONE sparc   andn			1 "$BOOMSW"
 $TESTONE pentium callchain		1 "$BOOMSW"
 $TESTONE sparc	 callchain		1 "$BOOMSW"
+$TESTONE pentium sumarray-O4	1 "$BOOMSW"
 
 
 if [ ! "$TYPEANALYSIS" ]
