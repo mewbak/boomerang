@@ -4,7 +4,7 @@
  *				tests the sparc front end
  *============================================================================*/
 /*
- * $Revision: 1.23 $
+ * $Revision: 1.24 $
  *
  * 05 Apr 02 - Mike: Created
  * 21 May 02 - Mike: Mods for gcc 3.1
@@ -114,7 +114,7 @@ void FrontPentTest::test1 () {
 	CPPUNIT_ASSERT_EQUAL(expected, std::string(o3.str()));
 
 	delete pFE;
-	delete pBF;
+	// delete pBF;
 }
 
 void FrontPentTest::test2() {
@@ -154,7 +154,7 @@ void FrontPentTest::test2() {
 	CPPUNIT_ASSERT_EQUAL(expected, std::string(o3.str()));
 
 	delete pFE;
-	delete pBF;
+	// delete pBF;
 }
 
 void FrontPentTest::test3() {
@@ -193,7 +193,7 @@ void FrontPentTest::test3() {
 	CPPUNIT_ASSERT_EQUAL(expected, std::string(o2.str()));
 
 	delete pFE;
-	delete pBF;
+	// delete pBF;
 }
 
 void FrontPentTest::testBranch() {
@@ -238,7 +238,7 @@ void FrontPentTest::testBranch() {
 	CPPUNIT_ASSERT_EQUAL(expected, std::string(o3.str()));
 
 	delete pFE;
-	delete pBF;
+	// delete pBF;
 }
 
 void FrontPentTest::testFindMain() {
