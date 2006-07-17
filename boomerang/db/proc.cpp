@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.320 $	// 1.238.2.44
+ * $Revision: 1.321 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -160,7 +160,6 @@ void UserProc::setParamType(const char* nam, Type* ty) {
 }
 
 void UserProc::setParamType(int idx, Type* ty) {
-	signature->setParamType(idx, ty);
 	int n = 0;
 	StatementList::iterator it;
 	for (it = parameters.begin(); n != idx && it != parameters.end(); it++, n++)
@@ -168,6 +167,8 @@ void UserProc::setParamType(int idx, Type* ty) {
 	if (it != parameters.end()) {
 		Assign *a = (Assign*)*it;
 		a->setType(ty);
+		// Sometimes the signature isn't up to date with the latest parameters
+		signature->setParamType(a->getLeft(), ty);
 	}
 }
 

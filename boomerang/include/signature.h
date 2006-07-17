@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.66 $	// 1.53.2.11
+ * $Revision: 1.67 $	// 1.53.2.11
  *
  * 12 Jul 02 - Trent: Created
  *
@@ -161,6 +161,7 @@ virtual Exp			*getParamExp(int n);
 virtual Type		*getParamType(int n);
 virtual void		setParamType(int n, Type *ty);
 virtual void		setParamType(const char* nam, Type *ty);
+virtual void		setParamType(Exp* e, Type *ty);
 virtual void		setParamName(int n, const char *nam);
 virtual void		setParamExp(int n, Exp *e);
 virtual int			findParam(Exp *e);

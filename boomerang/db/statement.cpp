@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.218 $	// 1.148.2.38
+ * $Revision: 1.219 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -2792,7 +2792,9 @@ void CallStatement::processTypes()
 			Type *ty = e->getType();
 			if (ty && t->isSize()) {
 				UserProc *u = (UserProc*)procDest;
-				u->setParamType(i, ty->clone());
+				if (!isChildless())
+					// The destination of childless calls (e.g. with recursion) may not have parameters set up yet
+					u->setParamType(i, ty->clone());
 				((Assign*)*aa)->setType(ty->clone());
 				ReturnStatement *r = u->getTheReturnStatement();
 				if (r) {
