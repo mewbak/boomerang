@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.98 $	// 1.76.2.30
+ * $Revision: 1.99 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -953,6 +953,11 @@ virtual bool		accept(StmtPartModifier* visitor);
 		void		setCondExpr(Exp* pe);
 		// As above, no delete (for subscripting)
 		void		setCondExprND(Exp* e) { pCond = e; }
+
+		PBB			getFallBB();
+		PBB			getTakenBB();
+		void		setFallBB(PBB bb);
+		void		setTakenBB(PBB bb);
 		
 		// Probably only used in front386.cc: convert this from an unsigned to a
 		// signed conditional branch

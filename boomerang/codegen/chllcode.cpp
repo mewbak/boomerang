@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.119 $	// 1.90.2.16
+ * $Revision: 1.120 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1469,14 +1469,18 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open) {
 	ReturnStatement* returns = proc->getTheReturnStatement();
 	Type *retType = NULL;
 	if (proc->getSignature()->isForced()) {
-		unsigned int n = 0;
-		Exp *e = proc->getSignature()->getReturnExp(0);
-		if (e->isRegN(Signature::getStackRegister(proc->getProg())))
-			n = 1;
-		if (n < proc->getSignature()->getNumReturns())
-			retType = proc->getSignature()->getReturnType(n);
-		if (retType == NULL)
-			s << "void ";
+		if (proc->getSignature()->getNumReturns() == 0)
+			s << "void "; 
+		else {
+			unsigned int n = 0;
+			Exp *e = proc->getSignature()->getReturnExp(0);
+			if (e->isRegN(Signature::getStackRegister(proc->getProg())))
+				n = 1;
+			if (n < proc->getSignature()->getNumReturns())
+				retType = proc->getSignature()->getReturnType(n);
+			if (retType == NULL)
+				s << "void ";
+		}
 	} else if (returns == NULL || returns->getNumReturns() == 0) {
 		s << "void ";
 	} else {

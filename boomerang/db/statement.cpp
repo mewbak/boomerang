@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.217 $	// 1.148.2.38
+ * $Revision: 1.218 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1262,6 +1262,75 @@ Exp* BranchStatement::getCondExpr() {
 void BranchStatement::setCondExpr(Exp* e) {
 	if (pCond) ;//delete pCond;
 	pCond = e;
+}
+
+PBB	BranchStatement::getFallBB()
+{
+	ADDRESS a = getFixedDest();
+	if (a == NO_ADDRESS)
+		return NULL;
+	if (pbb == NULL)
+		return NULL;
+	if (pbb->getNumOutEdges() != 2)
+		return NULL;
+	if (pbb->getOutEdge(0)->getLowAddr() == a)
+		return pbb->getOutEdge(1);
+	return pbb->getOutEdge(0);
+}
+
+// not that if you set the taken BB or fixed dest first, you will not be able to set the fall BB
+void BranchStatement::setFallBB(PBB bb)
+{
+	ADDRESS a = getFixedDest();
+	if (a == NO_ADDRESS)
+		return;
+	if (pbb == NULL)
+		return;
+	if (pbb->getNumOutEdges() != 2)
+		return;
+	if (pbb->getOutEdge(0)->getLowAddr() == a) {
+		pbb->getOutEdge(1)->deleteInEdge(pbb);
+		pbb->setOutEdge(1, bb);
+		bb->addInEdge(pbb);
+	} else {
+		pbb->getOutEdge(0)->deleteInEdge(pbb);
+		pbb->setOutEdge(0, bb);
+		bb->addInEdge(pbb);
+	}
+}
+
+PBB	BranchStatement::getTakenBB()
+{
+	ADDRESS a = getFixedDest();
+	if (a == NO_ADDRESS)
+		return NULL;
+	if (pbb == NULL)
+		return NULL;
+	if (pbb->getNumOutEdges() != 2)
+		return NULL;
+	if (pbb->getOutEdge(0)->getLowAddr() == a)
+		return pbb->getOutEdge(0);
+	return pbb->getOutEdge(1);
+}
+
+void BranchStatement::setTakenBB(PBB bb)
+{
+	ADDRESS a = getFixedDest();
+	if (a == NO_ADDRESS)
+		return;
+	if (pbb == NULL)
+		return;
+	if (pbb->getNumOutEdges() != 2)
+		return;
+	if (pbb->getOutEdge(0)->getLowAddr() == a) {
+		pbb->getOutEdge(0)->deleteInEdge(pbb);
+		pbb->setOutEdge(0, bb);
+		bb->addInEdge(pbb);
+	} else {
+		pbb->getOutEdge(1)->deleteInEdge(pbb);
+		pbb->setOutEdge(1, bb);
+		bb->addInEdge(pbb);
+	}
 }
 
 bool BranchStatement::search(Exp* search, Exp*& result) {
@@ -2662,7 +2731,7 @@ void CallStatement::processTypes()
 					apush->setType(t->clone());
 					continue;
 				}
-			}		
+			}	
 		}
 
 		if (e->isAddrOf() && t->resolvesToPointer()) {
@@ -2713,6 +2782,35 @@ void CallStatement::processTypes()
 	}
 
 	// TODO: returns
+
+	if (procDest && !procDest->isLib() && !procDest->getSignature()->isForced()) {
+		int i = 0;
+		for (aa = arguments.begin(); aa != arguments.end(); ++aa, ++i) {
+			Type *t = ((Assign*)*aa)->getType();
+			Exp *e = ((Assign*)*aa)->getRight();
+
+			Type *ty = e->getType();
+			if (ty && t->isSize()) {
+				UserProc *u = (UserProc*)procDest;
+				u->setParamType(i, ty->clone());
+				((Assign*)*aa)->setType(ty->clone());
+				ReturnStatement *r = u->getTheReturnStatement();
+				if (r) {
+					r->processTypes();
+					for (StatementList::iterator rr = r->getReturns().begin(); rr != r->getReturns().end(); rr++) {
+						Assign *a = (Assign*)*rr;
+						setTypeFor(a->getLeft(), a->getType());
+						if (VERBOSE)
+							LOG << "set type for " << a->getLeft() << " to " << a->getType()->getCtype() << "\n";
+					}
+				}
+				//u->setStatus(PROC_EARLYDONE);
+				//u->simplify();
+				if (VERBOSE)
+					LOG << "setting type of param " << i << " to " << ty->getCtype() << " in proc " << procDest->getName() << "\n";
+			}
+		}
+	}
 }
 
 
@@ -3905,6 +4003,17 @@ void ReturnStatement::processTypes()
 						proc->getProg()->setGlobalType(nam, proc->getSignature()->getReturnType(n));
 					}
 				}
+		}
+	} else {
+		StatementList::iterator it;
+		int i = 0;
+		for (it = returns.begin(); it != returns.end(); it++, i++) {
+			Assign *as = (Assign*)*it;
+			as->setRight(as->getRight()->simplify());
+			Type *ty = as->getRight()->getType();
+			if (ty)
+				as->setType(ty);
+			proc->getSignature()->setReturnType(i, ty);
 		}
 	}
 }

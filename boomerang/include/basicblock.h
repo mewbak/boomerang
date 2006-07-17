@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $	// 1.1.2.2
+ * $Revision: 1.8 $	// 1.1.2.2
  *
  * 28 Jun 05 - Mike: Split off from cfg.h
  */
@@ -416,6 +416,8 @@ static void			doAvail(StatementSet& s, PBB inEdge);
 		Statement*	getLastStmt(); // for those of us that don't want the iterators
 		Statement*	getPrevStmt(rtlrit& rit, StatementList::reverse_iterator& sit);
 		RTL*		getLastRtl() {return m_pRtls->back();}
+
+		void		getStatements(StatementList &stmts);
 
 		/**
 		 * Get the statement number for the first BB as a character array.
