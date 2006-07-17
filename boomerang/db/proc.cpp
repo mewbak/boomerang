@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.319 $	// 1.238.2.44
+ * $Revision: 1.320 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -165,7 +165,7 @@ void UserProc::setParamType(int idx, Type* ty) {
 	StatementList::iterator it;
 	for (it = parameters.begin(); n != idx && it != parameters.end(); it++, n++)
 		;
-	if (n == idx) {
+	if (it != parameters.end()) {
 		Assign *a = (Assign*)*it;
 		a->setType(ty);
 	}
