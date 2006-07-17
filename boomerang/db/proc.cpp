@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.318 $	// 1.238.2.44
+ * $Revision: 1.319 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -5051,6 +5051,7 @@ bool UserProc::removeRedundantParameters() {
 			if (ss != symbolMap.end())
 				symbolMap.erase(ss);			// Kill the symbol
 			signature->removeParameter(param);	// Also remove from the signature
+			cfg->removeImplicitAssign(param);	// Remove the implicit assignment so it doesn't come back
 		}
 	}
 	parameters = newParameters;

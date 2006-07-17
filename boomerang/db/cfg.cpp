@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.111 $	// 1.95.2.5
+ * $Revision: 1.112 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -2069,7 +2069,10 @@ Statement* Cfg::findImplicitParamAssign(Parameter* param) {
 
 void Cfg::removeImplicitAssign(Exp* x) {
 	std::map<Exp*, Statement*, lessExpStar>::iterator it = implicitMap.find(x);
-	// assert(it != implicitMap.end());
-	implicitMap.erase(it);
+	assert(it != implicitMap.end());
+	Statement* ia = it->second;
+	implicitMap.erase(it);				// Delete the mapping
+	myProc->removeStatement(ia);		// Remove the actual implicit assignment statement as well
+	
 }
 
