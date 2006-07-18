@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.59 $	// 1.43.2.24
+ * $Revision: 1.60 $	// 1.43.2.24
  * 15 Mar 05 - Mike: Separated from cfg.cpp
  */
 
@@ -190,8 +190,6 @@ void DataFlow::computeDF(int n) {
 
 
 bool DataFlow::canRename(Exp* e, UserProc* proc) {
-if (e->isTemp())
-  int HACK=99;
 	if (renameAllMemofs)		// When safe,
 		return true;			//  allow memofs to be renamed
 	if (proc->isLocalOrParam(e)) return true;	// But do rename memofs that are locals or params
