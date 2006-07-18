@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.59 $
+ * $Revision: 1.60 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI
@@ -263,7 +263,7 @@ private:
 		int			signedness;		// pos=signed, neg=unsigned, 0=unknown or evenly matched
 
 public:
-					IntegerType(int sz = 32, int sign = 0);
+					IntegerType(int sz = STD_SIZE, int sign = 0);
 virtual 			~IntegerType();
 virtual bool		isInteger() const { return true; }
 virtual bool		isComplete() {return signedness != 0 && size != 0;}
@@ -283,7 +283,7 @@ virtual void		setSize(int sz) {size = sz;}
 		bool		isUnsigned() {return signedness <= 0; }		// True if not definately signed
 					// A hint for signedness
 		void		bumpSigned(int sg) { signedness += sg; }
-					// Do we need this? Set absolute signedness
+					// Set absolute signedness
 		void		setSigned(int sg) {signedness = sg; }
 					// Get the signedness
 		int			getSignedness() {return signedness;}
