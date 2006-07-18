@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.219 $	// 1.148.2.38
+ * $Revision: 1.220 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -5552,4 +5552,14 @@ void Statement::mapRegistersToLocals() {
 	ExpRegMapper erm(proc);
 	StmtRegMapper srm(&erm);
 	accept(&srm);
+}
+
+void Statement::insertCasts() {
+	// First we postvisit expressions using a StmtModifier and an ExpCastInserter
+	ExpCastInserter eci(proc);
+	StmtModifier sm(&eci, true);		// True to ignore collectors
+	accept(&sm);
+	// Now handle the LHS of assigns that happen to be m[...], using a StmtCastInserter
+	StmtCastInserter sci;
+	accept(&sci);
 }
