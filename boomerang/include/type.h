@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.60 $
+ * $Revision: 1.61 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI
@@ -190,6 +190,8 @@ virtual	bool		isCompatibleWith(Type* other, bool all = false);
 					// isCompatible does most of the work; isCompatibleWith looks for complex types in other, and if so
 					// reverses the parameters (this and other) to prevent many tedious repetitions
 virtual bool		isCompatible(Type* other, bool all) = 0;
+					// Return true if this is a subset or equal to other
+		bool		isSubTypeOrEqual(Type* other);
 					// Create a union of this Type and other. Set ch true if any change
 		Type*		createUnion(Type* other, bool& ch, bool bHighestPtr = false);
 static	Type*		newIntegerLikeType(int size, int signedness);	// Return a new Bool/Char/Int
