@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $	// 1.1.2.2
+ * $Revision: 1.9 $	// 1.1.2.2
  *
  * 28 Jun 05 - Mike: Split off from cfg.h
  */
@@ -533,6 +533,10 @@ public:
 		 * Change the BB enclosing stmt to be CALL, not COMPCALL
 		 */
 		bool		undoComputedBB(Statement* stmt);
+
+        // true if processing for overlapped registers on statements in this BB
+        // has been completed.
+        bool        overlappedRegProcessingDone;
 
 protected:
 		friend class XMLProgParser;

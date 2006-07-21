@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.130 $	// 1.93.2.8
+ * $Revision: 1.131 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -80,7 +80,9 @@ BasicBlock::BasicBlock()
 // From Doug's code
 ord(-1), revOrd(-1), inEdgesVisited(0), numForwardInEdges(-1), traversed(UNTRAVERSED), hllLabel(false), indentLevel(0),
 immPDom(NULL), loopHead(NULL), caseHead(NULL), condFollow(NULL), loopFollow(NULL), latchNode(NULL), sType(Seq), 
-usType(Structured) 
+usType(Structured),
+// Others
+        overlappedRegProcessingDone(false)
 {
 }
 
