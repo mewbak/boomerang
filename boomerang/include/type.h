@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.61 $
+ * $Revision: 1.62 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI
@@ -488,9 +488,10 @@ class CompoundType : public Type {
 private:
 		std::vector<Type*> types;
 		std::vector<std::string> names;
-
+		int			nextGenericMemberNum;
+		bool		generic;
 public:
-					CompoundType();
+					CompoundType(bool generic = false);
 virtual				~CompoundType();
 virtual bool		isCompound() const { return true; }
 
@@ -509,6 +510,8 @@ virtual bool		isCompound() const { return true; }
 		Type		*getTypeAtOffset(unsigned n);
 		void		setNameAtOffset(unsigned n, const char *nam);
 		const char	*getNameAtOffset(unsigned n);
+		bool		isGeneric() {return generic;}
+		void		updateGenericMember(int off, Type* ty, bool& ch);	// Add a new generic member if necessary
 		unsigned	getOffsetTo(unsigned n);
 		unsigned	getOffsetTo(const char *member);
 		unsigned	getOffsetRemainder(unsigned n);
