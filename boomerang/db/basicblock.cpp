@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.129 $	// 1.93.2.8
+ * $Revision: 1.130 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -2348,8 +2348,14 @@ void BasicBlock::processSwitch(UserProc* proc) {
 	}
 	// Decode the newly discovered switch code arms, if any, and if not already decoded
 	std::list<ADDRESS>::iterator dd;
-	for (dd = dests.begin(); dd != dests.end(); ++dd)
+	int count = 0;
+	for (dd = dests.begin(); dd != dests.end(); ++dd) {
+		char tmp[1024];
+		count++;
+		sprintf(tmp, "before decoding fragment %i of %i (%x)", count, dests.size(), *dd);
+		Boomerang::get()->alert_decompile_debug_point(proc, tmp);
 		prog->decodeFragment(proc, *dd);
+	}
 }
 
 // Change the BB enclosing stmt from type COMPCALL to CALL

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.120 $	// 1.89.2.7
+ * $Revision: 1.121 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -757,7 +757,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 
 					// Is the called function a thunk calling a library function?
 					// A "thunk" is a function which only consists of: "GOTO library_function"
-					if(	call &&	call->getDestProc() == NULL && call->getFixedDest() != NO_ADDRESS ) {
+					if(	call &&	call->getFixedDest() != NO_ADDRESS ) {
 						// Get the address of the called function.
 						ADDRESS callAddr=call->getFixedDest();
 						// Decode it.

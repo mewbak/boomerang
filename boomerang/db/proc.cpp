@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.323 $	// 1.238.2.44
+ * $Revision: 1.324 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1422,6 +1422,8 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent) {
 		// Code pointed to by the switch table entries has merely had FrontEnd::processFragment() called on it
 		LOG << "=== about to restart decompilation of " << getName() <<
 			" because indirect jumps or calls have been analysed\n\n";
+		Boomerang::get()->alert_decompile_debug_point(this, "before restarting decompilation because indirect jumps or calls have been analysed");
+
 		// First copy any new indirect jumps or calls that were decoded this time around. Just copy them all, the map
 		// will prevent duplicates
 		processDecodedICTs();
