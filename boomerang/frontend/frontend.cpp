@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.121 $	// 1.89.2.7
+ * $Revision: 1.122 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -777,14 +777,14 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 									pBF->IsDynamicLinkedProcPointer(((Const*)stmt_jump->getDest()->getSubExp1())->
 										getAddr())) // Is it an "DynamicLinkedProcPointer"?
 								{
-									LOG << "Lib function found in thunk\n";
 									// Yes, it's a library function. Look up it's name.
-									const char *nam = pBF->GetDynamicProcName(((Const*)stmt_jump->getDest()->
-										getSubExp1())->getAddr());
+                                    ADDRESS a = ((Const*)stmt_jump->getDest()->getSubExp1())->getAddr();
+									const char *nam = pBF->GetDynamicProcName(a);
 									// Assign the proc to the call
 									Proc *p = pProc->getProg()->getLibraryProc(nam);
 									call->setDestProc(p);
 									call->setIsComputed(false);
+                                    call->setDest(Location::memOf(new Const(a)));
 								}
 							}
 						}
@@ -845,7 +845,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 							if (pBF->IsDynamicLinkedProcPointer(a))
 								name = pBF->GetDynamicProcName(a);
 						}	
-						if (name && ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0) || (strcmp(name, "ExitProcess") == 0))) {
+						if (name && ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0) || (strcmp(name, "ExitProcess") == 0) || (strcmp(name, "abort") == 0))) {
 							// Make sure it has a return appended (so there is only one exit from the function)
 							//call->setReturnAfterCall(true);		// I think only the Sparc frontend cares
 							// Create the new basic block
