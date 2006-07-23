@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.64 $	// 1.51.2.3
+ * $Revision: 1.65 $	// 1.51.2.3
  *
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang
@@ -530,6 +530,7 @@ bool PentiumFrontEnd::helperFunc(ADDRESS dest, ADDRESS addr, std::list<RTL*>* lr
 				    Location::regOf(24)));
 		pRtl->appendStmt(a);
 		lrtl->push_back(pRtl);
+        prog->removeProc(name.c_str());
         return true;
     } else {
 		// Will be other cases in future

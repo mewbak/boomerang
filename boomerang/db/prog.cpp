@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.163 $	// 1.126.2.14
+ * $Revision: 1.164 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -702,6 +702,16 @@ void Prog::remProc(UserProc* uProc) {
 
 	// Delete the UserProc object as well
 	delete uProc;
+}
+
+void Prog::removeProc(const char *name)
+{
+	for (std::list<Proc*>::iterator it = m_procs.begin(); it != m_procs.end(); it++)
+        if (std::string(name) == (*it)->getName()) {
+            Boomerang::get()->alert_remove(*it);
+			m_procs.erase(it);
+			break;
+        }
 }
 
 /*==============================================================================
