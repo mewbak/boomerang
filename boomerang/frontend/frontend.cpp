@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.122 $	// 1.89.2.7
+ * $Revision: 1.123 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -782,6 +782,10 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 									const char *nam = pBF->GetDynamicProcName(a);
 									// Assign the proc to the call
 									Proc *p = pProc->getProg()->getLibraryProc(nam);
+									if (call->getDestProc()) {
+										// prevent unnecessary __imp procs
+										prog->removeProc(call->getDestProc()->getName());
+									}
 									call->setDestProc(p);
 									call->setIsComputed(false);
                                     call->setDest(Location::memOf(new Const(a)));

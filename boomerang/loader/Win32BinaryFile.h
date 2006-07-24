@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.19 $
+/* $Revision: 1.20 $
  * This file contains the definition of the Win32BinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
 */
@@ -210,6 +210,10 @@ virtual ADDRESS		IsJumpToAnotherAddr(ADDRESS uNative);
 virtual const char *GetDynamicProcName(ADDRESS uNative);
 
         bool        IsMinGWsAllocStack(ADDRESS uNative);
+		bool		IsMinGWsFrameInit(ADDRESS uNative);
+		bool		IsMinGWsFrameEnd(ADDRESS uNative);
+		bool		IsMinGWsCleanupSetup(ADDRESS uNative);
+		bool		IsMinGWsMalloc(ADDRESS uNative);
 
 virtual std::map<ADDRESS, std::string> &getSymbols() { return dlprocptrs; }
 
