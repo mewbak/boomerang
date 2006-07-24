@@ -10,7 +10,7 @@
 /** \file	boomerang.h
  * Interface for the boomerang singleton object.
  *
- * $Revision: 1.75 $	// 1.61.2.2
+ * $Revision: 1.76 $	// 1.61.2.2
  * 04 Dec 2002: Trent: Created
  */
 
@@ -121,6 +121,7 @@ static Boomerang *get() {
 				return boomerang;
 			}
 
+static	char*		getVersionStr();
 		Log			&log();
 		void		setLogger(Log *l) { logger = l; }
 		bool		setOutputDirectory(const char *path);
