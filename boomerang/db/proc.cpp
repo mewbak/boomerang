@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.327 $	// 1.238.2.44
+ * $Revision: 1.328 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -772,14 +772,11 @@ void UserProc::initStatements() {
 			CallStatement* call = dynamic_cast<CallStatement*>(s);
 			if (call) {
 				call->setSigArguments();
-				PBB exitbb = cfg->getExitBB();
-				if (exitbb && call->getDestProc() && call->getDestProc()->isNoReturn()) {
-					assert(bb->getNumOutEdges() == 1);
+				if (call->getDestProc() && call->getDestProc()->isNoReturn() && bb->getNumOutEdges() == 1) {
 					PBB out = bb->getOutEdge(0);
-					if (out != exitbb) {
+					if (out != cfg->getExitBB() || cfg->getExitBB()->getNumInEdges() != 1) {
 						out->deleteInEdge(bb);
-						bb->setOutEdge(0, exitbb);
-						exitbb->addInEdge(bb);
+						bb->getOutEdges().clear();
 					}
 				}
 			}

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.124 $	// 1.89.2.7
+ * $Revision: 1.125 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -119,7 +119,7 @@ bool FrontEnd::isWin32() {
 
 bool FrontEnd::noReturnCallDest(const char *name)
 {
-	return ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0) || (strcmp(name, "ExitProcess") == 0) || (strcmp(name, "abort") == 0));
+	return ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0) || (strcmp(name, "ExitProcess") == 0) || (strcmp(name, "abort") == 0) || (strcmp(name, "_assert") == 0));
 }
 
 // FIXME: Is this ever used? Need to pass a real pbff?
