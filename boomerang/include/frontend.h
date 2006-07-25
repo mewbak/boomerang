@@ -17,7 +17,7 @@
  *			    RTLs.
  *============================================================================*/
 
-/* $Revision: 1.34 $	// 1.29.2.2
+/* $Revision: 1.35 $	// 1.29.2.2
  *
  * 17 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 28 Jun 05 - Mike: Added a map of previously decoded indirect jumps and calls needed when restarting the cfg
@@ -153,6 +153,8 @@ virtual platform	getFrontEndId() = 0;
 static FrontEnd		*createById(std::string &str, BinaryFile *pBFi, Prog* prog);
 
 		bool		isWin32();					// Is this a win32 frontend?
+
+static	bool		noReturnCallDest(const char *name);
 
 		BinaryFile 	*getBinaryFile() { return pBF; }
 

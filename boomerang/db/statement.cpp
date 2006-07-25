@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.221 $	// 1.148.2.38
+ * $Revision: 1.222 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4814,6 +4814,12 @@ void ReturnStatement::updateModifieds() {
 	Signature* sig = proc->getSignature();
 	StatementList oldMods(modifieds);					// Copy the old modifieds
 	modifieds.clear();
+
+	if (pbb->getNumInEdges() == 1 && pbb->getInEdges()[0]->getLastStmt()->isCall()) {
+		CallStatement *call = (CallStatement*)pbb->getInEdges()[0]->getLastStmt();
+		if (call->getDestProc() && FrontEnd::noReturnCallDest(call->getDestProc()->getName()))
+			return;
+	}
 	// For each location in the collector, make sure that there is an assignment in the old modifieds, which will
 	// be filtered and sorted to become the new modifieds
 	// Ick... O(N*M) (N existing modifeds, M collected locations)

@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.60 $	// 1.43.2.24
+ * $Revision: 1.61 $	// 1.43.2.24
  * 15 Mar 05 - Mike: Separated from cfg.cpp
  */
 
@@ -26,6 +26,7 @@
 #include "boomerang.h"
 #include "visitor.h"
 #include "log.h"
+#include "frontend.h"
 
 extern char debug_buffer[];		 // For prints functions
 

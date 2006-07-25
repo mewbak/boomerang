@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.121 $	// 1.90.2.16
+ * $Revision: 1.122 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1442,6 +1442,8 @@ void CHLLCode::AddReturnStatement(int indLevel, StatementList* rets) {
 				first = false;
 			else
 				s << ", ";
+			appendExp(s, ((Assign*)*rr)->getLeft(), PREC_NONE);
+			s << " := ";
 			appendExp(s, ((Assign*)*rr)->getRight(), PREC_NONE);
 		}
 		if (n > 1)

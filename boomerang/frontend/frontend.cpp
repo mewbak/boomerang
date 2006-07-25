@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.123 $	// 1.89.2.7
+ * $Revision: 1.124 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -115,6 +115,11 @@ int FrontEnd::getRegSize(int idx) {
 
 bool FrontEnd::isWin32() {
 	return pBF->GetFormat() == LOADFMT_PE;
+}
+
+bool FrontEnd::noReturnCallDest(const char *name)
+{
+	return ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0) || (strcmp(name, "ExitProcess") == 0) || (strcmp(name, "abort") == 0));
 }
 
 // FIXME: Is this ever used? Need to pass a real pbff?
@@ -849,7 +854,7 @@ bool FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bo
 							if (pBF->IsDynamicLinkedProcPointer(a))
 								name = pBF->GetDynamicProcName(a);
 						}	
-						if (name && ((strcmp(name, "_exit") == 0) || (strcmp(name,	"exit") == 0) || (strcmp(name, "ExitProcess") == 0) || (strcmp(name, "abort") == 0))) {
+						if (name && noReturnCallDest(name)) {
 							// Make sure it has a return appended (so there is only one exit from the function)
 							//call->setReturnAfterCall(true);		// I think only the Sparc frontend cares
 							// Create the new basic block
