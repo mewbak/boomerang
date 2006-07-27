@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.209 $	// 1.172.2.20
+ * $Revision: 1.210 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -2507,6 +2507,16 @@ Exp* Binary::polySimplify(bool& bMod) {
 		return res;
 	}
 
+	// Check for (0 - x) != 0, becomes x != 0
+	if (	op == opNotEqual &&
+			opSub2 == opIntConst &&
+			((Const*)subExp2)->getInt() == 0 && opSub1 == opMinus && 
+			subExp1->getSubExp1()->isIntConst() && 
+			((Const*)subExp1->getSubExp1())->getInt() == 0) {
+		res = new Binary(opNotEqual, subExp1->getSubExp2()->clone(), subExp2->clone());
+		bMod = true;
+		return res;
+	}
 
 	// Check for (x > y) == 0, becomes x <= y
 	if (	op == opEquals && opSub2 == opIntConst &&
