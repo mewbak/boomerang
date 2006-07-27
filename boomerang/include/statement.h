@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.101 $	// 1.76.2.30
+ * $Revision: 1.102 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -327,6 +327,8 @@ virtual void		rangeAnalysis(std::list<Statement*> &execution_paths);
 		// Adds (inserts) all locations (registers or memory etc) used by this statement
 		// Set cc to true to count the uses in collectors
 		void		addUsedLocs(LocationSet& used, bool cc = false, bool memOnly = false);
+		// Special version of the above for finding used locations. Returns true if defineAll was found
+		bool		addUsedLocals(LocationSet& used);
 		// Bypass calls for references in this statement
 		void		bypass();
 

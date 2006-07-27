@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.223 $	// 1.148.2.38
+ * $Revision: 1.224 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -4589,6 +4589,13 @@ void Statement::addUsedLocs(LocationSet& used, bool cc /* = false */, bool memOn
 	UsedLocsFinder ulf(used, memOnly);
 	UsedLocsVisitor ulv(&ulf, cc);
 	accept(&ulv);
+}
+
+bool Statement::addUsedLocals(LocationSet& used) {
+	UsedLocalFinder ulf(used, proc);
+	UsedLocsVisitor ulv(&ulf, false);
+	accept(&ulv);
+	return ulf.wasAllFound();
 }
 
 // For all expressions in this Statement, replace any e with e{def}
