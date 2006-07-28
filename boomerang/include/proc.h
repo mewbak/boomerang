@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- *	$Revision: 1.149 $	// 1.115.2.27
+ *	$Revision: 1.150 $	// 1.115.2.27
  */
 
 #ifndef _PROC_H_
@@ -165,7 +165,7 @@ virtual void		renameParam(const char *oldName, const char *newName);
 		/**
 		 * Get a list of types to cast a given list of actual parameters to
 		 */
-		std::list<Type>* Proc::getParamTypeList(const std::list<Exp*>& actuals);
+		std::list<Type>* getParamTypeList(const std::list<Exp*>& actuals);
 
 		/**
 		 * Return true if this is a library proc
