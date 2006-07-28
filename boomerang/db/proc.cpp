@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.332 $	// 1.238.2.44
+ * $Revision: 1.333 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -3705,19 +3705,20 @@ void UserProc::fromSSAform() {
 		}
 		LocationSet refs;
 		pa->addUsedLocs(refs);
-		Exp* first = pa->begin()->e;
 		bool phiParamsSame = true;
+   		Exp* first = NULL;
 		if (pa->getNumDefs() > 1) {
 			PhiAssign::iterator uu;
 			for (uu = ++pa->begin(); uu != pa->end(); uu++) {
 				if (uu->e == NULL) continue;
+                if (first == NULL) { first = uu->e; continue; }
 				if (!(*uu->e == *first)) {
 					phiParamsSame = false;
 					break;
 				}
 			}
 		}
-		if (phiParamsSame) {
+		if (phiParamsSame && first) {
 			// Is the left of the phi assignment the same base variable as all the operands?
 			if (*pa->getLeft() == *first) {
 				if (DEBUG_LIVENESS || DEBUG_UNUSED)
@@ -3766,7 +3767,8 @@ void UserProc::fromSSAform() {
 			for (rr = pa->begin(); rr != pa->end(); rr++) {
 				// Replace the LHS of the definitions (use setLeftFor, since some could be calls with more than one
 				// return) with left
-				rr->def->setLeftFor(rr->e, left);
+                if (rr->def)
+				    rr->def->setLeftFor(rr->e, left);
 			}
 #endif
 		}
