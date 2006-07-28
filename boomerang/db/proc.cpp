@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.331 $	// 1.238.2.44
+ * $Revision: 1.332 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -4724,6 +4724,9 @@ void UserProc::fixCallAndPhiRefs() {
 			bool allSame = true;
 			// Let first be a reference build from the first parameter
 			PhiAssign::iterator p = ps->begin();
+			while (p->e == NULL && p != ps->end())
+				++p;									// Skip any null parameters
+			assert(p != ps->end());						// Should have been deleted
 			Exp* first = new RefExp(p->e, p->def);
 			// bypass to first
 			CallBypasser cb(ps);
@@ -4758,6 +4761,9 @@ void UserProc::fixCallAndPhiRefs() {
 			if (allSame) {
 				// let best be ref built from the "best" parameter p in ps ({-} better than {assign} better than {call})
 				p = ps->begin();
+				while (p->e == NULL && p != ps->end())
+					++p;									// Skip any null parameters
+				assert(p != ps->end());						// Should have been deleted
 				RefExp* best = new RefExp(p->e, p->def);
 				for (++p; p != ps->end(); ++p) {
 					if (p->e == NULL) continue;
