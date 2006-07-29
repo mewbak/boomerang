@@ -4,7 +4,7 @@
  *				tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  *
  * 05 Apr 02 - Mike: Fixed problems caused by lack of clone() calls
  * 09 Apr 02 - Mike: Compare, searchReplace
@@ -1432,11 +1432,13 @@ void ExpTest::testVisitors() {
 	res = e3->containsFlags();
     CPPUNIT_ASSERT_EQUAL(0, res);
 
+#if 0				// No longer used
 	res = e1->containsBareMemof();
 	CPPUNIT_ASSERT_EQUAL(1, res);
 	res = e2->containsBareMemof();
 	CPPUNIT_ASSERT_EQUAL(1, res);
 	res = e3->containsBareMemof();
 	CPPUNIT_ASSERT_EQUAL(0, res);
+#endif
 }
 
