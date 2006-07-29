@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.123 $	// 1.90.2.16
+ * $Revision: 1.124 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -974,8 +974,6 @@ void CHLLCode::appendTypeIdent(std::ostringstream& str, Type *typ, const char *i
 
 /// Remove all generated code.
 void CHLLCode::reset() {
-	for (std::list<char*>::iterator it = lines.begin(); it != lines.end();
-		 it++) delete *it;
 	lines.clear();
 }
 
