@@ -8,7 +8,7 @@
  */
 
 /*
- * $Revision: 1.27 $	// 1.24.2.8
+ * $Revision: 1.28 $	// 1.24.2.8
  *
  * 22 Nov 02 - Mike: Re-ordered initialisations to keep gcc quiet
  */
@@ -96,6 +96,9 @@ private:
 		/// Adds: )
 		void closeParen(std::ostringstream& str, PREC outer, PREC inner) {
 			if (inner < outer) str << ")"; }
+
+		void appendLine(const std::ostringstream& ostr);
+		void appendLine(const std::string& s);
 
 		/// All locals in a Proc
 		std::map<std::string, Type*> locals;
