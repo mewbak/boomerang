@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.334 $	// 1.238.2.44
+ * $Revision: 1.335 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -3332,18 +3332,20 @@ bool UserProc::propagateStatements(bool& convert, int pass) {
 	StatementList::iterator it;
 	// First pass: count the number of times each assignment LHS would be propagated somewhere
 	std::map<Exp*, int, lessExpStar> destCounts;
+	// Also maintain a set of locations which are used by phi statements
+	std::set<Exp*, lessExpStar> usedInPhi;
 	bool change = false;
 	for (it = stmts.begin(); it != stmts.end(); it++) {
 		Statement* s = *it;
 		ExpDestCounter edc(destCounts);
-		StmtDestCounter sdc(&edc);
+		StmtDestCounter sdc(&edc, usedInPhi);
 		s->accept(&sdc);
 	}
 	convert = false;
 	for (it = stmts.begin(); it != stmts.end(); it++) {
 		Statement* s = *it;
 		if (s->isPhi()) continue;
-		change |= s->propagateTo(convert, &destCounts);
+		change |= s->propagateTo(convert, &destCounts, &usedInPhi);
 	}
 	simplify();
 	propagateToCollector();
@@ -4726,7 +4728,7 @@ void UserProc::fixCallAndPhiRefs() {
 														// involved in a recursion group
 			Exp* lhs = ps->getLeft();
 			bool allSame = true;
-			// Let first be a reference build from the first parameter
+			// Let first be a reference built from the first parameter
 			PhiAssign::iterator p = ps->begin();
 			while (p->e == NULL && p != ps->end())
 				++p;									// Skip any null parameters
