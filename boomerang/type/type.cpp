@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.63 $	// 1.44.2.1
+ * $Revision: 1.64 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -855,14 +855,9 @@ const char *UnionType::getCtype(bool final) const {
 }
 
 const char* SizeType::getCtype(bool final) const {
-	if (final) {
-		// Make a signed integer type of the same size
-		IntegerType it(size);
-		return it.getCtype(final);
-	}
 	// Emit a comment and the size
 	std::ostringstream ost;
-	ost << "/*size " << std::dec << size << "*/";
+	ost << "__size" << std::dec << size;
 	return strdup(ost.str().c_str());
 }
 
