@@ -1,5 +1,5 @@
 #!/bin/bash
-# testOne.sh functional test script $Revision: 1.21 $ # 1.10.2.1
+# testOne.sh functional test script $Revision: 1.22 $ # 1.10.2.1
 # Call with test platform, test-program test-set [,options [,arguments]]
 # test-set is a char usually 1-9 for the various .out files, usually use 1 for .out1
 # e.g. "./testOne.sh pentium hello"
@@ -48,7 +48,7 @@ else
 			fi
 			mv functest.tmp functest.c
 		fi
-		gcc -o functest.exe functest.c >> functest.res 2>&1
+		gcc -D__size32=int -D__size16=short -D__size8=char -o functest.exe functest.c >> functest.res 2>&1
 		if [[ $? != 0 ]]; then
 			RESULT="Compile FAILED"
 		else
