@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.337 $	// 1.238.2.44
+ * $Revision: 1.338 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -137,6 +137,10 @@ bool LibProc::isNoReturn()
 
 bool UserProc::isNoReturn()
 {
+    // undecoded procs are assumed to always return (and define everything)
+    if (!this->isDecoded())
+        return false;
+
 	PBB exitbb = cfg->getExitBB();
 	if (exitbb == NULL)
 		return true;
