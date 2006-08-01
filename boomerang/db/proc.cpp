@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.336 $	// 1.238.2.44
+ * $Revision: 1.337 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2641,7 +2641,9 @@ void UserProc::replaceExpressionsWithGlobals() {
 									new Unary(opAddrOf, g),
 									new Const(r));
 							} else {
-								prog->setGlobalType((char*)gloName, pty);
+								// TMN: Bugfix for function argument changing type of globals to "void"
+								if (!pty->resolvesToVoid())
+									prog->setGlobalType((char*)gloName, pty);
 								Location *g = Location::global(strdup(gloName), this);
 								// &global
 								ne = new Unary(opAddrOf, g);
@@ -4232,7 +4234,8 @@ if (!cc->first->isTypeOf()) continue;
 				loc = ((RefExp*)loc)->getSubExp1();
 			if (loc->isGlobal()) {
 				char* nam = ((Const*)((Unary*)loc)->getSubExp1())->getStr();
-				prog->setGlobalType(nam, ty->clone());
+				if (!ty->resolvesToVoid())
+					prog->setGlobalType(nam, ty->clone());
 			} else if (loc->isLocal()) {
 				char* nam = ((Const*)((Unary*)loc)->getSubExp1())->getStr();
 				setLocalType(nam, ty);
