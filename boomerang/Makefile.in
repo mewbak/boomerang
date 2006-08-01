@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.119 $		// 1.91.2.10
+# $Revision: 1.120 $		// 1.91.2.10
 # 12 Apr 06 - Gerard: Restructured, added conditional rules, added generated dependencies
 # 13 Mar 06 - Mike: Prevent going to the loader directory 5 or 6 times
 # 05 Jul 05 - Mike: Big merge with boomerang.pole branch
@@ -255,7 +255,8 @@ ifdef BISONPP
 	cd transform ; ${BISONPP} -d -v -otransformation-parser.cpp -htransformation-parser.h transformation.y
 
   db/sslscanner.cpp db/sslscanner.h: db/sslscanner.l db/sslparser.y
-	cd db ; ${FLEXPP} -osslscanner.cpp -hsslscanner.h sslscanner.l
+	cd db ; ${FLEXPP} -osslscanner.cpp1 -hsslscanner.h sslscanner.l
+	sed -f db/sslscanner.sed db/sslscanner.cpp1 > db/sslscanner.cpp		# Fix warnings re array subscript has type char
 
   c/ansi-c-scanner.cpp c/ansi-c-scanner.h: c/ansi-c.l c/ansi-c.y
 	cd c ; ${FLEXPP} -oansi-c-scanner.cpp -hansi-c-scanner.h ansi-c.l
