@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.65 $	// 1.30.2.11
+ * $Revision: 1.66 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -509,6 +509,9 @@ Type* ArrayType::meetWith(Type* other, bool& ch, bool bHighestPtr) {
 			// base_type = newBase;		// No: call setBaseType to adjust length
 			setBaseType(newBase);
 		}
+        if (other->asArray()->getLength() < getLength()) {
+            this->setLength(other->asArray()->getLength());
+        }
 		return this;
 	}
 	if (*base_type == *other)

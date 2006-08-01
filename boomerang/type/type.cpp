@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.66 $	// 1.44.2.1
+ * $Revision: 1.67 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -1242,7 +1242,15 @@ bool DataIntervalMap::isClear(ADDRESS addr, unsigned size) {
 		return true;						// None <= this address, so no overlap possible
 	it--;									// If any item overlaps, it is this one
 	// Make sure the previous item ends before this one will start
-	return (it->first + it->second.size <= addr);
+    // FIXME: needs overflow detection, not (int) casts
+    if ((int)it->first + (int)it->second.size <= (int)addr) 
+        return true;
+    if (it->second.type->isArray() && it->second.type->asArray()->isUnbounded()) {
+        it->second.size = addr - it->first;
+        LOG << "shrinking size of unbound array to " << it->second.size << " bytes\n";
+        return true;
+    }
+    return false;
 }
 
 // With the forced parameter: are we forcing the name, the type, or always both?
