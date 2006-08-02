@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.121 $		// 1.91.2.10
+# $Revision: 1.122 $		// 1.91.2.10
 # 12 Apr 06 - Gerard: Restructured, added conditional rules, added generated dependencies
 # 13 Mar 06 - Mike: Prevent going to the loader directory 5 or 6 times
 # 05 Jul 05 - Mike: Big merge with boomerang.pole branch
@@ -263,7 +263,9 @@ ifdef BISONPP
 	sed -f db/sslscanner.sed c/ansi-c-scanner.cpp1 > c/ansi-c-scanner.cpp	# Fix warnings with same sed file
 
   transform/transformation-scanner.cpp transform/transformation-scanner.h: transform/transformation.l transform/transformation.y
-	cd transform ; ${FLEXPP} -otransformation-scanner.cpp -htransformation-scanner.h transformation.l
+	cd transform ; ${FLEXPP} -otransformation-scanner.cpp1 -htransformation-scanner.h transformation.l
+	# Fix warnings with same sed file
+	sed -f db/sslscanner.sed transform/transformation-scanner.cpp1 > transform/transformation-scanner.cpp
 
  endif # ifdef FLEXPP
 endif # ifdef BISONPP
