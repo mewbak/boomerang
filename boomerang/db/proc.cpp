@@ -20,7 +20,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.339 $	// 1.238.2.44
+ * $Revision: 1.340 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -1277,8 +1277,8 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent) {
 	if (change) numberStatements();		// Number the new statements
 	doRenameBlockVars(2);
 	propagateStatements(convert, 2);	// Otherwise sometimes sp is not fully propagated
-	if (DFA_TYPE_ANALYSIS)
-		mapLocalsAndParams();
+	// Map locals and temporary parameters as symbols, so that they can be propagated later
+	mapLocalsAndParams();
 	updateArguments();
 	reverseStrengthReduction();
 	processTypes();
