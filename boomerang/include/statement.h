@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.103 $	// 1.76.2.30
+ * $Revision: 1.104 $	// 1.76.2.30
  * 25 Nov 02 - Trent: appropriated for use by new dataflow.
  * 3 July 02 - Trent: created.
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy)
@@ -273,8 +273,9 @@ static	bool		canPropagateToExp(Exp* e);
 		// destCounts is a map that indicates how may times a statement's definition is used
 		// dnp is a StatementSet with statements that should not be propagated
 		// Set convert if an indirect call is changed to direct (otherwise, no change)
+		// Set force to true to propagate even memofs (for switch analysis)
 		bool		propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* destCounts = NULL,
-						std::set<Exp*, lessExpStar>* uip = NULL);
+						std::set<Exp*, lessExpStar>* uip = NULL, bool force = false);
 
 		// code generation
 virtual void		generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) = 0;

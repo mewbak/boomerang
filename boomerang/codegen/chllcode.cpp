@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.124 $	// 1.90.2.16
+ * $Revision: 1.125 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -76,9 +76,14 @@ void CHLLCode::indent(std::ostringstream& str, int indLevel) {
  *
  * \todo This function is 800+ lines, and should possibly be split up.
  */
+static int progress = 0;
 void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool uns /* = false */ ) {
+	if (exp == NULL) return;				// ?
 
-	if (exp == NULL) return;
+	if (++progress > 500) {
+		std::cerr << 'g' << std::flush;
+		progress = 0;
+	}
 
 	OPER op = exp->getOper();
 	// First, a crude cast if unsigned, for ad-hoc. For DFA type analysis, casts are corrected after TA

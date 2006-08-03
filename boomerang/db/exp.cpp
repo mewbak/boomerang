@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.210 $	// 1.172.2.20
+ * $Revision: 1.211 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -4297,22 +4297,6 @@ Exp* Exp::propagateAllRpt(bool& changed) {
 			break;
 	}
 	return ret;
-}
-
-// Return true for non-mem-ofs, or mem-ofs that have primitive address expressions
-bool Exp::canRename() {
-	if (op == opArrayIndex) return false;
-	if (op == opMemberAccess) return false;
-	//if (op == opTemp) return false;
-	if (op != opMemOf) return true;
-#if 0		// Hack MVE try not renaming memory
-	Exp* addressExp = ((Location*)this)->getSubExp1();
-	PrimitiveTester pt;
-	addressExp->accept(&pt);
-	return pt.getResult();
-#else
-	return false;
-#endif
 }
 
 bool Exp::containsFlags() {
