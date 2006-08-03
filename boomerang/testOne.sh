@@ -1,5 +1,5 @@
 #!/bin/bash
-# testOne.sh functional test script $Revision: 1.22 $ # 1.10.2.1
+# testOne.sh functional test script $Revision: 1.23 $ # 1.10.2.1
 # Call with test platform, test-program test-set [,options [,arguments]]
 # test-set is a char usually 1-9 for the various .out files, usually use 1 for .out1
 # e.g. "./testOne.sh pentium hello"
@@ -79,6 +79,10 @@ else
 			fi
 		fi
 	fi
+fi
+grep goto functest.c > /dev/null
+if [[ $? -eq 0 ]]; then
+	RESULT=$RESULT" (gotos in output)"
 fi
 echo $RESULT
 echo -e "$RES""$RESULT" >> functest.res
