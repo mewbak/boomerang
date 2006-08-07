@@ -10,7 +10,7 @@
 /** \file	boomerang.h
  * Interface for the boomerang singleton object.
  *
- * $Revision: 1.76 $	// 1.61.2.2
+ * $Revision: 1.77 $	// 1.61.2.2
  * 04 Dec 2002: Trent: Created
  */
 
@@ -31,6 +31,9 @@
 
 #ifndef BOOMERANG_H
 #define BOOMERANG_H
+
+// Defines to control experimental features
+#define USE_DOMINANCE_NUMS 1				// Set true to store a statement number that has dominance properties
 
 #include <iostream>
 #include <string>
