@@ -10,7 +10,7 @@
  */
 
 /* File: Win32BinaryFile.cc
- * $Revision: 1.35 $
+ * $Revision: 1.36 $
  * Desc: This file contains the implementation of the class Win32BinaryFile.
  */
 
@@ -256,6 +256,23 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint() {
 		p += size;
 		gap++;
 	}
+
+    // VS.NET release console mode pattern
+    p = LMMH(m_pPEHeader->EntrypointRVA);
+    if (*(unsigned char*)(p + base + 0x20) == 0xff && *(unsigned char*)(p + base + 0x21) == 0x15) {
+        unsigned int desti = LMMH(*(p + base + 0x22));
+        if (dlprocptrs.find(desti) != dlprocptrs.end() && dlprocptrs[desti] == "GetVersionExA") {
+            if (*(unsigned char*)(p + base + 0x6d) == 0xff && *(unsigned char*)(p + base + 0x6e) == 0x15) {
+                desti = LMMH(*(p + base + 0x6f));
+                if (dlprocptrs.find(desti) != dlprocptrs.end() && dlprocptrs[desti] == "GetModuleHandleA") {
+                    if (*(unsigned char*)(p + base + 0x16e) == 0xe8) {
+                        unsigned int dest = p + 0x16e + 5 + LMMH(*(p + base + 0x16f));
+                        return dest + LMMH(m_pPEHeader->Imagebase);
+                    }
+                }
+            }
+        }
+    }
 
 	// For VS.NET, need an old favourite: find a call with three pushes in the first 100 instuctions
 	int count = 100;
