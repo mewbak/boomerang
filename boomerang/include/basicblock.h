@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.9 $	// 1.1.2.2
+ * $Revision: 1.10 $	// 1.1.2.2
  *
  * 28 Jun 05 - Mike: Split off from cfg.h
  */
@@ -163,6 +163,7 @@ public:
 		void		setLabelStr(std::string &s) { m_labelStr = s; }
 		bool		isLabelNeeded() { return m_labelneeded; }
 		void		setLabelNeeded(bool b) { m_labelneeded = b; }
+        bool        isCaseOption();
 
 		/*
 		 * Return whether this BB has been traversed or not
