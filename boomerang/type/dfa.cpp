@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.67 $	// 1.30.2.11
+ * $Revision: 1.68 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -1309,7 +1309,7 @@ bool DfaLocalMapper::processExp(Exp* e) {
 			proc->getSymbolExp(e, new VoidType(), true);
 		} else {
 			std::ostringstream ost;
-			ost << "tparam" << proc->nextParamNum();
+			ost << "param" << proc->nextParamNum();		// Was "tparam" but seems to be permanent now
 			const char* name = strdup(ost.str().c_str());
 			proc->mapSymbolTo(e, Location::local(const_cast<char*>(name), proc));
 		}
@@ -1346,7 +1346,6 @@ Exp* DfaLocalMapper::preVisit(TypedExp* e, bool& recur) {
 	recur = false;
 	return e;
 }
-
 
 bool Signature::dfaTypeAnalysis(Cfg* cfg) {
 	bool ch = false;
