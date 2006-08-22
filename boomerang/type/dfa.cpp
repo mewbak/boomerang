@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.68 $	// 1.30.2.11
+ * $Revision: 1.69 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -807,7 +807,8 @@ void Assignment::dfaTypeAnalysis(bool& ch) {
 }
 
 void BranchStatement::dfaTypeAnalysis(bool& ch) {
-	pCond->descendType(new BooleanType(), ch, this);
+	if (pCond)
+		pCond->descendType(new BooleanType(), ch, this);
 	// Not fully implemented yet?
 }
 

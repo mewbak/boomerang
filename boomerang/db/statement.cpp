@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.229 $	// 1.148.2.38
+ * $Revision: 1.230 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 09 Jan 03 - Mike: Untabbed, reformatted
  * 03 Feb 03 - Mike: cached dataflow (uses and usedBy) (since reversed)
@@ -1661,7 +1661,8 @@ bool condToRelational(Exp*& pCond, BRANCH_TYPE jtCond) {
 						op = opLessEq;
 						break;
 					default:
-						break;		// Not possible, but avoid a compiler warning
+						op = opWild;		// Not possible, but avoid a compiler warning
+						break;
 				}
 				pCond = new Binary(op,
 					flagsParam->getSubExp1()->getSubExp2()->getSubExp1()->clone(),

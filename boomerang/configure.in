@@ -7,7 +7,7 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.31 $
+dnl $Revision: 1.32 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
@@ -27,6 +27,10 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP
+if test "$GCC" = yes; then
+	CFLAGS="$CFLAGS -Wall"
+	CXXFLAGS="$CXXFLAGS -Wall"
+fi
 
 AC_PATH_PROG( MAKEDEPEND, makedepend )
 if test -z "$MAKEDEPEND"; then
@@ -255,7 +259,7 @@ AC_CHECK_LIB(dl, dlopen, ,
 
 dnl Checks for optional cppunit library
 AC_LANG_PUSH(C++)
-CPPFLAGS="-Iinclude ${CPPFLAGS}"
+CPPFLAGS="-I\$(top_srcdir)/include ${CPPFLAGS}"
 AC_CHECK_HEADER(cppunit/TestSuite.h,,
     [AC_CHECK_FILE(include/cppunit/TestSuite.h,,
 		[AC_PATH_PROG(CPPUNIT_HDR_PATH, cppunit/TestSuite.h, :,

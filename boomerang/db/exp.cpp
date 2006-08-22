@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.211 $	// 1.172.2.20
+ * $Revision: 1.212 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added copy constructors; was crashing under Linux
  * 08 Apr 02 - Mike: Added Terminal subclass
@@ -138,10 +138,9 @@ Ternary::Ternary(Ternary& o)
     assert(subExp1 && subExp2 && subExp3);
 }
 
-TypedExp::TypedExp() : Unary(opTypedExp), type(NULL) { }
+TypedExp::TypedExp() : Unary(opTypedExp), type(NULL) { } 
 TypedExp::TypedExp(Exp* e1) : Unary(opTypedExp, e1), type(NULL) { }
-TypedExp::TypedExp(Type* ty, Exp* e1) : Unary(opTypedExp, e1),
-	type(ty) { }
+TypedExp::TypedExp(Type* ty, Exp* e1) : Unary(opTypedExp, e1), type(ty) { }
 TypedExp::TypedExp(TypedExp& o) : Unary(opTypedExp)
 {
 	subExp1 = o.subExp1->clone();
