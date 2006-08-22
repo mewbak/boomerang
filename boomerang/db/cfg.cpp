@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.113 $	// 1.95.2.5
+ * $Revision: 1.114 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -528,7 +528,7 @@ bool Cfg::label ( ADDRESS uNativeAddr, PBB& pCurBB )
 
 		newi = mi;
 		bool bSplit = false;
-		PBB pPrevBB;
+		PBB pPrevBB = NULL;
 		if (newi != m_mapBB.begin()) {
 			pPrevBB = (*--mi).second;
 			if (!pPrevBB->m_bIncomplete &&
