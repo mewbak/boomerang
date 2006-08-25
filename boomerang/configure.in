@@ -7,7 +7,7 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.32 $
+dnl $Revision: 1.33 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
@@ -22,12 +22,22 @@ AC_CONFIG_HEADER(include/config.h)
 
 AC_CANONICAL_SYSTEM
 
-
+dnl check if the OPT variable is set
+isset_OPT=${OPT+set}
+ 
 dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP
 if test "$GCC" = yes; then
+	if test "$isset_OPT" == "set"; then
+		CFLAGS="-g $OPT"
+		CXXFLAGS="-g $OPT"
+	fi
+dnl	if test "$NOOPT" = yes; then
+dnl		CFLAGS="-g -O0"
+dnl		CXXFLAGS="-g -O0"
+dnl	fi
 	CFLAGS="$CFLAGS -Wall"
 	CXXFLAGS="$CXXFLAGS -Wall"
 fi
