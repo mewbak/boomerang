@@ -10,7 +10,7 @@
  */
 
 /* File: DOS4GWBinaryFile.cc
- * $Revision: 1.1 $
+ * $Revision: 1.2 $
  * Desc: This file contains the implementation of the class DOS4GWBinaryFile.
  */
 
@@ -25,7 +25,7 @@
 #endif
 
 #include "BinaryFile.h"
-#include "dos4gwbinaryfile.h"
+#include "DOS4GWBinaryFile.h"
 #include "config.h"
 #include <iostream>
 #include <sstream>
