@@ -10,7 +10,7 @@
  */
 
 /* File: DOS4GWBinaryFile.cc
- * $Revision: 1.3 $
+ * $Revision: 1.4 $
  * Desc: This file contains the implementation of the class DOS4GWBinaryFile.
  */
 
@@ -122,6 +122,12 @@ ADDRESS DOS4GWBinaryFile::GetMainEntryPoint() {
 				gotSubEbp = false;
 				lastWasCall = false;
 				break;
+			case 0xEB: 					// Short relative jump
+				if (op2 >= 0x80)		// Branch backwards?
+					break;				// Yes, just ignore it
+				// Otherwise, actually follow the branch. May have to modify this some time...
+				p += op2+2;				// +2 for the instruction itself, and op2 for the displacement
+				continue;				// Don't break, we have the new "pc" set already
 		}
 		int size = microX86Dis(p + base);
 		if (size == 0x40) {
