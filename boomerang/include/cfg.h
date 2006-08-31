@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.75 $	// 1.69.2.7
+ * $Revision: 1.76 $	// 1.69.2.7
  * 18 Apr 02 - Mike: Mods for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
  */
@@ -500,7 +500,7 @@ public:
 		void	setImplicitsDone() {					// Call when implicits have been created
 					bImplicitsDone = true; }
 
-		void	findInterferences(igraph& ig);
+		void	findInterferences(ConnectionGraph& ig);
 		void	appendBBs(std::list<PBB>& worklist, std::set<PBB>& workset);
 
 		void removeUsedGlobals(std::set<Global*> &unusedGlobals);

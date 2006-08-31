@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.114 $	// 1.95.2.5
+ * $Revision: 1.115 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -1764,7 +1764,7 @@ void updateWorkListRev(PBB currBB, std::list<PBB>&workList, std::set<PBB>& workS
 }
 
 static int progress = 0;
-void Cfg::findInterferences(igraph& ig) {
+void Cfg::findInterferences(ConnectionGraph& cg) {
 	if (m_listBB.size() == 0) return;
 
 	std::list<PBB> workList;			// List of BBs still to be processed
@@ -1784,7 +1784,7 @@ void Cfg::findInterferences(igraph& ig) {
 		workList.erase(--workList.end());
 		workSet.erase(currBB);
 		// Calculate live locations and interferences
-		change = currBB->calcLiveness(ig, myProc);
+		change = currBB->calcLiveness(cg, myProc);
 		if (change) {
 			if (DEBUG_LIVENESS) {
 				LOG << "Revisiting BB ending with stmt ";

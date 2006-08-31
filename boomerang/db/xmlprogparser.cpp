@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.26 $	// 1.17.2.8
+ * $Revision: 1.27 $	// 1.17.2.8
  *
  * June 2004 - Trent: created
  * NOTE: As of early 2006, this file has likely fallen behind changes to class members, and so probably needs some major
@@ -506,7 +506,7 @@ void XMLProgParser::addToContext_userproc(Context *c, int e)
 			userproc->locals[stack.front()->str.c_str()] = stack.front()->type;
 			break;
 		case e_symbol:
-			userproc->symbolMap[stack.front()->exp] = stack.front()->symbol;
+			userproc->mapSymbolTo(stack.front()->exp, stack.front()->symbol);
 			break;
 		default:
 			if (e == e_unknown)

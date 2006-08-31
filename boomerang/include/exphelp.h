@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 01 Jul 05 - Mike: added header
  */
@@ -58,8 +58,5 @@ class lessAssign : public std::binary_function<Assign*, Assign*, bool> {
 public:
 	bool operator()(const Assign* x, const Assign* y) const;
 };
-
-// A type for an "interference graph". Needed by various classes to implement the transforation out of SSA form.
-typedef std::map<Exp*, Exp*, lessExpStar> igraph;
 
 #endif		// __EXPHELP_H__

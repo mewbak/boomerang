@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.10 $	// 1.1.2.2
+ * $Revision: 1.11 $	// 1.1.2.2
  *
  * 28 Jun 05 - Mike: Split off from cfg.h
  */
@@ -522,7 +522,7 @@ public:
 		void		prependStmt(Statement* s, UserProc* proc);
 
 		// Liveness
-		bool		calcLiveness(igraph& ig, UserProc* proc);
+		bool		calcLiveness(ConnectionGraph& ig, UserProc* proc);
 		void		getLiveOut(LocationSet& live, LocationSet& phiLocs);
 
 		// Find indirect jumps and calls
