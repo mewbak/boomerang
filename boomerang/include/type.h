@@ -1,10 +1,9 @@
 /*
  * Copyright (C) 2000-2001, The University of Queensland
- * Copyright (C) 2002, Trent Waddington
+ * Copyright (C) 2002-2006, Trent Waddington and Mike Van Emmerik
  *
  * See the file "LICENSE.TERMS" for information on usage and
- * redistribution of this file, and for a DISCLAIMER OF ALL
- * WARRANTIES.
+ * redistribution of this file, and for a DISCLAIMER OF ALL WARRANTIES.
  *
  */
 
@@ -16,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.63 $
+ * $Revision: 1.64 $
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI

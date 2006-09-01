@@ -4,8 +4,7 @@
  * Copyright (C) 2002-2006, Mike Van Emmerik and Trent Waddington
  *
  * See the file "LICENSE.TERMS" for information on usage and
- * redistribution of this file, and for a DISCLAIMER OF ALL
- * WARRANTIES.
+ * redistribution of this file, and for a DISCLAIMER OF ALL WARRANTIES.
  *
  */
 
@@ -16,7 +15,7 @@
  *======================================================================================================*/
 
 /*
- * $Revision: 1.25 $
+ * $Revision: 1.26 $
  *
  * 30 Aug 05 - Mike: Added init_dfa() etc for garbage collection safety
  */

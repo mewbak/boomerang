@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2005, Mike Van Emmerik
+ * Copyright (C) 2004-2006, Mike Van Emmerik
  *
  * See the file "LICENSE.TERMS" for information on usage and
  * redistribution of this file, and for a DISCLAIMER OF ALL WARRANTIES.
@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.71 $	// 1.30.2.11
+ * $Revision: 1.72 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
