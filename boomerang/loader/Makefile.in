@@ -11,7 +11,7 @@
 #
 ######################################################
 
-# $Revision: 1.39 $
+# $Revision: 1.40 $
 # Note: gnu make is probably required (for patsubst etc)
 # This whole makefile is dependent on finding the pattern *BinaryFile.cpp; a lib%.so file is made for each of these
 # You should be able to add a simple loader without any changes to this Makefile, as long as you follow the naming
@@ -144,7 +144,7 @@ $(BASEDLL) : BinaryFile.o SymTab.o
 
 # This pattern generates all the main dependencies
 $(LOADERDLLS): ../lib/lib%$(DLLEXT) : %.o $(BASEDLL)
-	$(CC) $(CFLAGS) -o $@ $(SHARED) $< SymTab.o $(EXTRAS) -lBinaryFile $(RUNPATH) -L../lib $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) $< SymTab.o $(EXTRAS) -lBinaryFile $(RUNPATH) -L../lib $(LDFLAGS)
 
 # Compile all objects with -fPIC
 $(ALLOBJS): %.o : %.cpp
