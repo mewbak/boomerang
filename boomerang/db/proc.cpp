@@ -19,7 +19,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.343 $	// 1.238.2.44
+ * $Revision: 1.344 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -637,7 +637,7 @@ void UserProc::generateCode(HLLCode *hll) {
 	}
 
 	std::list<PBB> followSet, gotoSet;
-	getEntryBB()->generateCode(hll, 1, NULL, followSet, gotoSet);
+	getEntryBB()->generateCode(hll, 1, NULL, followSet, gotoSet, this);
 	
 	hll->AddProcEnd();
 
@@ -3134,7 +3134,7 @@ void UserProc::fromSSAform() {
 		r2 = (RefExp*)ii->second;			// r1 -> r2 and vice versa
 		char* name1 = lookupSymFromRefAny(r1);
 		char* name2 = lookupSymFromRefAny(r2);
-		if (strcmp(name1, name2) != 0)
+		if (name1 && name2 && strcmp(name1, name2) != 0)
 			continue;						// Already different names, probably because of the redundant mapping
 		RefExp* rename = NULL;
 		if (r1->isImplicitDef())
