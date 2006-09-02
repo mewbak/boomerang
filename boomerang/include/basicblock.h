@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.12 $	// 1.1.2.2
+ * $Revision: 1.13 $	// 1.1.2.2
  *
  * 28 Jun 05 - Mike: Split off from cfg.h
  */
@@ -517,7 +517,7 @@ protected:
 
 public:
 		void		generateCode(HLLCode *hll, int indLevel, PBB latch, std::list<PBB> &followSet,
-						std::list<PBB> &gotoSet);
+						std::list<PBB> &gotoSet, UserProc* proc);
 		// For prepending phi functions
 		void		prependStmt(Statement* s, UserProc* proc);
 
