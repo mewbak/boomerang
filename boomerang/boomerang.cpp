@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.176 $	// 1.115.2.5
+ * $Revision: 1.177 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
  * 02 Sep 06 - Mike: introduced USE_XML to make it easy to disable use of the expat library
@@ -147,7 +147,7 @@ void Boomerang::help() {
 	std::cout << "  -t               : Trace (print address of) every instruction decoded\n";
 	std::cout << "  -Tc              : Use old constraint-based type analysis\n";
 	std::cout << "  -Td              : Use data-flow-based type analysis\n";
-#if XML_USED
+#if USE_XML
 	std::cout << "  -LD              : Load before decompile (<program> becomes xml input file)\n";
 	std::cout << "  -SD              : Save before decompile\n";
 #endif
@@ -1191,7 +1191,7 @@ int Boomerang::decompile(const char *fname, const char *pname)
 	return 0;
 }
 
-#if XML_USED
+#if USE_XML
 /**
  * Saves the state of the Prog object to a XML file.
  * \param prog The Prog object to save.
