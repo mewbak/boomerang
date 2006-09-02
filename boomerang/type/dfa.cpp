@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.72 $	// 1.30.2.11
+ * $Revision: 1.73 $	// 1.30.2.11
  *
  * 24 Sep 04 - Mike: Created
  * 25 Aug 05 - Mike: Switch from Mycroft style "pointer to alpha plus integer equals pointer to another alpha" to
@@ -66,6 +66,7 @@ void init_dfa() {
 }
 
 
+static int progress = 0;
 void UserProc::dfaTypeAnalysis() {
 	Boomerang::get()->alert_decompile_debug_point(this, "before dfa type analysis");
 
@@ -79,6 +80,10 @@ void UserProc::dfaTypeAnalysis() {
 	for (iter = 1; iter <= DFA_ITER_LIMIT; iter++) {
 		ch = false;
 		for (it = stmts.begin(); it != stmts.end(); it++) {
+			if (++progress >= 2000) {
+				progress = 0;
+				std::cerr << "t" << std::flush;
+			}
 			bool thisCh = false;
 			(*it)->dfaTypeAnalysis(thisCh);
 			if (thisCh) {
