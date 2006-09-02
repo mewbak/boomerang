@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.28 $	// 1.17.2.8
+ * $Revision: 1.29 $	// 1.17.2.8
  *
  * June 2004 - Trent: created
  * NOTE: As of early 2006, this file has likely fallen behind changes to class members, and so probably needs some major
@@ -2217,42 +2217,6 @@ void XMLProgParser::persistToXML(std::ostream &out, Global *g)
 	persistToXML(out, g->type);
 	out << "</type>\n";
 	out << "</global>\n";
-}
-
-const char *Cluster::getOutPath(const char *ext)
-{
-	std::string basedir = makeDirs();
-	// Ugh - should probably return a whole std::string
-	return strdup((basedir + "/" + name + "." + ext).c_str());
-}
-
-void Cluster::openStream(const char *ext)
-{
-	if (out.is_open())
-		return;
-	out.open(getOutPath(ext));
-	stream_ext = ext;
-	if (!strcmp(ext, "xml")) {
-		out << "<?xml version=\"1.0\"?>\n";
-	if (parent != NULL)
-		out << "<procs>\n";
-	}
-}
-
-void Cluster::openStreams(const char *ext)
-{
-	openStream(ext);
-	for (unsigned i = 0; i < children.size(); i++)
-		children[i]->openStreams(ext);
-}
-
-void Cluster::closeStreams()
-{
-	if (out.is_open()) {
-		out.close();
-	}
-	for (unsigned i = 0; i < children.size(); i++)
-		children[i]->closeStreams();
 }
 
 void XMLProgParser::persistToXML(Prog *prog)
