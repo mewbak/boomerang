@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.29 $	// 1.17.2.8
+ * $Revision: 1.30 $	// 1.17.2.8
  *
  * June 2004 - Trent: created
  * NOTE: As of early 2006, this file has likely fallen behind changes to class members, and so probably needs some major
@@ -2295,7 +2295,7 @@ void XMLProgParser::persistToXML(std::ostream &out, UserProc *proc)
 		out << "</local>\n";
 	}
 
-	for (std::map<Exp*, Exp*, lessExpStar>::iterator it2 = proc->symbolMap.begin(); it2 != proc->symbolMap.end(); it2++)
+	for (std::multimap<Exp*, Exp*, lessExpStar>::iterator it2 = proc->symbolMap.begin(); it2 != proc->symbolMap.end(); it2++)
 	{
 		out << "<symbol>\n";
 		out << "<exp>\n";
