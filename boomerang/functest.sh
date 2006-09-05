@@ -1,5 +1,5 @@
 #!/bin/bash
-# functest.sh functional test script $Revision: 1.47 $	# 1.23.2.1
+# functest.sh functional test script $Revision: 1.48 $	# 1.23.2.1
 #
 # 02 Feb 05 - Mike: Conditional tests for no type analysis. So all tests should pass whether -Td is passed or not
 # 06 Feb 05 - Mike: Pass the test-set parameter to testOne.sh
@@ -50,7 +50,7 @@ $TESTONE pentium global1		1 "$BOOMSW"
 $TESTONE sparc   global1		1 "$BOOMSW"
 $TESTONE pentium global2		1 "$BOOMSW"
 $TESTONE sparc   global2		1 "$BOOMSW"
-echo known portability issue with long long type used in global3 (should work for Unix/Cygwin but not MSVC/MinGW
+echo "known portability issue with long long type used in global3 (should work for Unix/Cygwin but not MSVC/MinGW)"
 $TESTONE pentium global3		1 "$BOOMSW"
 $TESTONE sparc   global3		1 "$BOOMSW"
 
