@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.137 $	// 1.93.2.8
+ * $Revision: 1.138 $	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ
@@ -1065,8 +1065,8 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
 	// if this is a latchNode and the current indentation level is the same as the first node in the loop, then this
 	// write out its body and return otherwise generate a goto
 	if (isLatchNode())
-		if (latch && latch->loopHead && indLevel == latch->loopHead->indentLevel + (latch->loopHead->lType ==
-				PreTested ? 1 : 0)) {
+		if (latch && latch->loopHead &&
+				indLevel == latch->loopHead->indentLevel + (latch->loopHead->lType == PreTested ? 1 : 0)) {
 			WriteBB(hll, indLevel);
 			return;
 		} else {
@@ -1077,7 +1077,7 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
 			return;
 		}
 
-	PBB child;
+	PBB child = NULL;
 	switch(sType) {
 		case Loop:
 		case LoopCond:
