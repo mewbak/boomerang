@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.232 $	// 1.148.2.38
+ * $Revision: 1.233 $	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 25 Jul 03 - Mike: dataflow.cpp, hrtl.cpp -> statement.cpp
  */
@@ -843,6 +843,7 @@ bool Statement::propagateFlagsTo() {
 		LocationSet::iterator ll;
 		for (ll = exps.begin(); ll != exps.end(); ll++) {
 			Exp* e = *ll;
+			if (!e->isSubscript()) continue;		// e.g. %pc
 			Assign* def = (Assign*)((RefExp*)e)->getDef();
 			if (def == NULL || !def->isAssign()) continue;
 			Exp* base = ((RefExp*)e)->getSubExp1();
