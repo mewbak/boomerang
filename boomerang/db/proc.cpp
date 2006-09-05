@@ -19,7 +19,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.344 $	// 1.238.2.44
+ * $Revision: 1.345 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -2749,10 +2749,10 @@ char* UserProc::newLocalName(Exp* e) {
 			ost.str("");
 			ost << regName << "_" << ++tag;
 		} while (locals.find(ost.str()) != locals.end());
-		return (char*) ost.str().c_str();
+		return strdup (ost.str().c_str());
 	}
 	ost << "local" << nextLocal++;
-	return (char*) ost.str().c_str();
+	return strdup(ost.str().c_str());
 }
 
 Exp* UserProc::newLocal(Type* ty, Exp* e, char* nam /* = NULL */) {
