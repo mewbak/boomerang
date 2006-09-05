@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the implementation for the various visitor and modifier classes.
  *============================================================================*/
 /*
- * $Revision: 1.57 $
+ * $Revision: 1.58 $
  *
  * 18 Aug 06 - Mike: Moved DfaLocalMapper here from type/dfa.cpp
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
@@ -1006,8 +1006,7 @@ Exp* ExpSsaXformer::postVisit(RefExp *e) {
 	if (sym != NULL)
 		return Location::local(sym, proc);
 	// We should not get here: all locations should be replaced with Locals or Parameters
-	LOG << "ERROR! Could not find local or parameter for " << e << " !!\n";
-//	assert(0); int HACK=0;
+	//LOG << "ERROR! Could not find local or parameter for " << e << " !!\n";
 	return e->getSubExp1();		// At least strip off the subscript
 }
 
