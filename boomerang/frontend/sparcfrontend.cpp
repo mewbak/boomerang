@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.43 $	// 1.35.2.5
+ * $Revision: 1.44 $	// 1.35.2.5
  *
  * 17 May 02 - Mike: Mods for boomerang
  * 22 Nov 02 - Mike: Added check for invalid instructions; prints opcode
@@ -807,8 +807,13 @@ bool SparcFrontEnd::processProc(ADDRESS address, UserProc* proc, std::ofstream &
 
 			// Define aliases to the RTLs so that they can be treated as a high level types where appropriate.
 			RTL* rtl = inst.rtl;
-			GotoStatement*	 stmt_jump	 = static_cast<GotoStatement*>(rtl->getList().back());
-			Statement* last = rtl->getList().back();
+			GotoStatement*	 stmt_jump = NULL;
+			Statement* last = NULL;
+			std::list<Statement*>& slist = rtl->getList();
+			if (slist.size()) {
+				last = slist.back();
+				stmt_jump = static_cast<GotoStatement*>(last);
+			}
 
 #define BRANCH_DS_ERROR 0	// If set, a branch to the delay slot of a delayed
 							// CTI instruction is flagged as an error
