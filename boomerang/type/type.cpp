@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.69 $	// 1.44.2.1
+ * $Revision: 1.70 $	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)
@@ -35,6 +35,9 @@
 #include "signature.h"
 #include "boomerang.h"
 #include "log.h"
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
+#endif
 
 extern char debug_buffer[];		 // For prints functions
 

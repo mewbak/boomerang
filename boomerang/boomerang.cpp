@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.182 $	// 1.115.2.5
+ * $Revision: 1.183 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
  * 02 Sep 06 - Mike: introduced USE_XML to make it easy to disable use of the expat library
@@ -46,6 +46,10 @@
 #if USE_XML
 #include "xmlprogparser.h"
 #endif
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
+#endif
+
 
 // For the -nG switch to disable the garbage collector
 #include "gc.h"

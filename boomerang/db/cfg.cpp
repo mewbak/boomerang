@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.115 $	// 1.95.2.5
+ * $Revision: 1.116 $	// 1.95.2.5
  * 18 Apr 02 - Mike: Mods for boomerang
  * 19 Jul 04 - Mike: Changed initialisation of BBs to not rely on out edges
  */
@@ -625,7 +625,7 @@ void Cfg::sortByAddress()
  *============================================================================*/
 void Cfg::sortByFirstDFT()
 {
-#ifndef WIN32
+#ifndef _WIN32
 	m_listBB.sort(BasicBlock::lessFirstDFT);
 #else
 	updateVectorBB();
@@ -645,7 +645,7 @@ void Cfg::sortByFirstDFT()
  *============================================================================*/
 void Cfg::sortByLastDFT()
 {
-#ifndef WIN32
+#ifndef _WIN32
 	m_listBB.sort(BasicBlock::lessLastDFT);
 #else
 	updateVectorBB();

@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.127 $	// 1.89.2.7
+ * $Revision: 1.128 $	// 1.89.2.7
  * 08 Apr 02 - Mike: Mods to adapt UQBT code to boomerang
  * 16 May 02 - Mike: Moved getMainEntry point here from prog
  * 09 Jul 02 - Mike: Fixed machine check for elf files (was checking endianness rather than machine type)
@@ -35,7 +35,7 @@
 #include <queue>
 #include <stdarg.h>			// For varargs
 #include <sstream>
-#ifndef WIN32
+#ifndef _WIN32
 #include <dlfcn.h>			// dlopen, dlsym
 #endif
 

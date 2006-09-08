@@ -15,7 +15,7 @@
  *		 a single register.
  *============================================================================*/
 
-/* $Revision: 1.6 $
+/* $Revision: 1.7 $
  *
  * 28 Apr 02 - Mike: Mods for boomerang
  */
@@ -30,7 +30,10 @@
 #include "type.h"
 
 
-#ifndef NULL			// Don't always include stdio.h
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
+#endif
+#ifndef NULL						// Don't always include stdio.h
 #define NULL 0
 #endif
 

@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the XMLProgParser and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.30 $	// 1.17.2.8
+ * $Revision: 1.31 $	// 1.17.2.8
  *
  * June 2004 - Trent: created
  * NOTE: As of early 2006, this file has likely fallen behind changes to class members, and so probably needs some major
@@ -29,6 +29,9 @@ extern "C" {
 #include "boomerang.h"
 #include "log.h"
 #include "frontend.h"
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
+#endif
 
 
 typedef enum { e_prog, e_procs, e_global, e_cluster, e_libproc, e_userproc, e_local, e_symbol, e_secondexp,

@@ -10,7 +10,7 @@
  */
 
 /* File: Win32BinaryFile.cc
- * $Revision: 1.36 $
+ * $Revision: 1.37 $
  * Desc: This file contains the implementation of the class Win32BinaryFile.
  */
 
@@ -27,6 +27,9 @@
 
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
+#endif
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
 #endif
 
 #ifdef _WIN32

@@ -19,7 +19,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.345 $	// 1.238.2.44
+ * $Revision: 1.346 $	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang
@@ -64,6 +64,9 @@ namespace dbghelp {
 #endif
 #undef NO_ADDRESS
 #define NO_ADDRESS ((ADDRESS)-1)
+#endif
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
 #endif
 
 typedef std::map<Statement*, int> RefCounter;

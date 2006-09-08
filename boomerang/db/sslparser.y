@@ -16,7 +16,7 @@
  *			   returns the list of SSL instruction and table definitions.
  *============================================================================*/
 
-/* $Revision: 1.34 $
+/* $Revision: 1.35 $
  * Updates:
  * Shane Sendall (original C version) Dec 1997
  * Doug Simon (C++ version) Jan 1998
@@ -53,7 +53,7 @@
 #include "util.h"			// E.g. str()
 #include "statement.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <malloc.h>
 #endif
 

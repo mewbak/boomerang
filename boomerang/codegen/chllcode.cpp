@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.127 $	// 1.90.2.16
+ * $Revision: 1.128 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -25,6 +25,9 @@
 #include <assert.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
+#endif
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
 #endif
 
 #include "cfg.h"
