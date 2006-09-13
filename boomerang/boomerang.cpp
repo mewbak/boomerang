@@ -6,7 +6,7 @@
  * OVERVIEW:   Command line processing for the Boomerang decompiler
  *============================================================================*/
 /*
- * $Revision: 1.184 $	// 1.115.2.5
+ * $Revision: 1.185 $	// 1.115.2.5
  *
  * 28 Jan 05 - G. Krol: Separated -h output into sections and neatened
  * 02 Sep 06 - Mike: introduced USE_XML to make it easy to disable use of the expat library
@@ -18,7 +18,7 @@
 #define USE_XML 0			// Cygwin has a weird problem that causes libBinaryFile.dll not to load if the expat library
 							// is used. Note that other Windows versions require expat.
 #else						// For all platforms other than Cygwin:
-#define USE_XML 1			// Set to 0 to not use the expat library for XML loading and saving
+#define USE_XML 0			// Set to 0 to not use the expat library for XML loading and saving
 #endif
 
 #include <iostream>
