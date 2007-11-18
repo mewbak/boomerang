@@ -8,7 +8,7 @@
 #
 ######################################################
 
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 # 08 Apr 02 - Mike: Created.
 # 10 Apr 02 - Mike: interface -> include
 
@@ -18,7 +18,7 @@ FRONTEND_LIB = ../lib/libfrontend.so
 TEST_OBJS = FrontSparcTest.o FrontPentTest.o # FrontendTest.o 
 LIB_OBJS  = frontend.o njmcDecoder.o
 
-MACHS     = sparc pentium
+MACHS     = sparc pentium st20 ppc mips arm hppa
 MACH_LIBS = $(patsubst %, ../lib/libfront%.so, $(MACHS))
 MACH_OBJS = $(patsubst %, %decoder.o, $(MACHS))
 MACH_SRC  = $(patsubst %, %decoder.cpp, $(MACHS))
