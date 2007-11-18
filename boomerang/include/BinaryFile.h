@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.31 $
+/* $Revision: 1.32 $
  * This class attempts to provide a relatively machine independent interface for programs that read binary files.
  * Created by Mike, 97
  * 01 Aug 01 - Mike: Changed the definition of GetGlobalPointerInfo()
@@ -118,8 +118,8 @@ typedef BinaryFile *(*get_library_callback_t)(char *name);
 
 // This enum allows a sort of run time type identification, without using
 // compiler specific features
-enum LOAD_FMT {LOADFMT_ELF, LOADFMT_PE, LOADFMT_PALM, LOADFMT_PAR, LOADFMT_EXE, LOADFMT_MACHO, LOADFMT_LX};
-enum MACHINE {MACHINE_PENTIUM, MACHINE_SPARC, MACHINE_HPRISC, MACHINE_PALM, MACHINE_PPC, MACHINE_ST20};
+enum LOAD_FMT {LOADFMT_ELF, LOADFMT_PE, LOADFMT_PALM, LOADFMT_PAR, LOADFMT_EXE, LOADFMT_MACHO, LOADFMT_LX, LOADFMT_COFF};
+enum MACHINE {MACHINE_PENTIUM, MACHINE_SPARC, MACHINE_HPRISC, MACHINE_PALM, MACHINE_PPC, MACHINE_ST20, MACHINE_MIPS};
 
 class BinaryFileFactory {
 #ifdef _WIN32
