@@ -18,7 +18,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.5 $
+ * $Revision: 1.6 $
  *
  * 12 Jul 05 - Mike: New implementation with two maps
 */
@@ -47,6 +47,7 @@ public:
 		int			FindIndex(ADDRESS dwAddr);      // Find index for entry
 		ADDRESS		FindSym(char* pName);           // Linear search for addr from name
 #endif
+		std::map<ADDRESS, std::string>& getAll() { return amap; }
 };
 
 #ifndef NULL
