@@ -4,7 +4,7 @@
  *              tests the c parser
  *============================================================================*/
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  * 03 Dec 02 - Trent: Created
  */
@@ -64,7 +64,7 @@ void CTest::testSignature () {
     CPPUNIT_ASSERT_EQUAL(1, (int)p->signatures.size());
     Signature *sig = p->signatures.front();
     CPPUNIT_ASSERT_EQUAL(std::string("printf"), std::string(sig->getName()));
-    CPPUNIT_ASSERT(*sig->getReturnType(0) == IntegerType());
+    CPPUNIT_ASSERT(sig->getReturnType(0)->resolvesToInteger());
     Type *t = new PointerType(new CharType());
     // Pentium signatures used to have esp prepended to the list of parameters; no more?
 	int num = sig->getNumParams();

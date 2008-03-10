@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.215 $	// 1.172.2.20
+ * $Revision: 1.216 $	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  */
 
@@ -3564,8 +3564,8 @@ Exp* Binary::simplifyConstraint() {
 		case opEquals: {
 			if (subExp1->isTypeVal() && subExp2->isTypeVal()) {
 				// FIXME: ADHOC TA assumed
-				Type* t1 = NULL;	// ((TypeVal*)subExp1)->getType();
-				Type* t2 = NULL;	// ((TypeVal*)subExp2)->getType();
+				Type* t1 = ((TypeVal*)subExp1)->getType();
+				Type* t2 = ((TypeVal*)subExp2)->getType();
 				if (!t1->isPointerToAlpha() && !t2->isPointerToAlpha()) {
 					delete this;
 					if (*t1 == *t2)
