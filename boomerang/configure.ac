@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.1 2008-03-16 18:32:21 thenihilist Exp $
+dnl $Id: configure.ac,v 1.2 2008-03-16 18:50:44 thenihilist Exp $
 dnl
 dnl See the file "LICENSE.TERMS" for information on usage and
 dnl redistribution of this file, and for a DISCLAIMER OF ALL
@@ -8,22 +8,22 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.1 $
+dnl $Revision: 1.2 $
 dnl
 dnl 12 Apr 02 - Mike: Created
-dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ inserted
+dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ(2.61) inserted
 dnl 06 Mar 03 - Mike: Removed need for libelf
 dnl 27 Jun 04 - Mike: Added XMLWF for eXpat XML parser
 dnl 22 Aug 05 - Mike: Some improvements for OS X, and finding things like libexpat.a
 dnl 12 Dec 05 - Mike: Apply Emmanuel Fleury's changes for auto "make remote"
 dnl 16 Mar 08 - Markus Gothe: configure.ac for use with autotools.
 
-AC_PREREQ(2.59)
-AC_INIT(boomerang, 1.0, nietzsche@lysator.liu.se)
+AC_PREREQ(2.61)
+AC_INIT([boomerang],[1.0],[nietzsche@lysator.liu.se])
 AC_CONFIG_SRCDIR([LICENSE.TERMS])
 AC_CONFIG_HEADER(include/config.h)
 
-AC_CANONICAL_SYSTEM
+AC_CANONICAL_TARGET
 
 AM_INIT_AUTOMAKE
 
