@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.8 $
+ * $Revision: 1.9 $
  *
  * 22 Jun 00 - Mike: Initial version
  * 15 May 02 - Mike: Fixed several UINT4(&...) that were needed for endianness
