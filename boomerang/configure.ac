@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.2 2008-03-16 18:50:44 thenihilist Exp $
+dnl $Id: configure.ac,v 1.3 2008-03-17 01:04:41 thenihilist Exp $
 dnl
 dnl See the file "LICENSE.TERMS" for information on usage and
 dnl redistribution of this file, and for a DISCLAIMER OF ALL
@@ -8,7 +8,7 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.2 $
+dnl $Revision: 1.3 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ(2.61) inserted
@@ -34,6 +34,8 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP
+AC_PROG_LD
+AC_SUBST(LD)
 AC_PROG_RANLIB
 if test "$GCC" = yes; then
 	if test "$isset_OPT" == "set"; then
@@ -64,14 +66,11 @@ AC_PATH_PROG( M4, m4 )
 AC_SUBST( M4 )
 
 dnl -------------------
-AC_PATH_BINUTIL( HOST_CC, gcc cc )
-
-dnl -------------------
 AC_MSG_CHECKING( [if using GNU ld] )
 HOST_GNU_LD=no
-if ${HOST_CC} -v 2>&1 </dev/null | egrep "gcc" 1>&5; then
+if ${CC} -v 2>&1 </dev/null | egrep "gcc" 1>&5; then
    HOST_GCC=yes
-   HOST_LD=`${HOST_CC} -print-prog-name=ld`
+   HOST_LD=`${CC} -print-prog-name=ld`
 else
    HOST_LD=ld
 fi
