@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # 16 Mar 08 - Markus Gothe: Makefile.am for use with autotools
 # 22 Aug 06 - Mike Frysinger: respect values set up by ./configure script
 # 12 Apr 06 - Gerard: Restructured, added conditional rules, added generated dependencies
@@ -43,6 +43,8 @@
 # - Cleaning up
 # - Dependencies
 #
+
+SUBDIRS = loader db transform util frontent .
 
 bin_PROGRAMS = boomerang bffDump
 noinst_LIBRARIES = libdriver.a
