@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # 16 Mar 08 - Markus Gothe: Makefile.am for use with autotools
 # 22 Aug 06 - Mike Frysinger: respect values set up by ./configure script
 # 12 Apr 06 - Gerard: Restructured, added conditional rules, added generated dependencies
@@ -56,7 +56,6 @@ STD_DIRS = \
 	transform \
 	util \
 	frontent \
-	. \
 	$(NULL)
 
 SUBDIRS = $(STD_DIRS)
