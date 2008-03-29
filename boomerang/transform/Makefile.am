@@ -4,7 +4,7 @@
 #
 ######################################################
 
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 # 18 Apr 04 - Trent: Created.
 
 AUTOMAKE_OPTIONS = foreign
@@ -28,3 +28,5 @@ noinst_HEADERS = \
 		transformation-parser.h \
 		transformation-scanner.h \
 		$(NULL)
+
+libtransform_la_LDFLAGS = -release $(VERSION)
