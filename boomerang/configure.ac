@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.3 2008-03-17 01:04:41 thenihilist Exp $
+dnl $Id: configure.ac,v 1.4 2008-03-29 23:04:28 thenihilist Exp $
 dnl
 dnl See the file "LICENSE.TERMS" for information on usage and
 dnl redistribution of this file, and for a DISCLAIMER OF ALL
@@ -8,7 +8,7 @@ dnl File: configure.in
 dnl autoconf uses this file to create the configure script, which generates
 dnl the Makefiles and sets up various things.
 dnl
-dnl $Revision: 1.3 $
+dnl $Revision: 1.4 $
 dnl
 dnl 12 Apr 02 - Mike: Created
 dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ(2.61) inserted
@@ -34,10 +34,9 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP
-AC_PROG_LD
-AC_SUBST(LD)
-AC_PROG_RANLIB
-if test "$GCC" = yes; then
+AC_PROG_LIBTOOL
+
+if test "$GXX" = yes; then
 	if test "$isset_OPT" == "set"; then
 		CFLAGS="-g $OPT"
 		CXXFLAGS="-g $OPT"
