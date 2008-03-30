@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.128 $	// 1.90.2.16
+ * $Revision: 1.129 $	// 1.90.2.16
  * 20 Jun 02 - Trent: Quick and dirty implementation for debugging
  * 28 Jun 02 - Trent: Starting to look better
  * 22 May 03 - Mike: delete -> free() to keep valgrind happy
@@ -1539,13 +1539,13 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open) {
 			name = ((Const*)((Location*)left)->getSubExp1())->getStr();
 		else {
 			LOG << "ERROR: parameter " << left << " is not opParam!\n";
-			name = "??";
+			name = const_cast<char *>("??");
 		}
 		if (ty->isPointer() && ((PointerType*)ty)->getPointsTo()->isArray()) {
 			// C does this by default when you pass an array, i.e. you pass &array meaning array
 			// Replace all m[param] with foo, param with foo, then foo with param
 			ty = ((PointerType*)ty)->getPointsTo();
-			Exp *foo = new Const("foo123412341234");
+			Exp *foo = new Const(const_cast<char *>("foo123412341234"));
 			m_proc->searchAndReplace(Location::memOf(left, NULL), foo);
 			m_proc->searchAndReplace(left, foo);
 			m_proc->searchAndReplace(foo, left);
