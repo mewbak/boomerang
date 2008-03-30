@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.169 $	// 1.126.2.14
+ * $Revision: 1.170 $	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR
@@ -191,7 +191,7 @@ void Prog::generateCode(Cluster *cluster, UserProc *proc, bool intermixRTL) {
 			HLLCode *code = Boomerang::get()->getHLLCode();
 			bool global = false;
 			if (Boomerang::get()->noDecompile) {
-				char *sections[] = { "rodata", "data", "data1", 0 };
+				const char *sections[] = { "rodata", "data", "data1", 0 };
 				for (int j = 0; sections[j]; j++) {
 					std::string str = ".";
 					str += sections[j];
