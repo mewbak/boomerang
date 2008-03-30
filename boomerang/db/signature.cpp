@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.125 $	// 1.98.2.12
+ * $Revision: 1.126 $	// 1.98.2.12
  * 
  * 15 Jul 02 - Trent: Created.
  * 18 Jul 02 - Mike: Changed addParameter's last param to deflt to "", not NULL
@@ -62,8 +62,8 @@ char* Signature::conventionName(callconv cc) {
 	switch (cc) {
 		case CONV_C:		return const_cast<char *>("stdc");
 		case CONV_PASCAL:	return const_cast<char *>("pascal");
-		case CONV_THISCALL: return const_cast<char *>("thiscall");
-		default:			return const_cast<char *>("??");
+		case CONV_THISCALL: 	return const_cast<char *>("thiscall");
+		default:		return const_cast<char *>("??");
 	}
 }
 
