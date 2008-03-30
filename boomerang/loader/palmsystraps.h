@@ -14,7 +14,7 @@
  *             Based on code from the Metrowerks Compiler, PalmOS 2.0 support
  *============================================================================*/
 
-/* $Revision: 1.4 $
+/* $Revision: 1.5 $
  *    Mar 00 - Cristina: Created
  * 31 Mar 00 - Mike: Removed "sysTrap" from function names
  */
@@ -30,7 +30,7 @@
 //	"sysTrapMemInit",		// = sysTrapBase 
 
 
-char *trapNames[] = {
+const char *trapNames[] = {
 	"MemInit",
 	"MemInitHeapTable",
 	"MemStoreInit",
