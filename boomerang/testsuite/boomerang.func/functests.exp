@@ -1,0 +1,93 @@
+send_log "\n=== These should be OK ===\n"
+testOne pentium	hello		1 "$BOOMSW"
+testOne sparc	hello		1 "$BOOMSW"
+testOne ppc	hello		1 "$BOOMSW"
+testOne pentium	twoproc		1 "$BOOMSW"
+testOne sparc	twoproc		1 "$BOOMSW"
+testOne ppc	twoproc		1 "$BOOMSW"
+testOne pentium	param1		1 "$BOOMSW"
+testOne sparc	param1		4 "$BOOMSW" "2 3 4"
+testOne pentium	restoredparam	3 "$BOOMSW" "2 3"
+testOne pentium	fib		1 "$BOOMSW"
+testOne sparc	fib		1 "$BOOMSW"
+testOne pentium fibo-O4		1 "$BOOMSW" "" ../test/source/fibo-O4.in1
+testOne sparc	fibo-O4		1 "$BOOMSW" "" ../test/source/fibo-O4.in1
+testOne pentium	fibo-O4		3 "$BOOMSW" "" ../test/source/fibo-O4.in3
+testOne sparc	fibo-O4		3 "$BOOMSW" "" ../test/source/fibo-O4.in3
+testOne pentium	fibo3		3 "$BOOMSW" "" ../test/source/fibo-O4.in3
+testOne sparc	fibo3		3 "$BOOMSW" "" ../test/source/fibo-O4.in3
+testOne pentium fibo4		3 "$BOOMSW" "" ../test/source/fibo-O4.in3
+testOne pentium global1		1 "$BOOMSW"
+testOne sparc   global1		1 "$BOOMSW"
+testOne pentium global2		1 "$BOOMSW"
+testOne sparc   global2		1 "$BOOMSW"
+send_log "known portability issue with long long type used in global3 (should work for Unix/Cygwin but not MSVC/MinGW)\n"
+testOne pentium global3		1 "$BOOMSW"
+testOne sparc   global3		1 "$BOOMSW"
+testOne pentium minmax		1 "$BOOMSW" "2 3 4"
+testOne sparc   minmax		1 "$BOOMSW" "2 3 4"
+testOne pentium minmax2		1 "$BOOMSW" "two"
+testOne sparc   minmax2		1 "$BOOMSW" "two"
+send_log "minmax3 has a known error\n"
+testOne pentium minmax3		1 "$BOOMSW" "two"
+testOne pentium uns		1 "$BOOMSW" "2 3"
+testOne sparc   uns		1 "$BOOMSW" "2 3"
+testOne pentium fromssa2	1 "$BOOMSW"
+testOne sparc   fromssa2	1 "$BOOMSW"
+testOne pentium bswap		1 "$BOOMSW"
+testOne pentium testset		1 "$BOOMSW" "2 3 4"
+testOne sparc   andn		1 "$BOOMSW"
+testOne pentium callchain	1 "$BOOMSW"
+testOne sparc	callchain	1 "$BOOMSW"
+testOne pentium	short1		1 "$BOOMSW"
+testOne sparc	short1		1 "$BOOMSW"
+testOne pentium short2		1 "$BOOMSW"
+testOne sparc	short2		1 "$BOOMSW"
+
+send_log "\n=== These tests require type analysis ===\n"
+testOne pentium sumarray-O4	1 "$BOOMSW"
+testOne sparc   sumarray-O4	1 "$BOOMSW"
+testOne pentium paramchain	1 "$BOOMSW"
+testOne sparc	paramchain	1 "$BOOMSW"
+#testOne pentium line1		1 "$BOOMSW" "" ../test/source/line1.c
+#testOne sparc   line1		1 "$BOOMSW" "" ../test/source/line1.c
+
+send_log "\n=== Switch tests ===\n"
+testOne pentium switch_gcc	5 "$BOOMSW" "2 3 4 5"
+testOne pentium switch_gcc	1 "$BOOMSW"
+testOne sparc   switch_gcc	5 "$BOOMSW" "2 3 4 5"
+testOne sparc   switch_gcc	1 "$BOOMSW"
+testOne pentium switch_cc	4 "$BOOMSW" "2 3 4"
+testOne pentium switch_cc	1 "$BOOMSW"
+testOne sparc   switch_cc	4 "$BOOMSW" "2 3 4"
+testOne sparc   switch_cc	1 "$BOOMSW"
+testOne pentium nestedswitch	4 "$BOOMSW" "2 3 4"
+testOne sparc   nestedswitch	4 "$BOOMSW" "2 3 4"
+
+send_log "\n=== Double handling tests ===\n"
+testOne pentium printpi		1 "$BOOMSW"
+testOne sparc   printpi		1 "$BOOMSW"
+
+send_log "\n=== Pentium floating point handling ===\n"
+# Note: these have a .sed file, for 2 known problems: 1) "%f" in scanf means float, not double
+# 2) Don't handle two halves of a double properly for printf
+# However, fbranch2.sed does not exist; there are issues with the name of the local whose address is taken
+# Note also that fbranch has issues with returning values that depend on flags, hence fbranch2 now
+testOne pentium fbranch2	4 "$BOOMSW" "" ../test/source/fbranch.in4
+testOne pentium fbranch2	5 "$BOOMSW" "" ../test/source/fbranch.in5
+testOne pentium fbranch2	6 "$BOOMSW" "" ../test/source/fbranch.in6
+
+send_log "\n=== End tests requiring type analysis ===\n"
+
+send_log "\n=== Sometimes issues with the GC ===\n"
+testOne sparc   global2		1 "$BOOMSW"
+testOne sparc   global3		1 "$BOOMSW"
+
+send_log "\n=== Known failures ===\n"
+testOne pentium recursion	2 "$BOOMSW" 2
+testOne pentium stattest	1 "$BOOMSW"		;# TA does not handle structs properly yet
+testOne sparc   stattest	1 "$BOOMSW"		;# ditto
+testOne sparc	elfhashtest	1 "$BOOMSW"		;# Not sure why fails
+testOne sparc   fibo4		3 "$BOOMSW" "" ../test/source/fibo-O4.in3	;# Some problem with bypassing m[...]
+testOne sparc   recursion	2 "$BOOMSW" 2	;# Not sure why fails
+testOne pentium recursion2	1 "$BOOMSW"

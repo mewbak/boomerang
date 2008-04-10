@@ -1,0 +1,35 @@
+set test "no file given"
+spawn $TOOL
+expect {
+	-re "^Boomerang.*\r\nUsage: boomerang \\\[ switches \\\] <program>\r\nboomerang -h for switch help\r\n$" { pass "$test" }
+	eof { fail "$test (unexpected output)" }
+}
+wait
+
+set test "-h option"
+spawn $TOOL -h
+expect {
+	"Decoding/decompilation options" { pass "$test" }
+	eof { fail "$test (unexpected output)" }
+}
+wait
+
+set test "open non-existing file"
+if {[create_output_dir]} { fail "$test" }
+spawn $TOOL -o $output_dir /should/not/exist
+expect {
+	"Unable to open binary file:" { pass "$test" }
+	eof { fail "$test (unexpected output)" }
+}
+wait
+cleanup
+
+set test "two input files"
+if {[create_output_dir]} { fail "$test" }
+spawn $TOOL -o $output_dir /should/not/exist /should/not/exist2
+expect {
+	-re "^Boomerang.*\r\nUsage: boomerang \\\[ switches \\\] <program>\r\nboomerang -h for switch help\r\n$" { pass "$test" }
+	eof { fail "$test (unexpected output)" }
+}
+wait
+cleanup

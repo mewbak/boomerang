@@ -1,0 +1,7 @@
+set tool boomerang
+set TOOL "$objdir/run_boomerang.sh"
+set BOOMSW ""
+set sample_dir "../test"
+set functest_dir "../functest"
+#set srcdir .
+#set objdir .

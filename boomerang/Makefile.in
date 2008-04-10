@@ -314,6 +314,9 @@ $(STATIC_OBJS): %.o : %.cpp
 driver.o: driver.cpp include/boomerang.h
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $(EXTRA) $<
 
+check test: all
+	$(MAKE) -C testsuite check
+
 ###############
 # Unit testing
 #
@@ -324,9 +327,9 @@ testDyn: lib
 	$(MAKE) -C db       test
 	$(MAKE) -C frontend test
 
-check test: lib loaders bigtest$(EXEEXT)
-	$(MAKE) -C loader test
-	./bigtest$(EXEEXT)
+#check test: lib loaders bigtest$(EXEEXT)
+#	$(MAKE) -C loader test
+#	./bigtest$(EXEEXT)
 
 # Needed because the test header files are in all these different directories
 INCLUDEALL = -Idb -Ifrontend -Ic -Itype
@@ -351,6 +354,7 @@ clean:
 		frontend/FrontPentTest.o frontend/FrontSparcTest.o
 	$(MAKE) -C loader clean
 	$(MAKE) -C db     clean
+	$(MAKE) -C testsuite distclean
 
 distclean: clean
 	rm -f Makefile util/Makefile loader/Makefile db/Makefile frontend/Makefile transform/Makefile include/config.h \
@@ -358,6 +362,7 @@ distclean: clean
 	rm -f include/gc.h include/gc_config_macros.h lib/libcppunit.a
 	rm -f functest.c functest.exe functest.out functest.res functest.tmp functests.out output/log
 	rm -rf functest unit_test lib
+	$(MAKE) -C testsuite distclean
 
 # target mostclean (clean also the autoconf output)
 mostclean: distclean

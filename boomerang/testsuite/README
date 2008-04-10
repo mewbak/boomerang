@@ -1,0 +1,25 @@
+Boomerang's testsuite
+=====================
+
+Currently, Boomerang's test set is split into two categories:
+
+* minor: tests that check corner cases, covering code not usually run by other
+  tests
+* func: functional tests (for now, simply a wrapper around ./testOne.sh,
+  replaces ./functest.sh)
+
+More categories may be added in future. The purpose is to make more fine
+grained tests, e.g. tests for type analysis, decoding etc.
+
+To run the testsuite, issue this command from Boomerang's source directory:
+
+make check
+
+Note that this used to run Boomerang's unit tests, but they are outdated and
+broken at the moment, and people usually expect functional tests to be run with
+"make check". In future (after fixing unit tests), a new target will be created
+for running them.
+
+Also note that for running Boomerang's testsuite you need DejaGNU installed.
+Either install it from your distribution repository or from
+http://www.gnu.org/software/dejagnu/.

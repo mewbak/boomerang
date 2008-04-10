@@ -1,0 +1,85 @@
+set output_dir ""
+
+proc create_output_dir {} {
+	global output_dir
+
+	if {[catch {exec mktemp -td boomerang.XXXXXXXXXX} output_dir]} {
+		puts stderr "Failed to create temporary directory: $output_dir"
+		set output_dir ""
+		return -1
+	}
+	return 0
+}
+
+proc cleanup {} {
+	global output_dir
+
+	if {$output_dir != ""} {
+		exec rm -rf $output_dir
+	}
+}
+
+proc run_cmd { args } {
+	set status 0
+	if {[catch {eval exec $args} output]} {
+		set details $::errorCode
+		if {[lindex $details 0] == "CHILDSTATUS"} {
+			set status [lindex $details 2]
+		} elseif {[lindex $details 0] != "NONE"} {
+			# FIXME: handle more error codes
+			send_log "ERROR: $details\n"
+			set status 1
+		}
+		send_log "***OUTPUT BEGIN***\n$output\n***OUTPUT END***\n"
+	}
+	return $status
+}
+
+# TODO : finish
+#proc testOne2 { platform program test_set {options ""} {arguments ""} } {
+#	global TOOL output_dir sample_dir functest_dir
+#
+#	create_output_dir
+#	set program_path [file normalize $sample_dir/$platform/$program]
+#	set status [run_cmd $TOOL -o $output_dir $program_path]
+#
+#	if {$status >= 128} {
+#		set signal {$status - 128}
+#		send_log "received signal $signal\n"
+#		cleanup
+#		return -1
+#	} elseif {$status != 0} {
+#		send_log "exited with code $status\n"
+#		cleanup
+#		return -1
+#	} elseif {![file isfile $output_dir/$program/$program.c]} {
+#		send_log "NO BOOMERANG OUTPUT for set $test_set\n"
+#		cleanup
+#		return -1
+#	}
+#	catch {exec ls -rt [glob $functest_dir/$program/*.c] | xargs cat > $output_dir/functest.c}
+#	if {[file isfile $sample_dir/$platform/$program.sed]} {
+#		send_log "WARNING: $sample_dir/$platform/$program.sed used\n"
+#		if {[catch {sed -i -f $sample_dir/$platform/$program.sed $output_dir/functest.c} output]} {
+#			send_log "ERROR: sed failed: $output\n"
+#			cleanup
+#			return -1
+#		}
+#	}
+#	cleanup
+#	return 0
+#}
+
+proc testOne { platform program test_set {options ""} {arguments ""} {input ""}} {
+	set test "$program $platform (set $test_set)"
+	spawn bash -c "cd .. && ./testOne.sh $platform $program $test_set '$options' '$arguments'"
+	if {$input != ""} {
+		catch {exec cat $input} output
+		send -- $output
+	}
+	expect {
+		"Passed set $test_set" { pass "$test" }
+		eof { fail "$test" }
+	}
+	wait
+}
