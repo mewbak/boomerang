@@ -9,10 +9,12 @@
  * 19 Oct 04 - Mike: Created
  */
 
-#include "DfaTest.h"
-#include <iostream>		// For std::cerr
 #include <log.h>
-#include <boomerang.h>
+
+#include "DfaTest.h"
+#include "type.h"
+
+CPPUNIT_TEST_SUITE_REGISTRATION( DfaTest );
 
 class ErrLogger : public Log {
 public:
@@ -22,25 +24,6 @@ public:
 	}
 	virtual ~ErrLogger() {};
 };
-/*==============================================================================
- * FUNCTION:		DfaTest::registerTests
- * OVERVIEW:		Register the test functions in the given suite
- * PARAMETERS:		Pointer to the test suite
- * RETURNS:			<nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<DfaTest> ("DfaTest", \
-	&DfaTest::name, *this))
-
-void DfaTest::registerTests(CppUnit::TestSuite* suite) {
-	MYTEST(testMeetInt);
-	MYTEST(testMeetSize);
-	MYTEST(testMeetPointer);
-	MYTEST(testMeetUnion);
-}
-
-int DfaTest::countTestCases () const
-{ return 2; }	// ? What's this for?
 
 /*==============================================================================
  * FUNCTION:		DfaTest::setUp

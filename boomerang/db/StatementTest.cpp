@@ -11,9 +11,6 @@
  * 06 Jul 05 - Mike: Split testAddUsedLocs into six separate tests for Assign ... Bool
  */
 
-#define HELLO_PENTIUM	   "test/pentium/hello"
-#define GLOBAL1_PENTIUM	   "test/pentium/global1"
-
 #include "StatementTest.h"
 #include "cfg.h"
 #include "rtl.h"
@@ -23,9 +20,13 @@
 #include "managed.h"
 #include "log.h"
 #include "signature.h"
+#include "prog.h"
+#include "proc.h"
 
-#include <sstream>
-#include <map>
+CPPUNIT_TEST_SUITE_REGISTRATION( StatementTest );
+
+#define HELLO_PENTIUM	   "test/pentium/hello"
+#define GLOBAL1_PENTIUM	   "test/pentium/global1"
 
 class NullLogger : public Log {
 public:
@@ -35,47 +36,6 @@ public:
 	}
 	virtual ~NullLogger() {};
 };
-/*==============================================================================
- * FUNCTION:		StatementTest::registerTests
- * OVERVIEW:		Register the test functions in the given suite
- * PARAMETERS:		Pointer to the test suite
- * RETURNS:			<nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<StatementTest> ("Statements", \
-	&StatementTest::name, *this))
-
-void StatementTest::registerTests(CppUnit::TestSuite* suite) {
-
-	MYTEST(testLocationSet);
-	MYTEST(testWildLocationSet);
-	MYTEST(testEmpty);
-	MYTEST(testFlow);
-	MYTEST(testKill);
-	MYTEST(testUse);
-	MYTEST(testUseOverKill);
-	MYTEST(testUseOverBB);
-	MYTEST(testUseKill);
-	//MYTEST(testEndlessLoop);
-	//MYTEST(testRecursion);
-	//MYTEST(testExpand);
-	MYTEST(testClone);
-	MYTEST(testIsAssign);
-	MYTEST(testIsFlagAssgn);
-	MYTEST(testAddUsedLocsAssign);
-	MYTEST(testAddUsedLocsBranch);
-	MYTEST(testAddUsedLocsCase);
-	MYTEST(testAddUsedLocsCall);
-	MYTEST(testAddUsedLocsReturn);
-	MYTEST(testAddUsedLocsBool);
-	MYTEST(testSubscriptVars);
-	MYTEST(testBypass);
-	MYTEST(testStripSizes);
-	MYTEST(testFindConstants);
-}
-
-int StatementTest::countTestCases () const
-{ return 2; }	// ? What's this for?
 
 /*==============================================================================
  * FUNCTION:		StatementTest::setUp

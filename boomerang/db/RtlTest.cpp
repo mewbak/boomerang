@@ -12,7 +12,6 @@
 #include "RtlTest.h"
 #include "statement.h"
 #include "exp.h"
-#include <sstream>
 #include "BinaryFile.h"
 #include "frontend.h"
 #include "sparcfrontend.h"
@@ -22,29 +21,10 @@
 #include "prog.h"
 #include "visitor.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION( RtlTest );
+
 #define SWITCH_SPARC		"test/sparc/switch_cc"
 #define SWITCH_PENT			"test/pentium/switch_cc"
-
-/*==============================================================================
- * FUNCTION:		RtlTest::registerTests
- * OVERVIEW:		Register the test functions in the given suite
- * PARAMETERS:		Pointer to the test suite
- * RETURNS:			<nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<RtlTest> ("RtlTest", \
-	&RtlTest::name, *this))
-
-void RtlTest::registerTests(CppUnit::TestSuite* suite) {
-	MYTEST(testAppend);
-	MYTEST(testClone);
-	MYTEST(testVisitor);
-	MYTEST(testIsCompare);
-	MYTEST(testSetConscripts);
-}
-
-int RtlTest::countTestCases () const
-{ return 2; }	// ? What's this for?
 
 /*==============================================================================
  * FUNCTION:		RtlTest::setUp

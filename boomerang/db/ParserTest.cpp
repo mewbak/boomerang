@@ -9,30 +9,12 @@
  * 13 May 02 - Mike: Created
  */
 
-#define SPARC_SSL		"frontend/machine/sparc/sparc.ssl"
-
 #include "ParserTest.h"
 #include "sslparser.h"
 
-#include <sstream>
+CPPUNIT_TEST_SUITE_REGISTRATION( ParserTest );
 
-/*==============================================================================
- * FUNCTION:		ParserTest::registerTests
- * OVERVIEW:		Register the test functions in the given suite
- * PARAMETERS:		Pointer to the test suite
- * RETURNS:			<nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<ParserTest> ("ParserTest", \
-	&ParserTest::name, *this))
-
-void ParserTest::registerTests(CppUnit::TestSuite* suite) {
-	MYTEST(testRead);
-	MYTEST(testExp);
-}
-
-int ParserTest::countTestCases () const
-{ return 2; }	// ? What's this for?
+#define SPARC_SSL		"frontend/machine/sparc/sparc.ssl"
 
 /*==============================================================================
  * FUNCTION:		ParserTest::setUp

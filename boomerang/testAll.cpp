@@ -1,72 +1,34 @@
-/*==============================================================================
- * FILE:	   testAll.cc
- * OVERVIEW:   Command line test of all of Boomerang
- *============================================================================*/
-/*
- * $Revision: 1.13 $
- * 15 Jul 02 - Mike: Created from testDbase
-*/
+#include <cppunit/BriefTestProgressListener.h>
+#include <cppunit/CompilerOutputter.h>
+#include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/TestResult.h>
+#include <cppunit/TestResultCollector.h>
+#include <cppunit/TestRunner.h>
 
-#include "string"
-#include "cppunit/TextTestResult.h"
-#include "cppunit/TestSuite.h"
 
-#include "exp.h"
-
-#include "ExpTest.h"
-#include "ProgTest.h"
-#include "ProcTest.h"
-#include "StatementTest.h"
-#include "RtlTest.h"
-#include "DfaTest.h"
-#include "ParserTest.h"
-#include "TypeTest.h"
-#include "FrontSparcTest.h"
-#include "FrontPentTest.h"
-#include "CTest.h"
-#include "CfgTest.h"
-
-#include "prog.h"
-
-#include <sstream>
-#include <iostream>
-
-int main(int argc, char** argv)
+int
+main( int argc, char* argv[] )
 {
-//std::cerr << "Prog at " << std::hex << &prog << std::endl;
-	CppUnit::TestSuite suite;
+  // Create the event manager and test controller
+  CPPUNIT_NS::TestResult controller;
 
-	ExpTest	 expt("Exp Test");
-	ProgTest progt("Prog Test");
-	ProcTest proct("Proc Test");
-	RtlTest rtlt("Rtl Test");
-	ParserTest parsert("SSL Parser Test");
-	TypeTest typet("Type Test");
-	FrontSparcTest fst("SPARC Frontend Test");
-//	  FrontendTest fet("FrontendTest");
-	FrontPentTest fpt("Pentium Frontend Test");
-	CTest ct("C Parser Test");
-	StatementTest stt("Statement Test");
-	CfgTest cfgt("Cfg Test");
-	DfaTest dfat("Dfa Test");
+  // Add a listener that colllects test result
+  CPPUNIT_NS::TestResultCollector result;
+  controller.addListener( &result );        
 
-	expt.registerTests(&suite);
-	progt.registerTests(&suite);
-	proct.registerTests(&suite);
-	rtlt.registerTests(&suite);
-	parsert.registerTests(&suite);
-	typet.registerTests(&suite);
-	fst.registerTests(&suite);
-	fpt.registerTests(&suite);
-	ct.registerTests(&suite);
-	stt.registerTests(&suite);
-	cfgt.registerTests(&suite);
-	dfat.registerTests(&suite);
+  // Add a listener that print dots as test run.
+  CPPUNIT_NS::BriefTestProgressListener progress;
+  controller.addListener( &progress );      
 
-	CppUnit::TextTestResult res;
+  // Add the top suite to the test runner
+  CPPUNIT_NS::TestRunner runner;
+  runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
+  runner.run( controller );
 
-	suite.run( &res );
-	std::cout << res << std::endl;
+  // Print test in a compiler compatible format.
+  CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
+  outputter.write(); 
 
-	return 0;
+  return result.wasSuccessful() ? 0 : 1;
 }
+

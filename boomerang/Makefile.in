@@ -186,7 +186,7 @@ remote:
 # Lots of object files
 #
 
-TEST_OBJS = util/UtilTest.o db/ExpTest.o db/ParserTest.o db/ProcTest.o db/ProgTest.o db/RtlTest.o db/StatementTest.o \
+TEST_OBJS = db/ExpTest.o db/ParserTest.o db/ProcTest.o db/ProgTest.o db/RtlTest.o db/StatementTest.o \
 	db/CfgTest.o db/DfaTest.o frontend/FrontSparcTest.o frontend/FrontPentTest.o loader/BinaryFileStub.o c/CTest.o \
 	type/TypeTest.o
 
@@ -326,20 +326,21 @@ testDyn: lib
 	$(MAKE) -C loader   test
 	$(MAKE) -C db       test
 	$(MAKE) -C frontend test
+	$(MAKE) -C loader   test
 
-#check test: lib loaders bigtest$(EXEEXT)
-#	$(MAKE) -C loader test
-#	./bigtest$(EXEEXT)
-
-# Needed because the test header files are in all these different directories
-INCLUDEALL = -Idb -Ifrontend -Ic -Itype
+utest: bigtest$(EXEEXT)
+	./bigtest$(EXEEXT)
 
 testAll.o: testAll.cpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $(EXTRA) $< $(INCLUDEALL)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $(EXTRA) $<
 
 bigtest$(EXEEXT): testAll.o $(STATIC_OBJS) $(TEST_OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ testAll.o $(STATIC_OBJS) $(TEST_OBJS) $(LOADERLIBS) \
-	    $(RUNPATH) -Llib -lcppunit -lgc $(LDL) $(LDFLAGS) #-lexpat
+	# loader objects are handled specially because they need to be compiled
+	# on their own subdirectory, so that gcov can find them
+	make -C loader LoaderTest.o microX86dis.o
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LOADERLIBS) loader/LoaderTest.o \
+	    loader/microX86dis.o $(RUNPATH) -Llib -lcppunit \
+	    -lgc $(LDL) $(LDFLAGS) #-lexpat
 
 $(TEST_OBJS): %.o : %.cpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $(EXTRA) $<

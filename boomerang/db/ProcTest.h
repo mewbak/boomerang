@@ -9,29 +9,23 @@
  * 23 Apr 02 - Mike: Created
  */
 
-#include <cppunit/TestCaller.h>
-#include <cppunit/TestCase.h>
-#include <cppunit/TestSuite.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "proc.h"
-#include "prog.h"
 
-class ProcTest : public CppUnit::TestCase {
+class ProcTest : public CPPUNIT_NS::TestFixture {
+  CPPUNIT_TEST_SUITE( ProcTest );
+  CPPUNIT_TEST( testName );
+  CPPUNIT_TEST_SUITE_END();
+
   protected:
 	Proc*  m_proc;
-	
 
   public:
-	ProcTest(std::string name) : CppUnit::TestCase (name)
-	{}
-
-	virtual void registerTests(CppUnit::TestSuite* suite);
-
-	int countTestCases () const;
-
 	void setUp ();
 	void tearDown ();
 
+  protected:
 	void testName ();
 };
 

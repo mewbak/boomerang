@@ -15,6 +15,14 @@
  * 05 Aug 05 - Mike: added borland test; check address of main (not just != NO_ADDRESS)
  */
 
+#include "LoaderTest.h"
+#include "BinaryFile.h"
+#ifndef _WIN32
+#include <dlfcn.h>          // dlopen, dlsym
+#endif
+
+CPPUNIT_TEST_SUITE_REGISTRATION( LoaderTest );
+
 #define HELLO_SPARC     "test/sparc/hello"
 #define HELLO_PENTIUM   "test/pentium/hello"
 #define HELLO_HPPA      "test/hppa/hello"
@@ -27,40 +35,6 @@
 #endif
 #define SWITCH_BORLAND	"test/windows/switch_borland.exe"
 #define ELFBINFILE		"lib/libElfBinaryFile.so"
-
-#include "string"
-#include "LoaderTest.h"
-//#include "util.h"           // For str()
-#include <iostream>         // For cout
-#ifndef _WIN32
-#include <dlfcn.h>          // dlopen, dlsym
-#endif
-
-/*==============================================================================
- * FUNCTION:        LoaderTest::registerTests
- * OVERVIEW:        Register the test functions in the given suite
- * PARAMETERS:      Pointer to the test suite
- * RETURNS:         <nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<LoaderTest> ("LoaderTest", \
-    &LoaderTest::name, *this))
-
-void LoaderTest::registerTests(CppUnit::TestSuite* suite) {
-    MYTEST(testSparcLoad);
-    MYTEST(testPentiumLoad);
-    MYTEST(testHppaLoad);
-    MYTEST(testPalmLoad);
-    MYTEST(testWinLoad);
-
-    MYTEST(testMicroDis1);
-    MYTEST(testMicroDis2);
-
-	MYTEST(testElfHash);
-}
-
-int LoaderTest::countTestCases () const
-{ return 7; }   // ? What's this for?
 
 /*==============================================================================
  * FUNCTION:        LoaderTest::setUp

@@ -11,25 +11,7 @@
 
 #include "UtilTest.h"
 
-/*==============================================================================
- * FUNCTION:        UtilTest::registerTests
- * OVERVIEW:        Register the test functions in the given suite
- * PARAMETERS:      Pointer to the test suite
- * RETURNS:         <nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<UtilTest> ("testUtil", \
-    &UtilTest::name, *this))
-
-void UtilTest::registerTests(CppUnit::TestSuite* suite) {
-
-//  Note: there is nothing left to test in Util (for now)
-//    MYTEST(testTypeLong);
-//    MYTEST(testNotEqual);
-}
-
-int UtilTest::countTestCases () const
-{ return 1; }   // ? What's this for?
+CPPUNIT_TEST_SUITE_REGISTRATION( UtilTest );
 
 /*==============================================================================
  * FUNCTION:        UtilTest::setUp

@@ -11,9 +11,6 @@
  * 04 Dec 02 - Mike: Changed all r[0] to 0
  */
 
-#define HELLO_SPARC		"test/sparc/hello"
-#define BRANCH_SPARC	"test/sparc/branch"
-
 #include "types.h"
 #include "FrontSparcTest.h"
 #include "proc.h"
@@ -24,26 +21,10 @@
 #include "BinaryFile.h"
 #include "BinaryFileStub.h"
 
-/*==============================================================================
- * FUNCTION:		FrontSparcTest::registerTests
- * OVERVIEW:		Register the test functions in the given suite
- * PARAMETERS:		Pointer to the test suite
- * RETURNS:			<nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<FrontSparcTest> ("FrontSparcTest", \
-	&FrontSparcTest::name, *this))
+CPPUNIT_TEST_SUITE_REGISTRATION( FrontSparcTest );
 
-void FrontSparcTest::registerTests(CppUnit::TestSuite* suite) {
-	MYTEST(test1);
-	MYTEST(test2);
-	MYTEST(test3);
-	MYTEST(testBranch);
-	MYTEST(testDelaySlot);
-}
-
-int FrontSparcTest::countTestCases () const
-{ return 3; }	// ? What's this for?
+#define HELLO_SPARC		"test/sparc/hello"
+#define BRANCH_SPARC	"test/sparc/branch"
 
 /*==============================================================================
  * FUNCTION:		FrontSparcTest::setUp

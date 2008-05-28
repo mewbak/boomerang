@@ -10,33 +10,15 @@
  * 10 Mar 03 - Mike: Mods to not use Prog::pBF (no longer public)
  */
 
-#define HELLO_PENTIUM		"test/pentium/hello"
-
 #include "ProcTest.h"
 #include "BinaryFile.h"
 #include "BinaryFileStub.h"
 #include "pentiumfrontend.h"
+#include "prog.h"
 
-#include <sstream>
-#include <map>
+CPPUNIT_TEST_SUITE_REGISTRATION( ProcTest );
 
-/*==============================================================================
- * FUNCTION:		ProcTest::registerTests
- * OVERVIEW:		Register the test functions in the given suite
- * PARAMETERS:		Pointer to the test suite
- * RETURNS:			<nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<ProcTest> ("testProc", \
-	&ProcTest::name, *this))
-
-void ProcTest::registerTests(CppUnit::TestSuite* suite) {
-
-	MYTEST(testName);
-}
-
-int ProcTest::countTestCases () const
-{ return 2; }	// ? What's this for?
+#define HELLO_PENTIUM		"test/pentium/hello"
 
 /*==============================================================================
  * FUNCTION:		ProcTest::setUp
@@ -56,7 +38,6 @@ void ProcTest::setUp () {
  * RETURNS:			<nothing>
  *============================================================================*/
 void ProcTest::tearDown () {
-	delete m_proc;
 }
 
 /*==============================================================================
@@ -92,6 +73,7 @@ void ProcTest::testName () {
 	CPPUNIT_ASSERT_EQUAL(expected, a);
 
 	delete prog;
+	delete m_proc;
 	// delete pFE;		// No! Deleting the prog deletes the pFE already (which deletes the BinaryFileFactory)
 }
 

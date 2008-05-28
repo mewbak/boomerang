@@ -10,12 +10,6 @@
  * 21 May 02 - Mike: Mods for gcc 3.1
  */
 
-#define HELLO_PENT		"test/pentium/hello"
-#define BRANCH_PENT		"test/pentium/branch"
-#define FEDORA2_TRUE	"test/pentium/fedora2_true"
-#define FEDORA3_TRUE	"test/pentium/fedora3_true"
-#define SUSE_TRUE		"test/pentium/suse_true"
-
 #include "types.h"
 #include "rtl.h"
 #include "FrontPentTest.h"
@@ -24,27 +18,15 @@
 #include "pentiumfrontend.h"
 #include "BinaryFile.h"
 #include "BinaryFileStub.h"
+#include "decoder.h"
 
-/*==============================================================================
- * FUNCTION:		FrontPentTest::registerTests
- * OVERVIEW:		Register the test functions in the given suite
- * PARAMETERS:		Pointer to the test suite
- * RETURNS:			<nothing>
- *============================================================================*/
-#define MYTEST(name) \
-suite->addTest(new CppUnit::TestCaller<FrontPentTest> ("FrontPentTest", \
-	&FrontPentTest::name, *this))
+CPPUNIT_TEST_SUITE_REGISTRATION( FrontPentTest );
 
-void FrontPentTest::registerTests(CppUnit::TestSuite* suite) {
-	MYTEST(test1);
-	MYTEST(test2);
-	MYTEST(test3);
-	MYTEST(testBranch);
-	MYTEST(testFindMain);
-}
-
-int FrontPentTest::countTestCases () const
-{ return 3; }	// ? What's this for?
+#define HELLO_PENT		"test/pentium/hello"
+#define BRANCH_PENT		"test/pentium/branch"
+#define FEDORA2_TRUE	"test/pentium/fedora2_true"
+#define FEDORA3_TRUE	"test/pentium/fedora3_true"
+#define SUSE_TRUE		"test/pentium/suse_true"
 
 /*==============================================================================
  * FUNCTION:		FrontPentTest::setUp

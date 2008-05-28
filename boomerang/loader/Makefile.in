@@ -182,7 +182,7 @@ testLoader$(EXEEXT): testLoader.o LoaderTest.o microX86dis.o BinaryFileFactory.o
 testLoader.o: testLoader.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ -I$(top_srcdir)/include $<
 
-LoaderTest.o: LoaderTest.cpp LoaderTest.h $(top_srcdir)/include/BinaryFile.h SymTab.o
+LoaderTest.o: LoaderTest.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ -I$(top_srcdir)/include $<
 
 # Because of the relative paths, testLoader will only work from the parent
