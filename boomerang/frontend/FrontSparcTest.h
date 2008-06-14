@@ -3,12 +3,10 @@
 class FrontSparcTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST_SUITE( FrontSparcTest );
   CPPUNIT_TEST( test1 );
-// XXX FIXME segfault
-//  CPPUNIT_TEST( test2 );
+  CPPUNIT_TEST( test2 );
   CPPUNIT_TEST( test3 );
   CPPUNIT_TEST( testBranch );
-// FIXME segfault
-//  CPPUNIT_TEST( testDelaySlot );
+  CPPUNIT_TEST( testDelaySlot );
   CPPUNIT_TEST_SUITE_END();
 
   public:

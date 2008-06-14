@@ -6,8 +6,7 @@ class FrontPentTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST( test2 );
   CPPUNIT_TEST( test3 );
   CPPUNIT_TEST( testBranch );
-// XXX FIXME segfault
-//  CPPUNIT_TEST( testFindMain );
+  CPPUNIT_TEST( testFindMain );
   CPPUNIT_TEST_SUITE_END();
 
   public:
