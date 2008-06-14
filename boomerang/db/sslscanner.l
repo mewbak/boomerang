@@ -39,8 +39,6 @@
 #if defined(_MSC_VER) && _MSC_VER >= 1400
 #pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
 #endif
-
-#include "sslscanner.h"
 %}
 
 %define CONSTRUCTOR_PARAM std::istream &ins, bool trace
