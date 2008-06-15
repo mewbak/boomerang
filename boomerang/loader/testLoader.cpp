@@ -15,8 +15,7 @@
 #include <iostream>
 #include "LoaderTest.h"
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     CppUnit::TestSuite suite;
 
     LoaderTest lt("ExpTest");
