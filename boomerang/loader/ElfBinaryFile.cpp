@@ -285,14 +285,14 @@ void ElfBinaryFile::UnLoad() {
 }
 
 // Like a replacement for elf_strptr()
-char* ElfBinaryFile::GetStrPtr(int idx, int offset) {
+char *ElfBinaryFile::GetStrPtr(int idx, int offset) {
     if (idx < 0) {
         // Most commonly, this will be an index of -1, because a call to GetSectionIndexByName() failed
         fprintf(stderr, "Error! GetStrPtr passed index of %d\n", idx);
-        return static_cast<char *>("Error!");
+        return const_cast<char *>("Error!");
     }
     // Get a pointer to the start of the string table
-    char* pSym = (char*)m_pSections[idx].uHostAddr;
+    char *pSym = (char*)m_pSections[idx].uHostAddr;
     // Just add the offset
     return pSym + offset;
 }
