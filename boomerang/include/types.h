@@ -24,7 +24,7 @@ typedef unsigned int		ADDRESS;	/* 32-bit unsigned */
 #ifndef _MSC_VER
 typedef long unsigned long QWord;		// 64 bits
 #else
-typedef unsigned __int64   QWord;		
+typedef unsigned __int64   QWord;
 #endif
 
 #if defined(_MSC_VER)

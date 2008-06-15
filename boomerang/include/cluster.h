@@ -11,7 +11,7 @@
  * FILE:	   cluster.h
  * OVERVIEW:   Definition of the classes that describe a Cluster, a grouping
  *		   of functions irrespective of relationship.  For example, the
- *		   Object Oriented Programming concept of a Class is a Cluster. 
+ *		   Object Oriented Programming concept of a Class is a Cluster.
  *		   Clusters can contain other Clusters to form a tree.
  *============================================================================*/
 
@@ -34,59 +34,76 @@
 class XMLProgParser;
 class Cluster;
 
-class Cluster
-{
+class Cluster {
 protected:
-		std::string	name;
-		std::vector<Cluster*> children;
-		Cluster		*parent;
-		std::ofstream out;
-		std::string	stream_ext;
+    std::string	name;
+    std::vector<Cluster*> children;
+    Cluster		*parent;
+    std::ofstream out;
+    std::string	stream_ext;
 
 public:
-					Cluster() : name(""), parent(NULL) { }
-					Cluster(const char *name) : name(name), parent(NULL) { }
-virtual				~Cluster() {}
-		const		char *getName() { return name.c_str(); }
-		void		setName(const char *nam) { name = nam; }
-		unsigned int getNumChildren() { return children.size(); }
-		Cluster		*getChild(int n) { return children[n]; }
-		void		addChild(Cluster *n);
-		void		removeChild(Cluster *n);
-		Cluster		*getParent() { return parent; }
-		bool		hasChildren() { return children.size() > 0; }
-		void		openStream(const char *ext);
-		void		openStreams(const char *ext);
-		void		closeStreams();
-		std::ofstream &getStream() { return out; }
-		const char	*makeDirs();
-		const char	*getOutPath(const char *ext);
-		Cluster		*find(const char *nam);
-virtual bool		isAggregate() { return false; }
+    Cluster() : name(""), parent(NULL) { }
+    Cluster(const char *name) : name(name), parent(NULL) { }
+    virtual				~Cluster() {}
+    const		char *getName() {
+        return name.c_str();
+    }
+    void		setName(const char *nam) {
+        name = nam;
+    }
+    unsigned int getNumChildren() {
+        return children.size();
+    }
+    Cluster		*getChild(int n) {
+        return children[n];
+    }
+    void		addChild(Cluster *n);
+    void		removeChild(Cluster *n);
+    Cluster		*getParent() {
+        return parent;
+    }
+    bool		hasChildren() {
+        return children.size() > 0;
+    }
+    void		openStream(const char *ext);
+    void		openStreams(const char *ext);
+    void		closeStreams();
+    std::ofstream &getStream() {
+        return out;
+    }
+    const char	*makeDirs();
+    const char	*getOutPath(const char *ext);
+    Cluster		*find(const char *nam);
+    virtual bool		isAggregate() {
+        return false;
+    }
 
-		void		printTree(std::ostream &out);
+    void		printTree(std::ostream &out);
 protected:
 
-	friend class XMLProgParser;
+    friend class XMLProgParser;
 };
 
-class Module : public Cluster
-{
+class Module : public Cluster {
 public:
     Module(const char *name) : Cluster(name) { }
 };
 
-class Class : public Cluster
-{
+class Class : public Cluster {
 protected:
     CompoundType *type;
 
 public:
-    Class(const char *name) : Cluster(name) { type = new CompoundType(); }
+    Class(const char *name) : Cluster(name) {
+        type = new CompoundType();
+    }
 
-    // A Class tends to be aggregated into the parent Module, 
+    // A Class tends to be aggregated into the parent Module,
     // this isn't the case with Java, but hey, we're not doing that yet.
-    virtual bool isAggregate() { return true; }
+    virtual bool isAggregate() {
+        return true;
+    }
 };
 
 #endif /*__CLUSTER_H__*/
