@@ -297,7 +297,7 @@ char* ElfBinaryFile::GetStrPtr(int idx, int offset)
 	{
 		// Most commonly, this will be an index of -1, because a call to GetSectionIndexByName() failed
 		fprintf(stderr, "Error! GetStrPtr passed index of %d\n", idx);
-		return "Error!";
+		return static_cast<char *>("Error!");
 	}
 	// Get a pointer to the start of the string table
 	char* pSym = (char*)m_pSections[idx].uHostAddr;
