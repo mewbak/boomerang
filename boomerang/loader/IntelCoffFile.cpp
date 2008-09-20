@@ -8,22 +8,22 @@
 
 struct struc_coff_sect {        // segment information
     char  sch_sectname[8];
-    ulong sch_physaddr;
-    ulong sch_virtaddr;
-    ulong sch_sectsize;
-    ulong sch_sectptr;
-    ulong sch_relptr;
-    ulong sch_lineno_ptr;
-    ushort sch_nreloc;
-    ushort sch_nlineno;
-    ulong sch_flags;
+    unsigned long sch_physaddr;
+    unsigned long sch_virtaddr;
+    unsigned long sch_sectsize;
+    unsigned long sch_sectptr;
+    unsigned long sch_relptr;
+    unsigned long sch_lineno_ptr;
+    unsigned short sch_nreloc;
+    unsigned short sch_nlineno;
+    unsigned long sch_flags;
 } PACKED;       // 40 bytes
 
 struct coff_symbol {    // symbol information
     union {
         struct {
-            ulong zeros;
-            ulong offset;
+            unsigned long zeros;
+            unsigned long offset;
         } e;
         char name[8];
     } e;
@@ -31,11 +31,11 @@ struct coff_symbol {    // symbol information
 #define csym_zeros      e.e.zeros
 #define csym_offset     e.e.offset
 
-    ulong csym_value;
-    ushort csym_sectnum;
+    unsigned long csym_value;
+    unsigned short csym_sectnum;
 #define N_UNDEF 0
 
-    ushort csym_type;
+    unsigned short csym_type;
 #define T_FUNC  0x20
 
     unsigned char csym_loadclass;
@@ -43,9 +43,9 @@ struct coff_symbol {    // symbol information
 } PACKED;       // 18 bytes
 
 struct struct_coff_rel {
-    ulong   r_vaddr;
-    ulong   r_symndx;
-    ushort  r_type;
+    unsigned long   r_vaddr;
+    unsigned long   r_symndx;
+    unsigned short  r_type;
 #define RELOC_ADDR32    6
 #define RELOC_REL32     20
 } PACKED;
@@ -251,7 +251,7 @@ bool IntelCoffFile::RealLoad(const char *sName) {
         for ( int iReloc = 0; iReloc < psh[iSection].sch_nreloc; iReloc++ ) {
             struct struct_coff_rel *tRel = pRel + iReloc;
             struct coff_symbol* pSym = pSymbols+tRel->r_symndx;
-            ulong *pPatch = (ulong*)(pData + tRel->r_vaddr);
+            unsigned long *pPatch = (unsigned long*)(pData + tRel->r_vaddr);
 //printf("Relocating at %08lx: type %d, dest %08lx\n", tRel->r_vaddr + psi->uNativeAddr + psh[iSection].sch_virtaddr, (int)tRel->r_type, pSym->csym_value);
 
             switch ( tRel->r_type ) {
