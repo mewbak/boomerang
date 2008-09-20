@@ -49,23 +49,23 @@ dnl	fi
 	CXXFLAGS="$CXXFLAGS -Wall"
 fi
 
-AC_PATH_PROG( MAKEDEPEND, makedepend )
+AC_PATH_PROG(MAKEDEPEND, makedepend)
 if test -z "$MAKEDEPEND"; then
 	AC_MSG_NOTICE()
 	AC_MSG_NOTICE([You need the X11 makedepend utility to use automatic dependency generation (make depend)])
 	AC_MSG_NOTICE()
 fi
 
-AC_SUBST( MAKEDEPEND )
-AC_PATH_PROG( BISONPP, bison++ )
-AC_SUBST( BISONPP )
-AC_PATH_PROG( FLEXPP, flex++ )
-AC_SUBST( FLEXPP )
-AC_PATH_PROG( M4, m4 )
-AC_SUBST( M4 )
+AC_SUBST(MAKEDEPEND)
+AC_PATH_PROG(BISONPP, bison++)
+AC_SUBST(BISONPP)
+AC_PATH_PROG(FLEXPP, flex++)
+AC_SUBST(FLEXPP)
+AC_PATH_PROG(M4, m4)
+AC_SUBST(M4)
 
 dnl -------------------
-AC_MSG_CHECKING( [if using GNU ld] )
+AC_MSG_CHECKING([if using GNU ld])
 HOST_GNU_LD=no
 if ${CC} -v 2>&1 </dev/null | egrep "gcc" 1>&5; then
    HOST_GCC=yes
@@ -75,12 +75,12 @@ else
 fi
 if ${HOST_LD} -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
    HOST_GNU_LD=yes
-   AC_DEFINE( HOST_GNU_LD, 1, [Host uses GNU ld] )
+   AC_DEFINE(HOST_GNU_LD, 1, [Host uses GNU ld])
 fi
-AC_MSG_RESULT( $HOST_GNU_LD )
+AC_MSG_RESULT($HOST_GNU_LD)
 
 dnl -------------------
-AC_MSG_CHECKING( [if host is Windows] )
+AC_MSG_CHECKING([if host is Windows])
 case $host in
  *-*-mingw32* | *-*-cygwin*)
    HOST_WINDOWS=yes
@@ -89,9 +89,9 @@ case $host in
    HOST_WINDOWS=no
    ;;
 esac
-AC_MSG_RESULT( $HOST_WINDOWS )
+AC_MSG_RESULT($HOST_WINDOWS)
 
-AC_MSG_CHECKING( [if host is Cygwin] )
+AC_MSG_CHECKING([if host is Cygwin])
 case $host in
  *-*-cygwin*)
    HOST_CYGWIN=yes
@@ -100,9 +100,9 @@ case $host in
    HOST_CYGWIN=no
    ;;
 esac
-AC_MSG_RESULT( $HOST_CYGWIN )
+AC_MSG_RESULT($HOST_CYGWIN)
 
-AC_MSG_CHECKING( [if host is OS X] )
+AC_MSG_CHECKING([if host is OS X])
 case $host in
  *-apple-darwin*)
    HOST_OSX=yes
@@ -113,11 +113,11 @@ case $host in
    AC_DEFINE(HOST_OSX, 0, [Non zero if host machine is Mac OS X])
    ;;
 esac
-AC_MSG_RESULT( $HOST_OSX )
+AC_MSG_RESULT($HOST_OSX)
 
-AC_MSG_CHECKING( [if host is OS X 10.2] )
+AC_MSG_CHECKING([if host is OS X])
 case $host in
- *-apple-darwin6*)
+ *-apple-darwin*)
    HOST_OSX_10_2=yes
    AC_DEFINE(HOST_OSX_10_2, 1, [Non zero if host machine is Mac OS X 10.2])
    ;;
@@ -126,7 +126,7 @@ case $host in
    AC_DEFINE(HOST_OSX_10_2, 0, [Non zero if host machine is Mac OS X 10.2])
    ;;
 esac
-AC_MSG_RESULT( $HOST_OSX_10_2 )
+AC_MSG_RESULT($HOST_OSX_10_2)
 
 
 
@@ -309,7 +309,7 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(float)
 AC_CHECK_SIZEOF(double)
 AC_CHECK_SIZEOF(int *)
-dnl AC_CHECK_SIZEOF(long double)
+AC_CHECK_SIZEOF(long double)
 
 
 dnl Checks for library functions.
@@ -320,20 +320,20 @@ dnl AC_CHECK_FUNCS(mkdir rmdir)
 
 dnl Actually we have "make remote" again now, so this is unused at present:
 AC_ARG_ENABLE(remote, [  --enable-remote         don't try to regenerate source files],
-              [ REMOTE=1 ], [ REMOTE=0 ] )
+              [ REMOTE=1 ], [ REMOTE=0 ])
 AC_SUBST(REMOTE)
 
 dnl Three paths for frontend/mltk.sh. No longer give a "value-if-not-found", so can avoid errors when not installed
-AC_PATH_PROG(TKML, .run-sml, , [$PATH /usr/share/sml-nj/bin $HOME/install/smlnj/bin])
+AC_PATH_PROG(TKML, .run-sml, , [$PATH /usr/share/sml-nj/bin $HOME/install/smlnj/bin $HOME/sml-nj/bin])
 dnl many more processors and platforms needed in this list
 AC_SUBST(TKML)
 AC_PATH_PROGS(HEAPPATH,
     [sml-toolkit.x86-linux sml-toolkit.sparc-solaris], ,
-    [$HOME/install $PATH $HOME/install/mltk])
+    [$HOME/install $PATH $HOME/install/mltk $HOME/sml-nj/install])
 HEAP=\"@SMLload=$HEAPPATH\"
 AC_SUBST(HEAP)
 
-AC_PATH_PROG(UNGENERATE, ungenerate, , [$PATH:$HOME/install:$HOME/bin:/home/02/binary/u0.luna.tools/NJ/base])
+AC_PATH_PROG(UNGENERATE, ungenerate, , [$PATH:$HOME/install:$HOME/bin:/home/02/binary/u0.luna.tools/NJ/base:$HOME/sml-nj/install])
 
 PREFIX=$srcdir
 LIBDIR=$srcdir/lib
@@ -348,12 +348,7 @@ AC_SUBST(HOST_CYGWIN)
 
 
 dnl only the makefile in the loader dir is currently used
-AC_CONFIG_FILES(          Makefile)
-AC_CONFIG_FILES(     util/Makefile)
-AC_CONFIG_FILES(   loader/Makefile)
-AC_CONFIG_FILES(       db/Makefile)
-AC_CONFIG_FILES( frontend/Makefile)
-AC_CONFIG_FILES(transform/Makefile)
+AC_CONFIG_FILES(Makefile util/Makefile loader/Makefile db/Makefile frontend/Makefile transform/Makefile)
 AC_CONFIG_FILES(frontend/mltk.sh, [chmod +x frontend/mltk.sh])
 
 AC_OUTPUT
