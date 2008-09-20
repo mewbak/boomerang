@@ -92,11 +92,7 @@ else # Non-Windows
 endif
 
 ifeq ($(HOST_OSX), yes)
- ifeq ($HOST_OSX_10_2), yes)
   SHARED=-dynamiclib		# Note: doesn't seem to work at present; fiddle manually
- else
-  SHARED=-dynamic -dylib
- endif
  #-flat_namespace
  DLLEXT=.dylib
  RUNPATH=
