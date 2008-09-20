@@ -115,22 +115,6 @@ case $host in
 esac
 AC_MSG_RESULT($HOST_OSX)
 
-AC_MSG_CHECKING([if host is OS X])
-case $host in
- *-apple-darwin*)
-   HOST_OSX_10_2=yes
-   AC_DEFINE(HOST_OSX_10_2, 1, [Non zero if host machine is Mac OS X 10.2])
-   ;;
- *)
-   HOST_OSX_10_2=no
-   AC_DEFINE(HOST_OSX_10_2, 0, [Non zero if host machine is Mac OS X 10.2])
-   ;;
-esac
-AC_MSG_RESULT($HOST_OSX_10_2)
-
-
-
-
 dnl Checks for elf library (no longer needed)
 dnl AC_CHECK_LIB(elf, elf_begin, , [AC_MSG_ERROR("library 'elf' not found")])
 
