@@ -58,9 +58,6 @@ HOST_WINDOWS = @HOST_WINDOWS@
 # HOST_OSX is true if the host OS is Mac OS X
 HOST_OSX = @HOST_OSX@
 
-# HOST_OSX_10_2 is true if the hostOS is OS X version 10.2.x (*-apple-darwin6*)
-HOST_OSX = @HOST_OSX_10_2@
-
 # TKML is set to the path to the New Jersey Machine Code Toolkit (ML version) if found
 TKML = @TKML@
 
