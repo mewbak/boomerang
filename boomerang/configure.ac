@@ -33,8 +33,12 @@ isset_OPT=${OPT+set}
 dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AC_PROG_CXXCPP
 AC_PROG_CPP
+AC_PROG_RANLIB
 AC_PROG_LIBTOOL
+AC_PROG_CC_C99
+AC_PROG_CXX_C_O
 
 if test "$GXX" = yes; then
 	if test "$isset_OPT" == "set"; then
@@ -61,7 +65,7 @@ AC_PATH_PROG(BISONPP, bison++)
 AC_SUBST(BISONPP)
 AC_PATH_PROG(FLEXPP, flex++)
 AC_SUBST(FLEXPP)
-AC_PATH_PROG(M4, m4)
+AC_PATH_PROGS(M4, m4 gm4)
 AC_SUBST(M4)
 
 dnl -------------------
@@ -165,42 +169,60 @@ AC_CHECK_LIB(expat, XML_ExpatVersion, ,
 dnl Check for gc (garbage collector) includes
 dnl Want to check default-includes PLUS the Boomerang include/ directory, and some of the usual places it might already
 dnl be installed
-AC_CHECK_HEADER(gc.h,,
-    [AC_CHECK_FILE(include/gc.h,,
-		[AC_PATH_PROG(GC_HDR_PATH, gc.h, :, [/usr/include:/usr/include/gc:/usr/local/include:/opt/local/include:/sw/include])]
-		if test "${GC_HDR_PATH}" != :; then
-			[AC_MSG_WARN(Found gc.h; linking to include/)]
-			ln -s ${GC_HDR_PATH} include
-			dnl Sometimes, not sure if always, there is a gc_config_macros.h as well
-			[AC_PATH_PROG(GC_HDR_PATH2, gc_config_macros.h, :,
-			[/usr/include:/usr/include/gc:/usr/local/include:/opt/local/include:/sw/include])]
-			if test "${GC_HDR_PATH2}" != :; then
-				[AC_MSG_WARN(Also found gc_config_macros.h; linking to include/)]
-				ln -s ${GC_HDR_PATH2} include
-			fi
-        else
-        	[AC_MSG_WARN()]
-        	[AC_MSG_WARN(Header file gc.h not found: Boehm garbage collector likely not installed...)]
-        	[AC_MSG_WARN(or you need to copy gc.h and gc_config_macros.h to Boomerang's include/ dir)]
-        	[AC_MSG_WARN()]
-		fi
-	)])
+AC_CHECK_HEADERS(gc.h /usr/include/gc.h /usr/include/gc/gc.h /usr/local/include/gc.h /opt/local/include/gc.h /opt/local/include/gc/gc.h /sw/include/gc.h,
+CXXFLAGS="$CXXFLAGS -I`echo $ac_header | sed -e 's#/gc.h##g'`"
+CFLAGS="$CFLAGS -I`echo $ac_header | sed -e 's#/gc.h##g'`"
+break
+,
+,)
+#AC_CHECK_HEADER(gc.h,,
+#    [AC_CHECK_FILE(include/gc.h,,
+#		[AC_PATH_TOOL(GC_HDR_PATH, gc.h, :, [/usr/include:/usr/include/gc:/usr/local/include:/opt/local/include:/opt/local/include/gc:/sw/include])]
+#		if test "${GC_HDR_PATH}" != :; then
+#			[AC_MSG_WARN(Found gc.h; linking to include/)]
+#			ln -s ${GC_HDR_PATH} include
+#			dnl Sometimes, not sure if always, there is a gc_config_macros.h as well
+#			[AC_PATH_TOOL(GC_HDR_PATH2, gc_config_macros.h, :,
+#			[/usr/include:/usr/include/gc:/usr/local/include:/opt/local/include:/opt/local/include/gc:/sw/include])]
+#			if test "${GC_HDR_PATH2}" != :; then
+#				[AC_MSG_WARN(Also found gc_config_macros.h; linking to include/)]
+#				ln -s ${GC_HDR_PATH2} include
+#			fi
+#        else
+#        	[AC_MSG_WARN()]
+#        	[AC_MSG_WARN(Header file gc.h not found: Boehm garbage collector likely not installed...)]
+#        	[AC_MSG_WARN(or you need to copy gc.h and gc_config_macros.h to Boomerang's include/ dir)]
+#        	[AC_MSG_WARN()]
+#		fi
+#	)])
+
+gcpaths="/usr/lib /usr/local/lib /opt/lib /opt/local/lib /sw/include/lib"
+for x in $gcpaths; do
+save_libs="$LIBS"
+LIBS="$LIBS-L$x"
+unset ac_cv_lib_gc_GC_malloc
+AC_CHECK_LIB(gc, GC_malloc,
+break
+,
+,)
+LIBS="$save_LIBS"
+done
 
 dnl Check for gc library itself
-AC_CHECK_LIB(gc, GC_malloc, ,
-    [AC_CHECK_FILE(lib/libgc.a, ,
-		[AC_PATH_PROG(GC_PATH, libgc.a, :, [/usr/lib:/usr/local/lib:/opt/local/lib:/sw/lib])]
-		if test "${GC_PATH}" != :; then
-			[AC_MSG_WARN(Found libgc.a; linking to lib/)]
-			mkdir lib 2>/dev/null
-			ln -s ${GC_PATH} lib
-        else
-			[AC_MSG_WARN()]
-			[AC_MSG_WARN(Boehm garbage collector library not found: not installed...)]
-			[AC_MSG_WARN(or you need to copy libgc.a (etc) to Boomerang's lib/ dir)]
-			[AC_MSG_WARN()]
-		fi
-	) ],)
+#AC_CHECK_LIB(gc, GC_malloc, ,
+#    [AC_CHECK_FILE(lib/libgc.a, ,
+#		[AC_PATH_PROG(GC_PATH, libgc.a, :, [/usr/lib:/usr/local/lib:/opt/local/lib:/sw/lib])]
+#		if test "${GC_PATH}" != :; then
+#			[AC_MSG_WARN(Found libgc.a; linking to lib/)]
+#			mkdir lib 2>/dev/null
+#			ln -s ${GC_PATH} lib
+#       else
+#			[AC_MSG_WARN()]
+#			[AC_MSG_WARN(Boehm garbage collector library not found: not installed...)]
+#			[AC_MSG_WARN(or you need to copy libgc.a (etc) to Boomerang's lib/ dir)]
+#			[AC_MSG_WARN()]
+#		fi
+#	) ],)
 
 dnl Check for dlfcn.h (include for dlopen etc)
 dnl Want to check default-includes PLUS the Boomerang include/ directory, and some of the usual places it might already
@@ -270,14 +292,15 @@ AC_CHECK_LIB(cppunit, _ZN7CppUnit8TestCase3runEv, ,
 		fi
 	) ],)
 
+AC_C_RESTRICT
 AC_LANG_POP(C++)
 
 
 
 
 dnl Checks for header files.
-dnl AC_HEADER_STDC
-dnl AC_CHECK_HEADERS(fcntl.h malloc.h sys/time.h unistd.h byteswap.h)
+AC_HEADER_STDC
+AC_CHECK_HEADERS(fcntl.h malloc.h sys/time.h unistd.h byteswap.h)
 dnl AC_CHECK_HEADERS(libelf.h libelf/libelf.h, break)
 dnl AC_CHECK_HEADERS(link.h sys/link.h, break)
 dnl AC_CHECK_HEADERS(elf.h sys/elf_SPARC.h sys/auxv.h)
