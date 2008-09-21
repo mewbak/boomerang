@@ -202,6 +202,7 @@ save_libs="$LIBS"
 LIBS="$LIBS-L$x"
 unset ac_cv_lib_gc_GC_malloc
 AC_CHECK_LIB(gc, GC_malloc,
+LDFLAGS="$LDFLAGS -lgc"
 break
 ,
 ,)
