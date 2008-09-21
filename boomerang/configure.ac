@@ -202,7 +202,6 @@ save_libs="$LIBS"
 LIBS="$LIBS-L$x"
 unset ac_cv_lib_gc_GC_malloc
 AC_CHECK_LIB(gc, GC_malloc,
-LDFLAGS="$LDFLAGS -lgc"
 break
 ,
 ,)
@@ -351,7 +350,6 @@ AC_SUBST(LIBDIR)
 AC_SUBST(HOST_GNU_LD)
 AC_SUBST(HOST_WINDOWS)
 AC_SUBST(HOST_OSX)
-AC_SUBST(HOST_OSX_10_2)
 AC_SUBST(HOST_CYGWIN)
 
 
