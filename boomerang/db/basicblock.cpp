@@ -2077,7 +2077,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc) {
 						{
 							if (DEBUG_SWITCH)
 								LOG << "Truncating type A indirect jump array to " << iPtr << " entries "
-								       "due to finding an array entry pointing outside valid code\n";
+								       "due to finding an array entry pointing outside valid code " << uSwitch << " isn't in " << prog->getLimitTextLow() << " .. " << prog->getLimitTextHigh() << "\n";
 							// Found an array that isn't a pointer-to-code. Assume array has ended.
 							swi->iNumTable = iPtr;
 							break;

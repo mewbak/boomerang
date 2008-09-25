@@ -438,8 +438,11 @@ bool MachOBinaryFile::DisplayDetails(const char* fileName, FILE* f
 
 int MachOBinaryFile::machORead2(short* ps) const {
     unsigned char* p = (unsigned char*)ps;
-    // Big endian
-    int n = (int)(p[1] + (p[0] << 8));
+    int n; 
+    if (machine == MACHINE_PPC)
+        n = (int)(p[1] + (p[0] << 8));
+    else
+        n = (int)(p[0] + (p[1] << 8));
     return n;
 }
 
@@ -447,7 +450,11 @@ int MachOBinaryFile::machORead4(int* pi) const {
     short* p = (short*)pi;
     int n1 = machORead2(p);
     int n2 = machORead2(p+1);
-    int n = (int) (n2 | (n1 << 16));
+    int n;
+    if (machine == MACHINE_PPC)
+        n = (int) (n2 | (n1 << 16));
+    else
+        n = (int) (n1 | (n2 << 16));
     return n;
 }
 
