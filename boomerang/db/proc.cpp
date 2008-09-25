@@ -3951,6 +3951,8 @@ char* UserProc::lookupSymFromRef(RefExp* r) {
 
 char* UserProc::lookupSymFromRefAny(RefExp* r) {
 	Statement* def = r->getDef();
+    if (def == NULL)
+        return NULL;
 	Exp* base = r->getSubExp1();
 	Type* ty = def->getTypeFor(base);
 	char* ret = lookupSym(r, ty);
