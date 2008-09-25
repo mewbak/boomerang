@@ -86,10 +86,41 @@ ADDRESS MachOBinaryFile::GetMainEntryPoint() {
     return NO_ADDRESS;
 }
 
+#define BE4(x) ((magic[(x)] << 24) | (magic[(x)+1] << 16) | (magic[(x)+2] << 8) | (magic[(x)+3]))
+
 bool MachOBinaryFile::RealLoad(const char* sName) {
     m_pFileName = sName;
     FILE *fp = fopen(sName,"rb");
 
+    unsigned int imgoffs = 0;
+
+    unsigned char magic[12*4];
+    fread(magic, sizeof(magic), 1, fp);
+
+    if (magic[0] == 0xca && magic[1] == 0xfe && magic[2] == 0xba && magic[3] == 0xbe)
+    {
+        int nimages = BE4(4);
+        printf("binary is universal with %d images\n", nimages);
+        for (int i = 0; i < nimages; i++)
+        {
+            int fbh = 8 + i * 5*4;
+            unsigned int cputype = BE4(fbh);
+            unsigned int cpusubtype = BE4(fbh+4);
+            unsigned int offset = BE4(fbh+8);
+            unsigned int size = BE4(fbh+12);
+            unsigned int pad = BE4(fbh+16);
+            printf("cputype: %08x\n", cputype);
+            printf("cpusubtype: %08x\n", cpusubtype);
+            printf("offset: %08x\n", offset);
+            printf("size: %08x\n", size);
+            printf("pad: %08x\n", pad);
+
+            if (cputype == 0x7) // i386
+               imgoffs = offset;
+        }
+    }
+
+    fseek(fp, imgoffs, SEEK_SET);
     header = new struct mach_header;
     fread(header, sizeof(*header), 1, fp);
 
@@ -117,7 +148,7 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
     ADDRESS objc_symbols = NO_ADDRESS, objc_modules = NO_ADDRESS, objc_strings = NO_ADDRESS, objc_refs = NO_ADDRESS;
     unsigned objc_modules_size = 0;
 
-    fseek(fp, sizeof(*header), SEEK_SET);
+    fseek(fp, imgoffs + sizeof(*header), SEEK_SET);
     for (unsigned i = 0; i < BMMH(header->ncmds); i++) {
         struct load_command cmd;
         long pos = ftell(fp);
@@ -167,10 +198,10 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
         case LC_SYMTAB: {
             struct symtab_command syms;
             fread(&syms, 1, sizeof(syms), fp);
-            fseek(fp, BMMH(syms.stroff), SEEK_SET);
+            fseek(fp, imgoffs + BMMH(syms.stroff), SEEK_SET);
             strtbl = new char[BMMH(syms.strsize)];
             fread(strtbl, 1, BMMH(syms.strsize), fp);
-            fseek(fp, BMMH(syms.symoff), SEEK_SET);
+            fseek(fp, imgoffs + BMMH(syms.symoff), SEEK_SET);
             for (unsigned n = 0; n < BMMH(syms.nsyms); n++) {
                 struct nlist sym;
                 fread(&sym, 1, sizeof(sym), fp);
@@ -204,7 +235,7 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
             fprintf(stdout, "dysymtab has %i indirect symbols: ", BMMH(syms.nindirectsyms));
 #endif
             indirectsymtbl = new unsigned[BMMH(syms.nindirectsyms)];
-            fseek(fp, BMMH(syms.indirectsymoff), SEEK_SET);
+            fseek(fp, imgoffs + BMMH(syms.indirectsymoff), SEEK_SET);
             fread(indirectsymtbl, 1, BMMH(syms.nindirectsyms)*sizeof(unsigned), fp);
 #ifdef DEBUG_MACHO_LOADER
             for (unsigned j = 0; j < BMMH(syms.nindirectsyms); j++) {
@@ -248,7 +279,7 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
     m_pSections = new SectionInfo[m_iNumSections];
 
     for (unsigned i = 0; i < segments.size(); i++) {
-        fseek(fp, BMMH(segments[i].fileoff), SEEK_SET);
+        fseek(fp, imgoffs + BMMH(segments[i].fileoff), SEEK_SET);
         ADDRESS a = BMMH(segments[i].vmaddr);
         unsigned sz = BMMH(segments[i].vmsize);
         unsigned fsz = BMMH(segments[i].filesize);
