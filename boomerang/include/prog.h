@@ -268,6 +268,12 @@ public:
     bool		isReadOnly(ADDRESS a) {
         return pBF->isReadOnly(a);
     }
+    bool        isStringConstant(ADDRESS a) {
+        return pBF->isStringConstant(a);
+    }
+    bool        isCFStringConstant(ADDRESS a) {
+        return pBF->isCFStringConstant(a);
+    }
     // Read 2, 4, or 8 bytes given a native address
     int			readNative1(ADDRESS a) {
         return pBF->readNative1(a);

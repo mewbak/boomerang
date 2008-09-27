@@ -176,6 +176,10 @@ void FrontEnd::readLibraryCatalog() {
 		sList = Boomerang::get()->getProgPath() + "signatures/win32.hs";
 		readLibraryCatalog(sList.c_str());
 	}
+    if (pBF->GetFormat() == LOADFMT_MACHO) {
+		sList = Boomerang::get()->getProgPath() + "signatures/objc.hs";
+		readLibraryCatalog(sList.c_str());
+    }
 }
 
 std::vector<ADDRESS> FrontEnd::getEntryPoints()

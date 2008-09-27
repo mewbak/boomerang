@@ -2009,6 +2009,13 @@ Type *CallStatement::getArgumentType(int i) {
 	return ((Assign*)(*aa))->getType();
 }
 
+void CallStatement::setArgumentType(int i, Type *ty) {
+	assert(i < (int)arguments.size());
+	StatementList::iterator aa = arguments.begin();
+	my_advance(aa, i);	
+	((Assign*)(*aa))->setType(ty);
+}
+
 /*==============================================================================
  * FUNCTION:	  CallStatement::setArguments
  * OVERVIEW:	  Set the arguments of this call.
@@ -2281,9 +2288,11 @@ void CallStatement::generateCode(HLLCode *hll, BasicBlock *pbb, int indLevel) {
 	}
 	StatementList* results = calcResults();
 
-#if 0
+#if 1
 	LOG << "call: " << this;
 	LOG << " in proc " << proc->getName() << "\n";
+    for (StatementList::iterator it = results->begin(); it != results->end(); it++)
+        LOG << "result: " << *it << "\n";
 #endif
 	assert(p);
 	if (Boomerang::get()->noDecompile) {
@@ -2615,6 +2624,62 @@ void CallStatement::setTypeFor(Exp* e, Type* ty) {
 	def->setTypeFor(e, ty);
 }
 
+bool CallStatement::objcSpecificProcessing(const char *formatStr)
+{
+	std::string name(getDestProc()->getName());
+    if (name == "objc_msgSend")
+    {
+        if (formatStr)
+        {
+            int format = getNumArguments() - 1;
+            int n = 1;
+            char *p = (char*)formatStr;
+            while ((p = strchr(p, ':'))) {
+                p++;				// Point past the :
+                n++;
+                addSigParam(new PointerType(new VoidType()), false);
+            }
+            setNumArguments(format + n);
+            signature->killEllipsis();	// So we don't do this again
+            return true;
+        }
+        else
+        {
+            bool change = false;
+            LOG << this << "\n";
+            for (int i = 0; i < getNumArguments(); i++)
+            {
+                Exp *e = getArgumentExp(i);
+                Type *ty = getArgumentType(i);
+                LOG << "arg " << i << " e: " << e << " ty: " << ty << "\n";
+                if (!(ty->isPointer() && ((PointerType*)ty)->getPointsTo()->isChar()) &&
+                    e->isIntConst())
+                {
+                    ADDRESS addr = ((Const*)e)->getInt();
+                    LOG << "addr: " << addr << "\n";
+                    if (proc->getProg()->isStringConstant(addr))
+                    {
+                        LOG << "making arg " << i << " of call c*\n";
+                        setArgumentType(i, new PointerType(new CharType()));
+                        change = true;
+                    } 
+                    else if (proc->getProg()->isCFStringConstant(addr))
+                    {
+                        ADDRESS addr2 = proc->getProg()->readNative4(addr+8);
+                        LOG << "arg " << i << " of call is a cfstring\n";
+                        setArgumentType(i, new PointerType(new CharType()));
+                        // TODO: we'd really like to change this to CFSTR(addr)
+                        setArgumentExp(i, new Const(addr2));
+                        change = true;
+                    }
+                }
+            }
+            return change;
+        }
+    }
+
+    return false;
+}
 
 // This function has two jobs. One is to truncate the list of arguments based on the format string.
 // The second is to add parameter types to the signature.
@@ -2623,7 +2688,7 @@ bool CallStatement::ellipsisProcessing(Prog* prog) {
 
 	// if (getDestProc() == NULL || !getDestProc()->getSignature()->hasEllipsis())
 	if (getDestProc() == NULL || !signature->hasEllipsis())
-		return false;
+        return objcSpecificProcessing(NULL);
 	// functions like printf almost always have too many args
 	std::string name(getDestProc()->getName());
 	int format = -1;
@@ -2673,6 +2738,10 @@ bool CallStatement::ellipsisProcessing(Prog* prog) {
 	} else if (formatExp->isStrConst()) {
 		formatStr = ((Const*)formatExp)->getStr();
 	} else return false;
+
+    if (objcSpecificProcessing(formatStr))
+        return true;
+
 	// actually have to parse it
 	// Format string is: % [flags] [width] [.precision] [size] type
 	int n = 1;		// Count the format string itself (may also be "format" more arguments)
@@ -2747,6 +2816,7 @@ bool CallStatement::ellipsisProcessing(Prog* prog) {
 				LOG << "Unhandled format character " << ch << " in format string for call " << this << "\n";
 		}
 	}
+
 	setNumArguments(format + n);
 	signature->killEllipsis();	// So we don't do this again
 	return true;
@@ -4809,24 +4879,30 @@ StatementList* CallStatement::calcResults() {
 	StatementList* ret = new StatementList;
 	if (procDest) {
 		Signature* sig = procDest->getSignature();
-		if (procDest && procDest->isLib()) {
+		if (procDest && procDest->isLib() && 0) {
+            LOG << "dest is lib\n";
 			int n = sig->getNumReturns();
-			for (int i=1; i < n; i++) {						// Ignore first (stack pointer) return
+			for (int i=0; i < n; i++) {
 				Exp* sigReturn = sig->getReturnExp(i);
-#if SYMS_IN_BACK_END
+                if (sigReturn->isRegN(sig->getStackRegister(proc->getProg())))
+                    continue; // ignore stack reg
+#if 1 //SYMS_IN_BACK_END
 				// But we have translated out of SSA form, so some registers have had to have been replaced with locals
 				// So wrap the return register in a ref to this and check the locals
 				RefExp* wrappedRet = new RefExp(sigReturn, this);
-				char* locName = proc->findLocal(wrappedRet);	// E.g. r24{16}
+				char* locName = proc->findLocalFromRef(wrappedRet);	// E.g. r24{16}
 				if (locName)
 					sigReturn = Location::local(locName, proc);	// Replace e.g. r24 with local19
 #endif
+                LOG << "checking " << sigReturn << "\n";
 				if (useCol.exists(sigReturn)) {
+                    LOG << "  added\n";
 					ImplicitAssign* as = new ImplicitAssign(getTypeFor(sigReturn), sigReturn);
 					ret->append(as);
 				}
 			}
 		} else {
+            LOG << "dest is not lib\n";
 			Exp* rsp = Location::regOf(proc->getSignature()->getStackRegister(proc->getProg()));
 			StatementList::iterator dd;
 			for (dd = defines.begin(); dd != defines.end(); ++dd) {

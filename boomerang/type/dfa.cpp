@@ -675,7 +675,9 @@ Type* LowerType::meetWith(Type* other, bool& ch, bool bHighestPtr) {
 
 Type* Statement::meetWithFor(Type* ty, Exp* e, bool& ch) {
 	bool thisCh = false;
-	Type* newType = getTypeFor(e)->meetWith(ty, thisCh);
+    Type* typeFor = getTypeFor(e);
+    assert(typeFor);
+	Type* newType = typeFor->meetWith(ty, thisCh);
 	if (thisCh) {
 		ch = true;
 		setTypeFor(e, newType->clone());
@@ -1168,6 +1170,8 @@ void Binary::descendType(Type* parentType, bool& ch, Statement* s) {
 }
 
 void RefExp::descendType(Type* parentType, bool& ch, Statement* s) {
+    if (def == NULL)
+        return;
 	Type* newType = def->meetWithFor(parentType, subExp1, ch);
 	// In case subExp1 is a m[...]
 	subExp1->descendType(newType, ch, s);

@@ -100,7 +100,9 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
     if (magic[0] == 0xca && magic[1] == 0xfe && magic[2] == 0xba && magic[3] == 0xbe)
     {
         int nimages = BE4(4);
+#ifdef DEBUG_MACHO_LOADER
         printf("binary is universal with %d images\n", nimages);
+#endif
         for (int i = 0; i < nimages; i++)
         {
             int fbh = 8 + i * 5*4;
@@ -109,11 +111,13 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
             unsigned int offset = BE4(fbh+8);
             unsigned int size = BE4(fbh+12);
             unsigned int pad = BE4(fbh+16);
+#ifdef DEBUG_MACHO_LOADER
             printf("cputype: %08x\n", cputype);
             printf("cpusubtype: %08x\n", cpusubtype);
             printf("offset: %08x\n", offset);
             printf("size: %08x\n", size);
             printf("pad: %08x\n", pad);
+#endif
 
             if (cputype == 0x7) // i386
                imgoffs = offset;
@@ -139,6 +143,7 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
     else
         machine = MACHINE_PPC;
 
+    sections.clear();
     std::vector<struct segment_command> segments;
     std::vector<struct nlist> symbols;
     unsigned startlocal, nlocal, startdef, ndef, startundef, nundef;
@@ -166,6 +171,7 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
             for (unsigned n = 0; n < BMMH(seg.nsects); n++) {
                 struct section sect;
                 fread(&sect, 1, sizeof(sect), fp);
+                sections.push_back(sect);
 #ifdef DEBUG_MACHO_LOADER
                 fprintf(stdout, "    sectname %s segname %s addr %x size %i flags %x\n", sect.sectname, sect.segname, BMMH(sect.addr), BMMH(sect.size), BMMH(sect.flags));
 #endif
@@ -285,9 +291,6 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
         unsigned fsz = BMMH(segments[i].filesize);
         memset(base + a - loaded_addr, 0, sz);
         fread(base + a - loaded_addr, 1, fsz, fp);
-#ifdef DEBUG_MACHO_LOADER
-        fprintf(stderr, "loaded segment %x %i in mem %i in file\n", a, sz, fsz);
-#endif
 
         m_pSections[i].pSectionName = new char[17];
         strncpy(m_pSections[i].pSectionName, segments[i].segname, 16);
@@ -300,7 +303,11 @@ bool MachOBinaryFile::RealLoad(const char* sName) {
         m_pSections[i].bBss		= false; // TODO
         m_pSections[i].bCode		= l&VM_PROT_EXECUTE?1:0;
         m_pSections[i].bData		= l&VM_PROT_READ?1:0;
-        m_pSections[i].bReadOnly	= ~(l&VM_PROT_WRITE)?0:1;
+        m_pSections[i].bReadOnly	= (l&VM_PROT_WRITE)?0:1;
+
+#ifdef DEBUG_MACHO_LOADER
+        fprintf(stderr, "loaded segment %x %i in mem %i in file code=%i data=%i readonly=%i\n", a, sz, fsz, m_pSections[i].bCode, m_pSections[i].bData, m_pSections[i].bReadOnly);
+#endif
     }
 
     // process stubs_sects
@@ -503,6 +510,45 @@ unsigned int MachOBinaryFile::BMMH(unsigned int x) {
 unsigned short MachOBinaryFile::BMMHW(unsigned short x) {
     if (swap_bytes) return _BMMHW(x);
     else return x;
+}
+
+bool MachOBinaryFile::isReadOnly(ADDRESS uEntry) {
+    for (size_t i = 0; i < sections.size(); i++)
+        if (uEntry >= BMMH(sections[i].addr) && 
+            uEntry < BMMH(sections[i].addr) + BMMH(sections[i].size))
+        {
+            return (BMMH(sections[i].flags) & VM_PROT_WRITE) ? 0 : 1;
+        }
+    return BinaryFile::isReadOnly(uEntry);
+}
+
+// constant.. hmm, seems __cstring is writable, what's with that?
+bool MachOBinaryFile::isStringConstant(ADDRESS uEntry) {
+    for (size_t i = 0; i < sections.size(); i++)
+    {
+        if (uEntry >= BMMH(sections[i].addr) && 
+            uEntry < BMMH(sections[i].addr) + BMMH(sections[i].size))
+        {
+            //printf("%08x is in %s\n", uEntry, sections[i].sectname);
+            if (!strcmp(sections[i].sectname, "__cstring"))
+                return true;
+        }
+    }
+    return BinaryFile::isStringConstant(uEntry);
+}
+
+bool MachOBinaryFile::isCFStringConstant(ADDRESS uEntry) {
+    for (size_t i = 0; i < sections.size(); i++)
+    {
+        if (uEntry >= BMMH(sections[i].addr) && 
+            uEntry < BMMH(sections[i].addr) + BMMH(sections[i].size))
+        {
+            //printf("%08x is in %s\n", uEntry, sections[i].sectname);
+            if (!strcmp(sections[i].sectname, "__cfstring"))
+                return true;
+        }
+    }
+    return BinaryFile::isCFStringConstant(uEntry);
 }
 
 // Read 2 bytes from given native address

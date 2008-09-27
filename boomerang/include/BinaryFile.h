@@ -191,9 +191,16 @@ public:
     PSectionInfo GetSectionInfoByAddr(ADDRESS uEntry) const;
 
     // returns true if the given address is in a read only section
-    bool isReadOnly(ADDRESS uEntry) {
+    virtual bool isReadOnly(ADDRESS uEntry) {
         PSectionInfo p = GetSectionInfoByAddr(uEntry);
         return p && p->bReadOnly;
+    }
+    // returns true if the given address is in a "strings" section
+    virtual bool isStringConstant(ADDRESS uEntry) {
+        return false;
+    }
+    virtual bool isCFStringConstant(ADDRESS uEntry) {
+        return false;
     }
     virtual int			readNative1(ADDRESS a) {
         return 0;

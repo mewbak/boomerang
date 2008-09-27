@@ -1313,6 +1313,7 @@ public:
     int			getNumArguments();
     void		removeArgument(int i);
     Type		*getArgumentType(int i);
+    void		setArgumentType(int i, Type *ty);
     void		truncateArguments();
     void		clearLiveEntry();
     void		eliminateDuplicateArgs();
@@ -1413,6 +1414,7 @@ private:
 
 protected:
 
+    bool        objcSpecificProcessing(const char *formatStr);
     void		updateDefineWithType(int n);
     void		appendArgument(Assignment* as) {
         arguments.append(as);

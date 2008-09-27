@@ -106,6 +106,10 @@ protected:
 
 public:
 
+    virtual bool        isReadOnly(ADDRESS uEntry);
+    virtual bool        isStringConstant(ADDRESS uEntry);
+    virtual bool        isCFStringConstant(ADDRESS uEntry);
+
     virtual int			readNative1(ADDRESS a);         // Read 1 bytes from native addr
     virtual int			readNative2(ADDRESS a);			// Read 2 bytes from native addr
     virtual int			readNative4(ADDRESS a);			// Read 4 bytes from native addr
@@ -142,6 +146,7 @@ private:
     bool            swap_bytes;
     std::map<ADDRESS, std::string> m_SymA, dlprocs;
     std::map<std::string, ObjcModule> modules;
+    std::vector<struct section> sections;
 };
 
 //#ifdef WIN32

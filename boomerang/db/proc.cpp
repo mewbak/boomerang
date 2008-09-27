@@ -1168,6 +1168,9 @@ void UserProc::earlyDecompile() {
 	// Update the defines in the calls. Will redo if involved in recursion
 	updateCallDefines();
 
+    // This is useful for obj-c
+    replaceSimpleGlobalConstants();
+
 	// First placement of phi functions, renaming, and initial propagation. This is mostly for the stack pointer
 	//maxDepth = findMaxDepth() + 1;
 	//if (Boomerang::get()->maxMemDepth < maxDepth)
@@ -4099,6 +4102,40 @@ void UserProc::updateCallDefines() {
 		CallStatement* call = dynamic_cast<CallStatement*>(*it);
 		if (call == NULL) continue;
 		call->updateDefines();
+	}
+}
+
+void UserProc::replaceSimpleGlobalConstants() {
+	if (VERBOSE)
+		LOG << "### replace simple global constants for " << getName() << " ###\n";
+	StatementList stmts;
+	getStatements(stmts);
+	StatementList::iterator it;
+	for (it = stmts.begin(); it != stmts.end(); it++) {
+		Assign* assgn = dynamic_cast<Assign*>(*it);
+		if (assgn == NULL) continue;
+        if (!assgn->getRight()->isMemOf()) continue;
+        if (!assgn->getRight()->getSubExp1()->isIntConst()) continue;
+        ADDRESS addr = ((Const*)assgn->getRight()->getSubExp1())->getInt();
+        LOG << "assgn " << assgn << "\n";
+        if (prog->isReadOnly(addr)) {
+            LOG << "is readonly\n";
+            int val;
+            switch (assgn->getType()->getSize()) {
+                case 8:
+                    val = prog->readNative1(addr);
+                    break;
+                case 16:
+                    val = prog->readNative2(addr);
+                    break;
+                case 32:
+                    val = prog->readNative4(addr);
+                    break;
+                default:
+                    assert(false);
+            }
+            assgn->setRight(new Const(val));
+        }
 	}
 }
 
