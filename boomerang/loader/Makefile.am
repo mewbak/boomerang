@@ -41,7 +41,7 @@ FPIC = -fPIC
 # EXEEXT is .exe for Windows
 # DLLEXT is .dll for Windows and .so otherwise 
 EXEEXT=$(EXEEXT)
-DLLEXT=$(OBJEXT)
+DLLEXT=$(LIBEXT)
 if HOST_WINDOWS
  WININCLUDE=-Iwin32make/include
  # RUNPATH is not needed on Windows 
@@ -97,7 +97,7 @@ ALLLIBS=$(patsubst %,-l%,$(LOADERS)) -lBinaryFile
 ALLOBJS = $(patsubst %, %.o, $(LOADERS))
 ALLOBJS += BinaryFile.o SymTab.o
 
-all:    $(ALLDLLS) $(COPYDLL) BinaryFileFactory.o BinaryFileStub.o
+all: $(ALLDLLS) $(COPYDLL) BinaryFileFactory.o BinaryFileStub.o
 
 microX86dis.o: microX86dis.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $(FPIC) $<
@@ -133,18 +133,18 @@ $(ALLOBJS): %.o : %.cpp
 # Automatic generation of dependencies
 if MAKEDEPEND
 # automatic is better!
- depend: $(MAKEDEPEND)
-	$(MAKEDEPEND) -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
+depend: $(MAKEDEPEND)
+$(MAKEDEPEND) -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
 		-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
 
- depend.in: $(MAKEDEPEND)
-	$(MAKEDEPEND) -fMakefile.in -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
+depend.in: $(MAKEDEPEND)
+$(MAKEDEPEND) -fMakefile.in -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
 		-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
 	
 else
- depend:
+depend:
 @echo You need the (X11) makedepend tool to generate dependencies
- depend.in:
+depend.in:
 @echo You need the (X11) makedepend tool to generate dependencies
 endif
 
