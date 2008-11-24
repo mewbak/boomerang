@@ -131,11 +131,11 @@ $(ALLOBJS): %.o : %.cpp
 if MAKEDEPEND
 # automatic is better!
 depend: $(MAKEDEPEND)
-$(MAKEDEPEND) -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
+	$(MAKEDEPEND) -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
 	-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
 
 depend.in: $(MAKEDEPEND)
-$(MAKEDEPEND) -fMakefile.in -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
+	$(MAKEDEPEND) -fMakefile.in -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
 	-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
 else
 depend:
