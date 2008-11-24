@@ -17,6 +17,7 @@
 # You should be able to add a simple loader without any changes to this Makefile, as long as you follow the naming
 # convention <type>BinaryFile.*
 
+# 24 Nov 08 - Markus Gothe - Automake
 # 22 Aug 06 - Mike Frysinger: respect values set up by ./configure script
 # 12 Jul 05 - Mike: All use SymTab.o now
 # 20 Jul 04 - Mike: Removed BOOMDIR (paths relative now)
