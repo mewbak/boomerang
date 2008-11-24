@@ -87,9 +87,9 @@ else
  # the Cygwin hosted Boomerang can compile and use non-MachO loaders
  LOADERS+=MachOBinaryFile.cpp
 endif
-#LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%.$(OBJEXT),$(LOADERS))
-#BASEDLL=$(top_srcdir)/lib/libBinaryFile$(OBJEXT)
-#ALLDLLS=$(LOADERDLLS) $(BASEDLL)
+LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%.$(OBJEXT),$(LOADERS))
+BASEDLL=$(top_srcdir)/lib/libBinaryFile$(OBJEXT)
+ALLDLLS=$(LOADERDLLS) $(BASEDLL)
 ALLLIBS=$(patsubst %,-l%,$(LOADERS)) -lBinaryFile
 ALLOBJS = $(patsubst %, %.o, $(LOADERS))
 ALLOBJS += BinaryFile.o SymTab.o
