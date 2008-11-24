@@ -37,34 +37,31 @@ FPIC = -fPIC
 # Detection of OS specific settings
 #
 
-# LDL is -ldl if needed (Windows does not)
-# EXEEXT is .exe for Windows
-# DLLEXT is .dll for Windows and .so otherwise 
-EXEEXT=$(EXEEXT)
-DLLEXT=$(LIBEXT)
+#EXEEXT=$(EXEEXT)
+#DLLEXT=$(LIBEXT)
 if HOST_WINDOWS
  WININCLUDE=-Iwin32make/include
  # RUNPATH is not needed on Windows 
  RUNPATH=
- COPYDLL=$(top_srcdir)/libBinaryFile$(OBJEXT)
+ COPYDLL=$(top_srcdir)/libBinaryFile.$(LIBEXT)
 else # Non-Windows
  LDL=-ldl
- if HOST_GNU_LD
-  RUNPATH=-Wl,-rpath -Wl,"lib"
- endif
+if HOST_GNU_LD
+ RUNPATH=-Wl,-rpath -Wl,"lib"
+endif
 endif
 
 if HOST_OSX
-  RUNPATH=
-else		# Assume Solaris
-   RUNPATH=-R"lib"
+ RUNPATH=
+else
+ # Assume Solaris
+ RUNPATH=-R"lib"
 endif
 
-if HOST_OSX 
-  SHARED=-dynamic -dylib
- #-flat_namespace
-else # Non-OS X
- SHARED=-shared
+if HOST_OSX
+SHARED=-dynamic -dylib 
+else
+SHARED=-shared
 endif
 
 ######################
@@ -90,8 +87,8 @@ else
  # the Cygwin hosted Boomerang can compile and use non-MachO loaders
  LOADERS+=MachOBinaryFile.cpp
 endif
-#LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%$(DLLEXT),$(LOADERS))
-#BASEDLL=$(top_srcdir)/lib/libBinaryFile$(DLLEXT)
+#LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%.$(LIBEXT),$(LOADERS))
+#BASEDLL=$(top_srcdir)/lib/libBinaryFile$(LIBEXT)
 #ALLDLLS=$(LOADERDLLS) $(BASEDLL)
 ALLLIBS=$(patsubst %,-l%,$(LOADERS)) -lBinaryFile
 ALLOBJS = $(patsubst %, %.o, $(LOADERS))
@@ -104,12 +101,12 @@ microX86dis.o: microX86dis.c
 
 # Extra object files, etc
 # These are target specific variables.
-$(top_srcdir)/lib/libWin32BinaryFile$(DLLEXT): EXTRAS = microX86dis.o
-$(top_srcdir)/lib/libWin32BinaryFile$(DLLEXT): microX86dis.o
-$(top_srcdir)/lib/libDOS4GWBinaryFile$(DLLEXT): EXTRAS = microX86dis.o
-$(top_srcdir)/lib/libDOS4GWBinaryFile$(DLLEXT): microX86dis.o
+$(top_srcdir)/lib/libWin32BinaryFile.$(LIBEXT): EXTRAS = microX86dis.o
+$(top_srcdir)/lib/libWin32BinaryFile.$(LIBEXT): microX86dis.o
+$(top_srcdir)/lib/libDOS4GWBinaryFile.$(LIBEXT): EXTRAS = microX86dis.o
+$(top_srcdir)/lib/libDOS4GWBinaryFile.$(LIBEXT): microX86dis.o
 
-$(top_srcdir)/libBinaryFile$(DLLEXT): $(top_srcdir)/lib/libBinaryFile$(DLLEXT)
+$(top_srcdir)/libBinaryFile.$(LIBEXT): $(top_srcdir)/lib/libBinaryFile.$(LIBEXT)
 	cp $< $@
 
 BinaryFile.o:		CCEXTRAS = -DBUILDING_LIBBINARYFILE
@@ -119,7 +116,7 @@ $(BASEDLL) : BinaryFile.o SymTab.o
 	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) BinaryFile.o SymTab.o $(OUTIMPLIB) $(LDFLAGS)
 
 # This pattern generates all the main dependencies
-$(LOADERDLLS): $(top_srcdir)/lib/lib%$(DLLEXT) : %.o $(BASEDLL)
+$(LOADERDLLS): $(top_srcdir)/lib/lib%.$(LIBEXT) : %.o $(BASEDLL)
 	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) $< SymTab.o $(EXTRAS) -lBinaryFile $(RUNPATH) -L$(top_srcdir)/lib $(LDFLAGS)
 
 # Compile all objects with -fPIC
@@ -135,12 +132,11 @@ if MAKEDEPEND
 # automatic is better!
 depend: $(MAKEDEPEND)
 $(MAKEDEPEND) -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
-		-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
+	-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
 
 depend.in: $(MAKEDEPEND)
 $(MAKEDEPEND) -fMakefile.in -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
-		-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
-	
+	-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
 else
 depend:
 @echo You need the (X11) makedepend tool to generate dependencies
