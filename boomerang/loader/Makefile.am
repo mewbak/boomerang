@@ -87,7 +87,7 @@ else
  # the Cygwin hosted Boomerang can compile and use non-MachO loaders
  LOADERS+=MachOBinaryFile.cpp
 endif
-LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%.$(OBJEXT),$(LOADERS))
+LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%$(OBJEXT),$(LOADERS))
 BASEDLL=$(top_srcdir)/lib/libBinaryFile$(OBJEXT)
 ALLDLLS=$(LOADERDLLS) $(BASEDLL)
 ALLLIBS=$(patsubst %,-l%,$(LOADERS)) -lBinaryFile
@@ -112,11 +112,11 @@ $(top_srcdir)/libBinaryFile.$(OBJEXT): $(top_srcdir)/lib/libBinaryFile.$(OBJEXT)
 BinaryFile.o:		CCEXTRAS = -DBUILDING_LIBBINARYFILE
 MachOBinaryFile.o:	CCEXTRAS = -I.
 
-$(BASEDLL) : BinaryFile.o SymTab.o
-	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) BinaryFile.o SymTab.o $(OUTIMPLIB) $(LDFLAGS)
+$(BASEDLL) : BinaryFile.$(OBJEXT) SymTab.$(OBJEXT)
+	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) BinaryFile.$(OBJEXT) SymTab.$(OBJEXT) $(OUTIMPLIB) $(LDFLAGS)
 
 # This pattern generates all the main dependencies
-$(LOADERDLLS): $(top_srcdir)/lib/lib%.$(OBJEXT) : %.o $(BASEDLL)
+$(LOADERDLLS): $(top_srcdir)/lib/lib%.$(OBJEXT) : %.$(OBJEXT) $(BASEDLL)
 	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) $< SymTab.o $(EXTRAS) -lBinaryFile $(RUNPATH) -L$(top_srcdir)/lib $(LDFLAGS)
 
 # Compile all objects with -fPIC
