@@ -94,17 +94,17 @@ ALLLIBS=$(patsubst %,-l%,$(LOADERS)) -lBinaryFile
 ALLOBJS = $(patsubst %, %.o, $(LOADERS))
 ALLOBJS += BinaryFile.o SymTab.o
 
-all: $(ALLDLLS) $(COPYDLL) BinaryFileFactory.o BinaryFileStub.o
+all: $(ALLDLLS) $(COPYDLL) BinaryFileFactory.$(OBJEXT) BinaryFileStub.$(OBJEXT)
 
-microX86dis.o: microX86dis.c
+microX86dis.$(OBJEXT): microX86dis.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $(FPIC) $<
 
 # Extra object files, etc
 # These are target specific variables.
-$(top_srcdir)/lib/libWin32BinaryFile.$(OBJEXT): EXTRAS = microX86dis.o
-$(top_srcdir)/lib/libWin32BinaryFile.$(OBJEXT): microX86dis.o
-$(top_srcdir)/lib/libDOS4GWBinaryFile.$(OBJEXT): EXTRAS = microX86dis.o
-$(top_srcdir)/lib/libDOS4GWBinaryFile.$(OBJEXT): microX86dis.o
+$(top_srcdir)/lib/libWin32BinaryFile.$(OBJEXT): EXTRAS = microX86dis.$(OBJEXT)
+$(top_srcdir)/lib/libWin32BinaryFile.$(OBJEXT): microX86dis.$(OBJEXT)
+$(top_srcdir)/lib/libDOS4GWBinaryFile.$(OBJEXT): EXTRAS = microX86dis.$(OBJEXT)
+$(top_srcdir)/lib/libDOS4GWBinaryFile.$(OBJEXT): microX86dis.$(OBJEXT)
 
 $(top_srcdir)/libBinaryFile.$(OBJEXT): $(top_srcdir)/lib/libBinaryFile.$(OBJEXT)
 	cp $< $@
@@ -120,7 +120,7 @@ $(LOADERDLLS): $(top_srcdir)/lib/lib%.$(OBJEXT) : %.o $(BASEDLL)
 	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) $< SymTab.o $(EXTRAS) -lBinaryFile $(RUNPATH) -L$(top_srcdir)/lib $(LDFLAGS)
 
 # Compile all objects with -fPIC
-$(ALLOBJS): %.o : %.cpp
+$(ALLOBJS): %.$(OBJEXT) : %.cpp
 	$(CXX) $(CXXFLAGS) -c $(FPIC) $(CCEXTRAS) -I$(top_srcdir)/include -o $@ $<
 
 ####################
@@ -148,13 +148,13 @@ endif
 # Unit testing
 #
 
-testLoader$(EXEEXT): testLoader.o LoaderTest.o microX86dis.o BinaryFileFactory.o SymTab.o
+testLoader$(EXEEXT): testLoader.$(OBJEXT) LoaderTest.$(OBJEXT) microX86dis.$(OBJEXT) BinaryFileFactory.$(OBJEXT) SymTab.$(OBJEXT)
 	$(CXX) $(CXXFLAGS) -o $@ $^  -lcppunit $(ALLLIBS) $(RUNPATH) $(LDL) -L$(top_srcdir)/lib $(LDFLAGS)
 
-testLoader.o: testLoader.cpp
+testLoader.$(OBJEXT): testLoader.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ -I$(top_srcdir)/include $<
 
-LoaderTest.o: LoaderTest.cpp LoaderTest.h $(top_srcdir)/include/BinaryFile.h SymTab.o
+LoaderTest.$(OBJEXT): LoaderTest.cpp LoaderTest.h $(top_srcdir)/include/BinaryFile.h SymTab.$(OBJEXT)
 	$(CXX) $(CXXFLAGS) -c -o $@ -I$(top_srcdir)/include $<
 
 # Because of the relative paths, testLoader will only work from the parent
