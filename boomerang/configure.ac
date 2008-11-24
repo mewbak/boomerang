@@ -81,6 +81,7 @@ if ${HOST_LD} -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
    HOST_GNU_LD=yes
    AC_DEFINE(HOST_GNU_LD, 1, [Host uses GNU ld])
 fi
+AM_CONDITIONAL(HOST_GNU_LD, test "$HOST_GNU_LD" = "yes")
 AC_MSG_RESULT($HOST_GNU_LD)
 
 dnl -------------------
@@ -93,6 +94,7 @@ case $host in
    HOST_WINDOWS=no
    ;;
 esac
+AM_CONDITIONAL(HOST_WINDOWS, test "$HOST_WINDOWS" = "yes")
 AC_MSG_RESULT($HOST_WINDOWS)
 
 AC_MSG_CHECKING([if host is Cygwin])
@@ -104,6 +106,7 @@ case $host in
    HOST_CYGWIN=no
    ;;
 esac
+AM_CONDITIONAL(HOST_CYGWIN, test "$HOST_CYGWIN" = "yes")
 AC_MSG_RESULT($HOST_CYGWIN)
 
 AC_MSG_CHECKING([if host is OS X])
@@ -117,6 +120,7 @@ case $host in
    AC_DEFINE(HOST_OSX, 0, [Non zero if host machine is Mac OS X])
    ;;
 esac
+AM_CONDITIONAL(HOST_OSX, test "$HOST_OSX" = "yes")
 AC_MSG_RESULT($HOST_OSX)
 
 dnl Checks for elf library (no longer needed)
