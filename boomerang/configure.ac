@@ -54,6 +54,7 @@ dnl	fi
 fi
 
 AC_PATH_PROG(MAKEDEPEND, makedepend)
+AM_CONDITIONAL(MAKEDEPEND, test -n "$MAKEDEPEND")
 if test -z "$MAKEDEPEND"; then
 	AC_MSG_NOTICE()
 	AC_MSG_NOTICE([You need the X11 makedepend utility to use automatic dependency generation (make depend)])
@@ -66,6 +67,7 @@ AC_SUBST(BISONPP)
 AC_PATH_PROG(FLEXPP, flex++)
 AC_SUBST(FLEXPP)
 AC_PATH_PROGS(M4, m4 gm4)
+AM_CONDITIONAL(MAKEDEPEND, test -n "$M4")
 AC_SUBST(M4)
 
 dnl -------------------
