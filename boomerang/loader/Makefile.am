@@ -38,12 +38,12 @@ FPIC = -fPIC
 #
 
 #EXEEXT=$(EXEEXT)
-#DLLEXT=$(LIBEXT)
+#DLLEXT=$(OBJEXT)
 if HOST_WINDOWS
  WININCLUDE=-Iwin32make/include
  # RUNPATH is not needed on Windows 
  RUNPATH=
- COPYDLL=$(top_srcdir)/libBinaryFile.$(LIBEXT)
+ COPYDLL=$(top_srcdir)/libBinaryFile.$(OBJEXT)
 else # Non-Windows
  LDL=-ldl
 if HOST_GNU_LD
@@ -87,8 +87,8 @@ else
  # the Cygwin hosted Boomerang can compile and use non-MachO loaders
  LOADERS+=MachOBinaryFile.cpp
 endif
-#LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%.$(LIBEXT),$(LOADERS))
-#BASEDLL=$(top_srcdir)/lib/libBinaryFile$(LIBEXT)
+#LOADERDLLS=$(patsubst %,$(top_srcdir)/lib/lib%.$(OBJEXT),$(LOADERS))
+#BASEDLL=$(top_srcdir)/lib/libBinaryFile$(OBJEXT)
 #ALLDLLS=$(LOADERDLLS) $(BASEDLL)
 ALLLIBS=$(patsubst %,-l%,$(LOADERS)) -lBinaryFile
 ALLOBJS = $(patsubst %, %.o, $(LOADERS))
@@ -101,12 +101,12 @@ microX86dis.o: microX86dis.c
 
 # Extra object files, etc
 # These are target specific variables.
-$(top_srcdir)/lib/libWin32BinaryFile.$(LIBEXT): EXTRAS = microX86dis.o
-$(top_srcdir)/lib/libWin32BinaryFile.$(LIBEXT): microX86dis.o
-$(top_srcdir)/lib/libDOS4GWBinaryFile.$(LIBEXT): EXTRAS = microX86dis.o
-$(top_srcdir)/lib/libDOS4GWBinaryFile.$(LIBEXT): microX86dis.o
+$(top_srcdir)/lib/libWin32BinaryFile.$(OBJEXT): EXTRAS = microX86dis.o
+$(top_srcdir)/lib/libWin32BinaryFile.$(OBJEXT): microX86dis.o
+$(top_srcdir)/lib/libDOS4GWBinaryFile.$(OBJEXT): EXTRAS = microX86dis.o
+$(top_srcdir)/lib/libDOS4GWBinaryFile.$(OBJEXT): microX86dis.o
 
-$(top_srcdir)/libBinaryFile.$(LIBEXT): $(top_srcdir)/lib/libBinaryFile.$(LIBEXT)
+$(top_srcdir)/libBinaryFile.$(OBJEXT): $(top_srcdir)/lib/libBinaryFile.$(OBJEXT)
 	cp $< $@
 
 BinaryFile.o:		CCEXTRAS = -DBUILDING_LIBBINARYFILE
@@ -116,7 +116,7 @@ $(BASEDLL) : BinaryFile.o SymTab.o
 	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) BinaryFile.o SymTab.o $(OUTIMPLIB) $(LDFLAGS)
 
 # This pattern generates all the main dependencies
-$(LOADERDLLS): $(top_srcdir)/lib/lib%.$(LIBEXT) : %.o $(BASEDLL)
+$(LOADERDLLS): $(top_srcdir)/lib/lib%.$(OBJEXT) : %.o $(BASEDLL)
 	$(CXX) $(CXXFLAGS) -o $@ $(SHARED) $< SymTab.o $(EXTRAS) -lBinaryFile $(RUNPATH) -L$(top_srcdir)/lib $(LDFLAGS)
 
 # Compile all objects with -fPIC
