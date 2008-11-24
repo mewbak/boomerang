@@ -31,26 +31,6 @@ AUTOMAKE_OPTIONS = foreign
 
 FPIC = -fPIC
 
-####################################
-# Other variables detected by ./configure
-#
-
-# HOST_WINDOWS is "yes" if the host OS is Cygwin or MinGW
-HOST_WINDOWS = @HOST_WINDOWS@
-
-# HOST_CYGWIN is "yes" if the host environment is Cygwin
-HOST_CYGWIN = @HOST_CYGWIN@
-
-# HOST_OSX is true if the hostOS is OS X (*-apple-darwin*)
-HOST_OSX = @HOST_OSX@
-
-# HOST_OSX_10_2 is true if the hostOS is OS X version 10.2.x (*-apple-darwin6*)
-HOST_OSX_10_2 = @HOST_OSX_10_2@
-
-# HOST_GNU_LD is true if the linker on this host machine is GNU
-HOST_GNU_LD = @HOST_GNU_LD@
-
-MAKEDEPEND=@MAKEDEPEND@
 
 ####################################
 # Detection of OS specific settings
@@ -59,40 +39,29 @@ MAKEDEPEND=@MAKEDEPEND@
 # LDL is -ldl if needed (Windows does not)
 # EXEEXT is .exe for Windows
 # DLLEXT is .dll for Windows and .so otherwise 
-ifeq ($(HOST_WINDOWS), yes)
- LDL=
- EXEEXT=.exe
- DLLEXT=.dll
+EXEEXT=$(EXEEXT)
+DLLEXT=$(OBJEXT)
+if HOST_WINDOWS
  WININCLUDE=-Iwin32make/include
  # RUNPATH is not needed on Windows 
  RUNPATH=
- COPYDLL=$(top_srcdir)/libBinaryFile$(DLLEXT)
+ COPYDLL=$(top_srcdir)/libBinaryFile$(OBJEXT)
 else # Non-Windows
  LDL=-ldl
- EXEEXT=
- DLLEXT=.so
- WININCLUDE=
- ifeq ($(HOST_GNU_LD), yes)
+ if HOST_GNU_LD
   RUNPATH=-Wl,-rpath -Wl,"lib"
- else
-  ifeq ($(HOST_OSX), yes)
-   RUNPATH=
-  else		# Assume Solaris
-   RUNPATH=-R"lib"
-  endif
  endif
- COPYDLL=
 endif
 
-ifeq ($(HOST_OSX), yes)
- ifeq ($HOST_OSX_10_2), yes)
-  SHARED=-dynamiclib		# Note: doesn't seem to work at present; fiddle manually
- else
+if HOST_OSX
+  RUNPATH=
+else		# Assume Solaris
+   RUNPATH=-R"lib"
+endif
+
+if HOST_OSX 
   SHARED=-dynamic -dylib
- endif
  #-flat_namespace
- DLLEXT=.dylib
- RUNPATH=
 else # Non-OS X
  SHARED=-shared
 endif
@@ -113,7 +82,9 @@ LOADERS = \
 
 pkglib_LTLIBRARIES = 
 
-ifeq ($(HOST_CYGWIN), no)
+if HOST_CYGWIN
+ LOADERS+=
+else
  # Until we can resolve the issue of compiling loader/MachOBinaryFile.cpp, don't attempt to make it so at least
  # the Cygwin hosted Boomerang can compile and use non-MachO loaders
  LOADERS+=MachOBinaryFile.cpp
@@ -159,8 +130,8 @@ $(ALLOBJS): %.o : %.cpp
 #
 
 # Automatic generation of dependencies
-ifdef MAKEDEPEND
- # automatic is better!
+if MAKEDEPEND
+# automatic is better!
  depend: $(MAKEDEPEND)
 	$(MAKEDEPEND) -w120 -Y -I$(top_srcdir)/include -I. -I$(top_srcdir)/c -I$(top_srcdir)/codegen \
 		-I$(top_srcdir)/frontend *.cpp *.c > /dev/null 2>&1
@@ -171,10 +142,10 @@ ifdef MAKEDEPEND
 	
 else
  depend:
-	# You need the (X11) makedepend tool to generate dependencies
+@echo You need the (X11) makedepend tool to generate dependencies
  depend.in:
-	# You need the (X11) makedepend tool to generate dependencies
-endif # ifdef MAKEDEPEND
+@echo You need the (X11) makedepend tool to generate dependencies
+endif
 
 ###############
 # Unit testing
