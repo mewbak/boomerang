@@ -1,6 +1,6 @@
 gl.h
 stdlib.h
-strings.h
+string.h
 stdio.h
 math.h
 glu.h
