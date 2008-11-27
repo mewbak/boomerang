@@ -8,3 +8,4 @@ glut.h
 signal.h
 ctype.h
 fcntl.h
+socket.h
