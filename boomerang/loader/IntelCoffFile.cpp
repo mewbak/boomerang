@@ -3,7 +3,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <assert.h>
+#include <cassert>
+#include <cstring>
+#include <cstdlib>
 #include "config.h"
 
 struct struc_coff_sect {        // segment information
