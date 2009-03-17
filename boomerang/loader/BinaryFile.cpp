@@ -34,8 +34,8 @@
 
 #include "BinaryFile.h"
 #include <iostream>
-#include <stdio.h>
-
+#include <cstdio>
+#include <cstring>
 
 BinaryFile::BinaryFile(bool bArch /*= false*/) {
     m_bArchive = bArch;			// Remember whether an archive member
