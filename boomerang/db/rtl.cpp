@@ -25,13 +25,14 @@
  * 25 Jul 02 - Mike: RTL is now list of Statements
  */
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif 
 
 #include <iomanip>			// For setfill
 #include <sstream>
+#include <cstring>
 #include "types.h"
 #include "statement.h"
 #include "exp.h"

@@ -28,7 +28,7 @@
  * Dependencies.
  *============================================================================*/
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200 
 #pragma warning(disable:4786)
 // ? How does the following do any good?
@@ -38,11 +38,13 @@
 #pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
 #endif
 
-#include <assert.h>
+#include <cassert>
+#include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <math.h>
+#include <cmath>
 #ifdef _WIN32
 #include <direct.h>					// For Windows mkdir()
 #endif

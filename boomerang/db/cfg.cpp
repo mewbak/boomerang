@@ -25,7 +25,7 @@
  * Dependencies.
  *============================================================================*/
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif 
@@ -33,6 +33,7 @@
 #include <algorithm>		// For find()
 #include <fstream>
 #include <sstream>
+#include <cstring>
 #include "types.h"
 #include "statement.h"
 #include "signature.h"

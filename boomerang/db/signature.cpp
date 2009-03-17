@@ -22,12 +22,13 @@
  * 01 Feb 05 - Mike: Parameters default to void type unless ad-hoc TA
  */
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif 
 
 #include <string>
+#include <cstring>
 #include <sstream>
 #include "type.h"
 #include "signature.h"

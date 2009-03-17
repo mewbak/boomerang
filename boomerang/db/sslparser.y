@@ -40,12 +40,14 @@
 // stuff to go in sslparser.h
 %header{
 #include "gc.h"
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif 
 
 #include <sstream>
+#include <cstdlib>
+#include <cstring>
 #include "types.h"
 #include "rtl.h"
 #include "table.h"

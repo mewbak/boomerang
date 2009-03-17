@@ -25,7 +25,8 @@
 // For MSVC 5 or 6: warning about debug into truncated to 255 chars
 #pragma warning(disable:4786)
 #endif
-#include <assert.h>
+#include <cassert>
+#include <cstring>
 #include "register.h"
 #include "type.h"
 

@@ -35,7 +35,7 @@
 #endif
 
 #ifdef __cplusplus
-#include <stdlib.h>
+#include <cstdlib>
 #define YY_USE_CONST
 #define YY_USE_PROTOS
 #ifndef YY_USE_CLASS
@@ -47,12 +47,12 @@
 #else   /* ! __cplusplus */
 #ifdef __STDC__
 #ifdef __GNUC__
-#include <stddef.h>
+#include <cstddef>
 void *malloc( size_t );
 void free( void* );
 int read();
 #else
-#include <stdlib.h>
+#include <cstdlib>
 #endif  /* __GNUC__ */
 #define YY_USE_PROTOS
 #define YY_USE_CONST
@@ -61,7 +61,8 @@ int read();
 #ifdef __TURBOC__
 #define YY_USE_CONST
 #endif
-#include <stdio.h>
+#include <cstdio>
+#include <cstring>
 
 
 /*********************************************/
@@ -221,7 +222,7 @@ int read();
  */
 #define YY_SSLScanner_FLEX_SCANNER
 #line 35 "sslscanner.l"
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif 

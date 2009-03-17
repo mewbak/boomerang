@@ -77,7 +77,7 @@ void *alloca ();
 #define const
 #endif
 #endif
-#include <stdio.h>
+#include <cstdio>
 #define YYBISON 1  
 
 /* #line 73 "/usr/local/lib/bison.cc" */
@@ -85,12 +85,14 @@ void *alloca ();
 #line 41 "sslparser.y"
 
 #include "gc.h"
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif 
 
 #include <sstream>
+#include <cstring>
+#include <cstdlib>
 #include "types.h"
 #include "rtl.h"
 #include "table.h"

@@ -10,7 +10,7 @@
  * 05 Apr 02 - Mike: Created
  */
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif
@@ -38,6 +38,7 @@
 #include "visitor.h"
 #include "log.h"
 #include <iomanip>			// For std::setw etc
+#include <cstring>
 
 extern char debug_buffer[];		 ///< For prints functions
 
