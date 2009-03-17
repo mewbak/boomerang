@@ -1441,7 +1441,7 @@ bool UnionType::isCompatible(Type* other, bool all) {
 	}
 	// Other is not a UnionType
 	for (it = li.begin(); it != li.end(); it++)
-		if (other->isCompatibleWith(it->type), all) return true;
+		if (other->isCompatibleWith(it->type, all)) return true;
 	return false;
 }
 
