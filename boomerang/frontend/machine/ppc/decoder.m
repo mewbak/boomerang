@@ -22,7 +22,7 @@
  * Dependencies.
  *============================================================================*/
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1100
 #include "signature.h"
 #endif
@@ -36,6 +36,7 @@
 #include "BinaryFile.h"		// For SymbolByAddress()
 #include "boomerang.h"
 #include <iostream>
+#include <cstring>
 
 Exp*	crBit(int bitNum);	// Get an expression for a CR bit access
 

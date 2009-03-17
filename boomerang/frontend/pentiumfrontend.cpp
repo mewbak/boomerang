@@ -26,12 +26,13 @@
  * 31 Jul 06 - Tamlin: Fixed overlapped register processing for esi/edi/ebp plus a bug in ah/bh/ch/dh processing
 */
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif
 
 #include <sstream>
+#include <cstring>
 #include "types.h"
 #include "BinaryFile.h"
 #include "frontend.h"

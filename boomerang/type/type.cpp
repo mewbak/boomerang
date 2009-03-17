@@ -24,7 +24,8 @@
  * 23 Jul 04 - Mike: Implement SizeType
  */
 
-#include <assert.h>
+#include <cassert>
+#include <cstring>
 
 #include "types.h"
 #include "type.h"
