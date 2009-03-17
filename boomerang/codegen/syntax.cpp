@@ -1,6 +1,7 @@
 
 #include <fstream>
 #include <iomanip>			// For setfill etc
+#include <cstdlib>			// For exit().
 #include "prog.h"
 #include "exp.h"
 #include "hllcode.h"

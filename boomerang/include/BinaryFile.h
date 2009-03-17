@@ -33,7 +33,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <stdio.h>		// For FILE
+#include <cstdio>		// For FILE
 
 // Note: #including windows.h causes problems later in the objective C code.
 

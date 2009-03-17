@@ -22,7 +22,7 @@
  * 18 Jan 06 - Gerard: several changes for prettier output, better logging of warnings and errors
  */
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif
@@ -43,6 +43,8 @@
 #include "util.h"
 #include "log.h"
 #include <sstream>
+#include <cstring>
+#include <cstdlib>
 
 extern char *operStrings[];
 

@@ -29,7 +29,7 @@
  * Dependencies.
  *============================================================================*/
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif 
@@ -49,7 +49,7 @@
 #include "type.h"
 #include "log.h"
 #include "visitor.h"
-
+#include <cstring>
 
 /**********************************
  * BasicBlock methods
