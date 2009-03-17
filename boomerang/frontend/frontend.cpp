@@ -26,15 +26,17 @@
  * 02 Feb 05 - Gerard: Check for thunks to library functions and don't create procs for these
  */
 
-#include <assert.h>
+#include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
 #endif
 
 #include "frontend.h"
 #include <queue>
-#include <stdarg.h>			// For varargs
+#include <cstdarg>			// For varargs
 #include <sstream>
+#include <cstring>
+#include <cstdlib>
 #ifndef _WIN32
 #include <dlfcn.h>			// dlopen, dlsym
 #endif

@@ -23,13 +23,15 @@
 
 #include <iostream>
 #include <fstream>
-#include <time.h>
+#include <ctime>
+#include <cstring>
+#include <cstdlib>
 #ifdef _WIN32
 #include <direct.h>			// mkdir under Windows
 #else
 #include <sys/stat.h>		// For mkdir
 #include <unistd.h>			// For unlink
-#include <signal.h>
+#include <csignal>
 #endif
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <windows.h>
