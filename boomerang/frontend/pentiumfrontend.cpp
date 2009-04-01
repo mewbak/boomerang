@@ -257,7 +257,7 @@ void PentiumFrontEnd::processFloatCode(Cfg* pCfg)
 				st = (*rit)->elementAt(i);
 				if (st->isFpush()) {
 					(*rit)->insertStmt(new Assign(new FloatType(80),
-						Location::tempOf(new Const(const_cast<char *>("tmpD9"))), 
+						Location::tempOf(new Const("tmpD9")), 
 						Location::regOf(39)), i++);
 					(*rit)->insertStmt(new Assign(new FloatType(80),
 						Location::regOf(39), 
@@ -282,7 +282,7 @@ void PentiumFrontEnd::processFloatCode(Cfg* pCfg)
 						Location::regOf(32)), i++);
 					(*rit)->insertStmt(new Assign(new FloatType(80),
 						Location::regOf(32), 
-						Location::tempOf(new Const(const_cast<char *>("tmpD9")))), i++);
+						Location::tempOf(new Const("tmpD9"))), i++);
 					// Remove the FPUSH
 					(*rit)->deleteStmt(i);
 					i--;
@@ -290,7 +290,7 @@ void PentiumFrontEnd::processFloatCode(Cfg* pCfg)
 				}
 				else if (st->isFpop()) {
 					(*rit)->insertStmt(new Assign(new FloatType(80),
-						Location::tempOf(new Const(const_cast<char *>("tmpD9"))), 
+						Location::tempOf(new Const("tmpD9")), 
 						Location::regOf(32)), i++);
 					(*rit)->insertStmt(new Assign(new FloatType(80),
 						Location::regOf(32), 
@@ -315,7 +315,7 @@ void PentiumFrontEnd::processFloatCode(Cfg* pCfg)
 						Location::regOf(39)), i++);
 					(*rit)->insertStmt(new Assign(new FloatType(80),
 						Location::regOf(39), 
-						Location::tempOf(new Const(const_cast<char *>("tmpD9")))), i++);
+						Location::tempOf(new Const("tmpD9"))), i++);
 					// Remove the FPOP
 					(*rit)->deleteStmt(i);
 					i--;
@@ -498,7 +498,7 @@ bool PentiumFrontEnd::helperFunc(ADDRESS dest, ADDRESS addr, std::list<RTL*>* lr
 		// r[24] = trunc(64, 32, r[tmpl])
 		// r[26] = r[tmpl] >> 32
 		Statement* a = new Assign(new IntegerType(64),
-			Location::tempOf(new Const(const_cast<char *>("tmpl"))),
+			Location::tempOf(new Const("tmpl")),
 			new Ternary(opFtoi,
 				new Const(64),
 				new Const(32),
@@ -510,12 +510,12 @@ bool PentiumFrontEnd::helperFunc(ADDRESS dest, ADDRESS addr, std::list<RTL*>* lr
 			new Ternary(opTruncs,
 				new Const(64),
 				new Const(32),
-				Location::tempOf(new Const(const_cast<char *>("tmpl")))));
+				Location::tempOf(new Const("tmpl"))));
 		pRtl->appendStmt(a);
 		a = new Assign(
 			Location::regOf(26),
 			new Binary(opShiftR,
-				Location::tempOf(new Const(const_cast<char *>("tmpl"))),
+				Location::tempOf(new Const("tmpl")),
 				new Const(32)));
 		pRtl->appendStmt(a);
 		// Append this RTL to the list of RTLs for this BB
@@ -727,7 +727,7 @@ void PentiumFrontEnd::processStringInst(UserProc* proc) {
 					Exp* lhs = ((Assign*)firstStmt)->getLeft();
 					if (lhs->isMachFtr()) {
 						Const* sub = (Const*)((Unary*)lhs)->getSubExp1();
-						char* str = sub->getStr();
+						const char* str = sub->getStr();
 						if (strncmp(str, "%SKIP", 5) == 0) {
 							toBranches(addr, lastRtl, cfg, rtl, bb, it);
 							noinc = true;		// toBranches inc's it

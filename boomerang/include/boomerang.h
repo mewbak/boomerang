@@ -124,7 +124,7 @@ public:
         return boomerang;
     }
 
-    static	char*		getVersionStr();
+    static	const char*		getVersionStr();
     Log			&log();
     void		setLogger(Log *l) {
         logger = l;

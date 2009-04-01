@@ -212,7 +212,7 @@ public:
         return op == opStrConst;
     }
     // Get string constant even if mangled
-    char*		getAnyStrConst();
+	const char* getAnyStrConst();
     // True if is flt point const
     bool		isFltConst() {
         return op == opFltConst;
@@ -486,7 +486,7 @@ class Const : public Exp {
         ADDRESS	a;			// void* conflated with unsigned int: needs fixing
         QWord	ll;			// 64 bit integer
         double	d;			// Double precision float
-        char*	p;			// Pointer to string
+        const char*	p;			// Pointer to string
         // Don't store string: function could be renamed
         Proc*	pp;			// Pointer to function
     } u;
@@ -498,7 +498,7 @@ public:
     Const(QWord ll);
     Const(ADDRESS a);
     Const(double d);
-    Const(char* p);
+    Const(const char* p);
     Const(Proc* p);
     // Copy constructor
     Const(Const& o);
@@ -523,7 +523,7 @@ public:
     double		getFlt() {
         return u.d;
     }
-    char*		getStr() {
+    const char*		getStr() {
         return u.p;
     }
     ADDRESS		getAddr() {
@@ -541,7 +541,7 @@ public:
     void		setFlt(double d)	{
         u.d = d;
     }
-    void		setStr(char* p)		{
+    void		setStr(const char* p)		{
         u.p = p;
     }
     void		setAddr(ADDRESS a)	{
@@ -1035,7 +1035,7 @@ public:
     }
     static Location*	local(const char *nam, UserProc *p);
     static Location*	param(const char *nam, UserProc *p = NULL) {
-        return new Location(opParam, new Const((char*)nam), p);
+        return new Location(opParam, new Const(nam), p);
     }
     // Clone
     virtual Exp*		clone();

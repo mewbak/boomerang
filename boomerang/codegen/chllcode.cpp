@@ -46,7 +46,7 @@
 #include <cstring>
 #include <cstdlib>
 
-extern char *operStrings[];
+extern const char *operStrings[];
 
 /// Empty constructor, calls HLLCode()
 CHLLCode::CHLLCode() : HLLCode()
@@ -94,7 +94,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 #if SYMS_IN_BACK_END				// Should no longer be any unmapped symbols by the back end
 	// Check if it's mapped to a symbol
 	if (m_proc && !exp->isTypedExp()) {			// Beware: lookupSym will match (cast)r24 to local0, stripping the cast!
-		char* sym = m_proc->lookupSym(exp);
+		const char* sym = m_proc->lookupSym(exp);
 		if (sym) {
 			str << sym;
 			return;
@@ -706,7 +706,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 		case opTypedExp: {
 #if SYMS_IN_BACK_END
 			Exp* b = u->getSubExp1();					// Base expression
-			char* sym = m_proc->lookupSym(exp);			// Check for (cast)sym
+			const char* sym = m_proc->lookupSym(exp);			// Check for (cast)sym
 			if (sym) {
 				str << "(";
 				appendType(str, ((TypedExp*)u)->getType());
@@ -754,7 +754,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 				Type* tt = ((TypedExp*)u)->getType();
 				if (dynamic_cast<PointerType*>(tt)) {
 #if SYMS_IN_BACK_END
-					char* sym = m_proc->lookupSym(Location::memOf(b));
+					const char* sym = m_proc->lookupSym(Location::memOf(b));
 					if (sym) {
 						openParen(str, curPrec, PREC_UNARY);
 						str << "&" << sym;
@@ -802,7 +802,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
 			str << "/* machine specific */ (int) ";
 			Exp* sub = u->getSubExp1();
 			assert(sub->isStrConst());
-			char* s = ((Const*)sub)->getStr();
+			const char* s = ((Const*)sub)->getStr();
 			if (s[0] == '%')		// e.g. %Y
 				str << s+1;			// Just use Y
 			else
@@ -1198,7 +1198,7 @@ bool isBareMemof(Exp* e, UserProc* proc) {
 	if (!e->isMemOf()) return false;
 #if SYMS_IN_BACK_END
 	// Check if it maps to a symbol
-	char* sym = proc->lookupSym(e);
+	const char* sym = proc->lookupSym(e);
 	if (sym == NULL)
 		sym = proc->lookupSym(e->getSubExp1());
 	return sym == NULL;			// Only a bare memof if it is not a symbol
@@ -1536,18 +1536,18 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open) {
 				LOG << "ERROR in CHLLCode::AddProcDec: no type for parameter " << left << "!\n";
 			ty = new IntegerType();
 		}
-		char* name;
+		const char* name;
 		if (left->isParam())
 			name = ((Const*)((Location*)left)->getSubExp1())->getStr();
 		else {
 			LOG << "ERROR: parameter " << left << " is not opParam!\n";
-			name = const_cast<char *>("??");
+			name = "??";
 		}
 		if (ty->isPointer() && ((PointerType*)ty)->getPointsTo()->isArray()) {
 			// C does this by default when you pass an array, i.e. you pass &array meaning array
 			// Replace all m[param] with foo, param with foo, then foo with param
 			ty = ((PointerType*)ty)->getPointsTo();
-			Exp *foo = new Const(const_cast<char *>("foo123412341234"));
+			Exp *foo = new Const("foo123412341234");
 			m_proc->searchAndReplace(Location::memOf(left, NULL), foo);
 			m_proc->searchAndReplace(left, foo);
 			m_proc->searchAndReplace(foo, left);
