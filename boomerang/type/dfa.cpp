@@ -20,7 +20,9 @@
  *						Van Emmerik style "result is void*" for sigma and delta functions
  */
 
+#ifndef NO_GARBAGE_COLLECTOR
 #include "gc.h"
+#endif
 #include "type.h"
 #include "boomerang.h"
 #include "signature.h"
