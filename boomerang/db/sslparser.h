@@ -20,7 +20,10 @@
 #line 21 "sslparser.h"
 #line 41 "sslparser.y"
 
+#ifndef NO_GARBAGE_COLLECTOR
 #include "gc.h"
+#endif
+
 #include <assert.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)

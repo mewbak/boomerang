@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="boomerang"
 	ProjectGUID="{6423B982-BD86-49D9-B4B4-834697281351}"
+	RootNamespace="boomerang"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -382,6 +383,22 @@
 			</File>
 			<File
 				RelativePath="db\managed.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\frontend\mipsdecoder.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\frontend\mipsdecoder.h"
+				>
+			</File>
+			<File
+				RelativePath=".\frontend\mipsfrontend.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\frontend\mipsfrontend.h"
 				>
 			</File>
 			<File

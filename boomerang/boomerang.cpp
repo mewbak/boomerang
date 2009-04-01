@@ -54,8 +54,9 @@
 
 
 // For the -nG switch to disable the garbage collector
+#ifndef NO_GARBAGE_COLLECTOR
 #include "gc.h"
-
+#endif
 Boomerang *Boomerang::boomerang = NULL;
 
 /**

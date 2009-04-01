@@ -83,8 +83,9 @@ void *alloca ();
 /* #line 73 "/usr/local/lib/bison.cc" */
 #line 85 "sslparser.cpp"
 #line 41 "sslparser.y"
-
+#ifndef NO_GARBAGE_COLLECTOR
 #include "gc.h"
+#endif
 #include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)

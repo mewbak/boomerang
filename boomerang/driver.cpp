@@ -22,7 +22,10 @@
 
 #include "boomerang.h"
 //#define GC_DEBUG 1		// Uncomment to debug the garbage collector
+
+#ifndef NO_GARBAGE_COLLECTOR
 #include "gc.h"
+#endif
 
 void init_dfa();			// Prototypes for
 void init_sslparser();		// various initialisation functions
