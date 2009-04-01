@@ -4,9 +4,15 @@
 #include <stdint.h>
 #include "BinaryFile.h"
 #include "SymTab.h"
-
+#ifdef _MSC_VER
+#define PACKED 
+#else
 #define PACKED __attribute__((packed))
+#endif
 
+#ifdef _MSC_VER
+#pragma pack(push, 1)
+#endif
 struct coff_header {
     unsigned short  coff_magic;
     unsigned short  coff_sections;
@@ -16,6 +22,9 @@ struct coff_header {
     unsigned short  coff_opthead_size;
     unsigned short  coff_flags;
 } PACKED;
+#ifdef _MSC_VER
+#pragma pack(pop)
+#endif
 
 class IntelCoffFile : public BinaryFile {
 public:
@@ -60,7 +69,7 @@ private:
     // Internal stuff
     //
     const char *m_pFilename;
-    int m_fd;
+    FILE *m_fd;
     std::list<SectionInfo*> m_EntryPoints;
     std::list<ADDRESS> m_Relocations;
     struct coff_header m_Header;
