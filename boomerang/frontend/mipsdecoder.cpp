@@ -95,7 +95,7 @@ result.reset();
 std::list<Statement*>* stmts = NULL;
 
 ADDRESS nextPC = NO_ADDRESS;
-
+	return result;
 }
 
 
