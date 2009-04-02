@@ -98,7 +98,8 @@ private:        \
 public: \
     virtual ~TransformationParser();
 #line 32 "transformation.y"
-
+  #include <cstring>
+  #include <cstdlib>
   #include <list>
   #include <string>
   #include "exp.h"

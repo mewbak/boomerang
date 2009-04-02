@@ -30,6 +30,8 @@ public: \
 
 
 %header{
+  #include <cstring>
+  #include <cstdlib>
   #include <list>
   #include <string>
   #include "exp.h"
