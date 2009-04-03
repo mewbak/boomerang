@@ -5,6 +5,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_scripts;${CMAKE_MODULE_PATH})
 
+OPTION(BUILD_TESTING "Build the testing tree." OFF)
+IF(BUILD_TESTING)
+	ENABLE_TESTING()
+ENDIF(BUILD_TESTING)
+
 INCLUDE(CheckIncludeFile)
 INCLUDE(CheckTypeSize)
 INCLUDE(CheckLibraryExists)
@@ -17,7 +22,7 @@ SET(BOOMERANG_FRONTENDS "" CACHE INTERNAL "")
 SET(BOOMERANG_LOADERS "" CACHE INTERNAL "")
 SET(BOOMERANG_CODE_GENERATORS "" CACHE INTERNAL "")
 IF(MSVC)
-ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
+	ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
 ENDIF(MSVC)
 # this is the list of libraries that will be extended
 # by various configured libraries
@@ -98,7 +103,6 @@ SET(boomerang_SRCS
 )
 
 ADD_EXECUTABLE(boomerang ${boomerang_SRCS})
-
 TARGET_LINK_LIBRARIES(boomerang 
 	driver 
 	${BOOMERANG_LOADERS} 
@@ -119,3 +123,31 @@ install(FILES  include/*.h DESTINATION include)
 # this is put at the end so that first cmake configure will assume USE_GC NO, 
 # and will not check for existence of Boehm GC
 OPTION(USE_GC "Use Boehm garbage collector, only developers should turn this off" true)
+
+IF(BUILD_TESTING)
+	FIND_PACKAGE(CppUnit REQUIRED)
+	MESSAGE(WARNING CPPUNIT_INCLUDE_DIR ${CPPUNIT_INCLUDE_DIR})
+	INCLUDE_DIRECTORIES(${CPPUNIT_INCLUDE_DIR})
+
+	ENABLE_TESTING()
+	FILE(GLOB_RECURSE UnitTests_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*Test.cpp" )
+	FILE(GLOB_RECURSE UnitTests_INCLUDES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*Test.h" )
+	ADD_EXECUTABLE(UnitTester testAll.cpp ${UnitTests_SRCS} ${UnitTests_INCLUDES})
+	FOREACH(test ${UnitTests_SRCS})
+			GET_FILENAME_COMPONENT(TestName ${test} NAME_WE)
+			ADD_TEST(${TestName} UnitTester ${TestName})
+	ENDFOREACH(test)
+	TARGET_LINK_LIBRARIES(UnitTester ${CPPUNIT_LIBRARIES}
+		${BOOMERANG_LOADERS} 
+		${BOOMERANG_FRONTENDS} 
+		boomerang_db
+		boomerang_type_solvers
+		boomerang_transform
+		boomerang_util
+		boomerang_DSLs
+		${BOOMERANG_CODE_GENERATORS}
+		${boomerang_libs}
+		${CMAKE_DL_LIBS}	
+	)
+
+ENDIF(BUILD_TESTING)

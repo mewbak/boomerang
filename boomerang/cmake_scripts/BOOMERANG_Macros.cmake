@@ -1,4 +1,7 @@
 #this macro expects all loader names to be the same as their cpp files
+# collected names will be available in local scoped variable named
+# _BOOMERANG_...
+
 MACRO(BOOMERANG_ADD_LOADER loader_name)
 	IF(NOT ${loader_name}_LOADER_VISITED)
 		# add the loader as a dll
@@ -12,8 +15,8 @@ MACRO(BOOMERANG_ADD_LOADER loader_name)
 		TARGET_LINK_LIBRARIES(${loader_name} BinaryFile)
 		ADD_DEPENDENCIES(${loader_name} BinaryFile)
 		# add this loader to project's global loader list
-		SET(BOOMERANG_LOADERS ${BOOMERANG_LOADERS} ${loader_name} CACHE INTERNAL "")		
-		SET(${loader_name}_LOADER_VISITED CACHE INTERNAL "")
+		LIST(APPEND _BOOMERANG_LOADERS ${loader_name})		
+		SET(${loader_name}_LOADER_VISITED true)
 	ENDIF(NOT ${loader_name}_LOADER_VISITED)
 ENDMACRO(BOOMERANG_ADD_LOADER)
 
@@ -30,17 +33,18 @@ MACRO(BOOMERANG_ADD_FRONTEND frontend_name)
 		 ${ARGN}
 		 )
 		# add this generator to project's global loader list
-		SET(BOOMERANG_FRONTENDS ${BOOMERANG_FRONTENDS} Frontend_${frontend_name} CACHE INTERNAL "")		
-		SET(${frontend_name}_FRONTEND_VISITED)
+		LIST(APPEND _BOOMERANG_FRONTENDS Frontend_${frontend_name})		
+		SET(${frontend_name}_FRONTEND_VISITED true)
 	ENDIF(NOT ${frontend_name}_FRONTEND_VISITED)
 ENDMACRO(BOOMERANG_ADD_FRONTEND)
 
 MACRO(BOOMERANG_ADD_CODEGEN gen_name)
+	MESSAGE(NOTICE "Addding Codegen ${gen_name} with sources ${ARGN}")
 	IF(NOT ${gen_name}_CODEGEN_VISITED)
 		# add the loader as a static
-		ADD_LIBRARY(${gen_name} STATIC ${ARGN})
+		ADD_LIBRARY(Codegen_${gen_name} STATIC ${ARGN})
 		# add this generator to project's global loader list
-		SET(BOOMERANG_CODE_GENERATORS ${BOOMERANG_CODE_GENERATORS} ${gen_name} CACHE INTERNAL "")		
-		SET(${gen_name}_CODEGEN_VISITED true CACHE INTERNAL "")
+		LIST(APPEND _BOOMERANG_CODE_GENERATORS Codegen_${gen_name})		
+		SET(${gen_name}_CODEGEN_VISITED true)
 	ENDIF(NOT ${gen_name}_CODEGEN_VISITED)
 ENDMACRO(BOOMERANG_ADD_CODEGEN)
