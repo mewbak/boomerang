@@ -5,7 +5,7 @@ ADD_LIBRARY(BinaryFile SHARED
 			SymTab.cpp 
 			SymTab.h
 			)
-ADD_DEPENDENCIES(BinaryFile ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES(BinaryFile ${CMAKE_DL_LIBS})
 # This will be removed to use CMAKE default shared library 
 # define : ${}_Exports
 SET_TARGET_PROPERTIES(BinaryFile PROPERTIES 
