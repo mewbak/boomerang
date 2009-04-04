@@ -326,7 +326,6 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint() {
     unsigned int lastcall = 0, lastlastcall = 0;
     while (1) {
         op1 = *(unsigned char*)(p + base);
-		assert(p<textSize);
         if (op1 == 0xE8) {			// CALL opcode
             unsigned int dest = p + 5 + LMMH(*(p + base + 1));
             if (in_mingw_CRTStartup&&dest<textSize) {
@@ -343,6 +342,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint() {
                 lastcall = p;
             } else {
                 p = dest;
+				if(dest>=textSize)
+					break;
                 in_mingw_CRTStartup = true;
                 continue;
             }
