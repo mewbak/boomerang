@@ -861,6 +861,8 @@ std::vector<Exp*> &Prog::getDefaultReturns()
 }
 
 bool Prog::isWin32() {
+	if(!pFE)
+		return false;
 	return pFE->isWin32();
 }
 

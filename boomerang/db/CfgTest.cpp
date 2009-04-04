@@ -24,14 +24,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CfgTest );
 #define SEMI_PENTIUM			"test/pentium/semi"
 #define IFTHEN_PENTIUM			"test/pentium/ifthen"
 
-class NullLogger : public Log {
-public:
-	virtual Log &operator<<(const char *str) {
-		// std::cerr << str;
-		return *this;
-	}
-	virtual ~NullLogger() {};
-};
 /*==============================================================================
  * FUNCTION:		CfgTest::setUp
  * OVERVIEW:		Set up some expressions for use with all the tests

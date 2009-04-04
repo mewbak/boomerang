@@ -20,7 +20,8 @@
 #include "cfg.h"
 #include "BinaryFile.h"
 #include "BinaryFileStub.h"
-
+#include "boomerang.h"
+#include "log.h"
 CPPUNIT_TEST_SUITE_REGISTRATION( FrontSparcTest );
 
 #define HELLO_SPARC		"test/sparc/hello"
@@ -34,7 +35,12 @@ CPPUNIT_TEST_SUITE_REGISTRATION( FrontSparcTest );
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
+static bool logset = false;
 void FrontSparcTest::setUp () {
+	if (!logset) {
+		logset = true;
+		Boomerang::get()->setLogger(new NullLogger());
+	}
 }
 
 /*==============================================================================

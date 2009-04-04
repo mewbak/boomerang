@@ -19,7 +19,8 @@
 #include "BinaryFile.h"
 #include "BinaryFileStub.h"
 #include "decoder.h"
-
+#include "boomerang.h"
+#include "log.h"
 CPPUNIT_TEST_SUITE_REGISTRATION( FrontPentTest );
 
 #define HELLO_PENT		"test/pentium/hello"
@@ -36,7 +37,12 @@ CPPUNIT_TEST_SUITE_REGISTRATION( FrontPentTest );
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
+static bool logset = false;
 void FrontPentTest::setUp () {
+	if (!logset) {
+		logset = true;
+		Boomerang::get()->setLogger(new NullLogger());
+	}
 }
 
 /*==============================================================================

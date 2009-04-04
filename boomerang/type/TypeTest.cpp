@@ -18,6 +18,8 @@
 #include "log.h"
 #include "prog.h"
 #include "proc.h"
+#include "boomerang.h"
+#include "log.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TypeTest );
 
@@ -30,7 +32,12 @@ CPPUNIT_TEST_SUITE_REGISTRATION( TypeTest );
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
+static bool logset = false;
 void TypeTest::setUp () {
+	if (!logset) {
+		logset = true;
+		Boomerang::get()->setLogger(new NullLogger());
+	}
 }
 
 /*==============================================================================
@@ -76,7 +83,7 @@ void TypeTest::testCompound() {
 	BinaryFileFactory bff;
 	BinaryFile *pBF = bff.Load(HELLO_WINDOWS);
 	FrontEnd *pFE = new PentiumFrontEnd(pBF, new Prog, &bff);
-	Boomerang::get()->setLogger(new FileLogger());		// May try to output some messages to LOG
+
 	pFE->readLibraryCatalog();				// Read definitions
 
 	Signature* paintSig = pFE->getLibSignature("BeginPaint");

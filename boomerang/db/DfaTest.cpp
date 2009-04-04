@@ -10,7 +10,7 @@
  */
 
 #include <log.h>
-
+#include "boomerang.h"
 #include "DfaTest.h"
 #include "type.h"
 
@@ -32,7 +32,12 @@ public:
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
+static bool logset = false;
 void DfaTest::setUp () {
+	if (!logset) {
+		logset = true;
+		Boomerang::get()->setLogger(new NullLogger());
+	}
 }
 
 /*==============================================================================

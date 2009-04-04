@@ -48,6 +48,14 @@ public:
     }
     virtual ~FileLogger() {};
 };
+class NullLogger : public Log {
+public:
+	virtual Log &operator<<(const char *str) {
+		// std::cerr << str;
+		return *this;
+	}
+	virtual ~NullLogger() {};
+};
 
 // For older MSVC compilers
 #if defined(_MSC_VER) && (_MSC_VER <= 1200)

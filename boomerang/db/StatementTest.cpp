@@ -28,15 +28,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION( StatementTest );
 #define HELLO_PENTIUM	   "test/pentium/hello"
 #define GLOBAL1_PENTIUM	   "test/pentium/global1"
 
-class NullLogger : public Log {
-public:
-	virtual Log &operator<<(const char *str) {
-		// std::cerr << str;
-		return *this;
-	}
-	virtual ~NullLogger() {};
-};
-
 /*==============================================================================
  * FUNCTION:		StatementTest::setUp
  * OVERVIEW:		Set up some expressions for use with all the tests
