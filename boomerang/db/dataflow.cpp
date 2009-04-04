@@ -255,7 +255,8 @@ bool DataFlow::placePhiFunctions(UserProc* proc) {
 	// Recreate each call because propagation and other changes make old data invalid
 	unsigned n;
 	for (n=0; n < numBB; n++) {
-		BasicBlock::rtlit rit; StatementList::iterator sit;
+		BasicBlock::rtlit rit;
+		StatementList::iterator sit;
 		PBB bb = BBs[n];
 		for (Statement* s = bb->getFirstStmt(rit, sit); s; s = bb->getNextStmt(rit, sit)) {
 			LocationSet ls;

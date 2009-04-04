@@ -12,7 +12,7 @@
 #include "CTest.h"
 #include "ansi-c-parser.h"
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( CTest, CTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( CTest );
 
 /*==============================================================================
  * FUNCTION:        CTest::setUp

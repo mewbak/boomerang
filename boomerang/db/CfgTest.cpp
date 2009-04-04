@@ -16,6 +16,7 @@
 #include "prog.h"
 #include "dataflow.h"
 #include "pentiumfrontend.h"
+#include "log.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CfgTest );
 
@@ -23,6 +24,14 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CfgTest );
 #define SEMI_PENTIUM			"test/pentium/semi"
 #define IFTHEN_PENTIUM			"test/pentium/ifthen"
 
+class NullLogger : public Log {
+public:
+	virtual Log &operator<<(const char *str) {
+		// std::cerr << str;
+		return *this;
+	}
+	virtual ~NullLogger() {};
+};
 /*==============================================================================
  * FUNCTION:		CfgTest::setUp
  * OVERVIEW:		Set up some expressions for use with all the tests
@@ -30,8 +39,12 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CfgTest );
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
+static bool logset = false;
 void CfgTest::setUp () {
-	//prog.setName("default name");
+	if (!logset) {
+		logset = true;
+		Boomerang::get()->setLogger(new NullLogger());
+	}
 }
 
 /*==============================================================================

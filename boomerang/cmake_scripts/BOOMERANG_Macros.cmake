@@ -39,7 +39,6 @@ MACRO(BOOMERANG_ADD_FRONTEND frontend_name)
 ENDMACRO(BOOMERANG_ADD_FRONTEND)
 
 MACRO(BOOMERANG_ADD_CODEGEN gen_name)
-	MESSAGE(NOTICE "Addding Codegen ${gen_name} with sources ${ARGN}")
 	IF(NOT ${gen_name}_CODEGEN_VISITED)
 		# add the loader as a static
 		ADD_LIBRARY(Codegen_${gen_name} STATIC ${ARGN})
