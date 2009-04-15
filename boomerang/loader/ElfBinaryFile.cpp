@@ -1085,6 +1085,7 @@ void ElfBinaryFile::applyRelocations() {
                     if (e_type == E_REL)
                         pRelWord = ((int*)(destHostOrigin + r_offset));
                     else {
+                        if (r_offset == 0) continue;
                         SectionInfo* destSec = GetSectionInfoByAddr(r_offset);
                         pRelWord = (int*)(destSec->uHostAddr - destSec->uNativeAddr + r_offset);
                         destNatOrigin = 0;
@@ -1194,6 +1195,7 @@ bool ElfBinaryFile::IsRelocationAt(ADDRESS uNative) {
                     if (e_type == E_REL)
                         pRelWord = destNatOrigin + r_offset;
                     else {
+                        if (r_offset == 0) continue;
                         SectionInfo* destSec = GetSectionInfoByAddr(r_offset);
                         pRelWord = destSec->uNativeAddr + r_offset;
                         destNatOrigin = 0;
@@ -1253,6 +1255,77 @@ const char *ElfBinaryFile::getFilenameSymbolFor(const char *sym) {
         }
     }
     return NULL;
+}
+
+void ElfBinaryFile::getFunctionSymbols(std::map<std::string, std::map<ADDRESS, std::string> > &syms_in_file)
+{
+    int i;
+    int secIndex = 0;
+    for (i=1; i < m_iNumSections; ++i) {
+        unsigned uType = m_pSections[i].uType;
+        if (uType == SHT_SYMTAB) {
+            secIndex = i;
+            break;
+        }
+    }
+    if (secIndex == 0)
+    {
+        fprintf(stderr, "no symtab section? Assuming stripped, looking for dynsym.\n");
+            
+        for (i=1; i < m_iNumSections; ++i) {
+            unsigned uType = m_pSections[i].uType;
+            if (uType == SHT_DYNSYM) {
+                secIndex = i;
+                break;
+            }
+        }
+
+        if (secIndex == 0)
+        {
+            fprintf(stderr, "no dynsyms either.. guess we're out of luck.\n");
+            return;
+        }
+    }
+
+    int e_type = elfRead2(&((Elf32_Ehdr*)m_pImage)->e_type);
+    PSectionInfo pSect = &m_pSections[secIndex];
+    // Calc number of symbols
+    int nSyms = pSect->uSectionSize / pSect->uSectionEntrySize;
+    m_pSym = (Elf32_Sym*) pSect->uHostAddr;			// Pointer to symbols
+    int strIdx = m_sh_link[secIndex];				// sh_link points to the string table
+
+    std::string filename = "unknown.c";
+
+    // Index 0 is a dummy entry
+    for (int i = 1; i < nSyms; i++) {
+        int name = elfRead4(&m_pSym[i].st_name);
+        if (name == 0)  /* Silly symbols with no names */ continue;
+        std::string str(GetStrPtr(strIdx, name));
+        // Hack off the "@@GLIBC_2.0" of Linux, if present
+        unsigned pos;
+        if ((pos = str.find("@@")) != std::string::npos)
+            str.erase(pos);
+        if (ELF32_ST_TYPE(m_pSym[i].st_info) == STT_FILE) {
+            filename = str;
+            continue;
+        }
+        if (ELF32_ST_TYPE(m_pSym[i].st_info) == STT_FUNC) {
+            ADDRESS val = (ADDRESS) elfRead4((int*)&m_pSym[i].st_value);
+            if (e_type == E_REL) {
+                int nsec = elfRead2(&m_pSym[i].st_shndx);
+                if (nsec >= 0 && nsec < m_iNumSections)
+                    val += GetSectionInfo(nsec)->uNativeAddr;
+            }
+            if (val == 0)
+            {
+                // ignore plt for now
+            }
+            else
+            {
+                syms_in_file[filename][val] = str;
+            }
+        }
+    }
 }
 
 // A map for extra symbols, those not in the usual Elf symbol tables

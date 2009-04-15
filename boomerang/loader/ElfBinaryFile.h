@@ -236,6 +236,8 @@ public:
         return m_SymTab;
     }
 
+    virtual void getFunctionSymbols(std::map<std::string, std::map<ADDRESS, std::string> > &syms_in_file);
+
     // Not meant to be used externally, but sometimes you just have to have it.
     char*       GetStrPtr(int idx, int offset); // Calc string pointer
 

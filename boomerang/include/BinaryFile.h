@@ -295,8 +295,7 @@ public:
 
     virtual bool	RealLoad(const char* sName) = 0;
 
-    virtual std::map<ADDRESS, std::string> &getFuncSymbols() {
-        return *new std::map<ADDRESS, std::string>();
+    virtual void getFunctionSymbols(std::map<std::string, std::map<ADDRESS, std::string> > &syms_in_file) {
     }
 
     virtual std::map<ADDRESS, std::string> &getSymbols() {
@@ -330,8 +329,10 @@ protected:
     // Special load function for archive members
     virtual bool		PostLoad(void* handle) = 0;		// Called after loading archive member
 
+public:
     // Get the lower and upper limits of the text segment
     void		getTextLimits();
+protected:
 
     // Data
     bool		m_bArchive;					// True if archive member
