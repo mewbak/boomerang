@@ -1,14 +1,15 @@
-struct nlist {
+struct nlist
+  {
     union {
         char      *n_name;   /* for use when in-core */
         long       n_strx;   /* index into file string table */
-    } n_un;
+      } n_un;
     unsigned char  n_type;   /* type flag; see below */
     unsigned char  n_sect;   /* section number or NO_SECT */
     short          n_desc;   /* see the header file stab.h */
     unsigned       n_value;  /* value of this symbol table entry
-				    (or stab offset) */
-};
+    				    (or stab offset) */
+  };
 
 #define N_STAB  0xe0  /* if any bits are set, this is a symbolic
 debugging entry */

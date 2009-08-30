@@ -41,16 +41,19 @@
 #define LMMHw(x) ((unsigned)((Byte *)(&x))[0] + ((unsigned)((Byte *)(&x))[1] << 8))
 
 
-typedef struct {				/* exe file header, just the signature really */
+typedef struct
+  {				/* exe file header, just the signature really */
     Byte	sigLo;			/* .EXE signature: 0x4D 0x5A	 */
     Byte	sigHi;
-} Header;
+  }
+Header;
 
 //#ifdef WIN32
 #pragma pack(1)
 //#endif
 
-typedef struct {
+typedef struct
+  {
     Byte sigLo;
     Byte sigHi;
     Byte byteord;
@@ -98,38 +101,46 @@ typedef struct {
     DWord numinstancepreload;
     DWord numinstancedemand;
     DWord heapsize;
-} LXHeader;
+  }
+LXHeader;
 
-typedef struct {
+typedef struct
+  {
     DWord VirtualSize;
     DWord RelocBaseAddr;
     DWord ObjectFlags;
     DWord PageTblIdx;
     DWord NumPageTblEntries;
     DWord Reserved1;
-} LXObject;
+  }
+LXObject;
 
-typedef struct {
+typedef struct
+  {
     DWord pagedataoffset;
     SWord datasize;
     SWord flags;
-} LXPage;
+  }
+LXPage;
 
 // this is correct for internal fixups only
-typedef struct {
+typedef struct
+  {
     unsigned char src;
     unsigned char flags;
     short srcoff;
 //    unsigned char object;         // these are now variable length
 //    unsigned short trgoff;
-} LXFixup;
+  }
+LXFixup;
 
 //#ifdef WIN32
 #pragma pack(4)
 //#endif
 
-class DOS4GWBinaryFile : public BinaryFile {
-public:
+class DOS4GWBinaryFile : public BinaryFile
+  {
+  public:
     DOS4GWBinaryFile();				// Default constructor
     virtual		~DOS4GWBinaryFile();				// Destructor
     virtual bool	Open(const char* sName);		// Open the file for r/w; ???
@@ -139,9 +150,10 @@ public:
     // LOADFMT_DOS4GW)
     virtual MACHINE GetMachine() const;			// Get machine (i.e.
     // MACHINE_Pentium)
-    virtual const char *getFilename() const {
+    virtual const char *getFilename() const
+      {
         return m_pFileName;
-    }
+      }
     virtual bool isLibrary() const;
     virtual std::list<const char *> getDependencyList();
     virtual ADDRESS getImageBase();
@@ -163,12 +175,12 @@ public:
     // Dump headers, etc
     virtual bool	DisplayDetails(const char* fileName, FILE* f = stdout);
 
-protected:
+  protected:
 
     int dos4gwRead2(short *ps) const; // Read 2 bytes from native addr
     int dos4gwRead4(int *pi) const;	 // Read 4 bytes from native addr
 
-public:
+  public:
 
     virtual int readNative1(ADDRESS a);         // Read 1 bytes from native addr
     virtual int readNative2(ADDRESS a);			// Read 2 bytes from native addr
@@ -181,14 +193,15 @@ public:
     virtual bool	IsDynamicLinkedProc(ADDRESS uNative);
     virtual const char *GetDynamicProcName(ADDRESS uNative);
 
-    virtual std::map<ADDRESS, std::string> &getSymbols() {
-        return dlprocptrs;
+    virtual std::map<ADDRESS, std::string> &getSymbols()
+    {
+      return dlprocptrs;
     }
 
-protected:
+  protected:
     virtual bool  RealLoad(const char* sName); // Load the file; pure virtual
 
-private:
+  private:
 
     bool	PostLoad(void* handle); // Called after archive member loaded
 
@@ -204,7 +217,7 @@ private:
     std::map<ADDRESS, std::string> dlprocptrs;
     const char *m_pFileName;
 
-};
+  };
 
 //#ifdef WIN32
 #pragma pack()

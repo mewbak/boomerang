@@ -20,8 +20,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION( UtilTest );
  * PARAMETERS:      <none>
  * RETURNS:         <nothing>
  *============================================================================*/
-void UtilTest::setUp () {
-}
+void UtilTest::setUp ()
+{}
 
 /*==============================================================================
  * FUNCTION:        UtilTest::tearDown
@@ -30,28 +30,31 @@ void UtilTest::setUp () {
  * PARAMETERS:      <none>
  * RETURNS:         <nothing>
  *============================================================================*/
-void UtilTest::tearDown () {
-}
+void UtilTest::tearDown ()
+{}
 /*==============================================================================
 * FUNCTION:		UtilTest::test_hasExt
 * OVERVIEW:		Test hasExt utility function
 *============================================================================*/
-void UtilTest::test_hasExt() {
-	CPPUNIT_FAIL("Unimplemented hasExt test");
-}
-
-/*==============================================================================
-* FUNCTION:		UtilTest::test_hasExt
-* OVERVIEW:		Test hasExt utility function
-*============================================================================*/
-void UtilTest::test_changeExt() {
-	CPPUNIT_FAIL("Unimplemented changeExt test");
+void UtilTest::test_hasExt()
+{
+  CPPUNIT_FAIL("Unimplemented hasExt test");
 }
 
 /*==============================================================================
 * FUNCTION:		UtilTest::test_hasExt
 * OVERVIEW:		Test hasExt utility function
 *============================================================================*/
-void UtilTest::test_searchAndReplace() {
-	CPPUNIT_FAIL("Unimplemented searchAndReplace test");
+void UtilTest::test_changeExt()
+{
+  CPPUNIT_FAIL("Unimplemented changeExt test");
+}
+
+/*==============================================================================
+* FUNCTION:		UtilTest::test_hasExt
+* OVERVIEW:		Test hasExt utility function
+*============================================================================*/
+void UtilTest::test_searchAndReplace()
+{
+  CPPUNIT_FAIL("Unimplemented searchAndReplace test");
 }

@@ -71,7 +71,8 @@ typedef std::map<ADDRESS, PBB, std::less<ADDRESS> >	  MAPBB;
  * Control Flow Graph class. Contains all the BasicBlock objects for a procedure.  These BBs contain all the RTLs for
  * the procedure, so by traversing the Cfg, one traverses the whole procedure.
  *============================================================================*/
-class Cfg {
+class Cfg
+  {
     /*
      * Pointer to the UserProc object that contains this CFG object
      */
@@ -124,7 +125,7 @@ class Cfg {
     bool		bImplicitsDone;			// True when the implicits are done; they can cause problems (e.g. with
     // ad-hoc global assignment)
 
-public:
+  public:
     /*
      * Constructor.
      */
@@ -148,8 +149,9 @@ public:
     /*
      * Get the number of BBs
      */
-    unsigned	getNumBBs() {
-        return m_listBB.size();
+    unsigned	getNumBBs()
+    {
+      return m_listBB.size();
     }
 
     /*
@@ -157,11 +159,13 @@ public:
      */
     const Cfg&	operator=(const Cfg& other); /* Copy constructor */
 
-class BBAlreadyExistsError : public std::exception {
-    public:
+  class BBAlreadyExistsError : public std::exception
+      {
+      public:
         PBB pBB;
-        BBAlreadyExistsError(PBB pBB) : pBB(pBB) { }
-    };
+        BBAlreadyExistsError(PBB pBB) : pBB(pBB)
+        { }
+      };
 
     /*
      * Checks to see if the address associated with pRtls is already in the map as an incomplete BB; if so, it is
@@ -222,11 +226,13 @@ class BBAlreadyExistsError : public std::exception {
      * An alternative to the above is to use begin() and end():
      */
     typedef		BB_IT iterator;
-    iterator	begin() {
-        return m_listBB.begin();
+    iterator	begin()
+    {
+      return m_listBB.begin();
     }
-    iterator	end()	 {
-        return m_listBB.end();
+    iterator	end()
+    {
+      return m_listBB.end();
     }
 
 
@@ -403,8 +409,9 @@ class BBAlreadyExistsError : public std::exception {
     std::vector<PBB> m_vectorBB; // faster access
 
     /* return a bb given an address */
-    PBB			bbForAddr(ADDRESS addr) {
-        return m_mapBB[addr];
+    PBB			bbForAddr(ADDRESS addr)
+    {
+      return m_mapBB[addr];
     }
 
     /* Simplify all the expressions in the CFG
@@ -416,7 +423,7 @@ class BBAlreadyExistsError : public std::exception {
      */
     void		undoComputedBB(Statement* stmt);
 
-private:
+  private:
 
     /*
      * Split the given basic block at the RTL associated with uNativeAddr. The first node's type becomes
@@ -440,7 +447,7 @@ private:
      */
     bool		checkEntryBB();
 
-public:
+  public:
     /*
      * Split the given BB at the RTL given, and turn it into the BranchStatement given. Sort out all the in and out
      * edges.
@@ -467,11 +474,13 @@ public:
     /*
      * Get the entry-point or exit BB
      */
-    PBB			getEntryBB() {
-        return entryBB;
+    PBB			getEntryBB()
+    {
+      return entryBB;
     }
-    PBB			getExitBB()	 {
-        return exitBB;
+    PBB			getExitBB()
+    {
+      return exitBB;
     }
 
     /*
@@ -507,11 +516,13 @@ public:
     Statement* findTheImplicitAssign(Exp* x);		// Find the existing implicit assign for x (if any)
     Statement* findImplicitParamAssign(Parameter* p);// Find exiting implicit assign for parameter p
     void	removeImplicitAssign(Exp* x);			// Remove an existing implicit assignment for x
-    bool	implicitsDone() {						// True if implicits have been created
-        return bImplicitsDone;
+    bool	implicitsDone()
+    {						// True if implicits have been created
+      return bImplicitsDone;
     }
-    void	setImplicitsDone() {					// Call when implicits have been created
-        bImplicitsDone = true;
+    void	setImplicitsDone()
+    {					// Call when implicits have been created
+      bImplicitsDone = true;
     }
 
     void	findInterferences(ConnectionGraph& ig);
@@ -519,11 +530,13 @@ public:
 
     void removeUsedGlobals(std::set<Global*> &unusedGlobals);
 
-protected:
-    void	addBB(PBB bb) {
-        m_listBB.push_back(bb);
+  protected:
+    void	addBB(PBB bb)
+    {
+      m_listBB.push_back(bb);
     }
     friend class XMLProgParser;
-};				/* Cfg */
+  }
+;				/* Cfg */
 
 #endif

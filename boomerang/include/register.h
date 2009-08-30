@@ -33,8 +33,9 @@ class Type;
  * integrated into uqbt
  *============================================================================*/
 
-class Register {
-public:
+class Register
+  {
+  public:
 
     Register();		// needed for use in stl classes.
     Register(const Register&);
@@ -44,25 +45,30 @@ public:
 
     // access and set functins
     void s_name(const char *);
-    void s_size(int s) {
-        size = s;
+    void s_size(int s)
+    {
+      size = s;
     }
-    void s_float(bool f) {
-        flt = f;
+    void s_float(bool f)
+    {
+      flt = f;
     }
-    void s_address(void *p) {
-        address = p;
+    void s_address(void *p)
+    {
+      address = p;
     }
 
     /* These are only used in the interpreter */
     char *g_name() const;
-    void *g_address() const {
+    void *g_address() const
+      {
         return address;
-    }
+      }
 
-    int g_size() const {
+    int g_size() const
+      {
         return size;
-    }
+      }
     Type* g_type() const;
 
     /* Set the mapped index. For COVERS registers, this is the lower register
@@ -71,34 +77,39 @@ public:
      * For SHARES registers, this is the "parent" register, e.g. if the current
      * register is %al, the parent is %ax (note: not %eax)
      */
-    void s_mappedIndex(int i) {
-        mappedIndex = i;
+    void s_mappedIndex(int i)
+    {
+      mappedIndex = i;
     }
     /* Set the mapped offset. This is the bit number where this register starts,
        e.g. for register %ah, this is 8. For COVERS regisers, this is 0 */
-    void s_mappedOffset(int i) {
-        mappedOffset = i;
+    void s_mappedOffset(int i)
+    {
+      mappedOffset = i;
     }
     /* Get the mapped index (see above) */
-    int g_mappedIndex() const {
+    int g_mappedIndex() const
+      {
         return mappedIndex;
-    }
+      }
     /* Get the mapped offset (see above) */
-    int g_mappedOffset() const {
+    int g_mappedOffset() const
+      {
         return mappedOffset;
-    }
+      }
     /* Get a bool which is true if this is a floating point register */
-    bool isFloat() const {
+    bool isFloat() const
+      {
         return flt;
-    }
+      }
 
-private:
+  private:
     char *name;
     short size;
     void *address;
     int mappedIndex;
     int mappedOffset;
     bool flt;				// True if this is a floating point register
-};
+  };
 
 #endif

@@ -30,7 +30,8 @@
 
 #include "BinaryFile.h"
 
-typedef struct {            /*        PSP structure                 */
+typedef struct
+  {            /*        PSP structure                 */
     SWord int20h;           /* interrupt 20h                        */
     SWord eof;              /* segment, end of allocation block     */
     Byte res1;              /* reserved                             */
@@ -47,9 +48,11 @@ typedef struct {            /*        PSP structure                 */
     Byte fcb2[16];          /* default file control block 2         */
     Byte res5[4];           /* reserved                             */
     Byte cmdTail[0x80];     /* command tail and disk transfer area  */
-} PSP;
+  }
+PSP;
 
-typedef struct {            /*      EXE file header          */
+typedef struct
+  {            /*      EXE file header          */
     Byte   sigLo;          /* .EXE signature: 0x4D 0x5A     */
     Byte   sigHi;
     SWord  lastPageSize;   /* Size of the last page         */
@@ -65,10 +68,12 @@ typedef struct {            /*      EXE file header          */
     SWord  initCS;         /* Segment displacement of code  */
     SWord  relocTabOffset; /* Relocation table offset       */
     SWord  overlayNum;     /* Overlay number                */
-} exeHeader;
+  }
+exeHeader;
 
-class ExeBinaryFile : public BinaryFile {
-public:
+class ExeBinaryFile : public BinaryFile
+  {
+  public:
     ExeBinaryFile();                // Default constructor
     virtual void  UnLoad();                       // Unload the image
     virtual bool  Open(const char* sName);        // Open the file for r/w; pv
@@ -76,9 +81,10 @@ public:
     virtual bool  PostLoad(void* handle);         // For archive files only
     virtual LOAD_FMT GetFormat() const;           // Get format (i.e. LOADFMT_EXE)
     virtual MACHINE GetMachine() const;           // Get machine (i.e. MACHINE_PENTIUM)
-    virtual const char *getFilename() const {
+    virtual const char *getFilename() const
+      {
         return m_pFileName;
-    }
+      }
 
     virtual bool isLibrary() const;
     virtual std::list<const char *> getDependencyList();
@@ -99,9 +105,9 @@ public:
     // Dump headers, etc
     virtual bool    DisplayDetails(const char* fileName, FILE* f = stdout);
 
-protected:
+  protected:
     virtual bool  RealLoad(const char* sName); // Load the file; pure virtual
-private:
+  private:
 
 
     exeHeader* m_pHeader;               // Pointer to header
@@ -110,6 +116,6 @@ private:
     int     m_cReloc;                   // Number of relocation entries
     DWord*  m_pRelocTable;              // The relocation table
     const char *m_pFileName;
-};
+  };
 
 #endif      // ifndef __EXEBINARYFILE_H__

@@ -1,20 +1,23 @@
 #include <stdio.h>
 
-void hello() {
+void hello()
+{
   printf("Hello, ");
 }
 
-void world() {
+void world()
+{
   printf("world!\n");
 }
 
 typedef void (*FPTR)(void);
 
-int main() {
-    FPTR p;
-    p = hello;
-    (*p)();
-    p = world;
-    (*p)();
-    return 0;
+int main()
+{
+  FPTR p;
+  p = hello;
+  (*p)();
+  p = world;
+  (*p)();
+  return 0;
 }

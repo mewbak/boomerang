@@ -54,8 +54,9 @@ typedef unsigned long vm_prot_t;		// I guessed
 
 struct mach_header;
 
-class MachOBinaryFile : public BinaryFile {
-public:
+class MachOBinaryFile : public BinaryFile
+  {
+  public:
     MachOBinaryFile();				// Default constructor
     virtual		~MachOBinaryFile();				// Destructor
     virtual bool	Open(const char* sName);		// Open the file for r/w; ???
@@ -65,9 +66,10 @@ public:
     // LOADFMT_MACHO)
     virtual MACHINE GetMachine() const;			// Get machine (i.e.
     // MACHINE_PPC)
-    virtual const char	*getFilename() const {
+    virtual const char	*getFilename() const
+      {
         return m_pFileName;
-    }
+      }
     virtual bool		isLibrary() const;
     virtual std::list<const char *> getDependencyList();
     virtual ADDRESS		getImageBase();
@@ -89,7 +91,7 @@ public:
     // Dump headers, etc
     virtual bool	DisplayDetails(const char* fileName, FILE* f = stdout);
 
-protected:
+  protected:
 
     int machORead2(short *ps) const; // Read 2 bytes from native addr
     int machORead4(int *pi) const;	 // Read 4 bytes from native addr
@@ -104,7 +106,7 @@ protected:
     unsigned int   BMMH(unsigned int x);
     unsigned short BMMHW(unsigned short x);
 
-public:
+  public:
 
     virtual bool        isReadOnly(ADDRESS uEntry);
     virtual bool        isStringConstant(ADDRESS uEntry);
@@ -117,22 +119,25 @@ public:
     virtual float		readNativeFloat4(ADDRESS a);	// Read 4 bytes as float
     virtual double		readNativeFloat8(ADDRESS a); // Read 8 bytes as float
 
-    virtual bool		IsDynamicLinkedProc(ADDRESS uNative) {
-        return dlprocs.find(uNative) != dlprocs.end();
+    virtual bool		IsDynamicLinkedProc(ADDRESS uNative)
+    {
+      return dlprocs.find(uNative) != dlprocs.end();
     }
     virtual const char	*GetDynamicProcName(ADDRESS uNative);
 
-    virtual std::map<ADDRESS, std::string> &getSymbols() {
-        return m_SymA;
+    virtual std::map<ADDRESS, std::string> &getSymbols()
+    {
+      return m_SymA;
     }
-    virtual std::map<std::string, ObjcModule> &getObjcModules() {
-        return modules;
+    virtual std::map<std::string, ObjcModule> &getObjcModules()
+    {
+      return modules;
     }
 
-protected:
+  protected:
     virtual bool		RealLoad(const char* sName); // Load the file; pure virtual
 
-private:
+  private:
 
     bool		PostLoad(void* handle); // Called after archive member loaded
     void		findJumps(ADDRESS curr);// Find names for jumps to IATs
@@ -147,7 +152,7 @@ private:
     std::map<ADDRESS, std::string> m_SymA, dlprocs;
     std::map<std::string, ObjcModule> modules;
     std::vector<struct section> sections;
-};
+  };
 
 //#ifdef WIN32
 #pragma pack()

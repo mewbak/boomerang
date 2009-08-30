@@ -2,7 +2,7 @@
  * Copyright (c) 1999 Apple Computer, Inc. All rights reserved.
  *
  * @APPLE_LICENSE_HEADER_START@
- * 
+ *
  * Portions Copyright (c) 1999 Apple Computer, Inc.  All Rights
  * Reserved.  This file contains Original Code and/or Modifications of
  * Original Code as defined in and that are subject to the Apple Public
@@ -10,7 +10,7 @@
  * except in compliance with the License.  Please obtain a copy of the
  * License at http://www.apple.com/publicsource and read it before using
  * this file.
- * 
+ *
  * The Original Code and all software distributed under the License are
  * distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, EITHER
  * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
@@ -18,7 +18,7 @@
  * FITNESS FOR A PARTICULAR PURPOSE OR NON- INFRINGEMENT.  Please see the
  * License for the specific language governing rights and limitations
  * under the License.
- * 
+ *
  * @APPLE_LICENSE_HEADER_END@
  */
 /*
@@ -31,21 +31,23 @@
 
 #import <objc/Object.h>
 
-struct objc_method_description {
-	SEL name;
-	char *types;
-};
-struct objc_method_description_list {
-        int count;
-        struct objc_method_description list[1];
-};
+struct objc_method_description
+  {
+    SEL name;
+    char *types;
+  };
+struct objc_method_description_list
+  {
+    int count;
+    struct objc_method_description list[1];
+  };
 
 @interface Protocol : Object
 {
-@private
-	char *protocol_name;
- 	struct objc_protocol_list *protocol_list;
-  	struct objc_method_description_list *instance_methods, *class_methods;
+  @private
+  char *protocol_name;
+  struct objc_protocol_list *protocol_list;
+  struct objc_method_description_list *instance_methods, *class_methods;
 }
 
 /* Obtaining attributes intrinsic to the protocol */
@@ -54,7 +56,8 @@ struct objc_method_description_list {
 
 /* Testing protocol conformance */
 
-- (BOOL) conformsTo: (Protocol *)aProtocolObject;
+- (BOOL) conformsTo:
+(Protocol *)aProtocolObject;
 
 /* Looking up information specific to a protocol */
 

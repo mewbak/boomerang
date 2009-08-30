@@ -56,16 +56,18 @@
 // these structs. All information about the sections is contained in these
 // structures.
 
-struct IMPORT_BINARYFILE SectionInfo {
+struct IMPORT_BINARYFILE SectionInfo
+  {
     SectionInfo();		// Constructor
     virtual		~SectionInfo();		// Quell a warning in gcc
 
     // Windows's PE file sections can contain any combination of code, data and bss.
     // As such, it can't be correctly described by SectionInfo, why we need to override
     // the behaviour of (at least) the question "Is this address in BSS".
-    virtual bool isAddressBss(ADDRESS a) const {
+    virtual bool isAddressBss(ADDRESS a) const
+      {
         return bBss != 0;
-    }
+      }
 
     char*		pSectionName;		// Name of section
     ADDRESS		uNativeAddr;		// Logical or native load address
@@ -81,35 +83,39 @@ unsigned	bBss:
     1;				// Set if section is BSS (allocated only)
 unsigned	bReadOnly:
     1;		// Set if this is a read only section
-};
+  };
 
 typedef SectionInfo* PSectionInfo;
 
 // Objective-C stuff
-class ObjcIvar {
-public:
+class ObjcIvar
+  {
+  public:
     std::string name, type;
     unsigned offset;
-};
+  };
 
-class ObjcMethod {
-public:
+class ObjcMethod
+  {
+  public:
     std::string name, types;
     ADDRESS addr;
-};
+  };
 
-class ObjcClass {
-public:
+class ObjcClass
+  {
+  public:
     std::string name;
     std::map<std::string, ObjcIvar> ivars;
     std::map<std::string, ObjcMethod> methods;
-};
+  };
 
-class ObjcModule {
-public:
+class ObjcModule
+  {
+  public:
     std::string name;
     std::map<std::string, ObjcClass> classes;
-};
+  };
 
 /*
  * callback function, which when given the name of a library, should return
@@ -123,7 +129,8 @@ typedef BinaryFile *(*get_library_callback_t)(char *name);
 enum LOAD_FMT {LOADFMT_ELF, LOADFMT_PE, LOADFMT_PALM, LOADFMT_PAR, LOADFMT_EXE, LOADFMT_MACHO, LOADFMT_LX, LOADFMT_COFF};
 enum MACHINE {MACHINE_PENTIUM, MACHINE_SPARC, MACHINE_HPRISC, MACHINE_PALM, MACHINE_PPC, MACHINE_ST20, MACHINE_MIPS};
 
-class BinaryFileFactory {
+class BinaryFileFactory
+  {
 #ifdef _WIN32
 // The below should be of type HINSTANCE, but #including windows.h here causes problems later compiling the objective C
 // code. So just cast as needed.
@@ -131,26 +138,28 @@ class BinaryFileFactory {
 #else
     void*		dlHandle;		// Needed for UnLoading the library
 #endif
-public:
+  public:
     BinaryFile	*Load( const char *sName );
     void		UnLoad();
-private:
+  private:
     /*
      * Perform simple magic on the file by the given name in order to determine the appropriate type, and then return an
      * instance of the appropriate subclass.
      */
     BinaryFile	*getInstanceFor(const char *sName);
-};
+  };
 
 
-class IMPORT_BINARYFILE BinaryFile {
+class IMPORT_BINARYFILE BinaryFile
+  {
 
     friend class ArchiveFile;			// So can use the protected Load()
     friend class BinaryFileFactory;	// So can use getTextLimits
 
-public:
+  public:
 
-    virtual			~BinaryFile() {}
+    virtual			~BinaryFile()
+    {}
 
     // General loader functions
     BinaryFile(bool bArchive = false);	// Constructor
@@ -171,9 +180,10 @@ public:
     // Return whether the object can be relocated if necessary
     // (ie if it is not tied to a particular base address). If not, the object
     // must be loaded at the address given by getImageBase()
-    virtual bool	isRelocatable() const {
+    virtual bool	isRelocatable() const
+      {
         return isLibrary();
-    }
+      }
     // Return a list of library names which the binary file depends on
     virtual std::list<const char *> getDependencyList() = 0;
     // Return the virtual address at which the binary expects to be loaded.
@@ -191,39 +201,48 @@ public:
     PSectionInfo GetSectionInfoByAddr(ADDRESS uEntry) const;
 
     // returns true if the given address is in a read only section
-    virtual bool isReadOnly(ADDRESS uEntry) {
-        PSectionInfo p = GetSectionInfoByAddr(uEntry);
-        return p && p->bReadOnly;
+    virtual bool isReadOnly(ADDRESS uEntry)
+    {
+      PSectionInfo p = GetSectionInfoByAddr(uEntry);
+      return p && p->bReadOnly;
     }
     // returns true if the given address is in a "strings" section
-    virtual bool isStringConstant(ADDRESS uEntry) {
-        return false;
+    virtual bool isStringConstant(ADDRESS uEntry)
+    {
+      return false;
     }
-    virtual bool isCFStringConstant(ADDRESS uEntry) {
-        return false;
+    virtual bool isCFStringConstant(ADDRESS uEntry)
+    {
+      return false;
     }
-    virtual int			readNative1(ADDRESS a) {
-        return 0;
+    virtual int			readNative1(ADDRESS a)
+    {
+      return 0;
     }
     // Read 2 bytes from given native address a; considers endianness
-    virtual int			readNative2(ADDRESS a) {
-        return 0;
+    virtual int			readNative2(ADDRESS a)
+    {
+      return 0;
     }
     // Read 4 bytes from given native address a; considers endianness
-    virtual int			readNative4(ADDRESS a) {
-        return 0;
+    virtual int			readNative4(ADDRESS a)
+    {
+      return 0;
     }
     // Read 8 bytes from given native address a; considers endianness
-    virtual QWord		readNative8(ADDRESS a) {
-        return 0;
+    virtual QWord		readNative8(ADDRESS a)
+    {
+      return 0;
     }
     // Read 4 bytes as a float; consider endianness
-    virtual float		readNativeFloat4(ADDRESS a) {
-        return 0.;
+    virtual float		readNativeFloat4(ADDRESS a)
+    {
+      return 0.;
     }
     // Read 8 bytes as a float; consider endianness
-    virtual double		readNativeFloat8(ADDRESS a) {
-        return 0.;
+    virtual double		readNativeFloat8(ADDRESS a)
+    {
+      return 0.;
     }
 
 // Symbol table functions
@@ -231,17 +250,20 @@ public:
     virtual const char* SymbolByAddress(ADDRESS uNative);
     // Lookup the name, return the address. If not found, return NO_ADDRESS
     virtual ADDRESS		GetAddressByName(const char* pName, bool bNoTypeOK = false);
-    virtual void		AddSymbol(ADDRESS uNative, const char *pName) { }
+    virtual void		AddSymbol(ADDRESS uNative, const char *pName)
+    { }
     // Lookup the name, return the size
     virtual int GetSizeByName(const char* pName, bool bTypeOK = false);
     // Get an array of addresses of imported function stubs
     // Set number of these to numImports
     virtual ADDRESS* GetImportStubs(int& numImports);
-    virtual	const char *getFilenameSymbolFor(const char *sym) {
-        return NULL;
+    virtual	const char *getFilenameSymbolFor(const char *sym)
+    {
+      return NULL;
     }
-    virtual std::vector<ADDRESS> GetExportedAddresses(bool funcsOnly = true) {
-        return std::vector<ADDRESS>();
+    virtual std::vector<ADDRESS> GetExportedAddresses(bool funcsOnly = true)
+    {
+      return std::vector<ADDRESS>();
     }
 
 // Relocation table functions
@@ -250,8 +272,9 @@ public:
 //virtual	ADDRESS	ApplyRelocation(ADDRESS uNative, ADDRESS uWord);
     // Get symbol associated with relocation at address, if any
 //virtual const char* GetRelocSym(ADDRESS uNative, ADDRESS *a = NULL, unsigned int *sz = NULL) { return NULL; }
-    virtual bool IsRelocationAt(ADDRESS uNative) {
-        return false;
+    virtual bool IsRelocationAt(ADDRESS uNative)
+    {
+      return false;
     }
 
     // Specific to BinaryFile objects that implement a "global pointer"
@@ -295,44 +318,50 @@ public:
 
     virtual bool	RealLoad(const char* sName) = 0;
 
-    virtual void getFunctionSymbols(std::map<std::string, std::map<ADDRESS, std::string> > &syms_in_file) {
+    virtual void getFunctionSymbols(std::map<std::string, std::map<ADDRESS, std::string> > &syms_in_file)
+    {}
+
+    virtual std::map<ADDRESS, std::string> &getSymbols()
+    {
+      return *new std::map<ADDRESS, std::string>();
     }
 
-    virtual std::map<ADDRESS, std::string> &getSymbols() {
-        return *new std::map<ADDRESS, std::string>();
+    virtual std::map<std::string, ObjcModule> &getObjcModules()
+    {
+      return *new std::map<std::string, ObjcModule>();
     }
 
-    virtual std::map<std::string, ObjcModule> &getObjcModules() {
-        return *new std::map<std::string, ObjcModule>();
+    ADDRESS		getLimitTextLow()
+    {
+      return limitTextLow;
+    }
+    ADDRESS		getLimitTextHigh()
+    {
+      return limitTextHigh;
     }
 
-    ADDRESS		getLimitTextLow() {
-        return limitTextLow;
-    }
-    ADDRESS		getLimitTextHigh() {
-        return limitTextHigh;
+    int			getTextDelta()
+    {
+      return textDelta;
     }
 
-    int			getTextDelta() {
-        return textDelta;
-    }
-
-    virtual bool		hasDebugInfo() {
-        return false;
+    virtual bool		hasDebugInfo()
+    {
+      return false;
     }
 
 //
 //	--	--	--	--	--	--	--	--	--	--	--
 //
 
-protected:
+  protected:
     // Special load function for archive members
     virtual bool		PostLoad(void* handle) = 0;		// Called after loading archive member
 
-public:
+  public:
     // Get the lower and upper limits of the text segment
     void		getTextLimits();
-protected:
+  protected:
 
     // Data
     bool		m_bArchive;					// True if archive member
@@ -350,6 +379,6 @@ protected:
     // text sections of the BinaryFile image
     int			textDelta;
 
-};
+  };
 
 #endif		// #ifndef __BINARYFILE_H__

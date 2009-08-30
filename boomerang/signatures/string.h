@@ -34,9 +34,9 @@ wchar_t* wcscpy(wchar_t* dest, wchar_t* src);
 wchar_t *wcschr( const wchar_t *string, wchar_t c );
 
 unsigned long wcstoul(
-   const wchar_t *nptr,
-   wchar_t **endptr,
-   int base 
+  const wchar_t *nptr,
+  wchar_t **endptr,
+  int base
 );
 
 char *strtok(char *str, const char *sep);

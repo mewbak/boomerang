@@ -13,19 +13,20 @@
 
 #include "proc.h"
 
-class ProcTest : public CPPUNIT_NS::TestFixture {
-  CPPUNIT_TEST_SUITE( ProcTest );
-  CPPUNIT_TEST( testName );
-  CPPUNIT_TEST_SUITE_END();
+class ProcTest : public CPPUNIT_NS::TestFixture
+  {
+    CPPUNIT_TEST_SUITE( ProcTest );
+    CPPUNIT_TEST( testName );
+    CPPUNIT_TEST_SUITE_END();
 
   protected:
-	Proc*  m_proc;
+    Proc*  m_proc;
 
   public:
-	void setUp ();
-	void tearDown ();
+    void setUp ();
+    void tearDown ();
 
   protected:
-	void testName ();
-};
+    void testName ();
+  };
 

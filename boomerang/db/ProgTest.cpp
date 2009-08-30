@@ -25,8 +25,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION( ProgTest );
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
-void ProgTest::setUp () {
-	//prog.setName("default name");
+void ProgTest::setUp ()
+{
+  //prog.setName("default name");
 }
 
 /*==============================================================================
@@ -36,28 +37,29 @@ void ProgTest::setUp () {
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
-void ProgTest::tearDown () {
-}
+void ProgTest::tearDown ()
+{}
 
 /*==============================================================================
  * FUNCTION:		ProgTest::testName
  * OVERVIEW:		Test setting and reading name
  *============================================================================*/
-void ProgTest::testName () {
-	BinaryFileFactory bff;
-	BinaryFile *pBF = bff.Load(HELLO_PENTIUM);	// Don't actually use it
-	Prog* prog = new Prog();
-	FrontEnd *pFE = new PentiumFrontEnd(pBF, prog, &bff);
-	// We need a Prog object with a pBF (for getEarlyParamExp())
-	prog->setFrontEnd(pFE);
-	std::string actual(prog->getName());
-	std::string expected(HELLO_PENTIUM);
-	CPPUNIT_ASSERT_EQUAL(expected, actual);
-	std::string name("Happy prog");
-	prog->setName(name.c_str());
-	actual =  prog->getName();
-	CPPUNIT_ASSERT_EQUAL(name, actual);
-	delete pFE;
+void ProgTest::testName ()
+{
+  BinaryFileFactory bff;
+  BinaryFile *pBF = bff.Load(HELLO_PENTIUM);	// Don't actually use it
+  Prog* prog = new Prog();
+  FrontEnd *pFE = new PentiumFrontEnd(pBF, prog, &bff);
+  // We need a Prog object with a pBF (for getEarlyParamExp())
+  prog->setFrontEnd(pFE);
+  std::string actual(prog->getName());
+  std::string expected(HELLO_PENTIUM);
+  CPPUNIT_ASSERT_EQUAL(expected, actual);
+  std::string name("Happy prog");
+  prog->setName(name.c_str());
+  actual =  prog->getName();
+  CPPUNIT_ASSERT_EQUAL(name, actual);
+  delete pFE;
 }
 
 // Pathetic: the second test we had (for readLibraryParams) is now obsolete;

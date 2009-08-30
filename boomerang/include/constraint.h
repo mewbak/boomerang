@@ -24,56 +24,68 @@
 
 // This class represents fixed constraints (e.g. Ta = <int>, Tb = <alpha2*>),
 // but also "tentative" constraints resulting from disjunctions of constraints
-class ConstraintMap {
+class ConstraintMap
+  {
     std::map<Exp*, Exp*, lessExpStar> cmap;
-public:
+  public:
     typedef std::map<Exp*, Exp*, lessExpStar>::iterator iterator;
 
     // Return true if the given expression is in the map
-    bool isFound(Exp* e)  {
-        return cmap.find(e) != cmap.end();
+    bool isFound(Exp* e)
+    {
+      return cmap.find(e) != cmap.end();
     }
     // Return an iterator to the given left hand side Exp
-    iterator find(Exp* e) {
-        return cmap.find(e);
+    iterator find(Exp* e)
+    {
+      return cmap.find(e);
     }
     // Lookup a given left hand side Exp (e.g. given Tlocal1, return <char*>)
-    Exp*& operator[](Exp* e) {
-        return cmap[e];
+    Exp*& operator[](Exp* e)
+    {
+      return cmap[e];
     }
     // Return the number of constraints in the map
-    int	  size() {
-        return cmap.size();
+    int	  size()
+    {
+      return cmap.size();
     }
     // Empty the map
-    void  clear() {
-        cmap.clear();
+    void  clear()
+    {
+      cmap.clear();
     }
     // Return iterators for the begin() and end() of the map
-    iterator begin() {
-        return cmap.begin();
+    iterator begin()
+    {
+      return cmap.begin();
     }
-    iterator end()	 {
-        return cmap.end();
+    iterator end()
+    {
+      return cmap.end();
     }
     // Insert a constraint given two locations (i.e. Tloc1 = Tloc2)
-    void constrain(Exp* loc1, Exp* loc2) {
-        cmap[new Unary(opTypeOf, loc1)] = new Unary(opTypeOf, loc2);
+    void constrain(Exp* loc1, Exp* loc2)
+    {
+      cmap[new Unary(opTypeOf, loc1)] = new Unary(opTypeOf, loc2);
     }
     // Insert a constraint given an equality expression
     // e.g. Tlocal1 = <char*>
     void insert(Exp* term);
     // Insert a constraint given left and right hand sides (as type Exps)
-    void insert(Exp* lhs, Exp* rhs) {
-        cmap[lhs] = rhs;
+    void insert(Exp* lhs, Exp* rhs)
+    {
+      cmap[lhs] = rhs;
     }
     // Insert a constraint given a location and a Type
-    void constrain(Exp* loc, Type* t) {
-        cmap[new Unary(opTypeOf, loc)] = new TypeVal(t);
+    void constrain(Exp* loc, Type* t)
+    {
+      cmap[new Unary(opTypeOf, loc)] = new TypeVal(t);
     }
     // Insert a constraint given two Types (at least one variable)
-    void constrain(Type* t1, Type* t2) { // Example: alpha1 = alpha2
-        cmap[new TypeVal(t1)] = new TypeVal(t2);
+    void constrain(Type* t1, Type* t2)
+    { // Example: alpha1 = alpha2
+      cmap[new TypeVal(t1)] = new TypeVal(t2);
     }
     // Union with another constraint map
     void makeUnion(ConstraintMap& o);
@@ -88,61 +100,74 @@ public:
     // <type>	= <alphaN>
     // and substitute these into each part of the solution
     void	substAlpha();
-};	// class ConstraintMap
+  }
+;	// class ConstraintMap
 
 // A class used for fast location of a constraint
 // An equation like Ta = Tb is inserted into this class twice (i.e. as
 // Ta = Tb and also as Tb = Ta. So to find out if Ta is involved in an
 // equate, only have to look up Ta in the map (on the LHS, which is fast)
-class EquateMap {
+class EquateMap
+  {
     std::map<Exp*, LocationSet, lessExpStar> emap;
-public:
+  public:
     typedef std::map<Exp*, LocationSet, lessExpStar>::iterator iterator;
-    iterator begin() {
-        return emap.begin();
+    iterator begin()
+    {
+      return emap.begin();
     }
-    iterator end()	 {
-        return emap.end();
+    iterator end()
+    {
+      return emap.end();
     }
-    void erase(iterator it) {
-        emap.erase(it);
+    void erase(iterator it)
+    {
+      emap.erase(it);
     }
-    int	 size() {
-        return emap.size();
+    int	 size()
+    {
+      return emap.size();
     }
     // Add an equate (both ways)
-    void addEquate(Exp* a, Exp* b) {
-        emap[a].insert(b);
-        emap[b].insert(a);
+    void addEquate(Exp* a, Exp* b)
+    {
+      emap[a].insert(b);
+      emap[b].insert(a);
     }
-    iterator find(Exp* e) {
-        return emap.find(e);
+    iterator find(Exp* e)
+    {
+      return emap.find(e);
     }
     void print(std::ostream& os);
     char* prints();
-};	// class EquateMap
+  }
+;	// class EquateMap
 
-class Constraints {
+class Constraints
+  {
     LocationSet		conSet;
     std::list<Exp*> disjunctions;
     // Map from location to a fixed type (could be a pointer to a variable
     // type, i.e. an alpha).
-    ConstraintMap fixed;
-    // EquateMap of locations that are equal
-    EquateMap equates;
+    ConstraintMap fixed ;
+  // EquateMap of locations that are equal
+  EquateMap equates;
 
 public:
-    Constraints() {}
+  Constraints()
+  {}
     ~Constraints();
 
     void	print(std::ostream& os);
     char*	prints();
 
-    LocationSet& getConstraints() {
-        return conSet;
+    LocationSet& getConstraints()
+    {
+      return conSet;
     }
-    void	addConstraints(LocationSet& con) {
-        conSet.makeUnion(con);
+    void	addConstraints(LocationSet& con)
+    {
+      conSet.makeUnion(con);
     }
     // Substitute the given constraintMap into the disjuncts
     void	substIntoDisjuncts(ConstraintMap& in);
@@ -157,11 +182,12 @@ public:
     // a copy of the solution (in the form of a set of T<location> = <type>)
     // into solns
     bool	solve(std::list<ConstraintMap>& solns);
-private:
+  private:
     bool	doSolve(std::list<Exp*>::iterator it, ConstraintMap& extra,
                  std::list<ConstraintMap>& solns);
     // Test for compatibility of these types. Sometimes, they are compatible
     // with an extra constraint (e.g. alpha3* is compatible with alpha4* with
     // the extra constraint that alpha3 == alpha4)
     bool	unify(Exp* x, Exp* y, ConstraintMap& extra);
-};	// class Constraints
+  }
+;	// class Constraints

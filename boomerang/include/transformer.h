@@ -16,18 +16,20 @@
 
 #include <list>
 
-class ExpTransformer {
-protected:
+class ExpTransformer
+  {
+  protected:
     static std::list<ExpTransformer*> transformers;
-public:
+  public:
     ExpTransformer();
-    virtual				~ExpTransformer() { };		// Prevent gcc4 warning
+    virtual				~ExpTransformer()
+    { };		// Prevent gcc4 warning
 
     static void			loadAll();
 
     virtual Exp			*applyTo(Exp *e, bool &bMod) = 0;
     static Exp			*applyAllTo(Exp *e, bool &bMod);
-};
+  };
 
 #endif
 

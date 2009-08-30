@@ -37,14 +37,14 @@
 #define XMLCALL __attribute__((cdecl))
 #else
 /* For any platform which uses this definition and supports more than
-   one calling convention, we need to extend this definition to
-   declare the convention used on that platform, if it's possible to
-   do so.
+one calling convention, we need to extend this definition to
+declare the convention used on that platform, if it's possible to
+do so.
 
-   If this is the case for your platform, please file a bug report
-   with information on how to identify your platform via the C
-   pre-processor and how to specify the same calling convention as the
-   platform's malloc() implementation.
+If this is the case for your platform, please file a bug report
+with information on how to identify your platform via the C
+pre-processor and how to specify the same calling convention as the
+platform's malloc() implementation.
 */
 #define XMLCALL
 #endif
@@ -71,7 +71,8 @@
 #define XMLPARSEAPI(type) XMLIMPORT type XMLCALL
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+  {
 #endif
 
 #ifdef XML_UNICODE_WCHAR_T
@@ -80,13 +81,13 @@ extern "C" {
 
 #ifdef XML_UNICODE     /* Information is UTF-16 encoded. */
 #ifdef XML_UNICODE_WCHAR_T
-typedef wchar_t XML_Char;
-typedef wchar_t XML_LChar;
+    typedef wchar_t XML_Char;
+    typedef wchar_t XML_LChar;
 #else
-typedef unsigned short XML_Char;
-typedef char XML_LChar;
+    typedef unsigned short XML_Char;
+    typedef char XML_LChar;
 #endif /* XML_UNICODE_WCHAR_T */
 #else                  /* Information is UTF-8 encoded. */
-typedef char XML_Char;
-typedef char XML_LChar;
+    typedef char XML_Char;
+    typedef char XML_LChar;
 #endif /* XML_UNICODE */

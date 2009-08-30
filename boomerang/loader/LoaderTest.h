@@ -1,6 +1,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
-class LoaderTest : public CPPUNIT_NS::TestFixture {
+class LoaderTest : public CPPUNIT_NS::TestFixture
+  {
     CPPUNIT_TEST_SUITE( LoaderTest );
     CPPUNIT_TEST( testSparcLoad );
     CPPUNIT_TEST( testPentiumLoad );
@@ -12,11 +13,11 @@ class LoaderTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST( testElfHash );
     CPPUNIT_TEST_SUITE_END();
 
-public:
+  public:
     void setUp ();
     void tearDown ();
 
-protected:
+  protected:
     void testSparcLoad ();
     void testPentiumLoad ();
     void testHppaLoad ();
@@ -27,5 +28,5 @@ protected:
     void testMicroDis2();
 
     void testElfHash();
-};
+  };
 

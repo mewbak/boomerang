@@ -22,52 +22,55 @@
 
 #include "table.h"
 
-class InsNameElem {
+class InsNameElem
+  {
 
-public:
-	InsNameElem(const char *name);
-	virtual ~InsNameElem(void);
-	virtual int ntokens(void);
-	virtual std::string getinstruction(void);
-	virtual std::string getinspattern(void);
-	virtual void getrefmap(std::map<std::string, InsNameElem*> &m);
- 
-	int ninstructions(void);
-	void append(InsNameElem* next);
-	bool increment(void);
-	void reset(void);
-	int getvalue(void);
-	
-protected:
-	InsNameElem* nextelem;
-	std::string elemname;
-	int value;
-};
+  public:
+    InsNameElem(const char *name);
+    virtual ~InsNameElem(void);
+    virtual int ntokens(void);
+    virtual std::string getinstruction(void);
+    virtual std::string getinspattern(void);
+    virtual void getrefmap(std::map<std::string, InsNameElem*> &m);
 
-class InsOptionElem : public InsNameElem {
+    int ninstructions(void);
+    void append(InsNameElem* next);
+    bool increment(void);
+    void reset(void);
+    int getvalue(void);
 
-public:
-	InsOptionElem(const char *name);
-	virtual int ntokens(void);
-	virtual std::string getinstruction(void);
-	virtual std::string getinspattern(void);
- 
-};
+  protected:
+    InsNameElem* nextelem;
+    std::string elemname;
+    int value;
+  };
 
-class InsListElem : public InsNameElem {
+class InsOptionElem : public InsNameElem
+  {
 
-public:
-	InsListElem(const char *name, Table* t, const char *idx);
-	virtual int ntokens(void);
-	virtual std::string getinstruction(void);
-	virtual std::string getinspattern(void);
-	virtual void getrefmap(std::map<std::string, InsNameElem*> &m);
+  public:
+    InsOptionElem(const char *name);
+    virtual int ntokens(void);
+    virtual std::string getinstruction(void);
+    virtual std::string getinspattern(void);
 
-	std::string getindex(void);
+  };
 
-protected:
-	std::string indexname;
-	Table* thetable;
-};
+class InsListElem : public InsNameElem
+  {
+
+  public:
+    InsListElem(const char *name, Table* t, const char *idx);
+    virtual int ntokens(void);
+    virtual std::string getinstruction(void);
+    virtual std::string getinspattern(void);
+    virtual void getrefmap(std::map<std::string, InsNameElem*> &m);
+
+    std::string getindex(void);
+
+  protected:
+    std::string indexname;
+    Table* thetable;
+  };
 
 #endif

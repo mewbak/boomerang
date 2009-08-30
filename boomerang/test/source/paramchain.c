@@ -4,18 +4,18 @@
 
 void addem(int a, int b, int c, int* res)
 {
-    *res = a+b+c;
+  *res = a+b+c;
 }
 
 void passem(int a, int b, int c, int* res)
 {
-    addem(a, b, c, res);
+  addem(a, b, c, res);
 }
 
 int main()
 {
-    int res;
-    passem(5, 10, 40, &res);
-    printf("Fifty five is %d\n", res);
-    return 0;
+  int res;
+  passem(5, 10, 40, &res);
+  printf("Fifty five is %d\n", res);
+  return 0;
 }

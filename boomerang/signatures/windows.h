@@ -41,220 +41,230 @@ typedef unsigned int ULONG;
 typedef unsigned char BYTE;
 typedef char CHAR;
 typedef int HRESULT;
-typedef LRESULT WndProc(	  
-	HWND hwnd,
-	UINT uMsg,
-	WPARAM wParam,
-	LPARAM lParam
+typedef LRESULT WndProc(
+  HWND hwnd,
+  UINT uMsg,
+  WPARAM wParam,
+  LPARAM lParam
 );
 typedef WndProc *WNDPROC;
 typedef int CRITICAL_SECTION;
 typedef CRITICAL_SECTION *LPCRITICAL_SECTION;
 
-typedef int WinMain(	  
-	HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine,
-	int nCmdShow
+typedef int WinMain(
+  HINSTANCE hInstance,
+  HINSTANCE hPrevInstance,
+  LPSTR lpCmdLine,
+  int nCmdShow
 );
 
 HLOCAL LocalFree(HLOCAL hMem);
 DWORD FormatMessageA(DWORD dwFlags, LPCVOID lpSource, DWORD dwMessageId, DWORD dwLanguageId, LPSTR lpBuffer, DWORD nSize, va_list* Arguments);
-LPSTR CharNextA(	  
-	LPCSTR lpsz
+LPSTR CharNextA(
+  LPCSTR lpsz
 );
-LPWSTR CharNextW(	   
-	LPCWSTR lpsz
+LPWSTR CharNextW(
+  LPCWSTR lpsz
 );
 LPSTR GetCommandLineA(void);
 LPWSTR GetCommandLineW(void);
 
-typedef struct {
-	UINT cbSize;
-	UINT style;
-	WNDPROC lpfnWndProc;
-	int cbClsExtra;
-	int cbWndExtra;
-	HINSTANCE hInstance;
-	HICON hIcon;
-	HCURSOR hCursor;
-	HBRUSH hbrBackground;
-	LPCSTR lpszMenuName;
-	LPCSTR lpszClassName;
-	HICON hIconSm;
-} WNDCLASSEX;
-typedef struct {
-	UINT cbSize;
-	UINT style;
-	WNDPROC lpfnWndProc;
-	int cbClsExtra;
-	int cbWndExtra;
-	HINSTANCE hInstance;
-	HICON hIcon;
-	HCURSOR hCursor;
-	HBRUSH hbrBackground;
-	LPCWSTR lpszMenuName;
-	LPCWSTR lpszClassName;
-	HICON hIconSm;
-} WNDCLASSEXw;
+typedef struct
+  {
+    UINT cbSize;
+    UINT style;
+    WNDPROC lpfnWndProc;
+    int cbClsExtra;
+    int cbWndExtra;
+    HINSTANCE hInstance;
+    HICON hIcon;
+    HCURSOR hCursor;
+    HBRUSH hbrBackground;
+    LPCSTR lpszMenuName;
+    LPCSTR lpszClassName;
+    HICON hIconSm;
+  }
+WNDCLASSEX;
+typedef struct
+  {
+    UINT cbSize;
+    UINT style;
+    WNDPROC lpfnWndProc;
+    int cbClsExtra;
+    int cbWndExtra;
+    HINSTANCE hInstance;
+    HICON hIcon;
+    HCURSOR hCursor;
+    HBRUSH hbrBackground;
+    LPCWSTR lpszMenuName;
+    LPCWSTR lpszClassName;
+    HICON hIconSm;
+  }
+WNDCLASSEXw;
 
 
 ATOM RegisterClassExW(WNDCLASSEXw *lpwcx);
 ATOM RegisterClassExA(WNDCLASSEX *lpwcx);
 
-int LoadStringA(	  
-	HINSTANCE hInstance,
-	UINT uID,
-	LPSTR lpBuffer,
-	int nBufferMax
+int LoadStringA(
+  HINSTANCE hInstance,
+  UINT uID,
+  LPSTR lpBuffer,
+  int nBufferMax
 );
 
-int LoadStringW(	  
-	HINSTANCE hInstance,
-	UINT uID,
-	LPWSTR lpBuffer,
-	int nBufferMax
+int LoadStringW(
+  HINSTANCE hInstance,
+  UINT uID,
+  LPWSTR lpBuffer,
+  int nBufferMax
 );
 
-HACCEL LoadAcceleratorsA(	   
-	HINSTANCE hInstance,
-	LPCSTR lpTableName
+HACCEL LoadAcceleratorsA(
+  HINSTANCE hInstance,
+  LPCSTR lpTableName
 );
 
-HACCEL LoadAcceleratorsW(	   
-	HINSTANCE hInstance,
-	LPCWSTR lpTableName
+HACCEL LoadAcceleratorsW(
+  HINSTANCE hInstance,
+  LPCWSTR lpTableName
 );
 
-typedef struct {
-	int x;
-	int y;
-} POINT;
+typedef struct
+  {
+    int x;
+    int y;
+  }
+POINT;
 typedef POINT *LPPOINT;
 
-typedef struct {
-	int cx;
-	int cy;
-} SIZE;
+typedef struct
+  {
+    int cx;
+    int cy;
+  }
+SIZE;
 
-typedef struct {
-	HWND hwnd;
-	UINT message;
-	WPARAM wParam;
-	LPARAM lParam;
-	DWORD time;
-	POINT pt;
-} MSG;
+typedef struct
+  {
+    HWND hwnd;
+    UINT message;
+    WPARAM wParam;
+    LPARAM lParam;
+    DWORD time;
+    POINT pt;
+  }
+MSG;
 typedef MSG *LPMSG;
 
-BOOL GetMessageA(	   
-	LPMSG lpMsg,
-	HWND hWnd,
-	UINT wMsgFilterMin,
-	UINT wMsgFilterMax
+BOOL GetMessageA(
+  LPMSG lpMsg,
+  HWND hWnd,
+  UINT wMsgFilterMin,
+  UINT wMsgFilterMax
 );
 BOOL GetMessageW(
-	LPMSG lpMsg,
-	HWND hWnd,
-	UINT wMsgFilterMin,
-	UINT wMsgFilterMax
+  LPMSG lpMsg,
+  HWND hWnd,
+  UINT wMsgFilterMin,
+  UINT wMsgFilterMax
 );
 
-int TranslateAcceleratorA(		
-	HWND hWnd,
-	HACCEL hAccTable,
-	LPMSG lpMsg
+int TranslateAcceleratorA(
+  HWND hWnd,
+  HACCEL hAccTable,
+  LPMSG lpMsg
 );
 
-int TranslateAcceleratorW(		
-	HWND hWnd,
-	HACCEL hAccTable,
-	LPMSG lpMsg
+int TranslateAcceleratorW(
+  HWND hWnd,
+  HACCEL hAccTable,
+  LPMSG lpMsg
 );
 
-BOOL TranslateMessage(		
-	const MSG *lpMsg
+BOOL TranslateMessage(
+  const MSG *lpMsg
 );
 
-LRESULT DispatchMessageA(	   
-	const MSG *lpmsg
+LRESULT DispatchMessageA(
+  const MSG *lpmsg
 );
 
-LRESULT DispatchMessageW(	   
-	const MSG *lpmsg
+LRESULT DispatchMessageW(
+  const MSG *lpmsg
 );
 
-HICON LoadIconW(	  
-	HINSTANCE hInstance,
-	LPCWSTR lpIconName
+HICON LoadIconW(
+  HINSTANCE hInstance,
+  LPCWSTR lpIconName
 );
 
-HCURSOR LoadCursorW(	  
-	HINSTANCE hInstance,
-	LPCWSTR lpCursorName
+HCURSOR LoadCursorW(
+  HINSTANCE hInstance,
+  LPCWSTR lpCursorName
 );
 
-HICON LoadIconA(	  
-	HINSTANCE hInstance,
-	LPCSTR lpIconName
+HICON LoadIconA(
+  HINSTANCE hInstance,
+  LPCSTR lpIconName
 );
 
-HCURSOR LoadCursorA(	  
-	HINSTANCE hInstance,
-	LPCSTR lpCursorName
+HCURSOR LoadCursorA(
+  HINSTANCE hInstance,
+  LPCSTR lpCursorName
 );
 
-HWND CreateWindowExA(	   
-	DWORD dwExStyle,
-	LPCSTR lpClassName,
-	LPCSTR lpWindowName,
-	DWORD dwStyle,
-	int x,
-	int y,
-	int nWidth,
-	int nHeight,
-	HWND hWndParent,
-	HMENU hMenu,
-	HINSTANCE hInstance,
-	LPVOID lpParam
+HWND CreateWindowExA(
+  DWORD dwExStyle,
+  LPCSTR lpClassName,
+  LPCSTR lpWindowName,
+  DWORD dwStyle,
+  int x,
+  int y,
+  int nWidth,
+  int nHeight,
+  HWND hWndParent,
+  HMENU hMenu,
+  HINSTANCE hInstance,
+  LPVOID lpParam
 );
 
-HWND CreateWindowExW(	   
-	DWORD dwExStyle,
-	LPCWSTR lpClassName,
-	LPCWSTR lpWindowName,
-	DWORD dwStyle,
-	int x,
-	int y,
-	int nWidth,
-	int nHeight,
-	HWND hWndParent,
-	HMENU hMenu,
-	HINSTANCE hInstance,
-	LPVOID lpParam
+HWND CreateWindowExW(
+  DWORD dwExStyle,
+  LPCWSTR lpClassName,
+  LPCWSTR lpWindowName,
+  DWORD dwStyle,
+  int x,
+  int y,
+  int nWidth,
+  int nHeight,
+  HWND hWndParent,
+  HMENU hMenu,
+  HINSTANCE hInstance,
+  LPVOID lpParam
 );
 
-BOOL ShowWindow(	  
-	HWND hWnd,
-	int nCmdShow
+BOOL ShowWindow(
+  HWND hWnd,
+  int nCmdShow
 );
 
 BOOL UpdateWindow(
   HWND hWnd
 );
 
-int MessageBoxA(	  
-	HWND hWnd,
-	LPCSTR lpText,
-	LPCSTR lpCaption,
-	UINT uType
+int MessageBoxA(
+  HWND hWnd,
+  LPCSTR lpText,
+  LPCSTR lpCaption,
+  UINT uType
 );
 
-int MessageBoxW(	  
-	HWND hWnd,
-	LPCWSTR lpText,
-	LPCWSTR lpCaption,
-	UINT uType
+int MessageBoxW(
+  HWND hWnd,
+  LPCWSTR lpText,
+  LPCWSTR lpCaption,
+  UINT uType
 );
 
 BOOL GetProcessDefaultLayout(DWORD *pdwDefaultLayout);
@@ -291,57 +301,61 @@ BOOL DestroyWindow(HWND hWnd);
 BOOL DestroyMenu(HMENU hMenu);
 
 typedef int INT_PTR;
-typedef INT_PTR DlgProc(	  
-	HWND hwndDlg,
-	UINT uMsg,
-	WPARAM wParam,
-	LPARAM lParam
+typedef INT_PTR DlgProc(
+  HWND hwndDlg,
+  UINT uMsg,
+  WPARAM wParam,
+  LPARAM lParam
 );
 typedef DlgProc *DLGPROC;
 
-HWND CreateDialogParamA(	  
-	HINSTANCE hInstance,
-	LPCSTR lpTemplateName,
-	HWND hWndParent,
-	DLGPROC lpDialogFunc,
-	LPARAM dwInitParam
+HWND CreateDialogParamA(
+  HINSTANCE hInstance,
+  LPCSTR lpTemplateName,
+  HWND hWndParent,
+  DLGPROC lpDialogFunc,
+  LPARAM dwInitParam
 );
 
-HWND CreateDialogParamW(	  
-	HINSTANCE hInstance,
-	LPCWSTR lpTemplateName,
-	HWND hWndParent,
-	DLGPROC lpDialogFunc,
-	LPARAM dwInitParam
+HWND CreateDialogParamW(
+  HINSTANCE hInstance,
+  LPCWSTR lpTemplateName,
+  HWND hWndParent,
+  DLGPROC lpDialogFunc,
+  LPARAM dwInitParam
 );
 
-LRESULT DefWindowProcA(		 
-	HWND hWnd,
-	UINT Msg,
-	WPARAM wParam,
-	LPARAM lParam
+LRESULT DefWindowProcA(
+  HWND hWnd,
+  UINT Msg,
+  WPARAM wParam,
+  LPARAM lParam
 );
 
-void PostQuitMessage(	   
-	int nExitCode
+void PostQuitMessage(
+  int nExitCode
 );
 
-typedef struct { 
-  LONG left; 
-  LONG top; 
-  LONG right; 
-  LONG bottom; 
-} RECT;
+typedef struct
+  {
+    LONG left;
+    LONG top;
+    LONG right;
+    LONG bottom;
+  }
+RECT;
 typedef RECT *LPRECT;
 
-typedef struct { 
-  HDC  hdc; 
-  BOOL fErase; 
-  RECT rcPaint; 
-  BOOL fRestore; 
-  BOOL fIncUpdate; 
-  BYTE rgbReserved[32]; 
-} PAINTSTRUCT;
+typedef struct
+  {
+    HDC  hdc;
+    BOOL fErase;
+    RECT rcPaint;
+    BOOL fRestore;
+    BOOL fIncUpdate;
+    BYTE rgbReserved[32];
+  }
+PAINTSTRUCT;
 typedef PAINTSTRUCT *LPPAINTSTRUCT;
 
 HDC BeginPaint(
@@ -354,9 +368,9 @@ BOOL EndPaint(
   LPPAINTSTRUCT lpPaint
 );
 
-BOOL GetClientRect(		 
-	HWND hWnd,
-	LPRECT lpRect
+BOOL GetClientRect(
+  HWND hWnd,
+  LPRECT lpRect
 );
 
 int DrawTextA(
@@ -376,42 +390,42 @@ int DrawTextW(
 );
 
 BOOL GetTextExtentPointA(
-	HDC		hDC,
-	LPCSTR	lpStr,
-	int		len,
-	SIZE*	sz
+  HDC		hDC,
+  LPCSTR	lpStr,
+  int		len,
+  SIZE*	sz
 );
 
 HGDIOBJ SelectObject(
-	HDC hDC,
-	HGDIOBJ hObj
+  HDC hDC,
+  HGDIOBJ hObj
 );
 
-INT_PTR DialogBoxParamA(	  
-	HINSTANCE hInstance,
-	LPCSTR lpTemplateName,
-	HWND hWndParent,
-	DLGPROC lpDialogFunc,
-	LPARAM dwInitParam
+INT_PTR DialogBoxParamA(
+  HINSTANCE hInstance,
+  LPCSTR lpTemplateName,
+  HWND hWndParent,
+  DLGPROC lpDialogFunc,
+  LPARAM dwInitParam
 );
 
-INT_PTR DialogBoxParamW(	  
-	HINSTANCE hInstance,
-	LPCWSTR lpTemplateName,
-	HWND hWndParent,
-	DLGPROC lpDialogFunc,
-	LPARAM dwInitParam
+INT_PTR DialogBoxParamW(
+  HINSTANCE hInstance,
+  LPCWSTR lpTemplateName,
+  HWND hWndParent,
+  DLGPROC lpDialogFunc,
+  LPARAM dwInitParam
 );
 
-BOOL EndDialog(		 
-	HWND hDlg,
-	INT_PTR nResult
+BOOL EndDialog(
+  HWND hDlg,
+  INT_PTR nResult
 );
 
 int wsprintfA(
-	LPSTR lpOut,
-	LPCSTR lpFmt,
-	...
+  LPSTR lpOut,
+  LPCSTR lpFmt,
+  ...
 );
 
 char *_gcvt(double value, int digits, char *buffer);  /* Convert flt to str */
@@ -468,60 +482,60 @@ DWORD GetProfileStringW(
 DWORD GetSysColor(
   int nIndex
 );
-BOOL GetWindowRect(		 
-	HWND hWnd,
-	LPRECT lpRect
+BOOL GetWindowRect(
+  HWND hWnd,
+  LPRECT lpRect
 );
 LONG GetWindowLongA(
-    HWND hWnd,
-    int nIndex
+  HWND hWnd,
+  int nIndex
 );
 LONG GetWindowLongW(
-    HWND hWnd,
-    int nIndex
+  HWND hWnd,
+  int nIndex
 );
 LONG SetWindowLongA(
-    HWND hWnd,
-    int nIndex,
-    LONG dwNewLong
+  HWND hWnd,
+  int nIndex,
+  LONG dwNewLong
 );
 LONG SetWindowLongW(
-    HWND hWnd,
-    int nIndex,
-    LONG dwNewLong
+  HWND hWnd,
+  int nIndex,
+  LONG dwNewLong
 );
 HMENU LoadMenuA(
-    HINSTANCE hInstance,
-    LPCSTR lpMenuName
+  HINSTANCE hInstance,
+  LPCSTR lpMenuName
 );
 HMENU LoadMenuW(
-    HINSTANCE hInstance,
-    LPCWSTR lpMenuName
+  HINSTANCE hInstance,
+  LPCWSTR lpMenuName
 );
 LRESULT SendMessageA(
-    HWND hWnd,
-    UINT Msg,
-    WPARAM wParam,
-    LPARAM lParam
+  HWND hWnd,
+  UINT Msg,
+  WPARAM wParam,
+  LPARAM lParam
 );
 LRESULT SendMessageW(
-    HWND hWnd,
-    UINT Msg,
-    WPARAM wParam,
-    LPARAM lParam
+  HWND hWnd,
+  UINT Msg,
+  WPARAM wParam,
+  LPARAM lParam
 );
 BOOL InvalidateRect(
   HWND hWnd,
   LPRECT lpRect,
   BOOL bErase
 );
-HWND GetDlgItem(	  
-	HWND hDlg,
-	int nIDDlgItem
+HWND GetDlgItem(
+  HWND hDlg,
+  int nIDDlgItem
 );
-BOOL EnableWindow(		
-	HWND hWnd,
-	BOOL bEnable
+BOOL EnableWindow(
+  HWND hWnd,
+  BOOL bEnable
 );
 int MapWindowPoints(
   HWND hWndFrom,
@@ -534,50 +548,50 @@ BOOL OffsetRect(
   int dx,
   int dy
 );
-BOOL SetWindowPos(		
-	HWND hWnd,
-	HWND hWndInsertAfter,
-	int X,
-	int Y,
-	int cx,
-	int cy,
-	UINT uFlags
+BOOL SetWindowPos(
+  HWND hWnd,
+  HWND hWndInsertAfter,
+  int X,
+  int Y,
+  int cx,
+  int cy,
+  UINT uFlags
 );
-HMENU GetMenu(		
-	HWND hWnd
+HMENU GetMenu(
+  HWND hWnd
 );
-HMENU GetSubMenu(	   
-	HMENU hMenu,
-	int nPos
+HMENU GetSubMenu(
+  HMENU hMenu,
+  int nPos
 );
-DWORD CheckMenuItem(	  
-	HMENU hmenu,
-	UINT uIDCheckItem,
-	UINT uCheck
+DWORD CheckMenuItem(
+  HMENU hmenu,
+  UINT uIDCheckItem,
+  UINT uCheck
 );
 BOOL SetDlgItemTextA(
-	HWND hDlg,
-	int nIDDlgItem,
-	LPCSTR lpString
+  HWND hDlg,
+  int nIDDlgItem,
+  LPCSTR lpString
 );
 BOOL SetDlgItemTextW(
-	HWND hDlg,
-	int nIDDlgItem,
-	LPCWSTR lpString
+  HWND hDlg,
+  int nIDDlgItem,
+  LPCWSTR lpString
 );
-BOOL CheckRadioButton(		
-	HWND hDlg,
-	int nIDFirstButton,
-	int nIDLastButton,
-	int nIDCheckButton
+BOOL CheckRadioButton(
+  HWND hDlg,
+  int nIDFirstButton,
+  int nIDLastButton,
+  int nIDCheckButton
 );
-HCURSOR SetCursor(		
-	HCURSOR hCursor
+HCURSOR SetCursor(
+  HCURSOR hCursor
 );
 BOOL TextOutA(
-	HDC hDC,
-	int x, int y,
-	char* sz, int len);
+  HDC hDC,
+  int x, int y,
+  char* sz, int len);
 
 int FillRect(
   HDC hDC,			// handle to DC
@@ -585,9 +599,10 @@ int FillRect(
   HBRUSH hbr		// handle to brush
 );
 
-struct SLIST_ENTRY {
-  SLIST_ENTRY *Next;
-};
+struct SLIST_ENTRY
+  {
+    SLIST_ENTRY *Next;
+  };
 
 typedef SLIST_ENTRY *PSLIST_ENTRY;
 
@@ -616,59 +631,69 @@ DWORD GetTempPathA(DWORD nBufferLength, LPSTR lpBuffer);
 DWORD SizeofResource(HMODULE hModule, HRSRC hResInfo);
 HINSTANCE ShellExecuteA(HWND hwnd, LPCSTR lpOperation, LPCSTR lpFile, LPCSTR lpParameters, LPCSTR lpDirectory, INT nShowCmd);
 
-typedef struct {
-  DWORD dwOSVersionInfoSize;
-  DWORD dwMajorVersion;
-  DWORD dwMinorVersion;
-  DWORD dwBuildNumber;
-  DWORD dwPlatformId;
-  CHAR  szCSDVersion[128];
-} OSVERSIONINFOA;
+typedef struct
+  {
+    DWORD dwOSVersionInfoSize;
+    DWORD dwMajorVersion;
+    DWORD dwMinorVersion;
+    DWORD dwBuildNumber;
+    DWORD dwPlatformId;
+    CHAR  szCSDVersion[128];
+  }
+OSVERSIONINFOA;
 
-typedef struct {
-  DWORD dwOSVersionInfoSize;
-  DWORD dwMajorVersion;
-  DWORD dwMinorVersion;
-  DWORD dwBuildNumber;
-  DWORD dwPlatformId;
-  WCHAR szCSDVersion[128];
-} OSVERSIONINFOW;
+typedef struct
+  {
+    DWORD dwOSVersionInfoSize;
+    DWORD dwMajorVersion;
+    DWORD dwMinorVersion;
+    DWORD dwBuildNumber;
+    DWORD dwPlatformId;
+    WCHAR szCSDVersion[128];
+  }
+OSVERSIONINFOW;
 
 BOOL GetVersionExA(OSVERSIONINFOA *v);
 BOOL GetVersionExW(OSVERSIONINFOW *v);
 
-typedef struct {
-  DWORD  dwOemId;
-  DWORD  dwPageSize;
-  LPVOID lpMinimumApplicationAddress;
-  LPVOID lpMaximumApplicationAddress;
-  DWORD  dwActiveProcessorMask;
-  DWORD  dwNumberOfProcessors;
-  DWORD  dwProcessorType;
-  DWORD  dwReserved1;
-  DWORD  dwReserved2;
-} SYSTEM_INFO;
+typedef struct
+  {
+    DWORD  dwOemId;
+    DWORD  dwPageSize;
+    LPVOID lpMinimumApplicationAddress;
+    LPVOID lpMaximumApplicationAddress;
+    DWORD  dwActiveProcessorMask;
+    DWORD  dwNumberOfProcessors;
+    DWORD  dwProcessorType;
+    DWORD  dwReserved1;
+    DWORD  dwReserved2;
+  }
+SYSTEM_INFO;
 
 void GetSystemInfo(SYSTEM_INFO *sinf);
 
-typedef struct {
-  DWORD dwLength;      // sizeof(MEMORYSTATUS)
-  DWORD dwMemoryLoad;  // % in use
-  DWORD dwTotalPhys;
-  DWORD dwAvailPhys;
-  DWORD dwTotalPageFile;
-  DWORD dwAvailPageFile;
-  DWORD dwTotalVirtual;
-  DWORD dwAvailVirtual;
-} MEMORYSTATUS;
+typedef struct
+  {
+    DWORD dwLength;      // sizeof(MEMORYSTATUS)
+    DWORD dwMemoryLoad;  // % in use
+    DWORD dwTotalPhys;
+    DWORD dwAvailPhys;
+    DWORD dwTotalPageFile;
+    DWORD dwAvailPageFile;
+    DWORD dwTotalVirtual;
+    DWORD dwAvailVirtual;
+  }
+MEMORYSTATUS;
 
 void GlobalMemoryStatus(MEMORYSTATUS *mst);
 
-typedef struct {
-  UINT MaxCharSize;
-  BYTE DefaultChar[2]; // MAX_DEFAULTCHAR
-  BYTE LeadByte[12];   // MAX_LEADBYTES
-} CPINFO;
+typedef struct
+  {
+    UINT MaxCharSize;
+    BYTE DefaultChar[2]; // MAX_DEFAULTCHAR
+    BYTE LeadByte[12];   // MAX_LEADBYTES
+  }
+CPINFO;
 
 BOOL GetCPInfo(UINT uCodePage, CPINFO *lpCPInfo);
 
@@ -695,9 +720,9 @@ int MultiByteToWideChar(UINT CodePage, DWORD dwFlags,
 typedef DWORD ACC_MSK;
 
 LONG RegOpenKeyExA(HANDLE hKey, LPCTSTR lpSubKey, DWORD ulOptions,
-                  ACC_MSK regsam, HANDLE *phkResult);
+                   ACC_MSK regsam, HANDLE *phkResult);
 LONG RegOpenKeyExW(HANDLE hKey, LPCTSTR lpSubKey, DWORD ulOptions,
-                  ACC_MSK regsam, HANDLE *phkResult);
+                   ACC_MSK regsam, HANDLE *phkResult);
 LONG RegCloseKey(HANDLE hKey);
 
 void SetLastError(DWORD error);
@@ -715,19 +740,19 @@ HANDLE GetStdHandle(DWORD nStdHandle);
 BOOL   SetStdHandle(DWORD nStdHandle, HANDLE hHandle);
 
 BOOL WriteFile(
-    HANDLE hFile,
-    LPCVOID lpBuffer,
-    DWORD nNumberOfBytesToWrite,
-    LPDWORD lpNumberOfBytesWritten,
-    LPOVERLAPPED lpOverlapped
-    );
+  HANDLE hFile,
+  LPCVOID lpBuffer,
+  DWORD nNumberOfBytesToWrite,
+  LPDWORD lpNumberOfBytesWritten,
+  LPOVERLAPPED lpOverlapped
+);
 
 LPVOID VirtualAlloc(
-    LPVOID lpAddress,
-    DWORD dwSize,
-    DWORD flAllocationType,
-    DWORD flProtect
-    );
+  LPVOID lpAddress,
+  DWORD dwSize,
+  DWORD flAllocationType,
+  DWORD flProtect
+);
 
 BOOL FlushFileBuffers(HANDLE hFile);
 
@@ -735,55 +760,55 @@ DWORD GetLastError(void);
 
 DWORD
 SetFilePointer(
-    HANDLE hFile,
-    LONG lDistanceToMove,
-    PLONG lpDistanceToMoveHigh,
-    DWORD dwMoveMethod
-    );
+  HANDLE hFile,
+  LONG lDistanceToMove,
+  PLONG lpDistanceToMoveHigh,
+  DWORD dwMoveMethod
+);
 
 BOOL CloseHandle(HANDLE hObject);
 BOOL CheckMenuRadioItem(
-    HMENU hmenu,
-    UINT idFirst,
-    UINT idLast,
-    UINT idCheck,
-    UINT uFlags
+  HMENU hmenu,
+  UINT idFirst,
+  UINT idLast,
+  UINT idCheck,
+  UINT uFlags
 );
 
 BOOL SetWindowTextA(
-    HWND hWnd,
-    LPCSTR lpString
+  HWND hWnd,
+  LPCSTR lpString
 );
 
 BOOL SetWindowTextW(
-    HWND hWnd,
-    LPCWSTR lpString
+  HWND hWnd,
+  LPCWSTR lpString
 );
 
 HWND SetFocus(
-    HWND hWnd
+  HWND hWnd
 );
 
 LPSTR lstrcpynA(
-    LPSTR lpString1,
-    LPCSTR lpString2,
-    int iMaxLength
+  LPSTR lpString1,
+  LPCSTR lpString2,
+  int iMaxLength
 );
 
 LPWSTR lstrcpynW(
-    LPWSTR lpString1,
-    LPCWSTR lpString2,
-    int iMaxLength
+  LPWSTR lpString1,
+  LPCWSTR lpString2,
+  int iMaxLength
 );
 
 LPSTR lstrcatA(
-    LPSTR lpString1,
-    LPSTR lpString2
+  LPSTR lpString1,
+  LPSTR lpString2
 );
 
 LPWSTR lstrcatW(
-    LPWSTR lpString1,
-    LPWSTR lpString2
+  LPWSTR lpString1,
+  LPWSTR lpString2
 );
 
 wchar_t *lstrcpyW(wchar_t *dst, wchar_t *src);
@@ -808,48 +833,52 @@ void InitializeCriticalSection(
   LPCRITICAL_SECTION lpCriticalSection
 );
 
-typedef struct {
-  DWORD cb;
-  LPSTR lpReserved;
-  LPSTR lpDesktop;
-  LPSTR lpTitle;
-  DWORD dwX;
-  DWORD dwY;
-  DWORD dwXSize;
-  DWORD dwYSize;
-  DWORD dwXCountChars;
-  DWORD dwYCountChars;
-  DWORD dwFillAttribute;
-  DWORD dwFlags;
-  WORD wShowWindow;
-  WORD cbReserved2;
-  LPBYTE lpReserved2;
-  HANDLE hStdInput;
-  HANDLE hStdOutput;
-  HANDLE hStdError;
-} STARTUPINFO;
+typedef struct
+  {
+    DWORD cb;
+    LPSTR lpReserved;
+    LPSTR lpDesktop;
+    LPSTR lpTitle;
+    DWORD dwX;
+    DWORD dwY;
+    DWORD dwXSize;
+    DWORD dwYSize;
+    DWORD dwXCountChars;
+    DWORD dwYCountChars;
+    DWORD dwFillAttribute;
+    DWORD dwFlags;
+    WORD wShowWindow;
+    WORD cbReserved2;
+    LPBYTE lpReserved2;
+    HANDLE hStdInput;
+    HANDLE hStdOutput;
+    HANDLE hStdError;
+  }
+STARTUPINFO;
 typedef STARTUPINFO *LPSTARTUPINFO;
 
-typedef struct {
-  DWORD cb;
-  LPWSTR lpReserved;
-  LPWSTR lpDesktop;
-  LPWSTR lpTitle;
-  DWORD dwX;
-  DWORD dwY;
-  DWORD dwXSize;
-  DWORD dwYSize;
-  DWORD dwXCountChars;
-  DWORD dwYCountChars;
-  DWORD dwFillAttribute;
-  DWORD dwFlags;
-  WORD wShowWindow;
-  WORD cbReserved2;
-  LPBYTE lpReserved2;
-  HANDLE hStdInput;
-  HANDLE hStdOutput;
-  HANDLE hStdError;
-} STARTUPINFOW;
+typedef struct
+  {
+    DWORD cb;
+    LPWSTR lpReserved;
+    LPWSTR lpDesktop;
+    LPWSTR lpTitle;
+    DWORD dwX;
+    DWORD dwY;
+    DWORD dwXSize;
+    DWORD dwYSize;
+    DWORD dwXCountChars;
+    DWORD dwYCountChars;
+    DWORD dwFillAttribute;
+    DWORD dwFlags;
+    WORD wShowWindow;
+    WORD cbReserved2;
+    LPBYTE lpReserved2;
+    HANDLE hStdInput;
+    HANDLE hStdOutput;
+    HANDLE hStdError;
+  }
+STARTUPINFOW;
 typedef STARTUPINFOW *LPSTARTUPINFOW;
 
 void GetStartupInfo(LPSTARTUPINFO lpStartupInfo);

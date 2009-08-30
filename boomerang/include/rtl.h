@@ -58,10 +58,11 @@ class StmtVisitor;
  * NOTE: when time permits, this class could be removed, replaced with new Statements that mark the current native
  * address
  *============================================================================*/
-class RTL {
+class RTL
+  {
     ADDRESS		nativeAddr;							// RTL's source program instruction address
     std::list<Statement*> stmtList;					// List of expressions in this RTL.
-public:
+  public:
     RTL();
     RTL(ADDRESS instNativeAddr, std::list<Statement*>* listStmt = NULL);
     RTL(const RTL& other);					// Makes deep copy of "other"
@@ -80,11 +81,13 @@ public:
     virtual bool		accept(StmtVisitor* visitor);
 
     // Common enquiry methods
-    ADDRESS		getAddress() {
-        return nativeAddr;    // Return RTL's native address
+    ADDRESS		getAddress()
+    {
+      return nativeAddr;    // Return RTL's native address
     }
-    void		setAddress(ADDRESS a) {
-        nativeAddr=a;    // Set the address
+    void		setAddress(ADDRESS a)
+    {
+      nativeAddr=a;    // Set the address
     }
     Type*		getType();								// Return type of first Assign.
     bool		areFlagsAffected();						// True if flags are affected
@@ -109,8 +112,9 @@ public:
     // Make a deep copy of the list of Exp*
     void		deepCopyList(std::list<Statement*>& dest);
     // direct access to the list of expressions
-    std::list<Statement*> &getList() {
-        return stmtList;
+    std::list<Statement*> &getList()
+    {
+      return stmtList;
     }
 
     // Print RTL to a stream.
@@ -181,10 +185,10 @@ public:
 
     // Set or clear all the "constant subscripts" (conscripts) in this RTL
     int			setConscripts(int n, bool bClear);
-protected:
+  protected:
 
     friend class XMLProgParser;
-};
+  };
 
 
 
@@ -194,8 +198,9 @@ protected:
  * This class plus ParamEntry and RTLInstDict should be moved to a separate
  * header file...
  *============================================================================*/
-class TableEntry {
-public:
+class TableEntry
+  {
+  public:
     TableEntry();
     TableEntry(std::list<std::string>& p, RTL& rtl);
 
@@ -207,13 +212,13 @@ public:
     // non-zero return indicates failure
     int appendRTL(std::list<std::string>& p, RTL& rtl);
 
-public:
+  public:
     std::list<std::string> params;
     RTL rtl;
 
 #define TEF_NEXTPC 1
     int flags;					// aka required capabilities. Init. to 0
-};
+  };
 
 
 /*==============================================================================
@@ -221,19 +226,22 @@ public:
  *============================================================================*/
 typedef enum {PARAM_SIMPLE, PARAM_ASGN, PARAM_LAMBDA, PARAM_VARIANT} ParamKind;
 
-class ParamEntry {
-public:
-    ParamEntry() {
-        asgn = NULL;
-        kind = PARAM_SIMPLE;
-        type = NULL;
-        regType = NULL;
-        lhs = false;
-        mark = 0;
+class ParamEntry
+  {
+  public:
+    ParamEntry()
+    {
+      asgn = NULL;
+      kind = PARAM_SIMPLE;
+      type = NULL;
+      regType = NULL;
+      lhs = false;
+      mark = 0;
     }
-    ~ParamEntry() {
-        if (type) delete type;
-        if (regType) delete regType;
+    ~ParamEntry()
+    {
+      if (type) delete type;
+      if (regType) delete regType;
     }
 
     std::list<std::string> params;		/* PARAM_VARIANT & PARAM_ASGN only */
@@ -245,7 +253,7 @@ public:
     Type*		regType;				/* Type of r[this], if any (void otherwise) */
     std::set<int> regIdx;				/* Values this param can take as an r[param] */
     int			mark;					/* Traversal mark. (free temporary use, basically) */
-};
+  };
 
 
 /*==============================================================================
@@ -256,8 +264,9 @@ public:
  * instruction name and list of actual parameters.
  *============================================================================*/
 
-class RTLInstDict {
-public:
+class RTLInstDict
+  {
+  public:
     RTLInstDict();
     ~RTLInstDict();
 
@@ -300,7 +309,7 @@ public:
     // Go through the params and fixup any lambda functions
     void			fixupParams();
 
-public:
+  public:
     // A map from the symbolic representation of a register (e.g. "%g0") to its index within an array of registers.
     std::map<std::string, int, std::less<std::string> > RegMap;
 
@@ -334,7 +343,7 @@ public:
     RTL *fetchExecCycle;
 
     void fixupParamsSub(std::string s, std::list<std::string>& funcParams, bool& haveCount, int mark);
-};
+  };
 
 #endif /*__RTL_H__*/
 

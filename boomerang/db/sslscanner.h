@@ -52,7 +52,7 @@
 
 
 
-/* % here is the declaration from section1 %header{  */ 
+/* % here is the declaration from section1 %header{  */
 #line 29 "sslscanner.l"
 #include "sslparser.h"
 #define MAX_LINE 1024	   // the longest SSL spec line
@@ -61,7 +61,7 @@
 #line 45 "sslscanner.l"
 #define YY_SSLScanner_CONSTRUCTOR_INIT  : theLine(1), traceLines(trace), in(ins)
 #line 46 "sslscanner.l"
-#define YY_SSLScanner_CONSTRUCTOR_CODE 
+#define YY_SSLScanner_CONSTRUCTOR_CODE
 #line 47 "sslscanner.l"
 #define YY_SSLScanner_INPUT_CODE  if (in.eof()) {	\
 	result = 0; \
@@ -78,7 +78,7 @@ public: \
 	bool traceLines;	/* echo each lines as it is scanned */ \
 	std::istream &in;
 #line 61 "sslscanner.l"
-#define YY_SSLScanner_LEX_PARAM  YY_SSLParser_STYPE &yylval 
+#define YY_SSLScanner_LEX_PARAM  YY_SSLParser_STYPE &yylval
 #line 63 "sslscanner.l"
 #line 52 "/usr/local/include/flexskel.h"
 
@@ -86,7 +86,7 @@ public: \
 #ifdef YY_SSLScanner_IOSTREAM
 #include <iostream.h>
 #define YY_SSLScanner_IFILE  istream
-#define YY_SSLScanner_OFILE ostream 
+#define YY_SSLScanner_OFILE ostream
 #define YY_SSLScanner_ERRFILE cerr
 
 #ifndef YY_SSLScanner_IFILE_DEFAULT
@@ -101,11 +101,11 @@ public: \
 #endif
 
 #ifndef YY_SSLScanner_IFILE
-#define YY_SSLScanner_IFILE FILE 
+#define YY_SSLScanner_IFILE FILE
 #endif
 
 #ifndef YY_SSLScanner_OFILE
-#define YY_SSLScanner_OFILE FILE 
+#define YY_SSLScanner_OFILE FILE
 #endif
 
 #ifndef YY_SSLScanner_ERRFILE
@@ -140,7 +140,7 @@ public: \
 #define YY_SSLScanner_LEX_RETURN int
 #else
 #ifndef YY_SSLScanner_LEX_DEFINED
-#define YY_SSLScanner_LEX_DEFINED 
+#define YY_SSLScanner_LEX_DEFINED
 #endif
 #endif
 
@@ -148,19 +148,19 @@ public: \
 #define YY_SSLScanner_LEX yylex
 #else
 #ifndef YY_SSLScanner_LEX_DEFINED
-#define YY_SSLScanner_LEX_DEFINED 
+#define YY_SSLScanner_LEX_DEFINED
 #endif
 #endif
 
 #ifndef YY_SSLScanner_LEX_PARAM
 #ifndef YY_USE_PROTOS
-#define YY_SSLScanner_LEX_PARAM 
+#define YY_SSLScanner_LEX_PARAM
 #else
 #define YY_SSLScanner_LEX_PARAM void
 #endif
 #else
 #ifndef YY_SSLScanner_LEX_DEFINED
-#define YY_SSLScanner_LEX_DEFINED 
+#define YY_SSLScanner_LEX_DEFINED
 #endif
 #endif
 
@@ -168,7 +168,7 @@ public: \
 #define YY_SSLScanner_LEX_PARAM_DEF
 #else
 #ifndef YY_SSLScanner_LEX_DEFINED
-#define YY_SSLScanner_LEX_DEFINED 
+#define YY_SSLScanner_LEX_DEFINED
 #endif
 #endif
 
@@ -243,13 +243,13 @@ extern YY_SSLScanner_IFILE *YY_SSLScanner_IN;
 extern YY_SSLScanner_OFILE *YY_SSLScanner_OUT;
 #ifdef YY_SSLScanner_LEX_DEFINED
 extern YY_SSLScanner_LEX_RETURN YY_SSLScanner_LEX ( YY_SSLScanner_LEX_PARAM )
-YY_SSLScanner_LEX_PARAM_DEF
+  YY_SSLScanner_LEX_PARAM_DEF
 #else
 #ifndef YY_DECL
 extern YY_SSLScanner_LEX_RETURN YY_SSLScanner_LEX ( YY_SSLScanner_LEX_PARAM )
-YY_SSLScanner_LEX_PARAM_DEF
+  YY_SSLScanner_LEX_PARAM_DEF
 #else
-/* no declaration if oldstyle flex */
+  /* no declaration if oldstyle flex */
 #endif
 #endif
 #else
@@ -320,7 +320,7 @@ YY_SSLScanner_LEX_PARAM_DEF
 #define YY_SSLScanner_INHERIT
 #endif
 #ifndef YY_SSLScanner_MEMBERS
-#define YY_SSLScanner_MEMBERS 
+#define YY_SSLScanner_MEMBERS
 #endif
 #ifndef YY_SSLScanner_CONSTRUCTOR_PARAM
 #define YY_SSLScanner_CONSTRUCTOR_PARAM
@@ -337,75 +337,78 @@ YY_SSLScanner_LEX_PARAM_DEF
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 
 class YY_SSLScanner_CLASS YY_SSLScanner_INHERIT
-{
- private:/* data */
- YY_SSLScanner_CHAR  *yy_c_buf_p;
- YY_SSLScanner_CHAR  yy_hold_char;
- int yy_n_chars;
- int yy_init;
- int yy_start;
- int yy_did_buffer_switch_on_eof;
- private: /* functions */
- void yy_initialize();
- int input();
- int yyinput() {return input();};
- int yy_get_next_buffer();
- void yyunput( YY_SSLScanner_CHAR  c, YY_SSLScanner_CHAR  *buf_ptr );
- /* use long instead of yy_state_type because it is undef */
- long yy_get_previous_state_ ( void );
- long yy_try_NUL_trans_  ( long current_state_ );
- protected:/* non virtual */
- YY_BUFFER_STATE YY_SSLScanner_CURRENT_BUFFER;
- void YY_SSLScanner_RESTART ( YY_SSLScanner_IFILE *input_file );
- void YY_SSLScanner_SWITCH_TO_BUFFER( YY_BUFFER_STATE new_buffer );
- void YY_SSLScanner_LOAD_BUFFER_STATE( void );
- YY_BUFFER_STATE YY_SSLScanner_CREATE_BUFFER( YY_SSLScanner_IFILE *file, int size );
- void YY_SSLScanner_DELETE_BUFFER( YY_BUFFER_STATE b );
- void YY_SSLScanner_INIT_BUFFER( YY_BUFFER_STATE b, YY_SSLScanner_IFILE *file );
- protected: /* virtual */
- virtual void YY_SSLScanner_ECHO()
+  {
+  private:/* data */
+    YY_SSLScanner_CHAR  *yy_c_buf_p;
+    YY_SSLScanner_CHAR  yy_hold_char;
+    int yy_n_chars;
+    int yy_init;
+    int yy_start;
+    int yy_did_buffer_switch_on_eof;
+  private: /* functions */
+    void yy_initialize();
+    int input();
+    int yyinput()
+    {
+      return input();
+    };
+    int yy_get_next_buffer();
+    void yyunput( YY_SSLScanner_CHAR  c, YY_SSLScanner_CHAR  *buf_ptr );
+    /* use long instead of yy_state_type because it is undef */
+    long yy_get_previous_state_ ( void );
+    long yy_try_NUL_trans_  ( long current_state_ );
+  protected:/* non virtual */
+    YY_BUFFER_STATE YY_SSLScanner_CURRENT_BUFFER;
+    void YY_SSLScanner_RESTART ( YY_SSLScanner_IFILE *input_file );
+    void YY_SSLScanner_SWITCH_TO_BUFFER( YY_BUFFER_STATE new_buffer );
+    void YY_SSLScanner_LOAD_BUFFER_STATE( void );
+    YY_BUFFER_STATE YY_SSLScanner_CREATE_BUFFER( YY_SSLScanner_IFILE *file, int size );
+    void YY_SSLScanner_DELETE_BUFFER( YY_BUFFER_STATE b );
+    void YY_SSLScanner_INIT_BUFFER( YY_BUFFER_STATE b, YY_SSLScanner_IFILE *file );
+  protected: /* virtual */
+    virtual void YY_SSLScanner_ECHO()
 #ifdef YY_SSLScanner_ECHO_PURE
-  =0
+    =0
 #endif
-  ;
- virtual int  YY_SSLScanner_INPUT(char  *buf,int &result,int max_size)
+     ;
+    virtual int  YY_SSLScanner_INPUT(char  *buf,int &result,int max_size)
 #ifdef YY_SSLScanner_INPUT_PURE
-  =0
+    =0
 #endif
-  ;
- virtual void  YY_SSLScanner_FATAL_ERROR(char *msg)
+     ;
+    virtual void  YY_SSLScanner_FATAL_ERROR(char *msg)
 #ifdef YY_SSLScanner_FATAL_ERROR_PURE
-  =0
+    =0
 #endif
-  ;
- virtual int  YY_SSLScanner_WRAP()
+     ;
+    virtual int  YY_SSLScanner_WRAP()
 #ifdef YY_SSLScanner_WRAP_PURE
-  =0
+    =0
 #endif
-  ;
- public:
- YY_SSLScanner_CHAR  *YY_SSLScanner_TEXT;
- int YY_SSLScanner_LENG;
- YY_SSLScanner_IFILE *YY_SSLScanner_IN;
- YY_SSLScanner_OFILE *YY_SSLScanner_OUT;
- YY_SSLScanner_LEX_RETURN YY_SSLScanner_LEX ( YY_SSLScanner_LEX_PARAM);
- YY_SSLScanner_CLASS(YY_SSLScanner_CONSTRUCTOR_PARAM) ;
- virtual ~YY_SSLScanner_CLASS() ;
+     ;
+  public:
+    YY_SSLScanner_CHAR  *YY_SSLScanner_TEXT;
+    int YY_SSLScanner_LENG;
+    YY_SSLScanner_IFILE *YY_SSLScanner_IN;
+    YY_SSLScanner_OFILE *YY_SSLScanner_OUT;
+    YY_SSLScanner_LEX_RETURN YY_SSLScanner_LEX ( YY_SSLScanner_LEX_PARAM);
+    YY_SSLScanner_CLASS(YY_SSLScanner_CONSTRUCTOR_PARAM) ;
+    virtual ~YY_SSLScanner_CLASS() ;
 #if YY_SSLScanner_DEBUG != 0
- int YY_SSLScanner_DEBUG_FLAG;
+    int YY_SSLScanner_DEBUG_FLAG;
 #endif
- public: /* added members */
- YY_SSLScanner_MEMBERS 
-};
+  public: /* added members */
+    YY_SSLScanner_MEMBERS
+  };
 #endif
 
 
 
-/* declaration of externs for public use of yylex scanner */
+  /* declaration of externs for public use of yylex scanner */
 
-/* % here is the declaration from section2 %header{ */ 
+  /* % here is the declaration from section2 %header{ */
 #line 328 "sslscanner.l"
 #endif
 #line 375 "/usr/local/include/flexskel.h"
 
-/* end of generated header */
+  /* end of generated header */

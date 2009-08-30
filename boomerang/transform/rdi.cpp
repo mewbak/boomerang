@@ -13,7 +13,7 @@
 #include <assert.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
-#endif 
+#endif
 
 #include <numeric>      // For accumulate
 #include <algorithm>    // For std::max()
@@ -31,10 +31,11 @@
 
 Exp *RDIExpTransformer::applyTo(Exp *e, bool &bMod)
 {
-    if (e->getOper() == opAddrOf && e->getSubExp1()->getOper() == opMemOf) {
-        e = e->getSubExp1()->getSubExp1()->clone();
-        bMod = true;
+  if (e->getOper() == opAddrOf && e->getSubExp1()->getOper() == opMemOf)
+    {
+      e = e->getSubExp1()->getSubExp1()->clone();
+      bMod = true;
     }
-    return e;
+  return e;
 }
 

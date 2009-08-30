@@ -41,16 +41,19 @@
 #define LMMH2(x) ((unsigned)((Byte *)(x))[0] + ((unsigned)((Byte *)(x))[1] << 8) + \
 	((unsigned)((Byte *)(x))[2] << 16) + ((unsigned)((Byte *)(x))[3] << 24))
 
-typedef struct {				/* exe file header, just the signature really */
+typedef struct
+  {				/* exe file header, just the signature really */
     Byte	sigLo;			/* .EXE signature: 0x4D 0x5A	 */
     Byte	sigHi;
-} Header;
+  }
+Header;
 
 //#ifdef WIN32
 #pragma pack(1)
 //#endif
 
-typedef struct {
+typedef struct
+  {
     Byte sigLo;
     Byte sigHi;
     SWord sigver;
@@ -111,9 +114,11 @@ typedef struct {
     DWord MachineSpecificSize;
     DWord ThreadLocalStorageRVA;
     DWord TotalTLSSize;
-} PEHeader;
+  }
+PEHeader;
 
-typedef struct {	// The real Win32 name of this struct is IMAGE_SECTION_HEADER
+typedef struct
+  {	// The real Win32 name of this struct is IMAGE_SECTION_HEADER
     char ObjectName[8];	// Name
     DWord VirtualSize;
     DWord RVA;			// VirtualAddress
@@ -123,9 +128,11 @@ typedef struct {	// The real Win32 name of this struct is IMAGE_SECTION_HEADER
     DWord Reserved2;		// PointerToLinenumbers
     DWord Reserved3;		// WORD NumberOfRelocations; WORD NumberOfLinenumbers;
     DWord Flags;			// Characteristics
-} PEObject;
+  }
+PEObject;
 
-typedef struct {
+typedef struct
+  {
     DWord originalFirstThunk; // 0 for end of array; also ptr to hintNameArray
     DWord preSnapDate;		// Time and date the import data was pre-snapped
     // or zero if not pre-snapped
@@ -133,9 +140,11 @@ typedef struct {
     SWord verMinor;			// Minor "		 "
     DWord name;				// RVA of dll name (asciz)
     DWord firstThunk;		// RVA of start of import address table (IAT)
-} PEImportDtor;
+  }
+PEImportDtor;
 
-typedef struct {
+typedef struct
+  {
     DWord	flags;			// Reserved; 0
     DWord	stamp;			// Time/date stamp export data was created
     SWord	verMajor;		// Version number can be ...
@@ -150,14 +159,16 @@ typedef struct {
     DWord	eatRVA;			// RVA of the EAT
     DWord	nptRVA;			// RVA of the NPT
     DWord	otRVA;			// RVA of the OT
-} PEExportDtor;
+  }
+PEExportDtor;
 
 //#ifdef WIN32
 #pragma pack(4)
 //#endif
 
-class Win32BinaryFile : public BinaryFile {
-public:
+class Win32BinaryFile : public BinaryFile
+  {
+  public:
     Win32BinaryFile();				// Default constructor
     virtual				~Win32BinaryFile();				// Destructor
     virtual bool		Open(const char* sName);		// Open the file for r/w; ???
@@ -167,9 +178,10 @@ public:
     // LOADFMT_Win32)
     virtual MACHINE		GetMachine() const;			// Get machine (i.e.
     // MACHINE_Pentium)
-    virtual const char*	getFilename() const {
+    virtual const char*	getFilename() const
+      {
         return m_pFileName;
-    }
+      }
     virtual bool		isLibrary() const;
     virtual std::list<const char *> getDependencyList();
     virtual ADDRESS		getImageBase();
@@ -191,12 +203,12 @@ public:
     // Dump headers, etc
     virtual bool		DisplayDetails(const char* fileName, FILE* f = stdout);
 
-protected:
+  protected:
 
     int			win32Read2(short *ps) const; // Read 2 bytes from native addr
     int			win32Read4(int *pi) const;	 // Read 4 bytes from native addr
 
-public:
+  public:
 
     virtual int			readNative1(ADDRESS a);         // Read 1 bytes from native addr
     virtual int			readNative2(ADDRESS a);			// Read 2 bytes from native addr
@@ -216,18 +228,20 @@ public:
     bool		IsMinGWsCleanupSetup(ADDRESS uNative);
     bool		IsMinGWsMalloc(ADDRESS uNative);
 
-    virtual std::map<ADDRESS, std::string> &getSymbols() {
-        return dlprocptrs;
+    virtual std::map<ADDRESS, std::string> &getSymbols()
+    {
+      return dlprocptrs;
     }
 
-    bool		hasDebugInfo() {
-        return haveDebugInfo;
+    bool		hasDebugInfo()
+    {
+      return haveDebugInfo;
     }
 
-protected:
+  protected:
     virtual bool  		RealLoad(const char* sName); // Load the file; pure virtual
 
-private:
+  private:
 
     bool		PostLoad(void* handle); // Called after archive member loaded
     void		findJumps(ADDRESS curr);// Find names for jumps to IATs
@@ -244,7 +258,7 @@ private:
     bool		haveDebugInfo;
     bool        mingw_main;
 
-};
+  };
 
 //#ifdef WIN32
 #pragma pack()

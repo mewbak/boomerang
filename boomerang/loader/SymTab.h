@@ -30,12 +30,13 @@
 #include <map>
 #include <string>
 
-class SymTab {
+class SymTab
+  {
     // The map indexed by address.
     std::map<ADDRESS, std::string> amap;
     // The map indexed by string. Note that the strings are stored twice.
     std::map<std::string, ADDRESS> smap;
-public:
+  public:
     SymTab();						// Constructor
     ~SymTab();						// Destructor
     void		Add(ADDRESS a, char* s);		// Add a new entry
@@ -47,10 +48,11 @@ public:
     int			FindIndex(ADDRESS dwAddr);      // Find index for entry
     ADDRESS		FindSym(char* pName);           // Linear search for addr from name
 #endif
-    std::map<ADDRESS, std::string>& getAll() {
-        return amap;
+    std::map<ADDRESS, std::string>& getAll()
+    {
+      return amap;
     }
-};
+  };
 
 #ifndef NULL
 #define NULL 0          // Normally in stdio.h, it seems!

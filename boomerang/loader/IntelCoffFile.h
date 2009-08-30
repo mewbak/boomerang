@@ -5,7 +5,7 @@
 #include "BinaryFile.h"
 #include "SymTab.h"
 #ifdef _MSC_VER
-#define PACKED 
+#define PACKED
 #else
 #define PACKED __attribute__((packed))
 #endif
@@ -13,7 +13,8 @@
 #ifdef _MSC_VER
 #pragma pack(push, 1)
 #endif
-struct coff_header {
+struct coff_header
+  {
     unsigned short  coff_magic;
     unsigned short  coff_sections;
     unsigned long   coff_timestamp;
@@ -21,13 +22,15 @@ struct coff_header {
     unsigned long   coff_num_syment;
     unsigned short  coff_opthead_size;
     unsigned short  coff_flags;
-} PACKED;
+  }
+PACKED;
 #ifdef _MSC_VER
 #pragma pack(pop)
 #endif
 
-class IntelCoffFile : public BinaryFile {
-public:
+class IntelCoffFile : public BinaryFile
+  {
+  public:
     //
     // Interface
     //
@@ -64,7 +67,7 @@ public:
     virtual int readNative2(ADDRESS a);
     virtual int readNative1(ADDRESS a);
 
-private:
+  private:
     //
     // Internal stuff
     //
@@ -79,6 +82,6 @@ private:
     int readNative(ADDRESS a, unsigned short n);
 
     SymTab m_Symbols;
-};
+  };
 
 #endif	// !defined(__INTELCOFFFILE_H__)

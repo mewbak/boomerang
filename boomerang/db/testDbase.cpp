@@ -29,26 +29,26 @@
 
 int main(int argc, char** argv)
 {
-	CppUnit::TestSuite suite;
+  CppUnit::TestSuite suite;
 
-	ExpTest	 expt("ExpTest");
-	ProgTest progt("ProgTest");
-	ProcTest proct("ProcTest");
-	RtlTest rtlt("RtlTest");
-	ParserTest parsert("ParserTest");
-	TypeTest typet("TypeTest");
+  ExpTest	 expt("ExpTest");
+  ProgTest progt("ProgTest");
+  ProcTest proct("ProcTest");
+  RtlTest rtlt("RtlTest");
+  ParserTest parsert("ParserTest");
+  TypeTest typet("TypeTest");
 
-	expt.registerTests(&suite);
-	progt.registerTests(&suite);
-	proct.registerTests(&suite);
-	rtlt.registerTests(&suite);
-	parsert.registerTests(&suite);
-	typet.registerTests(&suite);
+  expt.registerTests(&suite);
+  progt.registerTests(&suite);
+  proct.registerTests(&suite);
+  rtlt.registerTests(&suite);
+  parsert.registerTests(&suite);
+  typet.registerTests(&suite);
 
-	CppUnit::TextTestResult res;
+  CppUnit::TextTestResult res;
 
-	suite.run( &res );
-	std::cout << res << std::endl;
+  suite.run( &res );
+  std::cout << res << std::endl;
 
-	return 0;
+  return 0;
 }

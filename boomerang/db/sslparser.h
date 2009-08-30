@@ -27,7 +27,7 @@
 #include <assert.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
-#endif 
+#endif
 
 #include <sstream>
 #include "types.h"
@@ -45,24 +45,24 @@ class SSLScanner;
 
 #line 68 "sslparser.y"
 typedef union {
-	Exp*			exp;
-	char*			str;
-	int				num;
-	double			dbl;
-	Statement*		regtransfer;
-	Type*			typ;
-	
-	Table*			tab;
-	InsNameElem*	insel;
-	std::list<std::string>*	  parmlist;
-	std::list<std::string>*	  strlist;
-	std::deque<Exp*>*	 exprlist;
-	std::deque<std::string>*  namelist;
-	std::list<Exp*>*	 explist;
-	RTL*			rtlist;
-} yy_SSLParser_stype;
+    Exp*			exp;
+    char*			str;
+    int				num;
+    double			dbl;
+    Statement*		regtransfer;
+    Type*			typ;
+
+    Table*			tab;
+    InsNameElem*	insel;
+    std::list<std::string>*	  parmlist;
+    std::list<std::string>*	  strlist;
+    std::deque<Exp*>*	 exprlist;
+    std::deque<std::string>*  namelist;
+    std::list<Exp*>*	 explist;
+    RTL*			rtlist;
+  } yy_SSLParser_stype;
 #define YY_SSLParser_STYPE yy_SSLParser_stype
-#define YY_SSLParser_DEBUG  1 
+#define YY_SSLParser_DEBUG  1
 #define YY_SSLParser_PARSE_PARAM  \
 	RTLInstDict& Dict
 #define YY_SSLParser_CONSTRUCTOR_PARAM  \
@@ -127,7 +127,7 @@ protected: \
 	bool bFloat;
 
 #line 14 "/usr/local/include/bison.h"
- /* %{ and %header{ and %union, during decl */
+/* %{ and %header{ and %union, during decl */
 #ifndef YY_SSLParser_COMPATIBILITY
 #ifndef YY_USE_CLASS
 #define  YY_SSLParser_COMPATIBILITY 1
@@ -146,7 +146,7 @@ protected: \
 #endif
 #endif
 #ifdef YYSTYPE
-#ifndef YY_SSLParser_STYPE 
+#ifndef YY_SSLParser_STYPE
 #define YY_SSLParser_STYPE YYSTYPE
 /* WARNING obsolete !!! user defined YYSTYPE not reported into generated header */
 /* use %define STYPE */
@@ -203,22 +203,22 @@ protected: \
 #line 201 "sslparser.h"
 
 #line 70 "/usr/local/include/bison.h"
- /* YY_SSLParser_LSP_NEEDED*/
+/* YY_SSLParser_LSP_NEEDED*/
 #endif
 /* DEFAULT LTYPE*/
 #ifdef YY_SSLParser_LSP_NEEDED
 #ifndef YY_SSLParser_LTYPE
 typedef
-  struct yyltype
-    {
-      int timestamp;
-      int first_line;
-      int first_column;
-      int last_line;
-      int last_column;
-      char *text;
-   }
-  yyltype;
+struct yyltype
+  {
+    int timestamp;
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
+    char *text;
+  }
+yyltype;
 
 #define YY_SSLParser_LTYPE yyltype
 #endif
@@ -334,7 +334,7 @@ extern YY_SSLParser_STYPE YY_SSLParser_LVAL;
 
 
 #line 143 "/usr/local/include/bison.h"
- /* #defines token */
+/* #defines token */
 /* after #define tokens, before const tokens S5*/
 #else
 #ifndef YY_SSLParser_CLASS
@@ -345,13 +345,13 @@ extern YY_SSLParser_STYPE YY_SSLParser_LVAL;
 #define YY_SSLParser_INHERIT
 #endif
 #ifndef YY_SSLParser_MEMBERS
-#define YY_SSLParser_MEMBERS 
+#define YY_SSLParser_MEMBERS
 #endif
 #ifndef YY_SSLParser_LEX_BODY
-#define YY_SSLParser_LEX_BODY  
+#define YY_SSLParser_LEX_BODY
 #endif
 #ifndef YY_SSLParser_ERROR_BODY
-#define YY_SSLParser_ERROR_BODY  
+#define YY_SSLParser_ERROR_BODY
 #endif
 #ifndef YY_SSLParser_CONSTRUCTOR_PARAM
 #define YY_SSLParser_CONSTRUCTOR_PARAM
@@ -360,7 +360,7 @@ extern YY_SSLParser_STYPE YY_SSLParser_LVAL;
 #ifndef YY_SSLParser_USE_CONST_TOKEN
 #define YY_SSLParser_USE_CONST_TOKEN 0
 /* yes enum is more compatible with flex,  */
-/* so by default we use it */ 
+/* so by default we use it */
 #endif
 #if YY_SSLParser_USE_CONST_TOKEN != 0
 #ifndef YY_SSLParser_ENUM_TOKEN
@@ -369,159 +369,162 @@ extern YY_SSLParser_STYPE YY_SSLParser_LVAL;
 #endif
 
 class YY_SSLParser_CLASS YY_SSLParser_INHERIT
-{
-public: 
+  {
+  public:
 #if YY_SSLParser_USE_CONST_TOKEN != 0
-/* static const int token ... */
+    /* static const int token ... */
 
-/* #line 182 "/usr/local/include/bison.h" */
+    /* #line 182 "/usr/local/include/bison.h" */
 #line 376 "sslparser.h"
-static const int COND_OP;
-static const int BIT_OP;
-static const int ARITH_OP;
-static const int LOG_OP;
-static const int NAME;
-static const int ASSIGNTYPE;
-static const int REG_ID;
-static const int REG_NUM;
-static const int COND_TNAME;
-static const int DECOR;
-static const int FARITH_OP;
-static const int FPUSH;
-static const int FPOP;
-static const int TEMP;
-static const int SHARES;
-static const int CONV_FUNC;
-static const int TRUNC_FUNC;
-static const int TRANSCEND;
-static const int FABS_FUNC;
-static const int BIG;
-static const int LITTLE;
-static const int NAME_CALL;
-static const int NAME_LOOKUP;
-static const int ENDIANNESS;
-static const int COVERS;
-static const int INDEX;
-static const int NOT;
-static const int LNOT;
-static const int FNEG;
-static const int THEN;
-static const int LOOKUP_RDC;
-static const int BOGUS;
-static const int ASSIGN;
-static const int TO;
-static const int COLON;
-static const int S_E;
-static const int AT;
-static const int ADDR;
-static const int REG_IDX;
-static const int EQUATE;
-static const int MEM_IDX;
-static const int TOK_INTEGER;
-static const int TOK_FLOAT;
-static const int FAST;
-static const int OPERAND;
-static const int FETCHEXEC;
-static const int CAST_OP;
-static const int FLAGMACRO;
-static const int SUCCESSOR;
-static const int NUM;
-static const int FLOATNUM;
-static const int FCHS;
+    static const int COND_OP;
+    static const int BIT_OP;
+    static const int ARITH_OP;
+    static const int LOG_OP;
+    static const int NAME;
+    static const int ASSIGNTYPE;
+    static const int REG_ID;
+    static const int REG_NUM;
+    static const int COND_TNAME;
+    static const int DECOR;
+    static const int FARITH_OP;
+    static const int FPUSH;
+    static const int FPOP;
+    static const int TEMP;
+    static const int SHARES;
+    static const int CONV_FUNC;
+    static const int TRUNC_FUNC;
+    static const int TRANSCEND;
+    static const int FABS_FUNC;
+    static const int BIG;
+    static const int LITTLE;
+    static const int NAME_CALL;
+    static const int NAME_LOOKUP;
+    static const int ENDIANNESS;
+    static const int COVERS;
+    static const int INDEX;
+    static const int NOT;
+    static const int LNOT;
+    static const int FNEG;
+    static const int THEN;
+    static const int LOOKUP_RDC;
+    static const int BOGUS;
+    static const int ASSIGN;
+    static const int TO;
+    static const int COLON;
+    static const int S_E;
+    static const int AT;
+    static const int ADDR;
+    static const int REG_IDX;
+    static const int EQUATE;
+    static const int MEM_IDX;
+    static const int TOK_INTEGER;
+    static const int TOK_FLOAT;
+    static const int FAST;
+    static const int OPERAND;
+    static const int FETCHEXEC;
+    static const int CAST_OP;
+    static const int FLAGMACRO;
+    static const int SUCCESSOR;
+    static const int NUM;
+    static const int FLOATNUM;
+    static const int FCHS;
 
 
 #line 182 "/usr/local/include/bison.h"
- /* decl const */
+    /* decl const */
 #else
-enum YY_SSLParser_ENUM_TOKEN { YY_SSLParser_NULL_TOKEN=0
+enum YY_SSLParser_ENUM_TOKEN
+{
+  YY_SSLParser_NULL_TOKEN=0
 
-/* #line 185 "/usr/local/include/bison.h" */
+                          /* #line 185 "/usr/local/include/bison.h" */
 #line 437 "sslparser.h"
-	,COND_OP=258
-	,BIT_OP=259
-	,ARITH_OP=260
-	,LOG_OP=261
-	,NAME=262
-	,ASSIGNTYPE=263
-	,REG_ID=264
-	,REG_NUM=265
-	,COND_TNAME=266
-	,DECOR=267
-	,FARITH_OP=268
-	,FPUSH=269
-	,FPOP=270
-	,TEMP=271
-	,SHARES=272
-	,CONV_FUNC=273
-	,TRUNC_FUNC=274
-	,TRANSCEND=275
-	,FABS_FUNC=276
-	,BIG=277
-	,LITTLE=278
-	,NAME_CALL=279
-	,NAME_LOOKUP=280
-	,ENDIANNESS=281
-	,COVERS=282
-	,INDEX=283
-	,NOT=284
-	,LNOT=285
-	,FNEG=286
-	,THEN=287
-	,LOOKUP_RDC=288
-	,BOGUS=289
-	,ASSIGN=290
-	,TO=291
-	,COLON=292
-	,S_E=293
-	,AT=294
-	,ADDR=295
-	,REG_IDX=296
-	,EQUATE=297
-	,MEM_IDX=298
-	,TOK_INTEGER=299
-	,TOK_FLOAT=300
-	,FAST=301
-	,OPERAND=302
-	,FETCHEXEC=303
-	,CAST_OP=304
-	,FLAGMACRO=305
-	,SUCCESSOR=306
-	,NUM=307
-	,FLOATNUM=308
-	,FCHS=309
+                          ,COND_OP=258
+                                   ,BIT_OP=259
+                                           ,ARITH_OP=260
+                                                     ,LOG_OP=261
+                                                             ,NAME=262
+                                                                   ,ASSIGNTYPE=263
+                                                                               ,REG_ID=264
+                                                                                       ,REG_NUM=265
+                                                                                                ,COND_TNAME=266
+                                                                                                            ,DECOR=267
+                                                                                                                   ,FARITH_OP=268
+                                                                                                                              ,FPUSH=269
+                                                                                                                                     ,FPOP=270
+                                                                                                                                           ,TEMP=271
+                                                                                                                                                 ,SHARES=272
+                                                                                                                                                         ,CONV_FUNC=273
+                                                                                                                                                                    ,TRUNC_FUNC=274
+                                                                                                                                                                                ,TRANSCEND=275
+                                                                                                                                                                                           ,FABS_FUNC=276
+                                                                                                                                                                                                      ,BIG=277
+                                                                                                                                                                                                           ,LITTLE=278
+                                                                                                                                                                                                                   ,NAME_CALL=279
+                                                                                                                                                                                                                              ,NAME_LOOKUP=280
+                                                                                                                                                                                                                                           ,ENDIANNESS=281
+                                                                                                                                                                                                                                                       ,COVERS=282
+                                                                                                                                                                                                                                                               ,INDEX=283
+                                                                                                                                                                                                                                                                      ,NOT=284
+                                                                                                                                                                                                                                                                           ,LNOT=285
+                                                                                                                                                                                                                                                                                 ,FNEG=286
+                                                                                                                                                                                                                                                                                       ,THEN=287
+                                                                                                                                                                                                                                                                                             ,LOOKUP_RDC=288
+                                                                                                                                                                                                                                                                                                         ,BOGUS=289
+                                                                                                                                                                                                                                                                                                                ,ASSIGN=290
+                                                                                                                                                                                                                                                                                                                        ,TO=291
+                                                                                                                                                                                                                                                                                                                            ,COLON=292
+                                                                                                                                                                                                                                                                                                                                   ,S_E=293
+                                                                                                                                                                                                                                                                                                                                        ,AT=294
+                                                                                                                                                                                                                                                                                                                                            ,ADDR=295
+                                                                                                                                                                                                                                                                                                                                                  ,REG_IDX=296
+                                                                                                                                                                                                                                                                                                                                                           ,EQUATE=297
+                                                                                                                                                                                                                                                                                                                                                                   ,MEM_IDX=298
+                                                                                                                                                                                                                                                                                                                                                                            ,TOK_INTEGER=299
+                                                                                                                                                                                                                                                                                                                                                                                         ,TOK_FLOAT=300
+                                                                                                                                                                                                                                                                                                                                                                                                    ,FAST=301
+                                                                                                                                                                                                                                                                                                                                                                                                          ,OPERAND=302
+                                                                                                                                                                                                                                                                                                                                                                                                                   ,FETCHEXEC=303
+                                                                                                                                                                                                                                                                                                                                                                                                                              ,CAST_OP=304
+                                                                                                                                                                                                                                                                                                                                                                                                                                       ,FLAGMACRO=305
+                                                                                                                                                                                                                                                                                                                                                                                                                                                  ,SUCCESSOR=306
+                                                                                                                                                                                                                                                                                                                                                                                                                                                             ,NUM=307
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ,FLOATNUM=308
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ,FCHS=309
 
 
 #line 185 "/usr/local/include/bison.h"
- /* enum token */
-     }; /* end of enum declaration */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  /* enum token */
+}
+; /* end of enum declaration */
 #endif
-public:
- int YY_SSLParser_PARSE(YY_SSLParser_PARSE_PARAM);
- virtual void YY_SSLParser_ERROR(char *msg) YY_SSLParser_ERROR_BODY;
+  public:
+    int YY_SSLParser_PARSE(YY_SSLParser_PARSE_PARAM);
+    virtual void YY_SSLParser_ERROR(char *msg) YY_SSLParser_ERROR_BODY;
 #ifdef YY_SSLParser_PURE
 #ifdef YY_SSLParser_LSP_NEEDED
- virtual int  YY_SSLParser_LEX(YY_SSLParser_STYPE *YY_SSLParser_LVAL,YY_SSLParser_LTYPE *YY_SSLParser_LLOC) YY_SSLParser_LEX_BODY;
+    virtual int  YY_SSLParser_LEX(YY_SSLParser_STYPE *YY_SSLParser_LVAL,YY_SSLParser_LTYPE *YY_SSLParser_LLOC) YY_SSLParser_LEX_BODY;
 #else
- virtual int  YY_SSLParser_LEX(YY_SSLParser_STYPE *YY_SSLParser_LVAL) YY_SSLParser_LEX_BODY;
+virtual int  YY_SSLParser_LEX(YY_SSLParser_STYPE *YY_SSLParser_LVAL) YY_SSLParser_LEX_BODY;
 #endif
 #else
- virtual int YY_SSLParser_LEX() YY_SSLParser_LEX_BODY;
- YY_SSLParser_STYPE YY_SSLParser_LVAL;
+virtual int YY_SSLParser_LEX() YY_SSLParser_LEX_BODY;
+YY_SSLParser_STYPE YY_SSLParser_LVAL;
 #ifdef YY_SSLParser_LSP_NEEDED
- YY_SSLParser_LTYPE YY_SSLParser_LLOC;
+YY_SSLParser_LTYPE YY_SSLParser_LLOC;
 #endif
- int YY_SSLParser_NERRS;
- int YY_SSLParser_CHAR;
+int YY_SSLParser_NERRS;
+int YY_SSLParser_CHAR;
 #endif
 #if YY_SSLParser_DEBUG != 0
-public:
- int YY_SSLParser_DEBUG_FLAG;	/*  nonzero means print parse trace	*/
+  public:
+    int YY_SSLParser_DEBUG_FLAG;	/*  nonzero means print parse trace	*/
 #endif
-public:
- YY_SSLParser_CLASS(YY_SSLParser_CONSTRUCTOR_PARAM);
-public:
- YY_SSLParser_MEMBERS 
-};
+  public:
+    YY_SSLParser_CLASS(YY_SSLParser_CONSTRUCTOR_PARAM);
+  public:
+    YY_SSLParser_MEMBERS
+  };
 /* other declare folow */
 #endif
 
@@ -536,7 +539,7 @@ public:
 #define YYLTYPE YY_SSLParser_LTYPE
 #endif
 #ifndef YYDEBUG
-#ifdef YY_SSLParser_DEBUG 
+#ifdef YY_SSLParser_DEBUG
 #define YYDEBUG YY_SSLParser_DEBUG
 #endif
 #endif

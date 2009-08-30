@@ -1,22 +1,29 @@
 #include "BinaryFile.h"
 
-class BinaryFileStub : public BinaryFile {
-public:
+class BinaryFileStub : public BinaryFile
+  {
+  public:
     BinaryFileStub(); // Constructor
-    virtual		~BinaryFileStub() { }
-    virtual void	UnLoad() { }					// Unload the image
-    bool		GetNextMember() {
-        return false;    // Load next member of archive
+    virtual		~BinaryFileStub()
+    { }
+    virtual void	UnLoad()
+    { }					// Unload the image
+    bool		GetNextMember()
+    {
+      return false;    // Load next member of archive
     }
-    virtual bool	Open(const char* sName) {
-        return false;    // Open for r/w; pv
+    virtual bool	Open(const char* sName)
+    {
+      return false;    // Open for r/w; pv
     }
-    virtual void	Close() { }						// Close file opened with Open()
+    virtual void	Close()
+    { }						// Close file opened with Open()
     virtual LOAD_FMT GetFormat() const;			// Get format (e.g. LOADFMT_ELF)
     virtual MACHINE GetMachine() const;			// Get machine (e.g. MACHINE_SPARC)
-    virtual const char *getFilename() const {
+    virtual const char *getFilename() const
+      {
         return m_pFileName;
-    }
+      }
     virtual bool isLibrary() const;
     virtual std::list<const char *> getDependencyList();
     virtual ADDRESS getImageBase();
@@ -58,10 +65,10 @@ public:
     void		SetLinkAndInfo(int idx, int link, int info);
 
     const char* m_pFileName;			// Pointer to input file name
-protected:
+  protected:
     virtual bool  RealLoad(const char* sName); // Load the file; pure virtual
     virtual bool	PostLoad(void* handle);		// Called after loading archive member
 
-private:
-};
+  private:
+  };
 

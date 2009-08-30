@@ -25,8 +25,9 @@
 
 #include "BinaryFile.h"
 
-class PalmBinaryFile : public BinaryFile {
-public:
+class PalmBinaryFile : public BinaryFile
+  {
+  public:
     PalmBinaryFile();               // Constructor
     virtual       ~PalmBinaryFile();
     virtual void  UnLoad();                       // Unload the image
@@ -35,9 +36,10 @@ public:
     virtual bool  PostLoad(void* handle);         // For archive files only
     virtual LOAD_FMT GetFormat() const;           // Get format i.e. LOADFMT_PALM
     virtual MACHINE GetMachine() const;           // Get machine i.e. MACHINE_PALM
-    virtual const char *getFilename() const {
+    virtual const char *getFilename() const
+      {
         return m_pFileName;
-    }
+      }
 
     virtual bool isLibrary() const;
     virtual std::list<const char *> getDependencyList();
@@ -78,15 +80,15 @@ public:
 //    bool        IsDynamicLinkedProc(ADDRESS wNative);
 //    ADDRESS     NativeToHostAddress(ADDRESS uNative);
 
-protected:
+  protected:
     virtual bool  RealLoad(const char* sName); // Load the file; pure virtual
 
-private:
+  private:
     unsigned char* m_pImage;                       // Points to loaded image
     unsigned char* m_pData;                        // Points to data
     // Offset from start of data to where a5 should be initialised to
     unsigned int   m_SizeBelowA5;
     const char *   m_pFileName;
-};
+  };
 
 #endif      // #ifndef __PALMBINARYFILE_H__

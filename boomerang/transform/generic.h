@@ -15,16 +15,17 @@
 #define GENERIC_EXP_TRANSFORMER_H
 
 class GenericExpTransformer : public ExpTransformer
-{
-protected:
+  {
+  protected:
     Exp *match, *where, *become;
 
     bool checkCond(Exp *cond, Exp *bindings);
     Exp *applyFuncs(Exp *rhs);
-public:
-    GenericExpTransformer(Exp *match, Exp *where, Exp *become) : match(match), where(where), become(become) { }
+  public:
+    GenericExpTransformer(Exp *match, Exp *where, Exp *become) : match(match), where(where), become(become)
+    { }
     virtual Exp *applyTo(Exp *e, bool &bMod);
-};
+  };
 
 #endif
 

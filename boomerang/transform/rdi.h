@@ -3,7 +3,7 @@
  */
 /*==============================================================================
  * FILE:       removedoubleindirection.h
- * OVERVIEW:   Provides the definition for the remove double indirection exp 
+ * OVERVIEW:   Provides the definition for the remove double indirection exp
                tranformer.
  *============================================================================*/
 /*
@@ -16,11 +16,12 @@
 #define REMOVE_DOUBLE_INDIRECTION_H
 
 class RDIExpTransformer : public ExpTransformer
-{
-public:
-    RDIExpTransformer() { }
+  {
+  public:
+    RDIExpTransformer()
+    { }
     virtual Exp *applyTo(Exp *e, bool &bMod);
-};
+  };
 
 #endif
 

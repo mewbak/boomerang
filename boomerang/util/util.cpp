@@ -23,9 +23,9 @@
  */
 
 #include <cassert>
-#if defined(_MSC_VER) && _MSC_VER <= 1200 
+#if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
-#endif 
+#endif
 #if defined(_MSC_VER) && _MSC_VER >= 1400
 #pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
 #endif
@@ -57,11 +57,11 @@
  *============================================================================*/
 std::string operator+(const std::string& s, int i)
 {
-	static char buf[50];
-	std::string ret(s);
+  static char buf[50];
+  std::string ret(s);
 
-	sprintf(buf,"%d",i);
-	return ret.append(buf);
+  sprintf(buf,"%d",i);
+  return ret.append(buf);
 }
 
 /*==============================================================================
@@ -73,9 +73,9 @@ std::string operator+(const std::string& s, int i)
  *============================================================================*/
 std::string initCapital(const std::string& s)
 {
-	std::string res(s);
-    res[0] = toupper(res[0]);
-	return res;
+  std::string res(s);
+  res[0] = toupper(res[0]);
+  return res;
 }
 
 /*==============================================================================
@@ -88,14 +88,17 @@ std::string initCapital(const std::string& s)
  *============================================================================*/
 bool hasExt(const std::string& s, const char* ext)
 {
-    std::string tailStr = std::string(".") + std::string(ext);
-    unsigned int i = s.rfind(tailStr);
-    if (i == std::string::npos) {
-        return false;
-    } else {
-        unsigned int sLen = s.length();
-        unsigned int tailStrLen = tailStr.length();
-        return ((i + tailStrLen) == sLen);
+  std::string tailStr = std::string(".") + std::string(ext);
+  unsigned int i = s.rfind(tailStr);
+  if (i == std::string::npos)
+    {
+      return false;
+    }
+  else
+    {
+      unsigned int sLen = s.length();
+      unsigned int tailStrLen = tailStr.length();
+      return ((i + tailStrLen) == sLen);
     }
 }
 
@@ -109,12 +112,14 @@ bool hasExt(const std::string& s, const char* ext)
  *============================================================================*/
 std::string changeExt(const std::string& s, const char* ext)
 {
-    size_t i = s.rfind(".");
-    if (i == std::string::npos) {
-        return s + ext;
+  size_t i = s.rfind(".");
+  if (i == std::string::npos)
+    {
+      return s + ext;
     }
-    else {
-        return s.substr(0, i) + ext;
+  else
+    {
+      return s.substr(0, i) + ext;
     }
 }
 
@@ -130,17 +135,19 @@ std::string changeExt(const std::string& s, const char* ext)
 std::string searchAndReplace( const std::string &in, const std::string &match,
                               const std::string &rep )
 {
-    std::string result;
-    for( int n = 0; n != -1; ) {
-        int l = in.find(match,n);
-        result.append( in.substr(n,(l==-1?in.length() : l )-n) );
-        if( l != -1 ) {
-            result.append( rep );
-            l+=match.length();
+  std::string result;
+  for ( int n = 0; n != -1; )
+    {
+      int l = in.find(match,n);
+      result.append( in.substr(n,(l==-1?in.length() : l )-n) );
+      if ( l != -1 )
+        {
+          result.append( rep );
+          l+=match.length();
         }
-        n = l;
+      n = l;
     }
-    return result;
+  return result;
 }
 
 /*==============================================================================
@@ -152,98 +159,109 @@ std::string searchAndReplace( const std::string &in, const std::string &match,
  *============================================================================*/
 void upperStr(const char* s, char* d)
 {
-    int len = strlen(s);
-    for (int i=0; i < len; i++)
-       d[i] = toupper(s[i]);
-    d[len] = '\0';
+  int len = strlen(s);
+  for (int i=0; i < len; i++)
+    d[i] = toupper(s[i]);
+  d[len] = '\0';
 }
 
 int lockFileRead(const char *fname)
 {
-    int fd = open("filename", O_RDONLY);  /* get the file descriptor */
+  int fd = open("filename", O_RDONLY);  /* get the file descriptor */
 #ifdef _FLOCK_
-    struct flock fl;
-    fl.l_type   = F_RDLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
-    fl.l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
-    fl.l_start  = 0;        /* Offset from l_whence         */
-    fl.l_len    = 0;        /* length, 0 = to EOF           */
-    fl.l_pid    = getpid(); /* our PID                      */
-    fcntl(fd, F_SETLKW, &fl);  /* set the lock, waiting if necessary */
+  struct flock fl;
+  fl.l_type   = F_RDLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
+  fl.l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
+  fl.l_start  = 0;        /* Offset from l_whence         */
+  fl.l_len    = 0;        /* length, 0 = to EOF           */
+  fl.l_pid    = getpid(); /* our PID                      */
+  fcntl(fd, F_SETLKW, &fl);  /* set the lock, waiting if necessary */
 #endif
-    return fd;
+  return fd;
 }
 
 int lockFileWrite(const char *fname)
 {
-    int fd = open("filename", O_WRONLY);  /* get the file descriptor */
+  int fd = open("filename", O_WRONLY);  /* get the file descriptor */
 #ifdef _FLOCK_
-    struct flock fl;
-    fl.l_type   = F_WRLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
-    fl.l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
-    fl.l_start  = 0;        /* Offset from l_whence         */
-    fl.l_len    = 0;        /* length, 0 = to EOF           */
-    fl.l_pid    = getpid(); /* our PID                      */
-    fcntl(fd, F_SETLKW, &fl);  /* set the lock, waiting if necessary */
+  struct flock fl;
+  fl.l_type   = F_WRLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
+  fl.l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
+  fl.l_start  = 0;        /* Offset from l_whence         */
+  fl.l_len    = 0;        /* length, 0 = to EOF           */
+  fl.l_pid    = getpid(); /* our PID                      */
+  fcntl(fd, F_SETLKW, &fl);  /* set the lock, waiting if necessary */
 #endif
-    return fd;
+  return fd;
 }
 
 void unlockFile(int fd)
 {
 #ifdef _FLOCK_
-    struct flock fl;
-    fl.l_type   = F_UNLCK;  /* tell it to unlock the region */
-    fcntl(fd, F_SETLK, &fl); /* set the region to unlocked */
+  struct flock fl;
+  fl.l_type   = F_UNLCK;  /* tell it to unlock the region */
+  fcntl(fd, F_SETLK, &fl); /* set the region to unlocked */
 #endif
-    close(fd);
+  close(fd);
 }
 
 void escapeXMLChars(std::string &s)
 {
-    std::string bad = "<>&";
-    const char *replace[] = { "&lt;", "&gt;", "&amp;" };
-    for (unsigned i = 0; i < s.size(); i++) {
-        unsigned n = bad.find(s[i]);
-        if (n != std::string::npos) {
-            s.replace(i, 1, replace[n]);
+  std::string bad = "<>&";
+  const char *replace[] =
+    { "&lt;", "&gt;", "&amp;"
+    };
+  for (unsigned i = 0; i < s.size(); i++)
+    {
+      unsigned n = bad.find(s[i]);
+      if (n != std::string::npos)
+        {
+          s.replace(i, 1, replace[n]);
         }
     }
 }
 
 // Turn things like newline, return, tab into \n, \r, \t etc
 // Note: assumes a C or C++ back end...
-char* escapeStr( const char* str ) {
-    std::ostringstream out;
-	char unescaped[]="ntvbrfa\"";
-	char escaped[]="\n\t\v\b\r\f\a\"";
-	bool escapedSucessfully;
+char* escapeStr( const char* str )
+{
+  std::ostringstream out;
+  char unescaped[]="ntvbrfa\"";
+  char escaped[]="\n\t\v\b\r\f\a\"";
+  bool escapedSucessfully;
 
-	// test each character
-	for(;*str;str++)
-	{
-		if(isprint((unsigned char)*str) && *str != '\"' ) {
-    		// it's printable, so just print it
-    		out << *str;
-		} else { // in fact, this shouldn't happen, except for "
-			// maybe it's a known escape sequence
-			escapedSucessfully=false;
-			for(int i=0;escaped[i] && !escapedSucessfully ;i++) {
-				if(*str == escaped[i]) {
-					out << "\\" << unescaped[i];
-					escapedSucessfully=true;
-      			}
-			}
-			if(!escapedSucessfully) {
- 				// it isn't so just use the \xhh escape
- 				out << "\\x" << std::hex << std::setfill('0') << std::setw(2) << (int)*str;
-				out << std::setfill(' ');
-			}
-		}
+  // test each character
+  for (;*str;str++)
+    {
+      if (isprint((unsigned char)*str) && *str != '\"' )
+        {
+          // it's printable, so just print it
+          out << *str;
+        }
+      else
+        { // in fact, this shouldn't happen, except for "
+          // maybe it's a known escape sequence
+          escapedSucessfully=false;
+          for (int i=0;escaped[i] && !escapedSucessfully ;i++)
+            {
+              if (*str == escaped[i])
+                {
+                  out << "\\" << unescaped[i];
+                  escapedSucessfully=true;
+                }
+            }
+          if (!escapedSucessfully)
+            {
+              // it isn't so just use the \xhh escape
+              out << "\\x" << std::hex << std::setfill('0') << std::setw(2) << (int)*str;
+              out << std::setfill(' ');
+            }
+        }
     }
 
-    char* ret = new char[out.str().size()+1];
-    strcpy(ret, out.str().c_str());
-    return ret;
+  char* ret = new char[out.str().size()+1];
+  strcpy(ret, out.str().c_str());
+  return ret;
 }
 
 

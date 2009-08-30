@@ -59,8 +59,9 @@ class XMLProgParser;
  *============================================================================*/
 /// Interface for the procedure classes, which are used to store information about variables in the
 /// procedure such as parameters and locals.
-class Proc {
-public:
+class Proc
+  {
+  public:
 
     /**
      * Constructor with name, native address and optional bLib.
@@ -92,29 +93,34 @@ public:
     /**
      * Get the program this procedure belongs to.
      */
-    Prog		*getProg() {
-        return prog;
+    Prog		*getProg()
+    {
+      return prog;
     }
-    void		setProg(Prog *p) {
-        prog = p;
+    void		setProg(Prog *p)
+    {
+      prog = p;
     }
 
     /**
      * Get/Set the first procedure that calls this procedure (or null for main/start).
      */
     Proc		*getFirstCaller();
-    void		setFirstCaller(Proc *p) {
-        if (m_firstCaller == NULL) m_firstCaller = p;
+    void		setFirstCaller(Proc *p)
+    {
+      if (m_firstCaller == NULL) m_firstCaller = p;
     }
 
     /**
      * Returns a pointer to the Signature
      */
-    Signature	*getSignature() {
-        return signature;
+    Signature	*getSignature()
+    {
+      return signature;
     }
-    void		setSignature(Signature *sig) {
-        signature = sig;
+    void		setSignature(Signature *sig)
+    {
+      signature = sig;
     }
 
     virtual void		renameParam(const char *oldName, const char *newName);
@@ -181,8 +187,9 @@ public:
     /**
      * Return true if this is a library proc
      */
-    virtual bool		isLib() {
-        return false;
+    virtual bool		isLib()
+    {
+      return false;
     }
 
     /**
@@ -206,15 +213,17 @@ public:
      * Get the callers
      * Note: the callers will be in a random order (determined by memory allocation)
      */
-    std::set<CallStatement*>& getCallers() {
+    std::set<CallStatement*>& getCallers()
+      {
         return callerSet;
-    }
+      }
 
     /**
      * Add to the set of callers
      */
-    void		addCaller(CallStatement* caller) {
-        callerSet.insert(caller);
+    void		addCaller(CallStatement* caller)
+    {
+      callerSet.insert(caller);
     }
 
     /**
@@ -229,21 +238,25 @@ public:
 
     virtual void		printCallGraphXML(std::ostream &os, int depth, bool recurse = true);
     void		printDetailsXML();
-    void		clearVisited() {
-        visited = false;
+    void		clearVisited()
+    {
+      visited = false;
     }
-    bool		isVisited() {
-        return visited;
-    }
-
-    Cluster		*getCluster() {
-        return cluster;
-    }
-    void		setCluster(Cluster *c) {
-        cluster = c;
+    bool		isVisited()
+    {
+      return visited;
     }
 
-protected:
+    Cluster		*getCluster()
+    {
+      return cluster;
+    }
+    void		setCluster(Cluster *c)
+    {
+      cluster = c;
+    }
+
+  protected:
 
     bool		visited;						///< For printCallGraphXML
 
@@ -278,15 +291,17 @@ protected:
 
     friend class XMLProgParser;
     Proc() : visited(false), prog(NULL), signature(NULL), address(0), m_firstCaller(NULL), m_firstCallerAddr(0),
-            cluster(NULL) { }
+        cluster(NULL)
+  { }
 
-};	// class Proc
+  };	// class Proc
 
 /*==============================================================================
  * LibProc class.
  *============================================================================*/
-class LibProc : public Proc {
-public:
+class LibProc : public Proc
+  {
+  public:
 
     LibProc(Prog *prog, std::string& name, ADDRESS address);
     virtual				~LibProc();
@@ -294,15 +309,17 @@ public:
     /**
      * Return true, since is a library proc
      */
-    bool		isLib() {
-        return true;
+    bool		isLib()
+    {
+      return true;
     }
 
     virtual bool		isNoReturn();
 
     virtual Exp*		getProven(Exp* left);					// Get the RHS that is proven for left
-    virtual	Exp*		getPremised(Exp* left) {
-        return NULL;    // Get the RHS that is premised for left
+    virtual	Exp*		getPremised(Exp* left)
+    {
+      return NULL;    // Get the RHS that is premised for left
     }
     virtual	bool		isPreserved(Exp* e);					///< Return whether e is preserved by this proc
 
@@ -312,23 +329,24 @@ public:
     //std::ostream& put(std::ostream& os);
 
     void		getInternalStatements(StatementList &internal);
-protected:
+  protected:
 
     friend class XMLProgParser;
-    LibProc() : Proc() { }
-};		// class LibProc
+    LibProc() : Proc()
+    { }
+  };		// class LibProc
 
 enum ProcStatus {
-    PROC_UNDECODED,		///< Has not even been decoded
-    PROC_DECODED,		///< Decoded, no attempt at decompiling
-    PROC_SORTED,		///< Decoded, and CFG has been sorted by address
-    PROC_VISITED,		///< Has been visited on the way down in decompile()
-    PROC_INCYCLE,		///< Is involved in cycles, has not completed early decompilation as yet
-    PROC_PRESERVEDS,	///< Has had preservation analysis done
-    PROC_EARLYDONE,		///< Has completed everything except the global analyses
-    PROC_FINAL,			///< Has had final decompilation
-    // , PROC_RETURNS	///< Has had returns intersected with all caller's defines
-    PROC_CODE_GENERATED,///< Has had code generated
+  PROC_UNDECODED,		///< Has not even been decoded
+  PROC_DECODED,		///< Decoded, no attempt at decompiling
+  PROC_SORTED,		///< Decoded, and CFG has been sorted by address
+  PROC_VISITED,		///< Has been visited on the way down in decompile()
+  PROC_INCYCLE,		///< Is involved in cycles, has not completed early decompilation as yet
+  PROC_PRESERVEDS,	///< Has had preservation analysis done
+  PROC_EARLYDONE,		///< Has completed everything except the global analyses
+  PROC_FINAL,			///< Has had final decompilation
+  // , PROC_RETURNS	///< Has had returns intersected with all caller's defines
+  PROC_CODE_GENERATED,///< Has had code generated
 };
 
 typedef std::set <UserProc*> ProcSet;
@@ -338,7 +356,8 @@ typedef std::list<UserProc*> ProcList;
  * UserProc class.
  *============================================================================*/
 
-class UserProc : public Proc {
+class UserProc : public Proc
+  {
 
     /**
      * The control flow graph.
@@ -372,9 +391,9 @@ class UserProc : public Proc {
      * It is a *multi*map because one location can have several default names differentiated by type.
      * E.g. r24 -> eax for int, r24 -> eax_1 for float
      */
-public:
+  public:
     typedef std::multimap<Exp*,Exp*,lessExpStar> SymbolMap;
-private:
+  private:
     SymbolMap	symbolMap;
 
     /**
@@ -438,7 +457,7 @@ private:
     /// function to do safe adding.
     void addToStackMap(int c, Type *ty);
 
-public:
+  public:
 
     UserProc(Prog *prog, std::string& name, ADDRESS address);
     virtual				~UserProc();
@@ -456,15 +475,17 @@ public:
     /**
      * Returns a pointer to the CFG object.
      */
-    Cfg*		getCFG() {
-        return cfg;
+    Cfg*		getCFG()
+    {
+      return cfg;
     }
 
     /**
      * Returns a pointer to the DataFlow object.
      */
-    DataFlow*	getDataFlow() {
-        return &df;
+    DataFlow*	getDataFlow()
+    {
+      return &df;
     }
 
     /**
@@ -486,28 +507,35 @@ public:
     /**
      * Returns whether or not this procedure can be decoded (i.e. has it already been decoded).
      */
-    bool		isDecoded() {
-        return status >= PROC_DECODED;
+    bool		isDecoded()
+    {
+      return status >= PROC_DECODED;
     }
-    bool		isDecompiled() {
-        return status >= PROC_FINAL;
+    bool		isDecompiled()
+    {
+      return status >= PROC_FINAL;
     }
-    bool		isEarlyRecursive() {
-        return cycleGrp != NULL && status <= PROC_INCYCLE;
+    bool		isEarlyRecursive()
+    {
+      return cycleGrp != NULL && status <= PROC_INCYCLE;
     }
-    bool		doesRecurseTo(UserProc* p) {
-        return cycleGrp && cycleGrp->find(p) != cycleGrp->end();
-    }
-
-    bool		isSorted() {
-        return status >= PROC_SORTED;
-    }
-    void		setSorted() {
-        setStatus(PROC_SORTED);
+    bool		doesRecurseTo(UserProc* p)
+    {
+      return cycleGrp && cycleGrp->find(p) != cycleGrp->end();
     }
 
-    ProcStatus	getStatus() {
-        return status;
+    bool		isSorted()
+    {
+      return status >= PROC_SORTED;
+    }
+    void		setSorted()
+    {
+      setStatus(PROC_SORTED);
+    }
+
+    ProcStatus	getStatus()
+    {
+      return status;
     }
     void		setStatus(ProcStatus s);
 
@@ -529,8 +557,9 @@ public:
     void		dumpLocals();
 
     /// simplify the statements in this proc
-    void		simplify() {
-        cfg->simplify();
+    void		simplify()
+    {
+      cfg->simplify();
     }
 
     // simple windows mode decompile
@@ -574,16 +603,18 @@ public:
     // Fix any ugly branch statements (from propagating too much)
     void		fixUglyBranches();
     // Place the phi functions
-    void		placePhiFunctions() {
-        df.placePhiFunctions(this);
+    void		placePhiFunctions()
+    {
+      df.placePhiFunctions(this);
     }
 
 //		void		propagateAtDepth(int depth);
     // Rename block variables, with log if verbose. Return true if a change
     bool		doRenameBlockVars(int pass, bool clearStacks = false);
     //int			getMaxDepth() {return maxDepth;}		// FIXME: needed?
-    bool		canRename(Exp* e) {
-        return df.canRename(e, this);
+    bool		canRename(Exp* e)
+    {
+      return df.canRename(e, this);
     }
 
     Statement	*getStmtAtLex(unsigned int begin, unsigned int end);
@@ -611,8 +642,9 @@ public:
     void		initialParameters();				///< Get initial parameters based on proc's use collector
     void		mapLocalsAndParams();				///< Map expressions to locals and initial parameters
     void		findFinalParameters();
-    int			nextParamNum() {
-        return ++nextParam;
+    int			nextParamNum()
+    {
+      return ++nextParam;
     }
     void		addParameter(Exp *e, Type* ty);		///< Add parameter to signature
     void		insertParameter(Exp* e, Type* ty);	///< Insert into parameters list correctly sorted
@@ -630,9 +662,10 @@ public:
     bool		isLocal(Exp* e);				///< True if e represents a stack local variable
     bool		isLocalOrParam(Exp* e);			///< True if e represents a stack local or stack param
     bool		isLocalOrParamPattern(Exp* e);	///< True if e could represent a stack local or stack param
-	bool existsLocal(const char* name);		///< True if a local exists with name \a name
-    bool		isAddressEscapedVar(Exp* e) {
-        return addressEscapedVars.exists(e);
+    bool existsLocal(const char* name);		///< True if a local exists with name \a name
+    bool		isAddressEscapedVar(Exp* e)
+    {
+      return addressEscapedVars.exists(e);
     }
     bool		isPropagatable(Exp* e);			///< True if e can be propagated
 
@@ -645,9 +678,9 @@ public:
     // eliminate duplicate arguments
     void		eliminateDuplicateArgs();
 
-private:
+  private:
     void		searchRegularLocals(OPER minusOrPlus, bool lastPass, int sp, StatementList& stmts);
-public:
+  public:
     bool		removeNullStatements();
     bool		removeDeadStatements();
     typedef std::map<Statement*, int> RefCounter;
@@ -714,7 +747,7 @@ public:
     bool		prove(Exp *query, bool conditional = false);
     /// helper function, should be private
     bool		prover(Exp *query, std::set<PhiAssign*> &lastPhis, std::map<PhiAssign*, Exp*> &cache,
-                 Exp* original, PhiAssign *lastPhi = NULL);
+                   Exp* original, PhiAssign *lastPhi = NULL);
 
     /// promote the signature if possible
     void		promoteSignature();
@@ -738,14 +771,16 @@ public:
     void		addImplicitAssigns();
     void		makeSymbolsImplicit();
     void		makeParamsImplicit();
-    StatementList& getParameters() {
-        return parameters;
+    StatementList& getParameters()
+    {
+      return parameters;
     }
-    StatementList& getModifieds() {
-        return theReturnStatement->getModifieds();
+    StatementList& getModifieds()
+    {
+      return theReturnStatement->getModifieds();
     }
 
-private:
+  private:
     /**
      * Find a pointer to the Exp* representing the given var
      * Used by the above 2
@@ -763,7 +798,7 @@ private:
      */
     void		checkMemSize(Exp* e);
 
-public:
+  public:
     /**
      * Return an expression that is equivilent to e in terms of local variables.  Creates new locals as needed.
      */
@@ -807,26 +842,27 @@ public:
     /// Lookup the expression in the symbol map. Return NULL or a C string with the symbol. Use the Type* ty to
     /// select from several names in the multimap; the name corresponding to the first compatible type is returned
     Exp*		getSymbolFor(Exp* e, Type* ty);		/// Lookup the symbol map considering type
-	const char* lookupSym(Exp* e, Type* ty);
-	const char* lookupSymFromRef(RefExp* r);		// Lookup a specific symbol for the given ref
-	const char* lookupSymFromRefAny(RefExp* r);		// Lookup a specific symbol if any, else the general one if any
-	const char* lookupParam(Exp* e);				// Find the implicit definition for e and lookup a symbol
+    const char* lookupSym(Exp* e, Type* ty);
+    const char* lookupSymFromRef(RefExp* r);		// Lookup a specific symbol for the given ref
+    const char* lookupSymFromRefAny(RefExp* r);		// Lookup a specific symbol if any, else the general one if any
+    const char* lookupParam(Exp* e);				// Find the implicit definition for e and lookup a symbol
     void		checkLocalFor(RefExp* r);			// Check if r is already mapped to a local, else add one
     Type*		getTypeForLocation(Exp* e);			// Find the type of the local or parameter e
     /// Determine whether e is a local, either as a true opLocal (e.g. generated by fromSSA), or if it is in the
     /// symbol map and the name is in the locals map. If it is a local, return its name, else NULL
-	const char* findLocal(Exp* e, Type* ty);
-	const char* findLocalFromRef(RefExp* r);
-	const char* findFirstSymbol(Exp* e);
-    int			getNumLocals() {
-        return (int)locals.size();
+    const char* findLocal(Exp* e, Type* ty);
+    const char* findLocalFromRef(RefExp* r);
+    const char* findFirstSymbol(Exp* e);
+    int			getNumLocals()
+    {
+      return (int)locals.size();
     }
     const char	*getLocalName(int n);
-	const char *getSymbolName(Exp* e);		///< As getLocalName, but look for expression e
+    const char *getSymbolName(Exp* e);		///< As getLocalName, but look for expression e
     void		renameLocal(const char *oldName, const char *newName);
     virtual void		renameParam(const char *oldName, const char *newName);
 
-	const char* getRegName(Exp* r);			/// Get a name like eax or o2 from r24 or r8
+    const char* getRegName(Exp* r);			/// Get a name like eax or o2 from r24 or r8
     void		setParamType(const char* nam, Type* ty);
     void		setParamType(int idx, Type* ty);
 
@@ -853,8 +889,9 @@ public:
     /**
      * Get the callees.
      */
-    std::list<Proc*>& getCallees() {
-        return calleeList;
+    std::list<Proc*>& getCallees()
+    {
+      return calleeList;
     }
 
     /**
@@ -875,8 +912,9 @@ public:
     /**
      * Change BB containing this statement from a COMPCALL to a CALL.
      */
-    void		undoComputedBB(Statement* stmt) {
-        cfg->undoComputedBB(stmt);
+    void		undoComputedBB(Statement* stmt)
+    {
+      cfg->undoComputedBB(stmt);
     }
 
     /*
@@ -888,12 +926,14 @@ public:
     virtual Exp*		getProven(Exp* left);
     virtual Exp*		getPremised(Exp* left);
     // Set a location as a new premise, i.e. assume e=e
-    void		setPremise(Exp* e) {
-        e = e->clone();
-        recurPremises[e] = e;
+    void		setPremise(Exp* e)
+    {
+      e = e->clone();
+      recurPremises[e] = e;
     }
-    void		killPremise(Exp* e) {
-        recurPremises.erase(e);
+    void		killPremise(Exp* e)
+    {
+      recurPremises.erase(e);
     }
     virtual	bool		isPreserved(Exp* e);				///< Return whether e is preserved by this proc
 
@@ -913,30 +953,34 @@ public:
 
     /// Add a location to the UseCollector; this means this location is used before defined, and hence is an
     /// *initial* parameter. Note that final parameters don't use this information; it's only for handling recursion.
-    void		useBeforeDefine(Exp* loc) {
-        col.insert(loc);
+    void		useBeforeDefine(Exp* loc)
+    {
+      col.insert(loc);
     }
 
     /// Copy the decoded indirect control transfer instructions' RTLs to the front end's map, and decode any new
     /// targets for this CFG
     void		processDecodedICTs();
 
-private:
+  private:
     /// We ensure that there is only one return statement now. See code in frontend/frontend.cpp handling case
     /// STMT_RET. If no return statement, this will be NULL.
     ReturnStatement* theReturnStatement;
     int			DFGcount;
-public:
-    ADDRESS		getTheReturnAddr() {
-        return theReturnStatement == NULL ? NO_ADDRESS : theReturnStatement->getRetAddr();
+  public:
+    ADDRESS		getTheReturnAddr()
+    {
+      return theReturnStatement == NULL ? NO_ADDRESS : theReturnStatement->getRetAddr();
     }
-    void		setTheReturnAddr(ReturnStatement* s, ADDRESS r) {
-        assert(theReturnStatement == NULL);
-        theReturnStatement = s;
-        theReturnStatement->setRetAddr(r);
+    void		setTheReturnAddr(ReturnStatement* s, ADDRESS r)
+    {
+      assert(theReturnStatement == NULL);
+      theReturnStatement = s;
+      theReturnStatement->setRetAddr(r);
     }
-    ReturnStatement* getTheReturnStatement() {
-        return theReturnStatement;
+    ReturnStatement* getTheReturnStatement()
+    {
+      return theReturnStatement;
     }
     bool		filterReturns(Exp* e);			///< Decide whether to filter out e (return true) or keep it
     bool		filterParams(Exp* e);			///< As above but for parameters and arguments
@@ -944,12 +988,14 @@ public:
     /// Find and if necessary insert an implicit reference before s whose address expression is a and type is t.
     void		setImplicitRef(Statement* s, Exp* a, Type* ty);
 
-protected:
+  protected:
     friend class XMLProgParser;
     UserProc();
-    void		setCFG(Cfg *c) {
-        cfg = c;
+    void		setCFG(Cfg *c)
+    {
+      cfg = c;
     }
-};		// class UserProc
+  }
+;		// class UserProc
 
 #endif

@@ -30,7 +30,7 @@
         10834:  84 08 80 03        and          %g2, %g3, %g2
         10838:  40 00 40 4f        call         printf
         1083c:  92 00 a0 03        add          %g2, 3, %o1
-        10840:  81 c7 e0 08        ret     
+        10840:  81 c7 e0 08        ret
         10844:  91 e8 20 00        restore      %g0, 0, %o0
 
     For pentum, the Sun compiler doesn't (at present) generate terribly
@@ -42,9 +42,9 @@
 #include <stdio.h>
 int main(int argc)
 {
-    if (argc < -2) argc = -2;
-    if (argc > 3) argc = 3;
+  if (argc < -2) argc = -2;
+  if (argc > 3) argc = 3;
 
-    printf("MinMax adjusted number of arguments is %d\n", argc);
-    return 0;
+  printf("MinMax adjusted number of arguments is %d\n", argc);
+  return 0;
 }

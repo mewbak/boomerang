@@ -36,26 +36,27 @@ class Prog;
 // Binary Translation of Delayed Branches" for SPARC instructions.
 // Extended for HPPA. Ignored by machines with no delay slots
 enum ICLASS {
-    NCT,			// Non Control Transfer
-    SD,				// Static Delayed
-    DD,				// Dynamic Delayed
-    SCD,			// Static Conditional Delayed
-    SCDAN,			// Static Conditional Delayed, Anulled if Not taken
-    SCDAT,			// Static Conditional Delayed, Anulled if Taken
-    SU,				// Static Unconditional (not delayed)
-    SKIP,			// Skip successor
-//	TRAP,			// Trap
-    NOP,			// No operation (e.g. sparc BN,A)
-    // HPPA only
-    DU,				// Dynamic Unconditional (not delayed)
-    NCTA			// Non Control Transfer, with following instr Anulled
+  NCT,			// Non Control Transfer
+  SD,				// Static Delayed
+  DD,				// Dynamic Delayed
+  SCD,			// Static Conditional Delayed
+  SCDAN,			// Static Conditional Delayed, Anulled if Not taken
+  SCDAT,			// Static Conditional Delayed, Anulled if Taken
+  SU,				// Static Unconditional (not delayed)
+  SKIP,			// Skip successor
+  //	TRAP,			// Trap
+  NOP,			// No operation (e.g. sparc BN,A)
+  // HPPA only
+  DU,				// Dynamic Unconditional (not delayed)
+  NCTA			// Non Control Transfer, with following instr Anulled
 };
 /*==============================================================================
  * The DecodeResult struct contains all the information that results from
  * calling the decoder. This prevents excessive use of confusing
  * reference parameters.
  *============================================================================*/
-struct DecodeResult {
+struct DecodeResult
+  {
     /*
      * Resets all the fields to their default values.
      */
@@ -95,20 +96,22 @@ struct DecodeResult {
      */
     ADDRESS forceOutEdge;
 
-};
+  };
 
 /*==============================================================================
  * The NJMCDecoder class is a class that contains NJMC generated decoding methods.
  *============================================================================*/
-class NJMCDecoder {
-protected:
+class NJMCDecoder
+  {
+  protected:
     Prog*		prog;
-public:
+  public:
     /*
      * Constructor and destructor
      */
     NJMCDecoder(Prog* prog);
-    virtual				~NJMCDecoder() {};
+    virtual				~NJMCDecoder()
+    {};
 
     /*
      * Decodes the machine instruction at pc and returns an RTL instance for the instruction.
@@ -121,8 +124,9 @@ public:
      */
     virtual int decodeAssemblyInstruction (ADDRESS pc, int delta) = 0;
 
-    RTLInstDict& getRTLDict() {
-        return RTLDict;
+    RTLInstDict& getRTLDict()
+    {
+      return RTLDict;
     }
 
     void		computedJump(const char* name, int size, Exp* dest, ADDRESS pc, std::list<Statement*>* stmts,
@@ -131,11 +135,12 @@ public:
     void		computedCall(const char* name, int size, Exp* dest, ADDRESS pc, std::list<Statement*>* stmts,
                        DecodeResult& result);
 
-    Prog*		getProg() {
-        return prog;
+    Prog*		getProg()
+    {
+      return prog;
     }
 
-protected:
+  protected:
 
     /*
      * Given an instruction name and a variable list of Exps representing the actual operands of the instruction,
@@ -178,7 +183,7 @@ protected:
     // Public dictionary of instruction patterns, and other information summarised from the SSL file
     // (e.g. source machine's endianness)
     RTLInstDict	RTLDict;
-};
+  };
 
 // Function used to guess whether a given pc-relative address is the start of a function
 

@@ -20,20 +20,27 @@
 #ifndef MEMO_H
 #define MEMO_H
 
-class Memo {
-public:
-    Memo(int m) : mId(m) { }
+class Memo
+  {
+  public:
+    Memo(int m) : mId(m)
+    { }
     int mId;
-    virtual void doNothing() { }
-    virtual ~Memo() { }			// Kill gcc warning
-};
+    virtual void doNothing()
+    { }
+    virtual ~Memo()
+    { }			// Kill gcc warning
+  };
 
-class Memoisable {
-public:
-    Memoisable() {
-        cur_memo = memos.begin();
+class Memoisable
+  {
+  public:
+    Memoisable()
+    {
+      cur_memo = memos.begin();
     }
-    virtual ~Memoisable() { }
+    virtual ~Memoisable()
+    { }
 
     void takeMemo(int mId);
     void restoreMemo(int mId, bool dec = false);
@@ -45,10 +52,10 @@ public:
     bool canRestore(bool dec = false);
     void restoreMemo(bool dec = false);
 
-protected:
+  protected:
     std::list<Memo*> memos;
     std::list<Memo*>::iterator cur_memo;
-};
+  };
 
 #endif
 

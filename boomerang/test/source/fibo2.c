@@ -13,24 +13,26 @@ Compile with gcc -O4 -fno-inline -o test/sparc/fibo2 test/source/fibo2.c
 
 int fib2(int x);
 
-int fib1 (int x) {
-    return fib2(x);
+int fib1 (int x)
+{
+  return fib2(x);
 }
 
 int fib2 (int x)
 {
-	if (x > 1)
-		return (fib1(x - 1) + fib1(x - 2));
-	else return (x);
+  if (x > 1)
+    return (fib1(x - 1) + fib1(x - 2));
+  else return (x);
 }
 
 int main (void)
-{	int number, value;
+{
+  int number, value;
 
-	printf ("Input number: ");
-	scanf ("%d", &number);
-	value = fib1(number);
-	printf("fibonacci(%d) = %d\n", number, value);
-	return (0);
+  printf ("Input number: ");
+  scanf ("%d", &number);
+  value = fib1(number);
+  printf("fibonacci(%d) = %d\n", number, value);
+  return (0);
 }
 

@@ -1,7 +1,7 @@
 /*
  * This should never be included directly.  It is included only from gc.h.
  * We separate it only to make gc.h more suitable as documentation.
- * 
+ *
  * Some tests for old macros.  These violate our namespace rules and will
  * disappear shortly.  Use the GC_ names.
  */
@@ -44,8 +44,8 @@
 			     || defined(GC_AIX_THREADS) \
 			     || defined(GC_LINUX_THREADS))
 # define _REENTRANT
-	/* Better late than never.  This fails if system headers that	*/
-	/* depend on this were previously included.			*/
+/* Better late than never.  This fails if system headers that	*/
+/* depend on this were previously included.			*/
 #endif
 
 #if defined(GC_DGUX386_THREADS) && !defined(_POSIX4A_DRAFT10_SOURCE)
@@ -110,7 +110,7 @@
 # ifdef _WIN32_WCE
 /* Yet more kluges for WinCE */
 #   include <stdlib.h>		/* size_t is defined here */
-    typedef long ptrdiff_t;	/* ptrdiff_t is not defined */
+typedef long ptrdiff_t;	/* ptrdiff_t is not defined */
 # endif
 
 #if defined(_DLL) && !defined(GC_NOT_DLL) && !defined(GC_DLL)

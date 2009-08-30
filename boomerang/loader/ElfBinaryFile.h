@@ -29,13 +29,16 @@
 #include "SymTab.h"					// For SymTab (probably unused)
 typedef std::map<ADDRESS,std::string,std::less<ADDRESS> >  RelocMap;
 
-typedef struct {
+typedef struct
+  {
     ADDRESS		uSymAddr;			// Symbol native address
     int			iSymSize;			// Size associated with symbol
-} SymValue;
+  }
+SymValue;
 
 // Internal elf info
-typedef struct {
+typedef struct
+  {
     char  e_ident[4];
     char  e_class;
     char  endianness;
@@ -55,7 +58,8 @@ typedef struct {
     short e_shentsize;
     short e_shnum;
     short e_shstrndx;
-} Elf32_Ehdr;
+  }
+Elf32_Ehdr;
 
 #define EM_SPARC		2			// Sun SPARC
 #define EM_386			3			// Intel 80386 or higher
@@ -73,7 +77,8 @@ typedef struct {
 #define R_386_PC32 2
 
 // Program header
-typedef struct {
+typedef struct
+  {
     int	 p_type;	 /* entry type */
     int	 p_offset;	 /* file offset */
     int	 p_vaddr;	 /* virtual address */
@@ -82,10 +87,12 @@ typedef struct {
     int	 p_memsz;	 /* memory size */
     int	 p_flags;	 /* entry flags */
     int	 p_align;	 /* memory/file alignment */
-} Elf32_Phdr;
+  }
+Elf32_Phdr;
 
 // Section header
-typedef struct {
+typedef struct
+  {
     int	sh_name;
     int	sh_type;
     int	sh_flags;
@@ -96,7 +103,8 @@ typedef struct {
     int	sh_info;
     int	sh_addralign;
     int	sh_entsize;
-} Elf32_Shdr;
+  }
+Elf32_Shdr;
 
 #define SHF_WRITE		1		// Writeable
 #define SHF_ALLOC		2		// Consumes memory in exe
@@ -108,19 +116,23 @@ typedef struct {
 #define SHT_SYMTAB		2		// Symbol table
 #define SHT_DYNSYM		11		// Dynamic symbol table
 
-typedef struct {
+typedef struct
+  {
     int				st_name;
     unsigned		st_value;
     int				st_size;
     unsigned char	st_info;
     unsigned char	st_other;
     short			st_shndx;
-} Elf32_Sym;
+  }
+Elf32_Sym;
 
-typedef struct {
+typedef struct
+  {
     unsigned r_offset;
     int r_info;
-} Elf32_Rel;
+  }
+Elf32_Rel;
 
 #define	 ELF32_R_SYM(info)		 ((info)>>8)
 #define ELF32_ST_BIND(i)		((i) >> 4)
@@ -133,14 +145,16 @@ typedef struct {
 #define STB_GLOBAL	1
 #define STB_WEAK	2
 
-typedef struct {
+typedef struct
+  {
     short d_tag;				/* how to interpret value */
     union {
         int	 d_val;
         int	 d_ptr;
         int	 d_off;
-    } d_un;
-} Elf32_Dyn;
+      } d_un;
+  }
+Elf32_Dyn;
 
 // Tag values
 #define DT_NULL		0		// Last entry in list
@@ -149,8 +163,9 @@ typedef struct {
 
 #define E_REL		1		// Relocatable file type
 
-class ElfBinaryFile : public BinaryFile {
-public:
+class ElfBinaryFile : public BinaryFile
+  {
+  public:
     ElfBinaryFile(bool bArchive = false);	// Constructor
     virtual void		UnLoad();						// Unload the image
     virtual				~ElfBinaryFile();				// Destructor
@@ -159,9 +174,10 @@ public:
     virtual void		Close();						// Close file opened with Open()
     virtual LOAD_FMT	GetFormat() const;			// Get format (e.g. LOADFMT_ELF)
     virtual MACHINE		GetMachine() const;			// Get machine (e.g. MACHINE_SPARC)
-    virtual const char*	getFilename() const {
+    virtual const char*	getFilename() const
+      {
         return m_pFileName;
-    }
+      }
     virtual bool		isLibrary() const;
     virtual std::list<const char *> getDependencyList();
     virtual ADDRESS		getImageBase();
@@ -232,8 +248,9 @@ public:
     // The ADDRESS is the native address of a pointer to the real dynamic data object.
     virtual std::map<ADDRESS, const char*>* GetDynamicGlobalMap();
 
-    virtual std::map<ADDRESS, std::string> &getSymbols() {
-        return m_SymTab;
+    virtual std::map<ADDRESS, std::string> &getSymbols()
+    {
+      return m_SymTab;
     }
 
     virtual void getFunctionSymbols(std::map<std::string, std::map<ADDRESS, std::string> > &syms_in_file);
@@ -247,10 +264,10 @@ public:
     void        SetLinkAndInfo(int idx, int link, int info);
 
     const char* m_pFileName;			// Pointer to input file name
-protected:
+  protected:
     virtual bool		RealLoad(const char* sName); // Load the file; pure virtual
 
-private:
+  private:
     void        Init();                 // Initialise most member variables
     int         ProcessElfFile();       // Does most of the work
     void        AddSyms(int secIndex);
@@ -295,6 +312,6 @@ private:
     ADDRESS		next_extern;					// where the next extern will be placed
     int*		m_sh_link;						// pointer to array of sh_link values
     int*		m_sh_info;						// pointer to array of sh_info values
-};
+  };
 
 #endif		// #ifndef __ELFBINARYFILE_H__
