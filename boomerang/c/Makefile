@@ -30,19 +30,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/local/bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /opt/local/bin/cmake -E remove -f
+RM = /usr/bin/cmake -E remove -f
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /opt/local/bin/ccmake
+CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/nietzsche/boomerang
+CMAKE_SOURCE_DIR = /home/markus/boomerang
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/nietzsche/boomerang
+CMAKE_BINARY_DIR = /home/markus/boomerang
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -50,7 +50,7 @@ CMAKE_BINARY_DIR = /Users/nietzsche/boomerang
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/opt/local/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -60,19 +60,19 @@ edit_cache/fast: edit_cache
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/opt/local/bin/cmake -P cmake_install.cmake
+	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/opt/local/bin/cmake -P cmake_install.cmake
+	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/opt/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local
 
 # Special rule for the target install/local
@@ -82,7 +82,7 @@ install/local/fast: install/local
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/opt/local/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
@@ -101,7 +101,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/local/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -110,14 +110,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/nietzsche/boomerang && $(CMAKE_COMMAND) -E cmake_progress_start /Users/nietzsche/boomerang/CMakeFiles /Users/nietzsche/boomerang/c/CMakeFiles/progress.make
-	cd /Users/nietzsche/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nietzsche/boomerang/CMakeFiles 0
+	cd /home/markus/boomerang && $(CMAKE_COMMAND) -E cmake_progress_start /home/markus/boomerang/CMakeFiles /home/markus/boomerang/c/CMakeFiles/progress.make
+	cd /home/markus/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/markus/boomerang/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/clean
+	cd /home/markus/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/clean
 .PHONY : clean
 
 # The main clean target
@@ -126,22 +126,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/nietzsche/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/preinstall
+	cd /home/markus/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/preinstall
+	cd /home/markus/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/nietzsche/boomerang && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/markus/boomerang && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 c/CMakeFiles/boomerang_DSLs.dir/rule:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/CMakeFiles/boomerang_DSLs.dir/rule
+	cd /home/markus/boomerang && $(MAKE) -f CMakeFiles/Makefile2 c/CMakeFiles/boomerang_DSLs.dir/rule
 .PHONY : c/CMakeFiles/boomerang_DSLs.dir/rule
 
 # Convenience name for target.
@@ -150,7 +150,7 @@ boomerang_DSLs: c/CMakeFiles/boomerang_DSLs.dir/rule
 
 # fast build rule for target.
 boomerang_DSLs/fast:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/build
+	cd /home/markus/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/build
 .PHONY : boomerang_DSLs/fast
 
 ansi-c-parser.o: ansi-c-parser.cpp.o
@@ -158,7 +158,7 @@ ansi-c-parser.o: ansi-c-parser.cpp.o
 
 # target to build an object file
 ansi-c-parser.cpp.o:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-parser.cpp.o
+	cd /home/markus/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-parser.cpp.o
 .PHONY : ansi-c-parser.cpp.o
 
 ansi-c-parser.i: ansi-c-parser.cpp.i
@@ -166,7 +166,7 @@ ansi-c-parser.i: ansi-c-parser.cpp.i
 
 # target to preprocess a source file
 ansi-c-parser.cpp.i:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-parser.cpp.i
+	cd /home/markus/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-parser.cpp.i
 .PHONY : ansi-c-parser.cpp.i
 
 ansi-c-parser.s: ansi-c-parser.cpp.s
@@ -174,7 +174,7 @@ ansi-c-parser.s: ansi-c-parser.cpp.s
 
 # target to generate assembly for a file
 ansi-c-parser.cpp.s:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-parser.cpp.s
+	cd /home/markus/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-parser.cpp.s
 .PHONY : ansi-c-parser.cpp.s
 
 ansi-c-scanner.o: ansi-c-scanner.cpp.o
@@ -182,7 +182,7 @@ ansi-c-scanner.o: ansi-c-scanner.cpp.o
 
 # target to build an object file
 ansi-c-scanner.cpp.o:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-scanner.cpp.o
+	cd /home/markus/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-scanner.cpp.o
 .PHONY : ansi-c-scanner.cpp.o
 
 ansi-c-scanner.i: ansi-c-scanner.cpp.i
@@ -190,7 +190,7 @@ ansi-c-scanner.i: ansi-c-scanner.cpp.i
 
 # target to preprocess a source file
 ansi-c-scanner.cpp.i:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-scanner.cpp.i
+	cd /home/markus/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-scanner.cpp.i
 .PHONY : ansi-c-scanner.cpp.i
 
 ansi-c-scanner.s: ansi-c-scanner.cpp.s
@@ -198,7 +198,7 @@ ansi-c-scanner.s: ansi-c-scanner.cpp.s
 
 # target to generate assembly for a file
 ansi-c-scanner.cpp.s:
-	cd /Users/nietzsche/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-scanner.cpp.s
+	cd /home/markus/boomerang && $(MAKE) -f c/CMakeFiles/boomerang_DSLs.dir/build.make c/CMakeFiles/boomerang_DSLs.dir/ansi-c-scanner.cpp.s
 .PHONY : ansi-c-scanner.cpp.s
 
 # Help Target
@@ -231,6 +231,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/nietzsche/boomerang && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/markus/boomerang && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
