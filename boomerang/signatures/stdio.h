@@ -17,7 +17,7 @@ int fwrite(char *ptr, int size, int nitems, FILE *stream);
 int fclose(FILE *stream);
 int fileno(FILE *stream);
 int puts(char *s);
-char *fgets(char[] *s, int size @max(s), FILE *stream);
+char *fgets(char[] * s, int size @max(s), FILE *stream);
 void perror(const char *s);
 int fprintf(FILE *stream, const char *format, ...);
 int sscanf(const char *str, const char *format, ...);

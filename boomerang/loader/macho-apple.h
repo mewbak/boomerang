@@ -53,16 +53,15 @@
 /*
  * The mach header appears at the very beginning of the object file.
  */
-struct mach_header
-  {
-    unsigned long	magic;		/* mach magic number identifier */
-    cpu_type_t	cputype;	/* cpu specifier */
-    cpu_subtype_t	cpusubtype;	/* machine specifier */
-    unsigned long	filetype;	/* type of file */
-    unsigned long	ncmds;		/* number of load commands */
-    unsigned long	sizeofcmds;	/* the size of all the load commands */
-    unsigned long	flags;		/* flags */
-  };
+struct mach_header {
+    unsigned long magic; /* mach magic number identifier */
+    cpu_type_t cputype; /* cpu specifier */
+    cpu_subtype_t cpusubtype; /* machine specifier */
+    unsigned long filetype; /* type of file */
+    unsigned long ncmds; /* number of load commands */
+    unsigned long sizeofcmds; /* the size of all the load commands */
+    unsigned long flags; /* flags */
+};
 
 /* Constant for the magic field of the mach_header */
 #define	MH_MAGIC	0xfeedface	/* the mach magic number */
@@ -143,27 +142,27 @@ sub-images so the two-level namespace
         are both set. */
 #define MH_CANONICAL    0x4000		/* the binary has been canonicalized
         via the unprebind operation */
-        /*
-         * The load commands directly follow the mach_header.  The total size of all
-         * of the commands is given by the sizeofcmds field in the mach_header.  All
-         * load commands must have as their first two fields cmd and cmdsize.  The cmd
-         * field is filled in with a constant for that command type.  Each command type
-         * has a structure specifically for it.  The cmdsize field is the size in bytes
-         * of the particular load command structure plus anything that follows it that
-         * is a part of the load command (i.e. section structures, strings, etc.).  To
-         * advance to the next load command the cmdsize can be added to the offset or
-         * pointer of the current load command.  The cmdsize MUST be a multiple of
-         * 4 bytes (this is forever the maximum alignment of any load commands).
-         * The padded bytes must be zero.  All tables in the object file must also
-         * follow these rules so the file can be memory mapped.  Otherwise the pointers
-         * to these tables will not work well or at all on some machines.  With all
-         * padding zeroed like objects will compare byte for byte.
-         */
-        struct load_command
-      {
-        unsigned long cmd;		/* type of load command */
-        unsigned long cmdsize;		/* total size of command in bytes */
-      };
+
+/*
+ * The load commands directly follow the mach_header.  The total size of all
+ * of the commands is given by the sizeofcmds field in the mach_header.  All
+ * load commands must have as their first two fields cmd and cmdsize.  The cmd
+ * field is filled in with a constant for that command type.  Each command type
+ * has a structure specifically for it.  The cmdsize field is the size in bytes
+ * of the particular load command structure plus anything that follows it that
+ * is a part of the load command (i.e. section structures, strings, etc.).  To
+ * advance to the next load command the cmdsize can be added to the offset or
+ * pointer of the current load command.  The cmdsize MUST be a multiple of
+ * 4 bytes (this is forever the maximum alignment of any load commands).
+ * The padded bytes must be zero.  All tables in the object file must also
+ * follow these rules so the file can be memory mapped.  Otherwise the pointers
+ * to these tables will not work well or at all on some machines.  With all
+ * padding zeroed like objects will compare byte for byte.
+ */
+struct load_command {
+    unsigned long cmd; /* type of load command */
+    unsigned long cmdsize; /* total size of command in bytes */
+};
 
 /*
  * After MacOS X 10.1 when a new load command is added that is required to be
@@ -216,9 +215,9 @@ sub-images so the two-level namespace
  * of 4 bytes must be zero.
  */
 union lc_str {
-    unsigned long	offset;	/* offset to the string */
-    char		*ptr;	/* pointer to the string */
-  };
+    unsigned long offset; /* offset to the string */
+    char *ptr; /* pointer to the string */
+};
 
 /*
  * The segment load command indicates that a part of this file is to be
@@ -232,20 +231,19 @@ union lc_str {
  * section structures directly follow the segment command and their size is
  * reflected in cmdsize.
  */
-struct segment_command
-  {
-    unsigned long	cmd;		/* LC_SEGMENT */
-    unsigned long	cmdsize;	/* includes sizeof section structs */
-    char		segname[16];	/* segment name */
-    unsigned long	vmaddr;		/* memory address of this segment */
-    unsigned long	vmsize;		/* memory size of this segment */
-    unsigned long	fileoff;	/* file offset of this segment */
-    unsigned long	filesize;	/* amount to map from the file */
-    vm_prot_t	maxprot;	/* maximum VM protection */
-    vm_prot_t	initprot;	/* initial VM protection */
-    unsigned long	nsects;		/* number of sections in segment */
-    unsigned long	flags;		/* flags */
-  };
+struct segment_command {
+    unsigned long cmd; /* LC_SEGMENT */
+    unsigned long cmdsize; /* includes sizeof section structs */
+    char segname[16]; /* segment name */
+    unsigned long vmaddr; /* memory address of this segment */
+    unsigned long vmsize; /* memory size of this segment */
+    unsigned long fileoff; /* file offset of this segment */
+    unsigned long filesize; /* amount to map from the file */
+    vm_prot_t maxprot; /* maximum VM protection */
+    vm_prot_t initprot; /* initial VM protection */
+    unsigned long nsects; /* number of sections in segment */
+    unsigned long flags; /* flags */
+};
 
 /* Constants for the flags field of the segment_command */
 #define	SG_HIGHVM	0x1	/* the file contents for this segment is for
@@ -258,45 +256,44 @@ a fixed VM library, for overlap checking in
   in it and nothing relocated to it, that is
   it maybe safely replaced without relocation*/
 
-  /*
-   * A segment is made up of zero or more sections.  Non-MH_OBJECT files have
-   * all of their segments with the proper sections in each, and padded to the
-   * specified segment alignment when produced by the link editor.  The first
-   * segment of a MH_EXECUTE and MH_FVMLIB format file contains the mach_header
-   * and load commands of the object file before its first section.  The zero
-   * fill sections are always last in their segment (in all formats).  This
-   * allows the zeroed segment padding to be mapped into memory where zero fill
-   * sections might be.
-   *
-   * The MH_OBJECT format has all of its sections in one segment for
-   * compactness.  There is no padding to a specified segment boundary and the
-   * mach_header and load commands are not part of the segment.
-   *
-   * Sections with the same section name, sectname, going into the same segment,
-   * segname, are combined by the link editor.  The resulting section is aligned
-   * to the maximum alignment of the combined sections and is the new section's
-   * alignment.  The combined sections are aligned to their original alignment in
-   * the combined section.  Any padded bytes to get the specified alignment are
-   * zeroed.
-   *
-   * The format of the relocation entries referenced by the reloff and nreloc
-   * fields of the section structure for mach object files is described in the
-   * header file <reloc.h>.
-   */
-  struct section
-    {
-      char		sectname[16];	/* name of this section */
-        char		segname[16];	/* segment this section goes in */
-        unsigned long	addr;		/* memory address of this section */
-        unsigned long	size;		/* size in bytes of this section */
-        unsigned long	offset;		/* file offset of this section */
-        unsigned long	align;		/* section alignment (power of 2) */
-        unsigned long	reloff;		/* file offset of relocation entries */
-        unsigned long	nreloc;		/* number of relocation entries */
-        unsigned long	flags;		/* flags (section type and attributes)*/
-        unsigned long	reserved1;	/* reserved */
-        unsigned long	reserved2;	/* reserved */
-      };
+/*
+ * A segment is made up of zero or more sections.  Non-MH_OBJECT files have
+ * all of their segments with the proper sections in each, and padded to the
+ * specified segment alignment when produced by the link editor.  The first
+ * segment of a MH_EXECUTE and MH_FVMLIB format file contains the mach_header
+ * and load commands of the object file before its first section.  The zero
+ * fill sections are always last in their segment (in all formats).  This
+ * allows the zeroed segment padding to be mapped into memory where zero fill
+ * sections might be.
+ *
+ * The MH_OBJECT format has all of its sections in one segment for
+ * compactness.  There is no padding to a specified segment boundary and the
+ * mach_header and load commands are not part of the segment.
+ *
+ * Sections with the same section name, sectname, going into the same segment,
+ * segname, are combined by the link editor.  The resulting section is aligned
+ * to the maximum alignment of the combined sections and is the new section's
+ * alignment.  The combined sections are aligned to their original alignment in
+ * the combined section.  Any padded bytes to get the specified alignment are
+ * zeroed.
+ *
+ * The format of the relocation entries referenced by the reloff and nreloc
+ * fields of the section structure for mach object files is described in the
+ * header file <reloc.h>.
+ */
+struct section {
+    char sectname[16]; /* name of this section */
+    char segname[16]; /* segment this section goes in */
+    unsigned long addr; /* memory address of this section */
+    unsigned long size; /* size in bytes of this section */
+    unsigned long offset; /* file offset of this section */
+    unsigned long align; /* section alignment (power of 2) */
+    unsigned long reloff; /* file offset of relocation entries */
+    unsigned long nreloc; /* number of relocation entries */
+    unsigned long flags; /* flags (section type and attributes)*/
+    unsigned long reserved1; /* reserved */
+    unsigned long reserved2; /* reserved */
+};
 
 /*
  * The flags field of a section structure is separated into two parts a section
@@ -340,10 +337,10 @@ pointers for initialization*/
 pointers for termination */
 #define	S_COALESCED			0xb	/* section contains symbols that
   are to be coalesced */
-  /*
-   * Constants for the section attributes part of the flags field of a section
-   * structure.
-   */
+/*
+ * Constants for the section attributes part of the flags field of a section
+ * structure.
+ */
 #define SECTION_ATTRIBUTES_USR	 0xff000000	/* User setable attributes */
 #define S_ATTR_PURE_INSTRUCTIONS 0x80000000	/* section contains only true
   machine instructions */
@@ -363,43 +360,43 @@ pointers for termination */
   relocation entries */
 
 
-  /*
-   * The names of segments and sections in them are mostly meaningless to the
-   * link-editor.  But there are few things to support traditional UNIX
-   * executables that require the link-editor and assembler to use some names
-   * agreed upon by convention.
-   *
-   * The initial protection of the "__TEXT" segment has write protection turned
-   * off (not writeable).
-   *
-   * The link-editor will allocate common symbols at the end of the "__common"
-   * section in the "__DATA" segment.  It will create the section and segment
-   * if needed.
-   */
+/*
+ * The names of segments and sections in them are mostly meaningless to the
+ * link-editor.  But there are few things to support traditional UNIX
+ * executables that require the link-editor and assembler to use some names
+ * agreed upon by convention.
+ *
+ * The initial protection of the "__TEXT" segment has write protection turned
+ * off (not writeable).
+ *
+ * The link-editor will allocate common symbols at the end of the "__common"
+ * section in the "__DATA" segment.  It will create the section and segment
+ * if needed.
+ */
 
-  /* The currently known segment names and the section names in those segments */
+/* The currently known segment names and the section names in those segments */
 
 #define	SEG_PAGEZERO	"__PAGEZERO"	/* the pagezero segment which has no */
-  /* protections and catches NULL */
-  /* references for MH_EXECUTE files */
+/* protections and catches NULL */
+/* references for MH_EXECUTE files */
 
 
 #define	SEG_TEXT	"__TEXT"	/* the tradition UNIX text segment */
 #define	SECT_TEXT	"__text"	/* the real text part of the text */
-  /* section no headers, and no padding */
+/* section no headers, and no padding */
 #define SECT_FVMLIB_INIT0 "__fvmlib_init0"	/* the fvmlib initialization */
-  /*  section */
+/*  section */
 #define SECT_FVMLIB_INIT1 "__fvmlib_init1"	/* the section following the */
-  /*  fvmlib initialization */
-  /*  section */
+/*  fvmlib initialization */
+/*  section */
 
 #define	SEG_DATA	"__DATA"	/* the tradition UNIX data segment */
 #define	SECT_DATA	"__data"	/* the real initialized data section */
-  /* no padding, no bss overlap */
+/* no padding, no bss overlap */
 #define	SECT_BSS	"__bss"		/* the real uninitialized data section*/
-  /* no padding */
+/* no padding */
 #define SECT_COMMON	"__common"	/* the section common symbols are */
-  /* allocated in by the link editor */
+/* allocated in by the link editor */
 
 #define	SEG_OBJC	"__OBJC"	/* objective-C runtime segment */
 #define SECT_OBJC_SYMBOLS "__symbol_table"	/* symbol table */
@@ -412,25 +409,24 @@ pointers for termination */
 #define	SECT_ICON_TIFF   "__tiff"	/* the icons in tiff format */
 
 #define	SEG_LINKEDIT	"__LINKEDIT"	/* the segment containing all structs */
-  /* created and maintained by the link */
-  /* editor.  Created with -seglinkedit */
-  /* option to ld(1) for MH_EXECUTE and */
-  /* FVMLIB file types only */
+/* created and maintained by the link */
+/* editor.  Created with -seglinkedit */
+/* option to ld(1) for MH_EXECUTE and */
+/* FVMLIB file types only */
 
 #define SEG_UNIXSTACK	"__UNIXSTACK"	/* the unix stack segment */
 
-  /*
-   * Fixed virtual memory shared libraries are identified by two things.  The
-   * target pathname (the name of the library as found for execution), and the
-   * minor version number.  The address of where the headers are loaded is in
-   * header_addr.
-   */
-  struct fvmlib
-    {
-      union lc_str	name;		/* library's target pathname */
-      unsigned long	minor_version;	/* library's minor version number */
-      unsigned long	header_addr;	/* library's header address */
-    };
+/*
+ * Fixed virtual memory shared libraries are identified by two things.  The
+ * target pathname (the name of the library as found for execution), and the
+ * minor version number.  The address of where the headers are loaded is in
+ * header_addr.
+ */
+struct fvmlib {
+    union lc_str name; /* library's target pathname */
+    unsigned long minor_version; /* library's minor version number */
+    unsigned long header_addr; /* library's header address */
+};
 
 /*
  * A fixed virtual shared library (filetype == MH_FVMLIB in the mach header)
@@ -438,11 +434,10 @@ pointers for termination */
  * An object that uses a fixed virtual shared library also contains a
  * fvmlib_command (cmd == LC_LOADFVMLIB) for each library it uses.
  */
-struct fvmlib_command
-{
-  unsigned long	cmd;		/* LC_IDFVMLIB or LC_LOADFVMLIB */
-  unsigned long	cmdsize;	/* includes pathname string */
-  struct fvmlib	fvmlib;		/* the library identification */
+struct fvmlib_command {
+    unsigned long cmd; /* LC_IDFVMLIB or LC_LOADFVMLIB */
+    unsigned long cmdsize; /* includes pathname string */
+    struct fvmlib fvmlib; /* the library identification */
 };
 
 /*
@@ -454,12 +449,11 @@ struct fvmlib_command
  * built and copied into user so it can be use to determined if the library used
  * at runtime is exactly the same as used to built the program.
  */
-struct dylib
-{
-  union lc_str  name;			/* library's path name */
-  unsigned long timestamp;		/* library's build time stamp */
-  unsigned long current_version;	/* library's current version number */
-  unsigned long compatibility_version;/* library's compatibility vers number*/
+struct dylib {
+    union lc_str name; /* library's path name */
+    unsigned long timestamp; /* library's build time stamp */
+    unsigned long current_version; /* library's current version number */
+    unsigned long compatibility_version; /* library's compatibility vers number*/
 };
 
 /*
@@ -469,11 +463,10 @@ struct dylib
  * dylib_command (cmd == LC_LOAD_DYLIB or cmd == LC_LOAD_WEAK_DYLIB) for each
  * library it uses.
  */
-struct dylib_command
-{
-  unsigned long	cmd;		/* LC_ID_DYLIB, LC_LOAD_{,WEAK_}DYLIB */
-  unsigned long	cmdsize;	/* includes pathname string */
-  struct dylib	dylib;		/* the library identification */
+struct dylib_command {
+    unsigned long cmd; /* LC_ID_DYLIB, LC_LOAD_{,WEAK_}DYLIB */
+    unsigned long cmdsize; /* includes pathname string */
+    struct dylib dylib; /* the library identification */
 };
 
 /*
@@ -486,11 +479,10 @@ struct dylib_command
  * The name of the umbrella framework for subframeworks is recorded in the
  * following structure.
  */
-struct sub_framework_command
-{
-  unsigned long	cmd;		/* LC_SUB_FRAMEWORK */
-  unsigned long	cmdsize;	/* includes umbrella string */
-  union lc_str 	umbrella;	/* the umbrella framework name */
+struct sub_framework_command {
+    unsigned long cmd; /* LC_SUB_FRAMEWORK */
+    unsigned long cmdsize; /* includes umbrella string */
+    union lc_str umbrella; /* the umbrella framework name */
 };
 
 /*
@@ -502,11 +494,10 @@ struct sub_framework_command
  * usually a framework name.  It can also be a name used for bundles clients
  * where the bundle is built with "-client_name client_name".
  */
-struct sub_client_command
-{
-  unsigned long	cmd;		/* LC_SUB_CLIENT */
-  unsigned long	cmdsize;	/* includes client string */
-  union lc_str 	client;		/* the client name */
+struct sub_client_command {
+    unsigned long cmd; /* LC_SUB_CLIENT */
+    unsigned long cmdsize; /* includes client string */
+    union lc_str client; /* the client name */
 };
 
 /*
@@ -522,11 +513,10 @@ struct sub_client_command
  * Zero or more sub_umbrella frameworks may be use by an umbrella framework.
  * The name of a sub_umbrella framework is recorded in the following structure.
  */
-struct sub_umbrella_command
-{
-  unsigned long	cmd;		/* LC_SUB_UMBRELLA */
-  unsigned long	cmdsize;	/* includes sub_umbrella string */
-  union lc_str 	sub_umbrella;	/* the sub_umbrella framework name */
+struct sub_umbrella_command {
+    unsigned long cmd; /* LC_SUB_UMBRELLA */
+    unsigned long cmdsize; /* includes sub_umbrella string */
+    union lc_str sub_umbrella; /* the sub_umbrella framework name */
 };
 
 /*
@@ -544,11 +534,10 @@ struct sub_umbrella_command
  * The name of a sub_library framework is recorded in the following structure.
  * For example /usr/lib/libobjc_profile.A.dylib would be recorded as "libobjc".
  */
-struct sub_library_command
-{
-  unsigned long	cmd;		/* LC_SUB_LIBRARY */
-  unsigned long	cmdsize;	/* includes sub_library string */
-  union lc_str 	sub_library;	/* the sub_library name */
+struct sub_library_command {
+    unsigned long cmd; /* LC_SUB_LIBRARY */
+    unsigned long cmdsize; /* includes sub_library string */
+    union lc_str sub_library; /* the sub_library name */
 };
 
 /*
@@ -560,13 +549,12 @@ struct sub_library_command
  * of the first byte.  So the bit for the Nth module is:
  * (linked_modules[N/8] >> N%8) & 1
  */
-struct prebound_dylib_command
-{
-  unsigned long	cmd;		/* LC_PREBOUND_DYLIB */
-  unsigned long	cmdsize;	/* includes strings */
-  union lc_str	name;		/* library's path name */
-  unsigned long	nmodules;	/* number of modules in library */
-  union lc_str	linked_modules;	/* bit vector of linked modules */
+struct prebound_dylib_command {
+    unsigned long cmd; /* LC_PREBOUND_DYLIB */
+    unsigned long cmdsize; /* includes strings */
+    union lc_str name; /* library's path name */
+    unsigned long nmodules; /* number of modules in library */
+    union lc_str linked_modules; /* bit vector of linked modules */
 };
 
 /*
@@ -575,11 +563,10 @@ struct prebound_dylib_command
  * contains a dylinker_command to identify the dynamic linker (LC_ID_DYLINKER).
  * A file can have at most one of these.
  */
-struct dylinker_command
-{
-  unsigned long	cmd;		/* LC_ID_DYLINKER or LC_LOAD_DYLINKER */
-  unsigned long	cmdsize;	/* includes pathname string */
-  union lc_str    name;		/* dynamic linker's path name */
+struct dylinker_command {
+    unsigned long cmd; /* LC_ID_DYLINKER or LC_LOAD_DYLINKER */
+    unsigned long cmdsize; /* includes pathname string */
+    union lc_str name; /* dynamic linker's path name */
 };
 
 /*
@@ -603,14 +590,13 @@ struct dylinker_command
  * created (based on the shell's limit for the stack size).  Command arguments
  * and environment variables are copied onto that stack.
  */
-struct thread_command
-{
-  unsigned long	cmd;		/* LC_THREAD or  LC_UNIXTHREAD */
-  unsigned long	cmdsize;	/* total size of this command */
-  /* unsigned long flavor		   flavor of thread state */
-  /* unsigned long count		   count of longs in thread state */
-  /* struct XXX_thread_state state   thread state for this flavor */
-  /* ... */
+struct thread_command {
+    unsigned long cmd; /* LC_THREAD or  LC_UNIXTHREAD */
+    unsigned long cmdsize; /* total size of this command */
+    /* unsigned long flavor		   flavor of thread state */
+    /* unsigned long count		   count of longs in thread state */
+    /* struct XXX_thread_state state   thread state for this flavor */
+    /* ... */
 };
 
 /*
@@ -621,19 +607,18 @@ struct thread_command
  * and then calls it.  This gets called before any module initialization
  * routines (used for C++ static constructors) in the library.
  */
-struct routines_command
-{
-  unsigned long	cmd;		/* LC_ROUTINES */
-  unsigned long	cmdsize;	/* total size of this command */
-  unsigned long	init_address;	/* address of initialization routine */
-  unsigned long	init_module;	/* index into the module table that */
-  /*  the init routine is defined in */
-  unsigned long	reserved1;
-  unsigned long	reserved2;
-  unsigned long	reserved3;
-  unsigned long	reserved4;
-  unsigned long	reserved5;
-  unsigned long	reserved6;
+struct routines_command {
+    unsigned long cmd; /* LC_ROUTINES */
+    unsigned long cmdsize; /* total size of this command */
+    unsigned long init_address; /* address of initialization routine */
+    unsigned long init_module; /* index into the module table that */
+    /*  the init routine is defined in */
+    unsigned long reserved1;
+    unsigned long reserved2;
+    unsigned long reserved3;
+    unsigned long reserved4;
+    unsigned long reserved5;
+    unsigned long reserved6;
 };
 
 /*
@@ -641,14 +626,13 @@ struct routines_command
  * "stab" style symbol table information as described in the header files
  * <nlist.h> and <stab.h>.
  */
-struct symtab_command
-{
-  unsigned long	cmd;		/* LC_SYMTAB */
-  unsigned long	cmdsize;	/* sizeof(struct symtab_command) */
-  unsigned long	symoff;		/* symbol table offset */
-  unsigned long	nsyms;		/* number of symbol table entries */
-  unsigned long	stroff;		/* string table offset */
-  unsigned long	strsize;	/* string table size in bytes */
+struct symtab_command {
+    unsigned long cmd; /* LC_SYMTAB */
+    unsigned long cmdsize; /* sizeof(struct symtab_command) */
+    unsigned long symoff; /* symbol table offset */
+    unsigned long nsyms; /* number of symbol table entries */
+    unsigned long stroff; /* string table offset */
+    unsigned long strsize; /* string table size in bytes */
 };
 
 /*
@@ -691,120 +675,119 @@ struct symtab_command
  * For executable and object modules the relocation entries continue to hang
  * off the section structures.
  */
-struct dysymtab_command
-{
-  unsigned long cmd;		/* LC_DYSYMTAB */
-  unsigned long cmdsize;	/* sizeof(struct dysymtab_command) */
+struct dysymtab_command {
+    unsigned long cmd; /* LC_DYSYMTAB */
+    unsigned long cmdsize; /* sizeof(struct dysymtab_command) */
 
-  /*
-   * The symbols indicated by symoff and nsyms of the LC_SYMTAB load command
-   * are grouped into the following three groups:
-   *    local symbols (further grouped by the module they are from)
-   *    defined external symbols (further grouped by the module they are from)
-   *    undefined symbols
-   *
-   * The local symbols are used only for debugging.  The dynamic binding
-   * process may have to use them to indicate to the debugger the local
-   * symbols for a module that is being bound.
-   *
-   * The last two groups are used by the dynamic binding process to do the
-   * binding (indirectly through the module table and the reference symbol
-   * table when this is a dynamically linked shared library file).
-   */
-  unsigned long ilocalsym;	/* index to local symbols */
-  unsigned long nlocalsym;	/* number of local symbols */
+    /*
+     * The symbols indicated by symoff and nsyms of the LC_SYMTAB load command
+     * are grouped into the following three groups:
+     *    local symbols (further grouped by the module they are from)
+     *    defined external symbols (further grouped by the module they are from)
+     *    undefined symbols
+     *
+     * The local symbols are used only for debugging.  The dynamic binding
+     * process may have to use them to indicate to the debugger the local
+     * symbols for a module that is being bound.
+     *
+     * The last two groups are used by the dynamic binding process to do the
+     * binding (indirectly through the module table and the reference symbol
+     * table when this is a dynamically linked shared library file).
+     */
+    unsigned long ilocalsym; /* index to local symbols */
+    unsigned long nlocalsym; /* number of local symbols */
 
-  unsigned long iextdefsym;	/* index to externally defined symbols */
-  unsigned long nextdefsym;	/* number of externally defined symbols */
+    unsigned long iextdefsym; /* index to externally defined symbols */
+    unsigned long nextdefsym; /* number of externally defined symbols */
 
-  unsigned long iundefsym;	/* index to undefined symbols */
-  unsigned long nundefsym;	/* number of undefined symbols */
+    unsigned long iundefsym; /* index to undefined symbols */
+    unsigned long nundefsym; /* number of undefined symbols */
 
-  /*
-   * For the for the dynamic binding process to find which module a symbol
-   * is defined in the table of contents is used (analogous to the ranlib
-   * structure in an archive) which maps defined external symbols to modules
-   * they are defined in.  This exists only in a dynamically linked shared
-   * library file.  For executable and object modules the defined external
-   * symbols are sorted by name and is use as the table of contents.
-   */
-  unsigned long tocoff;	/* file offset to table of contents */
-  unsigned long ntoc;		/* number of entries in table of contents */
+    /*
+     * For the for the dynamic binding process to find which module a symbol
+     * is defined in the table of contents is used (analogous to the ranlib
+     * structure in an archive) which maps defined external symbols to modules
+     * they are defined in.  This exists only in a dynamically linked shared
+     * library file.  For executable and object modules the defined external
+     * symbols are sorted by name and is use as the table of contents.
+     */
+    unsigned long tocoff; /* file offset to table of contents */
+    unsigned long ntoc; /* number of entries in table of contents */
 
-  /*
-   * To support dynamic binding of "modules" (whole object files) the symbol
-   * table must reflect the modules that the file was created from.  This is
-   * done by having a module table that has indexes and counts into the merged
-   * tables for each module.  The module structure that these two entries
-   * refer to is described below.  This exists only in a dynamically linked
-   * shared library file.  For executable and object modules the file only
-   * contains one module so everything in the file belongs to the module.
-   */
-  unsigned long modtaboff;	/* file offset to module table */
-  unsigned long nmodtab;	/* number of module table entries */
+    /*
+     * To support dynamic binding of "modules" (whole object files) the symbol
+     * table must reflect the modules that the file was created from.  This is
+     * done by having a module table that has indexes and counts into the merged
+     * tables for each module.  The module structure that these two entries
+     * refer to is described below.  This exists only in a dynamically linked
+     * shared library file.  For executable and object modules the file only
+     * contains one module so everything in the file belongs to the module.
+     */
+    unsigned long modtaboff; /* file offset to module table */
+    unsigned long nmodtab; /* number of module table entries */
 
-  /*
-   * To support dynamic module binding the module structure for each module
-   * indicates the external references (defined and undefined) each module
-   * makes.  For each module there is an offset and a count into the
-   * reference symbol table for the symbols that the module references.
-   * This exists only in a dynamically linked shared library file.  For
-   * executable and object modules the defined external symbols and the
-   * undefined external symbols indicates the external references.
-   */
-  unsigned long extrefsymoff;  /* offset to referenced symbol table */
-  unsigned long nextrefsyms;	 /* number of referenced symbol table entries */
+    /*
+     * To support dynamic module binding the module structure for each module
+     * indicates the external references (defined and undefined) each module
+     * makes.  For each module there is an offset and a count into the
+     * reference symbol table for the symbols that the module references.
+     * This exists only in a dynamically linked shared library file.  For
+     * executable and object modules the defined external symbols and the
+     * undefined external symbols indicates the external references.
+     */
+    unsigned long extrefsymoff; /* offset to referenced symbol table */
+    unsigned long nextrefsyms; /* number of referenced symbol table entries */
 
-  /*
-   * The sections that contain "symbol pointers" and "routine stubs" have
-   * indexes and (implied counts based on the size of the section and fixed
-   * size of the entry) into the "indirect symbol" table for each pointer
-   * and stub.  For every section of these two types the index into the
-   * indirect symbol table is stored in the section header in the field
-   * reserved1.  An indirect symbol table entry is simply a 32bit index into
-   * the symbol table to the symbol that the pointer or stub is referring to.
-   * The indirect symbol table is ordered to match the entries in the section.
-   */
-  unsigned long indirectsymoff; /* file offset to the indirect symbol table */
-  unsigned long nindirectsyms;  /* number of indirect symbol table entries */
+    /*
+     * The sections that contain "symbol pointers" and "routine stubs" have
+     * indexes and (implied counts based on the size of the section and fixed
+     * size of the entry) into the "indirect symbol" table for each pointer
+     * and stub.  For every section of these two types the index into the
+     * indirect symbol table is stored in the section header in the field
+     * reserved1.  An indirect symbol table entry is simply a 32bit index into
+     * the symbol table to the symbol that the pointer or stub is referring to.
+     * The indirect symbol table is ordered to match the entries in the section.
+     */
+    unsigned long indirectsymoff; /* file offset to the indirect symbol table */
+    unsigned long nindirectsyms; /* number of indirect symbol table entries */
 
-  /*
-   * To support relocating an individual module in a library file quickly the
-   * external relocation entries for each module in the library need to be
-   * accessed efficiently.  Since the relocation entries can't be accessed
-   * through the section headers for a library file they are separated into
-   * groups of local and external entries further grouped by module.  In this
-   * case the presents of this load command who's extreloff, nextrel,
-   * locreloff and nlocrel fields are non-zero indicates that the relocation
-   * entries of non-merged sections are not referenced through the section
-   * structures (and the reloff and nreloc fields in the section headers are
-   * set to zero).
-   *
-   * Since the relocation entries are not accessed through the section headers
-   * this requires the r_address field to be something other than a section
-   * offset to identify the item to be relocated.  In this case r_address is
-   * set to the offset from the vmaddr of the first LC_SEGMENT command.
-   * For MH_SPLIT_SEGS images r_address is set to the the offset from the
-   * vmaddr of the first read-write LC_SEGMENT command.
-   *
-   * The relocation entries are grouped by module and the module table
-   * entries have indexes and counts into them for the group of external
-   * relocation entries for that the module.
-   *
-   * For sections that are merged across modules there must not be any
-   * remaining external relocation entries for them (for merged sections
-   * remaining relocation entries must be local).
-   */
-  unsigned long extreloff;	/* offset to external relocation entries */
-  unsigned long nextrel;	/* number of external relocation entries */
+    /*
+     * To support relocating an individual module in a library file quickly the
+     * external relocation entries for each module in the library need to be
+     * accessed efficiently.  Since the relocation entries can't be accessed
+     * through the section headers for a library file they are separated into
+     * groups of local and external entries further grouped by module.  In this
+     * case the presents of this load command who's extreloff, nextrel,
+     * locreloff and nlocrel fields are non-zero indicates that the relocation
+     * entries of non-merged sections are not referenced through the section
+     * structures (and the reloff and nreloc fields in the section headers are
+     * set to zero).
+     *
+     * Since the relocation entries are not accessed through the section headers
+     * this requires the r_address field to be something other than a section
+     * offset to identify the item to be relocated.  In this case r_address is
+     * set to the offset from the vmaddr of the first LC_SEGMENT command.
+     * For MH_SPLIT_SEGS images r_address is set to the the offset from the
+     * vmaddr of the first read-write LC_SEGMENT command.
+     *
+     * The relocation entries are grouped by module and the module table
+     * entries have indexes and counts into them for the group of external
+     * relocation entries for that the module.
+     *
+     * For sections that are merged across modules there must not be any
+     * remaining external relocation entries for them (for merged sections
+     * remaining relocation entries must be local).
+     */
+    unsigned long extreloff; /* offset to external relocation entries */
+    unsigned long nextrel; /* number of external relocation entries */
 
-  /*
-   * All the local relocation entries are grouped together (they are not
-   * grouped by their module since they are only used if the object is moved
-   * from it staticly link edited address).
-   */
-  unsigned long locreloff;	/* offset to local relocation entries */
-  unsigned long nlocrel;	/* number of local relocation entries */
+    /*
+     * All the local relocation entries are grouped together (they are not
+     * grouped by their module since they are only used if the object is moved
+     * from it staticly link edited address).
+     */
+    unsigned long locreloff; /* offset to local relocation entries */
+    unsigned long nlocrel; /* number of local relocation entries */
 
 };
 
@@ -818,42 +801,39 @@ struct dysymtab_command
 #define INDIRECT_SYMBOL_LOCAL	0x80000000
 #define INDIRECT_SYMBOL_ABS	0x40000000
 
-
 /* a table of contents entry */
-struct dylib_table_of_contents
-{
-  unsigned long symbol_index;	/* the defined external symbol
+struct dylib_table_of_contents {
+    unsigned long symbol_index; /* the defined external symbol
   				   (index into the symbol table) */
-  unsigned long module_index;	/* index into the module table this symbol
+    unsigned long module_index; /* index into the module table this symbol
   				   is defined in */
 };
 
 /* a module table entry */
-struct dylib_module
-{
-  unsigned long module_name;	/* the module name (index into string table) */
+struct dylib_module {
+    unsigned long module_name; /* the module name (index into string table) */
 
-  unsigned long iextdefsym;	/* index into externally defined symbols */
-  unsigned long nextdefsym;	/* number of externally defined symbols */
-  unsigned long irefsym;	/* index into reference symbol table */
-  unsigned long nrefsym;	/* number of reference symbol table entries */
-  unsigned long ilocalsym;	/* index into symbols for local symbols */
-  unsigned long nlocalsym;	/* number of local symbols */
+    unsigned long iextdefsym; /* index into externally defined symbols */
+    unsigned long nextdefsym; /* number of externally defined symbols */
+    unsigned long irefsym; /* index into reference symbol table */
+    unsigned long nrefsym; /* number of reference symbol table entries */
+    unsigned long ilocalsym; /* index into symbols for local symbols */
+    unsigned long nlocalsym; /* number of local symbols */
 
-  unsigned long iextrel;	/* index into external relocation entries */
-  unsigned long nextrel;	/* number of external relocation entries */
+    unsigned long iextrel; /* index into external relocation entries */
+    unsigned long nextrel; /* number of external relocation entries */
 
-  unsigned long iinit_iterm;	/* low 16 bits are the index into the init
+    unsigned long iinit_iterm; /* low 16 bits are the index into the init
   				   section, high 16 bits are the index into
   			           the term section */
-  unsigned long ninit_nterm;	/* low 16 bits are the number of init section
+    unsigned long ninit_nterm; /* low 16 bits are the number of init section
   				   entries, high 16 bits are the number of
   				   term section entries */
 
-  unsigned long		/* for this module address of the start of */
-  objc_module_info_addr;  /*  the (__OBJC,__module_info) section */
-  unsigned long		/* for this module size of */
-  objc_module_info_size;	/*  the (__OBJC,__module_info) section */
+    unsigned long /* for this module address of the start of */
+    objc_module_info_addr; /*  the (__OBJC,__module_info) section */
+    unsigned long /* for this module size of */
+    objc_module_info_size; /*  the (__OBJC,__module_info) section */
 };
 
 /*
@@ -864,24 +844,22 @@ struct dylib_module
  * reference that is being made.  The constants for the flags are defined in
  * <mach-o/nlist.h> as they are also used for symbol table entries.
  */
-struct dylib_reference
-{
-unsigned long isym:
-  24,	/* index into the symbol table */
-flags:
-  8;	/* flags to indicate the type of reference */
+struct dylib_reference {
+    unsigned long isym :
+            24, /* index into the symbol table */
+            flags :
+            8; /* flags to indicate the type of reference */
 };
 
 /*
  * The twolevel_hints_command contains the offset and number of hints in the
  * two-level namespace lookup hints table.
  */
-struct twolevel_hints_command
-{
-  unsigned long cmd;		/* LC_TWOLEVEL_HINTS */
-  unsigned long cmdsize;	/* sizeof(struct twolevel_hints_command) */
-  unsigned long offset;	/* offset to the hint table */
-  unsigned long nhints;	/* number of hints in the hint table */
+struct twolevel_hints_command {
+    unsigned long cmd; /* LC_TWOLEVEL_HINTS */
+    unsigned long cmdsize; /* sizeof(struct twolevel_hints_command) */
+    unsigned long offset; /* offset to the hint table */
+    unsigned long nhints; /* number of hints in the hint table */
 };
 
 /*
@@ -900,13 +878,12 @@ struct twolevel_hints_command
  * library's table of contents.  This is used as the starting point of the
  * binary search or a directed linear search.
  */
-struct twolevel_hint
-{
-  unsigned long
-isub_image:
-  8,	/* index into the sub images */
-itoc:
-  24;	/* index into the table of contents */
+struct twolevel_hint {
+    unsigned long
+    isub_image :
+            8, /* index into the sub images */
+            itoc :
+            24; /* index into the table of contents */
 };
 
 /*
@@ -919,11 +896,10 @@ itoc:
  * is re-done and the cksum field is non-zero it is left unchanged from the
  * input file.
  */
-struct prebind_cksum_command
-{
-  unsigned long cmd;		/* LC_PREBIND_CKSUM */
-  unsigned long cmdsize;	/* sizeof(struct prebind_cksum_command) */
-  unsigned long cksum;	/* the check sum or zero */
+struct prebind_cksum_command {
+    unsigned long cmd; /* LC_PREBIND_CKSUM */
+    unsigned long cmdsize; /* sizeof(struct prebind_cksum_command) */
+    unsigned long cksum; /* the check sum or zero */
 };
 
 /*
@@ -935,12 +911,11 @@ struct prebind_cksum_command
  * roots also being a multiple of a long.  Also the padding must again be
  * zeroed. (THIS IS OBSOLETE and no longer supported).
  */
-struct symseg_command
-{
-  unsigned long	cmd;		/* LC_SYMSEG */
-  unsigned long	cmdsize;	/* sizeof(struct symseg_command) */
-  unsigned long	offset;		/* symbol segment offset */
-  unsigned long	size;		/* symbol segment size in bytes */
+struct symseg_command {
+    unsigned long cmd; /* LC_SYMSEG */
+    unsigned long cmdsize; /* sizeof(struct symseg_command) */
+    unsigned long offset; /* symbol segment offset */
+    unsigned long size; /* symbol segment size in bytes */
 };
 
 /*
@@ -949,10 +924,9 @@ struct symseg_command
  * the command is padded out with zero bytes to a multiple of 4 bytes/
  * (THIS IS OBSOLETE and no longer supported).
  */
-struct ident_command
-{
-  unsigned long cmd;		/* LC_IDENT */
-  unsigned long cmdsize;		/* strings that follow this command */
+struct ident_command {
+    unsigned long cmd; /* LC_IDENT */
+    unsigned long cmdsize; /* strings that follow this command */
 };
 
 /*
@@ -961,12 +935,11 @@ struct ident_command
  * internal use.  The kernel ignores this command when loading a program into
  * memory).
  */
-struct fvmfile_command
-{
-  unsigned long cmd;		/* LC_FVMFILE */
-  unsigned long cmdsize;		/* includes pathname string */
-  union lc_str	name;		/* files pathname */
-  unsigned long	header_addr;	/* files virtual address */
+struct fvmfile_command {
+    unsigned long cmd; /* LC_FVMFILE */
+    unsigned long cmdsize; /* includes pathname string */
+    union lc_str name; /* files pathname */
+    unsigned long header_addr; /* files virtual address */
 };
 
 #endif /* _MACHO_LOADER_H_ */

@@ -5,7 +5,7 @@ typedef int int32_t;
 
 int32_t **__ctype_toupper_loc(void);
 const unsigned short **__ctype_b_loc(void);
-char[] *__strdup(const char[] *str);
+char[] * __strdup(const char[] * str);
 int _IO_getc(FILE *fp);
 
 int __lxstat(int version, char *__path, stat *__statbuf);

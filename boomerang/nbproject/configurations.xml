@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <df name="boomerang" root=".">
+      <df name="autom4te.cache">
+      </df>
+      <df name="build">
+        <df name="Default">
+          <df name="GNU-MacOSX">
+            <df name="tmp-packaging">
+              <df name="boomerang">
+                <df name="bin">
+                </df>
+              </df>
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="c">
+        <df name="CMakeFiles">
+          <df name="boomerang_DSLs.dir">
+          </df>
+        </df>
+        <in>CTest.cpp</in>
+        <in>CTest.h</in>
+        <in>ansi-c-parser.cpp</in>
+        <in>ansi-c-parser.h</in>
+        <in>ansi-c-scanner.cpp</in>
+        <in>ansi-c-scanner.h</in>
+        <in>testC.cc</in>
+      </df>
+      <df name="cmake_scripts">
+      </df>
+      <df name="CMakeFiles">
+        <df name="boomerang.dir">
+          <df name="loader">
+          </df>
+        </df>
+        <df name="CMakeTmp">
+          <df name="CMakeFiles">
+            <df name="cmTryCompileExec.dir">
+            </df>
+          </df>
+        </df>
+        <df name="CompilerIdC">
+          <df name="a.out.dSYM">
+            <df name="Contents">
+              <df name="Resources">
+                <df name="DWARF">
+                </df>
+              </df>
+            </df>
+          </df>
+          <in>CMakeCCompilerId.c</in>
+        </df>
+        <df name="CompilerIdCXX">
+          <df name="a.out.dSYM">
+            <df name="Contents">
+              <df name="Resources">
+                <df name="DWARF">
+                </df>
+              </df>
+            </df>
+          </df>
+          <in>CMakeCXXCompilerId.cpp</in>
+        </df>
+        <df name="driver.dir">
+        </df>
+        <df name="Progress">
+        </df>
+      </df>
+      <df name="codegen">
+        <df name="CMakeFiles">
+          <df name="Codegen_c_language.dir">
+          </df>
+        </df>
+        <in>chllcode.cpp</in>
+        <in>chllcode.h</in>
+        <in>syntax.cpp</in>
+      </df>
+      <df name="compiled">
+        <df name="boomerang.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libBinaryFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libDOS4GWBinaryFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libElfBinaryFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libExeBinaryFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libHpSomBinaryFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libIntelCoffFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libPalmBinaryFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="libWin32BinaryFile.dylib.dSYM">
+          <df name="Contents">
+            <df name="Resources">
+              <df name="DWARF">
+              </df>
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="db">
+        <df name="CMakeFiles">
+          <df name="boomerang_db.dir">
+          </df>
+        </df>
+        <in>CfgTest.cpp</in>
+        <in>CfgTest.h</in>
+        <in>DfaTest.cpp</in>
+        <in>DfaTest.h</in>
+        <in>ExpTest.cpp</in>
+        <in>ExpTest.h</in>
+        <in>ParserTest.cpp</in>
+        <in>ParserTest.h</in>
+        <in>ProcTest.cpp</in>
+        <in>ProcTest.h</in>
+        <in>ProgTest.cpp</in>
+        <in>ProgTest.h</in>
+        <in>RtlTest.cpp</in>
+        <in>RtlTest.h</in>
+        <in>StatementTest.cpp</in>
+        <in>StatementTest.h</in>
+        <in>basicblock.cpp</in>
+        <in>cfg.cpp</in>
+        <in>checkstrings.cpp</in>
+        <in>dataflow.cpp</in>
+        <in>exp.cpp</in>
+        <in>insnameelem.cpp</in>
+        <in>insnameelem.h</in>
+        <in>managed.cpp</in>
+        <in>operstrings.h</in>
+        <in>proc.cpp</in>
+        <in>prog.cpp</in>
+        <in>register.cpp</in>
+        <in>rtl.cpp</in>
+        <in>signature.cpp</in>
+        <in>signatureStubs.cpp</in>
+        <in>sslinst.cpp</in>
+        <in>sslparser.cpp</in>
+        <in>sslparser.h</in>
+        <in>sslscanner.cpp</in>
+        <in>sslscanner.h</in>
+        <in>statement.cpp</in>
+        <in>table.cpp</in>
+        <in>table.h</in>
+        <in>testDbase.cpp</in>
+        <in>testExp.cpp</in>
+        <in>testExpStubs.cpp</in>
+        <in>testRtl.cpp</in>
+        <in>testRtlStubs.cpp</in>
+        <in>testStmt.cpp</in>
+        <in>testStmtStubs.cpp</in>
+        <in>typeStubs.cpp</in>
+        <in>utilStubs.cpp</in>
+        <in>visitor.cpp</in>
+        <in>xmlprogparser.cpp</in>
+      </df>
+      <df name="dist">
+        <df name="Default">
+          <df name="GNU-MacOSX">
+            <df name="package">
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="frontend">
+        <df name="CMakeFiles">
+          <df name="Frontend_common.dir">
+          </df>
+          <df name="Frontend_mips.dir">
+          </df>
+          <df name="Frontend_pentium.dir">
+          </df>
+          <df name="Frontend_ppc.dir">
+          </df>
+          <df name="Frontend_sparc.dir">
+          </df>
+          <df name="Frontend_st20.dir">
+          </df>
+        </df>
+        <df name="machine">
+          <df name="arm">
+          </df>
+          <df name="hppa">
+            <in>decoder.cpp</in>
+            <in>decoder.m</in>
+            <in>decoder_low.cpp</in>
+            <in>decoder_low.m</in>
+            <in>disassembler.2.m</in>
+            <in>disassembler.cpp</in>
+            <in>disassembler.m</in>
+            <in>disassembler9.m</in>
+            <in>enc.c</in>
+            <in>enc.h</in>
+            <in>fronthppa.cpp</in>
+            <in>hppa-names.cpp</in>
+            <in>hppa-names.h</in>
+            <in>hppa.pat.cpp</in>
+            <in>hppa.pat.h</in>
+            <in>hppa.pat.m</in>
+            <in>simple.cpp</in>
+            <in>simple.m</in>
+          </df>
+          <df name="mc68k">
+            <in>decoder.cpp</in>
+            <in>decoder.m</in>
+            <in>decoder_low.cpp</in>
+            <in>decoder_low.m</in>
+            <in>front68k.cpp</in>
+            <in>mc68k.pat.cpp</in>
+            <in>mc68k.pat.h</in>
+            <in>mc68k.pat.m</in>
+          </df>
+          <df name="mips">
+            <in>decoder.m</in>
+            <in>disassembler.cpp</in>
+            <in>disassembler.m</in>
+          </df>
+          <df name="pentium">
+            <in>decoder.m</in>
+            <in>disassembler.cpp</in>
+            <in>disassembler.m</in>
+          </df>
+          <df name="ppc">
+            <in>decoder.m</in>
+          </df>
+          <df name="sparc">
+            <in>decoder.m</in>
+            <in>disassembler.cpp</in>
+            <in>disassembler.m</in>
+            <in>sparc-names.c</in>
+            <in>sparc-names.h</in>
+            <in>sparc.c</in>
+            <in>sparc.h</in>
+            <in>sparc.pat.cpp</in>
+            <in>sparc.pat.h</in>
+            <in>sparc.pat.m</in>
+          </df>
+          <df name="st20">
+            <in>decoder.m</in>
+            <in>st20.ssl.m</in>
+          </df>
+        </df>
+        <in>FrontPentTest.cpp</in>
+        <in>FrontPentTest.h</in>
+        <in>FrontSparcTest.cpp</in>
+        <in>FrontSparcTest.h</in>
+        <in>FrontendTest.cpp</in>
+        <in>FrontendTest.h</in>
+        <in>frontend.cpp</in>
+        <in>mipsdecoder.cpp</in>
+        <in>mipsdecoder.h</in>
+        <in>mipsfrontend.cpp</in>
+        <in>mipsfrontend.h</in>
+        <in>njmcDecoder.cpp</in>
+        <in>pentiumdecoder.cpp</in>
+        <in>pentiumdecoder.h</in>
+        <in>pentiumfrontend.cpp</in>
+        <in>pentiumfrontend.h</in>
+        <in>ppcdecoder.cpp</in>
+        <in>ppcdecoder.h</in>
+        <in>ppcfrontend.cpp</in>
+        <in>ppcfrontend.h</in>
+        <in>sparcdecoder.cpp</in>
+        <in>sparcdecoder.h</in>
+        <in>sparcfrontend.cpp</in>
+        <in>sparcfrontend.h</in>
+        <in>st20decoder.cpp</in>
+        <in>st20decoder.h</in>
+        <in>st20frontend.cpp</in>
+        <in>st20frontend.h</in>
+        <in>testFront.cpp</in>
+      </df>
+      <df name="include">
+        <in>BinaryFile.h</in>
+        <in>BinaryFileStub.h</in>
+        <in>basicblock.h</in>
+        <in>boomerang.h</in>
+        <in>cfg.h</in>
+        <in>cluster.h</in>
+        <in>config.h</in>
+        <in>constraint.h</in>
+        <in>dataflow.h</in>
+        <in>decoder.h</in>
+        <in>exp.h</in>
+        <in>exphelp.h</in>
+        <in>frontend.h</in>
+        <in>hllcode.h</in>
+        <in>log.h</in>
+        <in>managed.h</in>
+        <in>memo.h</in>
+        <in>operator.h</in>
+        <in>osfcn.h</in>
+        <in>proc.h</in>
+        <in>prog.h</in>
+        <in>register.h</in>
+        <in>rtl.h</in>
+        <in>sigenum.h</in>
+        <in>signature.h</in>
+        <in>statement.h</in>
+        <in>transformer.h</in>
+        <in>type.h</in>
+        <in>types.h</in>
+        <in>util.h</in>
+        <in>visitor.h</in>
+        <in>xmlprogparser.h</in>
+      </df>
+      <df name="lib">
+      </df>
+      <df name="loader">
+        <df name="CMakeFiles">
+          <df name="bffDump.dir">
+          </df>
+          <df name="BinaryFile.dir">
+          </df>
+          <df name="DOS4GWBinaryFile.dir">
+          </df>
+          <df name="ElfBinaryFile.dir">
+          </df>
+          <df name="ExeBinaryFile.dir">
+          </df>
+          <df name="HpSomBinaryFile.dir">
+          </df>
+          <df name="IntelCoffFile.dir">
+          </df>
+          <df name="PalmBinaryFile.dir">
+          </df>
+          <df name="Win32BinaryFile.dir">
+          </df>
+        </df>
+        <df name="objc">
+          <in>List.h</in>
+          <in>Object.h</in>
+          <in>Protocol.h</in>
+          <in>error.h</in>
+          <in>hashtable.h</in>
+          <in>hashtable2.h</in>
+          <in>malloc.h</in>
+          <in>objc-api.h</in>
+          <in>objc-class.h</in>
+          <in>objc-load.h</in>
+          <in>objc-runtime.h</in>
+          <in>objc.h</in>
+          <in>zone.h</in>
+        </df>
+        <in>ArchiveFile.cpp</in>
+        <in>BinaryFile.cpp</in>
+        <in>BinaryFileFactory.cpp</in>
+        <in>BinaryFileStub.cpp</in>
+        <in>DOS4GWBinaryFile.cpp</in>
+        <in>DOS4GWBinaryFile.h</in>
+        <in>ElfArchiveFile.cpp</in>
+        <in>ElfBinaryFile.cpp</in>
+        <in>ElfBinaryFile.h</in>
+        <in>ExeBinaryFile.cpp</in>
+        <in>ExeBinaryFile.h</in>
+        <in>HpSomBinaryFile.cpp</in>
+        <in>HpSomBinaryFile.h</in>
+        <in>IntelCoffFile.cpp</in>
+        <in>IntelCoffFile.h</in>
+        <in>LoaderTest.cpp</in>
+        <in>LoaderTest.h</in>
+        <in>MachOBinaryFile.cpp</in>
+        <in>MachOBinaryFile.h</in>
+        <in>PalmBinaryFile.cpp</in>
+        <in>PalmBinaryFile.h</in>
+        <in>SymTab.cpp</in>
+        <in>SymTab.h</in>
+        <in>Win32BinaryFile.cpp</in>
+        <in>Win32BinaryFile.h</in>
+        <in>bffDump.cpp</in>
+        <in>macho-apple.h</in>
+        <in>microX86dis.c</in>
+        <in>nlist.h</in>
+        <in>palmsystraps.h</in>
+        <in>syself.h</in>
+        <in>testLoader.cpp</in>
+      </df>
+      <df name="output">
+        <in>boomerang.h</in>
+      </df>
+      <df name="qtgui2">
+        <in>DecompilerThread.cpp</in>
+        <in>DecompilerThread.h</in>
+        <in>main.cpp</in>
+        <in>mainwindow.cpp</in>
+        <in>mainwindow.h</in>
+        <in>mypthread.cpp</in>
+        <in>rtleditor.cpp</in>
+        <in>rtleditor.h</in>
+      </df>
+      <df name="signatures">
+        <in>ctype.h</in>
+        <in>fcntl.h</in>
+        <in>gcc2.9.h</in>
+        <in>gcc3.h</in>
+        <in>gcc_pent.h</in>
+        <in>getopt.h</in>
+        <in>gl.h</in>
+        <in>glu.h</in>
+        <in>glut.h</in>
+        <in>libintl.h</in>
+        <in>locale.h</in>
+        <in>math.h</in>
+        <in>mfc.h</in>
+        <in>netdb.h</in>
+        <in>ntddk.h</in>
+        <in>ntifs.h</in>
+        <in>pwd.h</in>
+        <in>signal.h</in>
+        <in>socket.h</in>
+        <in>stat_pent.h</in>
+        <in>stat_ppc.h</in>
+        <in>stat_sparc.h</in>
+        <in>stdio.h</in>
+        <in>stdlib.h</in>
+        <in>string.h</in>
+        <in>sunCC.h</in>
+        <in>termios.h</in>
+        <in>time.h</in>
+        <in>uname_pent.h</in>
+        <in>unistd.h</in>
+        <in>utmp.h</in>
+        <in>windows.h</in>
+        <in>xf86.h</in>
+      </df>
+      <df name="testsuite">
+        <df name="boomerang.func">
+        </df>
+        <df name="boomerang.minor">
+        </df>
+        <df name="config">
+        </df>
+        <df name="lib">
+        </df>
+      </df>
+      <df name="transform">
+        <df name="CMakeFiles">
+          <df name="boomerang_transform.dir">
+          </df>
+        </df>
+        <in>generic.cpp</in>
+        <in>generic.h</in>
+        <in>rdi.cpp</in>
+        <in>rdi.h</in>
+        <in>transformation-parser.cpp</in>
+        <in>transformation-parser.h</in>
+        <in>transformation-scanner.cpp</in>
+        <in>transformation-scanner.h</in>
+        <in>transformer.cpp</in>
+      </df>
+      <df name="transformations">
+      </df>
+      <df name="type">
+        <df name="CMakeFiles">
+          <df name="boomerang_type_solvers.dir">
+          </df>
+        </df>
+        <in>TypeTest.cpp</in>
+        <in>TypeTest.h</in>
+        <in>constraint.cpp</in>
+        <in>dfa.cpp</in>
+        <in>type.cpp</in>
+      </df>
+      <df name="util">
+        <df name="CMakeFiles">
+          <df name="boomerang_util.dir">
+          </df>
+        </df>
+        <in>UtilTest.cpp</in>
+        <in>UtilTest.h</in>
+        <in>testUtil.cpp</in>
+        <in>util.cpp</in>
+      </df>
+      <df name="win32make">
+        <df name="BinaryFile">
+        </df>
+        <df name="DOS4GWBinaryFile">
+        </df>
+        <df name="ElfBinaryFile">
+        </df>
+        <df name="ExeBinaryFile">
+        </df>
+        <df name="include">
+          <in>config.h</in>
+          <in>expat.h</in>
+          <in>expat_external.h</in>
+          <in>gc.h</in>
+          <in>gc_config_macros.h</in>
+        </df>
+        <df name="MachOBinaryFile">
+        </df>
+        <df name="Win32BinaryFile">
+        </df>
+      </df>
+      <df name="xslt">
+      </df>
+      <in>boomerang.cpp</in>
+      <in>driver.cpp</in>
+      <in>log.cpp</in>
+      <in>resource.h</in>
+      <in>testAll.cpp</in>
+      <in>windows.cpp</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile-boomerang.mk</itemPath>
+      <itemPath>makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile-boomerang.mk</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>4</platform>
+      </toolsSet>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>$(MAKE) -f Makefile</buildCommand>
+          <cleanCommand>$(MAKE) -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+      </makefileType>
+    </conf>
+  </confs>
+</configurationDescriptor>

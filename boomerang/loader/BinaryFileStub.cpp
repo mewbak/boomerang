@@ -1,12 +1,12 @@
 /* 26 Nov 02 - Mike: Fixed return types to avoid warnings with gcc */
 
-#include <assert.h>
+#include <cassert>
 #include "BinaryFileStub.h"
-#include <assert.h>
+
+using namespace std;
 
 // text segment of hello pentium
-static unsigned char pent_hello_text[] =
-  {
+static unsigned char pent_hello_text[] ={
     0x6a, 0x00, 0x6a, 0x00, 0x8b, 0xec, 0x52, 0xb8, 0x80, 0x87, 0x04, 0x08, 0x85, 0xc0, 0x74, 0x0d,
     0x68, 0x80, 0x87, 0x04, 0x08, 0xe8, 0x66, 0xff, 0xff, 0xff, 0x83, 0xc4, 0x04, 0xb8, 0x44, 0xa4,
     0x04, 0x08, 0x85, 0xc0, 0x74, 0x05, 0xe8, 0x55, 0xff, 0xff, 0xff, 0x68, 0xe0, 0x93, 0x04, 0x08,
@@ -193,108 +193,90 @@ static unsigned char pent_hello_text[] =
     0xfc, 0xff, 0x74, 0x0c, 0x8b, 0x06, 0xff, 0xd0, 0x83, 0xc6, 0xfc, 0x83, 0x3e, 0xffu, 0x75, 0xf4,
     0x8d, 0x65, 0xf8, 0x5b, 0x5e, 0xc9, 0xc3, 0x90, 0x55, 0x8b, 0xec, 0x53, 0xe8, 0x00u, 0x00, 0x00,
     0x00, 0x5b, 0x81, 0xc3, 0x73, 0x10, 0x00, 0x00, 0x8b, 0x5d, 0xfc, 0xc9, 0xc3
-  };
+};
 
-BinaryFileStub::BinaryFileStub()
-{
-  m_iNumSections = 1;
-  SectionInfo *text = new SectionInfo();
-  text->pSectionName = const_cast<char *>(".text");
-  text->uNativeAddr = 0x8048810;
-  text->uHostAddr = (ADDRESS)pent_hello_text;
-  text->uSectionSize = sizeof(pent_hello_text);
-  text->uSectionEntrySize = 0;
-  text->uType = 0;
-  text->bCode = 1;
-  text->bData = 0;
-  text->bBss = 0;
-  text->bReadOnly = 1;
-  m_pSections = text;
-  getTextLimits();
+BinaryFileStub::BinaryFileStub() {
+    m_iNumSections = 1;
+    SectionInfo *text = new SectionInfo();
+    text->pSectionName = const_cast<char *> (".text");
+    text->uNativeAddr = 0x8048810;
+    text->uHostAddr = (ADDRESS) pent_hello_text;
+    text->uSectionSize = sizeof (pent_hello_text);
+    text->uSectionEntrySize = 0;
+    text->uType = 0;
+    text->bCode = 1;
+    text->bData = 0;
+    text->bBss = 0;
+    text->bReadOnly = 1;
+    m_pSections = text;
+    getTextLimits();
 }
 
-LOAD_FMT BinaryFileStub::GetFormat() const
-  {
+LOAD_FMT BinaryFileStub::GetFormat() const {
     return LOADFMT_ELF;
-  }
+}
 
-MACHINE BinaryFileStub::GetMachine() const
-  {
+MACHINE BinaryFileStub::GetMachine() const {
     return MACHINE_PENTIUM;
-  }
+}
 
-bool BinaryFileStub::isLibrary() const
-  {
+bool BinaryFileStub::isLibrary() const {
     return false;
-  }
-
-std::list<const char *> BinaryFileStub::getDependencyList()
-{
-  assert(false);
-  return std::list<const char*> ();
 }
 
-ADDRESS BinaryFileStub::getImageBase()
-{
-  return 0;
+std::list<const char *> BinaryFileStub::getDependencyList() {
+    assert(false);
+    return std::list<const char*> ();
 }
 
-size_t BinaryFileStub::getImageSize()
-{
-  return 0;
+ADDRESS BinaryFileStub::getImageBase() {
+    return 0;
 }
 
-ADDRESS BinaryFileStub::GetFirstHeaderAddress()
-{
-  return 0;
+size_t BinaryFileStub::getImageSize() {
+    return 0;
 }
 
-ADDRESS* BinaryFileStub::GetImportStubs(int& numImports)
-{
-  return NULL;
+ADDRESS BinaryFileStub::GetFirstHeaderAddress() {
+    return 0;
 }
 
-bool    BinaryFileStub::DisplayDetails(const char* fileName, FILE* f)
-{
-  return false;
+ADDRESS* BinaryFileStub::GetImportStubs(int& numImports) {
+    return NULL;
 }
 
-std::list<SectionInfo*>& BinaryFileStub::GetEntryPoints(const char* pEntry)
-{
-  return * new std::list<SectionInfo*>;
+bool BinaryFileStub::DisplayDetails(const char* fileName, FILE* f) {
+    return false;
 }
 
-ADDRESS BinaryFileStub::GetMainEntryPoint()
-{
-  return 0x8048918;
+std::list<SectionInfo*>& BinaryFileStub::GetEntryPoints(const char* pEntry) {
+    return * new std::list<SectionInfo*>;
 }
 
-ADDRESS BinaryFileStub::GetEntryPoint()
-{
-  return 0;
+ADDRESS BinaryFileStub::GetMainEntryPoint() {
+    return 0x8048918;
 }
 
-std::map<ADDRESS, const char*>* BinaryFileStub::GetDynamicGlobalMap()
-{
-  return new std::map<ADDRESS, const char*>;
+ADDRESS BinaryFileStub::GetEntryPoint() {
+    return 0;
 }
 
-char* BinaryFileStub::GetStrPtr(int idx, int offset)
-{
-  return NULL;
+std::map<ADDRESS, const char*>* BinaryFileStub::GetDynamicGlobalMap() {
+    return new std::map<ADDRESS, const char*>;
 }
 
-void BinaryFileStub::SetLinkAndInfo(int idx, int link, int info)
-{
-  assert(false);
+char* BinaryFileStub::GetStrPtr(int idx, int offset) {
+    return NULL;
 }
 
-bool  BinaryFileStub::RealLoad(const char* sName)
-{
-  return false;
+void BinaryFileStub::SetLinkAndInfo(int idx, int link, int info) {
+    assert(false);
 }
 
-bool BinaryFileStub::PostLoad(void* handle)
-{
-  return false;
+bool BinaryFileStub::RealLoad(const char* sName) {
+    return false;
+}
+
+bool BinaryFileStub::PostLoad(void* handle) {
+    return false;
 }
