@@ -93,7 +93,7 @@ dnl if ${HOST_LD} -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
 dnl   HOST_GNU_LD=yes
 dnl   AC_DEFINE(HOST_GNU_LD, 1, [Host uses GNU ld])
 dnl fi
-dnlAM_CONDITIONAL(HOST_GNU_LD, test "$HOST_GNU_LD" = "yes")
+dnl AM_CONDITIONAL(HOST_GNU_LD, test "$HOST_GNU_LD" = "yes")
 dnl AC_MSG_RESULT($HOST_GNU_LD)
 
 dnl -------------------
