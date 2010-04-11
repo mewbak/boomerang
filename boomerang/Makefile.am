@@ -60,6 +60,7 @@ STD_DIRS = \
 	$(NULL)
 
 SUBDIRS = $(STD_DIRS)
+SUBDIRS += libltdl
 DIST_SUBDIRS = $(STD_DIRS)
 
 nobase_include_HEADERS = include/*.h

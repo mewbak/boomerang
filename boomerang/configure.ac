@@ -23,6 +23,8 @@ AC_INIT([boomerang],[1.0],[nietzsche@lysator.liu.se])
 AC_CONFIG_SRCDIR([LICENSE.TERMS])
 AC_CONFIG_HEADER(include/config.h)
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([libltdl/config])
+AC_CONFIG_MACRO_DIR([libltdl/m4])
 AC_CANONICAL_TARGET
 
 AM_INIT_AUTOMAKE
@@ -34,6 +36,7 @@ dnl Checks for programs.
 LT_PREREQ([2.2.6])
 LT_INIT([dlopen win32-dll])
 AC_SUBST([LIBTOOL_DEPS])
+LT_CONFIG_LTDL_DIR([libltdl])
 
 AC_PROG_CXX
 AC_PROG_CC
@@ -74,20 +77,20 @@ AM_CONDITIONAL(MAKEDEPEND, test -n "$M4")
 AC_SUBST(M4)
 
 dnl -------------------
-AC_MSG_CHECKING([if using GNU ld])
-HOST_GNU_LD=no
-if ${CC} -v 2>&1 </dev/null | egrep "gcc" 1>&5; then
-   HOST_GCC=yes
-   HOST_LD=`${CC} -print-prog-name=ld`
-else
-   HOST_LD=ld
-fi
-if ${HOST_LD} -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
-   HOST_GNU_LD=yes
-   AC_DEFINE(HOST_GNU_LD, 1, [Host uses GNU ld])
-fi
-AM_CONDITIONAL(HOST_GNU_LD, test "$HOST_GNU_LD" = "yes")
-AC_MSG_RESULT($HOST_GNU_LD)
+dnl AC_MSG_CHECKING([if using GNU ld])
+dnl HOST_GNU_LD=no
+dnl if ${CC} -v 2>&1 </dev/null | egrep "gcc" 1>&5; then
+dnl   HOST_GCC=yes
+dnl   HOST_LD=`${CC} -print-prog-name=ld`
+dnl else
+dnl   HOST_LD=ld
+dln fi
+dnl if ${HOST_LD} -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
+dnl   HOST_GNU_LD=yes
+dnl   AC_DEFINE(HOST_GNU_LD, 1, [Host uses GNU ld])
+dnl fi
+dnlAM_CONDITIONAL(HOST_GNU_LD, test "$HOST_GNU_LD" = "yes")
+dnl AC_MSG_RESULT($HOST_GNU_LD)
 
 dnl -------------------
 AC_MSG_CHECKING([if host is Windows])
@@ -364,7 +367,7 @@ AC_SUBST(HOST_CYGWIN)
 
 
 dnl only the makefile in the loader dir is currently used
-AC_CONFIG_FILES(Makefile util/Makefile loader/Makefile db/Makefile frontend/Makefile transform/Makefile)
+AC_CONFIG_FILES(Makefile util/Makefile loader/Makefile db/Makefile frontend/Makefile transform/Makefile libltdl/Makefile)
 AC_CONFIG_FILES(frontend/mltk.sh, [chmod +x frontend/mltk.sh])
 
 AC_OUTPUT
