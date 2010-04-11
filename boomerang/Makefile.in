@@ -318,8 +318,8 @@ bffDump$(EXEEXT): loader/bffDump.o
 
 # Compile ordinary files
 $(STATIC_OBJS): %.o : %.cpp
-	$(LIBTOOL) -static -o $@ $< 
-	#$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $(EXTRA) $<
+	#$(LIBTOOL) -static -o $@ $< 
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $(EXTRA) $<
 
 # driver.o is special because it contains main() and is not wanted for bigtest (the unit test program)
 driver.o: driver.cpp include/boomerang.h
