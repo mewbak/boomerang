@@ -71,3 +71,6 @@ boomerang_SOURCES = boomerang.cpp $(STATIC_OBJS) $(GENSSL)
 boomerang_LDADD = libdriver.a
 libdriver_a_SOURCES= driver.cpp include/boomerang.h
 
+LIBTOOL_DEPS = @LIBTOOL_DEPS@
+libtool: $(LIBTOOL_DEPS)
+	$(SHELL) ./config.status --recheck

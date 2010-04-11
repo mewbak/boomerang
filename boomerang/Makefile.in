@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.130 $
+# $Id:$
 # 22 Aug 06 - Mike Frysinger: respect values set up by ./configure script
 # 12 Apr 06 - Gerard: Restructured, added conditional rules, added generated dependencies
 # 13 Mar 06 - Mike: Prevent going to the loader directory 5 or 6 times
@@ -74,30 +74,35 @@ M4=@M4@
 # LDL is -ldl if needed (Windows does not)
 # EXEEXT is .exe for Windows
 # DLLEXT is .dll for Windows and .so otherwise 
-ifeq ($(HOST_WINDOWS), yes)
- LDL=
- EXEEXT=.exe
- DLLEXT=.dll
- WININCLUDE=-Iwin32make/include
+#ifeq ($(HOST_WINDOWS), yes)
+# LDL=
+# EXEEXT=.exe
+# DLLEXT=.dll
+# WININCLUDE=-Iwin32make/include
  # RUNPATH is not needed on Windows 
- RUNPATH=
- COPYDLL=libBinaryFile$(DLLEXT)
-else # Non-Windows
- LDL=-ldl
- EXEEXT=
- DLLEXT=.so
- WININCLUDE=
- ifeq ($(HOST_GNU_LD), yes)
-  RUNPATH=-Wl,-rpath -Wl,"lib"
- else
-  ifeq ($(HOST_OSX), yes)
-   RUNPATH=
-  else		# Assume Solaris
-   RUNPATH=-R"lib"
-  endif
- endif
- COPYDLL=
-endif
+# RUNPATH=
+# COPYDLL=libBinaryFile$(DLLEXT)
+#else
+ # Non-Windows
+# LDL=-ldl
+# EXEEXT=
+# DLLEXT=.so
+# WININCLUDE=
+# ifeq ($(HOST_GNU_LD), yes)
+#  RUNPATH=-Wl,-rpath -Wl,"lib"
+# else
+#  ifeq ($(HOST_OSX), yes)
+#   RUNPATH=
+#  else		# Assume Solaris
+#   RUNPATH=-R"lib"
+#  endif
+# endif
+# COPYDLL=
+#endif
+
+LIBTOOL_DEPS = @LIBTOOL_DEPS@
+libtool: $(LIBTOOL_DEPS)          
+        $(SHELL) ./config.status --recheck
 
 ####################
 # Compiler settings
@@ -113,10 +118,10 @@ LDFLAGS = @LDFLAGS@
 # NOTE: "win32make/include" should be after "include" because if there is a generated include/config.h then we prefer to
 # use that
 # comment out the next two lines and uncomment the two after to disable the garbage collector
-LINKGC=-lgc
-CPPFLAGS += $(WININCLUDE)
-#LINKGC=
-#CPPFLAGS += $(WININCLUDE) -DNO_GARBAGE_COLLECTOR
+#LINKGC=-lgc
+#CPPFLAGS += $(WININCLUDE)
+LINKGC=
+CPPFLAGS += $(WININCLUDE) -DNO_GARBAGE_COLLECTOR
 
 
 #############
