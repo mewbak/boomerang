@@ -31,6 +31,10 @@ dnl check if the OPT variable is set
 isset_OPT=${OPT+set}
  
 dnl Checks for programs.
+LT_PREREQ([2.2.6])
+LT_INIT[(dlopen win32-dll)]
+AC_SUBST([LIBTOOL_DEPS])
+
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CXXCPP
@@ -51,10 +55,6 @@ dnl	fi
 	CFLAGS="$CFLAGS -Wall"
 	CXXFLAGS="$CXXFLAGS -Wall"
 fi
-
-LT_PREREQ([2.2.6])
-LT_INIT
-AC_SUBST([LIBTOOL_DEPS])
 
 AC_PATH_PROG(MAKEDEPEND, makedepend)
 AM_CONDITIONAL(MAKEDEPEND, test -n "$MAKEDEPEND")
