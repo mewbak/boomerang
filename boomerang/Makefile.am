@@ -46,7 +46,7 @@
 
 AUTOMAKE_OPTIONS = foreign
 ACLOCAL_AMFLAGS = -I libltdl/m4
-AM_CPPFLAGS = $(LTDLINCL)
+#AM_CPPFLAGS = $(LTDLINCL)
 
 DISTCHECK_CONFIGURE_FLAGS = \
 	$(NULL)
@@ -60,8 +60,9 @@ STD_DIRS = \
 	. \
 	$(NULL)
 
-SUBDIRS = libltdl $(STD_DIRS)
-DIST_SUBDIRS = $(STD_DIRS)
+SUBDIRS = $(STD_DIRS)
+DIST_SUBDIRS = $(STD_DIRS) libltdl
+LIBLTDLDIR = libltdl
 
 nobase_include_HEADERS = include/*.h
 

@@ -22,7 +22,7 @@ AC_PREREQ(2.65)
 AC_INIT([boomerang],[1.0],[nietzsche@lysator.liu.se])
 AC_CONFIG_SRCDIR([LICENSE.TERMS])
 AC_CONFIG_HEADER(include/config.h)
-AC_CONFIG_AUX_DIR([libltdl/config])
+#AC_CONFIG_AUX_DIR([libltdl/config])
 AC_CONFIG_MACRO_DIR([libltdl/m4])
 AC_CANONICAL_TARGET
 
@@ -30,13 +30,6 @@ AM_INIT_AUTOMAKE
 
 dnl check if the OPT variable is set
 isset_OPT=${OPT+set}
- 
-dnl Checks for programs.
-LT_PREREQ([2.2.6])
-LT_INIT([dlopen win32-dll])
-AC_SUBST([LIBTOOL_DEPS])
-LT_CONFIG_LTDL_DIR([libltdl])
-LTDL_INIT([convenience])
 
 AC_PROG_CXX
 AC_PROG_CC
@@ -45,6 +38,25 @@ AC_PROG_CPP
 AC_PROG_CC_C99
 AC_PROG_CXX_C_O
 AC_PROG_INSTALL
+ 
+dnl Checks for programs.
+LT_PREREQ([2.2.6])
+LT_INIT([dlopen win32-dll])
+LTDL_INIT([convenience recursive])
+
+LT_INIT
+
+AM_CONDITIONAL(CONVENIENCE_LTDL, test x"${enable_ltdl_convenience-no}" != xno)
+AM_CONDITIONAL(INSTALL_LTDL, test x"${enable_ltdl_install-no}" != xno)
+
+AC_C_BIGENDIAN
+AC_C_CONST
+AC_C_INLINE
+AC_SUBST([LIBTOOL_DEPS])
+LTDL_INIT([])
+
+AM_CONDITIONAL(ENABLE_SHARED, [test x"${enable_shared}" = xyes])
+AM_CONDITIONAL(ENABLE_STATIC, [test x"${enable_shared}" = xno])
 
 if test "$GXX" = yes; then
 	if test "$isset_OPT" == "set"; then
