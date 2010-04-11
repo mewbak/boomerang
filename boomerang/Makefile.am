@@ -46,6 +46,7 @@
 
 AUTOMAKE_OPTIONS = foreign
 ACLOCAL_AMFLAGS = -I libltdl/m4
+AM_CPPFLAGS = $(LTDLINCL)
 
 DISTCHECK_CONFIGURE_FLAGS = \
 	$(NULL)
@@ -59,8 +60,7 @@ STD_DIRS = \
 	. \
 	$(NULL)
 
-SUBDIRS = $(STD_DIRS)
-SUBDIRS += libltdl
+SUBDIRS = libltdl $(STD_DIRS)
 DIST_SUBDIRS = $(STD_DIRS)
 
 nobase_include_HEADERS = include/*.h
@@ -69,6 +69,8 @@ bin_PROGRAMS = boomerang bffDump
 noinst_LIBRARIES = libdriver.a
 bffDump_sources = loader/bffDump.cpp
 boomerang_SOURCES = boomerang.cpp $(STATIC_OBJS) $(GENSSL)
-boomerang_LDADD = libdriver.a
+boomerang_LDFLAGS = -export-dynamic
+bffDump_LDFLAGS = -export-dynamic
+boomerang_LDADD = $(LIBLTDL) -dlopen self -dlopen libdriver.la
+boomerang__DEPENDENCIES = $(LTDLDEPS) libdriver.la
 libdriver_a_SOURCES= driver.cpp include/boomerang.h
-
