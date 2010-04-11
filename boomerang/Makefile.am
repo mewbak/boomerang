@@ -5,7 +5,7 @@
 #
 ######################################################
 
-# $Revision: 1.5 $
+# $Id$
 # 16 Mar 08 - Markus Gothe: Makefile.am for use with autotools
 # 22 Aug 06 - Mike Frysinger: respect values set up by ./configure script
 # 12 Apr 06 - Gerard: Restructured, added conditional rules, added generated dependencies
@@ -71,6 +71,3 @@ boomerang_SOURCES = boomerang.cpp $(STATIC_OBJS) $(GENSSL)
 boomerang_LDADD = libdriver.a
 libdriver_a_SOURCES= driver.cpp include/boomerang.h
 
-LIBTOOL_DEPS = @LIBTOOL_DEPS@
-libtool: $(LIBTOOL_DEPS)
-	$(SHELL) ./config.status --recheck
