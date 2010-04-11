@@ -143,6 +143,9 @@ static: boomerang$(EXEEXT)
 lib:
 	mkdir lib
 
+libtool: $(LIBTOOL_DEPS)
+	$(SHELL) ./config.status --recheck
+
 libltdl:
 	$(MAKE) -C libltdl
 	
