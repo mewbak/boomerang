@@ -101,6 +101,7 @@ M4=@M4@
 #endif
 
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
+LIBTOOL = @LIBTOOL@
 
 ####################
 # Compiler settings
