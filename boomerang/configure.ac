@@ -32,7 +32,7 @@ isset_OPT=${OPT+set}
  
 dnl Checks for programs.
 LT_PREREQ([2.2.6])
-LT_INIT[(dlopen win32-dll)]
+LT_INIT([dlopen win32-dll])
 AC_SUBST([LIBTOOL_DEPS])
 
 AC_PROG_CXX
