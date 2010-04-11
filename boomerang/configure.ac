@@ -11,14 +11,14 @@ dnl
 dnl $Revision: 1.4 $
 dnl
 dnl 12 Apr 02 - Mike: Created
-dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ(2.61) inserted
+dnl 15 Oct 02 - Sebastian Apel: checks for libelf, libcppunit and AC_PREREQ(2.65) inserted
 dnl 06 Mar 03 - Mike: Removed need for libelf
 dnl 27 Jun 04 - Mike: Added XMLWF for eXpat XML parser
 dnl 22 Aug 05 - Mike: Some improvements for OS X, and finding things like libexpat.a
 dnl 12 Dec 05 - Mike: Apply Emmanuel Fleury's changes for auto "make remote"
 dnl 16 Mar 08 - Markus Gothe: configure.ac for use with autotools.
 
-AC_PREREQ(2.63)
+AC_PREREQ(2.65)
 AC_INIT([boomerang],[1.0],[nietzsche@lysator.liu.se])
 AC_CONFIG_SRCDIR([LICENSE.TERMS])
 AC_CONFIG_HEADER(include/config.h)
