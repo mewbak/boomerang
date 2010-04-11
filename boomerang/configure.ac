@@ -34,9 +34,9 @@ isset_OPT=${OPT+set}
 dnl Checks for programs.
 LT_PREREQ([2.2.6])
 LT_INIT([dlopen win32-dll])
-LTDL_INIT
 AC_SUBST([LIBTOOL_DEPS])
 LT_CONFIG_LTDL_DIR([libltdl])
+LTDL_INIT
 
 AC_PROG_CXX
 AC_PROG_CC
