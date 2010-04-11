@@ -22,7 +22,6 @@ AC_PREREQ(2.63)
 AC_INIT([boomerang],[1.0],[nietzsche@lysator.liu.se])
 AC_CONFIG_SRCDIR([LICENSE.TERMS])
 AC_CONFIG_HEADER(include/config.h)
-AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([libltdl/config])
 AC_CONFIG_MACRO_DIR([libltdl/m4])
 AC_CANONICAL_TARGET
