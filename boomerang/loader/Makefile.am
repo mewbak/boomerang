@@ -42,26 +42,14 @@ FPIC = -fPIC
 if HOST_WINDOWS
  WININCLUDE=-Iwin32make/include
  # RUNPATH is not needed on Windows 
- RUNPATH=
+# RUNPATH=
  COPYDLL=$(top_srcdir)/libBinaryFile.$(OBJEXT)
-else # Non-Windows
- LDL=-ldl
-if HOST_GNU_LD
- RUNPATH=-Wl,-rpath -Wl,"lib"
-endif
-endif
-
-if HOST_OSX
- RUNPATH=
-else
- # Assume Solaris
- RUNPATH=-R"lib"
-endif
-
-if HOST_OSX
-SHARED=-dynamic -dylib 
-else
-SHARED=-shared
+#else
+ # Non-Windows
+# LDL=-ldl
+#if HOST_GNU_LD
+# RUNPATH=-Wl,-rpath -Wl,"lib"
+#endif
 endif
 
 ######################
