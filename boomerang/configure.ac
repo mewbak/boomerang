@@ -33,14 +33,10 @@ isset_OPT=${OPT+set}
  
 dnl Checks for programs.
 LT_PREREQ([2.2.6])
-LT_INIT([win32-dll])
+LT_INIT([dlopen win32-dll])
+LTDL_INIT
 AC_SUBST([LIBTOOL_DEPS])
 LT_CONFIG_LTDL_DIR([libltdl])
-SVN_LT_CCTAG="--tag=CC"
-SVN_LT_CXXTAG="--tag=CXX"
-AC_SUBST(SVN_LT_CCTAG)
-AC_SUBST(SVN_LT_CXXTAG)
-
 
 AC_PROG_CXX
 AC_PROG_CC
