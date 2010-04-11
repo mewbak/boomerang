@@ -175,11 +175,11 @@ dnl Check for gc (garbage collector) includes
 dnl Want to check default-includes PLUS the Boomerang include/ directory, and some of the usual places it might already
 dnl be installed
 AC_CHECK_HEADERS(gc.h /usr/include/gc.h /usr/include/gc/gc.h /usr/local/include/gc.h /opt/local/include/gc.h /opt/local/include/gc/gc.h /sw/include/gc.h,
-CXXFLAGS="$CXXFLAGS -I`echo $ac_header | sed -e 's#/gc.h##g'`"
-CFLAGS="$CFLAGS -I`echo $ac_header | sed -e 's#/gc.h##g'`"
-break
-,
-,)
+	CXXFLAGS="$CXXFLAGS -I`echo $ac_header | sed -e 's#/gc.h##g'`"
+	CFLAGS="$CFLAGS -I`echo $ac_header | sed -e 's#/gc.h##g'`"
+	break
+	,
+	,)
 #AC_CHECK_HEADER(gc.h,,
 #    [AC_CHECK_FILE(include/gc.h,,
 #		[AC_PATH_TOOL(GC_HDR_PATH, gc.h, :, [/usr/include:/usr/include/gc:/usr/local/include:/opt/local/include:/opt/local/include/gc:/sw/include])]
@@ -203,15 +203,15 @@ break
 
 gcpaths="/usr/lib /usr/local/lib /opt/lib /opt/local/lib /sw/include/lib"
 for x in $gcpaths; do
-save_libs="$LIBS"
-LIBS="$LIBS-L$x"
-unset ac_cv_lib_gc_GC_malloc
-AC_CHECK_LIB(gc, GC_malloc,
-LDFLAGS="$LDFLAGS $LIBS"
-break
-,
-,)
-LIBS="$save_LIBS"
+	save_libs="$LIBS"
+	LIBS="$LIBS-L$x"
+	unset ac_cv_lib_gc_GC_malloc
+	AC_CHECK_LIB(gc, GC_malloc,
+		LDFLAGS="$LDFLAGS $LIBS"
+		break
+		,
+		,)
+	LIBS="$save_LIBS"
 done
 
 dnl Check for gc library itself
