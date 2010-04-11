@@ -32,10 +32,15 @@ dnl check if the OPT variable is set
 isset_OPT=${OPT+set}
  
 dnl Checks for programs.
-LT_PREREQ([2.2.6b])
-LT_INIT([dlopen win32-dll])
+LT_PREREQ([2.2.6])
+LT_INIT([win32-dll])
 AC_SUBST([LIBTOOL_DEPS])
 LT_CONFIG_LTDL_DIR([libltdl])
+SVN_LT_CCTAG="--tag=CC"
+SVN_LT_CXXTAG="--tag=CXX"
+AC_SUBST(SVN_LT_CCTAG)
+AC_SUBST(SVN_LT_CXXTAG)
+
 
 AC_PROG_CXX
 AC_PROG_CC
@@ -83,7 +88,7 @@ dnl   HOST_GCC=yes
 dnl   HOST_LD=`${CC} -print-prog-name=ld`
 dnl else
 dnl   HOST_LD=ld
-dln fi
+dnl fi
 dnl if ${HOST_LD} -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
 dnl   HOST_GNU_LD=yes
 dnl   AC_DEFINE(HOST_GNU_LD, 1, [Host uses GNU ld])
