@@ -32,7 +32,7 @@ dnl check if the OPT variable is set
 isset_OPT=${OPT+set}
  
 dnl Checks for programs.
-LT_PREREQ([2.2.6])
+LT_PREREQ([2.2.6b])
 LT_INIT([dlopen win32-dll])
 AC_SUBST([LIBTOOL_DEPS])
 LT_CONFIG_LTDL_DIR([libltdl])
