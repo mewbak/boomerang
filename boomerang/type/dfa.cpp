@@ -1375,7 +1375,7 @@ void RefExp::descendType(Type* parentType, bool& ch, Statement* s)
 
 void Const::descendType(Type* parentType, bool& ch, Statement* s)
 {
-  bool thisCh;
+  bool thisCh = false;
   type = type->meetWith(parentType, thisCh);
   ch |= thisCh;
   if (thisCh)

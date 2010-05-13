@@ -3044,7 +3044,10 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
 
                                         bool CallStatement::objcSpecificProcessing(const char *formatStr)
                                         {
-                                          std::string name(getDestProc()->getName());
+                                        	Proc* proc = getDestProc();
+                                        	if(!proc) return false;
+
+                                          std::string name(proc->getName());
                                           if (name == "objc_msgSend")
                                             {
                                               if (formatStr)

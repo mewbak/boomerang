@@ -135,11 +135,12 @@ bool IntelCoffFile::RealLoad(const char *sName)
   if ( !psh )
     return false;
 
-  if ( static_cast<signed long>(sizeof *psh * m_Header.coff_sections) != fread(psh, sizeof *psh ,m_Header.coff_sections,m_fd) )
-    {
+  size_t readSize = fread(psh, sizeof(*psh), m_Header.coff_sections, m_fd);
+  if (readSize != sizeof(*psh) * m_Header.coff_sections) {
       free(psh);
       return false;
-    }
+  }
+
   for ( int iSection = 0; iSection < m_Header.coff_sections; iSection++ )
     {
 //		assert(0 == psh[iSection].sch_virtaddr);
@@ -201,9 +202,9 @@ bool IntelCoffFile::RealLoad(const char *sName)
         return false;
 
       char *pData = (char*)psi->uHostAddr + psh[iSection].sch_virtaddr;
-      if ( !(psh[iSection].sch_flags & 0x80) )
-        {
-          if ( static_cast<signed long>(psh[iSection].sch_sectsize) != fread(pData, psh[iSection].sch_sectsize,1,m_fd) )
+      if ( !(psh[iSection].sch_flags & 0x80) ) {
+    	  readSize = fread(pData, psh[iSection].sch_sectsize, 1, m_fd);
+          if ( readSize != psh[iSection].sch_sectsize )
             return false;
         }
     }
@@ -221,7 +222,9 @@ bool IntelCoffFile::RealLoad(const char *sName)
 
   // TODO: Groesse des Abschnittes vorher bestimmen
   char *pStrings = (char*)malloc(0x8000);
-  fread(pStrings, 0x8000,1,m_fd);
+  readSize = fread(pStrings, 0x8000, 1, m_fd);
+  if(readSize != 0x8000)
+	  return false;
 
 
   // Run the symbol table
