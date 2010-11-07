@@ -117,7 +117,7 @@ Elf32_Shdr;
 
 typedef struct {
     int st_name;
-    unsigned st_value;
+    unsigned int st_value;
     int st_size;
     unsigned char st_info;
     unsigned char st_other;
@@ -126,12 +126,12 @@ typedef struct {
 Elf32_Sym;
 
 typedef struct {
-    unsigned r_offset;
+    unsigned int r_offset;
     int r_info;
 }
 Elf32_Rel;
 
-#define	 ELF32_R_SYM(info)		 ((info)>>8)
+#define	ELF32_R_SYM(info)		((info)>>8)
 #define ELF32_ST_BIND(i)		((i) >> 4)
 #define ELF32_ST_TYPE(i)		((i) & 0xf)
 #define ELF32_ST_INFO(b, t)		(((b)<<4)+((t)&0xf))

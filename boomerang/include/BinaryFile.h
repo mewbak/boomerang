@@ -74,14 +74,14 @@ struct IMPORT_BINARYFILE SectionInfo
     ADDRESS		uHostAddr;			// Host or actual address of data
     ADDRESS		uSectionSize;		// Size of section in bytes
     ADDRESS		uSectionEntrySize;	// Size of one section entry (if applic)
-    unsigned	uType;				 // Type of section (format dependent)
-unsigned	bCode:
+    unsigned int uType;				 // Type of section (format dependent)
+unsigned int	bCode:
     1;			// Set if section contains instructions
-unsigned	bData:
+unsigned int	bData:
     1;			// Set if section contains data
-unsigned	bBss:
+unsigned int	bBss:
     1;				// Set if section is BSS (allocated only)
-unsigned	bReadOnly:
+unsigned int	bReadOnly:
     1;		// Set if this is a read only section
   };
 

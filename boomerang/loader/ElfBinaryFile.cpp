@@ -100,7 +100,7 @@ extern "C" { // So we can call this with dlopen()
 
 // Return true for a good load
 
-bool ElfBinaryFile::RealLoad(const char* sName) {
+bool ElfBinaryFile::RealLoad(const char *sName) {
     int i;
 
     if (m_bArchive) {
@@ -125,7 +125,7 @@ bool ElfBinaryFile::RealLoad(const char* sName) {
         fprintf(stderr, "Could not allocate %ld bytes for program image\n", m_lImageSize);
         return false;
     }
-    Elf32_Ehdr* pHeader = (Elf32_Ehdr*) m_pImage; // Save a lot of casts
+    Elf32_Ehdr* pHeader = reinterpret_cast<Elf32_Ehdr*>(m_pImage); // Save a lot of casts
 
     // Read the whole file in
     fseek(m_fd, 0, SEEK_SET);
@@ -181,18 +181,21 @@ bool ElfBinaryFile::RealLoad(const char* sName) {
     for (i = 0; i < m_iNumSections; i++) {
         // Get section information.
         Elf32_Shdr* pShdr = m_pShdrs + i;
-        if ((char*) pShdr > m_pImage + m_lImageSize) {
+        if (reinterpret_cast<char *>(pShdr) > (m_pImage + m_lImageSize)) {
             std::cerr << "section " << i << " header is outside the image size\n";
             return false;
         }
         pName = m_pStrings + elfRead4(&pShdr->sh_name);
-        if (pName > m_pImage + m_lImageSize) {
+        if (pName > (m_pImage + m_lImageSize)) {
             std::cerr << "name for section " << i << " is outside the image size\n";
             return false;
         }
         m_pSections[i].pSectionName = pName;
         int off = elfRead4(&pShdr->sh_offset);
-        if (off) m_pSections[i].uHostAddr = (ADDRESS) (m_pImage + off);
+        
+        if (off) 
+        	m_pSections[i].uHostAddr = *reinterpret_cast<ADDRESS *>(m_pImage + off);
+        
         m_pSections[i].uNativeAddr = elfRead4(&pShdr->sh_addr);
         m_pSections[i].uSectionSize = elfRead4(&pShdr->sh_size);
         if (m_pSections[i].uNativeAddr == 0 && strncmp(pName, ".rel", 4)) {

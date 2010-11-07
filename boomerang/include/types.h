@@ -5,13 +5,15 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
+#include <stdint.h>
+
 // Machine types
-typedef unsigned char		Byte;		/* 8 bits */
-typedef unsigned short		SWord;		/* 16 bits */
-typedef unsigned int		DWord;		/* 32 bits */
-typedef unsigned int		dword;		/* 32 bits */
-typedef unsigned int		Word;		/* 32 bits */
-typedef unsigned int		ADDRESS;	/* 32-bit unsigned */
+typedef uint8_t			Byte;		/* 8 bits */
+typedef uint16_t		SWord;		/* 16 bits */
+typedef uint32_t		DWord;		/* 32 bits */
+typedef uint32_t		dword;		/* 32 bits */
+typedef uint32_t		Word;		/* 32 bits */
+typedef uint32_t		ADDRESS;	/* 32-bit unsigned */
 
 
 #define STD_SIZE	32					// Standard size
@@ -24,7 +26,7 @@ typedef unsigned int		ADDRESS;	/* 32-bit unsigned */
 #ifndef _MSC_VER
 typedef long unsigned long QWord;		// 64 bits
 #else
-typedef unsigned __int64   QWord;
+typedef uint64_t QWord;
 #endif
 
 #if defined(_MSC_VER)
