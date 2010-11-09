@@ -92,7 +92,7 @@ class ObjcIvar
   {
   public:
     std::string name, type;
-    unsigned offset;
+    unsigned int offset;
   };
 
 class ObjcMethod
@@ -284,7 +284,7 @@ class IMPORT_BINARYFILE BinaryFile
     // the latter is only used by the Palm machine, to represent the space
     // allocated below the %a5 register (i.e. the difference between %a5 and
     // %agp). This value could possibly be used for other purposes.
-    virtual std::pair<unsigned,unsigned> GetGlobalPointerInfo();
+    virtual std::pair<unsigned int,unsigned int> GetGlobalPointerInfo();
 
     // Get a map from ADDRESS to const char*. This map contains the native addresses and symbolic names of global
     // data items (if any) which are shared with dynamically linked libraries. Example: __iob (basis for stdout).
@@ -340,7 +340,7 @@ class IMPORT_BINARYFILE BinaryFile
       return limitTextHigh;
     }
 
-    int			getTextDelta()
+    intptr_t	getTextDelta()
     {
       return textDelta;
     }
@@ -377,7 +377,7 @@ class IMPORT_BINARYFILE BinaryFile
     // Also the difference between the host and native addresses (host - native)
     // At this stage, we are assuming that the difference is the same for all
     // text sections of the BinaryFile image
-    int			textDelta;
+    intptr_t	textDelta;
 
   };
 
