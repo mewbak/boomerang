@@ -36,13 +36,13 @@ public:
 	 * Decodes the machine instruction at pc and returns an RTL instance for
 	 * the instruction.
 	 */
-virtual DecodeResult& decodeInstruction(ADDRESS pc, int delta);
+virtual DecodeResult& decodeInstruction(ADDRESS pc, intptr_t delta);
 
 	/*
 	 * Disassembles the machine instruction at pc and returns the number of
 	 * bytes disassembled. Assembler output goes to global _assembly
 	 */
-virtual int decodeAssemblyInstruction(ADDRESS pc, int delta);
+virtual int decodeAssemblyInstruction(ADDRESS pc, intptr_t delta);
 
 
 private:
