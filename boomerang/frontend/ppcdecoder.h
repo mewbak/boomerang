@@ -52,8 +52,8 @@ private:
 		 */
 		Exp*		dis_Eaddr(ADDRESS pc, int size = 0);
 		Exp*		dis_RegImm(ADDRESS pc);
-		Exp*		dis_Reg(unsigned r);
-		Exp*		dis_RAmbz(unsigned r);		// Special for rA of certain instructions
+		Exp*		dis_Reg(unsigned int r);
+		Exp*		dis_RAmbz(unsigned int r);		// Special for rA of certain instructions
 
 		void		unused(int x);
 		RTL*		createBranchRtl(ADDRESS pc, std::list<Statement*>* stmts, const char* name);
