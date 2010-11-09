@@ -98,7 +98,7 @@ void PentiumDecoder::unused(int x)
  * RETURNS:		   a DecodeResult structure containing all the information gathered during decoding
  *============================================================================*/
 static DecodeResult result;
-DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
+DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, intptr_t delta)
 {
 	ADDRESS hostPC = pc + delta;
 
@@ -146,13 +146,13 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 	 * Unconditional branches
 	 */
 	| JMP.Jvod(relocd) [name] =>
-		unused((int) name);
+		unused((intptr_t) name);
 		unconditionalJump(name, 5, relocd, delta, pc, stmts, result);
 	| JMP.Jvow(relocd) [name] =>
-		unused((int) name);
+		unused((intptr_t) name);
 		unconditionalJump(name, 3, relocd, delta, pc, stmts, result);
 	| JMP.Jb(relocd) [name] =>
-		unused((int) name);
+		unused((intptr_t) name);
 		unconditionalJump(name, 2, relocd, delta, pc, stmts, result);
 
 	/*
@@ -2144,7 +2144,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 Exp* PentiumDecoder::dis_Mem(ADDRESS pc)
 {
 	Exp* expr = NULL;
-	lastDwordLc = (unsigned)-1;
+	lastDwordLc = (uintptr_t)-1;
 
 	match pc to 
 	| Abs32 (a) =>
@@ -2280,7 +2280,7 @@ bool PentiumDecoder::isFuncPrologue(ADDRESS hostPC)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-Byte PentiumDecoder::getByte (unsigned lc)
+Byte PentiumDecoder::getByte (unsigned int lc)
 /* getByte - returns next byte from image pointed to by lc.	 */
 {
 	return *(Byte *)lc;
@@ -2292,7 +2292,7 @@ Byte PentiumDecoder::getByte (unsigned lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-SWord PentiumDecoder::getWord (unsigned lc)
+SWord PentiumDecoder::getWord (unsigned int lc)
 /* get2Bytes - returns next 2-Byte from image pointed to by lc.	 */
 {
 	return (SWord)(*(Byte *)lc + (*(Byte *)(lc+1) << 8));
@@ -2304,7 +2304,7 @@ SWord PentiumDecoder::getWord (unsigned lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-DWord PentiumDecoder::getDword (unsigned lc)
+DWord PentiumDecoder::getDword (unsigned int lc)
 /* get4Bytes - returns the next 4-Byte word from image pointed to by lc. */
 {
 	lastDwordLc = lc - prog->getTextDelta();
@@ -2325,7 +2325,7 @@ PentiumDecoder::PentiumDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PentiumDecoder::decodeAssemblyInstruction(unsigned, int)
+int PentiumDecoder::decodeAssemblyInstruction(unsigned int, int)
 { return 0; }
 
 /*==============================================================================
