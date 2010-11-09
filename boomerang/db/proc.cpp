@@ -505,7 +505,7 @@ SyntaxNode *UserProc::getAST()
   ASTs.push(init);
 
   SyntaxNode *best = init;
-  int best_score = init->getScore();
+  intptr_t best_score = init->getScore();
   int count = 0;
   while (ASTs.size())
     {
@@ -1388,7 +1388,7 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
   //processTypes();
 
   // Repeat until no change
-  int pass;
+  intptr_t pass;
   for (pass = 3; pass <= 12; ++pass)
     {
       // Redo the renaming process to take into account the arguments
@@ -1430,7 +1430,7 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
             for (int i=0; i < 3; i++)
               {		// FIXME: should be iterate until no change
                 if (VERBOSE)
-                  LOG << "### update returns loop iteration " << i << " ###\n";
+                  LOG << "### update returns loop iteration " << (intptr_t)i << " ###\n";
                 if (status != PROC_INCYCLE)
                   doRenameBlockVars(pass, true);
                 findPreserveds();
@@ -1688,7 +1688,7 @@ void UserProc::remUnusedStmtEtc()
   printXML();
   if (VERBOSE && !Boomerang::get()->noRemoveNull)
       {
-        LOG << "--- after removing unused and null statements pass " << 1 << " for " << getName() << " ---\n";
+        LOG << "--- after removing unused and null statements pass " << (intptr_t)1 << " for " << getName() << " ---\n";
         printToLog();
         LOG << "=== end after removing unused statements for " << getName() << " ===\n\n";
       }
@@ -2040,7 +2040,7 @@ void UserProc::fixUglyBranches()
 bool UserProc::doRenameBlockVars(int pass, bool clearStacks)
 {
   if (VERBOSE)
-    LOG << "### rename block vars for " << getName() << " pass " << pass << ", clear = " << clearStacks << " ###\n";
+    LOG << "### rename block vars for " << getName() << " pass " << (intptr_t)pass << ", clear = " << (intptr_t)clearStacks << " ###\n";
   bool b = df.renameBlockVars(this, 0, clearStacks);
   if (VERBOSE)
     LOG << "df.renameBlockVars return " << (b ? "true" : "false") << "\n";
@@ -2054,7 +2054,7 @@ void UserProc::findSpPreservation()
 
   bool stdsp = false;		// FIXME: are these really used?
   // Note: need this non-virtual version most of the time, since nothing proved yet
-  int sp = signature->getStackRegister(prog);
+  intptr_t sp = signature->getStackRegister(prog);
 
   for (int n = 0; n < 2; n++)
     {
@@ -2065,7 +2065,7 @@ void UserProc::findSpPreservation()
       for (int p = 0; !stdsp && p < 8; p++)
         {
           if (DEBUG_PROOF)
-            LOG << "attempting to prove sp = sp + " << p*4 << " for " << getName() << "\n";
+            LOG << "attempting to prove sp = sp + " << (intptr_t)p*4 << " for " << getName() << "\n";
           stdsp = prove(new Binary(opEquals,
                                    Location::regOf(sp),
                                    new Binary(opPlus,
@@ -2491,7 +2491,7 @@ void UserProc::trimParameters(int depth)
   std::vector<Exp*> params;
   bool referenced[64];
   assert(totparams <= (int)(sizeof(referenced)/sizeof(bool)));
-  int i;
+  intptr_t i;
   for (i = 0; i < nparams; i++)
     {
       referenced[i] = false;
@@ -2507,7 +2507,7 @@ void UserProc::trimParameters(int depth)
       Statement* s = *it;
       if (!s->isCall() || ((CallStatement*)s)->getDestProc() != this)
         {
-          for (int i = 0; i < totparams; i++)
+          for (intptr_t i = 0; i < totparams; i++)
             {
               Exp *p, *pe;
               //if (i < nparams) {
@@ -2572,7 +2572,7 @@ void UserProc::removeReturn(Exp *e)
 
 void Proc::removeParameter(Exp *e)
 {
-  int n = signature->findParam(e);
+  intptr_t n = signature->findParam(e);
   if (n != -1)
     {
       signature->removeParameter(n);
@@ -2772,7 +2772,7 @@ void UserProc::mapExpressionsToLocals(bool lastPass)
       LOG << "\n";
     }
 
-  int sp = signature->getStackRegister(prog);
+  intptr_t sp = signature->getStackRegister(prog);
   if (getProven(Location::regOf(sp)) == NULL)
     {
       if (VERBOSE)
@@ -2787,7 +2787,7 @@ void UserProc::mapExpressionsToLocals(bool lastPass)
       if ((*it)->isCall())
         {
           CallStatement *call = (CallStatement*)*it;
-          for (int i = 0; i < call->getNumArguments(); i++)
+          for (intptr_t i = 0; i < call->getNumArguments(); i++)
             {
               Type *ty = call->getArgumentType(i);
               Exp *e = call->getArgumentExp(i);
@@ -2865,7 +2865,7 @@ void UserProc::mapExpressionsToLocals(bool lastPass)
                             new Binary(opMinus,
                                        new RefExp(Location::regOf(sp), NULL),
                                        result->getSubExp1()->getSubExp2()->clone()));
-          int n = ((Const*)result->getSubExp1()->getSubExp2())->getInt();
+          intptr_t n = ((Const*)result->getSubExp1()->getSubExp2())->getInt();
           arr->setProc(this);
           Type *base = new IntegerType();
           if (s->isAssign() && ((Assign*)s)->getLeft() == result)
@@ -2968,7 +2968,7 @@ bool UserProc::removeNullStatements()
 bool UserProc::propagateStatements(bool& convert, int pass)
 {
   if (VERBOSE)
-    LOG << "--- begin propagating statements pass " << pass << " ---\n";
+    LOG << "--- begin propagating statements pass " << (intptr_t)pass << " ---\n";
   StatementList stmts;
   getStatements(stmts);
   // propagate any statements that can be
@@ -3009,20 +3009,20 @@ bool UserProc::propagateStatements(bool& convert, int pass)
   simplify();
   propagateToCollector();
   if (VERBOSE)
-    LOG << "=== end propagating statements at pass " << pass << " ===\n";
+    LOG << "=== end propagating statements at pass " << (intptr_t)pass << " ===\n";
   return change;
 }	// propagateStatements
 
-Statement *UserProc::getStmtAtLex(unsigned int begin, unsigned int end)
+Statement *UserProc::getStmtAtLex(uintptr_t begin, uintptr_t end)
 {
   StatementList stmts;
   getStatements(stmts);
 
-  unsigned int lowest = begin;
+  uintptr_t lowest = begin;
   Statement *loweststmt = NULL;
   for (StatementList::iterator it = stmts.begin(); it != stmts.end(); it++)
     if (begin >= (*it)->getLexBegin() && begin <= lowest && begin <= (*it)->getLexEnd() &&
-        (end == (unsigned)-1 || end < (*it)->getLexEnd()))
+        (end == (uintptr_t)-1 || end < (*it)->getLexEnd()))
       {
         loweststmt = (*it);
         lowest = (*it)->getLexBegin();
@@ -3238,7 +3238,7 @@ void UserProc::countRefs(RefCounter& refCounts)
       RefCounter::iterator rr;
       LOG << "### reference counts for " << getName() << ":\n";
       for (rr = refCounts.begin(); rr != refCounts.end(); ++rr)
-        LOG << "  " << rr->first->getNumber() << ":" << rr->second << "\t";
+        LOG << "  " << (intptr_t)rr->first->getNumber() << ":" << (intptr_t)rr->second << "\t";
       LOG << "\n### end reference counts\n";
     }
 }
@@ -3298,7 +3298,7 @@ void UserProc::removeUnusedLocals()
       std::string& name = const_cast<std::string&>(it->first);
       // LOG << "Considering local " << name << "\n";
       if (VERBOSE && all && removes.size())
-        LOG << "WARNING: defineall seen in procedure " << name.c_str() << " so not removing " << (int)removes.size()
+        LOG << "WARNING: defineall seen in procedure " << name.c_str() << " so not removing " << (intptr_t)removes.size()
         << " locals\n";
       if (usedLocals.find(name) == usedLocals.end() && !all)
         {
@@ -4182,7 +4182,7 @@ void UserProc::conTypeAnalysis()
   getStatements(stmts);
   StatementList::iterator ss;
   // For each statement this proc
-  int conscript = 0;
+  intptr_t conscript = 0;
   for (ss = stmts.begin(); ss != stmts.end(); ss++)
     {
       cons.clear();
@@ -4205,11 +4205,11 @@ void UserProc::conTypeAnalysis()
         LOG << "** could not solve type constraints for proc " << getName() << "!\n";
       else if (solns.size() > 1)
         // Note: require cast to unsigned for OS X and 64-bit hosts
-        LOG << "** " << (unsigned)solns.size() << " solutions to type constraints for proc " << getName() << "!\n";
+        LOG << "** " << (intptr_t)solns.size() << " solutions to type constraints for proc " << getName() << "!\n";
     }
 
   std::list<ConstraintMap>::iterator it;
-  int solnNum = 0;
+  intptr_t solnNum = 0;
   ConstraintMap::iterator cc;
   if (DEBUG_TA)
     {
@@ -5746,7 +5746,7 @@ void UserProc::rangeAnalysis()
   assert(cfg->getEntryBB()->getFirstStmt());
   execution_paths.push_back(cfg->getEntryBB()->getFirstStmt());
 
-  int watchdog = 0;
+  intptr_t watchdog = 0;
 
   while (execution_paths.size())
     {
@@ -5762,7 +5762,7 @@ void UserProc::rangeAnalysis()
             stmt->rangeAnalysis(execution_paths);
         }
       if (watchdog > 45)
-        LOG << "processing execution paths resulted in " << (int)junctions.size() << " junctions to process\n";
+        LOG << "processing execution paths resulted in " << (intptr_t)junctions.size() << " junctions to process\n";
       while (junctions.size())
         {
           Statement *junction = junctions.front();
@@ -5779,7 +5779,7 @@ void UserProc::rangeAnalysis()
           LOG << "  watchdog " << watchdog << "\n";
           if (watchdog > 45)
             {
-              LOG << (int)execution_paths.size() << " execution paths remaining.\n";
+              LOG << (intptr_t)execution_paths.size() << " execution paths remaining.\n";
               LOG << "=== After range analysis watchdog " << watchdog << " for " << getName() << " ===\n";
               printToLog();
               LOG << "=== end after range analysis watchdog " << watchdog << " for " << getName() << " ===\n\n";

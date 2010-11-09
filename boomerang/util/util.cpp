@@ -89,15 +89,15 @@ std::string initCapital(const std::string& s)
 bool hasExt(const std::string& s, const char* ext)
 {
   std::string tailStr = std::string(".") + std::string(ext);
-  unsigned int i = s.rfind(tailStr);
+  uintptr_t i = s.rfind(tailStr);
   if (i == std::string::npos)
     {
       return false;
     }
   else
     {
-      unsigned int sLen = s.length();
-      unsigned int tailStrLen = tailStr.length();
+      uintptr_t sLen = s.length();
+      uintptr_t tailStrLen = tailStr.length();
       return ((i + tailStrLen) == sLen);
     }
 }
@@ -136,7 +136,7 @@ std::string searchAndReplace( const std::string &in, const std::string &match,
                               const std::string &rep )
 {
   std::string result;
-  for ( int n = 0; n != -1; )
+  for ( intptr_t n = 0; n != -1; )
     {
       int l = in.find(match,n);
       result.append( in.substr(n,(l==-1?in.length() : l )-n) );
@@ -211,9 +211,9 @@ void escapeXMLChars(std::string &s)
   const char *replace[] =
     { "&lt;", "&gt;", "&amp;"
     };
-  for (unsigned i = 0; i < s.size(); i++)
+  for (uintptr_t i = 0; i < s.size(); i++)
     {
-      unsigned n = bad.find(s[i]);
+      uintptr_t n = bad.find(s[i]);
       if (n != std::string::npos)
         {
           s.replace(i, 1, replace[n]);
@@ -253,7 +253,7 @@ char* escapeStr( const char* str )
           if (!escapedSucessfully)
             {
               // it isn't so just use the \xhh escape
-              out << "\\x" << std::hex << std::setfill('0') << std::setw(2) << (int)*str;
+              out << "\\x" << std::hex << std::setfill('0') << std::setw(2) << (intptr_t)*str;
               out << std::setfill(' ');
             }
         }

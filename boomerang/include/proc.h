@@ -617,7 +617,7 @@ class UserProc : public Proc
       return df.canRename(e, this);
     }
 
-    Statement	*getStmtAtLex(unsigned int begin, unsigned int end);
+    Statement	*getStmtAtLex(uintptr_t begin, uintptr_t end);
 
     /**
      * All the decompile stuff except propagation, DFA repair, and null/unused statement removal.

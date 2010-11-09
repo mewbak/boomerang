@@ -1596,7 +1596,7 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
         }
       break;
     default:
-      std::cerr << "unhandled sType " << (int)sType << "\n";
+      std::cerr << "unhandled sType " << (intptr_t)sType << "\n";
     }
 }
 
@@ -1793,7 +1793,7 @@ char* BasicBlock::getStmtNumber()
   if (first)
     sprintf(ret, "%d", first->getNumber());
   else
-    sprintf(ret, "bb%x", (unsigned)this);
+    sprintf(ret, "bb%x", (uintptr_t)(this));
   return ret;
 }
 
@@ -2325,7 +2325,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
               if (form == 'A')
                 {
                   Prog* prog = proc->getProg();
-                  for (int iPtr = 0; iPtr < swi->iNumTable; ++iPtr)
+                  for (intptr_t iPtr = 0; iPtr < swi->iNumTable; ++iPtr)
                     {
                       ADDRESS uSwitch = prog->readNative4(swi->uTable + iPtr*4);
                       if (uSwitch >= prog->getLimitTextHigh() ||
@@ -2381,7 +2381,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
                       SWITCH_INFO* swi = new SWITCH_INFO;
                       swi->chForm = 'F';					// The "Fortran" form
                       swi->pSwitchVar = e;
-                      swi->uTable = (ADDRESS)destArray;	// Abuse the uTable member as a pointer
+                      swi->uTable = *reinterpret_cast<ADDRESS *>(destArray);	// Abuse the uTable member as a pointer
                       swi->iNumTable = n;
                       swi->iLower = 1;					// Not used, except to compute
                       swi->iUpper = n;					// the number of options
@@ -2420,7 +2420,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
 
       int n = sizeof(hlVfc) / sizeof(Exp*);
       bool recognised = false;
-      int i;
+      intptr_t i;
       for (i=0; i < n; i++)
         {
           if (*e *= *hlVfc[i])
@@ -2433,7 +2433,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
         }
       if (!recognised) return false;
       lastStmt->setDest(e);				// Keep the changes to the indirect call expression
-      int K1, K2;
+      intptr_t K1, K2;
       Exp *vtExp, *t1;
       Prog* prog = proc->getProg();
       switch (i)
@@ -2585,11 +2585,11 @@ void BasicBlock::processSwitch(UserProc* proc)
       {
         LOG << "processing switch statement type " << si->chForm << " with table at 0x" << si->uTable << ", ";
         if (si->iNumTable)
-          LOG << si->iNumTable << " entries, ";
-        LOG << "lo= " << si->iLower << ", hi= " << si->iUpper << "\n";
+          LOG << (intptr_t)si->iNumTable << " entries, ";
+        LOG << "lo= " << (intptr_t)si->iLower << ", hi= " << (intptr_t)si->iUpper << "\n";
       }
   ADDRESS uSwitch;
-  int iNumOut, iNum;
+  uintptr_t iNumOut, iNum;
   iNumOut = si->iUpper-si->iLower+1;
   iNum = iNumOut;
   // Emit an NWAY BB instead of the COMPJUMP. Also update the number of out edges.
@@ -2609,7 +2609,7 @@ void BasicBlock::processSwitch(UserProc* proc)
   // for the ith zero-based case. It may be that the code for case 5 above will be a goto to the code for case 3,
   // but a smarter back end could group them
   std::list<ADDRESS> dests;
-  for (int i=0; i < iNum; i++)
+  for (intptr_t i=0; i < iNum; i++)
     {
       // Get the destination address from the switch table.
       if (si->chForm == 'H')
@@ -2656,7 +2656,7 @@ void BasicBlock::processSwitch(UserProc* proc)
     }
   // Decode the newly discovered switch code arms, if any, and if not already decoded
   std::list<ADDRESS>::iterator dd;
-  int count = 0;
+  intptr_t count = 0;
   for (dd = dests.begin(); dd != dests.end(); ++dd)
     {
       char tmp[1024];

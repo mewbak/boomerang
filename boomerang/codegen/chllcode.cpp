@@ -589,7 +589,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
       break;
     case opFtoi:
       // Should check size!
-      str << "(int)";
+      str << "(intptr_t)";
       appendExp(str, u->getSubExp3(), PREC_UNARY);
       break;
     case opRotateL:
@@ -876,7 +876,7 @@ void CHLLCode::appendExp(std::ostringstream& str, Exp *exp, PREC curPrec, bool u
     }
     case opMachFtr:
     {
-      str << "/* machine specific */ (int) ";
+      str << "/* machine specific */ (intptr_t) ";
       Exp* sub = u->getSubExp1();
       assert(sub->isStrConst());
       const char* s = ((Const*)sub)->getStr();
@@ -1680,7 +1680,7 @@ void CHLLCode::AddProcDec(UserProc* proc, bool open)
 
   if (parameters.size() > 10 && open)
     {
-      LOG << "Warning: CHLLCode::AddProcDec: Proc " << proc->getName() << " has " << (int)parameters.size() <<
+      LOG << "Warning: CHLLCode::AddProcDec: Proc " << proc->getName() << " has " << (intptr_t)parameters.size() <<
       " parameters\n";
     }
 

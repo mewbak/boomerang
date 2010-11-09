@@ -73,7 +73,7 @@ void Statement::setProc(UserProc *p)
     }
 }
 
-Exp *Statement::getExpAtLex(unsigned int begin, unsigned int end)
+Exp *Statement::getExpAtLex(uintptr_t begin, uintptr_t end)
 {
   return NULL;
 }
@@ -86,7 +86,7 @@ bool Statement::mayAlias(Exp *e1, Exp *e2, int size)
   bool b =  (calcMayAlias(e1, e2, size) && calcMayAlias(e2, e1, size));
   if (b && VERBOSE)
     {
-      LOG << "May alias: " << e1 << " and " << e2 << " size " << size << "\n";
+      LOG << "May alias: " << e1 << " and " << e2 << " size " << (intptr_t)size << "\n";
     }
   return b;
 }
@@ -280,7 +280,7 @@ void Assign::rangeAnalysis(std::list<Statement*> &execution_paths)
                   a_rhs = new Const(proc->getProg()->readNative4(c));
                   break;
                 default:
-                  LOG << "error: unhandled type size " << type->getSize() << " for reading native address\n";
+                  LOG << "error: unhandled type size " << (intptr_t)type->getSize() << " for reading native address\n";
                 }
             }
           else
@@ -3069,7 +3069,7 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
                                                 {
                                                   bool change = false;
                                                   LOG << this << "\n";
-                                                  for (int i = 0; i < getNumArguments(); i++)
+                                                  for (intptr_t i = 0; i < getNumArguments(); i++)
                                                     {
                                                       Exp *e = getArgumentExp(i);
                                                       Type *ty = getArgumentType(i);

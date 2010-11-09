@@ -5,7 +5,7 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
-#include <stdint.h>
+#include <inttypes.h>
 
 // Machine types
 typedef uint8_t			Byte;		/* 8 bits */

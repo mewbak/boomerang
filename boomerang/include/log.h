@@ -26,7 +26,7 @@ class Log
     virtual Log &operator<<(Range *r);
     virtual Log &operator<<(Range &r);
     virtual Log &operator<<(RangeMap &r);
-    virtual Log &operator<<(int i);
+    virtual Log &operator<<(intptr_t i);
     virtual Log &operator<<(char c);
     virtual Log &operator<<(double d);
     virtual Log &operator<<(ADDRESS a);

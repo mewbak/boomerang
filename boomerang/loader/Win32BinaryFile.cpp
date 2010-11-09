@@ -196,8 +196,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
   gap = 0xF0000000;	// Large positive number (in case no ordinary calls)
   while (p < lim)
     {
-      op1 = *(unsigned char*)(p + base);
-      op2 = *(unsigned char*)(p + base + 1);
+      op1 = *reinterpret_cast<unsigned char *>(p + base);
+      op2 = *reinterpret_cast<unsigned char *>(p + base + 1);
 //		std::cerr << std::hex << "At " << p << ", ops " << (unsigned)op1 << ", " << (unsigned)op2 << std::dec << "\n";
       switch (op1)
         {
@@ -516,8 +516,8 @@ bool Win32BinaryFile::RealLoad(const char* sName)
       strncpy(sect.pSectionName, o->ObjectName, 8);
 //		if (!strcmp(sect.pSectionName, ".reloc"))
 //			reloc = &sect;
-      sect.uNativeAddr=(ADDRESS)(LMMH(o->RVA) + LMMH(m_pPEHeader->Imagebase));
-      sect.uHostAddr=(ADDRESS)(LMMH(o->RVA) + base);
+      sect.uNativeAddr = static_cast<ADDRESS>(LMMH(o->RVA) + LMMH(m_pPEHeader->Imagebase));
+      sect.uHostAddr = *reinterpret_cast<ADDRESS *>(LMMH(o->RVA) + base);
       sect.uSectionSize=LMMH(o->VirtualSize);
       DWord Flags = LMMH(o->Flags);
       sect.bBss      = (Flags&IMAGE_SCN_CNT_UNINITIALIZED_DATA)?1:0;
@@ -539,7 +539,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
         {
           char* dllName = LMMH(id->name) + base;
           unsigned thunk = id->originalFirstThunk ? id->originalFirstThunk : id->firstThunk;
-          unsigned* iat = (unsigned*)(LMMH(thunk) + base);
+          uintptr_t* iat = (uintptr_t *)(LMMH(thunk) + base);
           unsigned iatEntry = LMMH(*iat);
           ADDRESS paddr = LMMH(id->firstThunk) + LMMH(m_pPEHeader->Imagebase);
           while (iatEntry)
@@ -560,10 +560,10 @@ bool Win32BinaryFile::RealLoad(const char* sName)
               else
                 {
                   // Normal case (IMAGE_IMPORT_BY_NAME). Skip the useless hint (2 bytes)
-                  std::string name((const char*)(iatEntry+2+base));
+                  std::string name(const_cast<const char*>(iatEntry+2+base));
                   dlprocptrs[paddr] = name;
-                  if ((unsigned)paddr != (unsigned)iat - (unsigned)base + LMMH(m_pPEHeader->Imagebase))
-                    dlprocptrs[(unsigned)iat - (unsigned)base + LMMH(m_pPEHeader->Imagebase)]
+                  if ((unsigned)paddr != ((uintptr_t)(iat) - (uintptr_t)(base) + LMMH(m_pPEHeader->Imagebase)))
+                    dlprocptrs[(uintptr_t)(iat) - (uintptr_t)(base) + LMMH(m_pPEHeader->Imagebase)]
                     = std::string("old_") + name; // add both possibilities
                   // printf("Added symbol %s value %x\n", name.c_str(), paddr);
                   // printf("Also added old_%s value %x\n", name.c_str(), (int)iat - (int)base +
@@ -1258,7 +1258,7 @@ DWord Win32BinaryFile::getDelta()
   // Stupid function anyway: delta depends on section
   // This should work for the header only
   //	return (DWord)base - LMMH(m_pPEHeader->Imagebase);
-  return (DWord)base - (DWord)m_pPEHeader->Imagebase;
+  return (*reinterpret_cast<DWord *>(base) - *reinterpret_cast<DWord *>(m_pPEHeader->Imagebase));
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile derived concrete object. After this object is

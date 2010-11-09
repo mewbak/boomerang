@@ -391,13 +391,13 @@ bool Constraints::solve(std::list<ConstraintMap>& solns)
     }
 
   {
-    LOG << "\n" << (unsigned)disjunctions.size() << " disjunctions: ";
+    LOG << "\n" << (intptr_t)disjunctions.size() << " disjunctions: ";
     std::list<Exp*>::iterator dd;
     for (dd = disjunctions.begin(); dd != disjunctions.end(); dd++) LOG << *dd << ",\n";
     LOG << "\n";
   }
-  LOG << fixed.size() << " fixed: " << fixed.prints();
-  LOG << equates.size() << " equates: " << equates.prints();
+  LOG << (intptr_t)fixed.size() << " fixed: " << fixed.prints();
+  LOG << (intptr_t)equates.size() << " equates: " << equates.prints();
 
   // Substitute the fixed types into the disjunctions
   substIntoDisjuncts(fixed );
@@ -408,26 +408,26 @@ bool Constraints::solve(std::list<ConstraintMap>& solns)
 
   LOG << "\nAfter substitute fixed into equates:\n";
   {
-    LOG << "\n" << (unsigned)disjunctions.size() << " disjunctions: ";
+    LOG << "\n" << (intptr_t)disjunctions.size() << " disjunctions: ";
     std::list<Exp*>::iterator dd;
     for (dd = disjunctions.begin(); dd != disjunctions.end(); dd++) LOG << *dd << ",\n";
     LOG << "\n";
   }
-  LOG << fixed.size() << " fixed: " << fixed.prints();
-  LOG << equates.size() << " equates: " << equates.prints();
+  LOG << (intptr_t)fixed.size() << " fixed: " << fixed.prints();
+  LOG << (intptr_t)equates.size() << " equates: " << equates.prints();
   // Substitute again the fixed types into the disjunctions
   // (since there may be more fixed types from the above)
   substIntoDisjuncts(fixed );
 
   LOG << "\nAfter second substitute fixed into disjunctions:\n";
   {
-    LOG << "\n" << (unsigned)disjunctions.size() << " disjunctions: ";
+    LOG << "\n" << (intptr_t)disjunctions.size() << " disjunctions: ";
     std::list<Exp*>::iterator dd;
     for (dd = disjunctions.begin(); dd != disjunctions.end(); dd++) LOG << *dd << ",\n";
     LOG << "\n";
   }
-  LOG << fixed.size() << " fixed: " << fixed.prints();
-  LOG << equates.size() << " equates: " << equates.prints();
+  LOG << (intptr_t)fixed.size() << " fixed: " << fixed.prints();
+  LOG << (intptr_t)equates.size() << " equates: " << equates.prints();
 
   ConstraintMap soln;
   bool ret = doSolve(disjunctions.begin(), soln, solns);
@@ -444,7 +444,7 @@ bool Constraints::solve(std::list<ConstraintMap>& solns)
   return ret;
 }
 
-static int level = 0;
+static intptr_t level = 0;
 // Constraints up to but not including iterator it have been unified.
 // The current solution is soln
 // The set of all solutions is in solns
@@ -499,7 +499,7 @@ bool Constraints::doSolve(std::list<Exp*>::iterator it, ConstraintMap& soln, std
           if (kk != fixed.end())
             {
               unified &= unify(rhs, kk->second, extra);
-              LOG << "Unified now " << unified << "; extra now " << extra.prints() << "\n";
+              LOG << "Unified now " << (intptr_t)unified << "; extra now " << extra.prints() << "\n";
               if (!unified) break;
             }
         }
@@ -525,7 +525,7 @@ bool Constraints::doSolve(std::list<Exp*>::iterator it, ConstraintMap& soln, std
     }
   // We have run out of disjuncts. Return true if any disjuncts had no
   // unification failures
-  LOG << "Exiting doSolve at level " << level-- << " returning " << anyUnified << "\n";
+  LOG << "Exiting doSolve at level " << level-- << " returning " << (intptr_t)anyUnified << "\n";
   return anyUnified;
 }
 
@@ -552,7 +552,7 @@ bool Constraints::unify(Exp* x, Exp* y, ConstraintMap& extra)
           LOG << "true\n";
           return true;
         }
-      LOG << (*xPointsTo == *yPointsTo) << "\n";
+      LOG << (intptr_t)(*xPointsTo == *yPointsTo) << "\n";
       return *xPointsTo == *yPointsTo;
     }
   else if (xtype->isSize())
@@ -564,7 +564,7 @@ bool Constraints::unify(Exp* x, Exp* y, ConstraintMap& extra)
         }
       else
         {
-          LOG << (xtype->getSize() == ytype->getSize()) << "\n";
+          LOG << (intptr_t)(xtype->getSize() == ytype->getSize()) << "\n";
           return xtype->getSize() == ytype->getSize();
         }
     }
@@ -577,12 +577,12 @@ bool Constraints::unify(Exp* x, Exp* y, ConstraintMap& extra)
         }
       else
         {
-          LOG << (xtype->getSize() == ytype->getSize()) << "\n";
+          LOG << (intptr_t)(xtype->getSize() == ytype->getSize()) << "\n";
           return xtype->getSize() == ytype->getSize();
         }
     }
   // Otherwise, just compare the sizes
-  LOG << (*xtype == *ytype) << "\n";
+  LOG << (intptr_t)(*xtype == *ytype) << "\n";
   return *xtype == *ytype;
 }
 
@@ -646,14 +646,14 @@ void Constraints::alphaSubst()
 
 void Constraints::print(std::ostream& os)
 {
-  os << "\n" << std::dec << (int)disjunctions.size() << " disjunctions: ";
+  os << "\n" << std::dec << (intptr_t)disjunctions.size() << " disjunctions: ";
   std::list<Exp*>::iterator dd;
   for (dd = disjunctions.begin(); dd != disjunctions.end(); dd++)
     os << *dd << ",\n";
   os << "\n";
-  os << (int)fixed.size() << " fixed: ";
+  os << (intptr_t)fixed.size() << " fixed: ";
   fixed.print(os);
-  os << (int)equates.size() << " equates: ";
+  os << (intptr_t)equates.size() << " equates: ";
   equates.print(os);
 }
 
