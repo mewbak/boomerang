@@ -17,7 +17,7 @@
  *				etc. Ordinary instructions are processed in decoder_low.m
  *============================================================================*/ 
 /*
- * $Revision: 1.66 $	// 1.33.2.2
+ * $Revision: 1.39 $	// 1.33.2.2
  *
  * 26 Apr 02 - Mike: Changes for boomerang
  * 18 Nov 02 - Mike: Mods for MOV.Ed.Iv^od etc. Also suppressed warning re name
@@ -102,7 +102,7 @@ void PentiumDecoder::unused(int x)
  * RETURNS:		   a DecodeResult structure containing all the information gathered during decoding
  *============================================================================*/
 static DecodeResult result;
-DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
+DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, intptr_t delta)
 {
 	ADDRESS hostPC = pc + delta;
 
@@ -14513,7 +14513,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 #line 148 "frontend/machine/pentium/decoder.m"
                     
 
-                    		unused((int) name);
+                    		unused((intptr_t) name);
 
                     		unconditionalJump(name, 5, relocd, delta, pc, stmts, result);
 
@@ -14539,7 +14539,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 #line 154 "frontend/machine/pentium/decoder.m"
                     
 
-                    		unused((int) name);
+                    		unused((intptr_t) name);
 
                     		unconditionalJump(name, 2, relocd, delta, pc, stmts, result);
 
@@ -26407,7 +26407,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 #line 151 "frontend/machine/pentium/decoder.m"
                             
 
-                            		unused((int) name);
+                            		unused((intptr_t) name);
 
                             		unconditionalJump(name, 3, relocd, delta, pc, stmts, result);
 
@@ -61462,7 +61462,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 Exp* PentiumDecoder::dis_Mem(ADDRESS pc)
 {
 	Exp* expr = NULL;
-	lastDwordLc = (unsigned)-1;
+	lastDwordLc = (uintptr_t)-1;
 
 
 
@@ -61920,7 +61920,7 @@ bool PentiumDecoder::isFuncPrologue(ADDRESS hostPC)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-Byte PentiumDecoder::getByte (unsigned lc)
+Byte PentiumDecoder::getByte (unsigned int lc)
 /* getByte - returns next byte from image pointed to by lc.	 */
 {
 	return *(Byte *)lc;
@@ -61932,7 +61932,7 @@ Byte PentiumDecoder::getByte (unsigned lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-SWord PentiumDecoder::getWord (unsigned lc)
+SWord PentiumDecoder::getWord (unsigned int lc)
 /* get2Bytes - returns next 2-Byte from image pointed to by lc.	 */
 {
 	return (SWord)(*(Byte *)lc + (*(Byte *)(lc+1) << 8));
@@ -61944,7 +61944,7 @@ SWord PentiumDecoder::getWord (unsigned lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-DWord PentiumDecoder::getDword (unsigned lc)
+DWord PentiumDecoder::getDword (unsigned int lc)
 /* get4Bytes - returns the next 4-Byte word from image pointed to by lc. */
 {
 	lastDwordLc = lc - prog->getTextDelta();
@@ -61965,7 +61965,7 @@ PentiumDecoder::PentiumDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PentiumDecoder::decodeAssemblyInstruction(unsigned, int)
+int PentiumDecoder::decodeAssemblyInstruction(unsigned int, int)
 { return 0; }
 
 /*==============================================================================
