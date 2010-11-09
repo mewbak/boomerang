@@ -230,7 +230,7 @@ bool createDirectory(std::string dir)
 {
   std::string remainder(dir);
   std::string path;
-  unsigned i;
+  uintptr_t i;
   while ((i = remainder.find('/')) != std::string::npos)
     {
       path += remainder.substr(0, i+1);
@@ -265,7 +265,7 @@ bool createDirectory(std::string dir)
 void Cluster::printTree(std::ostream &out)
 {
   out << "\t\t" << name << "\n";
-  for (unsigned i = 0; i < children.size(); i++)
+  for (unsigned int i = 0; i < children.size(); i++)
     children[i]->printTree(out);
 }
 
@@ -1447,7 +1447,7 @@ void Boomerang::alert_decompile_debug_point(UserProc *p, const char *description
                 }
               else if (!strncmp(line, "watch ", 6))
                 {
-                  int n = atoi(line + 6);
+                  intptr_t n = (intptr_t)strtol(line + 6, (char **)NULL, 10);
                   StatementList stmts;
                   p->getStatements(stmts);
                   StatementList::iterator it;
