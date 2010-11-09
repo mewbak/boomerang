@@ -23,6 +23,7 @@
  *				that had 8 bit instead of 32 bit modrm sizes
  * 24 Oct 03 - Mike: Fixed DIS_IDXP1: did not have +32 in macro
  * 02 Sep 05 - Mike: POP.Evod/w take Eaddr now, not Mem
+ * 09 Nov 19 - Markus: Make it compile with 64-bits.
 */
 
 #include <assert.h>
@@ -2325,7 +2326,7 @@ PentiumDecoder::PentiumDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PentiumDecoder::decodeAssemblyInstruction(unsigned int, int)
+int PentiumDecoder::decodeAssemblyInstruction(ADDRESS, intptr_t)
 { return 0; }
 
 /*==============================================================================
