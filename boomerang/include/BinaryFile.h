@@ -92,7 +92,7 @@ class ObjcIvar
   {
   public:
     std::string name, type;
-    unsigned int offset;
+    uintptr_t offset;
   };
 
 class ObjcMethod
@@ -215,17 +215,17 @@ class IMPORT_BINARYFILE BinaryFile
     {
       return false;
     }
-    virtual int			readNative1(ADDRESS a)
+    virtual int8_t		readNative1(ADDRESS a)
     {
       return 0;
     }
     // Read 2 bytes from given native address a; considers endianness
-    virtual int			readNative2(ADDRESS a)
+    virtual int16_t		readNative2(ADDRESS a)
     {
       return 0;
     }
     // Read 4 bytes from given native address a; considers endianness
-    virtual int			readNative4(ADDRESS a)
+    virtual int32_t		readNative4(ADDRESS a)
     {
       return 0;
     }
