@@ -209,8 +209,9 @@ void escapeXMLChars(std::string &s)
 {
   std::string bad = "<>&";
   const char *replace[] =
-    { "&lt;", "&gt;", "&amp;"
-    };
+  {
+    "&lt;", "&gt;", "&amp;"
+  };
   for (unsigned i = 0; i < s.size(); i++)
     {
       unsigned n = bad.find(s[i]);
@@ -231,7 +232,7 @@ char* escapeStr( const char* str )
   bool escapedSucessfully;
 
   // test each character
-  for (;*str;str++)
+  for (; *str; str++)
     {
       if (isprint((unsigned char)*str) && *str != '\"' )
         {
@@ -239,10 +240,11 @@ char* escapeStr( const char* str )
           out << *str;
         }
       else
-        { // in fact, this shouldn't happen, except for "
+        {
+          // in fact, this shouldn't happen, except for "
           // maybe it's a known escape sequence
           escapedSucessfully=false;
-          for (int i=0;escaped[i] && !escapedSucessfully ;i++)
+          for (int i=0; escaped[i] && !escapedSucessfully ; i++)
             {
               if (*str == escaped[i])
                 {
