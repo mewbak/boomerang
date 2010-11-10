@@ -184,9 +184,9 @@ public:
     //virtual ADDRESS	GetFirstHeaderAddress();		// Get ADDRESS of main header
     //		ADDRESS		GetNextHeaderAddress();			// Get any other headers
 
-    int readNative1(ADDRESS a); // Read 1 bytes from native addr
-    int readNative2(ADDRESS a); // Read 2 bytes from native addr
-    int readNative4(ADDRESS a); // Read 4 bytes from native addr
+    int8_t readNative1(ADDRESS a); // Read 1 bytes from native addr
+    int16_t readNative2(ADDRESS a); // Read 2 bytes from native addr
+    int32_t readNative4(ADDRESS a); // Read 4 bytes from native addr
     QWord readNative8(ADDRESS a); // Read 8 bytes from native addr
     float readNativeFloat4(ADDRESS a); // Read 4 bytes as float
     double readNativeFloat8(ADDRESS a); // Read 8 bytes as float
@@ -277,9 +277,9 @@ private:
     ADDRESS findRelPltOffset(int i, ADDRESS addrRelPlt, int sizeRelPlt, int numRelPlt, ADDRESS addrPlt);
 
     // Internal elf reading methods
-    int elfRead2(short* ps) const; // Read a short with endianness care
-    int elfRead4(int* pi) const; // Read an int with endianness care
-    void elfWrite4(int* pi, int val); // Write an int with endianness care
+    int16_t elfRead2(int16_t* ps) const; // Read a short with endianness care
+    int32_t elfRead4(int32_t* pi) const; // Read an int with endianness care
+    void elfWrite4(int32_t* pi, int val); // Write an int with endianness care
 
     FILE* m_fd; // File stream
     long m_lImageSize; // Size of image in bytes

@@ -129,7 +129,7 @@ Win32BinaryFile::Win32BinaryFile() : m_pFileName(0), mingw_main(false)
 
 Win32BinaryFile::~Win32BinaryFile()
 {
-  for (int i=0; i < m_iNumSections; i++)
+  for (intptr_t i=0; i < m_iNumSections; i++)
     {
       if (m_pSections[i].pSectionName)
         delete [] m_pSections[i].pSectionName;
@@ -186,7 +186,7 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
   SectionInfo* si = GetSectionInfoByName(".text");
   if (si == NULL) si = GetSectionInfoByName("CODE");
   assert(si);
-  unsigned textSize = si->uSectionSize;
+  uintptr_t textSize = si->uSectionSize;
   if (textSize < 0x200)
     lim = p + textSize;
 
@@ -507,7 +507,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
   m_iNumSections = LH(&m_pPEHeader->numObjects);
   m_pSections = new PESectionInfo[m_iNumSections];
 //	SectionInfo *reloc = NULL;
-  for (int i=0; i<m_iNumSections; i++, o++)
+  for (intptr_t i=0; i<m_iNumSections; i++, o++)
     {
       SectionInfo& sect = m_pSections[i];
       //	printf("%.8s RVA=%08X Offset=%08X size=%08X\n", (char*)o->ObjectName, LMMH(o->RVA), LMMH(o->PhysicalOffset),
@@ -550,7 +550,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
                   std::ostringstream ost;
                   std::string nodots(dllName);
                   int len = nodots.size();
-                  for (int j=0; j < len; j++)
+                  for (intptr_t j=0; j < len; j++)
                     if (nodots[j] == '.')
                       nodots[j] = '_';	// Dots can't be in identifiers
                   ost << nodots << "_" << (iatEntry & 0x7FFFFFFF);
@@ -962,7 +962,7 @@ bool Win32BinaryFile::DisplayDetails(const char* fileName, FILE* f
   return false;
 }
 
-int Win32BinaryFile::win32Read2(short* ps) const
+int16_t Win32BinaryFile::win32Read2(int16_t* ps) const
   {
     unsigned char* p = (unsigned char*)ps;
     // Little endian
@@ -970,7 +970,7 @@ int Win32BinaryFile::win32Read2(short* ps) const
     return n;
   }
 
-int Win32BinaryFile::win32Read4(int* pi) const
+int32_t Win32BinaryFile::win32Read4(int32_t* pi) const
   {
     short* p = (short*)pi;
     int n1 = win32Read2(p);
@@ -980,7 +980,7 @@ int Win32BinaryFile::win32Read4(int* pi) const
   }
 
 // Read 2 bytes from given native address
-int Win32BinaryFile::readNative1(ADDRESS nat)
+int8_t Win32BinaryFile::readNative1(ADDRESS nat)
 {
   PSectionInfo si = GetSectionInfoByAddr(nat);
   if (si == 0)
@@ -990,7 +990,7 @@ int Win32BinaryFile::readNative1(ADDRESS nat)
 }
 
 // Read 2 bytes from given native address
-int Win32BinaryFile::readNative2(ADDRESS nat)
+int16_t Win32BinaryFile::readNative2(ADDRESS nat)
 {
   PSectionInfo si = GetSectionInfoByAddr(nat);
   if (si == 0) return 0;
@@ -1000,7 +1000,7 @@ int Win32BinaryFile::readNative2(ADDRESS nat)
 }
 
 // Read 4 bytes from given native address
-int Win32BinaryFile::readNative4(ADDRESS nat)
+int32_t Win32BinaryFile::readNative4(ADDRESS nat)
 {
   PSectionInfo si = GetSectionInfoByAddr(nat);
   if (si == 0) return 0;

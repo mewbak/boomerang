@@ -177,7 +177,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
   printf("Loaded %d section headers\n", (int)m_Header.coff_sections);
 
   ADDRESS a = 0x40000000;
-  for ( int sidx = 0; sidx < m_iNumSections; sidx++ )
+  for ( intptr_t sidx = 0; sidx < m_iNumSections; sidx++ )
     {
       PSectionInfo psi = GetSectionInfo(sidx);
       if ( psi->uSectionSize > 0 )
@@ -498,7 +498,7 @@ unsigned char* IntelCoffFile::getAddrPtr(ADDRESS a, ADDRESS range)
     }
   return 0;
 }
-int IntelCoffFile::readNative(ADDRESS a, unsigned short n)
+int8_t IntelCoffFile::readNative(ADDRESS a, unsigned short n)
 {
   unsigned char *buf = getAddrPtr(a, (ADDRESS)n);
   if ( !a ) return 0;
@@ -513,7 +513,7 @@ int IntelCoffFile::readNative(ADDRESS a, unsigned short n)
   return tmp;
 }
 
-int IntelCoffFile::readNative4(ADDRESS a)
+int32_t IntelCoffFile::readNative4(ADDRESS a)
 {
   return readNative(a, 4);
   /*
@@ -535,12 +535,12 @@ int IntelCoffFile::readNative4(ADDRESS a)
   */
 }
 
-int IntelCoffFile::readNative2(ADDRESS a)
+int16_t IntelCoffFile::readNative2(ADDRESS a)
 {
   return readNative(a, 2);
 }
 
-int IntelCoffFile::readNative1(ADDRESS a)
+int8_t IntelCoffFile::readNative1(ADDRESS a)
 {
   return readNative(a, 1);
 }
