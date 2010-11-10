@@ -36,7 +36,7 @@
 #include <windows.h>
 #ifndef __MINGW32__
 namespace dbghelp
-  {
+{
 #include <dbghelp.h>
 };
 #endif
@@ -52,9 +52,9 @@ namespace dbghelp
 #include <cstdlib>
 
 extern "C"
-  {
-    int microX86Dis(void* p);			// From microX86dis.c
-  }
+{
+  int microX86Dis(void* p);			// From microX86dis.c
+}
 
 
 #ifndef IMAGE_SCN_CNT_CODE // Assume that if one is not defined, the rest isn't either.
@@ -67,7 +67,7 @@ extern "C"
 
 
 namespace
-  {
+{
 
 // Due to the current rigid design, where BinaryFile holds a C-style array of
 // SectionInfo's, we can't extend a subclass of SectionInfo with the data required
@@ -75,51 +75,51 @@ namespace
 // from SectionInfo's to PEObject's, that contain the info we need.
 // TODO: Refactor BinaryFile to not expose its private parts in public. Design both
 // a protected (for subclasses) and public (for users) interface.
-  typedef std::map<const class PESectionInfo*, const PEObject*> SectionObjectMap;
+typedef std::map<const class PESectionInfo*, const PEObject*> SectionObjectMap;
 
-  SectionObjectMap s_sectionObjects;
+SectionObjectMap s_sectionObjects;
 
 
 // Note that PESectionInfo currently must be the exact same size as
 // SectionInfo due to the already mentioned array held by BinaryFile.
-  class PESectionInfo : public SectionInfo
-    {
-      virtual bool isAddressBss(ADDRESS a) const
-        {
-          if (a < uNativeAddr || a >= uNativeAddr + uSectionSize)
-            {
-              return false; // not even within this section
-            }
-          if (bBss)
-            {
-              return true; // obvious
-            }
-          if (bReadOnly)
-            {
-              return false; // R/O BSS makes no sense.
-            }
-          // Don't check for bData here. So long as the section has slack at end, that space can contain BSS.
-          const SectionObjectMap::iterator it = s_sectionObjects.find(this);
-          assert(it != s_sectionObjects.end());
-          assert(it->second);
-          assert(this == it->first);
-          const PEObject* sectionHeader = it->second;
-          const bool has_slack = LMMH(sectionHeader->VirtualSize) > LMMH(sectionHeader->PhysicalSize);
-          if (!has_slack)
-            {
-              return false; // BSS not possible.
-            }
-          if (a >= uNativeAddr + LMMH(sectionHeader->PhysicalSize))
-            {
-              return true;
-            }
-          return false;
-        }
-    };
+class PESectionInfo : public SectionInfo
+{
+  virtual bool isAddressBss(ADDRESS a) const
+  {
+    if (a < uNativeAddr || a >= uNativeAddr + uSectionSize)
+      {
+        return false; // not even within this section
+      }
+    if (bBss)
+      {
+        return true; // obvious
+      }
+    if (bReadOnly)
+      {
+        return false; // R/O BSS makes no sense.
+      }
+    // Don't check for bData here. So long as the section has slack at end, that space can contain BSS.
+    const SectionObjectMap::iterator it = s_sectionObjects.find(this);
+    assert(it != s_sectionObjects.end());
+    assert(it->second);
+    assert(this == it->first);
+    const PEObject* sectionHeader = it->second;
+    const bool has_slack = LMMH(sectionHeader->VirtualSize) > LMMH(sectionHeader->PhysicalSize);
+    if (!has_slack)
+      {
+        return false; // BSS not possible.
+      }
+    if (a >= uNativeAddr + LMMH(sectionHeader->PhysicalSize))
+      {
+        return true;
+      }
+    return false;
+  }
+};
 
 // attempt at a compile-time assert for the size requirement.
 // If the sizes differs, this statement will try to define a zero-sized array, which is invalid.
-  typedef char ct_failure[sizeof(SectionInfo) == sizeof(PESectionInfo)];
+typedef char ct_failure[sizeof(SectionInfo) == sizeof(PESectionInfo)];
 
 }
 
@@ -214,7 +214,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
         }
         case 0xFF:
           if (op2 == 0x15)
-            { 			// Opcode FF 15 is indirect call
+            {
+              // Opcode FF 15 is indirect call
               // Get the 4 byte address from the instruction
               addr = LMMH(*(p + base + 2));
 //					const char *c = dlprocptrs[addr].c_str();
@@ -243,7 +244,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
           continue;
         case 0x6A:
           if (op2 == 0)
-            {			// Push 00
+            {
+              // Push 00
               // Borland pattern: push 0 / call __ExceptInit / pop ecx / push offset mainInfo / push 0
               // Borland state before: 0				1			   2			3				4
               if (borlandState == 0)
@@ -316,7 +318,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
       count--;
       op1 = *(unsigned char*)(p + base);
       if (op1 == 0xE8)
-        {			// CALL opcode
+        {
+          // CALL opcode
           if (pushes == 3)
             {
               // Get the offset
@@ -372,7 +375,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
     {
       op1 = *(unsigned char*)(p + base);
       if (op1 == 0xE8)
-        {			// CALL opcode
+        {
+          // CALL opcode
           unsigned int dest = p + 5 + LMMH(*(p + base + 1));
           if (in_mingw_CRTStartup&&dest<textSize)
             {
@@ -418,7 +422,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
       op1 = *(unsigned char*)(p + base);
       op2 = *(unsigned char*)(p + base + 1);
       if (op1 == 0xFF && op2 == 0x15)
-        { // indirect CALL opcode
+        {
+          // indirect CALL opcode
           unsigned int desti = LMMH(*(p + base + 2));
           if (dlprocptrs.find(desti) != dlprocptrs.end() && dlprocptrs[desti] == "GetModuleHandleA")
             {
@@ -426,7 +431,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
             }
         }
       if (op1 == 0xE8 && gotGMHA)
-        {			// CALL opcode
+        {
+          // CALL opcode
           unsigned int dest = p + 5 + LMMH(*(p + base + 1));
           AddSymbol(dest + LMMH(m_pPEHeader->Imagebase), "WinMain");
           return dest + LMMH(m_pPEHeader->Imagebase);
@@ -534,7 +540,8 @@ bool Win32BinaryFile::RealLoad(const char* sName)
   // Add the Import Address Table entries to the symbol table
   PEImportDtor* id = (PEImportDtor*) (LMMH(m_pPEHeader->ImportTableRVA) + base);
   if (m_pPEHeader->ImportTableRVA)
-    {			// If any import table entry exists
+    {
+      // If any import table entry exists
       while (id->name != 0)
         {
           char* dllName = LMMH(id->name) + base;
@@ -659,7 +666,8 @@ void Win32BinaryFile::findJumps(ADDRESS curr)
   // Add to native addr to get host:
   int delta = sec->uHostAddr - sec->uNativeAddr;
   while (cnt < 0x60)
-    {	// Max of 0x60 bytes without a match
+    {
+      // Max of 0x60 bytes without a match
       curr -= 2;			// Has to be on 2-byte boundary
       cnt += 2;
       if (LH(delta+curr) != 0xFF + (0x25<<8)) continue;
@@ -720,7 +728,8 @@ char *SymTagEnums[] = { "SymTagNull",
                         "SymTagDimension"
                       };
 
-enum SymTagEnum {
+enum SymTagEnum
+{
   SymTagNull,
   SymTagExe,
   SymTagCompiland,
@@ -754,23 +763,24 @@ enum SymTagEnum {
   SymTagDimension
 };
 
-char *basicTypes[] = {
-                       "notype",
-                       "void",
-                       "char",
-                       "WCHAR",
-                       "??",
-                       "??",
-                       "int",
-                       "unsigned int",
-                       "float",
-                       "bcd",
-                       "bool",
-                       "??",
-                       "??",
-                       "long"
-                       "unsigned long",
-                     };
+char *basicTypes[] =
+{
+  "notype",
+  "void",
+  "char",
+  "WCHAR",
+  "??",
+  "??",
+  "int",
+  "unsigned int",
+  "float",
+  "bcd",
+  "bool",
+  "??",
+  "??",
+  "long"
+  "unsigned long",
+};
 
 void printType(DWORD index, DWORD64 ImageBase)
 {
@@ -963,21 +973,21 @@ bool Win32BinaryFile::DisplayDetails(const char* fileName, FILE* f
 }
 
 int Win32BinaryFile::win32Read2(short* ps) const
-  {
-    unsigned char* p = (unsigned char*)ps;
-    // Little endian
-    int n = (int)(p[0] + (p[1] << 8));
-    return n;
-  }
+{
+  unsigned char* p = (unsigned char*)ps;
+  // Little endian
+  int n = (int)(p[0] + (p[1] << 8));
+  return n;
+}
 
 int Win32BinaryFile::win32Read4(int* pi) const
-  {
-    short* p = (short*)pi;
-    int n1 = win32Read2(p);
-    int n2 = win32Read2(p+1);
-    int n = (int) (n1 | (n2 << 16));
-    return n;
-  }
+{
+  short* p = (short*)pi;
+  int n1 = win32Read2(p);
+  int n2 = win32Read2(p+1);
+  int n = (int) (n1 | (n2 << 16));
+  return n;
+}
 
 // Read 2 bytes from given native address
 int Win32BinaryFile::readNative1(ADDRESS nat)
@@ -1224,19 +1234,19 @@ const char *Win32BinaryFile::GetDynamicProcName(ADDRESS uNative)
 }
 
 LOAD_FMT Win32BinaryFile::GetFormat() const
-  {
-    return LOADFMT_PE;
-  }
+{
+  return LOADFMT_PE;
+}
 
 MACHINE Win32BinaryFile::GetMachine() const
-  {
-    return MACHINE_PENTIUM;
-  }
+{
+  return MACHINE_PENTIUM;
+}
 
 bool Win32BinaryFile::isLibrary() const
-  {
-    return ( (m_pPEHeader->Flags & 0x2000) != 0 );
-  }
+{
+  return ( (m_pPEHeader->Flags & 0x2000) != 0 );
+}
 
 ADDRESS Win32BinaryFile::getImageBase()
 {
@@ -1265,15 +1275,15 @@ DWord Win32BinaryFile::getDelta()
 // returned, the virtual function call mechanism will call the rest of the code in this library.  It needs to be C
 // linkage so that it its name is not mangled
 extern "C"
-  {
+{
 #ifdef _WIN32
-    __declspec(dllexport)
+  __declspec(dllexport)
 #endif
-    BinaryFile* construct()
-    {
-      return new Win32BinaryFile;
-    }
+  BinaryFile* construct()
+  {
+    return new Win32BinaryFile;
   }
+}
 
 void Win32BinaryFile::dumpSymbols()
 {

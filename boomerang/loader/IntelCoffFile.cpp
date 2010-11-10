@@ -12,18 +12,19 @@
 #pragma pack(push, 1)
 #endif
 struct struc_coff_sect
-  {        // segment information
-    char  sch_sectname[8];
-    unsigned long sch_physaddr;
-    unsigned long sch_virtaddr;
-    unsigned long sch_sectsize;
-    unsigned long sch_sectptr;
-    unsigned long sch_relptr;
-    unsigned long sch_lineno_ptr;
-    unsigned short sch_nreloc;
-    unsigned short sch_nlineno;
-    unsigned long sch_flags;
-  }
+{
+  // segment information
+  char  sch_sectname[8];
+  unsigned long sch_physaddr;
+  unsigned long sch_virtaddr;
+  unsigned long sch_sectsize;
+  unsigned long sch_sectptr;
+  unsigned long sch_relptr;
+  unsigned long sch_lineno_ptr;
+  unsigned short sch_nreloc;
+  unsigned short sch_nlineno;
+  unsigned long sch_flags;
+}
 PACKED;       // 40 bytes
 #ifdef _MSC_VER
 #pragma pack(pop)
@@ -33,30 +34,32 @@ PACKED;       // 40 bytes
 #pragma pack(push, 1)
 #endif
 struct coff_symbol
-  {    // symbol information
-    union {
-        struct
-          {
-            unsigned long zeros;
-            unsigned long offset;
-          }
-        e;
-        char name[8];
-      } e;
+{
+  // symbol information
+  union
+  {
+    struct
+    {
+      unsigned long zeros;
+      unsigned long offset;
+    }
+    e;
+    char name[8];
+  } e;
 #define csym_name       e.name
 #define csym_zeros      e.e.zeros
 #define csym_offset     e.e.offset
 
-    unsigned long csym_value;
-    unsigned short csym_sectnum;
+  unsigned long csym_value;
+  unsigned short csym_sectnum;
 #define N_UNDEF 0
 
-    unsigned short csym_type;
+  unsigned short csym_type;
 #define T_FUNC  0x20
 
-    unsigned char csym_loadclass;
-    unsigned char csym_numaux;
-  }
+  unsigned char csym_loadclass;
+  unsigned char csym_numaux;
+}
 PACKED;       // 18 bytes
 #ifdef _MSC_VER
 #pragma pack(pop)
@@ -66,13 +69,13 @@ PACKED;       // 18 bytes
 #pragma pack(push, 1)
 #endif
 struct struct_coff_rel
-  {
-    unsigned long   r_vaddr;
-    unsigned long   r_symndx;
-    unsigned short  r_type;
+{
+  unsigned long   r_vaddr;
+  unsigned long   r_symndx;
+  unsigned short  r_type;
 #define RELOC_ADDR32    6
 #define RELOC_REL32     20
-  }
+}
 PACKED;
 #ifdef _MSC_VER
 #pragma pack(pop)
@@ -136,10 +139,11 @@ bool IntelCoffFile::RealLoad(const char *sName)
     return false;
 
   size_t readSize = fread(psh, sizeof(*psh), m_Header.coff_sections, m_fd);
-  if (readSize != sizeof(*psh) * m_Header.coff_sections) {
+  if (readSize != sizeof(*psh) * m_Header.coff_sections)
+    {
       free(psh);
       return false;
-  }
+    }
 
   for ( int iSection = 0; iSection < m_Header.coff_sections; iSection++ )
     {
@@ -202,8 +206,9 @@ bool IntelCoffFile::RealLoad(const char *sName)
         return false;
 
       char *pData = (char*)psi->uHostAddr + psh[iSection].sch_virtaddr;
-      if ( !(psh[iSection].sch_flags & 0x80) ) {
-    	  readSize = fread(pData, psh[iSection].sch_sectsize, 1, m_fd);
+      if ( !(psh[iSection].sch_flags & 0x80) )
+        {
+          readSize = fread(pData, psh[iSection].sch_sectsize, 1, m_fd);
           if ( readSize != psh[iSection].sch_sectsize )
             return false;
         }
@@ -224,7 +229,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
   char *pStrings = (char*)malloc(0x8000);
   readSize = fread(pStrings, 0x8000, 1, m_fd);
   if(readSize != 0x8000)
-	  return false;
+    return false;
 
 
   // Run the symbol table
@@ -370,25 +375,25 @@ void IntelCoffFile::Close()
 }
 
 LOAD_FMT IntelCoffFile::GetFormat() const
-  {
-    return LOADFMT_COFF;
-  }
+{
+  return LOADFMT_COFF;
+}
 
 MACHINE IntelCoffFile::GetMachine() const
-  {
-    return MACHINE_PENTIUM;
-  }
+{
+  return MACHINE_PENTIUM;
+}
 
 const char *IntelCoffFile::getFilename() const
-  {
-    return m_pFilename;
-  }
+{
+  return m_pFilename;
+}
 
 bool IntelCoffFile::isLibrary() const
-  {
-    printf("IntelCoffFile::isLibrary called\n");
-    return false;
-  }
+{
+  printf("IntelCoffFile::isLibrary called\n");
+  return false;
+}
 
 void IntelCoffFile::UnLoad()
 {
@@ -450,15 +455,15 @@ std::list<const char *> IntelCoffFile::getDependencyList()
 }
 
 extern "C"
-  {
+{
 #ifdef _WIN32
-    __declspec(dllexport)
+  __declspec(dllexport)
 #endif
-    BinaryFile* construct()
-    {
-      return new IntelCoffFile();
-    }
+  BinaryFile* construct()
+  {
+    return new IntelCoffFile();
   }
+}
 
 const char* IntelCoffFile::SymbolByAddress(const ADDRESS dwAddr)
 {

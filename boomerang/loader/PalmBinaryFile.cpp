@@ -37,7 +37,7 @@
     UC(p)[3])
 
 PalmBinaryFile::PalmBinaryFile()
-    : m_pImage(0), m_pData(0)
+  : m_pImage(0), m_pData(0)
 {}
 
 PalmBinaryFile::~PalmBinaryFile()
@@ -339,19 +339,19 @@ bool PalmBinaryFile::PostLoad(void* handle)
 }
 
 LOAD_FMT PalmBinaryFile::GetFormat() const
-  {
-    return LOADFMT_PALM;
-  }
+{
+  return LOADFMT_PALM;
+}
 
 MACHINE PalmBinaryFile::GetMachine() const
-  {
-    return MACHINE_PALM;
-  }
+{
+  return MACHINE_PALM;
+}
 
 bool PalmBinaryFile::isLibrary() const
-  {
-    return (strncmp((char*)(m_pImage+0x3C), "libr", 4) == 0);
-  }
+{
+  return (strncmp((char*)(m_pImage+0x3C), "libr", 4) == 0);
+}
 std::list<const char *> PalmBinaryFile::getDependencyList()
 {
   return std::list<const char *>(); /* doesn't really exist on palm */
@@ -409,44 +409,44 @@ std::pair<unsigned,unsigned> PalmBinaryFile::GetGlobalPointerInfo()
 //  //  //  //  //  //  //
 
 int PalmBinaryFile::GetAppID() const
-  {
-    // The answer is in the header. Return 0 if file not loaded
-    if (m_pImage == 0)
-      return 0;
-    // Beware the endianness (large)
+{
+  // The answer is in the header. Return 0 if file not loaded
+  if (m_pImage == 0)
+    return 0;
+  // Beware the endianness (large)
 #define OFFSET_ID 0x40
-    return (m_pImage[OFFSET_ID  ] << 24) + (m_pImage[OFFSET_ID+1] << 16) +
-           (m_pImage[OFFSET_ID+2] <<  8) + (m_pImage[OFFSET_ID+3]);
-  }
+  return (m_pImage[OFFSET_ID  ] << 24) + (m_pImage[OFFSET_ID+1] << 16) +
+         (m_pImage[OFFSET_ID+2] <<  8) + (m_pImage[OFFSET_ID+3]);
+}
 
 // Patterns for Code Warrior
 #define WILD 0x4AFC
 static SWord CWFirstJump[] =
-  {
-    0x0, 0x1,           // ? All Pilot programs seem to start with this
-    0x487a, 0x4,        // pea 4(pc)
-    0x0697, WILD, WILD, // addil #number, (a7)
-    0x4e75
-  }
-  ;            // rts
+{
+  0x0, 0x1,           // ? All Pilot programs seem to start with this
+  0x487a, 0x4,        // pea 4(pc)
+  0x0697, WILD, WILD, // addil #number, (a7)
+  0x4e75
+}
+;            // rts
 static SWord CWCallMain[] =
-  {
-    0x487a, 14,         // pea 14(pc)
-    0x487a, 4,          // pea 4(pc)
-    0x0697, WILD, WILD, // addil #number, (a7)
-    0x4e75
-  }
-  ;            // rts
+{
+  0x487a, 14,         // pea 14(pc)
+  0x487a, 4,          // pea 4(pc)
+  0x0697, WILD, WILD, // addil #number, (a7)
+  0x4e75
+}
+;            // rts
 static SWord GccCallMain[] =
-  {
-    0x3F04,             // movew d4, -(a7)
-    0x6100, WILD,       // bsr xxxx
-    0x3F04,             // movew d4, -(a7)
-    0x2F05,             // movel d5, -(a7)
-    0x3F06,             // movew d6, -(a7)
-    0x6100, WILD
-  }
-  ;      // bsr PilotMain
+{
+  0x3F04,             // movew d4, -(a7)
+  0x6100, WILD,       // bsr xxxx
+  0x3F04,             // movew d4, -(a7)
+  0x2F05,             // movel d5, -(a7)
+  0x3F06,             // movew d6, -(a7)
+  0x6100, WILD
+}
+;      // bsr PilotMain
 
 /*==============================================================================
  * FUNCTION:      findPattern
@@ -530,45 +530,45 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
 }
 
 void PalmBinaryFile::GenerateBinFiles(const std::string& path) const
-  {
-    for (int i=0; i < m_iNumSections; i++)
-      {
-        SectionInfo* pSect = m_pSections + i;
-        if ((strncmp(pSect->pSectionName, "code", 4) != 0) &&
-            (strncmp(pSect->pSectionName, "data", 4) != 0))
-          {
-            // Save this section in a file
-            // First construct the file name
-            char name[20];
-            strncpy(name, pSect->pSectionName, 4);
-            sprintf(name+4, "%04x.bin", atoi(pSect->pSectionName+4));
-            std::string fullName(path);
-            fullName += name;
-            // Create the file
-            FILE* f = fopen(fullName.c_str(), "w");
-            if (f == NULL)
-              {
-                fprintf( stderr, "Could not open %s for writing binary file\n",
-                         fullName.c_str() );
-                return;
-              }
-            fwrite((void*)pSect->uHostAddr, pSect->uSectionSize, 1, f);
-            fclose(f);
-          }
-      }
-  }
+{
+  for (int i=0; i < m_iNumSections; i++)
+    {
+      SectionInfo* pSect = m_pSections + i;
+      if ((strncmp(pSect->pSectionName, "code", 4) != 0) &&
+          (strncmp(pSect->pSectionName, "data", 4) != 0))
+        {
+          // Save this section in a file
+          // First construct the file name
+          char name[20];
+          strncpy(name, pSect->pSectionName, 4);
+          sprintf(name+4, "%04x.bin", atoi(pSect->pSectionName+4));
+          std::string fullName(path);
+          fullName += name;
+          // Create the file
+          FILE* f = fopen(fullName.c_str(), "w");
+          if (f == NULL)
+            {
+              fprintf( stderr, "Could not open %s for writing binary file\n",
+                       fullName.c_str() );
+              return;
+            }
+          fwrite((void*)pSect->uHostAddr, pSect->uSectionSize, 1, f);
+          fclose(f);
+        }
+    }
+}
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile
 // derived concrete object. After this object is returned, the virtual function
 // call mechanism will call the rest of the code in this library
 // It needs to be C linkage so that it its name is not mangled
 extern "C"
-  {
+{
 #ifdef _WIN32
-    __declspec(dllexport)
+  __declspec(dllexport)
 #endif
-    BinaryFile* construct()
-    {
-      return new PalmBinaryFile;
-    }
+  BinaryFile* construct()
+  {
+    return new PalmBinaryFile;
   }
+}

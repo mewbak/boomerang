@@ -38,11 +38,11 @@
 #include "macho-apple.h"
 
 #ifndef HOST_OSX
-	#include "objc/objc-class.h"
-	#include "objc/objc-runtime.h"
+#include "objc/objc-class.h"
+#include "objc/objc-runtime.h"
 #else
-	#include <objc/objc-class.h>
-	#include <objc/objc-runtime.h>
+#include <objc/objc-class.h>
+#include <objc/objc-runtime.h>
 #endif
 
 //#define DEBUG_MACHO_LOADER
@@ -492,28 +492,28 @@ bool MachOBinaryFile::DisplayDetails(const char* fileName, FILE* f
 }
 
 int MachOBinaryFile::machORead2(short* ps) const
-  {
-    unsigned char* p = (unsigned char*)ps;
-    int n;
-    if (machine == MACHINE_PPC)
-      n = (int)(p[1] + (p[0] << 8));
-    else
-      n = (int)(p[0] + (p[1] << 8));
-    return n;
-  }
+{
+  unsigned char* p = (unsigned char*)ps;
+  int n;
+  if (machine == MACHINE_PPC)
+    n = (int)(p[1] + (p[0] << 8));
+  else
+    n = (int)(p[0] + (p[1] << 8));
+  return n;
+}
 
 int MachOBinaryFile::machORead4(int* pi) const
-  {
-    short* p = (short*)pi;
-    int n1 = machORead2(p);
-    int n2 = machORead2(p+1);
-    int n;
-    if (machine == MACHINE_PPC)
-      n = (int) (n2 | (n1 << 16));
-    else
-      n = (int) (n1 | (n2 << 16));
-    return n;
-  }
+{
+  short* p = (short*)pi;
+  int n1 = machORead2(p);
+  int n2 = machORead2(p+1);
+  int n;
+  if (machine == MACHINE_PPC)
+    n = (int) (n2 | (n1 << 16));
+  else
+    n = (int) (n1 | (n2 << 16));
+  return n;
+}
 
 /*
 void *MachOBinaryFile::BMMH(void *x)
@@ -690,19 +690,19 @@ const char *MachOBinaryFile::GetDynamicProcName(ADDRESS uNative)
 }
 
 LOAD_FMT MachOBinaryFile::GetFormat() const
-  {
-    return LOADFMT_MACHO;
-  }
+{
+  return LOADFMT_MACHO;
+}
 
 MACHINE MachOBinaryFile::GetMachine() const
-  {
-    return machine;
-  }
+{
+  return machine;
+}
 
 bool MachOBinaryFile::isLibrary() const
-  {
-    return false;
-  }
+{
+  return false;
+}
 
 ADDRESS MachOBinaryFile::getImageBase()
 {
@@ -732,12 +732,12 @@ DWord MachOBinaryFile::getDelta()
 // call mechanism will call the rest of the code in this library
 // It needs to be C linkage so that it its name is not mangled
 extern "C"
-  {
+{
 #ifdef _WIN32
-    __declspec(dllexport)
+  __declspec(dllexport)
 #endif
-    BinaryFile* construct()
-    {
-      return new MachOBinaryFile;
-    }
+  BinaryFile* construct()
+  {
+    return new MachOBinaryFile;
   }
+}
