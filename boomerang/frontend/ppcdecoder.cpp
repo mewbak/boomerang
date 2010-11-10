@@ -1,7 +1,7 @@
 #define sign_extend(N,SIZE) (((int)((N) << (sizeof(unsigned)*8-(SIZE)))) >> (sizeof(unsigned)*8-(SIZE)))
 #include <assert.h>
 
-#line 1 "frontend/machine/ppc/decoder.m"
+#line 0 "frontend/machine/ppc/decoder.m"
 /*
  * Copyright (C) 2004, The University of Queensland
  *
@@ -16,11 +16,10 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.26 $	// 1.24.2.1
+/* $Revision: 1.28 $	// 1.24.2.1
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  * 26/Sep/05 - Mike: Added Xsab_, Xsax_; DIS_INDEX uses RAZ not RA now; A2c_ -> Ac_ (does single as well as double prec)
- * 09 Nov 10 - Markus: 64-bit compat host.
  **/
 
 /*==============================================================================
@@ -58,8 +57,8 @@ Exp*	crBit(int bitNum);	// Get an expression for a CR bit access
 #define DIS_D		(new Const(d))
 #define DIS_NZRA	(dis_Reg(ra))
 #define DIS_NZRB	(dis_Reg(rb))
-#define DIS_ADDR	(new Const(static_cast<ADDRESS>(addr)))
-#define DIS_RELADDR	(new Const(static_cast<ADDRESS>(reladdr - delta)))
+#define DIS_ADDR	(new Const(addr))
+#define DIS_RELADDR	(new Const(reladdr - delta))
 #define DIS_CRBD	(crBit(crbD))
 #define DIS_CRBA	(crBit(crbA))
 #define DIS_CRBB	(crBit(crbB))
@@ -112,7 +111,7 @@ void unused(char* x) {}
  * RETURNS:		   a DecodeResult structure containing all the information
  *					 gathered during decoding
  *============================================================================*/
-DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) { 
+DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) { 
 	static DecodeResult result;
 	ADDRESS hostPC = pc+delta;
 
@@ -126,15 +125,15 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
 
 
 
-#line 122 "frontend/machine/ppc/decoder.m"
+#line 119 "frontend/machine/ppc/decoder.m"
 { 
   dword MATCH_p = 
     
-#line 122 "frontend/machine/ppc/decoder.m"
+#line 119 "frontend/machine/ppc/decoder.m"
     hostPC
     ;
   char *MATCH_name;
-  char *MATCH_name_OPCD_0[] = {
+  static char *MATCH_name_OPCD_0[] = {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, "mulli", "subfic", (char *)0, (char *)0, (char *)0, "addic", 
     "addicq", "addi", "addis", (char *)0, (char *)0, (char *)0, (char *)0, 
@@ -144,35 +143,35 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
     "sth", "sthu", "lmw", "stmw", "lfs", "lfsu", "lfd", "lfdu", "stfs", 
     "stfsu", "stfd", "stfdu", 
   };
-  char *MATCH_name_BO4_3[] = {
+  static char *MATCH_name_BO4_3[] = {
     (char *)0, (char *)0, "bge", (char *)0, (char *)0, (char *)0, "blt", 
   };
-  char *MATCH_name_BO4_4[] = {
+  static char *MATCH_name_BO4_4[] = {
     (char *)0, (char *)0, "ble", (char *)0, (char *)0, (char *)0, "bgt", 
   };
-  char *MATCH_name_BO4_5[] = {
+  static char *MATCH_name_BO4_5[] = {
     (char *)0, (char *)0, "bne", (char *)0, (char *)0, (char *)0, "beq", 
   };
-  char *MATCH_name_BO4_6[] = {
+  static char *MATCH_name_BO4_6[] = {
     (char *)0, (char *)0, "bns", (char *)0, (char *)0, (char *)0, "bso", 
   };
-  char *MATCH_name_LK_8[] = {"crnor", "bl", };
-  char *MATCH_name_BO4_10[] = {
+  static char *MATCH_name_LK_8[] = {"crnor", "bl", };
+  static char *MATCH_name_BO4_10[] = {
     (char *)0, (char *)0, "bgelr", (char *)0, (char *)0, (char *)0, "bltlr", 
   };
-  char *MATCH_name_BO4_11[] = {
+  static char *MATCH_name_BO4_11[] = {
     (char *)0, (char *)0, "blelr", (char *)0, (char *)0, (char *)0, "bgtlr", 
   };
-  char *MATCH_name_BO4_12[] = {
+  static char *MATCH_name_BO4_12[] = {
     (char *)0, (char *)0, "bnelr", (char *)0, (char *)0, (char *)0, "beqlr", 
   };
-  char *MATCH_name_BO4_13[] = {
+  static char *MATCH_name_BO4_13[] = {
     (char *)0, (char *)0, "bnslr", (char *)0, (char *)0, (char *)0, "bsolr", 
   };
-  char *MATCH_name_LK_14[] = {"crandc", "balctrl", };
-  char *MATCH_name_Rc_22[] = {"rlwimi", "rlwimiq", };
-  char *MATCH_name_Rc_23[] = {"rlwinm", "rlwinmq", };
-  char *MATCH_name_Xo1_26[] = {
+  static char *MATCH_name_LK_14[] = {"crandc", "balctrl", };
+  static char *MATCH_name_Rc_22[] = {"rlwimi", "rlwimiq", };
+  static char *MATCH_name_Rc_23[] = {"rlwinm", "rlwinmq", };
+  static char *MATCH_name_Xo1_26[] = {
     "fcmpu", (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, "frsp", 
     (char *)0, "fctiw", "fctiwz", (char *)0, (char *)0, (char *)0, (char *)0, 
@@ -333,7 +332,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, (char *)0, "stfiwx", (char *)0, (char *)0, "extsw", 
   };
-  char *MATCH_name_Xo9_29[] = {
+  static char *MATCH_name_Xo9_29[] = {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, (char *)0, "subfc", (char *)0, "addc", (char *)0, (char *)0, 
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
@@ -416,7 +415,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, "divd", (char *)0, "divw", 
   };
-  char *MATCH_name_Xo1_30[] = {
+  static char *MATCH_name_Xo1_30[] = {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     "frspq", (char *)0, "fctiwq", "fctiwzq", (char *)0, (char *)0, (char *)0, 
@@ -558,10 +557,10 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     "fcfidq", 
   };
-  char *MATCH_name_Rc_36[] = {"fdivs", "fdivsq", };
-  char *MATCH_name_Rc_37[] = {"fsubs", "fsubsq", };
-  char *MATCH_name_Rc_38[] = {"fadds", "faddsq", };
-  char *MATCH_name_Xo5_40[] = {
+  static char *MATCH_name_Rc_36[] = {"fdivs", "fdivsq", };
+  static char *MATCH_name_Rc_37[] = {"fsubs", "fsubsq", };
+  static char *MATCH_name_Rc_38[] = {"fadds", "faddsq", };
+  static char *MATCH_name_Xo5_40[] = {
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, 
     (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, (char *)0, "fdiv", 
@@ -587,7 +586,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
               sign_extend((MATCH_w_32_0 & 0xffff) /* SIMM at 0 */, 16);
             nextPC = 4 + MATCH_p; 
             
-#line 142 "frontend/machine/ppc/decoder.m"
+#line 139 "frontend/machine/ppc/decoder.m"
             
 
             		if (strcmp(name, "addi") == 0 || strcmp(name, "addis") == 0) {
@@ -617,7 +616,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
               unsigned uimm = (MATCH_w_32_0 & 0xffff) /* UIMM at 0 */;
               nextPC = 4 + MATCH_p; 
               
-#line 242 "frontend/machine/ppc/decoder.m"
+#line 239 "frontend/machine/ppc/decoder.m"
               
 
               		stmts = instantiate(pc, name, DIS_CRFD, DIS_NZRA, DIS_UIMM);
@@ -648,7 +647,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                 sign_extend((MATCH_w_32_0 & 0xffff) /* SIMM at 0 */, 16);
               nextPC = 4 + MATCH_p; 
               
-#line 239 "frontend/machine/ppc/decoder.m"
+#line 236 "frontend/machine/ppc/decoder.m"
               
 
               		stmts = instantiate(pc, name, DIS_CRFD, DIS_NZRA, DIS_SIMM);
@@ -680,7 +679,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                     addressToPC(MATCH_p);
                   nextPC = 4 + MATCH_p; 
                   
-#line 213 "frontend/machine/ppc/decoder.m"
+#line 210 "frontend/machine/ppc/decoder.m"
                   		// Always "conditional" branch with link, test/OSX/hello has this
 
                   		if (reladdr - delta - pc == 4) {	// Branch to next instr?
@@ -764,7 +763,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 278 "frontend/machine/ppc/decoder.m"
+#line 275 "frontend/machine/ppc/decoder.m"
                             
 
                             		PPC_COND_JUMP(name, 4, reladdr, BRANCH_JSGE, BIcr);
@@ -788,7 +787,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 272 "frontend/machine/ppc/decoder.m"
+#line 269 "frontend/machine/ppc/decoder.m"
                             
 
                             		PPC_COND_JUMP(name, 4, reladdr, BRANCH_JSL, BIcr);
@@ -828,7 +827,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 274 "frontend/machine/ppc/decoder.m"
+#line 271 "frontend/machine/ppc/decoder.m"
                             
 
                             		PPC_COND_JUMP(name, 4, reladdr, BRANCH_JSLE, BIcr);
@@ -852,7 +851,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 281 "frontend/machine/ppc/decoder.m"
+#line 278 "frontend/machine/ppc/decoder.m"
                             
 
                             		PPC_COND_JUMP(name, 4, reladdr, BRANCH_JSG, BIcr);
@@ -896,7 +895,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 285 "frontend/machine/ppc/decoder.m"
+#line 282 "frontend/machine/ppc/decoder.m"
                             
 
                             		PPC_COND_JUMP(name, 4, reladdr, BRANCH_JNE, BIcr);
@@ -924,7 +923,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 276 "frontend/machine/ppc/decoder.m"
+#line 273 "frontend/machine/ppc/decoder.m"
                             
 
                             		PPC_COND_JUMP(name, 4, reladdr, BRANCH_JE, BIcr);
@@ -964,7 +963,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 291 "frontend/machine/ppc/decoder.m"
+#line 288 "frontend/machine/ppc/decoder.m"
                             
 
                             		PPC_COND_JUMP(name, 4, reladdr, (BRANCH_TYPE)0, BIcr);
@@ -998,7 +997,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                     /* BD at 0 */ + addressToPC(MATCH_p);
                             nextPC = 4 + MATCH_p; 
                             
-#line 288 "frontend/machine/ppc/decoder.m"
+#line 285 "frontend/machine/ppc/decoder.m"
                             								// Branch on summary overflow
 
                             		PPC_COND_JUMP(name, 4, reladdr, (BRANCH_TYPE)0, BIcr);	// MVE: Don't know these last 4 yet
@@ -1025,11 +1024,12 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
               { 
                 char *name = MATCH_name;
                 unsigned reladdr = 
-                  4 * sign_extend((MATCH_w_32_0 >> 2 & 0xffffff) 
-                                    /* LI at 0 */, 24) + addressToPC(MATCH_p);
+                  4 * sign_extend(
+                              (MATCH_w_32_0 >> 2 & 0xffffff) /* LI at 0 */, 
+                              24) + addressToPC(MATCH_p);
                 nextPC = 4 + MATCH_p; 
                 
-#line 196 "frontend/machine/ppc/decoder.m"
+#line 193 "frontend/machine/ppc/decoder.m"
                 
 
                 		Exp* dest = DIS_RELADDR;
@@ -1070,7 +1070,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                             24) + addressToPC(MATCH_p);
               nextPC = 4 + MATCH_p; 
               
-#line 210 "frontend/machine/ppc/decoder.m"
+#line 207 "frontend/machine/ppc/decoder.m"
               
 
               		unconditionalJump("b", 4, reladdr, delta, pc, stmts, result);
@@ -1158,7 +1158,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 324 "frontend/machine/ppc/decoder.m"
+#line 321 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, BRANCH_JSL, BIcr);
@@ -1184,7 +1184,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 312 "frontend/machine/ppc/decoder.m"
+#line 309 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, BRANCH_JSGE, BIcr);
@@ -1230,7 +1230,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 316 "frontend/machine/ppc/decoder.m"
+#line 313 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, BRANCH_JSG, BIcr);
@@ -1256,7 +1256,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 328 "frontend/machine/ppc/decoder.m"
+#line 325 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, BRANCH_JSLE, BIcr);
@@ -1302,7 +1302,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 332 "frontend/machine/ppc/decoder.m"
+#line 329 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, BRANCH_JE, BIcr);
@@ -1328,7 +1328,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 320 "frontend/machine/ppc/decoder.m"
+#line 317 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, BRANCH_JNE, BIcr);
@@ -1374,7 +1374,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 340 "frontend/machine/ppc/decoder.m"
+#line 337 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, (BRANCH_TYPE)0, BIcr);
@@ -1400,7 +1400,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                                           /* BIcr at 0 */;
                                   nextPC = 4 + MATCH_p; 
                                   
-#line 336 "frontend/machine/ppc/decoder.m"
+#line 333 "frontend/machine/ppc/decoder.m"
                                   
 
                                   		PPC_COND_JUMP(name, 4, hostPC+4, (BRANCH_TYPE)0, BIcr);
@@ -1517,7 +1517,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                           (MATCH_w_32_0 >> 18 & 0x7) /* BIcr at 0 */;
                         nextPC = 4 + MATCH_p; 
                         
-#line 302 "frontend/machine/ppc/decoder.m"
+#line 299 "frontend/machine/ppc/decoder.m"
                         
 
                         		computedCall(name, 4, new Unary(opMachFtr, new Const("%CTR")), pc, stmts, result);
@@ -1540,7 +1540,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                           (MATCH_w_32_0 >> 18 & 0x7) /* BIcr at 0 */;
                         nextPC = 4 + MATCH_p; 
                         
-#line 298 "frontend/machine/ppc/decoder.m"
+#line 295 "frontend/machine/ppc/decoder.m"
                         
 
                         		computedJump(name, 4, new Unary(opMachFtr, new Const("%CTR")), pc, stmts, result);
@@ -1583,7 +1583,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
             unsigned uimm = (MATCH_w_32_0 & 0xffff) /* UIMM at 0 */;
             nextPC = 4 + MATCH_p; 
             
-#line 139 "frontend/machine/ppc/decoder.m"
+#line 136 "frontend/machine/ppc/decoder.m"
             
 
             		stmts = instantiate(pc, name, DIS_RD, DIS_RA, DIS_UIMM);
@@ -1705,7 +1705,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                     unsigned uimm = (MATCH_w_32_0 >> 11 & 0x1f) /* SH at 0 */;
                     nextPC = 4 + MATCH_p; 
                     
-#line 353 "frontend/machine/ppc/decoder.m"
+#line 350 "frontend/machine/ppc/decoder.m"
                     
 
                     		stmts = instantiate(pc,	 name, DIS_RA, DIS_RS, DIS_UIMM);
@@ -2649,7 +2649,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
                           (MATCH_w_32_0 >> 21 & 0x1f) /* D at 0 */;
                         nextPC = 4 + MATCH_p; 
                         
-#line 125 "frontend/machine/ppc/decoder.m"
+#line 122 "frontend/machine/ppc/decoder.m"
                         
 
                         		stmts = instantiate(pc, name, DIS_RD, DIS_RA);
@@ -3438,7 +3438,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
             unsigned rd = (MATCH_w_32_0 >> 21 & 0x1f) /* D at 0 */;
             nextPC = 4 + MATCH_p; 
             
-#line 155 "frontend/machine/ppc/decoder.m"
+#line 152 "frontend/machine/ppc/decoder.m"
             
 
             		if (strcmp(name, "lmw") == 0) {
@@ -3488,7 +3488,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
             unsigned rs = (MATCH_w_32_0 >> 21 & 0x1f) /* S at 0 */;
             nextPC = 4 + MATCH_p; 
             
-#line 133 "frontend/machine/ppc/decoder.m"
+#line 130 "frontend/machine/ppc/decoder.m"
             
 
             		if (strcmp(name, "stmw") == 0) {
@@ -3520,7 +3520,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
             unsigned ra = (MATCH_w_32_0 >> 16 & 0x1f) /* A at 0 */;
             nextPC = 4 + MATCH_p; 
             
-#line 246 "frontend/machine/ppc/decoder.m"
+#line 243 "frontend/machine/ppc/decoder.m"
             									// Floating point loads (non indexed)
 
             		stmts = instantiate(pc, name, DIS_FD, DIS_DISP, DIS_RA);	// Pass RA twice (needed for update)
@@ -3544,7 +3544,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
             unsigned ra = (MATCH_w_32_0 >> 16 & 0x1f) /* A at 0 */;
             nextPC = 4 + MATCH_p; 
             
-#line 252 "frontend/machine/ppc/decoder.m"
+#line 249 "frontend/machine/ppc/decoder.m"
             									// Floating point stores (non indexed)
 
             		stmts = instantiate(pc, name, DIS_FS, DIS_DISP, DIS_RA);	// Pass RA twice (needed for update)
@@ -4096,7 +4096,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
     { 
       nextPC = MATCH_p; 
       
-#line 356 "frontend/machine/ppc/decoder.m"
+#line 353 "frontend/machine/ppc/decoder.m"
       
       		stmts = NULL;
 
@@ -4117,7 +4117,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
         4 * (MATCH_w_32_0 >> 2 & 0x3fff) /* BD at 0 */ + addressToPC(MATCH_p);
       nextPC = 4 + MATCH_p; 
       
-#line 306 "frontend/machine/ppc/decoder.m"
+#line 303 "frontend/machine/ppc/decoder.m"
       
 
       		unconditionalJump("bal", 4, reladdr, delta, pc, stmts, result);
@@ -4142,7 +4142,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned BIcr = (MATCH_w_32_0 >> 18 & 0x7) /* BIcr at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 344 "frontend/machine/ppc/decoder.m"
+#line 341 "frontend/machine/ppc/decoder.m"
       
 
       		result.rtl = new RTL(pc, stmts);
@@ -4171,7 +4171,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned crbD = (MATCH_w_32_0 >> 21 & 0x1f) /* crbD at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 171 "frontend/machine/ppc/decoder.m"
+#line 168 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_CRBD, DIS_CRBA, DIS_CRBB);
@@ -4194,7 +4194,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned uimm = (MATCH_w_32_0 >> 11 & 0x1f) /* SH at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 192 "frontend/machine/ppc/decoder.m"
+#line 189 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_RA, DIS_RS, DIS_UIMM, DIS_BEG, DIS_END);
@@ -4218,7 +4218,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rb = (MATCH_w_32_0 >> 11 & 0x1f) /* B at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 236 "frontend/machine/ppc/decoder.m"
+#line 233 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_CRFD, DIS_NZRA, DIS_NZRB);
@@ -4237,7 +4237,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rd = (MATCH_w_32_0 >> 21 & 0x1f) /* D at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 189 "frontend/machine/ppc/decoder.m"
+#line 186 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_RD);
@@ -4258,7 +4258,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rd = (MATCH_w_32_0 >> 21 & 0x1f) /* D at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 149 "frontend/machine/ppc/decoder.m"
+#line 146 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_RD, DIS_INDEX);
@@ -4277,7 +4277,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rd = (MATCH_w_32_0 >> 16 & 0x1f) /* A at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 147 "frontend/machine/ppc/decoder.m"
+#line 144 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_RD, DIS_RA, DIS_RB);
@@ -4295,7 +4295,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rd = (MATCH_w_32_0 >> 16 & 0x1f) /* A at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 128 "frontend/machine/ppc/decoder.m"
+#line 125 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_RD, DIS_RA);
@@ -4320,7 +4320,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rd = (MATCH_w_32_0 >> 21 & 0x1f) /* S at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 152 "frontend/machine/ppc/decoder.m"
+#line 149 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_RD, DIS_INDEX);
@@ -4342,7 +4342,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
         (MATCH_w_32_0 >> 16 & 0x1f) /* sprL at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 173 "frontend/machine/ppc/decoder.m"
+#line 170 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc, name, DIS_RD, DIS_UIMM);
@@ -4362,7 +4362,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
         (MATCH_w_32_0 >> 16 & 0x1f) /* sprL at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 176 "frontend/machine/ppc/decoder.m"
+#line 173 "frontend/machine/ppc/decoder.m"
       
 
       		switch (uimm) {
@@ -4403,7 +4403,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rb = (MATCH_w_32_0 >> 11 & 0x1f) /* B at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 249 "frontend/machine/ppc/decoder.m"
+#line 246 "frontend/machine/ppc/decoder.m"
       									// Floating point loads (indexed)
 
       		stmts = instantiate(pc, name, DIS_FD, DIS_INDEX, DIS_RA);	// Pass RA twice (needed for update)
@@ -4424,7 +4424,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rb = (MATCH_w_32_0 >> 11 & 0x1f) /* B at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 255 "frontend/machine/ppc/decoder.m"
+#line 252 "frontend/machine/ppc/decoder.m"
       									// Floating point stores (indexed)
 
       		stmts = instantiate(pc, name, DIS_FS, DIS_INDEX, DIS_RA);	// Pass RA twice (needed for update)
@@ -4447,7 +4447,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned uimm = (MATCH_w_32_0 >> 11 & 0x1f) /* SH at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 350 "frontend/machine/ppc/decoder.m"
+#line 347 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc,	 name, DIS_RA, DIS_RS, DIS_UIMM);
@@ -4466,7 +4466,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned rd = (MATCH_w_32_0 >> 21 & 0x1f) /* D at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 123 "frontend/machine/ppc/decoder.m"
+#line 120 "frontend/machine/ppc/decoder.m"
       
 
       		stmts = instantiate(pc,	 name, DIS_RD, DIS_RA, DIS_RB);
@@ -4485,7 +4485,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned fd = (MATCH_w_32_0 >> 21 & 0x1f) /* fD at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 265 "frontend/machine/ppc/decoder.m"
+#line 262 "frontend/machine/ppc/decoder.m"
       									// Floating point binary
 
       		stmts = instantiate(pc, name, DIS_FD, DIS_FA, DIS_FB);
@@ -4516,7 +4516,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned fb = (MATCH_w_32_0 >> 11 & 0x1f) /* fB at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 259 "frontend/machine/ppc/decoder.m"
+#line 256 "frontend/machine/ppc/decoder.m"
       									// Floating point compare
 
       		stmts = instantiate(pc, name, DIS_CRFD, DIS_FA, DIS_FB);
@@ -4536,7 +4536,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
       unsigned fd = (MATCH_w_32_0 >> 21 & 0x1f) /* fD at 0 */;
       nextPC = 4 + MATCH_p; 
       
-#line 262 "frontend/machine/ppc/decoder.m"
+#line 259 "frontend/machine/ppc/decoder.m"
       									// Floating point unary
 
       		stmts = instantiate(pc, name, DIS_FD, DIS_FB);
@@ -4553,7 +4553,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
   
 }
 
-#line 361 "frontend/machine/ppc/decoder.m"
+#line 358 "frontend/machine/ppc/decoder.m"
 
 	result.numBytes = nextPC - hostPC;
 	if (result.valid && result.rtl == 0)	// Don't override higher level res
@@ -4574,7 +4574,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
  * PARAMETERS:		r - register (0-31)
  * RETURNS:			the expression representing the register
  *============================================================================*/
-Exp* PPCDecoder::dis_Reg(unsigned int r)
+Exp* PPCDecoder::dis_Reg(unsigned r)
 {
 	return Location::regOf(r);
 }
@@ -4585,7 +4585,7 @@ Exp* PPCDecoder::dis_Reg(unsigned int r)
  * PARAMETERS:		r - register (0-31)
  * RETURNS:			the expression representing the register
  *============================================================================*/
-Exp* PPCDecoder::dis_RAmbz(unsigned int r)
+Exp* PPCDecoder::dis_RAmbz(unsigned r)
 {
 	if (r == 0)
 		return new Const(0);
@@ -4637,7 +4637,7 @@ PPCDecoder::PPCDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PPCDecoder::decodeAssemblyInstruction(ADDRESS, intptr_t)
+int PPCDecoder::decodeAssemblyInstruction(unsigned, int)
 { return 0; }
 
 // Get an expression for a CR bit. For example, if bitNum is 6, return r65@[2:2]

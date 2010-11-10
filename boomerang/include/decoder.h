@@ -116,13 +116,13 @@ class NJMCDecoder
     /*
      * Decodes the machine instruction at pc and returns an RTL instance for the instruction.
      */
-    virtual DecodeResult& decodeInstruction (ADDRESS pc, intptr_t delta) = 0;
+    virtual DecodeResult& decodeInstruction (ADDRESS pc, int delta) = 0;
 
     /*
      * Disassembles the machine instruction at pc and returns the number of bytes disassembled.
      * Assembler output goes to global _assembly
      */
-    virtual int decodeAssemblyInstruction (ADDRESS pc, intptr_t delta) = 0;
+    virtual int decodeAssemblyInstruction (ADDRESS pc, int delta) = 0;
 
     RTLInstDict& getRTLDict()
     {

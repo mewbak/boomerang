@@ -55,7 +55,7 @@ bool isLDW(unsigned instr, int& offset, unsigned dest) {
             (instr & 1) && // Offset is neg
             (((instr >> 21) & 0x1f) == 27) && // register b
             (((instr >> 16) & 0x1f) == dest)) { // register t
-        offset = ((((intptr_t) instr << 31) >> 18) |
+        offset = ((((int) instr << 31) >> 18) |
                 ((instr & 0x3ffe) >> 1));
         return true;
     } else
@@ -139,7 +139,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName) {
     memset(m_pImage, size, 0);
 
     fseek(fp, 0, SEEK_SET);
-    if (fread(m_pImage, 1, size, fp) != (uintptr_t) size) {
+    if (fread(m_pImage, 1, size, fp) != (unsigned) size) {
         fprintf(stderr, "Error reading binary file %s\n", sName);
         return false;
     }
@@ -157,19 +157,19 @@ bool HpSomBinaryFile::RealLoad(const char* sName) {
     }
 
     // Find the array of aux headers
-    uintptr_t* auxHeaders = (uintptr_t*) UINT4(m_pImage + 0x1c);
+    unsigned* auxHeaders = (unsigned*) UINT4(m_pImage + 0x1c);
     if (auxHeaders == 0) {
         fprintf(stderr, "Error: auxilliary header array is not present\n");
         return false;
     }
     // Get the size of the aux headers
-    uintptr_t sizeAux = UINT4(m_pImage + 0x20);
+    unsigned sizeAux = UINT4(m_pImage + 0x20);
     // Search through the auxillary headers. There should be one of type 4
     // ("Exec Auxilliary Header")
     bool found = false;
-    uintptr_t* maxAux = auxHeaders + sizeAux;
+    unsigned* maxAux = auxHeaders + sizeAux;
     while (auxHeaders < maxAux) {
-        if ((UINT4(m_pImage + (intptr_t)(auxHeaders)) & 0xFFFF) == 0x0004) {
+        if ((UINT4(m_pImage + (int) auxHeaders) & 0xFFFF) == 0x0004) {
             found = true;
             break;
         }
@@ -196,7 +196,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName) {
     }
 
     // Find the main symbol table, if it exists
-    ADDRESS symPtr = *reinterpret_cast<ADDRESS *>(m_pImage) + UINT4(m_pImage + 0x5C);
+    ADDRESS symPtr = (ADDRESS) m_pImage + UINT4(m_pImage + 0x5C);
     unsigned numSym = UINT4(m_pImage + 0x60);
 
     // Find the DL Table, if it exists
@@ -216,12 +216,12 @@ bool HpSomBinaryFile::RealLoad(const char* sName) {
 
     // A convenient macro for accessing the fields (0-11) of the auxilliary header
     // Fields 0, 1 are the header (flags, aux header type, and size)
-#define AUXHDR(idx) (UINT4(m_pImage + (intptr_t)(auxHeaders+idx)))
+#define AUXHDR(idx) (UINT4(m_pImage + (int)(auxHeaders+idx)))
 
     // Section 0: header
     m_pSections[0].pSectionName = const_cast<char *> ("$HEADER$");
     m_pSections[0].uNativeAddr = 0; // Not applicable
-    m_pSections[0].uHostAddr = *reinterpret_cast<ADDRESS *>(m_pImage);
+    m_pSections[0].uHostAddr = (ADDRESS) m_pImage;
     //  m_pSections[0].uSectionSize = AUXHDR(4);
     // There is nothing that appears in memory space here; to give this a size
     // is to invite GetSectionInfoByAddr to return this section!
@@ -236,7 +236,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName) {
     // Section 1: text (code)
     m_pSections[1].pSectionName = const_cast<char *> ("$TEXT$");
     m_pSections[1].uNativeAddr = AUXHDR(3);
-    m_pSections[1].uHostAddr = *reinterpret_cast<ADDRESS *>(m_pImage) + AUXHDR(4);
+    m_pSections[1].uHostAddr = (ADDRESS) m_pImage + AUXHDR(4);
     m_pSections[1].uSectionSize = AUXHDR(2);
     m_pSections[1].uSectionEntrySize = 1; // Not applicable
     m_pSections[1].bCode = 1;
@@ -247,7 +247,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName) {
     // Section 2: initialised data
     m_pSections[2].pSectionName = const_cast<char *> ("$DATA$");
     m_pSections[2].uNativeAddr = AUXHDR(6);
-    m_pSections[2].uHostAddr = *reinterpret_cast<ADDRESS *>(m_pImage) + AUXHDR(7);
+    m_pSections[2].uHostAddr = (ADDRESS) m_pImage + AUXHDR(7);
     m_pSections[2].uSectionSize = AUXHDR(5);
     m_pSections[2].uSectionEntrySize = 1; // Not applicable
     m_pSections[2].bCode = 0;
@@ -352,7 +352,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName) {
 
     // Read the main symbol table, if any
     if (numSym) {
-        char* pNames = (char*) (m_pImage + (intptr_t) UINT4(m_pImage + 0x6C));
+        char* pNames = (char*) (m_pImage + (int) UINT4(m_pImage + 0x6C));
 #define SYMSIZE 20              // 5 4-byte words per symbol entry
 #define SYMBOLNM(idx)  (UINT4(symPtr + idx*SYMSIZE + 4))
 #define SYMBOLAUX(idx) (UINT4(symPtr + idx*SYMSIZE + 8))

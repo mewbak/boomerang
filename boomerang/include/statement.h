@@ -140,15 +140,15 @@ class Statement
   protected:
     PBB			pbb;			// contains a pointer to the enclosing BB
     UserProc	*proc;			// procedure containing this statement
-    intptr_t	number;			// Statement number for printing
+    int			number;			// Statement number for printing
 #if		USE_DOMINANCE_NUMS
-    intptr_t			dominanceNum;	// Like a statement number, but has dominance properties
+    int			dominanceNum;	// Like a statement number, but has dominance properties
   public:
-    intptr_t			getDomNumber()
+    int			getDomNumber()
     {
       return dominanceNum;
     }
-    void		setDomNumber(intptr_t dn)
+    void		setDomNumber(int dn)
     {
       dominanceNum = dn;
     }
@@ -159,7 +159,7 @@ class Statement
     RangeMap	ranges;			// overestimation of ranges of locations
     RangeMap    savedInputRanges;  // saved overestimation of ranges of locations
 
-    uintptr_t lexBegin, lexEnd;
+    unsigned int lexBegin, lexEnd;
 
   public:
 
@@ -186,11 +186,11 @@ class Statement
       return proc;
     }
 
-    intptr_t			getNumber()
+    int			getNumber()
     {
       return number;
     }
-    virtual	void		setNumber(intptr_t num)
+    virtual	void		setNumber(int num)
     {
       number = num;    // Overridden for calls (and maybe later returns)
     }
@@ -230,23 +230,23 @@ class Statement
     virtual bool		accept(StmtModifier* visitor) = 0;
     virtual bool		accept(StmtPartModifier* visitor) = 0;
 
-    void		setLexBegin(uintptr_t n)
+    void		setLexBegin(unsigned int n)
     {
       lexBegin = n;
     }
-    void		setLexEnd(uintptr_t n)
+    void		setLexEnd(unsigned int n)
     {
       lexEnd = n;
     }
-    uintptr_t getLexBegin()
+    unsigned	int getLexBegin()
     {
       return lexBegin;
     }
-    uintptr_t getLexEnd()
+    unsigned	int getLexEnd()
     {
       return lexEnd;
     }
-    Exp			*getExpAtLex(uintptr_t begin, uintptr_t end);
+    Exp			*getExpAtLex(unsigned int begin, unsigned int end);
 
 
     // returns true if this statement defines anything

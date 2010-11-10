@@ -85,7 +85,7 @@ void UserProc::dfaTypeAnalysis()
   StatementList stmts;
   getStatements(stmts);
   StatementList::iterator it;
-  intptr_t iter;
+  int iter;
   for (iter = 1; iter <= DFA_ITER_LIMIT; iter++)
     {
       ch = false;
@@ -254,7 +254,7 @@ void UserProc::dfaTypeAnalysis()
                       // Note: keep searching till we find the pattern with this constant, since other constants may
                       // not be used as pointer to array type.
                       if (constK != con) continue;
-                      ADDRESS K = static_cast<ADDRESS>(constK->getInt());
+                      ADDRESS K = (ADDRESS)constK->getInt();
                       Exp* idx = ((Binary*)*rr)->getSubExp1();
                       Exp* arr = new Unary(opAddrOf,
                                            new Binary(opArrayIndex,
@@ -306,7 +306,7 @@ void UserProc::dfaTypeAnalysis()
           Exp* t = ((Unary*)(*rr)->getSubExp1());		// idx*K1 + K2
           Exp* l = ((Binary*)t)->getSubExp1();		// idx*K1
           Exp* r = ((Binary*)t)->getSubExp2();		// K2
-          ADDRESS K2 = static_cast<ADDRESS>(((Const*)r)->getInt());
+          ADDRESS K2 = (ADDRESS)((Const*)r)->getInt();
           Exp* idx = ((Binary*)l)->getSubExp1();
           // Replace with the array expression
           const char* nam = prog->getGlobalName(K2);

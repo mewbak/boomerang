@@ -74,14 +74,14 @@ struct IMPORT_BINARYFILE SectionInfo
     ADDRESS		uHostAddr;			// Host or actual address of data
     ADDRESS		uSectionSize;		// Size of section in bytes
     ADDRESS		uSectionEntrySize;	// Size of one section entry (if applic)
-    unsigned int uType;				 // Type of section (format dependent)
-unsigned int	bCode:
+    unsigned	uType;				 // Type of section (format dependent)
+unsigned	bCode:
     1;			// Set if section contains instructions
-unsigned int	bData:
+unsigned	bData:
     1;			// Set if section contains data
-unsigned int	bBss:
+unsigned	bBss:
     1;				// Set if section is BSS (allocated only)
-unsigned int	bReadOnly:
+unsigned	bReadOnly:
     1;		// Set if this is a read only section
   };
 
@@ -92,7 +92,7 @@ class ObjcIvar
   {
   public:
     std::string name, type;
-    uintptr_t offset;
+    unsigned offset;
   };
 
 class ObjcMethod
@@ -215,17 +215,17 @@ class IMPORT_BINARYFILE BinaryFile
     {
       return false;
     }
-    virtual int8_t		readNative1(ADDRESS a)
+    virtual int			readNative1(ADDRESS a)
     {
       return 0;
     }
     // Read 2 bytes from given native address a; considers endianness
-    virtual int16_t		readNative2(ADDRESS a)
+    virtual int			readNative2(ADDRESS a)
     {
       return 0;
     }
     // Read 4 bytes from given native address a; considers endianness
-    virtual int32_t		readNative4(ADDRESS a)
+    virtual int			readNative4(ADDRESS a)
     {
       return 0;
     }
@@ -284,7 +284,7 @@ class IMPORT_BINARYFILE BinaryFile
     // the latter is only used by the Palm machine, to represent the space
     // allocated below the %a5 register (i.e. the difference between %a5 and
     // %agp). This value could possibly be used for other purposes.
-    virtual std::pair<unsigned int,unsigned int> GetGlobalPointerInfo();
+    virtual std::pair<unsigned,unsigned> GetGlobalPointerInfo();
 
     // Get a map from ADDRESS to const char*. This map contains the native addresses and symbolic names of global
     // data items (if any) which are shared with dynamically linked libraries. Example: __iob (basis for stdout).
@@ -340,7 +340,7 @@ class IMPORT_BINARYFILE BinaryFile
       return limitTextHigh;
     }
 
-    intptr_t	getTextDelta()
+    int			getTextDelta()
     {
       return textDelta;
     }
@@ -377,7 +377,7 @@ class IMPORT_BINARYFILE BinaryFile
     // Also the difference between the host and native addresses (host - native)
     // At this stage, we are assuming that the difference is the same for all
     // text sections of the BinaryFile image
-    intptr_t	textDelta;
+    int			textDelta;
 
   };
 

@@ -1237,7 +1237,7 @@ bool Prog::isProcLabel (ADDRESS addr)
  *============================================================================*/
 std::string Prog::getNameNoPath() const
   {
-    uintptr_t n = m_name.rfind("/");
+    unsigned n = m_name.rfind("/");
     if (n == std::string::npos)
       {
         n = m_name.rfind("\\");
@@ -1251,7 +1251,7 @@ std::string Prog::getNameNoPath() const
 std::string Prog::getNameNoPathNoExt() const
   {
     std::string nopath = getNameNoPath();
-    uintptr_t n = nopath.rfind(".");
+    unsigned n = nopath.rfind(".");
     if (n == std::string::npos)
       return nopath;
     return nopath.substr(0, n);
@@ -1411,7 +1411,7 @@ void Prog::decompile()
   assert(m_procs.size());
 
   if (VERBOSE)
-    LOG << (intptr_t)m_procs.size() << " procedures\n";
+    LOG << (int)m_procs.size() << " procedures\n";
 
   // Start decompiling each entry point
   std::list<UserProc*>::iterator ee;
@@ -1675,7 +1675,7 @@ void Prog::printCallGraph()
     {
       Proc *p = procList.front();
       procList.erase(procList.begin());
-      if ((uintptr_t)p == NO_ADDRESS)
+      if ((unsigned)p == NO_ADDRESS)
         continue;
       if (seen.find(p) == seen.end())
         {

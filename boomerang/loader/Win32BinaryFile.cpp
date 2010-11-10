@@ -129,7 +129,7 @@ Win32BinaryFile::Win32BinaryFile() : m_pFileName(0), mingw_main(false)
 
 Win32BinaryFile::~Win32BinaryFile()
 {
-  for (intptr_t i=0; i < m_iNumSections; i++)
+  for (int i=0; i < m_iNumSections; i++)
     {
       if (m_pSections[i].pSectionName)
         delete [] m_pSections[i].pSectionName;
@@ -186,7 +186,7 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
   SectionInfo* si = GetSectionInfoByName(".text");
   if (si == NULL) si = GetSectionInfoByName("CODE");
   assert(si);
-  uintptr_t textSize = si->uSectionSize;
+  unsigned textSize = si->uSectionSize;
   if (textSize < 0x200)
     lim = p + textSize;
 
@@ -196,8 +196,8 @@ ADDRESS Win32BinaryFile::GetMainEntryPoint()
   gap = 0xF0000000;	// Large positive number (in case no ordinary calls)
   while (p < lim)
     {
-      op1 = *reinterpret_cast<unsigned char *>(p + base);
-      op2 = *reinterpret_cast<unsigned char *>(p + base + 1);
+      op1 = *(unsigned char*)(p + base);
+      op2 = *(unsigned char*)(p + base + 1);
 //		std::cerr << std::hex << "At " << p << ", ops " << (unsigned)op1 << ", " << (unsigned)op2 << std::dec << "\n";
       switch (op1)
         {
@@ -507,7 +507,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
   m_iNumSections = LH(&m_pPEHeader->numObjects);
   m_pSections = new PESectionInfo[m_iNumSections];
 //	SectionInfo *reloc = NULL;
-  for (intptr_t i=0; i<m_iNumSections; i++, o++)
+  for (int i=0; i<m_iNumSections; i++, o++)
     {
       SectionInfo& sect = m_pSections[i];
       //	printf("%.8s RVA=%08X Offset=%08X size=%08X\n", (char*)o->ObjectName, LMMH(o->RVA), LMMH(o->PhysicalOffset),
@@ -516,8 +516,8 @@ bool Win32BinaryFile::RealLoad(const char* sName)
       strncpy(sect.pSectionName, o->ObjectName, 8);
 //		if (!strcmp(sect.pSectionName, ".reloc"))
 //			reloc = &sect;
-      sect.uNativeAddr = static_cast<ADDRESS>(LMMH(o->RVA) + LMMH(m_pPEHeader->Imagebase));
-      sect.uHostAddr = *reinterpret_cast<ADDRESS *>(LMMH(o->RVA) + base);
+      sect.uNativeAddr=(ADDRESS)(LMMH(o->RVA) + LMMH(m_pPEHeader->Imagebase));
+      sect.uHostAddr=(ADDRESS)(LMMH(o->RVA) + base);
       sect.uSectionSize=LMMH(o->VirtualSize);
       DWord Flags = LMMH(o->Flags);
       sect.bBss      = (Flags&IMAGE_SCN_CNT_UNINITIALIZED_DATA)?1:0;
@@ -539,7 +539,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
         {
           char* dllName = LMMH(id->name) + base;
           unsigned thunk = id->originalFirstThunk ? id->originalFirstThunk : id->firstThunk;
-          uintptr_t* iat = (uintptr_t *)(LMMH(thunk) + base);
+          unsigned* iat = (unsigned*)(LMMH(thunk) + base);
           unsigned iatEntry = LMMH(*iat);
           ADDRESS paddr = LMMH(id->firstThunk) + LMMH(m_pPEHeader->Imagebase);
           while (iatEntry)
@@ -550,7 +550,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
                   std::ostringstream ost;
                   std::string nodots(dllName);
                   int len = nodots.size();
-                  for (intptr_t j=0; j < len; j++)
+                  for (int j=0; j < len; j++)
                     if (nodots[j] == '.')
                       nodots[j] = '_';	// Dots can't be in identifiers
                   ost << nodots << "_" << (iatEntry & 0x7FFFFFFF);
@@ -560,10 +560,10 @@ bool Win32BinaryFile::RealLoad(const char* sName)
               else
                 {
                   // Normal case (IMAGE_IMPORT_BY_NAME). Skip the useless hint (2 bytes)
-                  std::string name(const_cast<const char*>(iatEntry+2+base));
+                  std::string name((const char*)(iatEntry+2+base));
                   dlprocptrs[paddr] = name;
-                  if ((unsigned)paddr != ((uintptr_t)(iat) - (uintptr_t)(base) + LMMH(m_pPEHeader->Imagebase)))
-                    dlprocptrs[(uintptr_t)(iat) - (uintptr_t)(base) + LMMH(m_pPEHeader->Imagebase)]
+                  if ((unsigned)paddr != (unsigned)iat - (unsigned)base + LMMH(m_pPEHeader->Imagebase))
+                    dlprocptrs[(unsigned)iat - (unsigned)base + LMMH(m_pPEHeader->Imagebase)]
                     = std::string("old_") + name; // add both possibilities
                   // printf("Added symbol %s value %x\n", name.c_str(), paddr);
                   // printf("Also added old_%s value %x\n", name.c_str(), (int)iat - (int)base +
@@ -962,7 +962,7 @@ bool Win32BinaryFile::DisplayDetails(const char* fileName, FILE* f
   return false;
 }
 
-int16_t Win32BinaryFile::win32Read2(int16_t* ps) const
+int Win32BinaryFile::win32Read2(short* ps) const
   {
     unsigned char* p = (unsigned char*)ps;
     // Little endian
@@ -970,7 +970,7 @@ int16_t Win32BinaryFile::win32Read2(int16_t* ps) const
     return n;
   }
 
-int32_t Win32BinaryFile::win32Read4(int32_t* pi) const
+int Win32BinaryFile::win32Read4(int* pi) const
   {
     short* p = (short*)pi;
     int n1 = win32Read2(p);
@@ -980,7 +980,7 @@ int32_t Win32BinaryFile::win32Read4(int32_t* pi) const
   }
 
 // Read 2 bytes from given native address
-int8_t Win32BinaryFile::readNative1(ADDRESS nat)
+int Win32BinaryFile::readNative1(ADDRESS nat)
 {
   PSectionInfo si = GetSectionInfoByAddr(nat);
   if (si == 0)
@@ -990,7 +990,7 @@ int8_t Win32BinaryFile::readNative1(ADDRESS nat)
 }
 
 // Read 2 bytes from given native address
-int16_t Win32BinaryFile::readNative2(ADDRESS nat)
+int Win32BinaryFile::readNative2(ADDRESS nat)
 {
   PSectionInfo si = GetSectionInfoByAddr(nat);
   if (si == 0) return 0;
@@ -1000,7 +1000,7 @@ int16_t Win32BinaryFile::readNative2(ADDRESS nat)
 }
 
 // Read 4 bytes from given native address
-int32_t Win32BinaryFile::readNative4(ADDRESS nat)
+int Win32BinaryFile::readNative4(ADDRESS nat)
 {
   PSectionInfo si = GetSectionInfoByAddr(nat);
   if (si == 0) return 0;
@@ -1258,7 +1258,7 @@ DWord Win32BinaryFile::getDelta()
   // Stupid function anyway: delta depends on section
   // This should work for the header only
   //	return (DWord)base - LMMH(m_pPEHeader->Imagebase);
-  return (*reinterpret_cast<DWord *>(base) - *reinterpret_cast<DWord *>(m_pPEHeader->Imagebase));
+  return (DWord)base - (DWord)m_pPEHeader->Imagebase;
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile derived concrete object. After this object is

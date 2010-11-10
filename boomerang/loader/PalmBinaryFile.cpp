@@ -81,7 +81,7 @@ bool PalmBinaryFile::RealLoad(const char* sName)
   memset(m_pImage, size, 0);
 
   fseek(fp, 0, SEEK_SET);
-  if (fread(m_pImage, 1, size, fp) != (unsigned int)size)
+  if (fread(m_pImage, 1, size, fp) != (unsigned)size)
     {
       fprintf(stderr, "Error reading binary file %s\n", sName);
       return false;
@@ -132,7 +132,7 @@ bool PalmBinaryFile::RealLoad(const char* sName)
       off = UINT4(p);
       p += 4;
       m_pSections[i].uNativeAddr = off;
-      m_pSections[i].uHostAddr = off + *reinterpret_cast<ADDRESS *>(m_pImage);
+      m_pSections[i].uHostAddr = off + (ADDRESS)m_pImage;
 
       // Guess the length
       if (i > 0)
@@ -286,7 +286,7 @@ bool PalmBinaryFile::RealLoad(const char* sName)
 //p-(unsigned char*)pData->uHostAddr, pData->uSectionSize);
 
   // Replace the data pointer and size with the uncompressed versions
-  pData->uHostAddr = *reinterpret_cast<ADDRESS *>(m_pData);
+  pData->uHostAddr = (ADDRESS)m_pData;
   pData->uSectionSize = sizeData;
   // May as well make the native address zero; certainly the offset in the
   // file is no longer appropriate (and is confusing)
@@ -498,7 +498,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
     {
       // We have the code warrior first jump. Get the addil operand
       int addilOp = (startCode[5] << 16) + startCode[6];
-      SWord* startupCode = (SWord*)((intptr_t)(startCode) + 10 + addilOp);
+      SWord* startupCode = (SWord*)((int)startCode + 10 + addilOp);
       // Now check the next 60 SWords for the call to PilotMain
       res = findPattern(startupCode, CWCallMain,
                         sizeof(CWCallMain) / sizeof(SWord), 60);
@@ -507,7 +507,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
           // Get the addil operand
           addilOp = (res[5] << 16) + res[6];
           // That operand plus the address of that operand is PilotMain
-          return *reinterpret_cast<ADDRESS *>(res) + 10 + addilOp - delta;
+          return (ADDRESS)res + 10 + addilOp - delta;
         }
       else
         {
@@ -522,7 +522,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
     {
       // Get the operand to the bsr
       SWord bsrOp = res[7];
-      return *reinterpret_cast<ADDRESS *>(res) + 14 + bsrOp - delta;
+      return (ADDRESS)res + 14 + bsrOp - delta;
     }
 
   fprintf(stderr,"Cannot find call to PilotMain\n");

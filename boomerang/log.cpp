@@ -72,7 +72,7 @@ Log &Log::operator<<(LocationSet *l)
   return *this;
 }
 
-Log &Log::operator<<(intptr_t i)
+Log &Log::operator<<(int i)
 {
   std::ostringstream st;
   st << std::dec << i;

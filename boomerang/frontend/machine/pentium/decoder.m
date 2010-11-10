@@ -23,7 +23,6 @@
  *				that had 8 bit instead of 32 bit modrm sizes
  * 24 Oct 03 - Mike: Fixed DIS_IDXP1: did not have +32 in macro
  * 02 Sep 05 - Mike: POP.Evod/w take Eaddr now, not Mem
- * 09 Nov 19 - Markus: Make it compile with 64-bits.
 */
 
 #include <assert.h>
@@ -99,7 +98,7 @@ void PentiumDecoder::unused(int x)
  * RETURNS:		   a DecodeResult structure containing all the information gathered during decoding
  *============================================================================*/
 static DecodeResult result;
-DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, intptr_t delta)
+DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, int delta)
 {
 	ADDRESS hostPC = pc + delta;
 
@@ -147,13 +146,13 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, intptr_t delta)
 	 * Unconditional branches
 	 */
 	| JMP.Jvod(relocd) [name] =>
-		unused((intptr_t) name);
+		unused((int) name);
 		unconditionalJump(name, 5, relocd, delta, pc, stmts, result);
 	| JMP.Jvow(relocd) [name] =>
-		unused((intptr_t) name);
+		unused((int) name);
 		unconditionalJump(name, 3, relocd, delta, pc, stmts, result);
 	| JMP.Jb(relocd) [name] =>
-		unused((intptr_t) name);
+		unused((int) name);
 		unconditionalJump(name, 2, relocd, delta, pc, stmts, result);
 
 	/*
@@ -2145,7 +2144,7 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, intptr_t delta)
 Exp* PentiumDecoder::dis_Mem(ADDRESS pc)
 {
 	Exp* expr = NULL;
-	lastDwordLc = (uintptr_t)-1;
+	lastDwordLc = (unsigned)-1;
 
 	match pc to 
 	| Abs32 (a) =>
@@ -2281,7 +2280,7 @@ bool PentiumDecoder::isFuncPrologue(ADDRESS hostPC)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-Byte PentiumDecoder::getByte (unsigned int lc)
+Byte PentiumDecoder::getByte (unsigned lc)
 /* getByte - returns next byte from image pointed to by lc.	 */
 {
 	return *(Byte *)lc;
@@ -2293,7 +2292,7 @@ Byte PentiumDecoder::getByte (unsigned int lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-SWord PentiumDecoder::getWord (unsigned int lc)
+SWord PentiumDecoder::getWord (unsigned lc)
 /* get2Bytes - returns next 2-Byte from image pointed to by lc.	 */
 {
 	return (SWord)(*(Byte *)lc + (*(Byte *)(lc+1) << 8));
@@ -2305,7 +2304,7 @@ SWord PentiumDecoder::getWord (unsigned int lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-DWord PentiumDecoder::getDword (unsigned int lc)
+DWord PentiumDecoder::getDword (unsigned lc)
 /* get4Bytes - returns the next 4-Byte word from image pointed to by lc. */
 {
 	lastDwordLc = lc - prog->getTextDelta();
@@ -2326,7 +2325,7 @@ PentiumDecoder::PentiumDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PentiumDecoder::decodeAssemblyInstruction(ADDRESS, intptr_t)
+int PentiumDecoder::decodeAssemblyInstruction(unsigned, int)
 { return 0; }
 
 /*==============================================================================

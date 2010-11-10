@@ -35,11 +35,11 @@
 // Given a little endian value x, load its value assuming little endian order
 // Note: must be able to take address of x
 // Note: Unlike the LH macro in BinaryFile.h, the parameter is not a pointer
-#define LMMH(x) ((uintptr_t)((Byte *)(&x))[0] + ((uintptr_t)((Byte *)(&x))[1] << 8) + \
-	((uintptr_t)((Byte *)(&x))[2] << 16) + ((uintptr_t)((Byte *)(&x))[3] << 24))
+#define LMMH(x) ((unsigned)((Byte *)(&x))[0] + ((unsigned)((Byte *)(&x))[1] << 8) + \
+	((unsigned)((Byte *)(&x))[2] << 16) + ((unsigned)((Byte *)(&x))[3] << 24))
 // With this one, x is a pointer to unsigned
-#define LMMH2(x) ((uintptr_t)((Byte *)(x))[0] + ((uintptr_t)((Byte *)(x))[1] << 8) + \
-	((uintptr_t)((Byte *)(x))[2] << 16) + ((uintptr_t)((Byte *)(x))[3] << 24))
+#define LMMH2(x) ((unsigned)((Byte *)(x))[0] + ((unsigned)((Byte *)(x))[1] << 8) + \
+	((unsigned)((Byte *)(x))[2] << 16) + ((unsigned)((Byte *)(x))[3] << 24))
 
 typedef struct
   {				/* exe file header, just the signature really */
@@ -205,14 +205,14 @@ class Win32BinaryFile : public BinaryFile
 
   protected:
 
-    int16_t			win32Read2(short *ps) const; // Read 2 bytes from native addr
-    int32_t			win32Read4(int *pi) const;	 // Read 4 bytes from native addr
+    int			win32Read2(short *ps) const; // Read 2 bytes from native addr
+    int			win32Read4(int *pi) const;	 // Read 4 bytes from native addr
 
   public:
 
-    virtual int8_t			readNative1(ADDRESS a);         // Read 1 bytes from native addr
-    virtual int16_t			readNative2(ADDRESS a);			// Read 2 bytes from native addr
-    virtual int32_t		readNative4(ADDRESS a);			// Read 4 bytes from native addr
+    virtual int			readNative1(ADDRESS a);         // Read 1 bytes from native addr
+    virtual int			readNative2(ADDRESS a);			// Read 2 bytes from native addr
+    virtual int			readNative4(ADDRESS a);			// Read 4 bytes from native addr
     virtual QWord		readNative8(ADDRESS a);		// Read 8 bytes from native addr
     virtual float		readNativeFloat4(ADDRESS a);	// Read 4 bytes as float
     virtual double		readNativeFloat8(ADDRESS a); // Read 8 bytes as float

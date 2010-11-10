@@ -15,8 +15,7 @@
  * $Revision: 1.3 $	// 1.2.2.2
  *
  * 10 Mar 05 - Mike: Created.
- * 09 Nov 10 - Markus: Added support for building on 64-bits hosts.
- */
+*/
 
 #include <assert.h>
 
@@ -52,7 +51,7 @@ void ST20Decoder::unused(int x)
  * RETURNS:		   a DecodeResult structure containing all the information gathered during decoding
  *============================================================================*/
 static	DecodeResult result;
-DecodeResult& ST20Decoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
+DecodeResult& ST20Decoder::decodeInstruction (ADDRESS pc, int delta) {
 	result.reset();							// Clear the result structure (numBytes = 0 etc)
 	ADDRESS hostPC = pc + delta;
 	std::list<Statement*>* stmts = NULL; 	// The actual list of instantiated Statements
@@ -303,7 +302,7 @@ DecodeResult& ST20Decoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-Byte ST20Decoder::getByte (unsigned int lc)
+Byte ST20Decoder::getByte (unsigned lc)
 /* getByte - returns next byte from image pointed to by lc.	 */
 {
 	return *(Byte *)lc;
@@ -315,7 +314,7 @@ Byte ST20Decoder::getByte (unsigned int lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-SWord ST20Decoder::getWord (unsigned int lc)
+SWord ST20Decoder::getWord (unsigned lc)
 /* get2Bytes - returns next 2-Byte from image pointed to by lc.	 */
 {
 	return (SWord)(*(Byte *)lc + (*(Byte *)(lc+1) << 8));
@@ -327,7 +326,7 @@ SWord ST20Decoder::getWord (unsigned int lc)
  * PARAMETERS:		lc - address at which to decode the double
  * RETURNS:			the decoded double
  *============================================================================*/
-DWord ST20Decoder::getDword (unsigned int lc)
+DWord ST20Decoder::getDword (unsigned lc)
 /* get4Bytes - returns the next 4-Byte word from image pointed to by lc. */
 {
 	return (DWord)(*(Byte *)lc + (*(Byte *)(lc+1) << 8) +
@@ -348,6 +347,6 @@ ST20Decoder::ST20Decoder() : NJMCDecoder(prog)
 }
 
 // For now...
-int ST20Decoder::decodeAssemblyInstruction(ADDRESS, intptr_t)
+int ST20Decoder::decodeAssemblyInstruction(unsigned, int)
 { return 0; }
 

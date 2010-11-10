@@ -478,7 +478,7 @@ bool CallingConvention::Win32Signature::qualified(UserProc *p, Signature &candid
         LOG << "got r[28] = r[28] + 4\n";
     }
   if (VERBOSE)
-    LOG << "qualified: " << (intptr_t)(gotcorrectret1 && gotcorrectret2) << "\n";
+    LOG << "qualified: " << (gotcorrectret1 && gotcorrectret2) << "\n";
   return gotcorrectret1 && gotcorrectret2;
 }
 

@@ -63,9 +63,9 @@ class IntelCoffFile : public BinaryFile
     virtual bool IsRelocationAt(ADDRESS uNative);
     virtual std::map<ADDRESS, std::string> &getSymbols();
 
-    virtual int32_t readNative4(ADDRESS a);
-    virtual int16_t readNative2(ADDRESS a);
-    virtual int8_t readNative1(ADDRESS a);
+    virtual int readNative4(ADDRESS a);
+    virtual int readNative2(ADDRESS a);
+    virtual int readNative1(ADDRESS a);
 
   private:
     //
@@ -79,7 +79,7 @@ class IntelCoffFile : public BinaryFile
 
     PSectionInfo AddSection(SectionInfo*);
     unsigned char* getAddrPtr(ADDRESS a, ADDRESS range);
-    int8_t readNative(ADDRESS a, unsigned short n);
+    int readNative(ADDRESS a, unsigned short n);
 
     SymTab m_Symbols;
   };

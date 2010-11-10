@@ -16,7 +16,6 @@
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  * 26/Sep/05 - Mike: Added Xsab_, Xsax_; DIS_INDEX uses RAZ not RA now; A2c_ -> Ac_ (does single as well as double prec)
- * 09 Nov 10 - Markus: 64-bit compat host.
  **/
 
 /*==============================================================================
@@ -54,8 +53,8 @@ Exp*	crBit(int bitNum);	// Get an expression for a CR bit access
 #define DIS_D		(new Const(d))
 #define DIS_NZRA	(dis_Reg(ra))
 #define DIS_NZRB	(dis_Reg(rb))
-#define DIS_ADDR	(new Const(static_cast<ADDRESS>(addr)))
-#define DIS_RELADDR	(new Const(static_cast<ADDRESS>(reladdr - delta)))
+#define DIS_ADDR	(new Const(addr))
+#define DIS_RELADDR	(new Const(reladdr - delta))
 #define DIS_CRBD	(crBit(crbD))
 #define DIS_CRBA	(crBit(crbA))
 #define DIS_CRBB	(crBit(crbB))
@@ -108,7 +107,7 @@ void unused(char* x) {}
  * RETURNS:		   a DecodeResult structure containing all the information
  *					 gathered during decoding
  *============================================================================*/
-DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) { 
+DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) { 
 	static DecodeResult result;
 	ADDRESS hostPC = pc+delta;
 
@@ -378,7 +377,7 @@ DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, intptr_t delta) {
  * PARAMETERS:		r - register (0-31)
  * RETURNS:			the expression representing the register
  *============================================================================*/
-Exp* PPCDecoder::dis_Reg(unsigned int r)
+Exp* PPCDecoder::dis_Reg(unsigned r)
 {
 	return Location::regOf(r);
 }
@@ -389,7 +388,7 @@ Exp* PPCDecoder::dis_Reg(unsigned int r)
  * PARAMETERS:		r - register (0-31)
  * RETURNS:			the expression representing the register
  *============================================================================*/
-Exp* PPCDecoder::dis_RAmbz(unsigned int r)
+Exp* PPCDecoder::dis_RAmbz(unsigned r)
 {
 	if (r == 0)
 		return new Const(0);
@@ -441,7 +440,7 @@ PPCDecoder::PPCDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PPCDecoder::decodeAssemblyInstruction(ADDRESS, intptr_t)
+int PPCDecoder::decodeAssemblyInstruction(unsigned, int)
 { return 0; }
 
 // Get an expression for a CR bit. For example, if bitNum is 6, return r65@[2:2]
