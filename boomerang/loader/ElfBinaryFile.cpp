@@ -101,7 +101,7 @@ extern "C" { // So we can call this with dlopen()
 // Return true for a good load
 
 bool ElfBinaryFile::RealLoad(const char *sName) {
-    int i;
+    intptr_t i;
 
     if (m_bArchive) {
         // This is a member of an archive. Should not be using this function at all
@@ -138,11 +138,11 @@ bool ElfBinaryFile::RealLoad(const char *sName) {
         fprintf(stderr, "Incorrect header: %02X %02X %02X %02X\n",
                 pHeader->e_ident[0], pHeader->e_ident[1], pHeader->e_ident[2],
                 pHeader->e_ident[3]);
-        return 0;
+        return false;
     }
     if ((pHeader->endianness != 1) && (pHeader->endianness != 2)) {
         fprintf(stderr, "Unknown endianness %02X\n", pHeader->endianness);
-        return 0;
+        return false;
     }
     // Needed for elfRead4 to work:
     m_elfEndianness = pHeader->endianness - 1;
@@ -247,7 +247,7 @@ bool ElfBinaryFile::RealLoad(const char *sName) {
     // Add symbol info. Note that some symbols will be in the main table only, and others in the dynamic table only.
     // So the best idea is to add symbols for all sections of the appropriate type
     for (i = 1; i < m_iNumSections; ++i) {
-        unsigned uType = m_pSections[i].uType;
+        uintptr_t uType = m_pSections[i].uType;
         if (uType == SHT_SYMTAB || uType == SHT_DYNSYM)
             AddSyms(i);
 #if 0	// Ick; bad logic. Done with fake library function pointers now (-2 .. -1024)
@@ -319,7 +319,7 @@ ADDRESS ElfBinaryFile::findRelPltOffset(int i, ADDRESS addrRelPlt, int sizeRelPl
     do {
         // Each entry is sizeRelPlt bytes, and will contain the offset, then the info (addend optionally follows)
         int* pEntry = (int*) (addrRelPlt + (curr * sizeRelPlt));
-        int entry = elfRead4(pEntry + 1); // Read pEntry[1]
+        int32_t entry = elfRead4(pEntry + 1); // Read pEntry[1]
         int sym = entry >> 8; // The symbol index is in the top 24 bits (Elf32 only)
         if (sym == i) {
             // Found! Now we want the native address of the associated PLT entry.
@@ -336,7 +336,7 @@ ADDRESS ElfBinaryFile::findRelPltOffset(int i, ADDRESS addrRelPlt, int sizeRelPl
 // Add appropriate symbols to the symbol table.  secIndex is the section index of the symbol table.
 
 void ElfBinaryFile::AddSyms(int secIndex) {
-    int e_type = elfRead2(&((Elf32_Ehdr*) m_pImage)->e_type);
+    intptr_t e_type = elfRead2(&((Elf32_Ehdr*) m_pImage)->e_type);
     PSectionInfo pSect = &m_pSections[secIndex];
     // Calc number of symbols
     int nSyms = pSect->uSectionSize / pSect->uSectionEntrySize;
@@ -360,8 +360,9 @@ void ElfBinaryFile::AddSyms(int secIndex) {
     // Number of entries in the PLT:
     // int max_i_for_hack = siPlt ? (int)siPlt->uSectionSize / 0x10 : 0;
     // Index 0 is a dummy entry
-    for (int i = 1; i < nSyms; i++) {
-        ADDRESS val = (ADDRESS) elfRead4((int*) & m_pSym[i].st_value);
+    for (intptr_t i = 1; i < nSyms; i++) {
+    	printf("\n 0%x\n\r", pSect->uHostAddr);
+        ADDRESS val = (ADDRESS) elfRead4((int32_t *) &m_pSym[i].st_value);
         int name = elfRead4(&m_pSym[i].st_name);
         if (name == 0) /* Silly symbols with no names */ continue;
         std::string str(GetStrPtr(strIdx, name));
@@ -929,19 +930,19 @@ int16_t ElfBinaryFile::elfRead2(int16_t* ps) const {
     unsigned char* p = (unsigned char*) ps;
     if (m_elfEndianness) {
         // Big endian
-        return (int) ((p[0] << 8) + p[1]);
+        return (int16_t) ((p[0] << 8) + p[1]);
     } else {
         // Little endian
-        return (int) (p[0] + (p[1] << 8));
+        return (int16_t) (p[0] + (p[1] << 8));
     }
 }
 
 int32_t ElfBinaryFile::elfRead4(int32_t* pi) const {
     short* p = (short*) pi;
     if (m_elfEndianness) {
-        return (int) ((elfRead2(p) << 16) + elfRead2(p + 1));
+        return (int32_t) ((elfRead2(p) << 16) + elfRead2(p + 1));
     } else
-        return (int) (elfRead2(p) + (elfRead2(p + 1) << 16));
+        return (int32_t) (elfRead2(p) + (elfRead2(p + 1) << 16));
 }
 
 void ElfBinaryFile::elfWrite4(int32_t* pi, int val) {
