@@ -69,18 +69,18 @@ Boomerang *Boomerang::boomerang = NULL;
  * - The output directory is "./output/"
  */
 Boomerang::Boomerang() : logger(NULL), vFlag(false), printRtl(false),
-    noBranchSimplify(false), noRemoveNull(false), noLocals(false),
-    noRemoveLabels(false), noDataflow(false), noDecompile(false), stopBeforeDecompile(false),
-    traceDecoder(false), dotFile(NULL), numToPropagate(-1),
-    noPromote(false), propOnlyToAll(false), debugGen(false),
-    maxMemDepth(99), debugSwitch(false), noParameterNames(false), debugLiveness(false),
-    stopAtDebugPoints(false), debugTA(false), decodeMain(true), printAST(false), dumpXML(false),
-    noRemoveReturns(false), debugDecoder(false), decodeThruIndCall(false), ofsIndCallReport(NULL),
-    noDecodeChildren(false), debugProof(false), debugUnused(false),
-    loadBeforeDecompile(false), saveBeforeDecompile(false),
-    noProve(false), noChangeSignatures(false), conTypeAnalysis(false), dfaTypeAnalysis(true),
-    propMaxDepth(3), generateCallGraph(false), generateSymbols(false), noGlobals(false), assumeABI(false),
-    experimental(false), minsToStopAfter(0)
+  noBranchSimplify(false), noRemoveNull(false), noLocals(false),
+  noRemoveLabels(false), noDataflow(false), noDecompile(false), stopBeforeDecompile(false),
+  traceDecoder(false), dotFile(NULL), numToPropagate(-1),
+  noPromote(false), propOnlyToAll(false), debugGen(false),
+  maxMemDepth(99), debugSwitch(false), noParameterNames(false), debugLiveness(false),
+  stopAtDebugPoints(false), debugTA(false), decodeMain(true), printAST(false), dumpXML(false),
+  noRemoveReturns(false), debugDecoder(false), decodeThruIndCall(false), ofsIndCallReport(NULL),
+  noDecodeChildren(false), debugProof(false), debugUnused(false),
+  loadBeforeDecompile(false), saveBeforeDecompile(false),
+  noProve(false), noChangeSignatures(false), conTypeAnalysis(false), dfaTypeAnalysis(true),
+  propMaxDepth(3), generateCallGraph(false), generateSymbols(false), noGlobals(false), assumeABI(false),
+  experimental(false), minsToStopAfter(0)
 {
   progPath = "./";
   outputPath = "./output/";
@@ -230,7 +230,7 @@ bool createDirectory(std::string dir)
 {
   std::string remainder(dir);
   std::string path;
-  unsigned i;
+  uintptr_t i;
   while ((i = remainder.find('/')) != std::string::npos)
     {
       path += remainder.substr(0, i+1);
@@ -265,7 +265,7 @@ bool createDirectory(std::string dir)
 void Cluster::printTree(std::ostream &out)
 {
   out << "\t\t" << name << "\n";
-  for (unsigned i = 0; i < children.size(); i++)
+  for (uintptr_t i = 0; i < children.size(); i++)
     children[i]->printTree(out);
 }
 
@@ -1195,7 +1195,7 @@ Prog *Boomerang::loadAndDecode(const char *fname, const char *pname)
     }
   fe->readLibraryCatalog();		// Needed before readSymbolFile()
 
-  for (unsigned i = 0; i < symbolFiles.size(); i++)
+  for (uintptr_t i = 0; i < symbolFiles.size(); i++)
     {
       std::cout << "reading symbol file " << symbolFiles[i].c_str() << "\n";
       prog->readSymbolFile(symbolFiles[i].c_str());
@@ -1206,14 +1206,15 @@ Prog *Boomerang::loadAndDecode(const char *fname, const char *pname)
     objcDecode(objcmodules, prog);
 
   // Entry points from -e (and -E) switch(es)
-  for (unsigned i = 0; i < entrypoints.size(); i++)
+  for (uintptr_t i = 0; i < entrypoints.size(); i++)
     {
       std::cout<< "decoding specified entrypoint " << std::hex << entrypoints[i] << "\n";
       prog->decodeEntryPoint(entrypoints[i]);
     }
 
   if (entrypoints.size() == 0)
-    {		// no -e or -E given
+    {
+      // no -e or -E given
       if (decodeMain)
         std::cout << "decoding entry point...\n";
       fe->decode(prog, decodeMain, pname);
@@ -1358,7 +1359,7 @@ int Boomerang::decompile(const char *fname, const char *pname)
   std::cout << "output written to " << outputPath << prog->getRootCluster()->getName() << "\n";
 
   if (Boomerang::get()->ofsIndCallReport)
-      ofsIndCallReport->close();
+    ofsIndCallReport->close();
 
   time_t end;
   time(&end);
@@ -1418,10 +1419,10 @@ void Boomerang::alert_decompile_debug_point(UserProc *p, const char *description
         {
           // This is a mini command line debugger.  Feel free to expand it.
           for (std::set<Statement*>::iterator it = watches.begin(); it != watches.end(); it++)
-              {
-                (*it)->print(std::cout);
-                std::cout << "\n";
-              }
+            {
+              (*it)->print(std::cout);
+              std::cout << "\n";
+            }
           std::cout << " <press enter to continue> \n";
           char line[1024];
           while (1)
@@ -1464,7 +1465,7 @@ void Boomerang::alert_decompile_debug_point(UserProc *p, const char *description
         }
     }
   for (std::set<Watcher*>::iterator it = watchers.begin(); it != watchers.end(); it++)
-      (*it)->alert_decompile_debug_point(p, description);
+    (*it)->alert_decompile_debug_point(p, description);
 }
 
 const char* Boomerang::getVersionStr()
