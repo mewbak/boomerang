@@ -231,8 +231,8 @@ void Constraints::substIntoEquates(ConstraintMap& in)
                         {
                           if (VERBOSE || DEBUG_TA)
                             LOG << "Constraint failure: " << *ll << " constrained to be " <<
-                            ((TypeVal*)val)->getType()->getCtype() << " and " <<
-                            ((TypeVal*)ff->second)->getType()->getCtype() << "\n";
+                                ((TypeVal*)val)->getType()->getCtype() << " and " <<
+                                ((TypeVal*)ff->second)->getType()->getCtype() << "\n";
                           return;
                         }
                     }
@@ -558,7 +558,8 @@ bool Constraints::unify(Exp* x, Exp* y, ConstraintMap& extra)
   else if (xtype->isSize())
     {
       if (ytype->getSize() == 0)
-        {   // Assume size=0 means unknown
+        {
+          // Assume size=0 means unknown
           LOG << "true\n";
           return true;
         }
@@ -571,7 +572,8 @@ bool Constraints::unify(Exp* x, Exp* y, ConstraintMap& extra)
   else if (ytype->isSize())
     {
       if (xtype->getSize() == 0)
-        {   // Assume size=0 means unknown
+        {
+          // Assume size=0 means unknown
           LOG << "true\n";
           return true;
         }

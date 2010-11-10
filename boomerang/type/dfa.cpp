@@ -42,7 +42,8 @@ static int nextUnionNumber = 0;
 
 #ifndef max
 int max(int a, int b)
-{		// Faster to write than to find the #include for
+{
+  // Faster to write than to find the #include for
   return a>b ? a : b;
 }
 #endif
@@ -52,14 +53,14 @@ int max(int a, int b)
 // m[idx*K1 + K2]; leave idx wild
 static Exp* scaledArrayPat = Location::memOf(
                                new Binary(opPlus,
-                                          new Binary(opMult,
-                                                     new Terminal(opWild),
-                                                     new Terminal(opWildIntConst)),
-                                          new Terminal(opWildIntConst)));
+                                   new Binary(opMult,
+                                       new Terminal(opWild),
+                                       new Terminal(opWildIntConst)),
+                                   new Terminal(opWildIntConst)));
 // idx + K; leave idx wild
 static Exp* unscaledArrayPat = new Binary(opPlus,
-                               new Terminal(opWild),
-                               new Terminal(opWildIntConst));
+    new Terminal(opWild),
+    new Terminal(opWildIntConst));
 
 // The purpose of this funciton and others like it is to establish safe static roots for garbage collection purposes
 // This is particularly important for OS X where it is known that the collector can't see global variables, but it is
@@ -463,7 +464,8 @@ Type* IntegerType::meetWith(Type* other, bool& ch, bool bHighestPtr)
   if (other->resolvesToSize())
     {
       if (size == 0)
-        {		// Doubt this will ever happen
+        {
+          // Doubt this will ever happen
           size = ((SizeType*)other)->getSize();
           return this;
         }
@@ -825,7 +827,7 @@ Type* Type::createUnion(Type* other, bool& ch, bool bHighestPtr /* = false */)
   ch = true;
 #if PRINT_UNION
   std::cerr << "  " << ++unionCount << " Created union from " << getCtype() << " and " << other->getCtype() <<
-  ", result is " << u->getCtype() << "\n";
+            ", result is " << u->getCtype() << "\n";
 #endif
   return u;
 }
@@ -1418,8 +1420,8 @@ void Unary::descendType(Type* parentType, bool& ch, Statement* s)
           unsigned stride =  ((Const*)((Binary*)leftOfPlus)->getSubExp2())->getInt();
           if (DEBUG_TA && stride*8 != parentType->getSize())
             LOG << "type WARNING: apparent array reference at " << this << " has stride " << stride*8 <<
-            " bits, but parent type " << parentType->getCtype() << " has size " <<
-            parentType->getSize() << "\n";
+                " bits, but parent type " << parentType->getCtype() << " has size " <<
+                parentType->getSize() << "\n";
           // The index is integer type
           Exp* x = ((Binary*)leftOfPlus)->getSubExp1();
           x->descendType(new IntegerType(parentType->getSize(), 0), ch, s);
@@ -1523,7 +1525,8 @@ bool Signature::dfaTypeAnalysis(Cfg* cfg)
       // Parameters should be defined in an implicit assignment
       Statement* def = cfg->findImplicitParamAssign(*it);
       if (def)
-        { 			// But sometimes they are not used, and hence have no implicit definition
+        {
+          // But sometimes they are not used, and hence have no implicit definition
           bool thisCh = false;
           def->meetWithFor((*it)->getType(), (*it)->getExp(), thisCh);
           if (thisCh)
