@@ -63,27 +63,27 @@
  * RETURNS:			<nothing>
  *============================================================================*/
 BasicBlock::BasicBlock()
-    :
-    m_DFTfirst(0), m_DFTlast(0),
-    m_structType(NONE), m_loopCondType(NONE),
-    m_loopHead(NULL), m_caseHead(NULL),
-    m_condFollow(NULL), m_loopFollow(NULL),
-    m_latchNode(NULL),
-    m_nodeType(INVALID),
-    m_pRtls(NULL),
-    m_iLabelNum(0),
-    m_labelneeded(false),
-    m_bIncomplete(true),
-    m_bJumpReqd(false),
-    m_iNumInEdges(0),
-    m_iNumOutEdges(0),
-    m_iTraversed(false),
+  :
+  m_DFTfirst(0), m_DFTlast(0),
+  m_structType(NONE), m_loopCondType(NONE),
+  m_loopHead(NULL), m_caseHead(NULL),
+  m_condFollow(NULL), m_loopFollow(NULL),
+  m_latchNode(NULL),
+  m_nodeType(INVALID),
+  m_pRtls(NULL),
+  m_iLabelNum(0),
+  m_labelneeded(false),
+  m_bIncomplete(true),
+  m_bJumpReqd(false),
+  m_iNumInEdges(0),
+  m_iNumOutEdges(0),
+  m_iTraversed(false),
 // From Doug's code
-    ord(-1), revOrd(-1), inEdgesVisited(0), numForwardInEdges(-1), traversed(UNTRAVERSED), hllLabel(false), indentLevel(0),
-    immPDom(NULL), loopHead(NULL), caseHead(NULL), condFollow(NULL), loopFollow(NULL), latchNode(NULL), sType(Seq),
-    usType(Structured),
+  ord(-1), revOrd(-1), inEdgesVisited(0), numForwardInEdges(-1), traversed(UNTRAVERSED), hllLabel(false), indentLevel(0),
+  immPDom(NULL), loopHead(NULL), caseHead(NULL), condFollow(NULL), loopFollow(NULL), latchNode(NULL), sType(Seq),
+  usType(Structured),
 // Others
-    overlappedRegProcessingDone(false)
+  overlappedRegProcessingDone(false)
 {}
 
 /*==============================================================================
@@ -119,7 +119,7 @@ BasicBlock::~BasicBlock()
  * RETURNS:			<nothing>
  *============================================================================*/
 BasicBlock::BasicBlock(const BasicBlock& bb)
-    :	m_DFTfirst(0), m_DFTlast(0),
+  :	m_DFTfirst(0), m_DFTlast(0),
     m_structType(bb.m_structType), m_loopCondType(bb.m_loopCondType),
     m_loopHead(bb.m_loopHead), m_caseHead(bb.m_caseHead),
     m_condFollow(bb.m_condFollow), m_loopFollow(bb.m_loopFollow),
@@ -153,7 +153,7 @@ BasicBlock::BasicBlock(const BasicBlock& bb)
  * RETURNS:			<nothing>
  *============================================================================*/
 BasicBlock::BasicBlock(std::list<RTL*>* pRtls, BBTYPE bbType, int iNumOutEdges)
-    :	m_DFTfirst(0), m_DFTlast(0),
+  :	m_DFTfirst(0), m_DFTlast(0),
     m_structType(NONE), m_loopCondType(NONE),
     m_loopHead(NULL), m_caseHead(NULL),
     m_condFollow(NULL), m_loopFollow(NULL),
@@ -362,7 +362,8 @@ void BasicBlock::print(std::ostream& os, bool html)
     os << std::hex << m_OutEdges[i]->getLowAddr() << " ";
   os << std::dec << "\n";
   if (m_pRtls)
-    {					// Can be zero if e.g. INVALID
+    {
+      // Can be zero if e.g. INVALID
       if (html)
         os << "<table>\n";
       std::list<RTL*>::iterator rit;
@@ -1032,8 +1033,8 @@ void BasicBlock::simplify()
           if (VERBOSE)
             {
               LOG << "turning TWOWAY into FALL: "
-              << m_OutEdges[0]->getLowAddr() << " "
-              << m_OutEdges[1]->getLowAddr() << "\n";
+                  << m_OutEdges[0]->getLowAddr() << " "
+                  << m_OutEdges[1]->getLowAddr() << "\n";
             }
           PBB redundant = m_OutEdges[0];
           m_OutEdges[0] = m_OutEdges[1];
@@ -1067,8 +1068,8 @@ void BasicBlock::simplify()
           if (VERBOSE)
             {
               LOG << "turning TWOWAY into ONEWAY: "
-              << m_OutEdges[0]->getLowAddr() << " "
-              << m_OutEdges[1]->getLowAddr() << "\n";
+                  << m_OutEdges[0]->getLowAddr() << " "
+                  << m_OutEdges[1]->getLowAddr() << "\n";
             }
           PBB redundant = m_OutEdges[1];
           m_OutEdges.resize(1);
@@ -1458,7 +1459,8 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
             }
         }
       else
-        { // case header
+        {
+          // case header
           // TODO: linearly emitting each branch of the switch does not result
           //       in optimal fall-through.
           // generate code for each out branch
@@ -1945,7 +1947,7 @@ void BasicBlock::getLiveOut(LocationSet &liveout, LocationSet& phiLocs)
           phiLocs.insert(r);
           if (DEBUG_LIVENESS)
             LOG << " ## Liveness: adding " << r << " due to ref to phi " << *it << " in BB at " << getLowAddr() <<
-            "\n";
+                "\n";
         }
     }
 }
@@ -1975,40 +1977,40 @@ int BasicBlock::whichPred(PBB pred)
 // With array processing, we get a new form, call it form 'a' (don't confuse with form 'A'):
 // Pattern: <base>{}[<index>]{} where <index> could be <var> - <Kmin>
 static Exp* forma = new RefExp(
-                      new Binary(opArrayIndex,
-                                 new RefExp(
-                                   new Terminal(opWild),
-                                   (Statement*)-1),
-                                 new Terminal(opWild)),
-                      (Statement*)-1);
+  new Binary(opArrayIndex,
+             new RefExp(
+               new Terminal(opWild),
+               (Statement*)-1),
+             new Terminal(opWild)),
+  (Statement*)-1);
 
 // Pattern: m[<expr> * 4 + T ]
 static Exp* formA	= Location::memOf(
                       new Binary(opPlus,
                                  new Binary(opMult,
-                                            new Terminal(opWild),
-                                            new Const(4)),
+                                     new Terminal(opWild),
+                                     new Const(4)),
                                  new Terminal(opWildIntConst)));
 
 // With array processing, we get a new form, call it form 'o' (don't confuse with form 'O'):
 // Pattern: <base>{}[<index>]{} where <index> could be <var> - <Kmin>
 // NOT COMPLETED YET!
 static Exp* formo = new RefExp(
-                      new Binary(opArrayIndex,
-                                 new RefExp(
-                                   new Terminal(opWild),
-                                   (Statement*)-1),
-                                 new Terminal(opWild)),
-                      (Statement*)-1);
+  new Binary(opArrayIndex,
+             new RefExp(
+               new Terminal(opWild),
+               (Statement*)-1),
+             new Terminal(opWild)),
+  (Statement*)-1);
 
 // Pattern: m[<expr> * 4 + T ] + T
 static Exp* formO = new Binary(opPlus,
                                Location::memOf(
                                  new Binary(opPlus,
-                                            new Binary(opMult,
-                                                       new Terminal(opWild),
-                                                       new Const(4)),
-                                            new Terminal(opWildIntConst))),
+                                     new Binary(opMult,
+                                         new Terminal(opWild),
+                                         new Const(4)),
+                                     new Terminal(opWildIntConst))),
                                new Terminal(opWildIntConst));
 
 // Pattern: %pc + m[%pc	 + (<expr> * 4) + k]
@@ -2016,32 +2018,33 @@ static Exp* formO = new Binary(opPlus,
 static Exp* formR = new Binary(opPlus,
                                new Terminal(opPC),
                                Location::memOf(new Binary(opPlus,
-                                                          new Terminal(opPC),
-                                                          new Binary(opPlus,
-                                                                     new Binary(opMult,
-                                                                                new Terminal(opWild),
-                                                                                new Const(4)),
-                                                                     new Const(opWildIntConst)))));
+                                   new Terminal(opPC),
+                                   new Binary(opPlus,
+                                       new Binary(opMult,
+                                           new Terminal(opWild),
+                                           new Const(4)),
+                                       new Const(opWildIntConst)))));
 
 // Pattern: %pc + m[%pc + ((<expr> * 4) - k)] - k
 // where k is a smallish constant, e.g. 288 (/usr/bin/vi 2.6, 0c4233c).
 static Exp* formr = new Binary(opPlus,
                                new Terminal(opPC),
                                Location::memOf(new Binary(opPlus,
-                                                          new Terminal(opPC),
-                                                          new Binary(opMinus,
-                                                                     new Binary(opMult,
-                                                                                new Terminal(opWild),
-                                                                                new Const(4)),
-                                                                     new Terminal(opWildIntConst)))));
+                                   new Terminal(opPC),
+                                   new Binary(opMinus,
+                                       new Binary(opMult,
+                                           new Terminal(opWild),
+                                           new Const(4)),
+                                       new Terminal(opWildIntConst)))));
 
 static Exp* hlForms[] =
-  {
-    forma, formA, formo, formO, formR, formr
-  };
+{
+  forma, formA, formo, formO, formR, formr
+};
 static char chForms[] =
-  {  'a',	 'A',	'o',   'O',	  'R',	 'r'
-  };
+{
+  'a',	 'A',	'o',   'O',	  'R',	 'r'
+};
 
 void init_basicblock()
 {
@@ -2060,24 +2063,24 @@ void init_basicblock()
 // Pattern 0: global<wild>[0]
 static Binary* vfc_funcptr = new Binary(opArrayIndex,
                                         new Location(opGlobal,
-                                                     new Terminal(opWildStrConst), NULL),
+                                            new Terminal(opWildStrConst), NULL),
                                         new Const(0));
 
 // Pattern 1: m[ m[ <expr> + K1 ] + K2 ]
 // K1 is vtable offset, K2 is virtual function offset (could come from m[A2], if A2 is in read-only memory
 static Location* vfc_both = Location::memOf(
                               new Binary(opPlus,
-                                         Location::memOf(
-                                           new Binary(opPlus,
-                                                      new Terminal(opWild),
-                                                      new Terminal(opWildIntConst))),
-                                         new Terminal(opWildIntConst)));
+                                  Location::memOf(
+                                    new Binary(opPlus,
+                                        new Terminal(opWild),
+                                        new Terminal(opWildIntConst))),
+                                  new Terminal(opWildIntConst)));
 
 // Pattern 2: m[ m[ <expr> ] + K2]
 static Location* vfc_vto = Location::memOf(
                              new Binary(opPlus,
                                         Location::memOf(
-                                          new Terminal(opWild)),
+                                            new Terminal(opWild)),
                                         new Terminal(opWildIntConst)));
 
 // Pattern 3: m[ m[ <expr> + K1] ]
@@ -2093,9 +2096,9 @@ Location* vfc_none = Location::memOf(
                          new Terminal(opWild)));
 
 static Exp* hlVfc[] =
-  {
-    vfc_funcptr, vfc_both, vfc_vto, vfc_vfo, vfc_none
-  };
+{
+  vfc_funcptr, vfc_both, vfc_vto, vfc_vfo, vfc_none
+};
 
 void findSwParams(char form, Exp* e, Exp*& expr, ADDRESS& T)
 {
@@ -2129,7 +2132,8 @@ void findSwParams(char form, Exp* e, Exp*& expr, ADDRESS& T)
       break;
     }
     case 'O':
-    {		// Form O
+    {
+      // Form O
       // Pattern: m[<expr> * 4 + T ] + T
       T = ((Const*)((Binary*)e)->getSubExp2())->getInt();
       // l = m[<expr> * 4 + T ]:
@@ -2196,7 +2200,8 @@ int BasicBlock::findNumCases()
 {
   std::vector<PBB>::iterator it;
   for (it = m_InEdges.begin(); it != m_InEdges.end(); it++)
-    {		// For each in-edge
+    {
+      // For each in-edge
       if ((*it)->m_nodeType != TWOWAY)							// look for a two-way BB
         continue;												// Ignore all others
       assert((*it)->m_pRtls->size());
@@ -2268,7 +2273,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
               if (seenSet.exists(it->def))
                 {
                   std::cerr << "Real phi loop involving statements " << originalPhi->getNumber() << " and " <<
-                  pi->getNumber() << "\n";
+                            pi->getNumber() << "\n";
                   break;
                 }
               else
@@ -2302,7 +2307,8 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
       for (int i=0; i < n; i++)
         {
           if (*e *= *hlForms[i])
-            {		// *= compare ignores subscripts
+            {
+              // *= compare ignores subscripts
               form = chForms[i];
               if (DEBUG_SWITCH)
                 LOG << "indirect jump matches form " << form << "\n";
@@ -2333,7 +2339,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
                         {
                           if (DEBUG_SWITCH)
                             LOG << "Truncating type A indirect jump array to " << iPtr << " entries "
-                            "due to finding an array entry pointing outside valid code " << uSwitch << " isn't in " << prog->getLimitTextLow() << " .. " << prog->getLimitTextHigh() << "\n";
+                                "due to finding an array entry pointing outside valid code " << uSwitch << " isn't in " << prog->getLimitTextLow() << " .. " << prog->getLimitTextHigh() << "\n";
                           // Found an array that isn't a pointer-to-code. Assume array has ended.
                           swi->iNumTable = iPtr;
                           break;
@@ -2424,7 +2430,8 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
       for (i=0; i < n; i++)
         {
           if (*e *= *hlVfc[i])
-            {			// *= compare ignores subscripts
+            {
+              // *= compare ignores subscripts
               recognised = true;
               if (DEBUG_SWITCH)
                 LOG << "indirect call matches form " << i << "\n";
@@ -2535,7 +2542,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
         }
       if (DEBUG_SWITCH)
         LOG << "form " << i << ": from statement " << lastStmt->getNumber() << " get e = " << lastStmt->getDest() <<
-        ", K1 = " << K1 << ", K2 = " << K2 << ", vtExp = " << vtExp << "\n";
+            ", K1 = " << K1 << ", K2 = " << K2 << ", vtExp = " << vtExp << "\n";
       // The vt expression might not be a constant yet, because of expressions not fully propagated, or because of
       // m[K] in the expression (fixed with the ConstGlobalConverter).  If so, look it up in the defCollector in the
       // call
@@ -2553,7 +2560,7 @@ bool BasicBlock::decodeIndirectJmp(UserProc* proc)
             {
               // A new, undecoded procedure
               if (Boomerang::get()->noDecodeChildren)
-                  return false;
+                return false;
               prog->decodeEntryPoint(pfunc);
               // Since this was not decoded, this is a significant change, and we want to redecode the current
               // function now that the callee has been decoded
@@ -2582,12 +2589,12 @@ void BasicBlock::processSwitch(UserProc* proc)
   SWITCH_INFO* si = lastStmt->getSwitchInfo();
 
   if (Boomerang::get()->debugSwitch)
-      {
-        LOG << "processing switch statement type " << si->chForm << " with table at 0x" << si->uTable << ", ";
-        if (si->iNumTable)
-          LOG << si->iNumTable << " entries, ";
-        LOG << "lo= " << si->iLower << ", hi= " << si->iUpper << "\n";
-      }
+    {
+      LOG << "processing switch statement type " << si->chForm << " with table at 0x" << si->uTable << ", ";
+      if (si->iNumTable)
+        LOG << si->iNumTable << " entries, ";
+      LOG << "lo= " << si->iLower << ", hi= " << si->iUpper << "\n";
+    }
   ADDRESS uSwitch;
   int iNumOut, iNum;
   iNumOut = si->iUpper-si->iLower+1;

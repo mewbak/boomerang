@@ -84,7 +84,8 @@ void DataFlow::dominators(Cfg* cfg)
     {
       PBB bb = *ii;
       if (bb != r)
-        {	   // Entry BB r already done
+        {
+          // Entry BB r already done
           indices[bb] = idx;
           BBs[idx++] = bb;
         }
@@ -409,7 +410,8 @@ bool DataFlow::renameBlockVars(UserProc* proc, int n, bool clearStacks /* = fals
   for (S = bb->getFirstStmt(rit, sit); S; S = bb->getNextStmt(rit, sit))
     {
       // if S is not a phi function (per Appel)
-      /* if (!S->isPhi()) */ {
+      /* if (!S->isPhi()) */
+      {
         // For each use of some variable x in S (not just assignments)
         LocationSet locs;
         if (S->isPhi())
@@ -429,7 +431,8 @@ bool DataFlow::renameBlockVars(UserProc* proc, int n, bool clearStacks /* = fals
               }
           }
         else
-          {				// Not a phi assignment
+          {
+            // Not a phi assignment
             S->addUsedLocs(locs);
           }
         LocationSet::iterator xx;
@@ -440,7 +443,8 @@ bool DataFlow::renameBlockVars(UserProc* proc, int n, bool clearStacks /* = fals
             if (!canRename(x, proc)) continue;
             Statement* def = NULL;
             if (x->isSubscript())
-              {					// Already subscripted?
+              {
+                // Already subscripted?
                 // No renaming required, but redo the usage analysis, in case this is a new return, and also because
                 // we may have just removed all call livenesses
                 // Update use information in calls, and in the proc (for parameters)
@@ -537,16 +541,16 @@ bool DataFlow::renameBlockVars(UserProc* proc, int n, bool clearStacks /* = fals
       // Special processing for define-alls (presently, only childless calls).
 // But note that only everythings at the current memory level are defined!
       if (S->isCall() && ((CallStatement*)S)->isChildless() && !Boomerang::get()->assumeABI)
-          {
-            // S is a childless call (and we're not assuming ABI compliance)
-            Stacks[defineAll];										// Ensure that there is an entry for defineAll
-            std::map<Exp*, std::stack<Statement*>, lessExpStar>::iterator dd;
-            for (dd = Stacks.begin(); dd != Stacks.end(); ++dd)
-              {
+        {
+          // S is a childless call (and we're not assuming ABI compliance)
+          Stacks[defineAll];										// Ensure that there is an entry for defineAll
+          std::map<Exp*, std::stack<Statement*>, lessExpStar>::iterator dd;
+          for (dd = Stacks.begin(); dd != Stacks.end(); ++dd)
+            {
 // if (dd->first->isMemDepth(memDepth))
-                dd->second.push(S);								// Add a definition for all vars
-              }
-          }
+              dd->second.push(S);								// Add a definition for all vars
+            }
+        }
     }
 
   // For each successor Y of block n
@@ -736,7 +740,8 @@ void DefCollector::print(std::ostream& os, bool html)
       if (first)
         first = false;
       else if (col+4+len >= DEFCOL_COLS)
-        {		// 4 for a comma and three spaces
+        {
+          // 4 for a comma and three spaces
           if (col != DEFCOL_COLS-1) os << ",";	// Comma at end of line
           os << "\n                ";
           col = 16;
@@ -818,7 +823,8 @@ void UseCollector::fromSSAform(UserProc* proc, Statement* def)
       Exp* ret = ref->accept(&esx);
       // If there is no change, ret will equal *it again (i.e. fromSSAform just removed the subscript)
       if (ret != *it)
-        {							// Pointer comparison
+        {
+          // Pointer comparison
           // There was a change; we want to replace *it with ret
           removes.insert(*it);
           inserts.insert(ret);

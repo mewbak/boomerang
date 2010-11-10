@@ -63,7 +63,7 @@ void erase_lrtls(std::list<RTL*>* pLrtl, std::list<RTL*>::iterator begin,
  * RETURNS:			<nothing>
  *============================================================================*/
 Cfg::Cfg()
-    : entryBB(NULL), exitBB(NULL), m_bWellFormed(false), structured(false), lastLabel(0), bImplicitsDone(false)
+  : entryBB(NULL), exitBB(NULL), m_bWellFormed(false), structured(false), lastLabel(0), bImplicitsDone(false)
 {}
 
 /*==============================================================================
@@ -415,7 +415,7 @@ PBB Cfg::splitBB (PBB pBB, ADDRESS uNativeAddr, PBB pNewBB /* = 0 */, bool bDelR
   if (ri == pBB->m_pRtls->end())
     {
       std::cerr << "could not split BB at " << std::hex << pBB->getLowAddr() << " at split address " << uNativeAddr
-      << std::endl;
+                << std::endl;
       return pBB;
     }
 
@@ -583,7 +583,8 @@ bool Cfg::label ( ADDRESS uNativeAddr, PBB& pCurBB )
           return true;			// wasn't a label, but already parsed
         }
       else
-        {						// not a non-explicit label
+        {
+          // not a non-explicit label
           // We don't have to erase this map entry. Having a null BasicBlock pointer is coped with in newBB() and
           // addOutEdge(); when eventually the BB is created, it will replace this entry.  We should be currently
           // processing this BB. The map will be corrected when newBB is called with this address.
@@ -753,7 +754,7 @@ bool Cfg::wellFormCfg()
                     m_bWellFormed = false;	// At least one problem
                     ADDRESS addr = (*it)->getLowAddr();
                     std::cerr << "WellFormCfg: BB with native address " << std::hex << addr <<
-                    " is missing outedge " << i << std::endl;
+                              " is missing outedge " << i << std::endl;
                   }
                 else
                   {
@@ -766,7 +767,7 @@ bool Cfg::wellFormCfg()
                     if (ii == pBB->m_InEdges.end())
                       {
                         std::cerr << "WellFormCfg: No in edge to BB at " << std::hex << (*it)->getLowAddr() <<
-                        " from successor BB at " << pBB->getLowAddr() << std::endl;
+                                  " from successor BB at " << pBB->getLowAddr() << std::endl;
                         m_bWellFormed = false;	// At least one problem
                       }
                   }
@@ -784,7 +785,7 @@ bool Cfg::wellFormCfg()
               if (oo == (*ii)->m_OutEdges.end())
                 {
                   std::cerr << "WellFormCfg: No out edge to BB at " << std::hex << (*it)->getLowAddr() <<
-                  " from predecessor BB at " << (*ii)->getLowAddr() << std::endl;
+                            " from predecessor BB at " << (*ii)->getLowAddr() << std::endl;
                   m_bWellFormed = false;	// At least one problem
                 }
             }
@@ -1136,9 +1137,9 @@ void Cfg::addCall(CallStatement* call)
  * RETURNS:			the set of calls within this procedure
  *============================================================================*/
 std::set<CallStatement*>& Cfg::getCalls()
-  {
-    return callSites;
-  }
+{
+  return callSites;
+}
 
 /*==============================================================================
  * FUNCTION:		Cfg::searchAndReplace
@@ -1329,7 +1330,7 @@ PBB Cfg::commonPDom(PBB curImmPDom, PBB succImmPDom)
     {
       if (VERBOSE)
         LOG << "failed to find commonPDom for " << oldCurImmPDom->getLowAddr() << " and " <<
-        oldSuccImmPDom->getLowAddr() << "\n";
+            oldSuccImmPDom->getLowAddr() << "\n";
       return oldCurImmPDom;  // no change
     }
 
@@ -1484,7 +1485,8 @@ void Cfg::findLoopFollow(PBB header, bool* &loopNodes)
         header->setLoopFollow(latch->getOutEdges()[0]);
     }
   else
-    { // endless loop
+    {
+      // endless loop
       PBB follow = NULL;
 
       // traverse the ordering array between the header and latch nodes.
@@ -1749,11 +1751,11 @@ void Cfg::structure()
   setTimeStamps();
   findImmedPDom();
   if (!Boomerang::get()->noDecompile)
-      {
-        structConds();
-        structLoops();
-        checkConds();
-      }
+    {
+      structConds();
+      structLoops();
+      checkConds();
+    }
   structured = true;
 }
 
@@ -1914,20 +1916,20 @@ void Cfg::generateDotFile(std::ofstream& of)
 ////////////////////////////////////
 
 void updateWorkListRev(PBB currBB, std::list<PBB>&workList, std::set<PBB>& workSet)
-  {
-    // Insert inedges of currBB into the worklist, unless already there
-    std::vector<PBB>& ins = currBB->getInEdges();
-    int n = ins.size();
-    for (int i=0; i < n; i++)
-      {
-        PBB currIn = ins[i];
-        if (workSet.find(currIn) == workSet.end())
-          {
-            workList.push_front(currIn);
-            workSet.insert(currIn);
-          }
-      }
-  }
+{
+  // Insert inedges of currBB into the worklist, unless already there
+  std::vector<PBB>& ins = currBB->getInEdges();
+  int n = ins.size();
+  for (int i=0; i < n; i++)
+    {
+      PBB currIn = ins[i];
+      if (workSet.find(currIn) == workSet.end())
+        {
+          workList.push_front(currIn);
+          workSet.insert(currIn);
+        }
+    }
+}
 
 static int progress = 0;
 void Cfg::findInterferences(ConnectionGraph& cg)
@@ -1978,14 +1980,14 @@ void Cfg::findInterferences(ConnectionGraph& cg)
 }
 
 void Cfg::appendBBs(std::list<PBB>& worklist, std::set<PBB>& workset)
-  {
-    // Append my list of BBs to the worklist
-    worklist.insert(worklist.end(), m_listBB.begin(), m_listBB.end());
-    // Do the same for the workset
-    std::list<PBB>::iterator it;
-    for (it = m_listBB.begin(); it != m_listBB.end(); it++)
-      workset.insert(*it);
-  }
+{
+  // Append my list of BBs to the worklist
+  worklist.insert(worklist.end(), m_listBB.begin(), m_listBB.end());
+  // Do the same for the workset
+  std::list<PBB>::iterator it;
+  for (it = m_listBB.begin(); it != m_listBB.end(); it++)
+    workset.insert(*it);
+}
 
 void dumpBB(PBB bb)
 {

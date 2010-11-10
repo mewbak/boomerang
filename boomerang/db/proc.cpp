@@ -60,7 +60,7 @@
 #include <windows.h>
 #ifndef __MINGW32__
 namespace dbghelp
-  {
+{
 #include <dbghelp.h>
 };
 #endif
@@ -89,7 +89,7 @@ Proc::~Proc()
  * RETURNS:			<nothing>
  *============================================================================*/
 Proc::Proc(Prog *prog, ADDRESS uNative, Signature *sig)
-    : prog(prog), signature(sig), address(uNative), m_firstCaller(NULL)
+  : prog(prog), signature(sig), address(uNative), m_firstCaller(NULL)
 {
   if (sig)
     cluster = prog->getDefaultCluster(sig->getName());
@@ -265,10 +265,10 @@ void Proc::printDetailsXML()
   unsigned i;
   for (i = 0; i < signature->getNumParams(); i++)
     out << "   <param name=\"" << signature->getParamName(i) << "\" " << "exp=\"" << signature->getParamExp(i)
-    << "\" " << "type=\"" << signature->getParamType(i)->getCtype() << "\"\n";
+        << "\" " << "type=\"" << signature->getParamType(i)->getCtype() << "\"\n";
   for (i = 0; i < signature->getNumReturns(); i++)
     out << "   <return exp=\"" << signature->getReturnExp(i) << "\" "
-    << "type=\"" << signature->getReturnType(i)->getCtype() << "\"/>\n";
+        << "type=\"" << signature->getReturnType(i)->getCtype() << "\"/>\n";
   out << "</proc>\n";
   out.close();
 }
@@ -441,19 +441,19 @@ bool LibProc::isPreserved(Exp* e)
  * RETURNS:			<nothing>
  *============================================================================*/
 UserProc::UserProc() : Proc(), cfg(NULL), status(PROC_UNDECODED),
-    // decoded(false), analysed(false),
-    nextLocal(0), nextParam(0),	// decompileSeen(false), decompiled(false), isRecursive(false)
-    cycleGrp(NULL), theReturnStatement(NULL)
+  // decoded(false), analysed(false),
+  nextLocal(0), nextParam(0),	// decompileSeen(false), decompiled(false), isRecursive(false)
+  cycleGrp(NULL), theReturnStatement(NULL)
 {
   localTable.setProc(this);
 }
 UserProc::UserProc(Prog *prog, std::string& name, ADDRESS uNative) :
-    // Not quite ready for the below fix:
-    // Proc(prog, uNative, prog->getDefaultSignature(name.c_str())),
-    Proc(prog, uNative, new Signature(name.c_str())),
-    cfg(new Cfg()), status(PROC_UNDECODED),
-    nextLocal(0),  nextParam(0),// decompileSeen(false), decompiled(false), isRecursive(false),
-    cycleGrp(NULL), theReturnStatement(NULL), DFGcount(0)
+  // Not quite ready for the below fix:
+  // Proc(prog, uNative, prog->getDefaultSignature(name.c_str())),
+  Proc(prog, uNative, new Signature(name.c_str())),
+  cfg(new Cfg()), status(PROC_UNDECODED),
+  nextLocal(0),  nextParam(0),// decompileSeen(false), decompiled(false), isRecursive(false),
+  cycleGrp(NULL), theReturnStatement(NULL), DFGcount(0)
 {
   cfg->setProc(this);				 // Initialise cfg.myProc
   localTable.setProc(this);
@@ -479,13 +479,13 @@ void UserProc::deleteCFG()
 }
 
 class lessEvaluate : public std::binary_function<SyntaxNode*, SyntaxNode*, bool>
+{
+public:
+  bool operator()(const SyntaxNode* x, const SyntaxNode* y) const
   {
-  public:
-    bool operator()(const SyntaxNode* x, const SyntaxNode* y) const
-      {
-        return ((SyntaxNode*)x)->getScore() > ((SyntaxNode*)y)->getScore();
-      }
-  };
+    return ((SyntaxNode*)x)->getScore() > ((SyntaxNode*)y)->getScore();
+  }
+};
 
 SyntaxNode *UserProc::getAST()
 {
@@ -657,7 +657,7 @@ void UserProc::generateCode(HLLCode *hll)
   // RefExps, which are all gone now (transformed out of SSA form)!
 
   if (VERBOSE || Boomerang::get()->printRtl)
-      printToLog();
+    printToLog();
 
   hll->AddProcStart(this);
 
@@ -673,13 +673,13 @@ void UserProc::generateCode(HLLCode *hll)
     }
 
   if (Boomerang::get()->noDecompile && std::string(getName()) == "main")
-      {
-        StatementList args, results;
-        if (prog->getFrontEndId() == PLAT_PENTIUM)
-          hll->AddCallStatement(1, NULL, "PENTIUMSETUP", args, &results);
-        else if (prog->getFrontEndId() == PLAT_SPARC)
-          hll->AddCallStatement(1, NULL, "SPARCSETUP", args, &results);
-      }
+    {
+      StatementList args, results;
+      if (prog->getFrontEndId() == PLAT_PENTIUM)
+        hll->AddCallStatement(1, NULL, "PENTIUMSETUP", args, &results);
+      else if (prog->getFrontEndId() == PLAT_SPARC)
+        hll->AddCallStatement(1, NULL, "SPARCSETUP", args, &results);
+    }
 
   std::list<PBB> followSet, gotoSet;
   getEntryBB()->generateCode(hll, 1, NULL, followSet, gotoSet, this);
@@ -687,7 +687,7 @@ void UserProc::generateCode(HLLCode *hll)
   hll->AddProcEnd();
 
   if (!Boomerang::get()->noRemoveLabels)
-      cfg->removeUnneededLabels(hll);
+    cfg->removeUnneededLabels(hll);
 
   setStatus(PROC_CODE_GENERATED);
 }
@@ -897,7 +897,7 @@ void UserProc::removeStatement(Statement *stmt)
         {
           if (VERBOSE)
             LOG << "removing proven true exp " << it->first << " = " << it->second <<
-            " that uses statement being removed.\n";
+                " that uses statement being removed.\n";
           provenTrue.erase(it++);
           // it = provenTrue.begin();
           continue;
@@ -1034,7 +1034,7 @@ ProcSet* UserProc::decompile(ProcList* path, int& indent)
 {
   Boomerang::get()->alert_considering(path->empty() ? NULL : path->back(), this);
   std::cout << std::setw(++indent) << " " << (status >= PROC_VISITED ? "re" : "") << "considering " << getName() <<
-  "\n";
+            "\n";
   if (VERBOSE)
     LOG << "begin decompile(" << getName() << ")\n";
 
@@ -1060,105 +1060,105 @@ ProcSet* UserProc::decompile(ProcList* path, int& indent)
    *	*	*	*	*	*	*	*	*	*	*	*/
 
   if (!Boomerang::get()->noDecodeChildren)
-      {
-        // Recurse to children first, to perform a depth first search
-        BB_IT it;
-        // Look at each call, to do the DFS
-        for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it))
-          {
-            if (bb->getType() == CALL)
-              {
-                // The call Statement will be in the last RTL in this BB
-                CallStatement* call = (CallStatement*)bb->getRTLs()->back()->getHlStmt();
-                if (!call->isCall())
-                  {
-                    LOG << "bb at " << bb->getLowAddr() << " is a CALL but last stmt is not a call: " << call << "\n";
-                  }
-                assert(call->isCall());
-                UserProc* c = (UserProc*)call->getDestProc();
-                if (c == NULL || c->isLib()) continue;
-                if (c->status == PROC_FINAL)
-                  {
-                    // Already decompiled, but the return statement still needs to be set for this call
-                    call->setCalleeReturn(c->getTheReturnStatement());
-                    continue;
-                  }
-                // if c has already been visited but not done (apart from global analyses, i.e. we have a new cycle)
-                if (c->status >= PROC_VISITED && c->status <= PROC_EARLYDONE)
-                  {
-                    // if c is in path
-                    ProcList::iterator pi;
-                    bool inPath = false;
-                    for (pi = path->begin(); pi != path->end(); ++pi)
-                      {
-                        if (*pi == c)
-                          {
-                            inPath = true;
-                            break;
-                          }
-                      }
-                    if (inPath)
-                      {
-                        // This is a completely new cycle
-                        // Insert every proc from c to the end of path into child
-                        do
-                          {
-                            child->insert(*pi);
-                            ++pi;
-                          }
-                        while (pi != path->end());
-                      }
-                    else
-                      {
-                        // This is new branch of an existing cycle
-                        child = c->cycleGrp;
-                        // Find first element f of path that is in c->cycleGrp
-                        ProcList::iterator pi;
-                        Proc* f = NULL;
-                        for (pi = path->begin(); pi != path->end(); ++pi)
-                          {
-                            if (c->cycleGrp->find(*pi) != c->cycleGrp->end())
-                              {
-                                f = *pi;
-                                break;
-                              }
-                          }
-                        assert(f);
-                        // Insert every proc after f to the end of path into child
-                        // There must be at least one element in the list (this proc), so the ++pi should be safe
-                        while (++pi != path->end())
-                          {
-                            child->insert(*pi);
-                          }
-                      }
-                    // point cycleGrp for each element of child to child, unioning in each element's cycleGrp
-                    ProcSet::iterator cc;
-                    for (cc = child->begin(); cc != child->end(); ++cc)
-                      {
-                        ProcSet*& cg = (*cc)->cycleGrp;
-                        if (cg)
-                          child->insert(cg->begin(), cg->end());
-                        cg = child;
-                      }
-                    setStatus(PROC_INCYCLE);
-                  }
-                else
-                  {
-                    // No new cycle
-                    if (VERBOSE)
-                      LOG << "visiting on the way down child " << c->getName() << " from " << getName() << "\n";
-                    ProcSet* tmp = c->decompile(path, indent);
-                    child->insert(tmp->begin(), tmp->end());
-                    // Child has at least done middleDecompile(), possibly more
-                    call->setCalleeReturn(c->getTheReturnStatement());
-                    if (tmp->size() > 0)
-                      {
-                        setStatus(PROC_INCYCLE);
-                      }
-                  }
-              }
-          }
-      }
+    {
+      // Recurse to children first, to perform a depth first search
+      BB_IT it;
+      // Look at each call, to do the DFS
+      for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it))
+        {
+          if (bb->getType() == CALL)
+            {
+              // The call Statement will be in the last RTL in this BB
+              CallStatement* call = (CallStatement*)bb->getRTLs()->back()->getHlStmt();
+              if (!call->isCall())
+                {
+                  LOG << "bb at " << bb->getLowAddr() << " is a CALL but last stmt is not a call: " << call << "\n";
+                }
+              assert(call->isCall());
+              UserProc* c = (UserProc*)call->getDestProc();
+              if (c == NULL || c->isLib()) continue;
+              if (c->status == PROC_FINAL)
+                {
+                  // Already decompiled, but the return statement still needs to be set for this call
+                  call->setCalleeReturn(c->getTheReturnStatement());
+                  continue;
+                }
+              // if c has already been visited but not done (apart from global analyses, i.e. we have a new cycle)
+              if (c->status >= PROC_VISITED && c->status <= PROC_EARLYDONE)
+                {
+                  // if c is in path
+                  ProcList::iterator pi;
+                  bool inPath = false;
+                  for (pi = path->begin(); pi != path->end(); ++pi)
+                    {
+                      if (*pi == c)
+                        {
+                          inPath = true;
+                          break;
+                        }
+                    }
+                  if (inPath)
+                    {
+                      // This is a completely new cycle
+                      // Insert every proc from c to the end of path into child
+                      do
+                        {
+                          child->insert(*pi);
+                          ++pi;
+                        }
+                      while (pi != path->end());
+                    }
+                  else
+                    {
+                      // This is new branch of an existing cycle
+                      child = c->cycleGrp;
+                      // Find first element f of path that is in c->cycleGrp
+                      ProcList::iterator pi;
+                      Proc* f = NULL;
+                      for (pi = path->begin(); pi != path->end(); ++pi)
+                        {
+                          if (c->cycleGrp->find(*pi) != c->cycleGrp->end())
+                            {
+                              f = *pi;
+                              break;
+                            }
+                        }
+                      assert(f);
+                      // Insert every proc after f to the end of path into child
+                      // There must be at least one element in the list (this proc), so the ++pi should be safe
+                      while (++pi != path->end())
+                        {
+                          child->insert(*pi);
+                        }
+                    }
+                  // point cycleGrp for each element of child to child, unioning in each element's cycleGrp
+                  ProcSet::iterator cc;
+                  for (cc = child->begin(); cc != child->end(); ++cc)
+                    {
+                      ProcSet*& cg = (*cc)->cycleGrp;
+                      if (cg)
+                        child->insert(cg->begin(), cg->end());
+                      cg = child;
+                    }
+                  setStatus(PROC_INCYCLE);
+                }
+              else
+                {
+                  // No new cycle
+                  if (VERBOSE)
+                    LOG << "visiting on the way down child " << c->getName() << " from " << getName() << "\n";
+                  ProcSet* tmp = c->decompile(path, indent);
+                  child->insert(tmp->begin(), tmp->end());
+                  // Child has at least done middleDecompile(), possibly more
+                  call->setCalleeReturn(c->getTheReturnStatement());
+                  if (tmp->size() > 0)
+                    {
+                      setStatus(PROC_INCYCLE);
+                    }
+                }
+            }
+        }
+    }
 
 
   // if child is empty, i.e. no child involved in recursion
@@ -1252,11 +1252,11 @@ void UserProc::initialiseDecompile()
   printXML();
 
   if (Boomerang::get()->noDecompile)
-      {
-        std::cout << "not decompiling.\n";
-        setStatus(PROC_FINAL);				// ??!
-        return;
-      }
+    {
+      std::cout << "not decompiling.\n";
+      setStatus(PROC_FINAL);				// ??!
+      return;
+    }
 
   if (VERBOSE)
     {
@@ -1360,8 +1360,8 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
   //setStatus(PROC_PRESERVEDS);		// Preservation done
 
   if (!Boomerang::get()->noPromote)
-      // We want functions other than main to be promoted. Needed before mapExpressionsToLocals
-      promoteSignature();
+    // We want functions other than main to be promoted. Needed before mapExpressionsToLocals
+    promoteSignature();
   // The problem with doing locals too early is that the symbol map ends up with some {-} and some {0}
   // Also, once named as a local, it is tempting to propagate the memory location, but that might be unsafe if the
   // address is taken. But see mapLocalsAndParams just a page below.
@@ -1411,50 +1411,53 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
 
       // Print if requested
       if (VERBOSE)
-        {		// was if debugPrintSSA
+        {
+          // was if debugPrintSSA
           LOG << "--- debug print SSA for " << getName() << " pass " << pass << " (no propagations) ---\n";
           printToLog();
           LOG << "=== end debug print SSA for " << getName() << " pass " << pass << " (no propagations) ===\n\n";
         }
 
       if (Boomerang::get()->dotFile)							// Require -gd now (though doesn't listen to file name)
-          printDFG();
+        printDFG();
       Boomerang::get()->alert_decompile_SSADepth(this, pass);	// FIXME: need depth -> pass in GUI code
 
       // (* Was: mapping expressions to Parameters as we go *)
 
 #if 1	// FIXME: Check if this is needed any more. At least fib seems to need it at present.
       if (!Boomerang::get()->noChangeSignatures)
-          {
-            // addNewReturns(depth);
-            for (int i=0; i < 3; i++)
-              {		// FIXME: should be iterate until no change
-                if (VERBOSE)
-                  LOG << "### update returns loop iteration " << i << " ###\n";
-                if (status != PROC_INCYCLE)
-                  doRenameBlockVars(pass, true);
-                findPreserveds();
-                updateCallDefines();		// Returns have uses which affect call defines (if childless)
-                fixCallAndPhiRefs();
-                findPreserveds();			// Preserveds subtract from returns
-              }
-            printXML();
-            if (VERBOSE)
-              {
-                LOG << "--- debug print SSA for " << getName() << " at pass " << pass <<
-                " (after updating returns) ---\n";
-                printToLog();
-                LOG << "=== end debug print SSA for " << getName() << " at pass " << pass << " ===\n\n";
-              }
-          }
+        {
+          // addNewReturns(depth);
+          for (int i=0; i < 3; i++)
+            {
+              // FIXME: should be iterate until no change
+              if (VERBOSE)
+                LOG << "### update returns loop iteration " << i << " ###\n";
+              if (status != PROC_INCYCLE)
+                doRenameBlockVars(pass, true);
+              findPreserveds();
+              updateCallDefines();		// Returns have uses which affect call defines (if childless)
+              fixCallAndPhiRefs();
+              findPreserveds();			// Preserveds subtract from returns
+            }
+          printXML();
+          if (VERBOSE)
+            {
+              LOG << "--- debug print SSA for " << getName() << " at pass " << pass <<
+                  " (after updating returns) ---\n";
+              printToLog();
+              LOG << "=== end debug print SSA for " << getName() << " at pass " << pass << " ===\n\n";
+            }
+        }
 #endif
 
       printXML();
       // Print if requested
       if (VERBOSE)
-        {		// was if debugPrintSSA
+        {
+          // was if debugPrintSSA
           LOG << "--- debug print SSA for " << getName() << " at pass " << pass <<
-          " (after trimming return set) ---\n";
+              " (after trimming return set) ---\n";
           printToLog();
           LOG << "=== end debug print SSA for " << getName() << " at pass " << pass << " ===\n\n";
         }
@@ -1479,7 +1482,7 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
             {
               if (VERBOSE)
                 LOG << "\nabout to restart propagations and dataflow at pass " << pass <<
-                " due to conversion of indirect to direct call(s)\n\n";
+                    " due to conversion of indirect to direct call(s)\n\n";
               df.setRenameLocalsParams(false);
               change |= doRenameBlockVars(0, true); 			// Initial dataflow level 0
               LOG << "\nafter rename (2) of " << getName() << ":\n";
@@ -1556,10 +1559,10 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
 #endif
 
   if (!Boomerang::get()->noParameterNames)
-      {
-        // ? Crazy time to do this... haven't even done "final" parameters as yet
-        //mapExpressionsToParameters();
-      }
+    {
+      // ? Crazy time to do this... haven't even done "final" parameters as yet
+      //mapExpressionsToParameters();
+    }
 
   // Check for indirect jumps or calls not already removed by propagation of constants
   if (cfg->decodeIndirectJmp(this))
@@ -1568,7 +1571,7 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
       // to this function so far is invalid. So redo everything. Very expensive!!
       // Code pointed to by the switch table entries has merely had FrontEnd::processFragment() called on it
       LOG << "=== about to restart decompilation of " << getName() <<
-      " because indirect jumps or calls have been analysed\n\n";
+          " because indirect jumps or calls have been analysed\n\n";
       Boomerang::get()->alert_decompile_debug_point(this, "before restarting decompilation because indirect jumps or calls have been analysed");
 
       // First copy any new indirect jumps or calls that were decoded this time around. Just copy them all, the map
@@ -1595,17 +1598,17 @@ ProcSet* UserProc::middleDecompile(ProcList* path, int indent)
 
   // Used to be later...
   if (!Boomerang::get()->noParameterNames)
-      {
-        //findPreserveds();		// FIXME: is this necessary here?
-        //fixCallBypass();	// FIXME: surely this is not necessary now?
-        //trimParameters();	// FIXME: surely there aren't any parameters to trim yet?
-        if (VERBOSE)
-          {
-            LOG << "--- after replacing expressions, trimming params and returns for " << getName() << " ---\n";
-            printToLog();
-            LOG << "=== end after replacing expressions, trimming params and returns for " << getName() << " ===\n";
-          }
-      }
+    {
+      //findPreserveds();		// FIXME: is this necessary here?
+      //fixCallBypass();	// FIXME: surely this is not necessary now?
+      //trimParameters();	// FIXME: surely there aren't any parameters to trim yet?
+      if (VERBOSE)
+        {
+          LOG << "--- after replacing expressions, trimming params and returns for " << getName() << " ---\n";
+          printToLog();
+          LOG << "=== end after replacing expressions, trimming params and returns for " << getName() << " ===\n";
+        }
+    }
 
   eliminateDuplicateArgs();
 
@@ -1679,35 +1682,35 @@ void UserProc::remUnusedStmtEtc()
   countRefs(refCounts);
   // Now remove any that have no used
   if (!Boomerang::get()->noRemoveNull)
-      remUnusedStmtEtc(refCounts);
+    remUnusedStmtEtc(refCounts);
 
   // Remove null statements
   if (!Boomerang::get()->noRemoveNull)
-      removeNullStatements();
+    removeNullStatements();
 
   printXML();
   if (VERBOSE && !Boomerang::get()->noRemoveNull)
-      {
-        LOG << "--- after removing unused and null statements pass " << 1 << " for " << getName() << " ---\n";
-        printToLog();
-        LOG << "=== end after removing unused statements for " << getName() << " ===\n\n";
-      }
+    {
+      LOG << "--- after removing unused and null statements pass " << 1 << " for " << getName() << " ---\n";
+      printToLog();
+      LOG << "=== end after removing unused statements for " << getName() << " ===\n\n";
+    }
   Boomerang::get()->alert_decompile_afterRemoveStmts(this, 1);
 
   findFinalParameters();
   if (!Boomerang::get()->noParameterNames)
-      {
-        // Replace the existing temporary parameters with the final ones:
-        //mapExpressionsToParameters();
-        addParameterSymbols();
+    {
+      // Replace the existing temporary parameters with the final ones:
+      //mapExpressionsToParameters();
+      addParameterSymbols();
 
-        if (VERBOSE)
-          {
-            LOG << "--- after adding new parameters ---\n";
-            printToLog();
-            LOG << "=== end after adding new parameters ===\n";
-          }
-      }
+      if (VERBOSE)
+        {
+          LOG << "--- after adding new parameters ---\n";
+          printToLog();
+          LOG << "=== end after adding new parameters ===\n";
+        }
+    }
 
 #if 0				// Construction zone; pay no attention
   bool convert;
@@ -1744,7 +1747,8 @@ void UserProc::remUnusedStmtEtc(RefCounter& refCounts)
   getStatements(stmts);
   bool change;
   do
-    {								// FIXME: check if this is ever needed
+    {
+      // FIXME: check if this is ever needed
       change = false;
       StatementList::iterator ll = stmts.begin();
       while (ll != stmts.end())
@@ -1783,7 +1787,8 @@ void UserProc::remUnusedStmtEtc(RefCounter& refCounts)
               continue;
             }
           if (refCounts.find(s) == refCounts.end() || refCounts[s] == 0)
-            {	// Care not to insert unnecessarily
+            {
+              // Care not to insert unnecessarily
               // First adjust the counts, due to statements only referenced by statements that are themselves unused.
               // Need to be careful not to count two refs to the same def as two; refCounts is a count of the number
               // of statements that use a definition, not the total number of refs
@@ -1804,7 +1809,7 @@ void UserProc::remUnusedStmtEtc(RefCounter& refCounts)
                   if (*dd == NULL) continue;
                   if (DEBUG_UNUSED)
                     LOG << "decrementing ref count of " << (*dd)->getNumber() << " because " << s->getNumber() <<
-                    " is unused\n";
+                        " is unused\n";
                   refCounts[*dd]--;
                 }
               if (DEBUG_UNUSED)
@@ -2279,7 +2284,7 @@ void UserProc::assignProcsToCalls()
               if (p == NULL)
                 {
                   std::cerr << "Cannot find proc for dest " << call->getFixedDest() << " in call at "
-                  << (*it2)->getAddress() << "\n";
+                            << (*it2)->getAddress() << "\n";
                   assert(p);
                 }
               call->setDestProc(p);
@@ -2326,10 +2331,10 @@ void UserProc::finalSimplify()
 
 // m[WILD]{-}
 static RefExp *memOfWild = new RefExp(
-                             Location::memOf(new Terminal(opWild)), NULL);
+  Location::memOf(new Terminal(opWild)), NULL);
 // r[WILD INT]{-}
 static RefExp* regOfWild = new RefExp(
-                             Location::regOf(new Terminal(opWildIntConst)), NULL);
+  Location::regOf(new Terminal(opWildIntConst)), NULL);
 
 // Search for expressions without explicit definitions (i.e. WILDCARD{0}), which represent parameters (use before
 // definition).
@@ -2357,7 +2362,8 @@ void UserProc::findFinalParameters()
           for (cc = components.begin(); cc != components.end(); ++cc)
             {
               if (*cc != paramLoc)
-                {								// Don't subscript outer level
+                {
+                  // Don't subscript outer level
                   paramLoc->expSubscriptVar(*cc, NULL);			// E.g. r28 -> r28{-}
                   paramLoc->accept(&ic);							// E.g. r28{-} -> r28{0}
                 }
@@ -2526,7 +2532,7 @@ void UserProc::trimParameters(int depth)
                   if (DEBUG_UNUSED)
                     {
                       LOG << "parameter " << p << " used by statement " << s->getNumber() << " : " << s->getKind() <<
-                      "\n";
+                          "\n";
                     }
                 }
               if (!referenced[i] && excluded.find(s) == excluded.end() &&
@@ -2577,11 +2583,11 @@ void Proc::removeParameter(Exp *e)
     {
       signature->removeParameter(n);
       for (std::set<CallStatement*>::iterator it = callerSet.begin(); it != callerSet.end(); it++)
-          {
-            if (DEBUG_UNUSED)
-              LOG << "removing argument " << e << " in pos " << n << " from " << *it << "\n";
-            (*it)->removeArgument(n);
-          }
+        {
+          if (DEBUG_UNUSED)
+            LOG << "removing argument " << e << " in pos " << n << " from " << *it << "\n";
+          (*it)->removeArgument(n);
+        }
     }
 }
 
@@ -2660,10 +2666,10 @@ Exp *UserProc::getSymbolExp(Exp *le, Type *ty, bool lastPass)
 
   // check for references to the middle of a local
   if (	le->isMemOf() &&
-       le->getSubExp1()->getOper() == opMinus &&
-       le->getSubExp1()->getSubExp1()->isSubscript() &&
-       le->getSubExp1()->getSubExp1()->getSubExp1()->isRegN(signature->getStackRegister()) &&
-       le->getSubExp1()->getSubExp2()->isIntConst())
+        le->getSubExp1()->getOper() == opMinus &&
+        le->getSubExp1()->getSubExp1()->isSubscript() &&
+        le->getSubExp1()->getSubExp1()->getSubExp1()->isRegN(signature->getStackRegister()) &&
+        le->getSubExp1()->getSubExp2()->isIntConst())
     {
       for (SymbolMap::iterator it = symbolMap.begin(); it != symbolMap.end(); it++)
         {
@@ -2675,10 +2681,10 @@ Exp *UserProc::getSymbolExp(Exp *le, Type *ty, bool lastPass)
                   Type *lty = locals[nam];
                   Exp *loc = (*it).first;
                   if (	loc->isMemOf() &&
-                       loc->getSubExp1()->getOper() == opMinus &&
-                       loc->getSubExp1()->getSubExp1()->isSubscript() &&
-                       loc->getSubExp1()->getSubExp1()->getSubExp1()->isRegN(signature->getStackRegister()) &&
-                       loc->getSubExp1()->getSubExp2()->isIntConst())
+                        loc->getSubExp1()->getOper() == opMinus &&
+                        loc->getSubExp1()->getSubExp1()->isSubscript() &&
+                        loc->getSubExp1()->getSubExp1()->getSubExp1()->isRegN(signature->getStackRegister()) &&
+                        loc->getSubExp1()->getSubExp2()->isIntConst())
                     {
                       int n = -((Const*)loc->getSubExp1()->getSubExp2())->getInt();
                       int m = -((Const*)le->getSubExp1()->getSubExp2())->getInt();
@@ -2849,8 +2855,8 @@ void UserProc::mapExpressionsToLocals(bool lastPass)
   // l = m[(sp{0} + WILD1) - K2]
   Exp *l = Location::memOf(new Binary(opMinus,
                                       new Binary(opPlus,
-                                                 new RefExp(Location::regOf(sp), NULL),
-                                                 new Terminal(opWild)),
+                                          new RefExp(Location::regOf(sp), NULL),
+                                          new Terminal(opWild)),
                                       new Terminal(opWildIntConst)));
   for (it = stmts.begin(); it != stmts.end(); it++)
     {
@@ -2954,7 +2960,7 @@ bool UserProc::removeNullStatements()
           if (VERBOSE)
             {
               LOG << "removing null statement: " << s->getNumber() <<
-              " " << s << "\n";
+                  " " << s << "\n";
             }
           removeStatement(s);
           change = true;
@@ -3299,7 +3305,7 @@ void UserProc::removeUnusedLocals()
       // LOG << "Considering local " << name << "\n";
       if (VERBOSE && all && removes.size())
         LOG << "WARNING: defineall seen in procedure " << name.c_str() << " so not removing " << (int)removes.size()
-        << " locals\n";
+            << " locals\n";
       if (usedLocals.find(name) == usedLocals.end() && !all)
         {
           if (VERBOSE)
@@ -3337,7 +3343,7 @@ void UserProc::removeUnusedLocals()
     }
   // Finally, remove them from locals, so they don't get declared
   for (std::set<std::string>::iterator it1 = removes.begin(); it1 != removes.end(); )
-      locals.erase(*it1++);
+    locals.erase(*it1++);
   // Also remove them from the symbols, since symbols are a superset of locals at present
   for (SymbolMap::iterator sm = symbolMap.begin(); sm != symbolMap.end(); )
     {
@@ -3444,7 +3450,7 @@ void UserProc::fromSSAform()
             {
               if (DEBUG_LIVENESS)
                 LOG << "def of " << base << " at " << s->getNumber() << " type " << ty <<
-                " is not compatible with first type " << ff->second.first << ".\n";
+                    " is not compatible with first type " << ff->second.first << ".\n";
               // There already is a type for base, and it is different to the type for this definition.
               // Record an "interference" so it will get a new variable
               if (!ty->isVoid())		// just ignore void interferences ??!!
@@ -3649,7 +3655,7 @@ void UserProc::fromSSAform()
           // seems unlikely
           Exp* lhs = pa->getLeft();
           RefExp* wrappedLeft = new RefExp(lhs, pa)
-                                char* lhsName = lookupSymForRef(wrappedLeft);
+          char* lhsName = lookupSymForRef(wrappedLeft);
           PhiAssign::iterator rr;
           for (rr = pa->begin(); rr != pa->end(); rr++)
             {
@@ -3772,7 +3778,7 @@ bool UserProc::prove(Exp *query, bool conditional /* = false */)
 #endif
 
   if (Boomerang::get()->noProve)
-      return false;
+    return false;
 
   Exp *original = query->clone();
   Exp* origLeft = ((Binary*)original)->getSubExp1();
@@ -3809,7 +3815,8 @@ bool UserProc::prove(Exp *query, bool conditional /* = false */)
           if (*origLeft == *right &&							// x == x
               origLeft->getOper() != opDefineAll &&			// Beware infinite recursion
               prove(&allEqAll))
-            {							// Recurse in case <all> not proven yet
+            {
+              // Recurse in case <all> not proven yet
               if (DEBUG_PROOF)
                 LOG << "Using all=all for " << query->getSubExp1() << "\n" << "prove returns true\n";
               provenTrue[origLeft->clone()] = right;
@@ -3831,7 +3838,7 @@ bool UserProc::prove(Exp *query, bool conditional /* = false */)
   if (cycleGrp)
     recurPremises.erase(origLeft);			// Remove the premise, regardless of result
   if (DEBUG_PROOF) LOG << "prove returns " << (result ? "true" : "false") << " for " << query << " in " << getName()
-    << "\n";
+                         << "\n";
 
   if (!conditional)
     {
@@ -3846,298 +3853,299 @@ bool UserProc::prove(Exp *query, bool conditional /* = false */)
 }
 
 bool UserProc::prover(Exp *query, std::set<PhiAssign*>& lastPhis, std::map<PhiAssign*, Exp*> &cache, Exp* original,
-                        PhiAssign* lastPhi /* = NULL */)
-  {
-    // A map that seems to be used to detect loops in the call graph:
-    std::map<CallStatement*, Exp*> called;
-    Exp *phiInd = query->getSubExp2()->clone();
+                      PhiAssign* lastPhi /* = NULL */)
+{
+  // A map that seems to be used to detect loops in the call graph:
+  std::map<CallStatement*, Exp*> called;
+  Exp *phiInd = query->getSubExp2()->clone();
 
-    if (lastPhi && cache.find(lastPhi) != cache.end() && *cache[lastPhi] == *phiInd)
-      {
-        if (DEBUG_PROOF)
-          LOG << "true - in the phi cache\n";
-        return true;
-      }
+  if (lastPhi && cache.find(lastPhi) != cache.end() && *cache[lastPhi] == *phiInd)
+    {
+      if (DEBUG_PROOF)
+        LOG << "true - in the phi cache\n";
+      return true;
+    }
 
-    std::set<Statement*> refsTo;
+  std::set<Statement*> refsTo;
 
-    query = query->clone();
-    bool change = true;
-    bool swapped = false;
-    while (change)
-      {
-        if (DEBUG_PROOF)
-          {
-            LOG << query << "\n";
-          }
+  query = query->clone();
+  bool change = true;
+  bool swapped = false;
+  while (change)
+    {
+      if (DEBUG_PROOF)
+        {
+          LOG << query << "\n";
+        }
 
-        change = false;
-        if (query->getOper() == opEquals)
-          {
+      change = false;
+      if (query->getOper() == opEquals)
+        {
 
-            // same left and right means true
-            if (*query->getSubExp1() == *query->getSubExp2())
-              {
-                query = new Terminal(opTrue);
-                change = true;
-              }
+          // same left and right means true
+          if (*query->getSubExp1() == *query->getSubExp2())
+            {
+              query = new Terminal(opTrue);
+              change = true;
+            }
 
-            // move constants to the right
-            Exp *plus = query->getSubExp1();
-            Exp *s1s2 = plus ? plus->getSubExp2() : NULL;
-            if (!change && plus->getOper() == opPlus && s1s2->isIntConst())
-              {
-                query->setSubExp2(new Binary(opPlus,
-                                             query->getSubExp2(),
-                                             new Unary(opNeg, s1s2->clone())));
-                query->setSubExp1(((Binary*)plus)->getSubExp1());
-                change = true;
-              }
-            if (!change && plus->getOper() == opMinus && s1s2->isIntConst())
-              {
-                query->setSubExp2(new Binary(opPlus, query->getSubExp2(), s1s2->clone()));
-                query->setSubExp1(((Binary*)plus)->getSubExp1());
-                change = true;
-              }
+          // move constants to the right
+          Exp *plus = query->getSubExp1();
+          Exp *s1s2 = plus ? plus->getSubExp2() : NULL;
+          if (!change && plus->getOper() == opPlus && s1s2->isIntConst())
+            {
+              query->setSubExp2(new Binary(opPlus,
+                                           query->getSubExp2(),
+                                           new Unary(opNeg, s1s2->clone())));
+              query->setSubExp1(((Binary*)plus)->getSubExp1());
+              change = true;
+            }
+          if (!change && plus->getOper() == opMinus && s1s2->isIntConst())
+            {
+              query->setSubExp2(new Binary(opPlus, query->getSubExp2(), s1s2->clone()));
+              query->setSubExp1(((Binary*)plus)->getSubExp1());
+              change = true;
+            }
 
 
-            // substitute using a statement that has the same left as the query
-            if (!change && query->getSubExp1()->getOper() == opSubscript)
-              {
-                RefExp *r = (RefExp*)query->getSubExp1();
-                Statement *s = r->getDef();
-                CallStatement *call = dynamic_cast<CallStatement*>(s);
-                if (call)
-                  {
-                    // See if we can prove something about this register.
-                    UserProc* destProc = (UserProc*)call->getDestProc();
-                    Exp* base = r->getSubExp1();
-                    if (destProc && !destProc->isLib() && ((UserProc*)destProc)->cycleGrp != NULL &&
-                        ((UserProc*)destProc)->cycleGrp->find(this) != ((UserProc*)destProc)->cycleGrp->end())
-                      {
-                        // The destination procedure may not have preservation proved as yet, because it is involved
-                        // in our recursion group. Use the conditional preservation logic to determine whether query is
-                        // true for this procedure
-                        Exp* provenTo = destProc->getProven(base);
-                        if (provenTo)
-                          {
-                            // There is a proven preservation. Use it to bypass the call
-                            Exp* queryLeft = call->localiseExp(provenTo->clone());
-                            query->setSubExp1(queryLeft);
-                            // Now try everything on the result
-                            return prover(query, lastPhis, cache, original, lastPhi);
-                          }
-                        else
-                          {
-                            // Check if the required preservation is one of the premises already assumed
-                            Exp* premisedTo = destProc->getPremised(base);
-                            if (premisedTo)
-                              {
-                                if (DEBUG_PROOF)
-                                  LOG << "conditional preservation for call from " << getName() << " to " <<
-                                  destProc->getName() << ", allows bypassing\n";
-                                Exp* queryLeft = call->localiseExp(premisedTo->clone());
-                                query->setSubExp1(queryLeft);
-                                return prover(query, lastPhis, cache, original, lastPhi);
-                              }
-                            else
-                              {
-                                // There is no proof, and it's not one of the premises. It may yet succeed, by making
-                                // another premise! Example: try to prove esp, depends on whether ebp is preserved, so
-                                // recurse to check ebp's preservation. Won't infinitely loop because of the premise map
-                                // FIXME: what if it needs a rx = rx + K preservation?
-                                Exp* newQuery = new Binary(opEquals,
-                                                           base->clone(),
-                                                           base->clone());
-                                destProc->setPremise(base);
-                                if (DEBUG_PROOF)
-                                  LOG << "new required premise " << newQuery << " for " << destProc->getName() <<
-                                  "\n";
-                                // Pass conditional as true, since even if proven, this is conditional on other things
-                                bool result = destProc->prove(newQuery, true);
-                                destProc->killPremise(base);
-                                if (result)
-                                  {
-                                    if (DEBUG_PROOF)
-                                      LOG << "conditional preservation with new premise " << newQuery <<
-                                      " succeeds for " << destProc->getName() << "\n";
-                                    // Use the new conditionally proven result
-                                    Exp* queryLeft = call->localiseExp(base->clone());
-                                    query->setSubExp1(queryLeft);
-                                    return destProc->prover(query, lastPhis, cache, original, lastPhi);
-                                  }
-                                else
-                                  {
-                                    if (DEBUG_PROOF)
-                                      LOG << "conditional preservation required premise " << newQuery << " fails!\n";
-                                    // Do nothing else; the outer proof will likely fail
-                                  }
-                              }
-                          }
+          // substitute using a statement that has the same left as the query
+          if (!change && query->getSubExp1()->getOper() == opSubscript)
+            {
+              RefExp *r = (RefExp*)query->getSubExp1();
+              Statement *s = r->getDef();
+              CallStatement *call = dynamic_cast<CallStatement*>(s);
+              if (call)
+                {
+                  // See if we can prove something about this register.
+                  UserProc* destProc = (UserProc*)call->getDestProc();
+                  Exp* base = r->getSubExp1();
+                  if (destProc && !destProc->isLib() && ((UserProc*)destProc)->cycleGrp != NULL &&
+                      ((UserProc*)destProc)->cycleGrp->find(this) != ((UserProc*)destProc)->cycleGrp->end())
+                    {
+                      // The destination procedure may not have preservation proved as yet, because it is involved
+                      // in our recursion group. Use the conditional preservation logic to determine whether query is
+                      // true for this procedure
+                      Exp* provenTo = destProc->getProven(base);
+                      if (provenTo)
+                        {
+                          // There is a proven preservation. Use it to bypass the call
+                          Exp* queryLeft = call->localiseExp(provenTo->clone());
+                          query->setSubExp1(queryLeft);
+                          // Now try everything on the result
+                          return prover(query, lastPhis, cache, original, lastPhi);
+                        }
+                      else
+                        {
+                          // Check if the required preservation is one of the premises already assumed
+                          Exp* premisedTo = destProc->getPremised(base);
+                          if (premisedTo)
+                            {
+                              if (DEBUG_PROOF)
+                                LOG << "conditional preservation for call from " << getName() << " to " <<
+                                    destProc->getName() << ", allows bypassing\n";
+                              Exp* queryLeft = call->localiseExp(premisedTo->clone());
+                              query->setSubExp1(queryLeft);
+                              return prover(query, lastPhis, cache, original, lastPhi);
+                            }
+                          else
+                            {
+                              // There is no proof, and it's not one of the premises. It may yet succeed, by making
+                              // another premise! Example: try to prove esp, depends on whether ebp is preserved, so
+                              // recurse to check ebp's preservation. Won't infinitely loop because of the premise map
+                              // FIXME: what if it needs a rx = rx + K preservation?
+                              Exp* newQuery = new Binary(opEquals,
+                                                         base->clone(),
+                                                         base->clone());
+                              destProc->setPremise(base);
+                              if (DEBUG_PROOF)
+                                LOG << "new required premise " << newQuery << " for " << destProc->getName() <<
+                                    "\n";
+                              // Pass conditional as true, since even if proven, this is conditional on other things
+                              bool result = destProc->prove(newQuery, true);
+                              destProc->killPremise(base);
+                              if (result)
+                                {
+                                  if (DEBUG_PROOF)
+                                    LOG << "conditional preservation with new premise " << newQuery <<
+                                        " succeeds for " << destProc->getName() << "\n";
+                                  // Use the new conditionally proven result
+                                  Exp* queryLeft = call->localiseExp(base->clone());
+                                  query->setSubExp1(queryLeft);
+                                  return destProc->prover(query, lastPhis, cache, original, lastPhi);
+                                }
+                              else
+                                {
+                                  if (DEBUG_PROOF)
+                                    LOG << "conditional preservation required premise " << newQuery << " fails!\n";
+                                  // Do nothing else; the outer proof will likely fail
+                                }
+                            }
+                        }
 
-                      } // End call involved in this recursion group
-                    // Seems reasonable that recursive procs need protection from call loops too
-                    Exp *right = call->getProven(r->getSubExp1());	// getProven returns the right side of what is
-                    if (right)
-                      {									//	proven about r (the LHS of query)
-                        right = right->clone();
-                        if (called.find(call) != called.end() && *called[call] == *query)
-                          {
-                            LOG << "found call loop to " << call->getDestProc()->getName() << " " << query << "\n";
-                            query = new Terminal(opFalse);
-                            change = true;
-                          }
-                        else
-                          {
-                            called[call] = query->clone();
-                            if (DEBUG_PROOF)
-                              LOG << "using proven for " << call->getDestProc()->getName() << " "
-                              << r->getSubExp1() << " = " << right << "\n";
-                            right = call->localiseExp(right);
-                            if (DEBUG_PROOF)
-                              LOG << "right with subs: " << right << "\n";
-                            query->setSubExp1(right);				// Replace LHS of query with right
-                            change = true;
-                          }
-                      }
-                  }
-                else if (s && s->isPhi())
-                  {
-                    // for a phi, we have to prove the query for every statement
-                    PhiAssign *pa = (PhiAssign*)s;
-                    PhiAssign::iterator it;
-                    bool ok = true;
-                    if (lastPhis.find(pa) != lastPhis.end() || pa == lastPhi)
-                      {
-                        if (DEBUG_PROOF)
-                          LOG << "phi loop detected ";
-                        ok = (*query->getSubExp2() == *phiInd);
-                        if (ok && DEBUG_PROOF)
-                          LOG << "(set true due to induction)\n";		// FIXME: induction??!
-                        if (!ok && DEBUG_PROOF)
-                          LOG << "(set false " << query->getSubExp2() << " != " << phiInd << ")\n";
-                      }
-                    else
-                      {
-                        if (DEBUG_PROOF)
-                          LOG << "found " << s << " prove for each\n";
-                        for (it = pa->begin(); it != pa->end(); it++)
-                          {
-                            Exp *e = query->clone();
-                            RefExp *r1 = (RefExp*)e->getSubExp1();
-                            r1->setDef(it->def);
-                            if (DEBUG_PROOF)
-                              LOG << "proving for " << e << "\n";
-                            lastPhis.insert(lastPhi);
-                            if (!prover(e, lastPhis, cache, original, pa))
-                              {
-                                ok = false;
-                                //delete e;
-                                break;
-                              }
-                            lastPhis.erase(lastPhi);
-                            //delete e;
-                          }
-                        if (ok)
-                          cache[pa] = query->getSubExp2()->clone();
-                      }
-                    if (ok)
-                      query = new Terminal(opTrue);
-                    else
-                      query = new Terminal(opFalse);
-                    change = true;
-                  }
-                else if (s && s->isAssign())
-                  {
-                    if (s && refsTo.find(s) != refsTo.end())
-                      {
-                        LOG << "detected ref loop " << s << "\n";
-                        LOG << "refsTo: ";
-                        std::set<Statement*>::iterator ll;
-                        for (ll = refsTo.begin(); ll != refsTo.end(); ++ll)
-                          LOG << (*ll)->getNumber() << ", ";
-                        LOG << "\n";
-                        assert(false);
-                      }
-                    else
-                      {
-                        refsTo.insert(s);
-                        query->setSubExp1(((Assign*)s)->getRight()->clone());
-                        change = true;
-                      }
-                  }
-              }
+                    } // End call involved in this recursion group
+                  // Seems reasonable that recursive procs need protection from call loops too
+                  Exp *right = call->getProven(r->getSubExp1());	// getProven returns the right side of what is
+                  if (right)
+                    {
+                      //	proven about r (the LHS of query)
+                      right = right->clone();
+                      if (called.find(call) != called.end() && *called[call] == *query)
+                        {
+                          LOG << "found call loop to " << call->getDestProc()->getName() << " " << query << "\n";
+                          query = new Terminal(opFalse);
+                          change = true;
+                        }
+                      else
+                        {
+                          called[call] = query->clone();
+                          if (DEBUG_PROOF)
+                            LOG << "using proven for " << call->getDestProc()->getName() << " "
+                                << r->getSubExp1() << " = " << right << "\n";
+                          right = call->localiseExp(right);
+                          if (DEBUG_PROOF)
+                            LOG << "right with subs: " << right << "\n";
+                          query->setSubExp1(right);				// Replace LHS of query with right
+                          change = true;
+                        }
+                    }
+                }
+              else if (s && s->isPhi())
+                {
+                  // for a phi, we have to prove the query for every statement
+                  PhiAssign *pa = (PhiAssign*)s;
+                  PhiAssign::iterator it;
+                  bool ok = true;
+                  if (lastPhis.find(pa) != lastPhis.end() || pa == lastPhi)
+                    {
+                      if (DEBUG_PROOF)
+                        LOG << "phi loop detected ";
+                      ok = (*query->getSubExp2() == *phiInd);
+                      if (ok && DEBUG_PROOF)
+                        LOG << "(set true due to induction)\n";		// FIXME: induction??!
+                      if (!ok && DEBUG_PROOF)
+                        LOG << "(set false " << query->getSubExp2() << " != " << phiInd << ")\n";
+                    }
+                  else
+                    {
+                      if (DEBUG_PROOF)
+                        LOG << "found " << s << " prove for each\n";
+                      for (it = pa->begin(); it != pa->end(); it++)
+                        {
+                          Exp *e = query->clone();
+                          RefExp *r1 = (RefExp*)e->getSubExp1();
+                          r1->setDef(it->def);
+                          if (DEBUG_PROOF)
+                            LOG << "proving for " << e << "\n";
+                          lastPhis.insert(lastPhi);
+                          if (!prover(e, lastPhis, cache, original, pa))
+                            {
+                              ok = false;
+                              //delete e;
+                              break;
+                            }
+                          lastPhis.erase(lastPhi);
+                          //delete e;
+                        }
+                      if (ok)
+                        cache[pa] = query->getSubExp2()->clone();
+                    }
+                  if (ok)
+                    query = new Terminal(opTrue);
+                  else
+                    query = new Terminal(opFalse);
+                  change = true;
+                }
+              else if (s && s->isAssign())
+                {
+                  if (s && refsTo.find(s) != refsTo.end())
+                    {
+                      LOG << "detected ref loop " << s << "\n";
+                      LOG << "refsTo: ";
+                      std::set<Statement*>::iterator ll;
+                      for (ll = refsTo.begin(); ll != refsTo.end(); ++ll)
+                        LOG << (*ll)->getNumber() << ", ";
+                      LOG << "\n";
+                      assert(false);
+                    }
+                  else
+                    {
+                      refsTo.insert(s);
+                      query->setSubExp1(((Assign*)s)->getRight()->clone());
+                      change = true;
+                    }
+                }
+            }
 
-            // remove memofs from both sides if possible
-            if (!change && query->getSubExp1()->getOper() == opMemOf && query->getSubExp2()->getOper() == opMemOf)
-              {
-                query->setSubExp1(((Unary*)query->getSubExp1())->getSubExp1());
-                query->setSubExp2(((Unary*)query->getSubExp2())->getSubExp1());
-                change = true;
-              }
+          // remove memofs from both sides if possible
+          if (!change && query->getSubExp1()->getOper() == opMemOf && query->getSubExp2()->getOper() == opMemOf)
+            {
+              query->setSubExp1(((Unary*)query->getSubExp1())->getSubExp1());
+              query->setSubExp2(((Unary*)query->getSubExp2())->getSubExp1());
+              change = true;
+            }
 
-            // is ok if both of the memofs are subscripted with NULL
-            if (!change && query->getSubExp1()->getOper() == opSubscript &&
-                query->getSubExp1()->getSubExp1()->getOper() == opMemOf &&
-                ((RefExp*)query->getSubExp1())->getDef() == NULL &&
-                query->getSubExp2()->getOper() == opSubscript &&
-                query->getSubExp2()->getSubExp1()->getOper() == opMemOf &&
-                ((RefExp*)query->getSubExp2())->getDef() == NULL)
-              {
-                query->setSubExp1(((Unary*)query->getSubExp1()->getSubExp1())->getSubExp1());
-                query->setSubExp2(((Unary*)query->getSubExp2()->getSubExp1())->getSubExp1());
-                change = true;
-              }
+          // is ok if both of the memofs are subscripted with NULL
+          if (!change && query->getSubExp1()->getOper() == opSubscript &&
+              query->getSubExp1()->getSubExp1()->getOper() == opMemOf &&
+              ((RefExp*)query->getSubExp1())->getDef() == NULL &&
+              query->getSubExp2()->getOper() == opSubscript &&
+              query->getSubExp2()->getSubExp1()->getOper() == opMemOf &&
+              ((RefExp*)query->getSubExp2())->getDef() == NULL)
+            {
+              query->setSubExp1(((Unary*)query->getSubExp1()->getSubExp1())->getSubExp1());
+              query->setSubExp2(((Unary*)query->getSubExp2()->getSubExp1())->getSubExp1());
+              change = true;
+            }
 
-            // find a memory def for the right if there is a memof on the left
-            // FIXME: this seems pretty much like a bad hack!
-            if (!change && query->getSubExp1()->getOper() == opMemOf)
-              {
-                StatementList stmts;
-                getStatements(stmts);
-                StatementList::iterator it;
-                for (it = stmts.begin(); it != stmts.end(); it++)
-                  {
-                    Assign* s = (Assign*)*it;
-                    if (s->isAssign() && *s->getRight() == *query->getSubExp2() && s->getLeft()->getOper() == opMemOf)
-                      {
-                        query->setSubExp2(s->getLeft()->clone());
-                        change = true;
-                        break;
-                      }
-                  }
-              }
+          // find a memory def for the right if there is a memof on the left
+          // FIXME: this seems pretty much like a bad hack!
+          if (!change && query->getSubExp1()->getOper() == opMemOf)
+            {
+              StatementList stmts;
+              getStatements(stmts);
+              StatementList::iterator it;
+              for (it = stmts.begin(); it != stmts.end(); it++)
+                {
+                  Assign* s = (Assign*)*it;
+                  if (s->isAssign() && *s->getRight() == *query->getSubExp2() && s->getLeft()->getOper() == opMemOf)
+                    {
+                      query->setSubExp2(s->getLeft()->clone());
+                      change = true;
+                      break;
+                    }
+                }
+            }
 
-            // last chance, swap left and right if haven't swapped before
-            if (!change && !swapped)
-              {
-                Exp *e = query->getSubExp1();
-                query->setSubExp1(query->getSubExp2());
-                query->setSubExp2(e);
-                change = true;
-                swapped = true;
-                refsTo.clear();
-              }
-          }
-        else if (query->isIntConst())
-          {
-            Const *c = (Const*)query;
-            query = new Terminal(c->getInt() ? opTrue : opFalse);
-          }
+          // last chance, swap left and right if haven't swapped before
+          if (!change && !swapped)
+            {
+              Exp *e = query->getSubExp1();
+              query->setSubExp1(query->getSubExp2());
+              query->setSubExp2(e);
+              change = true;
+              swapped = true;
+              refsTo.clear();
+            }
+        }
+      else if (query->isIntConst())
+        {
+          Const *c = (Const*)query;
+          query = new Terminal(c->getInt() ? opTrue : opFalse);
+        }
 
-        Exp *old = query->clone();
+      Exp *old = query->clone();
 
-        query = query->clone()->simplify();
+      query = query->clone()->simplify();
 
-        if (change && !(*old == *query) && DEBUG_PROOF)
-          {
-            LOG << old << "\n";
-          }
-        //delete old;
-      }
+      if (change && !(*old == *query) && DEBUG_PROOF)
+        {
+          LOG << old << "\n";
+        }
+      //delete old;
+    }
 
-    return query->getOper() == opTrue;
-  }
+  return query->getOper() == opTrue;
+}
 
 // Get the set of locations defined by this proc. In other words, the define set, currently called returns
 void UserProc::getDefinitions(LocationSet& ls)
@@ -4150,14 +4158,14 @@ void UserProc::getDefinitions(LocationSet& ls)
 }
 
 void Proc::addCallers(std::set<UserProc*>& callers)
-  {
-    std::set<CallStatement*>::iterator it;
-    for (it = callerSet.begin(); it != callerSet.end(); it++)
-      {
-        UserProc* callerProc = (*it)->getProc();
-        callers.insert(callerProc);
-      }
-  }
+{
+  std::set<CallStatement*>::iterator it;
+  for (it = callerSet.begin(); it != callerSet.end(); it++)
+    {
+      UserProc* callerProc = (*it)->getProc();
+      callers.insert(callerProc);
+    }
+}
 
 void UserProc::addCallees(std::list<UserProc*>& callees)
 {
@@ -4503,7 +4511,7 @@ void UserProc::dumpSymbolMap()
     {
       Type* ty = getTypeForLocation(it->second);
       std::cerr << "  " << it->first << " maps to " << it->second << " type " << (ty ? ty->getCtype() : "NULL") <<
-      "\n";
+                "\n";
     }
 }
 
@@ -4514,7 +4522,7 @@ void UserProc::dumpSymbolMapx()
     {
       Type* ty = getTypeForLocation(it->second);
       std::cerr << "  " << it->first << " maps to " << it->second << " type " << (ty ? ty->getCtype() : "NULL") <<
-      "\n";
+                "\n";
       it->first->printx(2);
     }
 }
@@ -4531,7 +4539,8 @@ void UserProc::testSymbolMap()
       while (it2 != symbolMap.end())
         {
           if (*it2->first < *it1->first)
-            {		// Compare keys
+            {
+              // Compare keys
               OK = false;
               std::cerr << "*it2->first < *it1->first: " << it2->first << " < " << it1->first << "!\n";
               // it2->first->printx(0); it1->first->printx(5);
@@ -4923,13 +4932,15 @@ void UserProc::fixCallAndPhiRefs()
           for (PhiAssign::iterator p = ps->begin(); p != ps->end(); )
             {
               if (p->e == NULL)
-                {						// Can happen due to PhiAssign::setAt
+                {
+                  // Can happen due to PhiAssign::setAt
                   ++p;
                   continue;
                 }
               Exp* current = new RefExp(p->e, p->def);
               if (*current == *r)
-                {					// Will we ever see this?
+                {
+                  // Will we ever see this?
                   p = ps->erase(p);					// Erase this phi parameter
                   continue;
                 }
@@ -4943,7 +4954,8 @@ void UserProc::fixCallAndPhiRefs()
                     }
                   Exp* rhs = ((Assign*)p->def)->getRight();
                   if (*rhs == *r)
-                    {					// Check if RHS is a single reference to ps
+                    {
+                      // Check if RHS is a single reference to ps
                       p = ps->erase(p);				// Yes, erase this phi parameter
                       continue;
                     }
@@ -4977,7 +4989,8 @@ void UserProc::fixCallAndPhiRefs()
             first = first->simplify();
           first = first->propagateAll();				// Propagate everything repeatedly
           if (cb.isMod())
-            {						// Modified?
+            {
+              // Modified?
               // if first is of the form lhs{x}
               if (first->isSubscript() && *((RefExp*)first)->getSubExp1() == *lhs)
                 // replace first with x
@@ -5029,7 +5042,8 @@ void UserProc::fixCallAndPhiRefs()
             }
         }
       else
-        {	// Ordinary statement
+        {
+          // Ordinary statement
           s->bypass();
         }
     }
@@ -5107,7 +5121,7 @@ void UserProc::propagateToCollector()
             {
               if (VERBOSE)
                 LOG << "propagating " << r << " to " << as->getRight() << " in collector; result " << memOfRes <<
-                "\n";
+                    "\n";
               ((Location*)*it)->setSubExp1(res);	// Change the child of the memof
             }
         }
@@ -5202,7 +5216,8 @@ bool UserProc::doesParamChainToCall(Exp* param, UserProc* p, ProcSet* visited)
       UserProc* dest = (UserProc*)c->getDestProc();
       if (dest == NULL || dest->isLib()) continue;  // Only interested in calls to UserProcs
       if (dest == p)
-        {				// Pointer comparison is OK here
+        {
+          // Pointer comparison is OK here
           // This is a recursive call to p. Check for an argument of the form param{-} FIXME: should be looking for
           // component
           StatementList& args = c->getArguments();
@@ -5444,207 +5459,207 @@ bool UserProc::removeRedundantParameters()
 // (only add procs to this set, never remove)
 // Return true if any change
 bool UserProc::removeRedundantReturns(std::set<UserProc*>& removeRetSet)
-  {
-    Boomerang::get()->alert_decompiling(this);
-    Boomerang::get()->alert_decompile_debug_point(this, "before removing unused returns");
-    // First remove the unused parameters
-    bool removedParams = removeRedundantParameters();
-    if (theReturnStatement == NULL)
-      return removedParams;
-    if (DEBUG_UNUSED)
-      LOG << "%%% removing unused returns for " << getName() << " %%%\n";
+{
+  Boomerang::get()->alert_decompiling(this);
+  Boomerang::get()->alert_decompile_debug_point(this, "before removing unused returns");
+  // First remove the unused parameters
+  bool removedParams = removeRedundantParameters();
+  if (theReturnStatement == NULL)
+    return removedParams;
+  if (DEBUG_UNUSED)
+    LOG << "%%% removing unused returns for " << getName() << " %%%\n";
 
-    if (signature->isForced())
-      {
-        // Respect the forced signature, but use it to remove returns if necessary
-        bool removedRets = false;
-        ReturnStatement::iterator rr;
-        for (rr = theReturnStatement->begin(); rr != theReturnStatement->end(); )
-          {
-            Assign* a = (Assign*)*rr;
-            Exp *lhs = a->getLeft();
-            // For each location in the returns, check if in the signature
-            bool found = false;
-            for (unsigned int i = 0; i < signature->getNumReturns(); i++)
-              if (*signature->getReturnExp(i) == *lhs)
-                {
-                  found = true;
-                  break;
-                }
-            if (found)
-              rr++;		// Yes, in signature; OK
-            else
+  if (signature->isForced())
+    {
+      // Respect the forced signature, but use it to remove returns if necessary
+      bool removedRets = false;
+      ReturnStatement::iterator rr;
+      for (rr = theReturnStatement->begin(); rr != theReturnStatement->end(); )
+        {
+          Assign* a = (Assign*)*rr;
+          Exp *lhs = a->getLeft();
+          // For each location in the returns, check if in the signature
+          bool found = false;
+          for (unsigned int i = 0; i < signature->getNumReturns(); i++)
+            if (*signature->getReturnExp(i) == *lhs)
               {
-                // This return is not in the signature. Remove it
-                rr = theReturnStatement->erase(rr);
-                removedRets = true;
-                if (DEBUG_UNUSED)
-                  LOG << "%%%  removing unused return " << a << " from proc " << getName() << " (forced signature)\n";
+                found = true;
+                break;
               }
-          }
-        if (removedRets)
-          // Still may have effects on calls or now unused statements
-          updateForUseChange(removeRetSet);
-        return removedRets;
-      }
-
-    // FIXME: this needs to be more sensible when we don't decompile down from main! Probably should assume just the
-    // first return is valid, for example (presently assume none are valid)
-    LocationSet unionOfCallerLiveLocs;
-    if (strcmp(getName(), "main") == 0)		// Probably not needed: main is forced so handled above
-      // Just insert one return for main. Note: at present, the first parameter is still the stack pointer
-      unionOfCallerLiveLocs.insert(signature->getReturnExp(1));
-    else
-      {
-        // For each caller
-        std::set<CallStatement*>& callers = getCallers();
-        std::set<CallStatement*>::iterator cc;
-        for (cc = callers.begin(); cc != callers.end(); ++cc)
-          {
-            // Union in the set of locations live at this call
-            UseCollector* useCol = (*cc)->getUseCollector();
-            unionOfCallerLiveLocs.makeUnion(useCol->getLocSet());
-          }
-      }
-    // Intersect with the current returns
-    bool removedRets = false;
-    ReturnStatement::iterator rr;
-    for (rr = theReturnStatement->begin(); rr != theReturnStatement->end(); )
-      {
-        Assign* a = (Assign*)*rr;
-        if (!unionOfCallerLiveLocs.exists(a->getLeft()))
-          {
-            if (DEBUG_UNUSED)
-              LOG << "%%%  removing unused return " << a << " from proc " << getName() << "\n";
-            // If a component of the RHS referenced a call statement, the liveness used to be killed here.
-            // This was wrong; you need to notice the liveness changing inside updateForUseChange() to correctly
-            // recurse to callee
-            rr = theReturnStatement->erase(rr);
-            removedRets = true;
-          }
-        else
-          rr++;
-      }
-
-    if (DEBUG_UNUSED)
-      {
-        std::ostringstream ost;
-        unionOfCallerLiveLocs.print(ost);
-        LOG << "%%%  union of caller live locations for " << getName() << ": " << ost.str().c_str() << "\n";
-        LOG << "%%%  final returns for " << getName() << ": " << theReturnStatement->getReturns().prints() << "\n";
-      }
-
-    // removing returns might result in params that can be removed, might as well do it now.
-    removedParams |= removeRedundantParameters();
-
-    ProcSet updateSet;			// Set of procs to update
-
-    if (removedParams || removedRets)
-      {
-        // Update the statements that call us
-        std::set<CallStatement*>::iterator it;
-        for (it = callerSet.begin(); it != callerSet.end() ; it++)
-          {
-            (*it)->updateArguments();				// Update caller's arguments
-            updateSet.insert((*it)->getProc());		// Make sure we redo the dataflow
-            removeRetSet.insert((*it)->getProc());	// Also schedule caller proc for more analysis
-          }
-
-        // Now update myself
+          if (found)
+            rr++;		// Yes, in signature; OK
+          else
+            {
+              // This return is not in the signature. Remove it
+              rr = theReturnStatement->erase(rr);
+              removedRets = true;
+              if (DEBUG_UNUSED)
+                LOG << "%%%  removing unused return " << a << " from proc " << getName() << " (forced signature)\n";
+            }
+        }
+      if (removedRets)
+        // Still may have effects on calls or now unused statements
         updateForUseChange(removeRetSet);
+      return removedRets;
+    }
 
-        // Update any other procs that need updating
-        updateSet.erase(this);		// Already done this proc
-        while (updateSet.size())
-          {
-            UserProc* proc = *updateSet.begin();
-            updateSet.erase(proc);
-            proc->updateForUseChange(removeRetSet);
-          }
-      }
+  // FIXME: this needs to be more sensible when we don't decompile down from main! Probably should assume just the
+  // first return is valid, for example (presently assume none are valid)
+  LocationSet unionOfCallerLiveLocs;
+  if (strcmp(getName(), "main") == 0)		// Probably not needed: main is forced so handled above
+    // Just insert one return for main. Note: at present, the first parameter is still the stack pointer
+    unionOfCallerLiveLocs.insert(signature->getReturnExp(1));
+  else
+    {
+      // For each caller
+      std::set<CallStatement*>& callers = getCallers();
+      std::set<CallStatement*>::iterator cc;
+      for (cc = callers.begin(); cc != callers.end(); ++cc)
+        {
+          // Union in the set of locations live at this call
+          UseCollector* useCol = (*cc)->getUseCollector();
+          unionOfCallerLiveLocs.makeUnion(useCol->getLocSet());
+        }
+    }
+  // Intersect with the current returns
+  bool removedRets = false;
+  ReturnStatement::iterator rr;
+  for (rr = theReturnStatement->begin(); rr != theReturnStatement->end(); )
+    {
+      Assign* a = (Assign*)*rr;
+      if (!unionOfCallerLiveLocs.exists(a->getLeft()))
+        {
+          if (DEBUG_UNUSED)
+            LOG << "%%%  removing unused return " << a << " from proc " << getName() << "\n";
+          // If a component of the RHS referenced a call statement, the liveness used to be killed here.
+          // This was wrong; you need to notice the liveness changing inside updateForUseChange() to correctly
+          // recurse to callee
+          rr = theReturnStatement->erase(rr);
+          removedRets = true;
+        }
+      else
+        rr++;
+    }
 
-    if (theReturnStatement->getNumReturns() == 1)
-      {
-        Assign *a = (Assign*)*theReturnStatement->getReturns().begin();
-        signature->setRetType(a->getType());
-      }
+  if (DEBUG_UNUSED)
+    {
+      std::ostringstream ost;
+      unionOfCallerLiveLocs.print(ost);
+      LOG << "%%%  union of caller live locations for " << getName() << ": " << ost.str().c_str() << "\n";
+      LOG << "%%%  final returns for " << getName() << ": " << theReturnStatement->getReturns().prints() << "\n";
+    }
 
-    Boomerang::get()->alert_decompile_debug_point(this, "after removing unused and redundant returns");
-    return removedRets || removedParams;
-  }
+  // removing returns might result in params that can be removed, might as well do it now.
+  removedParams |= removeRedundantParameters();
+
+  ProcSet updateSet;			// Set of procs to update
+
+  if (removedParams || removedRets)
+    {
+      // Update the statements that call us
+      std::set<CallStatement*>::iterator it;
+      for (it = callerSet.begin(); it != callerSet.end() ; it++)
+        {
+          (*it)->updateArguments();				// Update caller's arguments
+          updateSet.insert((*it)->getProc());		// Make sure we redo the dataflow
+          removeRetSet.insert((*it)->getProc());	// Also schedule caller proc for more analysis
+        }
+
+      // Now update myself
+      updateForUseChange(removeRetSet);
+
+      // Update any other procs that need updating
+      updateSet.erase(this);		// Already done this proc
+      while (updateSet.size())
+        {
+          UserProc* proc = *updateSet.begin();
+          updateSet.erase(proc);
+          proc->updateForUseChange(removeRetSet);
+        }
+    }
+
+  if (theReturnStatement->getNumReturns() == 1)
+    {
+      Assign *a = (Assign*)*theReturnStatement->getReturns().begin();
+      signature->setRetType(a->getType());
+    }
+
+  Boomerang::get()->alert_decompile_debug_point(this, "after removing unused and redundant returns");
+  return removedRets || removedParams;
+}
 
 // See comments above for removeRedundantReturns(). Need to save the old parameters and call livenesses, redo the
 // dataflow and removal of unused statements, recalculate the parameters and call livenesses, and if either or both of
 // these are changed, recurse to parents or those calls' children respectively. (When call livenesses change like this,
 // it means that the recently removed return was the only use of that liveness, i.e. there was a return chain.)
 void UserProc::updateForUseChange(std::set<UserProc*>& removeRetSet)
-  {
-    // We need to remember the parameters, and all the livenesses for all the calls, to see if these are changed
-    // by removing returns
-    if (DEBUG_UNUSED)
-      {
-        LOG << "%%% updating " << getName() << " for changes to uses (returns or arguments)\n";
-        LOG << "%%% updating dataflow:\n";
-      }
+{
+  // We need to remember the parameters, and all the livenesses for all the calls, to see if these are changed
+  // by removing returns
+  if (DEBUG_UNUSED)
+    {
+      LOG << "%%% updating " << getName() << " for changes to uses (returns or arguments)\n";
+      LOG << "%%% updating dataflow:\n";
+    }
 
-    // Save the old parameters and call liveness
-    StatementList oldParameters(parameters);
-    std::map<CallStatement*, UseCollector> callLiveness;
-    BasicBlock::rtlrit rrit;
-    StatementList::reverse_iterator srit;
-    BB_IT it;
-    for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it))
-      {
-        CallStatement* c = (CallStatement*) bb->getLastStmt(rrit, srit);
-        // Note: we may have removed some statements, so there may no longer be a last statement!
-        if (c == NULL || !c->isCall()) continue;
-        UserProc* dest = (UserProc*)c->getDestProc();
-        // Not interested in unanalysed indirect calls (not sure) or calls to lib procs
-        if (dest == NULL || dest->isLib()) continue;
-        callLiveness[c].makeCloneOf(*c->getUseCollector());
-      }
+  // Save the old parameters and call liveness
+  StatementList oldParameters(parameters);
+  std::map<CallStatement*, UseCollector> callLiveness;
+  BasicBlock::rtlrit rrit;
+  StatementList::reverse_iterator srit;
+  BB_IT it;
+  for (PBB bb = cfg->getFirstBB(it); bb; bb = cfg->getNextBB(it))
+    {
+      CallStatement* c = (CallStatement*) bb->getLastStmt(rrit, srit);
+      // Note: we may have removed some statements, so there may no longer be a last statement!
+      if (c == NULL || !c->isCall()) continue;
+      UserProc* dest = (UserProc*)c->getDestProc();
+      // Not interested in unanalysed indirect calls (not sure) or calls to lib procs
+      if (dest == NULL || dest->isLib()) continue;
+      callLiveness[c].makeCloneOf(*c->getUseCollector());
+    }
 
-    // Have to redo dataflow to get the liveness at the calls correct
-    removeCallLiveness();			// Want to recompute the call livenesses
-    doRenameBlockVars(-3, true);
+  // Have to redo dataflow to get the liveness at the calls correct
+  removeCallLiveness();			// Want to recompute the call livenesses
+  doRenameBlockVars(-3, true);
 
-    remUnusedStmtEtc();				// Also redoes parameters
+  remUnusedStmtEtc();				// Also redoes parameters
 
-    // Have the parameters changed? If so, then all callers will need to update their arguments, and do similar
-    // analysis to the removal of returns
-    //findFinalParameters();
-    removeRedundantParameters();
-    if (parameters.size() != oldParameters.size())
-      {
-        if (DEBUG_UNUSED)
-          LOG << "%%%  parameters changed for " << getName() << "\n";
-        std::set<CallStatement*>& callers = getCallers();
-        std::set<CallStatement*>::iterator cc;
-        std::set<UserProc*> callerProcs;
-        std::set<UserProc*>::iterator pp;
-        for (cc = callers.begin(); cc != callers.end(); ++cc)
-          {
-            (*cc)->updateArguments();
-            // Schedule the callers for analysis
-            removeRetSet.insert((*cc)->getProc());
-          }
-      }
-    // Check if the liveness of any calls has changed
-    std::map<CallStatement*, UseCollector>::iterator ll;
-    for (ll = callLiveness.begin(); ll != callLiveness.end(); ++ll)
-      {
-        CallStatement* call = ll->first;
-        UseCollector& oldLiveness = ll->second;
-        UseCollector& newLiveness = *call->getUseCollector();
-        if (!(newLiveness == oldLiveness))
-          {
-            if (DEBUG_UNUSED)
-              LOG << "%%%  liveness for call to " << call->getDestProc()->getName() << " in " << getName() <<
-              " changed\n";
-            removeRetSet.insert((UserProc*)call->getDestProc());
-          }
-      }
-  }
+  // Have the parameters changed? If so, then all callers will need to update their arguments, and do similar
+  // analysis to the removal of returns
+  //findFinalParameters();
+  removeRedundantParameters();
+  if (parameters.size() != oldParameters.size())
+    {
+      if (DEBUG_UNUSED)
+        LOG << "%%%  parameters changed for " << getName() << "\n";
+      std::set<CallStatement*>& callers = getCallers();
+      std::set<CallStatement*>::iterator cc;
+      std::set<UserProc*> callerProcs;
+      std::set<UserProc*>::iterator pp;
+      for (cc = callers.begin(); cc != callers.end(); ++cc)
+        {
+          (*cc)->updateArguments();
+          // Schedule the callers for analysis
+          removeRetSet.insert((*cc)->getProc());
+        }
+    }
+  // Check if the liveness of any calls has changed
+  std::map<CallStatement*, UseCollector>::iterator ll;
+  for (ll = callLiveness.begin(); ll != callLiveness.end(); ++ll)
+    {
+      CallStatement* call = ll->first;
+      UseCollector& oldLiveness = ll->second;
+      UseCollector& newLiveness = *call->getUseCollector();
+      if (!(newLiveness == oldLiveness))
+        {
+          if (DEBUG_UNUSED)
+            LOG << "%%%  liveness for call to " << call->getDestProc()->getName() << " in " << getName() <<
+                " changed\n";
+          removeRetSet.insert((UserProc*)call->getDestProc());
+        }
+    }
+}
 
 void UserProc::clearUses()
 {
@@ -6202,21 +6217,21 @@ void UserProc::checkLocalFor(RefExp* r)
 
 #ifdef USING_MEMOS
 class LibProcMemo : public Memo
-  {
-  public:
-    LibProcMemo(int mId) : Memo(mId)
-    { }
+{
+public:
+  LibProcMemo(int mId) : Memo(mId)
+  { }
 
-    bool visited;
-    Prog *prog;
-    Signature *signature;						// r
-    ADDRESS address;
-    Proc *m_firstCaller;
-    ADDRESS m_firstCallerAddr;
-    std::set<Exp*, lessExpStar> provenTrue;			// r
-    std::set<CallStatement*> callerSet;
-    Cluster *cluster;
-  };
+  bool visited;
+  Prog *prog;
+  Signature *signature;						// r
+  ADDRESS address;
+  Proc *m_firstCaller;
+  ADDRESS m_firstCallerAddr;
+  std::set<Exp*, lessExpStar> provenTrue;			// r
+  std::set<CallStatement*> callerSet;
+  Cluster *cluster;
+};
 
 Memo *LibProc::makeMemo(int mId)
 {
@@ -6257,27 +6272,27 @@ void LibProc::readMemo(Memo *mm, bool dec)
 }
 
 class UserProcMemo : public Memo
-  {
-  public:
-    UserProcMemo(int mId) : Memo(mId)
-    { }
+{
+public:
+  UserProcMemo(int mId) : Memo(mId)
+  { }
 
-    bool visited;
-    Prog *prog;
-    Signature *signature;						// r
-    ADDRESS address;
-    Proc *m_firstCaller;
-    ADDRESS m_firstCallerAddr;
-    std::set<Exp*, lessExpStar> provenTrue;			// r
-    std::set<CallStatement*> callerSet;
-    Cluster *cluster;
+  bool visited;
+  Prog *prog;
+  Signature *signature;						// r
+  ADDRESS address;
+  Proc *m_firstCaller;
+  ADDRESS m_firstCallerAddr;
+  std::set<Exp*, lessExpStar> provenTrue;			// r
+  std::set<CallStatement*> callerSet;
+  Cluster *cluster;
 
-    Cfg* cfg;
-    ProcStatus status;
-    std::map<std::string, Type*> locals;		// r
-    UserProc::SymbolMap symbolMap;			// r
-    std::list<Proc*> calleeList;
-  };
+  Cfg* cfg;
+  ProcStatus status;
+  std::map<std::string, Type*> locals;		// r
+  UserProc::SymbolMap symbolMap;			// r
+  std::list<Proc*> calleeList;
+};
 
 Memo *UserProc::makeMemo(int mId)
 {
@@ -6300,7 +6315,7 @@ Memo *UserProc::makeMemo(int mId)
 
   signature->takeMemo(mId);
   for (std::set<Exp*, lessExpStar>::iterator it = provenTrue.begin(); it != provenTrue.end(); it++)
-      (*it)->takeMemo(mId);
+    (*it)->takeMemo(mId);
 
   for (std::map<std::string, Type*>::iterator it = locals.begin(); it != locals.end(); it++)
     (*it).second->takeMemo(mId);
@@ -6335,7 +6350,7 @@ void UserProc::readMemo(Memo *mm, bool dec)
 
   signature->restoreMemo(m->mId, dec);
   for (std::set<Exp*, lessExpStar>::iterator it = provenTrue.begin(); it != provenTrue.end(); it++)
-      (*it)->restoreMemo(m->mId, dec);
+    (*it)->restoreMemo(m->mId, dec);
 
   for (std::map<std::string, Type*>::iterator it = locals.begin(); it != locals.end(); it++)
     (*it).second->restoreMemo(m->mId, dec);
