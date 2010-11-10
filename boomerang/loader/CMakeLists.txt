@@ -21,9 +21,9 @@ BOOMERANG_ADD_LOADER(HpSomBinaryFile)
 BOOMERANG_ADD_LOADER(PalmBinaryFile)
 BOOMERANG_ADD_LOADER(DOS4GWBinaryFile microX86dis.c)
 BOOMERANG_ADD_LOADER(IntelCoffFile)
-IF(NOT ${CYGWIN})
-BOOMERANG_ADD_LOADER(MachOBinaryFile)
-ENDIF(NOT ${CYGWIN})
+#IF(NOT ${CYGWIN})
+	BOOMERANG_ADD_LOADER(MachOBinaryFile)
+#ENDIF(NOT ${CYGWIN})
 
 # in include files this is expressed as:
 # if defined(_WIN32) && !defined(__MINGW32__) 

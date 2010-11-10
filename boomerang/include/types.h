@@ -5,6 +5,8 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
+#include <stdint.h>
+
 // Machine types
 typedef unsigned char		Byte;		/* 8 bits */
 typedef unsigned short		SWord;		/* 16 bits */

@@ -32,13 +32,18 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <cstdarg>					// For va_list for MinGW at least
 
 #include "nlist.h"
 #include "macho-apple.h"
 
-#include "objc/objc-class.h"
-#include <cstdarg>					// For va_list for MinGW at least
-#include "objc/objc-runtime.h"
+#ifndef HOST_OSX
+	#include "objc/objc-class.h"
+	#include "objc/objc-runtime.h"
+#else
+	#include <objc/objc-class.h>
+	#include <objc/objc-runtime.h>
+#endif
 
 //#define DEBUG_MACHO_LOADER
 //#define DEBUG_MACHO_LOADER_OBJC
