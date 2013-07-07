@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{899b1dfe-9866-4e0f-a5da-9a866b5365f1}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{29e40dfc-c6ea-415b-801c-6eb27ca637fa}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\boomerang">
+      <UniqueIdentifier>{02b81980-cc0e-4fa7-80fb-038c51f87463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{9172ba63-f4a5-4a01-a534-7b59efbd2a09}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DecompilerThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_DecompilerThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_rtleditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rtleditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\c\ansi-c-parser.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\c\ansi-c-scanner.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\basicblock.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\loader\BinaryFile.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\loader\BinaryFileFactory.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\boomerang.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\cfg.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codegen\chllcode.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\type\constraint.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\dataflow.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\type\dfa.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\exp.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\frontend.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\transform\generic.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\insnameelem.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\log.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\managed.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\njmcDecoder.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\pentiumdecoder.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\pentiumfrontend.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\ppcdecoder.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\ppcfrontend.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\proc.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\prog.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\transform\rdi.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\register.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\rtl.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\signature.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\sparcdecoder.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\sparcfrontend.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\sslinst.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\sslparser.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\sslscanner.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\st20decoder.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\frontend\st20frontend.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\statement.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codegen\syntax.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\table.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\transform\transformation-parser.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\transform\transformation-scanner.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\transform\transformer.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\type\type.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\util\util.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\visitor.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\db\xmlprogparser.cpp">
+      <Filter>Header Files\boomerang</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\c\ansi-c-parser.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\c\ansi-c-scanner.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basicblock.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BinaryFile.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BinaryFileStub.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\boomerang.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cfg.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cluster.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\config.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\constraint.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dataflow.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\decoder.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\exp.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\exphelp.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\frontend.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\hllcode.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\managed.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\memo.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\operator.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\db\operstrings.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\osfcn.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\frontend\pentiumdecoder.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\frontend\pentiumfrontend.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\proc.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\prog.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\register.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\rtl.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sigenum.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\signature.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\statement.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\transformer.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\type.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\types.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\util.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\visitor.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\xmlprogparser.h">
+      <Filter>Header Files\boomerang</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="DecompilerThread.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="mainwindow.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="rtleditor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="about.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="boomerang.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\c\ansi-c.l">
+      <Filter>Header Files\boomerang</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\c\ansi-c.y">
+      <Filter>Header Files\boomerang</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

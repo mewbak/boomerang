@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D98C1DD4-008F-34B2-A980-0998ECF8427E}</ProjectGuid>
+    <RootNamespace>qtgui2</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\Release\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>-Zm200 -EHsc %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>C:\Qt\4.1.2-msvc7.1\include\QtCore;C:\Qt\4.1.2-msvc7.1\include\QtGui;C:\Qt\4.1.2-msvc7.1\include;C:\Qt\4.1.2-msvc7.1\include\ActiveQt;C:\Qt\4.1.2-msvc7.1\mkspecs\win32-msvc.net;..\include;..\win32make\include;..\c;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QT_NO_DEBUG;NDEBUG;_WINDOWS;UNICODE;QT_LARGEFILE_SUPPORT;QT_DLL;QT_NO_DEBUG;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <ObjectFileName>release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>delayimp.lib;qtmain.lib;QtGui4.lib;QtCore4.lib;gc_cpp2.lib;libexpat.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\boomerang-gui.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>C:\Qt\4.1.2-msvc7.1\lib;..;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>
+      </ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Midl>
+      <WarningLevel>0</WarningLevel>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>-Zm200 -EHsc %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Qt\4.1.2-msvc7.1\include\QtCore;C:\Qt\4.1.2-msvc7.1\include\QtGui;C:\Qt\4.1.2-msvc7.1\include;.;C:\Qt\4.1.2-msvc7.1\include\ActiveQt;C:\Qt\4.1.2-msvc7.1\mkspecs\win32-msvc.net;..\include;..\win32make\include;..\c;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;QT_LARGEFILE_SUPPORT;QT_DLL;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <ObjectFileName>debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>delayimp.lib;qtmain.lib;QtGui4.lib;QtCore4.lib;gc_cpp2.lib;libexpat.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\boomerang-gui.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>C:\Qt\4.1.2-msvc7.1\lib;..;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>
+      </ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Midl>
+      <WarningLevel>0</WarningLevel>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="DecompilerThread.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="debug\moc_DecompilerThread.cpp" />
+    <ClCompile Include="debug\moc_mainwindow.cpp" />
+    <ClCompile Include="debug\moc_rtleditor.cpp" />
+    <ClCompile Include="rtleditor.cpp" />
+    <ClCompile Include="..\c\ansi-c-parser.cpp" />
+    <ClCompile Include="..\c\ansi-c-scanner.cpp" />
+    <ClCompile Include="..\db\basicblock.cpp" />
+    <ClCompile Include="..\loader\BinaryFile.cpp" />
+    <ClCompile Include="..\loader\BinaryFileFactory.cpp" />
+    <ClCompile Include="..\boomerang.cpp" />
+    <ClCompile Include="..\db\cfg.cpp" />
+    <ClCompile Include="..\codegen\chllcode.cpp" />
+    <ClCompile Include="..\type\constraint.cpp" />
+    <ClCompile Include="..\db\dataflow.cpp" />
+    <ClCompile Include="..\type\dfa.cpp" />
+    <ClCompile Include="..\db\exp.cpp" />
+    <ClCompile Include="..\frontend\frontend.cpp" />
+    <ClCompile Include="..\transform\generic.cpp" />
+    <ClCompile Include="..\db\insnameelem.cpp" />
+    <ClCompile Include="..\log.cpp" />
+    <ClCompile Include="..\db\managed.cpp" />
+    <ClCompile Include="..\frontend\njmcDecoder.cpp" />
+    <ClCompile Include="..\frontend\pentiumdecoder.cpp" />
+    <ClCompile Include="..\frontend\pentiumfrontend.cpp" />
+    <ClCompile Include="..\frontend\ppcdecoder.cpp" />
+    <ClCompile Include="..\frontend\ppcfrontend.cpp" />
+    <ClCompile Include="..\db\proc.cpp" />
+    <ClCompile Include="..\db\prog.cpp" />
+    <ClCompile Include="..\transform\rdi.cpp" />
+    <ClCompile Include="..\db\register.cpp" />
+    <ClCompile Include="..\db\rtl.cpp" />
+    <ClCompile Include="..\db\signature.cpp" />
+    <ClCompile Include="..\frontend\sparcdecoder.cpp" />
+    <ClCompile Include="..\frontend\sparcfrontend.cpp" />
+    <ClCompile Include="..\db\sslinst.cpp" />
+    <ClCompile Include="..\db\sslparser.cpp" />
+    <ClCompile Include="..\db\sslscanner.cpp" />
+    <ClCompile Include="..\frontend\st20decoder.cpp" />
+    <ClCompile Include="..\frontend\st20frontend.cpp" />
+    <ClCompile Include="..\db\statement.cpp" />
+    <ClCompile Include="..\codegen\syntax.cpp" />
+    <ClCompile Include="..\db\table.cpp" />
+    <ClCompile Include="..\transform\transformation-parser.cpp" />
+    <ClCompile Include="..\transform\transformation-scanner.cpp" />
+    <ClCompile Include="..\transform\transformer.cpp" />
+    <ClCompile Include="..\type\type.cpp" />
+    <ClCompile Include="..\util\util.cpp" />
+    <ClCompile Include="..\db\visitor.cpp" />
+    <ClCompile Include="..\db\xmlprogparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="DecompilerThread.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC DecompilerThread.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -DWIN32  -I "C:\Qt\4.1.2-msvc7.1\include\QtCore" -I "C:\Qt\4.1.2-msvc7.1\include\QtGui" -I "C:\Qt\4.1.2-msvc7.1\include" -I "." -I "C:\Qt\4.1.2-msvc7.1\include\ActiveQt" -I "debug" -I "." -I"C:\Qt\4.1.2-msvc7.1\mkspecs\win32-msvc.net" -DWIN32 DecompilerThread.h -o debug\moc_DecompilerThread.cpp
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">debug\moc_DecompilerThread.cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC DecompilerThread.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -DWIN32 -DNDEBUG  -I "C:\Qt\4.1.2-msvc7.1\include\QtCore" -I "C:\Qt\4.1.2-msvc7.1\include\QtGui" -I "C:\Qt\4.1.2-msvc7.1\include" -I "." -I "C:\Qt\4.1.2-msvc7.1\include\ActiveQt" -I "release" -I "." -I"C:\Qt\4.1.2-msvc7.1\mkspecs\win32-msvc.net" -DWIN32 DecompilerThread.h -o release\moc_DecompilerThread.cpp
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">release\moc_DecompilerThread.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="mainwindow.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC mainwindow.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -DWIN32  -I "C:\Qt\4.1.2-msvc7.1\include\QtCore" -I "C:\Qt\4.1.2-msvc7.1\include\QtGui" -I "C:\Qt\4.1.2-msvc7.1\include" -I "." -I "C:\Qt\4.1.2-msvc7.1\include\ActiveQt" -I "debug" -I "." -I"C:\Qt\4.1.2-msvc7.1\mkspecs\win32-msvc.net" -DWIN32 mainwindow.h -o debug\moc_mainwindow.cpp
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">debug\moc_mainwindow.cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC mainwindow.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -DWIN32 -DNDEBUG  -I "C:\Qt\4.1.2-msvc7.1\include\QtCore" -I "C:\Qt\4.1.2-msvc7.1\include\QtGui" -I "C:\Qt\4.1.2-msvc7.1\include" -I "." -I "C:\Qt\4.1.2-msvc7.1\include\ActiveQt" -I "release" -I "." -I"C:\Qt\4.1.2-msvc7.1\mkspecs\win32-msvc.net" -DWIN32 mainwindow.h -o release\moc_mainwindow.cpp
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">release\moc_mainwindow.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="rtleditor.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC rtleditor.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -DWIN32  -I "C:\Qt\4.1.2-msvc7.1\include\QtCore" -I "C:\Qt\4.1.2-msvc7.1\include\QtGui" -I "C:\Qt\4.1.2-msvc7.1\include" -I "." -I "C:\Qt\4.1.2-msvc7.1\include\ActiveQt" -I "debug" -I "." -I"C:\Qt\4.1.2-msvc7.1\mkspecs\win32-msvc.net" -DWIN32 rtleditor.h -o debug\moc_rtleditor.cpp
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">debug\moc_rtleditor.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\c\ansi-c-parser.h" />
+    <ClInclude Include="..\c\ansi-c-scanner.h" />
+    <ClInclude Include="..\include\basicblock.h" />
+    <ClInclude Include="..\include\BinaryFile.h" />
+    <ClInclude Include="..\include\BinaryFileStub.h" />
+    <ClInclude Include="..\include\boomerang.h" />
+    <ClInclude Include="..\include\cfg.h" />
+    <ClInclude Include="..\include\cluster.h" />
+    <ClInclude Include="..\include\config.h" />
+    <ClInclude Include="..\include\constraint.h" />
+    <ClInclude Include="..\include\dataflow.h" />
+    <ClInclude Include="..\include\decoder.h" />
+    <ClInclude Include="..\include\exp.h" />
+    <ClInclude Include="..\include\exphelp.h" />
+    <ClInclude Include="..\include\frontend.h" />
+    <ClInclude Include="..\include\hllcode.h" />
+    <ClInclude Include="..\include\log.h" />
+    <ClInclude Include="..\include\managed.h" />
+    <ClInclude Include="..\include\memo.h" />
+    <ClInclude Include="..\include\operator.h" />
+    <ClInclude Include="..\db\operstrings.h" />
+    <ClInclude Include="..\include\osfcn.h" />
+    <ClInclude Include="..\frontend\pentiumdecoder.h" />
+    <ClInclude Include="..\frontend\pentiumfrontend.h" />
+    <ClInclude Include="..\include\proc.h" />
+    <ClInclude Include="..\include\prog.h" />
+    <ClInclude Include="..\include\register.h" />
+    <ClInclude Include="..\include\rtl.h" />
+    <ClInclude Include="..\include\sigenum.h" />
+    <ClInclude Include="..\include\signature.h" />
+    <ClInclude Include="..\include\statement.h" />
+    <ClInclude Include="..\include\transformer.h" />
+    <ClInclude Include="..\include\type.h" />
+    <ClInclude Include="..\include\types.h" />
+    <ClInclude Include="..\include\util.h" />
+    <ClInclude Include="..\include\visitor.h" />
+    <ClInclude Include="..\include\xmlprogparser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="about.ui">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UIC about.ui</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\uic.exe about.ui -o ui_about.h
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ui_about.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="boomerang.ui">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UIC boomerang.ui</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\uic.exe boomerang.ui -o ui_boomerang.h
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\4.1.2-msvc7.1\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ui_boomerang.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UIC boomerang.ui</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\4.1.2-msvc7.1\bin\uic.exe boomerang.ui -o ui_boomerang.h
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\4.1.2-msvc7.1\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ui_boomerang.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\c\ansi-c.l">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">running flex++..</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cd %(RootDir)%(Directory)
+$(SolutionDir)\..\flexbison\flex++.exe -oansi-c-scanner.cpp -hansi-c-scanner.h %(Filename)%(Extension)
+cd $(SolutionDir)
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ansi-c-scanner.cpp ansi-c-scanner.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\c\ansi-c.y">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">running bison++..</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cd %(RootDir)%(Directory)
+$(SolutionDir)\..\flexbison\bison++.exe -o ansi-c-parser.cpp -d %(Filename)%(Extension)
+cd $(SolutionDir)
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ansi-c-parser.cpp ansi-c-parser.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
