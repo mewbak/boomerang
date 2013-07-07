@@ -86,6 +86,11 @@ ELSE(USE_GC)
 	ADD_DEFINITIONS(-DNO_GARBAGE_COLLECTOR)
 ENDIF(USE_GC)
 
+IF(USE_FLEXPP_BISONPP)
+	FIND_PACKAGE(Bisonpp REQUIRED)
+	FIND_PACKAGE(Flexpp REQUIRED)
+ENDIF(USE_FLEXPP_BISONPP)
+
 ADD_SUBDIRECTORY(loader)
 ADD_SUBDIRECTORY(c)
 ADD_SUBDIRECTORY(codegen)
@@ -127,6 +132,9 @@ install(FILES  include/*.h DESTINATION include)
 # this is put at the end so that first cmake configure will assume USE_GC NO, 
 # and will not check for existence of Boehm GC
 OPTION(USE_GC "Use Boehm garbage collector, only developers should turn this off" true)
+
+#Markus: Re-add usage of bison++ and flex++.
+OPTION(USE_FLEXPP_BISONPP "Use Coetmeur's bison++ and flex++, only developers should turn this on" false)
 
 IF(BUILD_TESTING)
 	FIND_PACKAGE(CppUnit REQUIRED)
