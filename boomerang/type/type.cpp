@@ -89,7 +89,7 @@ void PointerType::setPointsTo(Type* p)
       // Note: comparing pointers
       points_to = new VoidType();		// Can't point to self; impossible to compare, print, etc
       if (VERBOSE)
-        LOG << "Warning: attempted to create pointer to self: " << this << "\n";
+        LOG << "Warning: attempted to create pointer to self: " << (unsigned int)this << "\n";
     }
   else
     points_to = p;

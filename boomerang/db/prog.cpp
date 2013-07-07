@@ -272,7 +272,7 @@ void Prog::generateCode(Cluster *cluster, UserProc *proc, bool intermixRTL)
       if (cluster == NULL || cluster == m_rootCluster)
         code->print(os);
     }
-  if (proto && cluster == NULL || cluster == m_rootCluster)
+  if ((proto && cluster == NULL) || cluster == m_rootCluster)
     os << "\n";				// Separate prototype(s) from first proc
 
   for (it = m_procs.begin(); it != m_procs.end(); it++)
@@ -1178,7 +1178,7 @@ double Prog::getFloatConstant(ADDRESS uaddr, bool &ok, int bits)
 {
   ok = true;
   SectionInfo* si = pBF->GetSectionInfoByAddr(uaddr);
-  if (si && si->bReadOnly)
+  if (si && si->bReadOnly){
     if (bits == 64)
       {
         return pBF->readNativeFloat8(uaddr);
@@ -1188,6 +1188,7 @@ double Prog::getFloatConstant(ADDRESS uaddr, bool &ok, int bits)
         assert(bits == 32);
         return pBF->readNativeFloat4(uaddr);
       }
+  }
   ok = false;
   return 0.0;
 }

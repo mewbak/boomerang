@@ -224,16 +224,19 @@ Location::Location(Location& o) : Unary(o.op, o.subExp1->clone()), proc(o.proc)
 Unary::~Unary()
 {
   // Remember to ;//delete all children
-  if (subExp1 != 0) ;//delete subExp1;
+  if (subExp1 != 0)
+  	;//delete subExp1;
 }
 Binary::~Binary()
 {
-  if (subExp2 != 0) ;//delete subExp2;
+  if (subExp2 != 0)
+  	;//delete subExp2;
   // Note that the first pointer is destructed in the Exp1 destructor
 }
 Ternary::~Ternary()
 {
-  if (subExp3 != 0) ;//delete subExp3;
+  if (subExp3 != 0)
+  	;//delete subExp3;
 }
 FlagDef::~FlagDef()
 {
@@ -253,19 +256,22 @@ TypeVal::~TypeVal()
  *============================================================================*/
 void Unary::setSubExp1(Exp* e)
 {
-  if (subExp1 != 0) ;//delete subExp1;
+  if (subExp1 != 0)
+  	;//delete subExp1;
   subExp1 = e;
   assert(subExp1);
 }
 void Binary::setSubExp2(Exp* e)
 {
-  if (subExp2 != 0) ;//delete subExp2;
+  if (subExp2 != 0)
+  	;//delete subExp2;
   subExp2 = e;
   assert(subExp1 && subExp2);
 }
 void Ternary::setSubExp3(Exp* e)
 {
-  if (subExp3 != 0) ;//delete subExp3;
+  if (subExp3 != 0)
+  	;//delete subExp3;
   subExp3 = e;
   assert(subExp1 && subExp2 && subExp3);
 }
@@ -417,7 +423,7 @@ bool Const::operator==(const Exp& o) const
     if (((Const&)o).op == opWildIntConst && op == opIntConst) return true;
     if (((Const&)o).op == opWildStrConst && op == opStrConst) return true;
     if (op != ((Const&)o).op) return false;
-    if (conscript && conscript != ((Const&)o).conscript || ((Const&)o).conscript)
+    if ((conscript && conscript != ((Const&)o).conscript) || ((Const&)o).conscript)
       return false;
     switch (op)
       {
@@ -2839,9 +2845,9 @@ Exp* Binary::polySimplify(bool& bMod)
     }
 
   // Check for exp AND TRUE (logical AND)
-  if (	(op == opAnd) &&
+  if (	((op == opAnd) &&
        // Is the below really needed?
-       (opSub2 == opIntConst && ((Const*)subExp2)->getInt() != 0) || subExp2->isTrue())
+       ((opSub2 == opIntConst && ((Const*)subExp2)->getInt() != 0))) || subExp2->isTrue())
     {
       res = ((Unary*)res)->getSubExp1();
       bMod = true;
@@ -2849,9 +2855,9 @@ Exp* Binary::polySimplify(bool& bMod)
     }
 
   // Check for exp OR TRUE (logical OR)
-  if (	(op == opOr) &&
-       (opSub2 == opIntConst &&
-        ((Const*)subExp2)->getInt() != 0) || subExp2->isTrue())
+  if (	((op == opOr) &&
+       ((opSub2 == opIntConst &&
+        ((Const*)subExp2)->getInt() != 0))) || subExp2->isTrue())
     {
       ;//delete res;
       res = new Terminal(opTrue);
@@ -4095,7 +4101,7 @@ Exp* Binary::genConstraints(Exp* result)
       // A pointer to anything
       Type* ptrType = PointerType::newPtrAlpha();
       TypeVal ptrVal(ptrType);	// Type value of ptr to anything
-      if (!restrictTo || restrictTo && restrictTo->isInteger())
+      if (!restrictTo || (restrictTo && restrictTo->isInteger()))
         {
           // int + int -> int
           res = constrainSub(&intVal, &intVal);
@@ -4105,7 +4111,7 @@ Exp* Binary::genConstraints(Exp* result)
                                         intVal.clone()));
         }
 
-      if (!restrictTo || restrictTo && restrictTo->isPointer())
+      if (!restrictTo || (restrictTo && restrictTo->isPointer()))
         {
           // ptr + int -> ptr
           Exp* res2 = constrainSub(&ptrVal, &intVal);
@@ -4134,7 +4140,7 @@ Exp* Binary::genConstraints(Exp* result)
     {
       Type* ptrType = PointerType::newPtrAlpha();
       TypeVal ptrVal(ptrType);
-      if (!restrictTo || restrictTo && restrictTo->isInteger())
+      if (!restrictTo || (restrictTo && restrictTo->isInteger()))
         {
           // int - int -> int
           res = constrainSub(&intVal, &intVal);
@@ -4153,7 +4159,7 @@ Exp* Binary::genConstraints(Exp* result)
           else	 res = res2;
         }
 
-      if (!restrictTo || restrictTo && restrictTo->isPointer())
+      if (!restrictTo || (restrictTo && restrictTo->isPointer()))
         {
           // ptr - int -> ptr
           Exp* res2 = constrainSub(&ptrVal, &intVal);

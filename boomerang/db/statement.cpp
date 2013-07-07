@@ -1155,7 +1155,8 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
    *============================================================================*/
   GotoStatement::~GotoStatement()
   {
-    if (pDest) ;//delete pDest;
+    if (pDest)
+    	;//delete pDest;
   }
 
   /*==============================================================================
@@ -1513,7 +1514,8 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
    *============================================================================*/
   void BranchStatement::setCondExpr(Exp* e)
   {
-    if (pCond) ;//delete pCond;
+    if (pCond)
+    	;//delete pCond;
     pCond = e;
   }
 
@@ -2048,13 +2050,13 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
                     switch (mask)
                       {
                       case 1:
-                        if (condOp == opEquals && k == 0 || condOp == opNotEqual && k == 1)
+                        if ((condOp == opEquals && k == 0) || (condOp == opNotEqual && k == 1))
                           op = opGtrEq;
                         else
                           op = opLess;
                         break;
                       case 0x40:
-                        if (condOp == opEquals && k == 0 || condOp == opNotEqual && k == 0x40)
+                        if ((condOp == opEquals && k == 0) || (condOp == opNotEqual && k == 0x40))
                           op = opNotEqual;
                         else
                           op = opEquals;
@@ -3551,7 +3553,8 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
                                          *============================================================================*/
                                         void BoolAssign::setCondExpr(Exp* pss)
                                         {
-                                          if (pCond) ;//delete pCond;
+                                          if (pCond)
+                                          	;//delete pCond;
                                           pCond = pss;
                                         }
 
@@ -3846,7 +3849,7 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
                                           if (guard) guard = guard->simplify();
 
                                           // Perhaps the guard can go away
-                                          if (guard && (guard->isTrue() || guard->isIntConst() && ((Const*)guard)->getInt() == 1))
+                                          if (guard && (guard->isTrue() || (guard->isIntConst() && ((Const*)guard)->getInt() == 1)))
                                             guard = NULL;			// No longer a guarded assignment
 
                                           if (lhs->getOper() == opMemOf)
@@ -4937,13 +4940,14 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
         Statement *notthis = (Statement*)-1;
         for (uu = defVec.begin(); uu != defVec.end(); uu++)
           {
-            if (uu->def == NULL || uu->def->isImplicit() || !uu->def->isPhi() || uu->def != this)
+            if (uu->def == NULL || uu->def->isImplicit() || !uu->def->isPhi() || uu->def != this){
               if (notthis != (Statement*)-1)
                 {
                   onlyOneNotThis = false;
                   break;
                 }
               else notthis = uu->def;
+            }
           }
 
         if (onlyOneNotThis && notthis != (Statement*)-1)

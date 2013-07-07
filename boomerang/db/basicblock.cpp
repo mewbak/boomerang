@@ -1201,7 +1201,7 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
 
   // if this is a latchNode and the current indentation level is the same as the first node in the loop, then this
   // write out its body and return otherwise generate a goto
-  if (isLatchNode())
+  if (isLatchNode()){
     if (latch && latch->loopHead &&
         indLevel == latch->loopHead->indentLevel + (latch->loopHead->lType == PreTested ? 1 : 0))
       {
@@ -1216,7 +1216,8 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
         emitGotoAndLabel(hll, indLevel, this);
         return;
       }
-
+  }
+  
   PBB child = NULL;
   switch (sType)
     {
@@ -1795,7 +1796,7 @@ char* BasicBlock::getStmtNumber()
   if (first)
     sprintf(ret, "%d", first->getNumber());
   else
-    sprintf(ret, "bb%x", (unsigned)this);
+    sprintf(ret, "bb%lx", (unsigned long)this);
   return ret;
 }
 

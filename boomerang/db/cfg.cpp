@@ -1517,11 +1517,12 @@ void Cfg::findLoopFollow(PBB header, bool* &loopNodes)
                 {
                   // otherwise find the child (if any) of the conditional header that isn't inside the same loop
                   PBB succ = desc->getOutEdges()[0];
-                  if (loopNodes[succ->ord])
+                  if (loopNodes[succ->ord]){
                     if (!loopNodes[desc->getOutEdges()[1]->ord])
                       succ = desc->getOutEdges()[1];
                     else
                       succ = NULL;
+                  }
                   // if a potential follow was found, compare its ordering with the currently found follow
                   if (succ && (!follow || succ->ord > follow->ord))
                     follow = succ;

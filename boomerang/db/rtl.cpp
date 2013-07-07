@@ -288,7 +288,8 @@ void RTL::updateStmt(Statement *s, unsigned i)
   if (*pp != s)
     {
       // Do the update
-      if (*pp) ;//delete *pp;
+      if (*pp)
+      	;//delete *pp;
       *pp = s;
     }
 }
@@ -649,7 +650,7 @@ void RTL::simplify()
       else if (s->isAssign())
         {
           Exp* guard = ((Assign*)s)->getGuard();
-          if (guard && (guard->isFalse() || guard->isIntConst() && ((Const*)guard)->getInt() == 0))
+          if (guard && (guard->isFalse() || (guard->isIntConst() && ((Const*)guard)->getInt() == 0)))
             {
               // This assignment statement can be deleted
               if (VERBOSE)

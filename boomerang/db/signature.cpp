@@ -2011,8 +2011,7 @@ bool Signature::isAddrOfStackLocal(Prog* prog, Exp *e)
   if (op != opMinus && op != opPlus)
     {
       // Matches if e is sp or sp{0} or sp{-}
-      return (*e == *sp ||
-              e->isSubscript() && ((RefExp*)e)->isImplicitDef() && *((RefExp*)e)->getSubExp1() == *sp);
+      return (*e == *sp || (e->isSubscript() && ((RefExp*)e)->isImplicitDef() && *((RefExp*)e)->getSubExp1() == *sp));
     }
   if (op == opMinus && !isLocalOffsetNegative()) return false;
   if (op == opPlus  && !isLocalOffsetPositive()) return false;
@@ -2040,8 +2039,7 @@ bool CallingConvention::StdC::SparcSignature::isAddrOfStackLocal(Prog* prog, Exp
   if (op != opMinus && op != opPlus)
     {
       // Matches if e is sp or sp{0} or sp{-}
-      return (*e == *sp ||
-              e->isSubscript() && ((RefExp*)e)->isImplicitDef() && *((RefExp*)e)->getSubExp1() == *sp);
+      return (*e == *sp || (e->isSubscript() && ((RefExp*)e)->isImplicitDef() && *((RefExp*)e)->getSubExp1() == *sp));
     }
   Exp* sub1 = ((Binary*)e)->getSubExp1();
   Exp* sub2 = ((Binary*)e)->getSubExp2();

@@ -235,7 +235,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
   // Run the symbol table
   ADDRESS fakeForImport = (ADDRESS)0xfffe0000;
 
-  printf("Size of one symbol: %u\n", sizeof pSymbols[0]);
+  printf("Size of one symbol: %lu\n", sizeof pSymbols[0]);
   for (unsigned int iSym = 0; iSym < m_Header.coff_num_syment; iSym += pSymbols[iSym].csym_numaux+1)
     {
       char tmp_name[9];
