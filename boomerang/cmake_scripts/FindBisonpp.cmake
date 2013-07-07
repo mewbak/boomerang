@@ -1,13 +1,13 @@
 # - Look for GNU Bison, the parser generator
 # Based off a news post from Andy Cedilnik at Kitware
 # Defines the following:
-#  BISON_EXECUTABLE - path to the bison executable
-#  BISON_FILE - parse a file with bison
-#  BISON_PREFIX_OUTPUTS - Set to true to make BISON_FILE produce prefixed
+#  BISONPP_EXECUTABLE - path to the bison executable
+#  BISONPP_FILE - parse a file with bison
+#  BISONPP_PREFIX_OUTPUTS - Set to true to make BISON_FILE produce prefixed
 #                         symbols in the generated output based on filename.
 #                         So for ${filename}.y, you'll get ${filename}parse(), etc.
 #                         instead of yyparse().
-#  BISON_GENERATE_DEFINES - Set to true to make BISON_FILE output the matching
+#  BISONPP_GENERATE_DEFINES - Set to true to make BISON_FILE output the matching
 #                           .h file for a .c file. You want this if you're using
 #                           flex.
 

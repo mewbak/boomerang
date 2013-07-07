@@ -1,4 +1,4 @@
-set(boomerang_typesystem_sources
+SET(boomerang_typesystem_sources
 type.cpp
 dfa.cpp
 constraint.cpp

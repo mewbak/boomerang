@@ -1,7 +1,7 @@
 SET(boomerang_c_codegen_sources
-chllcode.cpp
-syntax.cpp
-chllcode.h
+	chllcode.cpp
+	syntax.cpp
+	chllcode.h
 )
 BOOMERANG_ADD_CODEGEN(c_language ${boomerang_c_codegen_sources})
 
