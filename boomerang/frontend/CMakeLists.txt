@@ -1,6 +1,8 @@
+ADD_SUBDIRECTORY(machine)
+
 SET(boomerang_frontend_common_sources
-frontend.cpp
-njmcDecoder.cpp
+	frontend.cpp
+	njmcDecoder.cpp
 )
 # for ansi-c parser includes
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/c)
@@ -13,4 +15,6 @@ BOOMERANG_ADD_FRONTEND(ppc)
 BOOMERANG_ADD_FRONTEND(sparc)
 BOOMERANG_ADD_FRONTEND(st20)
 
-SET(BOOMERANG_FRONTENDS Frontend_common ${_BOOMERANG_FRONTENDS} CACHE INTERNAL "")		
+SET(BOOMERANG_FRONTENDS Frontend_common ${_BOOMERANG_FRONTENDS} CACHE INTERNAL "")
+
+ADD_DEPENDENCIES(Frontend_common st20)
