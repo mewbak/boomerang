@@ -89,7 +89,7 @@ void PointerType::setPointsTo(Type* p)
       // Note: comparing pointers
       points_to = new VoidType();		// Can't point to self; impossible to compare, print, etc
       if (VERBOSE)
-        LOG << "Warning: attempted to create pointer to self: " << (unsigned)this << "\n";
+        LOG << "Warning: attempted to create pointer to self: " << this << "\n";
     }
   else
     points_to = p;
@@ -483,9 +483,9 @@ bool IntegerType::operator==(const Type& other) const
          // Note: zero size matches any other size (wild, or unknown, size)
          (size == 0 || otherInt.size == 0 || size == otherInt.size) &&
          // Note: actual value of signedness is disregarded, just whether less than, equal to, or greater than 0
-         ( signedness < 0	&& otherInt.signedness < 0 ||
-           signedness == 0	&& otherInt.signedness == 0 ||
-           signedness > 0	&& otherInt.signedness > 0);
+         ((signedness < 0 && otherInt.signedness < 0) ||
+           (signedness == 0 && otherInt.signedness == 0) ||
+           (signedness > 0 && otherInt.signedness > 0));
 }
 
 bool FloatType::operator==(const Type& other) const
