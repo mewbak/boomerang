@@ -23,7 +23,7 @@ add_custom_command(
 	COMMENT "Building Scanner - Flex++"
 	OUTPUT  ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.h
 	DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.l
-	COMMAND ${FLEXPP_EXECUTABLE} -o${CMAKE_CURRENT_SOURCE_DIR}/sslparser.cpp -h${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.h ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.l
+	COMMAND ${FLEXPP_EXECUTABLE} -o${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp -h${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.h ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.l
 	COMMAND sed -f ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.sed ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp > ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp.1
 	COMMAND mv ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp.1 ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp
 )

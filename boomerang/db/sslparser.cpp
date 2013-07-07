@@ -1,12 +1,12 @@
 #define YY_SSLParser_h_included
 
-/*  A Bison++ parser, made from sslparser.y  */
+/*  A Bison++ parser, made from /Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y  */
 
- /* with Bison++ version bison++ Version 1.21-8, adapted from GNU bison by coetmeur@icdc.fr
+ /* with Bison++ version bison++ version 1.21-45, adapted from GNU Bison by coetmeur@icdc.fr
   */
 
 
-#line 1 "/opt/local//lib/bison.cc"
+#line 1 "/opt/local/lib/bison.cc"
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
 /* Skeleton output parser for bison,
    Copyright (C) 1984, 1989, 1990 Bob Corbett and Richard Stallman
@@ -80,9 +80,9 @@ void *alloca ();
 #include <stdio.h>
 #define YYBISON 1  
 
-/* #line 73 "/opt/local//lib/bison.cc" */
-#line 85 "sslparser.cpp"
-#line 41 "sslparser.y"
+/* #line 73 "/opt/local/lib/bison.cc" */
+#line 85 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
+#line 41 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 
 #ifndef NO_GARBAGE_COLLECTOR
 #include "gc.h"
@@ -108,7 +108,7 @@ void *alloca ();
 
 class SSLScanner;
 
-#line 72 "sslparser.y"
+#line 72 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 typedef union {
 	Exp*			exp;
 	char*			str;
@@ -127,7 +127,7 @@ typedef union {
 	RTL*			rtlist;
 } yy_SSLParser_stype;
 #define YY_SSLParser_STYPE yy_SSLParser_stype
-#line 91 "sslparser.y"
+#line 91 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 
 #include "sslscanner.h"
 OPER strToTerm(char* s);		// Convert string to a Terminal (if possible)
@@ -197,7 +197,7 @@ protected: \
 	 */ \
 	bool bFloat;
 
-#line 73 "/opt/local//lib/bison.cc"
+#line 73 "/opt/local/lib/bison.cc"
 /* %{ and %header{ and %union, during decl */
 #define YY_SSLParser_BISON 1
 #ifndef YY_SSLParser_COMPATIBILITY
@@ -243,36 +243,36 @@ protected: \
 
 #ifndef YY_SSLParser_PURE
 
-/* #line 117 "/opt/local//lib/bison.cc" */
-#line 248 "sslparser.cpp"
+/* #line 117 "/opt/local/lib/bison.cc" */
+#line 248 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 
-#line 117 "/opt/local//lib/bison.cc"
+#line 117 "/opt/local/lib/bison.cc"
 /*  YY_SSLParser_PURE */
 #endif
 
 /* section apres lecture def, avant lecture grammaire S2 */
 
-/* #line 121 "/opt/local//lib/bison.cc" */
-#line 257 "sslparser.cpp"
+/* #line 121 "/opt/local/lib/bison.cc" */
+#line 257 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 
-#line 121 "/opt/local//lib/bison.cc"
+#line 121 "/opt/local/lib/bison.cc"
 /* prefix */
 #ifndef YY_SSLParser_DEBUG
 
-/* #line 123 "/opt/local//lib/bison.cc" */
-#line 264 "sslparser.cpp"
+/* #line 123 "/opt/local/lib/bison.cc" */
+#line 264 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 
-#line 123 "/opt/local//lib/bison.cc"
+#line 123 "/opt/local/lib/bison.cc"
 /* YY_SSLParser_DEBUG */
 #endif
 
 
 #ifndef YY_SSLParser_LSP_NEEDED
 
-/* #line 128 "/opt/local//lib/bison.cc" */
-#line 274 "sslparser.cpp"
+/* #line 128 "/opt/local/lib/bison.cc" */
+#line 274 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 
-#line 128 "/opt/local//lib/bison.cc"
+#line 128 "/opt/local/lib/bison.cc"
  /* YY_SSLParser_LSP_NEEDED*/
 #endif
 
@@ -382,8 +382,8 @@ typedef
 #ifndef YY_USE_CLASS
 /* TOKEN C */
 
-/* #line 236 "/opt/local//lib/bison.cc" */
-#line 387 "sslparser.cpp"
+/* #line 236 "/opt/local/lib/bison.cc" */
+#line 387 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 #define	COND_OP	258
 #define	BIT_OP	259
 #define	ARITH_OP	260
@@ -438,7 +438,7 @@ typedef
 #define	FCHS	309
 
 
-#line 236 "/opt/local//lib/bison.cc"
+#line 236 "/opt/local/lib/bison.cc"
  /* #defines tokens */
 #else
 /* CLASS */
@@ -484,8 +484,8 @@ public:
 #if YY_SSLParser_USE_CONST_TOKEN != 0
 /* static const int token ... */
 
-/* #line 280 "/opt/local//lib/bison.cc" */
-#line 489 "sslparser.cpp"
+/* #line 280 "/opt/local/lib/bison.cc" */
+#line 489 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 static const int COND_OP;
 static const int BIT_OP;
 static const int ARITH_OP;
@@ -540,13 +540,13 @@ static const int FLOATNUM;
 static const int FCHS;
 
 
-#line 280 "/opt/local//lib/bison.cc"
+#line 280 "/opt/local/lib/bison.cc"
  /* decl const */
 #else
 enum YY_SSLParser_ENUM_TOKEN { YY_SSLParser_NULL_TOKEN=0
 
-/* #line 283 "/opt/local//lib/bison.cc" */
-#line 550 "sslparser.cpp"
+/* #line 283 "/opt/local/lib/bison.cc" */
+#line 550 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 	,COND_OP=258
 	,BIT_OP=259
 	,ARITH_OP=260
@@ -601,7 +601,7 @@ enum YY_SSLParser_ENUM_TOKEN { YY_SSLParser_NULL_TOKEN=0
 	,FCHS=309
 
 
-#line 283 "/opt/local//lib/bison.cc"
+#line 283 "/opt/local/lib/bison.cc"
  /* enum token */
      }; /* end of enum declaration */
 #endif
@@ -634,8 +634,8 @@ public:
 /* other declare folow */
 #if YY_SSLParser_USE_CONST_TOKEN != 0
 
-/* #line 314 "/opt/local//lib/bison.cc" */
-#line 639 "sslparser.cpp"
+/* #line 314 "/opt/local/lib/bison.cc" */
+#line 639 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 const int YY_SSLParser_CLASS::COND_OP=258;
 const int YY_SSLParser_CLASS::BIT_OP=259;
 const int YY_SSLParser_CLASS::ARITH_OP=260;
@@ -690,7 +690,7 @@ const int YY_SSLParser_CLASS::FLOATNUM=308;
 const int YY_SSLParser_CLASS::FCHS=309;
 
 
-#line 314 "/opt/local//lib/bison.cc"
+#line 314 "/opt/local/lib/bison.cc"
  /* const YY_SSLParser_CLASS::token */
 #endif
 /*apres const  */
@@ -703,8 +703,8 @@ YY_SSLParser_CONSTRUCTOR_CODE;
 };
 #endif
 
-/* #line 325 "/opt/local//lib/bison.cc" */
-#line 708 "sslparser.cpp"
+/* #line 325 "/opt/local/lib/bison.cc" */
+#line 708 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 
 
 #define	YYFINAL		300
@@ -1116,7 +1116,7 @@ static const short yycheck[] = {     0,
     -1,    -1,    -1,    -1,    -1,    -1,    57
 };
 
-#line 325 "/opt/local//lib/bison.cc"
+#line 325 "/opt/local/lib/bison.cc"
  /* fattrs + tables */
 
 /* parser code folow  */
@@ -1173,7 +1173,7 @@ YYENDDECLARELABEL
 /* ALLOCA SIMULATION */
 /* __HAVE_NO_ALLOCA */
 #ifdef __HAVE_NO_ALLOCA
-int __alloca_free_ptr(char *ptr,char *ref)
+static int __alloca_free_ptr(char *ptr,char *ref)
 {if(ptr!=ref) free(ptr);
  return 0;}
 
@@ -1604,19 +1604,19 @@ YYLABEL(yyreduce)
 #endif
 
 
-/* #line 811 "/opt/local//lib/bison.cc" */
-#line 1609 "sslparser.cpp"
+/* #line 811 "/opt/local/lib/bison.cc" */
+#line 1609 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
 
   switch (yyn) {
 
 case 1:
-#line 224 "sslparser.y"
+#line 224 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			the_asgn = yyvsp[0].regtransfer;
 		;
     break;}
 case 2:
-#line 227 "sslparser.y"
+#line 227 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			the_asgn = new Assign(
 				new Terminal(opNil),
@@ -1624,17 +1624,17 @@ case 2:
 		;
     break;}
 case 7:
-#line 243 "sslparser.y"
+#line 243 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			Dict.fetchExecCycle = yyvsp[0].rtlist;
 		;
     break;}
 case 14:
-#line 266 "sslparser.y"
+#line 266 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 { Dict.fixupParams(); ;
     break;}
 case 17:
-#line 279 "sslparser.y"
+#line 279 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// Note: the below copies the list of strings!
 			Dict.DetParamMap[yyvsp[-4].str].params = *yyvsp[-1].parmlist;
@@ -1643,7 +1643,7 @@ case 17:
 		;
     break;}
 case 18:
-#line 293 "sslparser.y"
+#line 293 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::map<std::string, InsNameElem*> m;
 			ParamEntry &param = Dict.DetParamMap[yyvsp[-4].str];
@@ -1661,27 +1661,27 @@ case 18:
 		;
     break;}
 case 19:
-#line 310 "sslparser.y"
+#line 310 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 { yyval.parmlist = yyvsp[-1].parmlist; ;
     break;}
 case 20:
-#line 311 "sslparser.y"
+#line 311 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 { yyval.parmlist = new std::list<std::string>(); ;
     break;}
 case 21:
-#line 315 "sslparser.y"
+#line 315 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 					bFloat = false;
 				;
     break;}
 case 23:
-#line 318 "sslparser.y"
+#line 318 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 					bFloat = true;
 				;
     break;}
 case 27:
-#line 328 "sslparser.y"
+#line 328 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				if (Dict.RegMap.find(yyvsp[-2].str) != Dict.RegMap.end())
 					yyerror("Name reglist decared twice\n");
@@ -1689,7 +1689,7 @@ case 27:
 			;
     break;}
 case 28:
-#line 333 "sslparser.y"
+#line 333 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				if (Dict.RegMap.find(yyvsp[-5].str) != Dict.RegMap.end())
 					yyerror("Name reglist declared twice\n");
@@ -1697,7 +1697,7 @@ case 28:
 			;
     break;}
 case 29:
-#line 338 "sslparser.y"
+#line 338 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				if (Dict.RegMap.find(yyvsp[-9].str) != Dict.RegMap.end())
 					yyerror("Name reglist declared twice\n");
@@ -1734,7 +1734,7 @@ case 29:
 			;
     break;}
 case 30:
-#line 372 "sslparser.y"
+#line 372 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				if (Dict.RegMap.find(yyvsp[-13].str) != Dict.RegMap.end())
 					yyerror("Name reglist declared twice\n");
@@ -1759,7 +1759,7 @@ case 30:
 			;
     break;}
 case 31:
-#line 394 "sslparser.y"
+#line 394 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				if ((int)yyvsp[-8].strlist->size() != (yyvsp[0].num - yyvsp[-2].num + 1)) {
 					std::cerr << "size of register array does not match mapping to r[" << yyvsp[-2].num << ".." << yyvsp[0].num << "]\n";
@@ -1776,7 +1776,7 @@ case 31:
 			;
     break;}
 case 32:
-#line 408 "sslparser.y"
+#line 408 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				std::list<std::string>::iterator loc = yyvsp[-6].strlist->begin();
 				for (; loc != yyvsp[-6].strlist->end(); loc++) {
@@ -1788,27 +1788,27 @@ case 32:
 			;
     break;}
 case 33:
-#line 420 "sslparser.y"
+#line 420 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				yyvsp[-2].strlist->push_back(yyvsp[0].str);
 			;
     break;}
 case 34:
-#line 423 "sslparser.y"
+#line 423 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				yyval.strlist = new std::list<std::string>;
 				yyval.strlist->push_back(yyvsp[0].str);
 			;
     break;}
 case 35:
-#line 432 "sslparser.y"
+#line 432 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				// Note: $2 is a list of strings
 				Dict.FlagFuncs[yyvsp[-5].str] = new FlagDef(listStrToExp(yyvsp[-4].parmlist), yyvsp[-1].rtlist);
 			;
     break;}
 case 36:
-#line 439 "sslparser.y"
+#line 439 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				if (ConstTable.find(yyvsp[-2].str) != ConstTable.end())
 					yyerror("Constant declared twice");
@@ -1816,7 +1816,7 @@ case 36:
 			;
     break;}
 case 37:
-#line 445 "sslparser.y"
+#line 445 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 				if (ConstTable.find(yyvsp[-4].str) != ConstTable.end())
 					yyerror("Constant declared twice");
@@ -1829,34 +1829,34 @@ case 37:
 			;
     break;}
 case 38:
-#line 459 "sslparser.y"
+#line 459 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			TableDict[yyvsp[-2].str] = yyvsp[0].tab;
 		;
     break;}
 case 39:
-#line 465 "sslparser.y"
+#line 465 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.tab = new Table(*yyvsp[0].namelist);
 			//delete $1;
 		;
     break;}
 case 40:
-#line 470 "sslparser.y"
+#line 470 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.tab = new OpTable(*yyvsp[0].namelist);
 			//delete $1;
 		;
     break;}
 case 41:
-#line 474 "sslparser.y"
+#line 474 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.tab = new ExprTable(*yyvsp[0].exprlist);
 			//delete $1;
 		;
     break;}
 case 42:
-#line 481 "sslparser.y"
+#line 481 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// cross-product of two str_expr's
 			std::deque<std::string>::iterator i, j;
@@ -1869,13 +1869,13 @@ case 42:
 		;
     break;}
 case 43:
-#line 491 "sslparser.y"
+#line 491 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = yyvsp[0].namelist;
 		;
     break;}
 case 44:
-#line 497 "sslparser.y"
+#line 497 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// want to append $3 to $1
 			// The following causes a massive warning message about mixing signed and unsigned
@@ -1885,31 +1885,31 @@ case 44:
 		;
     break;}
 case 45:
-#line 504 "sslparser.y"
+#line 504 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyvsp[-3].namelist->push_back("");
 		;
     break;}
 case 46:
-#line 507 "sslparser.y"
+#line 507 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = yyvsp[0].namelist;
 		;
     break;}
 case 47:
-#line 513 "sslparser.y"
+#line 513 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = yyvsp[-1].namelist;
 		;
     break;}
 case 48:
-#line 516 "sslparser.y"
+#line 516 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = yyvsp[0].namelist;
 		;
     break;}
 case 49:
-#line 522 "sslparser.y"
+#line 522 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = new std::deque<std::string>;
 			yyval.namelist->push_back("");
@@ -1917,13 +1917,13 @@ case 49:
 		;
     break;}
 case 50:
-#line 527 "sslparser.y"
+#line 527 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = new std::deque<std::string>(1, yyvsp[-1].str);
 		;
     break;}
 case 51:
-#line 530 "sslparser.y"
+#line 530 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			// expand $2 from table of names
@@ -1941,7 +1941,7 @@ case 51:
 		;
     break;}
 case 52:
-#line 545 "sslparser.y"
+#line 545 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// try and expand $1 from table of names. if fail, expand using '"' NAME '"' rule
 			if (TableDict.find(yyvsp[0].str) != TableDict.end())
@@ -1959,85 +1959,85 @@ case 52:
 		;
     break;}
 case 53:
-#line 563 "sslparser.y"
+#line 563 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.str = yyvsp[0].str;
 		;
     break;}
 case 54:
-#line 567 "sslparser.y"
+#line 567 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.str = yyvsp[0].str;
 		;
     break;}
 case 55:
-#line 571 "sslparser.y"
+#line 571 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.str = yyvsp[0].str;
 		;
     break;}
 case 56:
-#line 578 "sslparser.y"
+#line 578 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = yyvsp[-1].namelist;
 		;
     break;}
 case 57:
-#line 585 "sslparser.y"
+#line 585 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = yyvsp[-4].namelist;
 			yyval.namelist->push_back(yyvsp[-1].str);
 		;
     break;}
 case 58:
-#line 589 "sslparser.y"
+#line 589 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.namelist = new std::deque<std::string>;
 			yyval.namelist->push_back(yyvsp[-1].str);
 		;
     break;}
 case 59:
-#line 597 "sslparser.y"
+#line 597 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exprlist = yyvsp[-1].exprlist;
 		;
     break;}
 case 60:
-#line 604 "sslparser.y"
+#line 604 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exprlist = yyvsp[-4].exprlist;
 			yyval.exprlist->push_back(yyvsp[-1].exp);
 		;
     break;}
 case 61:
-#line 608 "sslparser.y"
+#line 608 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exprlist = new std::deque<Exp*>;
 			yyval.exprlist->push_back(yyvsp[-1].exp);
 		;
     break;}
 case 62:
-#line 616 "sslparser.y"
+#line 616 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyvsp[0].insel->getrefmap(indexrefmap);
 		//	   $3			$4
 		;
     break;}
 case 63:
-#line 619 "sslparser.y"
+#line 619 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// This function expands the tables and saves the expanded RTLs to the dictionary
 			expandTables(yyvsp[-3].insel, yyvsp[-1].parmlist, yyvsp[0].rtlist, Dict);
 		;
     break;}
 case 64:
-#line 626 "sslparser.y"
+#line 626 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.insel = yyvsp[0].insel;
 		;
     break;}
 case 65:
-#line 629 "sslparser.y"
+#line 629 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			unsigned i;
 			InsNameElem *temp;
@@ -2061,32 +2061,32 @@ case 65:
 		;
     break;}
 case 66:
-#line 653 "sslparser.y"
+#line 653 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.insel = new InsNameElem(yyvsp[0].str);
 		;
     break;}
 case 67:
-#line 656 "sslparser.y"
+#line 656 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.insel = yyvsp[0].insel;
 		;
     break;}
 case 68:
-#line 659 "sslparser.y"
+#line 659 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.insel = yyvsp[-1].insel;
 			yyval.insel->append(yyvsp[0].insel);
 		;
     break;}
 case 69:
-#line 666 "sslparser.y"
+#line 666 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.insel = new InsOptionElem(yyvsp[-1].str);
 		;
     break;}
 case 70:
-#line 669 "sslparser.y"
+#line 669 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			if (TableDict.find(yyvsp[-2].str) == TableDict.end()) {
@@ -2100,7 +2100,7 @@ case 70:
 		;
     break;}
 case 71:
-#line 682 "sslparser.y"
+#line 682 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			if (TableDict.find(yyvsp[-2].str) == TableDict.end()) {
@@ -2111,7 +2111,7 @@ case 71:
 		;
     break;}
 case 72:
-#line 691 "sslparser.y"
+#line 691 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			if (TableDict.find(yyvsp[-2].str) == TableDict.end()) {
@@ -2125,7 +2125,7 @@ case 72:
 		;
     break;}
 case 73:
-#line 702 "sslparser.y"
+#line 702 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			if (TableDict.find(yyvsp[-2].str) == TableDict.end()) {
@@ -2136,13 +2136,13 @@ case 73:
 		;
     break;}
 case 74:
-#line 711 "sslparser.y"
+#line 711 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.insel = new InsNameElem(yyvsp[-1].str);
 		;
     break;}
 case 75:
-#line 717 "sslparser.y"
+#line 717 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// append any automatically generated register transfers and clear the list they were stored in.
 			// Do nothing for a NOP (i.e. $2 = 0)
@@ -2153,7 +2153,7 @@ case 75:
 		;
     break;}
 case 76:
-#line 726 "sslparser.y"
+#line 726 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.rtlist = new RTL(STMT_ASSIGN);
 			if (yyvsp[0].regtransfer != NULL)
@@ -2161,13 +2161,13 @@ case 76:
 		;
     break;}
 case 77:
-#line 734 "sslparser.y"
+#line 734 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.regtransfer = yyvsp[0].regtransfer;
 		;
     break;}
 case 78:
-#line 740 "sslparser.y"
+#line 740 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			if (Dict.FlagFuncs.find(yyvsp[-2].str) != Dict.FlagFuncs.end()) {
@@ -2186,25 +2186,25 @@ case 78:
 		;
     break;}
 case 79:
-#line 756 "sslparser.y"
+#line 756 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.regtransfer = 0;
 		;
     break;}
 case 80:
-#line 760 "sslparser.y"
+#line 760 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.regtransfer = 0;
 		;
     break;}
 case 81:
-#line 763 "sslparser.y"
+#line 763 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 		yyval.regtransfer = NULL;
 	;
     break;}
 case 82:
-#line 769 "sslparser.y"
+#line 769 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// Not sure why the below is commented out (MVE)
 /*			Location* pFlag = Location::regOf(Dict.RegMap[$3]);
@@ -2214,7 +2214,7 @@ case 82:
 		;
     break;}
 case 83:
-#line 776 "sslparser.y"
+#line 776 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 /*			std::list<Exp*>* tmp = new std::list<Exp*>;
 			Unary* pFlag = new Unary(opIdRegOf, Dict.RegMap[$1]);
@@ -2224,7 +2224,7 @@ case 83:
 		;
     break;}
 case 84:
-#line 787 "sslparser.y"
+#line 787 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			assert(yyvsp[0].str != 0);
 			yyvsp[-2].parmlist->push_back(yyvsp[0].str);
@@ -2232,46 +2232,46 @@ case 84:
 		;
     break;}
 case 85:
-#line 793 "sslparser.y"
+#line 793 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.parmlist = new std::list<std::string>;
 			yyval.parmlist->push_back(yyvsp[0].str);
 		;
     break;}
 case 86:
-#line 797 "sslparser.y"
+#line 797 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.parmlist = new std::list<std::string>;
 		;
     break;}
 case 87:
-#line 802 "sslparser.y"
+#line 802 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			Dict.ParamSet.insert(yyvsp[0].str);		// MVE: Likely wrong. Likely supposed to be OPERAND params only
 			yyval.str = yyvsp[0].str;
 		;
     break;}
 case 88:
-#line 808 "sslparser.y"
+#line 808 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.explist->push_back(yyvsp[0].exp);
 		;
     break;}
 case 89:
-#line 812 "sslparser.y"
+#line 812 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.explist = new std::list<Exp*>;
 			yyval.explist->push_back(yyvsp[0].exp);
 		;
     break;}
 case 90:
-#line 817 "sslparser.y"
+#line 817 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.explist = new std::list<Exp*>;
 		;
     break;}
 case 91:
-#line 825 "sslparser.y"
+#line 825 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			Assign* a = new Assign(yyvsp[-5].typ, yyvsp[-2].exp, yyvsp[0].exp);
 			a->setGuard(yyvsp[-4].exp);
@@ -2279,14 +2279,14 @@ case 91:
 		;
     break;}
 case 92:
-#line 832 "sslparser.y"
+#line 832 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// update the size of any generated RT's
 			yyval.regtransfer = new Assign(yyvsp[-3].typ, yyvsp[-2].exp, yyvsp[0].exp);
 		;
     break;}
 case 93:
-#line 838 "sslparser.y"
+#line 838 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.regtransfer = new Assign(
 				new Terminal(opNil),
@@ -2294,7 +2294,7 @@ case 93:
 		;
     break;}
 case 94:
-#line 843 "sslparser.y"
+#line 843 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.regtransfer = new Assign(
 				new Terminal(opNil),
@@ -2302,85 +2302,85 @@ case 94:
 		;
     break;}
 case 95:
-#line 850 "sslparser.y"
+#line 850 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.regtransfer = new Assign(yyvsp[-1].typ, NULL, yyvsp[0].exp);
 		;
     break;}
 case 96:
-#line 856 "sslparser.y"
+#line 856 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Const(yyvsp[0].num);
 		;
     break;}
 case 97:
-#line 860 "sslparser.y"
+#line 860 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Const(yyvsp[0].dbl);
 		;
     break;}
 case 98:
-#line 864 "sslparser.y"
+#line 864 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = yyvsp[-1].exp;
 		;
     break;}
 case 99:
-#line 868 "sslparser.y"
+#line 868 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = yyvsp[0].exp;
 		;
     break;}
 case 100:
-#line 872 "sslparser.y"
+#line 872 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Ternary(opTern, yyvsp[-5].exp, yyvsp[-3].exp, yyvsp[-1].exp);
 		;
     break;}
 case 101:
-#line 877 "sslparser.y"
+#line 877 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opAddrOf, yyvsp[-1].exp);
 		;
     break;}
 case 102:
-#line 882 "sslparser.y"
+#line 882 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Ternary(strToOper(yyvsp[-6].str), new Const(yyvsp[-5].num), new Const(yyvsp[-3].num), yyvsp[-1].exp);
 		;
     break;}
 case 103:
-#line 887 "sslparser.y"
+#line 887 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opFtrunc, yyvsp[-1].exp);
 		;
     break;}
 case 104:
-#line 892 "sslparser.y"
+#line 892 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opFabs, yyvsp[-1].exp);
 		;
     break;}
 case 105:
-#line 897 "sslparser.y"
+#line 897 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Terminal(opFpush);
 		;
     break;}
 case 106:
-#line 900 "sslparser.y"
+#line 900 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Terminal(opFpop);
 		;
     break;}
 case 107:
-#line 905 "sslparser.y"
+#line 905 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(strToOper(yyvsp[-2].str), yyvsp[-1].exp);
 		;
     break;}
 case 108:
-#line 911 "sslparser.y"
+#line 911 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			if (indexrefmap.find(yyvsp[-1].str) == indexrefmap.end()) {
@@ -2402,7 +2402,7 @@ case 108:
 		;
     break;}
 case 109:
-#line 934 "sslparser.y"
+#line 934 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 		std::ostringstream o;
 		if (Dict.ParamSet.find(yyvsp[-2].str) != Dict.ParamSet.end() ) {
@@ -2430,19 +2430,19 @@ case 109:
 	;
     break;}
 case 110:
-#line 960 "sslparser.y"
+#line 960 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = makeSuccessor(yyvsp[-1].exp);
 		;
     break;}
 case 111:
-#line 966 "sslparser.y"
+#line 966 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opSignExt, yyvsp[-1].exp);
 		;
     break;}
 case 112:
-#line 973 "sslparser.y"
+#line 973 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			// size casts and the opSize operator were generally deprecated, but now opSize is used to transmit
 			// the size of operands that could be memOfs from the decoder to type analysis
@@ -2453,55 +2453,55 @@ case 112:
 		;
     break;}
 case 113:
-#line 982 "sslparser.y"
+#line 982 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opNot, yyvsp[0].exp);
 		;
     break;}
 case 114:
-#line 986 "sslparser.y"
+#line 986 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opLNot, yyvsp[0].exp);
 		;
     break;}
 case 115:
-#line 990 "sslparser.y"
+#line 990 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opFNeg, yyvsp[0].exp);
 		;
     break;}
 case 116:
-#line 994 "sslparser.y"
+#line 994 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Binary(strToOper(yyvsp[-1].str), yyvsp[-2].exp, yyvsp[0].exp);
 		;
     break;}
 case 117:
-#line 998 "sslparser.y"
+#line 998 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Binary(strToOper(yyvsp[-1].str), yyvsp[-2].exp, yyvsp[0].exp);
 		;
     break;}
 case 118:
-#line 1002 "sslparser.y"
+#line 1002 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Binary(strToOper(yyvsp[-1].str), yyvsp[-2].exp, yyvsp[0].exp);
 		;
     break;}
 case 119:
-#line 1006 "sslparser.y"
+#line 1006 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Binary(strToOper(yyvsp[-1].str), yyvsp[-2].exp, yyvsp[0].exp);
 		;
     break;}
 case 120:
-#line 1010 "sslparser.y"
+#line 1010 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Binary(strToOper(yyvsp[-1].str), yyvsp[-2].exp, yyvsp[0].exp);
 		;
     break;}
 case 121:
-#line 1017 "sslparser.y"
+#line 1017 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			std::ostringstream o;
 			if (indexrefmap.find(yyvsp[-2].str) == indexrefmap.end()) {
@@ -2526,13 +2526,13 @@ case 121:
 		;
     break;}
 case 122:
-#line 1040 "sslparser.y"
+#line 1040 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = yyvsp[0].exp;
 		;
     break;}
 case 123:
-#line 1049 "sslparser.y"
+#line 1049 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			bool isFlag = strstr(yyvsp[0].str, "flags") != 0;
 			std::map<std::string, int>::const_iterator it = Dict.RegMap.find(yyvsp[0].str);
@@ -2557,13 +2557,13 @@ case 123:
 		;
     break;}
 case 124:
-#line 1072 "sslparser.y"
+#line 1072 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = Location::regOf(yyvsp[-1].exp);
 		;
     break;}
 case 125:
-#line 1076 "sslparser.y"
+#line 1076 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			int regNum;
 			sscanf(yyvsp[0].str, "r%d", &regNum);
@@ -2571,13 +2571,13 @@ case 125:
 		;
     break;}
 case 126:
-#line 1082 "sslparser.y"
+#line 1082 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = Location::memOf(yyvsp[-1].exp);
 		;
     break;}
 case 127:
-#line 1086 "sslparser.y"
+#line 1086 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 		// This is a mixture of the param: PARM {} match and the value_op: NAME {} match
 			Exp* s;
@@ -2596,55 +2596,55 @@ case 127:
 		;
     break;}
 case 128:
-#line 1103 "sslparser.y"
+#line 1103 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Ternary(opAt, yyvsp[-6].exp, yyvsp[-3].exp, yyvsp[-1].exp);
 		;
     break;}
 case 129:
-#line 1107 "sslparser.y"
+#line 1107 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = Location::tempOf(new Const(yyvsp[0].str));
 		;
     break;}
 case 130:
-#line 1112 "sslparser.y"
+#line 1112 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = new Unary(opPostVar, yyvsp[-1].exp);
 		;
     break;}
 case 131:
-#line 1115 "sslparser.y"
+#line 1115 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.exp = makeSuccessor(yyvsp[-1].exp);
 		;
     break;}
 case 132:
-#line 1121 "sslparser.y"
+#line 1121 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.num = yyvsp[-1].num;
 		;
     break;}
 case 133:
-#line 1127 "sslparser.y"
+#line 1127 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			Dict.bigEndian = (strcmp(yyvsp[0].str, "BIG") == 0);
 		;
     break;}
 case 134:
-#line 1132 "sslparser.y"
+#line 1132 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.str = yyvsp[0].str;
 		;
     break;}
 case 135:
-#line 1135 "sslparser.y"
+#line 1135 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			yyval.str = yyvsp[0].str;
 		;
     break;}
 case 136:
-#line 1141 "sslparser.y"
+#line 1141 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			char c = yyvsp[0].str[1];
 			if (c == '*') yyval.typ = new SizeType(0); // MVE: should remove these
@@ -2672,14 +2672,14 @@ case 136:
 		;
     break;}
 case 140:
-#line 1181 "sslparser.y"
+#line 1181 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 {
 			Dict.fastMap[std::string(yyvsp[-2].str)] = std::string(yyvsp[0].str);
 		;
     break;}
 }
 
-#line 811 "/opt/local//lib/bison.cc"
+#line 811 "/opt/local/lib/bison.cc"
    /* the action file gets copied in in place of this dollarsign  */
   yyvsp -= yylen;
   yyssp -= yylen;
@@ -2880,9 +2880,9 @@ YYLABEL(yyerrhandle)
 
 /* END */
 
-/* #line 1010 "/opt/local//lib/bison.cc" */
-#line 2885 "sslparser.cpp"
-#line 1184 "sslparser.y"
+/* #line 1010 "/opt/local/lib/bison.cc" */
+#line 2885 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.cpp"
+#line 1184 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslparser.y"
 
 
 /*==============================================================================
