@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>gc_cpp</ProjectName>
+    <ProjectGuid>{F86FFADC-E84D-4B50-8782-087CF517E6B9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;GC_DLL;GC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;GC_DLL;GC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <ImportLibrary>$(OutDir)gc_cpp2.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="add_gc_prefix.c" />
+    <ClCompile Include="allchblk.c" />
+    <ClCompile Include="alloc.c" />
+    <ClCompile Include="backgraph.c" />
+    <ClCompile Include="blacklst.c" />
+    <ClCompile Include="checksums.c" />
+    <ClCompile Include="dbg_mlc.c" />
+    <ClCompile Include="dyn_load.c" />
+    <ClCompile Include="finalize.c" />
+    <ClCompile Include="gc_cpp.cc">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="gc_dlopen.c" />
+    <ClCompile Include="gcc_support.c" />
+    <ClCompile Include="gcj_mlc.c" />
+    <ClCompile Include="gcname.c" />
+    <ClCompile Include="headers.c" />
+    <ClCompile Include="mach_dep.c" />
+    <ClCompile Include="malloc.c" />
+    <ClCompile Include="mallocx.c" />
+    <ClCompile Include="mark.c" />
+    <ClCompile Include="mark_rts.c" />
+    <ClCompile Include="misc.c" />
+    <ClCompile Include="new_hblk.c" />
+    <ClCompile Include="obj_map.c" />
+    <ClCompile Include="os_dep.c" />
+    <ClCompile Include="pcr_interface.c" />
+    <ClCompile Include="ptr_chck.c" />
+    <ClCompile Include="real_malloc.c" />
+    <ClCompile Include="reclaim.c" />
+    <ClCompile Include="setjmp_t.c" />
+    <ClCompile Include="specific.c" />
+    <ClCompile Include="stubborn.c" />
+    <ClCompile Include="threadlibs.c" />
+    <ClCompile Include="typd_mlc.c" />
+    <ClCompile Include="win32_threads.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\cord.h" />
+    <ClInclude Include="include\ec.h" />
+    <ClInclude Include="include\gc.h" />
+    <ClInclude Include="include\gc_alloc.h" />
+    <ClInclude Include="include\gc_allocator.h" />
+    <ClInclude Include="include\gc_amiga_redirects.h" />
+    <ClInclude Include="include\gc_backptr.h" />
+    <ClInclude Include="include\gc_cpp.h" />
+    <ClInclude Include="include\gc_gcj.h" />
+    <ClInclude Include="include\gc_inl.h" />
+    <ClInclude Include="include\gc_inline.h" />
+    <ClInclude Include="include\gc_local_alloc.h" />
+    <ClInclude Include="include\gc_mark.h" />
+    <ClInclude Include="include\gc_pthread_redirects.h" />
+    <ClInclude Include="include\gc_typed.h" />
+    <ClInclude Include="include\javaxfc.h" />
+    <ClInclude Include="include\leak_detector.h" />
+    <ClInclude Include="include\new_gc_alloc.h" />
+    <ClInclude Include="version.h" />
+    <ClInclude Include="include\weakpointer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

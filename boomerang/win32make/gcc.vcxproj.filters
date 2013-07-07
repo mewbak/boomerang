@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0d1fb838-8801-420b-9632-71970f8564ed}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{06730772-3a88-4bdf-acc5-37978edacc70}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{7236f360-0a5b-4b15-a35d-5eb8d9fb4b5d}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="add_gc_prefix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="allchblk.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="alloc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="backgraph.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blacklst.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="checksums.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dbg_mlc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dyn_load.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="finalize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gc_cpp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gc_dlopen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gcc_support.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gcj_mlc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gcname.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="headers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mach_dep.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="malloc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mallocx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mark.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mark_rts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="new_hblk.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="os_dep.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pcr_interface.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ptr_chck.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="real_malloc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="reclaim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="setjmp_t.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="specific.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stubborn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="threadlibs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="typd_mlc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win32_threads.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\cord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_alloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_amiga_redirects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_backptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_cpp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_gcj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_local_alloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_mark.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_pthread_redirects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gc_typed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\javaxfc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\leak_detector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\new_gc_alloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\weakpointer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>
