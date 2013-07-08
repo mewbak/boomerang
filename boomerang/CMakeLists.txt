@@ -91,6 +91,18 @@ IF(USE_FLEXPP_BISONPP)
 	FIND_PACKAGE(Flexpp REQUIRED)
 ENDIF(USE_FLEXPP_BISONPP)
 
+#==========================#
+# check if m4 is available #
+#==========================#
+
+MESSAGE("Searching for m4 scripting language")
+FIND_PROGRAM(M4_PROGRAM m4)
+IF(${M4_PROGRAM} MATCHES "NOTFOUND")
+  MESSAGE("   -> WARNING : could not find m4, cannot generate ssl files from m4 sources")
+ELSE(${M4_PROGRAM} MATCHES "NOTFOUND")
+  MESSAGE("   -> ${M4_PROGRAM}")
+ENDIF(${M4_PROGRAM} MATCHES "NOTFOUND")
+
 ADD_SUBDIRECTORY(loader)
 ADD_SUBDIRECTORY(c)
 ADD_SUBDIRECTORY(codegen)
