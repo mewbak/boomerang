@@ -25,7 +25,8 @@
 #include <deque>
 
 // Kinds of SSL specification tables
-enum TABLE_TYPE {
+enum TABLE_TYPE
+{
     NAMETABLE,
     OPTABLE,
     EXPRTABLE

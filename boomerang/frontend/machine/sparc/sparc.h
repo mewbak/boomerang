@@ -26,7 +26,8 @@ typedef long double NO_SUCH_TYPE; /* temporary copout */
 #ifndef HAVE_disasm_fmt_t
 #define HAVE_disasm_fmt_t
 
-typedef struct {
+typedef struct
+{
     char *addrfmt;
     char *hexfmt;
     int hexwidth, hexlen;
@@ -94,19 +95,26 @@ void dumpFloatRegisters( FILE *f );
 void dumpAllRegisters( FILE *f );
 
 /* Register structure */
-struct RegisterFile {
+struct RegisterFile
+{
     sint32_t rd[32];
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f0;
                     float32_t r_f1;
                 } r_f0to1_str;
                 float64_t r_f0to1;
             } r_f0to1_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f2;
                     float32_t r_f3;
                 } r_f2to3_str;
@@ -115,17 +123,23 @@ struct RegisterFile {
         } r_f0to3_str;
         float128_t r_f0to3;
     } r_f0to3_un;
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f4;
                     float32_t r_f5;
                 } r_f4to5_str;
                 float64_t r_f4to5;
             } r_f4to5_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f6;
                     float32_t r_f7;
                 } r_f6to7_str;
@@ -134,17 +148,23 @@ struct RegisterFile {
         } r_f4to7_str;
         float128_t r_f4to7;
     } r_f4to7_un;
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f8;
                     float32_t r_f9;
                 } r_f8to9_str;
                 float64_t r_f8to9;
             } r_f8to9_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f10;
                     float32_t r_f11;
                 } r_f10to11_str;
@@ -153,17 +173,23 @@ struct RegisterFile {
         } r_f8to11_str;
         float128_t r_f8to11;
     } r_f8to11_un;
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f12;
                     float32_t r_f13;
                 } r_f12to13_str;
                 float64_t r_f12to13;
             } r_f12to13_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f14;
                     float32_t r_f15;
                 } r_f14to15_str;
@@ -172,17 +198,23 @@ struct RegisterFile {
         } r_f12to15_str;
         float128_t r_f12to15;
     } r_f12to15_un;
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f16;
                     float32_t r_f17;
                 } r_f16to17_str;
                 float64_t r_f16to17;
             } r_f16to17_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f18;
                     float32_t r_f19;
                 } r_f18to19_str;
@@ -191,17 +223,23 @@ struct RegisterFile {
         } r_f16to19_str;
         float128_t r_f16to19;
     } r_f16to19_un;
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f20;
                     float32_t r_f21;
                 } r_f20to21_str;
                 float64_t r_f20to21;
             } r_f20to21_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f22;
                     float32_t r_f23;
                 } r_f22to23_str;
@@ -210,17 +248,23 @@ struct RegisterFile {
         } r_f20to23_str;
         float128_t r_f20to23;
     } r_f20to23_un;
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f24;
                     float32_t r_f25;
                 } r_f24to25_str;
                 float64_t r_f24to25;
             } r_f24to25_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f26;
                     float32_t r_f27;
                 } r_f26to27_str;
@@ -229,17 +273,23 @@ struct RegisterFile {
         } r_f24to27_str;
         float128_t r_f24to27;
     } r_f24to27_un;
-    union  {
-        struct  {
-            union  {
-                struct  {
+    union
+    {
+        struct
+        {
+            union
+            {
+                struct
+                {
                     float32_t r_f28;
                     float32_t r_f29;
                 } r_f28to29_str;
                 float64_t r_f28to29;
             } r_f28to29_un;
-            union  {
-                struct  {
+            union
+            {
+                struct
+                {
                     float32_t r_f30;
                     float32_t r_f31;
                 } r_f30to31_str;

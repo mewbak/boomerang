@@ -13,12 +13,12 @@ int fib (int x)
     fibn = 1;       /* fib(2) = 1 */
     fibn_1 = 1;     /* fib(1) = 1 */
     while (n < x)
-    {
-        save = fibn;
-        fibn = fibn + fibn_1;   /* fib(n+1) = fib(n) + fib(n-1) */
-        fibn_1 = save;          /* fib(n-1) = old fib(n) */
-        n++;
-    }
+        {
+            save = fibn;
+            fibn = fibn + fibn_1;   /* fib(n+1) = fib(n) + fib(n-1) */
+            fibn_1 = save;          /* fib(n-1) = old fib(n) */
+            n++;
+        }
     return fibn;
 }
 

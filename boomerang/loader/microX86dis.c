@@ -133,95 +133,95 @@ int microX86Dis(unsigned char* pCode)
     int prefix = 1;
 
     while (prefix)
-    {
-        switch (op)
         {
-        case 0x66:
-            /* Operand size override */
-            opsize = 2;
-            op = *pCode++;
-            size += 1; /* Count the 0x66 */
-            break;
-        case 0xF0:
-        case 0xF2:
-        case 0xF3:
-        case 0x26:
-        case 0x2E:
-        case 0x36:
-        case 0x3E:
-        case 0x64:
-        case 0x65:
-            /* Prefixes (Lock/repne/rep, segment overrides);
-              count these as part of the instruction rather than
-              returning 1 byte.
-              Easier to compare output with disassembly */
-            op = *pCode++;
-            size += 1; /* Count the prefix */
-            break;
-        default:
-            prefix = 0;
+            switch (op)
+                {
+                case 0x66:
+                    /* Operand size override */
+                    opsize = 2;
+                    op = *pCode++;
+                    size += 1; /* Count the 0x66 */
+                    break;
+                case 0xF0:
+                case 0xF2:
+                case 0xF3:
+                case 0x26:
+                case 0x2E:
+                case 0x36:
+                case 0x3E:
+                case 0x64:
+                case 0x65:
+                    /* Prefixes (Lock/repne/rep, segment overrides);
+                      count these as part of the instruction rather than
+                      returning 1 byte.
+                      Easier to compare output with disassembly */
+                    op = *pCode++;
+                    size += 1; /* Count the prefix */
+                    break;
+                default:
+                    prefix = 0;
+                }
         }
-    }
 
     if (op == 0x0F)
-    {
-        /* Two byte escape */
-        op2 = *pCode++;
-        size += op0Fmap[op2];
-    }
+        {
+            /* Two byte escape */
+            op2 = *pCode++;
+            size += op0Fmap[op2];
+        }
     else
         /* Normal case: look up the main table */
         size += opmap[op];
     if (size & MODRM)
-    {
-        size &= ~MODRM; /* Remove flag from size */
-        size++; /* Count the mod/rm itself */
-        modrm = *pCode++;
-        mod = modrm >> 6;
-        if ((mod != 3) && ((modrm & 0x7) == 4))
         {
-            /* SIB also present */
-            size++; /* Count the SIB itself */
-            sib = *pCode++;
-            if ((mod == 0) && ((sib & 0x7) == 0x5))
-            {
-                /* ds:d32 with scale */
-                size += 4;
-            }
+            size &= ~MODRM; /* Remove flag from size */
+            size++; /* Count the mod/rm itself */
+            modrm = *pCode++;
+            mod = modrm >> 6;
+            if ((mod != 3) && ((modrm & 0x7) == 4))
+                {
+                    /* SIB also present */
+                    size++; /* Count the SIB itself */
+                    sib = *pCode++;
+                    if ((mod == 0) && ((sib & 0x7) == 0x5))
+                        {
+                            /* ds:d32 with scale */
+                            size += 4;
+                        }
+                }
+            /* Regardless of whether a SIB is present or not... */
+            if (mod == 1) size++; /* d8 */
+            else if (mod == 2) size += 4; /* d32 */
+            /* ds:d32 is a special case */
+            if ((mod == 0) && ((modrm & 0x7) == 5))
+                size += 4; /* ds:d32 */
         }
-        /* Regardless of whether a SIB is present or not... */
-        if (mod == 1) size++; /* d8 */
-        else if (mod == 2) size += 4; /* d32 */
-        /* ds:d32 is a special case */
-        if ((mod == 0) && ((modrm & 0x7) == 5))
-            size += 4; /* ds:d32 */
-    }
     else
         modrm = 0;
     if (size & OPSIZE)
-    {
-        /* This means add on the current op size */
-        size &= ~OPSIZE;
-        size += opsize;
-    }
-    if (op == 0xF6)
-    {
-        /* Group 3, byte */
-        if (((modrm & 0x38) >> 3) == 0)
         {
-            // There is an immediate byte as well
-            size++;
-        }
-    }
-    if (op == 0xF7)
-    {
-        /* Group 3, word */
-        if (((modrm & 0x38) >> 3) == 0)
-        {
-            // There is an immediate word as well
+            /* This means add on the current op size */
+            size &= ~OPSIZE;
             size += opsize;
         }
-    }
+    if (op == 0xF6)
+        {
+            /* Group 3, byte */
+            if (((modrm & 0x38) >> 3) == 0)
+                {
+                    // There is an immediate byte as well
+                    size++;
+                }
+        }
+    if (op == 0xF7)
+        {
+            /* Group 3, word */
+            if (((modrm & 0x38) >> 3) == 0)
+                {
+                    // There is an immediate word as well
+                    size += opsize;
+                }
+        }
 
     return size;
 }

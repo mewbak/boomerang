@@ -1,5 +1,6 @@
 
-typedef struct {
+typedef struct
+{
     int ai_flags;
     int ai_family;
     int ai_socktype;

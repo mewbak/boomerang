@@ -1,4 +1,5 @@
-typedef struct {
+typedef struct
+{
     char *pw_name;
     char *pw_passwd;
     uid_t pw_uid;

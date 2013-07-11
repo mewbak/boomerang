@@ -35,7 +35,8 @@ class Prog;
 // These are the instruction classes defined in "A Transformational Approach to
 // Binary Translation of Delayed Branches" for SPARC instructions.
 // Extended for HPPA. Ignored by machines with no delay slots
-enum ICLASS {
+enum ICLASS
+{
     NCT,			// Non Control Transfer
     SD,				// Static Delayed
     DD,				// Dynamic Delayed

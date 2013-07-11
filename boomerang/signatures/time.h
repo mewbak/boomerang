@@ -3,7 +3,8 @@ typedef int time_t;
 
 time_t time(time_t *__timer);
 
-typedef struct {
+typedef struct
+{
     int tm_sec;
     int tm_min;
     int tm_hour;

@@ -33,21 +33,21 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
     // Perform application initialization:
     if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }
+        {
+            return FALSE;
+        }
 
     hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_HELLO);
 
     // Main message loop:
     while (GetMessage(&msg, NULL, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+                {
+                    TranslateMessage(&msg);
+                    DispatchMessage(&msg);
+                }
         }
-    }
 
     return msg.wParam;
 }
@@ -108,9 +108,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
                         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
     if (!hWnd)
-    {
-        return FALSE;
-    }
+        {
+            return FALSE;
+        }
 
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
@@ -137,37 +137,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     LoadString(hInst, IDS_HELLO, szHello, MAX_LOADSTRING);
 
     switch (message)
-    {
-    case WM_COMMAND:
-        wmId    = LOWORD(wParam);
-        wmEvent = HIWORD(wParam);
-        // Parse the menu selections:
-        switch (wmId)
         {
-        case IDM_ABOUT:
-            DialogBox(hInst, (LPCTSTR)IDD_ABOUTBOX, hWnd, (DLGPROC)About);
+        case WM_COMMAND:
+            wmId    = LOWORD(wParam);
+            wmEvent = HIWORD(wParam);
+            // Parse the menu selections:
+            switch (wmId)
+                {
+                case IDM_ABOUT:
+                    DialogBox(hInst, (LPCTSTR)IDD_ABOUTBOX, hWnd, (DLGPROC)About);
+                    break;
+                case IDM_EXIT:
+                    DestroyWindow(hWnd);
+                    break;
+                default:
+                    return DefWindowProc(hWnd, message, wParam, lParam);
+                }
             break;
-        case IDM_EXIT:
-            DestroyWindow(hWnd);
+        case WM_PAINT:
+            hdc = BeginPaint(hWnd, &ps);
+            // TODO: Add any drawing code here...
+            RECT rt;
+            GetClientRect(hWnd, &rt);
+            DrawText(hdc, szHello, strlen(szHello), &rt, DT_CENTER);
+            EndPaint(hWnd, &ps);
+            break;
+        case WM_DESTROY:
+            PostQuitMessage(0);
             break;
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
         }
-        break;
-    case WM_PAINT:
-        hdc = BeginPaint(hWnd, &ps);
-        // TODO: Add any drawing code here...
-        RECT rt;
-        GetClientRect(hWnd, &rt);
-        DrawText(hdc, szHello, strlen(szHello), &rt, DT_CENTER);
-        EndPaint(hWnd, &ps);
-        break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
     return 0;
 }
 
@@ -175,17 +175,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
-    {
-    case WM_INITDIALOG:
-        return TRUE;
-
-    case WM_COMMAND:
-        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
         {
-            EndDialog(hDlg, LOWORD(wParam));
+        case WM_INITDIALOG:
             return TRUE;
+
+        case WM_COMMAND:
+            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+                {
+                    EndDialog(hDlg, LOWORD(wParam));
+                    return TRUE;
+                }
+            break;
         }
-        break;
-    }
     return FALSE;
 }

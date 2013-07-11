@@ -1,6 +1,7 @@
 #ifndef __hppa_pat_H__
 #define __hppa_pat_H__
-class InstructionPatterns {
+class InstructionPatterns
+{
 private:
     static int R0;
     static int RP;

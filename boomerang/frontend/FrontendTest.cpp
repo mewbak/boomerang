@@ -26,7 +26,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION( FrontendTest );
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
-void FrontendTest::setUp () {
+void FrontendTest::setUp ()
+{
 }
 
 /*==============================================================================
@@ -36,13 +37,15 @@ void FrontendTest::setUp () {
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
-void FrontendTest::tearDown () {
+void FrontendTest::tearDown ()
+{
 }
 
 /*==============================================================================
  * FUNCTION:		FrontendTest::test1
  * OVERVIEW:		Test loading the sparc hello world program
  *============================================================================*/
-void FrontendTest::test1 () {
+void FrontendTest::test1 ()
+{
 }
 

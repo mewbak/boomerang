@@ -32,10 +32,10 @@
 Exp *RDIExpTransformer::applyTo(Exp *e, bool &bMod)
 {
     if (e->getOper() == opAddrOf && e->getSubExp1()->getOper() == opMemOf)
-    {
-        e = e->getSubExp1()->getSubExp1()->clone();
-        bMod = true;
-    }
+        {
+            e = e->getSubExp1()->getSubExp1()->clone();
+            bMod = true;
+        }
     return e;
 }
 

@@ -24,7 +24,8 @@ int InstructionPatterns::i0 = 24;
 int InstructionPatterns::i7 = 31;
 int InstructionPatterns::o7 = 15;
 int InstructionPatterns::g0 = 0;
-bool InstructionPatterns::ADD$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::ADD$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -46,30 +47,30 @@ bool InstructionPatterns::ADD$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, b
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ < 64))
                 goto MATCH_label_u0;  /*opt-block+*/
             else {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 27 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!imode(_b, b, b_isVAR)) return false;
+                    if (!imode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_u;
 
@@ -95,7 +96,8 @@ MATCH_finished_u:
 
 #line 36 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::ADD$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::ADD$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -117,30 +119,30 @@ bool InstructionPatterns::ADD$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, b
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ < 64))
                 goto MATCH_label_t0;  /*opt-block+*/
             else {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 40 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!rmode(_b, b, b_isVAR)) return false;
+                    if (!rmode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_t;
 
@@ -166,7 +168,8 @@ MATCH_finished_t:
 
 #line 49 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::JMPL$dispA(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::JMPL$dispA(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -183,27 +186,28 @@ bool InstructionPatterns::JMPL$dispA(ADDRESS& lc, int& a, bool a_isVAR, int& b, 
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 56 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = addressToPC(MATCH_p);
-                unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = addressToPC(MATCH_p);
+                    unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 53 "machine/sparc/sparc.pat.m"
 
 
-                if (!dispA(_a, a, a_isVAR, b, b_isVAR)) return false;
+                    if (!dispA(_a, a, a_isVAR, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_b != c) return false;
-                else c = _b;
+                    if (!c_isVAR && (int)_b != c) return false;
+                    else c = _b;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_s0;  /*opt-block+*/
 
@@ -231,7 +235,8 @@ MATCH_finished_s:
 
 #line 61 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::JMPL$indirectA(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR) {
+bool InstructionPatterns::JMPL$indirectA(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -248,27 +253,28 @@ bool InstructionPatterns::JMPL$indirectA(ADDRESS& lc, int& a, bool a_isVAR, int&
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 56 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = addressToPC(MATCH_p);
-                unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = addressToPC(MATCH_p);
+                    unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 65 "machine/sparc/sparc.pat.m"
 
 
-                if (!indirectA(_a, a, a_isVAR)) return false;
+                    if (!indirectA(_a, a, a_isVAR)) return false;
 
-                if (!b_isVAR && (int)_b != b) return false;
-                else b = _b;
+                    if (!b_isVAR && (int)_b != b) return false;
+                    else b = _b;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_r0;  /*opt-block+*/
 
@@ -296,7 +302,8 @@ MATCH_finished_r:
 
 #line 73 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::OR$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::OR$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -313,31 +320,32 @@ bool InstructionPatterns::OR$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bo
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 2 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 77 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!imode(_b, b, b_isVAR)) return false;
+                    if (!imode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_q0;  /*opt-block+*/
 
@@ -365,7 +373,8 @@ MATCH_finished_q:
 
 #line 86 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::RESTORE$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::RESTORE$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -382,31 +391,32 @@ bool InstructionPatterns::RESTORE$imode(ADDRESS& lc, int& a, bool a_isVAR, int& 
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 61 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 90 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!imode(_b, b, b_isVAR)) return false;
+                    if (!imode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_p0;  /*opt-block+*/
 
@@ -434,7 +444,8 @@ MATCH_finished_p:
 
 #line 99 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::RESTORE$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::RESTORE$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -451,31 +462,32 @@ bool InstructionPatterns::RESTORE$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& 
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 61 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 103 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!rmode(_b, b, b_isVAR)) return false;
+                    if (!rmode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_o0;  /*opt-block+*/
 
@@ -503,7 +515,8 @@ MATCH_finished_o:
 
 #line 112 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::SAVE$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::SAVE$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -520,31 +533,32 @@ bool InstructionPatterns::SAVE$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, 
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 60 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 116 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!imode(_b, b, b_isVAR)) return false;
+                    if (!imode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_n0;  /*opt-block+*/
 
@@ -572,7 +586,8 @@ MATCH_finished_n:
 
 #line 125 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::SAVE$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::SAVE$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -589,31 +604,32 @@ bool InstructionPatterns::SAVE$rmode(ADDRESS& lc, int& a, bool a_isVAR, int& b, 
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 60 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 129 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!rmode(_b, b, b_isVAR)) return false;
+                    if (!rmode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_m0;  /*opt-block+*/
 
@@ -641,7 +657,8 @@ MATCH_finished_m:
 
 #line 138 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::SUB$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR) {
+bool InstructionPatterns::SUB$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR, int& c, bool c_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -658,31 +675,32 @@ bool InstructionPatterns::SUB$imode(ADDRESS& lc, int& a, bool a_isVAR, int& b, b
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 4 &&
             (0 <= (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ &&
-            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2)) {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                unsigned _b = addressToPC(MATCH_p);
-                unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ < 2))
+                {
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _b = addressToPC(MATCH_p);
+                    unsigned _c = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 142 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!imode(_b, b, b_isVAR)) return false;
+                    if (!imode(_b, b, b_isVAR)) return false;
 
-                if (!c_isVAR && (int)_c != c) return false;
-                else c = _c;
+                    if (!c_isVAR && (int)_c != c) return false;
+                    else c = _c;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_l0;  /*opt-block+*/
 
@@ -710,7 +728,8 @@ MATCH_finished_l:
 
 #line 151 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::UNIMP(ADDRESS& lc, int& a, bool a_isVAR) {
+bool InstructionPatterns::UNIMP(ADDRESS& lc, int& a, bool a_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -725,24 +744,25 @@ bool InstructionPatterns::UNIMP(ADDRESS& lc, int& a, bool a_isVAR) {
         {
             MATCH_w_32_0 = getDword(MATCH_p);
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 0 &&
-            (MATCH_w_32_0 >> 22 & 0x7) /* op2 at 0 */ == 0) {
-                unsigned _a = (MATCH_w_32_0 & 0x3fffff) /* imm22 at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 22 & 0x7) /* op2 at 0 */ == 0)
+                {
+                    unsigned _a = (MATCH_w_32_0 & 0x3fffff) /* imm22 at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 155 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_k0;  /*opt-block+*/
 
@@ -770,7 +790,8 @@ MATCH_finished_k:
 
 #line 162 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::call__(ADDRESS& lc, int& a, bool a_isVAR) {
+bool InstructionPatterns::call__(ADDRESS& lc, int& a, bool a_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -784,37 +805,38 @@ bool InstructionPatterns::call__(ADDRESS& lc, int& a, bool a_isVAR) {
         unsigned MATCH_w_32_0;
         {
             MATCH_w_32_0 = getDword(MATCH_p);
-            if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 1) {
-                unsigned _a =
-                4 * sign_extend((MATCH_w_32_0 & 0x3fffffff) /* disp30 at 0 */, 30) +
-                addressToPC(MATCH_p);
-                nextPC = 4 + MATCH_p;
+            if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 1)
+                {
+                    unsigned _a =
+                    4 * sign_extend((MATCH_w_32_0 & 0x3fffffff) /* disp30 at 0 */, 30) +
+                    addressToPC(MATCH_p);
+                    nextPC = 4 + MATCH_p;
 
 #line 166 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else {
-                nextPC = MATCH_p;
+                    nextPC = MATCH_p;
 
 #line 169 "machine/sparc/sparc.pat.m"
 
-                return false;
+                    return false;
 
 
 
 
-            } /*opt-block*//*opt-block+*/
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_j;
 
@@ -825,7 +847,8 @@ MATCH_finished_j:
 
 #line 172 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::dispA(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR) {
+bool InstructionPatterns::dispA(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR)
+{
 
 
 #line 174 "machine/sparc/sparc.pat.m"
@@ -838,26 +861,27 @@ bool InstructionPatterns::dispA(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool 
         unsigned MATCH_w_32_0;
         {
             MATCH_w_32_0 = getDword(MATCH_p);
-            if ((MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ == 1) {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
-                int /* [~4096..4095] */ _b =
-                sign_extend((MATCH_w_32_0 & 0x1fff) /* simm13 at 0 */, 13);
+            if ((MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ == 1)
+                {
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    int /* [~4096..4095] */ _b =
+                    sign_extend((MATCH_w_32_0 & 0x1fff) /* simm13 at 0 */, 13);
 
 #line 176 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!b_isVAR && (int)_b != b) return false;
-                else b = _b;
+                    if (!b_isVAR && (int)_b != b) return false;
+                    else b = _b;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
 
 #line 179 "machine/sparc/sparc.pat.m"
@@ -876,7 +900,8 @@ MATCH_finished_i:
 
 #line 182 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::imode(ADDRESS& lc, int& a, bool a_isVAR) {
+bool InstructionPatterns::imode(ADDRESS& lc, int& a, bool a_isVAR)
+{
 
 
 #line 184 "machine/sparc/sparc.pat.m"
@@ -889,22 +914,23 @@ bool InstructionPatterns::imode(ADDRESS& lc, int& a, bool a_isVAR) {
         unsigned MATCH_w_32_0;
         {
             MATCH_w_32_0 = getDword(MATCH_p);
-            if ((MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ == 1) {
-                int /* [~4096..4095] */ _a =
-                sign_extend((MATCH_w_32_0 & 0x1fff) /* simm13 at 0 */, 13);
+            if ((MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ == 1)
+                {
+                    int /* [~4096..4095] */ _a =
+                    sign_extend((MATCH_w_32_0 & 0x1fff) /* simm13 at 0 */, 13);
 
 #line 186 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
 
 #line 188 "machine/sparc/sparc.pat.m"
@@ -923,7 +949,8 @@ MATCH_finished_h:
 
 #line 191 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::indirectA(ADDRESS& lc, int& a, bool a_isVAR) {
+bool InstructionPatterns::indirectA(ADDRESS& lc, int& a, bool a_isVAR)
+{
 
 
 #line 193 "machine/sparc/sparc.pat.m"
@@ -942,20 +969,20 @@ bool InstructionPatterns::indirectA(ADDRESS& lc, int& a, bool a_isVAR) {
             (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ == 1)
                 goto MATCH_label_g0;  /*opt-block+*/
             else {
-                unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
+                    unsigned _a = (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */;
 
 #line 195 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_g;
 
@@ -977,7 +1004,8 @@ MATCH_finished_g:
 
 #line 201 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::mov_(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR) {
+bool InstructionPatterns::mov_(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -994,28 +1022,29 @@ bool InstructionPatterns::mov_(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b
             if ((MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 2 &&
             (MATCH_w_32_0 >> 19 & 0x3f) /* op3 at 0 */ == 2 &&
             (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ == 0 &&
-            (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */ == 0) {
-                unsigned _a = (MATCH_w_32_0 & 0x1f) /* rs2 at 0 */;
-                unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 14 & 0x1f) /* rs1 at 0 */ == 0)
+                {
+                    unsigned _a = (MATCH_w_32_0 & 0x1f) /* rs2 at 0 */;
+                    unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 205 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!b_isVAR && (int)_b != b) return false;
-                else b = _b;
+                    if (!b_isVAR && (int)_b != b) return false;
+                    else b = _b;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_f0;  /*opt-block+*/
 
@@ -1043,7 +1072,8 @@ MATCH_finished_f:
 
 #line 213 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::restore_(ADDRESS& lc) {
+bool InstructionPatterns::restore_(ADDRESS& lc)
+{
     ADDRESS nextPC;
 
 
@@ -1088,19 +1118,19 @@ bool InstructionPatterns::restore_(ADDRESS& lc) {
             (MATCH_w_32_0 >> 13 & 0x1) /* i at 0 */ == 1)
                 goto MATCH_label_e0;  /*opt-block+*/
             else {
-                nextPC = 4 + MATCH_p;
+                    nextPC = 4 + MATCH_p;
 
 #line 217 "machine/sparc/sparc.pat.m"
 
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_e;
 
@@ -1126,7 +1156,8 @@ MATCH_finished_e:
 
 #line 223 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::ret(ADDRESS& lc) {
+bool InstructionPatterns::ret(ADDRESS& lc)
+{
     ADDRESS nextPC;
 
 
@@ -1173,19 +1204,19 @@ bool InstructionPatterns::ret(ADDRESS& lc) {
             (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */ < 32))
                 goto MATCH_label_d0;  /*opt-block+*/
             else {
-                nextPC = 4 + MATCH_p;
+                    nextPC = 4 + MATCH_p;
 
 #line 227 "machine/sparc/sparc.pat.m"
 
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_d;
 
@@ -1211,7 +1242,8 @@ MATCH_finished_d:
 
 #line 233 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::retl(ADDRESS& lc) {
+bool InstructionPatterns::retl(ADDRESS& lc)
+{
     ADDRESS nextPC;
 
 
@@ -1260,19 +1292,19 @@ bool InstructionPatterns::retl(ADDRESS& lc) {
             (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */ < 32))
                 goto MATCH_label_c0;  /*opt-block+*/
             else {
-                nextPC = 4 + MATCH_p;
+                    nextPC = 4 + MATCH_p;
 
 #line 237 "machine/sparc/sparc.pat.m"
 
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_c;
 
@@ -1298,7 +1330,8 @@ MATCH_finished_c:
 
 #line 242 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::rmode(ADDRESS& lc, int& a, bool a_isVAR) {
+bool InstructionPatterns::rmode(ADDRESS& lc, int& a, bool a_isVAR)
+{
 
 
 #line 244 "machine/sparc/sparc.pat.m"
@@ -1320,20 +1353,20 @@ bool InstructionPatterns::rmode(ADDRESS& lc, int& a, bool a_isVAR) {
 
             /*opt-block+*/
             else {
-                unsigned _a = (MATCH_w_32_0 & 0x1f) /* rs2 at 0 */;
+                    unsigned _a = (MATCH_w_32_0 & 0x1f) /* rs2 at 0 */;
 
 #line 246 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
 
         } goto MATCH_finished_b;
 
@@ -1344,7 +1377,8 @@ MATCH_finished_b:
 
 #line 252 "machine/sparc/sparc.pat.m"
 }
-bool InstructionPatterns::sethi(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR) {
+bool InstructionPatterns::sethi(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool b_isVAR)
+{
     ADDRESS nextPC;
 
 
@@ -1359,28 +1393,29 @@ bool InstructionPatterns::sethi(ADDRESS& lc, int& a, bool a_isVAR, int& b, bool 
         {
             MATCH_w_32_0 = getDword(MATCH_p);
             if ((MATCH_w_32_0 >> 22 & 0x7) /* op2 at 0 */ == 4 &&
-            (MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 0) {
-                unsigned _a = (MATCH_w_32_0 & 0x3fffff) /* imm22 at 0 */ << 10;
-                unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
-                nextPC = 4 + MATCH_p;
+            (MATCH_w_32_0 >> 30 & 0x3) /* op at 0 */ == 0)
+                {
+                    unsigned _a = (MATCH_w_32_0 & 0x3fffff) /* imm22 at 0 */ << 10;
+                    unsigned _b = (MATCH_w_32_0 >> 25 & 0x1f) /* rd at 0 */;
+                    nextPC = 4 + MATCH_p;
 
 #line 256 "machine/sparc/sparc.pat.m"
 
 
-                if (!a_isVAR && (int)_a != a) return false;
-                else a = _a;
+                    if (!a_isVAR && (int)_a != a) return false;
+                    else a = _a;
 
-                if (!b_isVAR && (int)_b != b) return false;
-                else b = _b;
+                    if (!b_isVAR && (int)_b != b) return false;
+                    else b = _b;
 
-                lc = nextPC;
+                    lc = nextPC;
 
-                return true;
-
-
+                    return true;
 
 
-            } /*opt-block*//*opt-block+*/
+
+
+                } /*opt-block*//*opt-block+*/
             else
                 goto MATCH_label_a0;  /*opt-block+*/
 
@@ -1412,15 +1447,18 @@ Logue* InstructionPatterns::std_call(CSR& csr, ADDRESS& lc, int& addr)
 {
     ADDRESS __save = lc;
     if (
-        call__(lc, addr, VAR)) {
-        vector<int> params(1);
-        params[0] = addr;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("std_call",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        call__(lc, addr, VAR))
+        {
+            vector<int> params(1);
+            params[0] = addr;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("std_call",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::struct_call(CSR& csr, ADDRESS& lc, int& addr, int& imm22)
 {
@@ -1428,16 +1466,19 @@ Logue* InstructionPatterns::struct_call(CSR& csr, ADDRESS& lc, int& addr, int& i
     if (
         call__(lc, addr, VAR) &&
         (lc += 4, true) &&
-        UNIMP(lc, imm22, VAR)) {
-        vector<int> params(2);
-        params[0] = addr;
-        params[1] = imm22;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("struct_call",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        UNIMP(lc, imm22, VAR))
+        {
+            vector<int> params(2);
+            params[0] = addr;
+            params[1] = imm22;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("struct_call",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::call_rst_ui_reg(CSR& csr, ADDRESS& lc, int& addr, int& imm22, int& rs1, int& rs2, int& rd)
 {
@@ -1445,19 +1486,22 @@ Logue* InstructionPatterns::call_rst_ui_reg(CSR& csr, ADDRESS& lc, int& addr, in
     if (
         call__(lc, addr, VAR) &&
         RESTORE$rmode(lc, rs1, VAR, rs2, VAR, rd, VAR) &&
-        UNIMP(lc, imm22, VAR)) {
-        vector<int> params(5);
-        params[0] = addr;
-        params[1] = imm22;
-        params[2] = rs1;
-        params[3] = rs2;
-        params[4] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("call_rst_ui_reg",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        UNIMP(lc, imm22, VAR))
+        {
+            vector<int> params(5);
+            params[0] = addr;
+            params[1] = imm22;
+            params[2] = rs1;
+            params[3] = rs2;
+            params[4] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("call_rst_ui_reg",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::call_rst_ui_imm(CSR& csr, ADDRESS& lc, int& addr, int& imm22, int& rs1, int& imm, int& rd)
 {
@@ -1465,55 +1509,64 @@ Logue* InstructionPatterns::call_rst_ui_imm(CSR& csr, ADDRESS& lc, int& addr, in
     if (
         call__(lc, addr, VAR) &&
         RESTORE$imode(lc, rs1, VAR, imm, VAR, rd, VAR) &&
-        UNIMP(lc, imm22, VAR)) {
-        vector<int> params(5);
-        params[0] = addr;
-        params[1] = imm22;
-        params[2] = rs1;
-        params[3] = imm;
-        params[4] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("call_rst_ui_imm",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        UNIMP(lc, imm22, VAR))
+        {
+            vector<int> params(5);
+            params[0] = addr;
+            params[1] = imm22;
+            params[2] = rs1;
+            params[3] = imm;
+            params[4] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("call_rst_ui_imm",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::call_restore_reg(CSR& csr, ADDRESS& lc, int& addr, int& rs1, int& rs2, int& rd)
 {
     ADDRESS __save = lc;
     if (
         call__(lc, addr, VAR) &&
-        RESTORE$rmode(lc, rs1, VAR, rs2, VAR, rd, VAR)) {
-        vector<int> params(4);
-        params[0] = addr;
-        params[1] = rs1;
-        params[2] = rs2;
-        params[3] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("call_restore_reg",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        RESTORE$rmode(lc, rs1, VAR, rs2, VAR, rd, VAR))
+        {
+            vector<int> params(4);
+            params[0] = addr;
+            params[1] = rs1;
+            params[2] = rs2;
+            params[3] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("call_restore_reg",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::call_restore_imm(CSR& csr, ADDRESS& lc, int& addr, int& rs1, int& imm, int& rd)
 {
     ADDRESS __save = lc;
     if (
         call__(lc, addr, VAR) &&
-        RESTORE$imode(lc, rs1, VAR, imm, VAR, rd, VAR)) {
-        vector<int> params(4);
-        params[0] = addr;
-        params[1] = rs1;
-        params[2] = imm;
-        params[3] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("call_restore_imm",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        RESTORE$imode(lc, rs1, VAR, imm, VAR, rd, VAR))
+        {
+            vector<int> params(4);
+            params[0] = addr;
+            params[1] = rs1;
+            params[2] = imm;
+            params[3] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("call_restore_imm",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::move_call_move(CSR& csr, ADDRESS& lc, int& addr, int& rd)
 {
@@ -1521,16 +1574,19 @@ Logue* InstructionPatterns::move_call_move(CSR& csr, ADDRESS& lc, int& addr, int
     if (
         mov_(lc, o7, VAL, rd, VAR) &&
         call__(lc, addr, VAR) &&
-        mov_(lc, rd, VAR, o7, VAL)) {
-        vector<int> params(2);
-        params[0] = addr;
-        params[1] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("move_call_move",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        mov_(lc, rd, VAR, o7, VAL))
+        {
+            vector<int> params(2);
+            params[0] = addr;
+            params[1] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("move_call_move",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::move_x_call_move(CSR& csr, ADDRESS& lc, int& addr, int& rd)
 {
@@ -1539,98 +1595,116 @@ Logue* InstructionPatterns::move_x_call_move(CSR& csr, ADDRESS& lc, int& addr, i
         mov_(lc, o7, VAL, rd, VAR) &&
         (lc += 4, true) &&
         call__(lc, addr, VAR) &&
-        mov_(lc, rd, VAR, o7, VAL)) {
-        vector<int> params(2);
-        params[0] = addr;
-        params[1] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("move_x_call_move",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        mov_(lc, rd, VAR, o7, VAL))
+        {
+            vector<int> params(2);
+            params[0] = addr;
+            params[1] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("move_x_call_move",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::call_add(CSR& csr, ADDRESS& lc, int& addr, int& imm)
 {
     ADDRESS __save = lc;
     if (
         call__(lc, addr, VAR) &&
-        ADD$imode(lc, o7, VAL, imm, VAR, o7, VAL)) {
-        vector<int> params(2);
-        params[0] = addr;
-        params[1] = imm;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("call_add",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        ADD$imode(lc, o7, VAL, imm, VAR, o7, VAL))
+        {
+            vector<int> params(2);
+            params[0] = addr;
+            params[1] = imm;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("call_add",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::jmp_restore_reg(CSR& csr, ADDRESS& lc, int& rs1j, int& rdj, int& rs1, int& rs2, int& rd)
 {
     ADDRESS __save = lc;
     if (
         JMPL$indirectA(lc, rs1j, VAR, rdj, VAR) &&
-        RESTORE$rmode(lc, rs1, VAR, rs2, VAR, rd, VAR)) {
-        vector<int> params(5);
-        params[0] = rs1j;
-        params[1] = rdj;
-        params[2] = rs1;
-        params[3] = rs2;
-        params[4] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("jmp_restore_reg",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        RESTORE$rmode(lc, rs1, VAR, rs2, VAR, rd, VAR))
+        {
+            vector<int> params(5);
+            params[0] = rs1j;
+            params[1] = rdj;
+            params[2] = rs1;
+            params[3] = rs2;
+            params[4] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("jmp_restore_reg",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::jmp_restore_imm(CSR& csr, ADDRESS& lc, int& rs1j, int& rdj, int& rs1, int& imm, int& rd)
 {
     ADDRESS __save = lc;
     if (
         JMPL$indirectA(lc, rs1j, VAR, rdj, VAR) &&
-        RESTORE$imode(lc, rs1, VAR, imm, VAR, rd, VAR)) {
-        vector<int> params(5);
-        params[0] = rs1j;
-        params[1] = rdj;
-        params[2] = rs1;
-        params[3] = imm;
-        params[4] = rd;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("jmp_restore_imm",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        RESTORE$imode(lc, rs1, VAR, imm, VAR, rd, VAR))
+        {
+            vector<int> params(5);
+            params[0] = rs1j;
+            params[1] = rdj;
+            params[2] = rs1;
+            params[3] = imm;
+            params[4] = rd;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("jmp_restore_imm",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::new_reg_win(CSR& csr, ADDRESS& lc, int& locals)
 {
     ADDRESS __save = lc;
     if (
-        SAVE$imode(lc, SP, VAL, locals, VAR, SP, VAL)) {
-        vector<int> params(1);
-        params[0] = locals;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("new_reg_win",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        SAVE$imode(lc, SP, VAL, locals, VAR, SP, VAL))
+        {
+            vector<int> params(1);
+            params[0] = locals;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("new_reg_win",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::same_reg_win(CSR& csr, ADDRESS& lc, int& locals)
 {
     ADDRESS __save = lc;
     if (
-        ADD$imode(lc, SP, VAL, locals, VAR, SP, VAL)) {
-        vector<int> params(1);
-        params[0] = locals;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("same_reg_win",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        ADD$imode(lc, SP, VAL, locals, VAR, SP, VAL))
+        {
+            vector<int> params(1);
+            params[0] = locals;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("same_reg_win",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::new_reg_win_large(CSR& csr, ADDRESS& lc, int& hiVal, int& loVal, int& reg)
 {
@@ -1639,17 +1713,20 @@ Logue* InstructionPatterns::new_reg_win_large(CSR& csr, ADDRESS& lc, int& hiVal,
         sethi(lc, hiVal, VAR, reg, VAR) &&
         (ADD$imode(lc, reg, VAR, loVal, VAR, reg, VAR) ||
          OR$imode(lc, reg, VAR, loVal, VAR, reg, VAR)) &&
-        SAVE$rmode(lc, SP, VAL, reg, VAR, SP, VAL)) {
-        vector<int> params(3);
-        params[0] = hiVal;
-        params[1] = loVal;
-        params[2] = reg;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("new_reg_win_large",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        SAVE$rmode(lc, SP, VAL, reg, VAR, SP, VAL))
+        {
+            vector<int> params(3);
+            params[0] = hiVal;
+            params[1] = loVal;
+            params[2] = reg;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("new_reg_win_large",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::same_reg_win_large(CSR& csr, ADDRESS& lc, int& hiVal, int& loVal, int& reg)
 {
@@ -1658,30 +1735,36 @@ Logue* InstructionPatterns::same_reg_win_large(CSR& csr, ADDRESS& lc, int& hiVal
         sethi(lc, hiVal, VAR, reg, VAR) &&
         (ADD$imode(lc, reg, VAR, loVal, VAR, reg, VAR) ||
          OR$imode(lc, reg, VAR, loVal, VAR, reg, VAR)) &&
-        ADD$rmode(lc, SP, VAL, reg, VAR, SP, VAL)) {
-        vector<int> params(3);
-        params[0] = hiVal;
-        params[1] = loVal;
-        params[2] = reg;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("same_reg_win_large",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        ADD$rmode(lc, SP, VAL, reg, VAR, SP, VAL))
+        {
+            vector<int> params(3);
+            params[0] = hiVal;
+            params[1] = loVal;
+            params[2] = reg;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("same_reg_win_large",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::none(CSR& csr, ADDRESS& lc)
 {
     ADDRESS __save = lc;
     if (
-        (lc += 0, true)) {
-        vector<int> params(0);
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("none",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        (lc += 0, true))
+        {
+            vector<int> params(0);
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("none",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::std_ret(CSR& csr, ADDRESS& lc)
 {
@@ -1690,14 +1773,17 @@ Logue* InstructionPatterns::std_ret(CSR& csr, ADDRESS& lc)
     if (
         (ret(lc) ||
          JMPL$dispA(lc, i7, VAL, __loc0 = 12, VAL, g0, VAL)) &&
-        restore_(lc)) {
-        vector<int> params(0);
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("std_ret",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        restore_(lc))
+        {
+            vector<int> params(0);
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("std_ret",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::ret_reg_val(CSR& csr, ADDRESS& lc, int& rs1, int& rs2)
 {
@@ -1706,16 +1792,19 @@ Logue* InstructionPatterns::ret_reg_val(CSR& csr, ADDRESS& lc, int& rs1, int& rs
     if (
         (ret(lc) ||
          JMPL$dispA(lc, i7, VAL, __loc0 = 12, VAL, g0, VAL)) &&
-        RESTORE$rmode(lc, rs1, VAR, rs2, VAR, o0, VAL)) {
-        vector<int> params(2);
-        params[0] = rs1;
-        params[1] = rs2;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("ret_reg_val",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        RESTORE$rmode(lc, rs1, VAR, rs2, VAR, o0, VAL))
+        {
+            vector<int> params(2);
+            params[0] = rs1;
+            params[1] = rs2;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("ret_reg_val",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::ret_imm_val(CSR& csr, ADDRESS& lc, int& rs1, int& imm)
 {
@@ -1724,16 +1813,19 @@ Logue* InstructionPatterns::ret_imm_val(CSR& csr, ADDRESS& lc, int& rs1, int& im
     if (
         (ret(lc) ||
          JMPL$dispA(lc, i7, VAL, __loc0 = 12, VAL, g0, VAL)) &&
-        RESTORE$imode(lc, rs1, VAR, imm, VAR, o0, VAL)) {
-        vector<int> params(2);
-        params[0] = rs1;
-        params[1] = imm;
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("ret_imm_val",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        RESTORE$imode(lc, rs1, VAR, imm, VAR, o0, VAL))
+        {
+            vector<int> params(2);
+            params[0] = rs1;
+            params[1] = imm;
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("ret_imm_val",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::leaf_ret(CSR& csr, ADDRESS& lc)
 {
@@ -1742,27 +1834,33 @@ Logue* InstructionPatterns::leaf_ret(CSR& csr, ADDRESS& lc)
     if (
         (retl(lc) ||
          JMPL$dispA(lc, o7, VAL, __loc0 = 12, VAL, g0, VAL)) &&
-        ((SUB$imode(lc, SP, VAL, __loc0, VAR, SP, VAL)) || true)) {
-        vector<int> params(0);
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("leaf_ret",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        ((SUB$imode(lc, SP, VAL, __loc0, VAR, SP, VAL)) || true))
+        {
+            vector<int> params(0);
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("leaf_ret",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 Logue* InstructionPatterns::ret_struct4(CSR& csr, ADDRESS& lc)
 {
     ADDRESS __save = lc;
     if (
-        false) {
-        vector<int> params(0);
-        if (__save == lc) return NULL;
-        return csr.instantiateLogue("ret_struct4",params);
-    } else {
-        lc = __save;
-        return NULL;
-    }
+        false)
+        {
+            vector<int> params(0);
+            if (__save == lc) return NULL;
+            return csr.instantiateLogue("ret_struct4",params);
+        }
+    else
+        {
+            lc = __save;
+            return NULL;
+        }
 }
 LogueDict::LogueDict()
 {

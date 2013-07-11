@@ -629,3932 +629,3658 @@ list<RT*>* NJMCDecoder::decodeLowLevelInstruction (ADDRESS hostPC, ADDRESS pc,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */) {
-            case 0:
-
-                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
+            switch((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */)
+                {
                 case 0:
-                case 2:
-                case 3:
-                case 4:
-                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
 
-                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                        case 0:
+                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
                         {
-                            unsigned ea = addressToPC(MATCH_p);
-                            unsigned n =
-                            (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+                        case 0:
+                        case 2:
+                        case 3:
+                        case 4:
+                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+                                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                    {
+                                    case 0:
+                                    {
+                                        unsigned ea = addressToPC(MATCH_p);
+                                        unsigned n =
+                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
 
 #line 315 "machine/mc68k/decoder_low.m"
-                            {
+                                        {
 
-                                // btst, btsti
+                                            // btst, btsti
 
-                                int bump = 0, bumpr;
+                                            int bump = 0, bumpr;
 
-                                RTs = instantiate(pc, "btst", DIS_DN(32), dBEA(ea, pc, bump, bumpr, 8));
+                                            RTs = instantiate(pc, "btst", DIS_DN(32), dBEA(ea, pc, bump, bumpr, 8));
 
-                                ADDBUMP;
+                                            ADDBUMP;
 
-                            }
-
-
+                                        }
 
 
 
 
 
 
-                        }
 
-                        break;
-                        case 1:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_sz_15[(MATCH_w_16_0 >> 6 & 0x3)
-                                                 /* sz at 0 */];
-                            goto MATCH_label_a5;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a5;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                    else
-
-                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                        case 0:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "orib";
-                                    goto MATCH_label_a0;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a2;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a3;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 1:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "andib";
-                                    goto MATCH_label_a0;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a2;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a3;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 2:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "subib";
-                                    goto MATCH_label_a0;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a2;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a3;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 3:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "addib";
-                                    goto MATCH_label_a0;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a2;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a3;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 4:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    unsigned ea = addressToPC(MATCH_p);
-                                    unsigned i8 =
-                                        (MATCH_w_16_16 & 0xff) /* disp8 at 16 */;
-
-#line 328 "machine/mc68k/decoder_low.m"
-                                    {
-
-                                        int bump = 0, bumpr;
-
-                                        RTs = instantiate (pc, "btst", DIS_I8, dBEA (ea, pc, bump, bumpr, 8));
-
-                                        ADDBUMP;
-
-                                        result.numBytes += 2;
 
                                     }
 
+                                    break;
+                                    case 1:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_sz_15[(MATCH_w_16_0 >> 6 & 0x3)
+                                                             /* sz at 0 */];
+                                        goto MATCH_label_a5;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a5;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                            else
+
+                                switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                    {
+                                    case 0:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "orib";
+                                                        goto MATCH_label_a0;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a2;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a3;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 1:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "andib";
+                                                        goto MATCH_label_a0;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a2;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a3;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 2:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "subib";
+                                                        goto MATCH_label_a0;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a2;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a3;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 3:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "addib";
+                                                        goto MATCH_label_a0;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a2;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a3;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 4:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        unsigned ea = addressToPC(MATCH_p);
+                                                        unsigned i8 =
+                                                            (MATCH_w_16_16 & 0xff) /* disp8 at 16 */;
+
+#line 328 "machine/mc68k/decoder_low.m"
+                                                        {
+
+                                                            int bump = 0, bumpr;
+
+                                                            RTs = instantiate (pc, "btst", DIS_I8, dBEA (ea, pc, bump, bumpr, 8));
+
+                                                            ADDBUMP;
+
+                                                            result.numBytes += 2;
+
+                                                        }
 
 
 
 
 
-                                } /*opt-block*//*opt-block+*/
 
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "bchgi";
-                                    goto MATCH_label_a4;
+                                                    } /*opt-block*//*opt-block+*/
 
-                                } /*opt-block*/
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "bchgi";
+                                                        goto MATCH_label_a4;
 
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "bclri";
-                                    goto MATCH_label_a4;
+                                                    } /*opt-block*/
 
-                                } /*opt-block*/
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "bclri";
+                                                        goto MATCH_label_a4;
 
-                                break;
-                            case 3:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "bseti";
-                                    goto MATCH_label_a4;
+                                                    } /*opt-block*/
 
-                                } /*opt-block*/
+                                                break;
+                                            case 3:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "bseti";
+                                                        goto MATCH_label_a4;
 
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                                    } /*opt-block*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 5:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "eorib";
+                                                        goto MATCH_label_a0;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_12[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a2;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_12[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a3;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 6:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "cmpib";
+                                                        goto MATCH_label_a0;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a2;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a3;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                            break;
+                        case 1:
+                            goto MATCH_label_a1;
                             break;
                         case 5:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "eorib";
-                                    goto MATCH_label_a0;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_12[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a2;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_12[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a3;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
                         case 6:
+                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
 
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "cmpib";
-                                    goto MATCH_label_a0;
+                                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                    {
+                                    case 0:
+                                        goto MATCH_label_a11;
+                                        break;
+                                    case 1:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_sz_31[(MATCH_w_16_0 >> 6 & 0x3)
+                                                             /* sz at 0 */];
+                                        goto MATCH_label_a12;
 
-                                } /*opt-block*/
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a12;
 
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a2;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                            else
 
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a3;
+                                switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                    {
+                                    case 0:
 
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "orib.ex";
+                                                        goto MATCH_label_a6;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a7;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a8;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 1:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "andib.ex";
+                                                        goto MATCH_label_a6;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a7;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a8;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 2:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "subib.ex";
+                                                        goto MATCH_label_a6;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a7;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a8;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 3:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "addib.ex";
+                                                        goto MATCH_label_a6;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a7;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a8;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 4:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    goto MATCH_label_a9;  /*opt-block+*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "bchgi.ex";
+                                                        goto MATCH_label_a10;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "bclri.ex";
+                                                        goto MATCH_label_a10;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 3:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "bseti.ex";
+                                                        goto MATCH_label_a10;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 5:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "eorib.ex";
+                                                        goto MATCH_label_a6;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a7;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a8;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 6:
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ < 8)
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_name = "cmpib.ex";
+                                                        goto MATCH_label_a6;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a7;
+
+                                                break;
+                                            case 2:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a8;
+
+                                                break;
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                        break;
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
                             break;
                         case 7:
-                            goto MATCH_label_a1;
+
+                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                {
+                                case 0:
+                                case 1:
+                                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                                goto MATCH_label_a11;
+                                                break;
+                                            case 1:
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_sz_31[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                     /* sz at 0 */];
+                                                goto MATCH_label_a12;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                    /* sz at 0 */];
+                                                goto MATCH_label_a12;
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                    else
+
+                                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                            {
+                                            case 0:
+
+                                                switch((MATCH_w_16_0 >> 6 & 0x3)
+                                                        /* sz at 0 */)
+                                                    {
+                                                    case 0:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "orib.ex";
+                                                                goto MATCH_label_a6;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a7;
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a8;
+
+                                                        break;
+                                                    case 3:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 6 & 0x3)
+                                      -- sz at 0 --*/
+                                                break;
+                                            case 1:
+
+                                                switch((MATCH_w_16_0 >> 6 & 0x3)
+                                                        /* sz at 0 */)
+                                                    {
+                                                    case 0:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "andib.ex";
+                                                                goto MATCH_label_a6;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a7;
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a8;
+
+                                                        break;
+                                                    case 3:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 6 & 0x3)
+                                      -- sz at 0 --*/
+                                                break;
+                                            case 2:
+
+                                                switch((MATCH_w_16_0 >> 6 & 0x3)
+                                                        /* sz at 0 */)
+                                                    {
+                                                    case 0:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "subib.ex";
+                                                                goto MATCH_label_a6;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a7;
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a8;
+
+                                                        break;
+                                                    case 3:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 6 & 0x3)
+                                      -- sz at 0 --*/
+                                                break;
+                                            case 3:
+
+                                                switch((MATCH_w_16_0 >> 6 & 0x3)
+                                                        /* sz at 0 */)
+                                                    {
+                                                    case 0:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "addib.ex";
+                                                                goto MATCH_label_a6;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a7;
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a8;
+
+                                                        break;
+                                                    case 3:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 6 & 0x3)
+                                      -- sz at 0 --*/
+                                                break;
+                                            case 4:
+
+                                                switch((MATCH_w_16_0 >> 6 & 0x3)
+                                                        /* sz at 0 */)
+                                                    {
+                                                    case 0:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            goto MATCH_label_a9;  /*opt-block+*/
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "bchgi.ex";
+                                                                goto MATCH_label_a10;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "bclri.ex";
+                                                                goto MATCH_label_a10;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 3:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "bseti.ex";
+                                                                goto MATCH_label_a10;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 6 & 0x3)
+                                      -- sz at 0 --*/
+                                                break;
+                                            case 5:
+
+                                                switch((MATCH_w_16_0 >> 6 & 0x3)
+                                                        /* sz at 0 */)
+                                                    {
+                                                    case 0:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "eorib.ex";
+                                                                goto MATCH_label_a6;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a7;
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a8;
+
+                                                        break;
+                                                    case 3:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 6 & 0x3)
+                                      -- sz at 0 --*/
+                                                break;
+                                            case 6:
+
+                                                switch((MATCH_w_16_0 >> 6 & 0x3)
+                                                        /* sz at 0 */)
+                                                    {
+                                                    case 0:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 0 &&
+                                                                (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ &&
+                                                                 (MATCH_w_16_16 >> 8 & 0x7)
+                                                                 /* null at 16 */ < 8) ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 15 & 0x1)
+                                                                /* iType at 16 */ == 1 ||
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ == 0 &&
+                                                                (MATCH_w_16_16 >> 11 & 0x1)
+                                                                /* iSize at 16 */ == 1 ||
+                                                                1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ &&
+                                                                (MATCH_w_16_16 >> 12 & 0x7)
+                                                                /* iReg at 16 */ < 8)
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+                                                        else
+                                                            {
+                                                                MATCH_name = "cmpib.ex";
+                                                                goto MATCH_label_a6;
+
+                                                            } /*opt-block*/
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a7;
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                             /* sz at 0 */];
+                                                        goto MATCH_label_a8;
+
+                                                        break;
+                                                    case 3:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 6 & 0x3)
+                                      -- sz at 0 --*/
+                                                break;
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                    break;
+                                case 2:
+                                case 3:
+                                    if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 0)
+                                        if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+                                            goto MATCH_label_a11;  /*opt-block+*/
+                                        else
+                                            {
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                if (0 <= (MATCH_w_16_0 >> 9 & 0x7)
+                                                        /* reg1 at 0 */ &&
+                                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 4 ||
+                                                        5 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
+                                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 8 ||
+                                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 0 &&
+                                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ &&
+                                                         (MATCH_w_16_16 >> 8 & 0x7)
+                                                         /* null at 16 */ < 8) ||
+                                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 15 & 0x1)
+                                                        /* iType at 16 */ == 1 ||
+                                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
+                                                        (MATCH_w_16_16 >> 12 & 0x7)
+                                                        /* iReg at 16 */ == 0 &&
+                                                        (MATCH_w_16_16 >> 11 & 0x1)
+                                                        /* iSize at 16 */ == 1 ||
+                                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
+                                                        (1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                         /* iReg at 16 */ &&
+                                                         (MATCH_w_16_16 >> 12 & 0x7)
+                                                         /* iReg at 16 */ < 8))
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                else
+                                                    goto MATCH_label_a9;  /*opt-block+*/
+
+                                            } /*opt-block*/
+                                    else
+                                        goto MATCH_label_a1;  /*opt-block+*/
+                                    break;
+                                case 4:
+                                    if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 0)
+                                        if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+                                            goto MATCH_label_a11;  /*opt-block+*/
+                                        else
+
+                                            switch((MATCH_w_16_0 >> 9 & 0x7)
+                                                    /* reg1 at 0 */)
+                                                {
+                                                case 0:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 0 &&
+                                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ &&
+                                                             (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ < 8) ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 1 ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 1 ||
+                                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ &&
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ < 8)
+                                                        goto MATCH_label_a1;  /*opt-block+*/
+                                                    else
+                                                        {
+                                                            MATCH_name = "oriToCCR";
+                                                            goto MATCH_label_a13;
+
+                                                        } /*opt-block*/
+
+                                                    break;
+                                                case 1:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 0 &&
+                                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ &&
+                                                             (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ < 8) ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 1 ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 1 ||
+                                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ &&
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ < 8)
+                                                        goto MATCH_label_a1;  /*opt-block+*/
+                                                    else
+                                                        {
+                                                            MATCH_name = "andiToCCR";
+                                                            goto MATCH_label_a13;
+
+                                                        } /*opt-block*/
+
+                                                    break;
+                                                case 2:
+                                                case 3:
+                                                case 6:
+                                                case 7:
+                                                    goto MATCH_label_a1;
+                                                    break;
+                                                case 4:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 0 &&
+                                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ &&
+                                                             (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ < 8) ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 1 ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 1 ||
+                                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ &&
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ < 8)
+                                                        goto MATCH_label_a1;  /*opt-block+*/
+                                                    else
+                                                        goto MATCH_label_a9;  /*opt-block+*/
+
+                                                    break;
+                                                case 5:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    if ((MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 0 &&
+                                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ &&
+                                                             (MATCH_w_16_16 >> 8 & 0x7)
+                                                             /* null at 16 */ < 8) ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 15 & 0x1)
+                                                            /* iType at 16 */ == 1 ||
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ == 0 &&
+                                                            (MATCH_w_16_16 >> 11 & 0x1)
+                                                            /* iSize at 16 */ == 1 ||
+                                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ &&
+                                                            (MATCH_w_16_16 >> 12 & 0x7)
+                                                            /* iReg at 16 */ < 8)
+                                                        goto MATCH_label_a1;  /*opt-block+*/
+                                                    else
+                                                        {
+                                                            MATCH_name = "eoriToCCR";
+                                                            goto MATCH_label_a13;
+
+                                                        } /*opt-block*/
+
+                                                    break;
+                                                default:
+                                                    assert(0);
+                                                } /* (MATCH_w_16_0 >> 9 & 0x7)
+                                  -- reg1 at 0 --*/
+                                    else
+                                        goto MATCH_label_a1;  /*opt-block+*/
+                                    break;
+                                case 5:
+                                case 6:
+                                case 7:
+                                    goto MATCH_label_a1;
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
                             break;
                         default:
                             assert(0);
-                        } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
                     break;
                 case 1:
-                    goto MATCH_label_a1;
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+                        if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                            if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
+                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 2)
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
+                                                (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_39[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a17;
+
+                                            } /*opt-block*/
+                                        else
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_39[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a14;
+
+                                            } /*opt-block*/
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
+                                                (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a18;
+
+                                            } /*opt-block*/
+                                        else
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a15;
+
+                                            } /*opt-block*/
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ &&
+                                                        (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ < 8)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a18;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a15;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ &&
+                                                        (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ < 8)
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_41[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a19;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_41[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a16;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            else
+
+                                switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a14;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a15;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 2:
+                                                    case 3:
+                                                    case 4:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a15;
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a16;
+
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 5:
+                                    case 6:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a17;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a18;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 2:
+                                                    case 3:
+                                                    case 4:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a18;
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a19;
+
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                        else
+
+                            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                                {
+                                case 0:
+                                case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+
+                                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                        {
+                                        case 0:
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            MATCH_name =
+                                                MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a14;
+
+                                            break;
+                                        case 5:
+                                        case 6:
+                                            MATCH_name =
+                                                MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a15;
+
+                                            break;
+                                        case 7:
+
+                                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                {
+                                                case 0:
+                                                case 2:
+                                                case 3:
+                                                case 4:
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a15;
+
+                                                    break;
+                                                case 1:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a16;
+
+                                                    break;
+                                                case 5:
+                                                case 6:
+                                                case 7:
+                                                    goto MATCH_label_a1;
+                                                    break;
+                                                default:
+                                                    assert(0);
+                                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                    break;
+                                case 5:
+                                case 6:
+
+                                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                        {
+                                        case 0:
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            MATCH_name =
+                                                MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a17;
+
+                                            break;
+                                        case 5:
+                                        case 6:
+                                            MATCH_name =
+                                                MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a18;
+
+                                            break;
+                                        case 7:
+
+                                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                {
+                                                case 0:
+                                                case 2:
+                                                case 3:
+                                                case 4:
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a18;
+
+                                                    break;
+                                                case 1:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a19;
+
+                                                    break;
+                                                case 5:
+                                                case 6:
+                                                case 7:
+                                                    goto MATCH_label_a1;
+                                                    break;
+                                                default:
+                                                    assert(0);
+                                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                    break;
+                                case 7:
+                                    goto MATCH_label_a1;
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                    else
+
+                        switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                            {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a14;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a15;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a15;
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a16;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 5:
+                            case 6:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a17;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a18;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a18;
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a19;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 7:
+                                goto MATCH_label_a1;
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
                     break;
-                case 5:
-                case 6:
+                case 2:
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+                        if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                            if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
+                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 2)
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
+                                                (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_46[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a17;
+
+                                            } /*opt-block*/
+                                        else
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_46[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a14;
+
+                                            } /*opt-block*/
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
+                                                (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a18;
+
+                                            } /*opt-block*/
+                                        else
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a15;
+
+                                            } /*opt-block*/
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ &&
+                                                        (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ < 8)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a18;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a15;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                            case 4:
+                                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ &&
+                                                        (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ < 8)
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_48[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a19;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_48[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a16;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            else
+
+                                switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a14;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a15;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 2:
+                                                    case 3:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a15;
+
+                                                        break;
+                                                    case 1:
+                                                    case 4:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a16;
+
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 5:
+                                    case 6:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a17;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a18;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 2:
+                                                    case 3:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a18;
+
+                                                        break;
+                                                    case 1:
+                                                    case 4:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a19;
+
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                        else
+
+                            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                                {
+                                case 0:
+                                case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+
+                                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                        {
+                                        case 0:
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            MATCH_name =
+                                                MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a14;
+
+                                            break;
+                                        case 5:
+                                        case 6:
+                                            MATCH_name =
+                                                MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a15;
+
+                                            break;
+                                        case 7:
+
+                                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                {
+                                                case 0:
+                                                case 2:
+                                                case 3:
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a15;
+
+                                                    break;
+                                                case 1:
+                                                case 4:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a16;
+
+                                                    break;
+                                                case 5:
+                                                case 6:
+                                                case 7:
+                                                    goto MATCH_label_a1;
+                                                    break;
+                                                default:
+                                                    assert(0);
+                                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                    break;
+                                case 5:
+                                case 6:
+
+                                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                        {
+                                        case 0:
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            MATCH_name =
+                                                MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a17;
+
+                                            break;
+                                        case 5:
+                                        case 6:
+                                            MATCH_name =
+                                                MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a18;
+
+                                            break;
+                                        case 7:
+
+                                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                {
+                                                case 0:
+                                                case 2:
+                                                case 3:
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a18;
+
+                                                    break;
+                                                case 1:
+                                                case 4:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a19;
+
+                                                    break;
+                                                case 5:
+                                                case 6:
+                                                case 7:
+                                                    goto MATCH_label_a1;
+                                                    break;
+                                                default:
+                                                    assert(0);
+                                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                    break;
+                                case 7:
+                                    goto MATCH_label_a1;
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                    else
+
+                        switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                            {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a14;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a15;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a15;
+
+                                                break;
+                                            case 1:
+                                            case 4:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a16;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 5:
+                            case 6:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a17;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a18;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a18;
+
+                                                break;
+                                            case 1:
+                                            case 4:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a19;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 7:
+                                goto MATCH_label_a1;
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                    break;
+                case 3:
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+                        if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                            if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
+                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 2)
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
+                                                (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_53[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a17;
+
+                                            } /*opt-block*/
+                                        else
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_53[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a14;
+
+                                            } /*opt-block*/
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
+                                                (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a18;
+
+                                            } /*opt-block*/
+                                        else
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                         /* MDadrm at 0 */];
+                                                goto MATCH_label_a15;
+
+                                            } /*opt-block*/
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ &&
+                                                        (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ < 8)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a18;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a15;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 1:
+                                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ &&
+                                                        (MATCH_w_16_0 >> 6 & 0x7)
+                                                        /* MDadrm at 0 */ < 8)
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_55[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a19;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_MDadrm_55[(MATCH_w_16_0 >> 6 & 0x7)
+                                                                                 /* MDadrm at 0 */];
+                                                        goto MATCH_label_a16;
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            else
+
+                                switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a14;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a15;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 2:
+                                                    case 3:
+                                                    case 4:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a15;
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a16;
+
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 5:
+                                    case 6:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a17;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a18;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 2:
+                                                    case 3:
+                                                    case 4:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a18;
+
+                                                        break;
+                                                    case 1:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a19;
+
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                        else
+
+                            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                                {
+                                case 0:
+                                case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+
+                                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                        {
+                                        case 0:
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            MATCH_name =
+                                                MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a14;
+
+                                            break;
+                                        case 5:
+                                        case 6:
+                                            MATCH_name =
+                                                MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a15;
+
+                                            break;
+                                        case 7:
+
+                                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                {
+                                                case 0:
+                                                case 2:
+                                                case 3:
+                                                case 4:
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a15;
+
+                                                    break;
+                                                case 1:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a16;
+
+                                                    break;
+                                                case 5:
+                                                case 6:
+                                                case 7:
+                                                    goto MATCH_label_a1;
+                                                    break;
+                                                default:
+                                                    assert(0);
+                                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                    break;
+                                case 5:
+                                case 6:
+
+                                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                        {
+                                        case 0:
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            MATCH_name =
+                                                MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a17;
+
+                                            break;
+                                        case 5:
+                                        case 6:
+                                            MATCH_name =
+                                                MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                   /* adrm at 0 */];
+                                            goto MATCH_label_a18;
+
+                                            break;
+                                        case 7:
+
+                                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                {
+                                                case 0:
+                                                case 2:
+                                                case 3:
+                                                case 4:
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a18;
+
+                                                    break;
+                                                case 1:
+                                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                    MATCH_name =
+                                                        MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
+                                                                           /* reg2 at 0 */];
+                                                    goto MATCH_label_a19;
+
+                                                    break;
+                                                case 5:
+                                                case 6:
+                                                case 7:
+                                                    goto MATCH_label_a1;
+                                                    break;
+                                                default:
+                                                    assert(0);
+                                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                    break;
+                                case 7:
+                                    goto MATCH_label_a1;
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                    else
+
+                        switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                            {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a14;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a15;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a15;
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a16;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 5:
+                            case 6:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a17;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a18;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a18;
+
+                                                break;
+                                            case 1:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                                MATCH_name =
+                                                    MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a19;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 7:
+                                goto MATCH_label_a1;
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                    break;
+                case 4:
                     if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
 
-                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                        case 0:
-                            goto MATCH_label_a11;
-                            break;
-                        case 1:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_sz_31[(MATCH_w_16_0 >> 6 & 0x3)
-                                                 /* sz at 0 */];
-                            goto MATCH_label_a12;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a12;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                    else
-
-                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                        case 0:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
                             case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "orib.ex";
-                                    goto MATCH_label_a6;
-
-                                } /*opt-block*/
-
-                                break;
                             case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a7;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a8;
-
-                                break;
-                            case 3:
                                 goto MATCH_label_a1;
                                 break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 1:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "andib.ex";
-                                    goto MATCH_label_a6;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a7;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a8;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 2:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "subib.ex";
-                                    goto MATCH_label_a6;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a7;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a8;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 3:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "addib.ex";
-                                    goto MATCH_label_a6;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a7;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a8;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 4:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else
-                                    goto MATCH_label_a9;  /*opt-block+*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "bchgi.ex";
-                                    goto MATCH_label_a10;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "bclri.ex";
-                                    goto MATCH_label_a10;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 3:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "bseti.ex";
-                                    goto MATCH_label_a10;
-
-                                } /*opt-block*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 5:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "eorib.ex";
-                                    goto MATCH_label_a6;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a7;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a8;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 6:
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if ((MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ < 8)
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else {
-                                    MATCH_name = "cmpib.ex";
-                                    goto MATCH_label_a6;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a7;
-
-                                break;
-                            case 2:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a8;
-
-                                break;
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                            break;
-                        case 7:
-                            goto MATCH_label_a1;
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                    break;
-                case 7:
-
-                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                    case 0:
-                    case 1:
-                        if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                goto MATCH_label_a11;
-                                break;
-                            case 1:
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_sz_31[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a12;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a12;
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        else
-
-                            switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                            case 0:
-
-                                switch((MATCH_w_16_0 >> 6 & 0x3)
-                                        /* sz at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "orib.ex";
-                                        goto MATCH_label_a6;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a7;
-
-                                    break;
-                                case 2:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_17[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a8;
-
-                                    break;
-                                case 3:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3)
-                                      -- sz at 0 --*/
-                                break;
-                            case 1:
-
-                                switch((MATCH_w_16_0 >> 6 & 0x3)
-                                        /* sz at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "andib.ex";
-                                        goto MATCH_label_a6;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a7;
-
-                                    break;
-                                case 2:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_19[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a8;
-
-                                    break;
-                                case 3:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3)
-                                      -- sz at 0 --*/
-                                break;
                             case 2:
 
-                                switch((MATCH_w_16_0 >> 6 & 0x3)
-                                        /* sz at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "subib.ex";
-                                        goto MATCH_label_a6;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a7;
-
-                                    break;
-                                case 2:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_21[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a8;
-
-                                    break;
-                                case 3:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3)
-                                      -- sz at 0 --*/
-                                break;
-                            case 3:
-
-                                switch((MATCH_w_16_0 >> 6 & 0x3)
-                                        /* sz at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "addib.ex";
-                                        goto MATCH_label_a6;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a7;
-
-                                    break;
-                                case 2:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_23[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a8;
-
-                                    break;
-                                case 3:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3)
-                                      -- sz at 0 --*/
-                                break;
-                            case 4:
-
-                                switch((MATCH_w_16_0 >> 6 & 0x3)
-                                        /* sz at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else
-                                        goto MATCH_label_a9;  /*opt-block+*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "bchgi.ex";
-                                        goto MATCH_label_a10;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 2:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "bclri.ex";
-                                        goto MATCH_label_a10;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 3:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "bseti.ex";
-                                        goto MATCH_label_a10;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3)
-                                      -- sz at 0 --*/
-                                break;
-                            case 5:
-
-                                switch((MATCH_w_16_0 >> 6 & 0x3)
-                                        /* sz at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "eorib.ex";
-                                        goto MATCH_label_a6;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a7;
-
-                                    break;
-                                case 2:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_28[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a8;
-
-                                    break;
-                                case 3:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3)
-                                      -- sz at 0 --*/
-                                break;
-                            case 6:
-
-                                switch((MATCH_w_16_0 >> 6 & 0x3)
-                                        /* sz at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "cmpib.ex";
-                                        goto MATCH_label_a6;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a7;
-
-                                    break;
-                                case 2:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_sz_30[(MATCH_w_16_0 >> 6 & 0x3)
-                                                         /* sz at 0 */];
-                                    goto MATCH_label_a8;
-
-                                    break;
-                                case 3:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3)
-                                      -- sz at 0 --*/
-                                break;
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                        break;
-                    case 2:
-                    case 3:
-                        if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 0)
-                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-                                goto MATCH_label_a11;  /*opt-block+*/
-                            else {
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                if (0 <= (MATCH_w_16_0 >> 9 & 0x7)
-                                        /* reg1 at 0 */ &&
-                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 4 ||
-                                        5 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
-                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 8 ||
-                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 0 &&
-                                        (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ &&
-                                         (MATCH_w_16_16 >> 8 & 0x7)
-                                         /* null at 16 */ < 8) ||
-                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 15 & 0x1)
-                                        /* iType at 16 */ == 1 ||
-                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
-                                        (MATCH_w_16_16 >> 12 & 0x7)
-                                        /* iReg at 16 */ == 0 &&
-                                        (MATCH_w_16_16 >> 11 & 0x1)
-                                        /* iSize at 16 */ == 1 ||
-                                        (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 4 &&
-                                        (1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                         /* iReg at 16 */ &&
-                                         (MATCH_w_16_16 >> 12 & 0x7)
-                                         /* iReg at 16 */ < 8))
-                                    goto MATCH_label_a1;  /*opt-block+*/
-                                else
-                                    goto MATCH_label_a9;  /*opt-block+*/
-
-                            } /*opt-block*/
-                        else
-                            goto MATCH_label_a1;  /*opt-block+*/
-                        break;
-                    case 4:
-                        if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 0)
-                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-                                goto MATCH_label_a11;  /*opt-block+*/
-                            else
-
-                                switch((MATCH_w_16_0 >> 9 & 0x7)
-                                        /* reg1 at 0 */) {
-                                case 0:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "oriToCCR";
-                                        goto MATCH_label_a13;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "andiToCCR";
-                                        goto MATCH_label_a13;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 2:
-                                case 3:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                case 4:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else
-                                        goto MATCH_label_a9;  /*opt-block+*/
-
-                                    break;
-                                case 5:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    if ((MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 0 &&
-                                            (1 <= (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ &&
-                                             (MATCH_w_16_16 >> 8 & 0x7)
-                                             /* null at 16 */ < 8) ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 15 & 0x1)
-                                            /* iType at 16 */ == 1 ||
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ == 0 &&
-                                            (MATCH_w_16_16 >> 11 & 0x1)
-                                            /* iSize at 16 */ == 1 ||
-                                            1 <= (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ &&
-                                            (MATCH_w_16_16 >> 12 & 0x7)
-                                            /* iReg at 16 */ < 8)
-                                        goto MATCH_label_a1;  /*opt-block+*/
-                                    else {
-                                        MATCH_name = "eoriToCCR";
-                                        goto MATCH_label_a13;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 9 & 0x7)
-                                  -- reg1 at 0 --*/
-                        else
-                            goto MATCH_label_a1;  /*opt-block+*/
-                        break;
-                    case 5:
-                    case 6:
-                    case 7:
-                        goto MATCH_label_a1;
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                break;
-            case 1:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-                    if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
-                        if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
-                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 2)
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
-                                        (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8) {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_39[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a17;
-
-                                } /*opt-block*/
-                                else {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_39[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a14;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 5:
-                            case 6:
-                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
-                                        (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8) {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a18;
-
-                                } /*opt-block*/
-                                else {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a15;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ &&
-                                            (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ < 8) {
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a18;
-
-                                    } /*opt-block*/
-                                    else {
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_40[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a15;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ &&
-                                            (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ < 8) {
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_41[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a19;
-
-                                    } /*opt-block*/
-                                    else {
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_41[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a16;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        else
-
-                            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-
-                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a14;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                    MATCH_name =
-                                        MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a15;
-
-                                    break;
-                                case 7:
-
-                                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
                                     case 0:
                                     case 2:
-                                    case 3:
-                                    case 4:
                                         MATCH_name =
-                                            MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a15;
+                                            MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a41;
 
                                         break;
                                     case 1:
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 3:
                                         MATCH_name =
-                                            MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a16;
+                                            MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a41;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a41;
 
                                         break;
                                     case 5:
                                     case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a42;
+
+                                        break;
                                     case 7:
-                                        goto MATCH_label_a1;
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a42;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a42;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a42;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a42;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
                                         break;
                                     default:
                                         assert(0);
-                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
                                 break;
-                            case 5:
-                            case 6:
+                            case 3:
 
-                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a17;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                    MATCH_name =
-                                        MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a18;
-
-                                    break;
-                                case 7:
-
-                                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
                                     case 0:
-                                    case 2:
+                                    case 1:
                                     case 3:
                                     case 4:
-                                        MATCH_name =
-                                            MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a18;
-
-                                        break;
-                                    case 1:
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a19;
-
-                                        break;
-                                    case 5:
-                                    case 6:
-                                    case 7:
                                         goto MATCH_label_a1;
                                         break;
-                                    default:
-                                        assert(0);
-                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                                break;
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                    else
-
-                        switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a14;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a15;
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a15;
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a16;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 5:
-                        case 6:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a17;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a18;
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a18;
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a19;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 7:
-                            goto MATCH_label_a1;
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a14;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a15;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a15;
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a16;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 5:
-                    case 6:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a17;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a18;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a18;
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_reg2_38[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a19;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 7:
-                        goto MATCH_label_a1;
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                break;
-            case 2:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-                    if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
-                        if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
-                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 2)
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
-                                        (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8) {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_46[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a17;
-
-                                } /*opt-block*/
-                                else {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_46[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a14;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 5:
-                            case 6:
-                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
-                                        (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8) {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a18;
-
-                                } /*opt-block*/
-                                else {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a15;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                    if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ &&
-                                            (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ < 8) {
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a18;
-
-                                    } /*opt-block*/
-                                    else {
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_47[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a15;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                case 4:
-                                    if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ &&
-                                            (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ < 8) {
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_48[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a19;
-
-                                    } /*opt-block*/
-                                    else {
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_48[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a16;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        else
-
-                            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-
-                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a14;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                    MATCH_name =
-                                        MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a15;
-
-                                    break;
-                                case 7:
-
-                                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                    case 0:
                                     case 2:
-                                    case 3:
-                                        MATCH_name =
-                                            MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a15;
-
-                                        break;
-                                    case 1:
-                                    case 4:
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a16;
-
-                                        break;
-                                    case 5:
-                                    case 6:
-                                    case 7:
-                                        goto MATCH_label_a1;
-                                        break;
-                                    default:
-                                        assert(0);
-                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                                break;
-                            case 5:
-                            case 6:
-
-                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a17;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                    MATCH_name =
-                                        MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a18;
-
-                                    break;
-                                case 7:
-
-                                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                    case 0:
-                                    case 2:
-                                    case 3:
-                                        MATCH_name =
-                                            MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a18;
-
-                                        break;
-                                    case 1:
-                                    case 4:
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a19;
-
-                                        break;
-                                    case 5:
-                                    case 6:
-                                    case 7:
-                                        goto MATCH_label_a1;
-                                        break;
-                                    default:
-                                        assert(0);
-                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                                break;
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                    else
-
-                        switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a14;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a15;
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                    MATCH_name =
-                                        MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a15;
-
-                                    break;
-                                case 1:
-                                case 4:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a16;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 5:
-                        case 6:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a17;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a18;
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                    MATCH_name =
-                                        MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a18;
-
-                                    break;
-                                case 1:
-                                case 4:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a19;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 7:
-                            goto MATCH_label_a1;
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a14;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a15;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a15;
-
-                                break;
-                            case 1:
-                            case 4:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_reg2_43[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a16;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 5:
-                    case 6:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a17;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a18;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a18;
-
-                                break;
-                            case 1:
-                            case 4:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_reg2_45[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a19;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 7:
-                        goto MATCH_label_a1;
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                break;
-            case 3:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-                    if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
-                        if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
-                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 2)
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
-                                        (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8) {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_53[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a17;
-
-                                } /*opt-block*/
-                                else {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_53[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a14;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 5:
-                            case 6:
-                                if (5 <= (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ &&
-                                        (MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */ < 8) {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a18;
-
-                                } /*opt-block*/
-                                else {
-                                    MATCH_name =
-                                        MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
-                                                             /* MDadrm at 0 */];
-                                    goto MATCH_label_a15;
-
-                                } /*opt-block*/
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ &&
-                                            (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ < 8) {
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a18;
-
-                                    } /*opt-block*/
-                                    else {
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_54[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a15;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 1:
-                                    if (5 <= (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ &&
-                                            (MATCH_w_16_0 >> 6 & 0x7)
-                                            /* MDadrm at 0 */ < 8) {
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_55[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a19;
-
-                                    } /*opt-block*/
-                                    else {
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_MDadrm_55[(MATCH_w_16_0 >> 6 & 0x7)
-                                                                 /* MDadrm at 0 */];
-                                        goto MATCH_label_a16;
-
-                                    } /*opt-block*/
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        else
-
-                            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-
-                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a14;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                    MATCH_name =
-                                        MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a15;
-
-                                    break;
-                                case 7:
-
-                                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                    case 0:
-                                    case 2:
-                                    case 3:
-                                    case 4:
-                                        MATCH_name =
-                                            MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a15;
-
-                                        break;
-                                    case 1:
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a16;
-
-                                        break;
-                                    case 5:
-                                    case 6:
-                                    case 7:
-                                        goto MATCH_label_a1;
-                                        break;
-                                    default:
-                                        assert(0);
-                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                                break;
-                            case 5:
-                            case 6:
-
-                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a17;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                    MATCH_name =
-                                        MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
-                                                           /* adrm at 0 */];
-                                    goto MATCH_label_a18;
-
-                                    break;
-                                case 7:
-
-                                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                    case 0:
-                                    case 2:
-                                    case 3:
-                                    case 4:
-                                        MATCH_name =
-                                            MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a18;
-
-                                        break;
-                                    case 1:
-                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                        MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                        MATCH_name =
-                                            MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
-                                                               /* reg2 at 0 */];
-                                        goto MATCH_label_a19;
-
-                                        break;
-                                    case 5:
-                                    case 6:
-                                    case 7:
-                                        goto MATCH_label_a1;
-                                        break;
-                                    default:
-                                        assert(0);
-                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                                break;
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                    else
-
-                        switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a14;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a15;
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a15;
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a16;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 5:
-                        case 6:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a17;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a18;
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 2:
-                                case 3:
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a18;
-
-                                    break;
-                                case 1:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                    MATCH_name =
-                                        MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a19;
-
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 7:
-                            goto MATCH_label_a1;
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a14;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a15;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a15;
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_reg2_50[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a16;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 5:
-                    case 6:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a17;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a18;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a18;
-
-                                break;
-                            case 1:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                MATCH_w_16_32 = getWord(4 + MATCH_p);
-                                MATCH_name =
-                                    MATCH_name_reg2_52[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a19;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 7:
-                        goto MATCH_label_a1;
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
-                break;
-            case 4:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-                    case 1:
-                        goto MATCH_label_a1;
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a41;
-
-                            break;
-                        case 1:
-                            goto MATCH_label_a1;
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a41;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a41;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a42;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name =
-                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a42;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a42;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a42;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a42;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                        case 3:
-                        case 4:
-                            goto MATCH_label_a1;
-                            break;
-                        case 2:
-                        {
-                            unsigned ea = addressToPC(MATCH_p);
-                            unsigned n =
-                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+                                    {
+                                        unsigned ea = addressToPC(MATCH_p);
+                                        unsigned n =
+                                            (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
 
 #line 619 "machine/mc68k/decoder_low.m"
-                            {
-
-                                // lea
-
-                                RTs = instantiate (pc, "lea", cEA (ea, pc, 32), DIS_AN);
-
-                            }
-
-
-
-
-
-
-                        }
-
-                        break;
-                        case 5:
-                        case 6:
-                            goto MATCH_label_a43;
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 4)
-                                goto MATCH_label_a43;  /*opt-block+*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                        case 3:
-                        case 4:
-                            if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
-                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 6) {
-                                MATCH_name =
-                                    MATCH_name_reg1_56[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a20;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        case 1:
-                            goto MATCH_label_a1;
-                            break;
-                        case 5:
-                        case 6:
-                            if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
-                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 6) {
-                                MATCH_name =
-                                    MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a21;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2 &&
-                                    (6 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
-                                     (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 8) ||
-                                    2 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 8)
-                                goto MATCH_label_a1;  /*opt-block+*/
-                            else {
-                                MATCH_name =
-                                    MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a21;
-
-                            } /*opt-block*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                        case 0:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_58[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a22;
-
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_58[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a23;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name =
-                                        MATCH_name_reg2_59[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a23;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 1:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_60[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a22;
-
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_60[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a23;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name =
-                                        MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a23;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 2:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_62[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a22;
-
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_62[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a23;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name =
-                                        MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a23;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 3:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_64[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a22;
-
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_64[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a23;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name =
-                                        MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a23;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 4:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                                MATCH_name =
-                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a24;
-
-                                break;
-                            case 1:
-                            case 3:
-                            case 4:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a25;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a26;
-
-                                break;
-                            case 7:
-
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 1:
-                                    MATCH_name =
-                                        MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a26;
-
-                                    break;
-                                case 2:
-                                case 3:
-                                    MATCH_name =
-                                        MATCH_name_reg2_59[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a26;
-
-                                    break;
-                                case 4:
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 5:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a22;
-
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 3:
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a22;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a23;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name =
-                                        MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a23;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 6:
-                            goto MATCH_label_a1;
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 4:
-                            case 5:
-                            case 7:
-                                if ((MATCH_w_16_0 >> 4 & 0x3)
-                                        /* adrb at 0 */ == 0)
-                                    goto MATCH_label_a27;  /*opt-block+*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            case 2:
-                                if ((MATCH_w_16_0 >> 4 & 0x3)
-                                        /* adrb at 0 */ == 0)
-                                    goto MATCH_label_a27;  /*opt-block+*/
-                                else {
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    MATCH_name = "link";
-                                    {
-                                        char *name = MATCH_name;
-                                        int /* [~32768..32767] */ i16 =
-                                            sign_extend(
-                                                (MATCH_w_16_16 & 0xffff)
-                                                /* d16 at 16 */, 16);
-                                        unsigned n =
-                                            (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-#line 549 "machine/mc68k/decoder_low.m"
                                         {
 
-                                            // link
+                                            // lea
 
-                                            RTs = instantiate (pc, name, DIS_AN, DIS_I16);
-
-                                            result.numBytes += 2;
-
-                                            // moveFromUSP, moveToUSP privileged
+                                            RTs = instantiate (pc, "lea", cEA (ea, pc, 32), DIS_AN);
 
                                         }
 
@@ -4565,4715 +4291,5298 @@ list<RT*>* NJMCDecoder::decodeLowLevelInstruction (ADDRESS hostPC, ADDRESS pc,
 
                                     }
 
-                                } /*opt-block*/
+                                    break;
+                                    case 5:
+                                    case 6:
+                                        goto MATCH_label_a43;
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 4)
+                                            goto MATCH_label_a43;  /*opt-block+*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
 
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
                                 break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                {
-                                    char *name = MATCH_name;
-                                    unsigned n =
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                    else
+
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
+                                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 6)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg1_56[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a20;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    case 1:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        if (0 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
+                                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 6)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a21;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2 &&
+                                                (6 <= (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ &&
+                                                 (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ < 8) ||
+                                                2 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 8)
+                                            goto MATCH_label_a1;  /*opt-block+*/
+                                        else
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a21;
+
+                                            } /*opt-block*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                    {
+                                    case 0:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_58[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a22;
+
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_58[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a23;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_59[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a23;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 1:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_60[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a22;
+
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_60[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a23;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a23;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 2:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_62[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a22;
+
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_62[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a23;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a23;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 3:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_64[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a22;
+
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_64[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a23;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a23;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 4:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a24;
+
+                                                break;
+                                            case 1:
+                                            case 3:
+                                            case 4:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a25;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a26;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 1:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a26;
+
+                                                        break;
+                                                    case 2:
+                                                    case 3:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_59[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a26;
+
+                                                        break;
+                                                    case 4:
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 5:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a22;
+
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 3:
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a22;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a23;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a23;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 6:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 4:
+                                            case 5:
+                                            case 7:
+                                                if ((MATCH_w_16_0 >> 4 & 0x3)
+                                                        /* adrb at 0 */ == 0)
+                                                    goto MATCH_label_a27;  /*opt-block+*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            case 2:
+                                                if ((MATCH_w_16_0 >> 4 & 0x3)
+                                                        /* adrb at 0 */ == 0)
+                                                    goto MATCH_label_a27;  /*opt-block+*/
+                                                else
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        MATCH_name = "link";
+                                                        {
+                                                            char *name = MATCH_name;
+                                                            int /* [~32768..32767] */ i16 =
+                                                                sign_extend(
+                                                                    (MATCH_w_16_16 & 0xffff)
+                                                                    /* d16 at 16 */, 16);
+                                                            unsigned n =
+                                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+#line 549 "machine/mc68k/decoder_low.m"
+                                                            {
+
+                                                                // link
+
+                                                                RTs = instantiate (pc, name, DIS_AN, DIS_I16);
+
+                                                                result.numBytes += 2;
+
+                                                                // moveFromUSP, moveToUSP privileged
+
+                                                            }
+
+
+
+
+
+
+                                                        }
+
+                                                    } /*opt-block*/
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                {
+                                                    char *name = MATCH_name;
+                                                    unsigned n =
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 #line 499 "machine/mc68k/decoder_low.m"
+                                                    {
+
+                                                        // unlk
+
+                                                        RTs = instantiate (pc, name, DIS_AN);
+
+                                                    }
+
+
+
+
+
+
+                                                }
+
+                                                break;
+                                            case 6:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 1:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a28;
+
+                                                        break;
+                                                    case 2:
+                                                    case 4:
+                                                        if ((MATCH_w_16_0 >> 4 & 0x3)
+                                                                /* adrb at 0 */ == 0)
+                                                            goto MATCH_label_a27;  /*opt-block+*/
+                                                        else
+                                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                                        break;
+                                                    case 3:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a28;
+
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a28;
+
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
                                     {
+                                    case 0:
 
-                                        // unlk
+                                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 5:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a29;
 
-                                        RTs = instantiate (pc, name, DIS_AN);
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a24;
 
-                                    }
+                                                break;
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                        break;
+                                    case 1:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 2:
 
+                                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 5:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a29;
 
+                                                break;
+                                            case 4:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a30;
 
+                                                break;
+                                            case 6:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a31;
 
+                                                break;
+                                            case 7:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_56[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a25;
 
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                        break;
+                                    case 3:
 
-                                }
+                                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 5:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a29;
 
-                                break;
-                            case 6:
+                                                break;
+                                            case 4:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 6:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a31;
 
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 1:
-                                    MATCH_name =
-                                        MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a28;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                        break;
+                                    case 4:
 
-                                    break;
-                                case 2:
-                                case 4:
-                                    if ((MATCH_w_16_0 >> 4 & 0x3)
-                                            /* adrb at 0 */ == 0)
-                                        goto MATCH_label_a27;  /*opt-block+*/
-                                    else
-                                        goto MATCH_label_a1;  /*opt-block+*/
+                                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 5:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a29;
 
-                                    break;
-                                case 3:
-                                    MATCH_name =
-                                        MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a28;
+                                                break;
+                                            case 4:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a30;
 
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    MATCH_name =
-                                        MATCH_name_reg2_36[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a28;
+                                                break;
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                        break;
+                                    case 5:
+                                    case 6:
 
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                        break;
-                    case 2:
+                                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 5:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_73[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a32;
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
+                                                break;
+                                            case 4:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a33;
 
-                            switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 5:
-                                MATCH_name =
-                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a29;
+                                                break;
+                                            case 6:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a34;
 
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a24;
+                                                break;
+                                            case 7:
+                                                MATCH_name =
+                                                    MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                       /* reg1 at 0 */];
+                                                goto MATCH_label_a26;
 
-                                break;
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                            break;
-                        case 1:
-                            goto MATCH_label_a1;
-                            break;
-                        case 2:
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                        break;
+                                    case 7:
 
-                            switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 5:
-                                MATCH_name =
-                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a29;
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
 
-                                break;
-                            case 4:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a30;
+                                                switch((MATCH_w_16_0 >> 9 & 0x7)
+                                                        /* reg1 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 1:
+                                                    case 2:
+                                                    case 3:
+                                                    case 5:
+                                                        MATCH_name =
+                                                            MATCH_name_reg1_73[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                               /* reg1 at 0 */];
+                                                        goto MATCH_label_a32;
 
-                                break;
-                            case 6:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a31;
+                                                        break;
+                                                    case 4:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        goto MATCH_label_a33;
 
-                                break;
-                            case 7:
-                                MATCH_name =
-                                    MATCH_name_reg1_56[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a25;
+                                                        break;
+                                                    case 6:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        goto MATCH_label_a34;
 
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                            break;
-                        case 3:
+                                                        break;
+                                                    case 7:
+                                                        MATCH_name =
+                                                            MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                               /* reg1 at 0 */];
+                                                        goto MATCH_label_a26;
 
-                            switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 5:
-                                MATCH_name =
-                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a29;
-
-                                break;
-                            case 4:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            case 6:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a31;
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                            break;
-                        case 4:
-
-                            switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 5:
-                                MATCH_name =
-                                    MATCH_name_reg1_72[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a29;
-
-                                break;
-                            case 4:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a30;
-
-                                break;
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                            break;
-                        case 5:
-                        case 6:
-
-                            switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 5:
-                                MATCH_name =
-                                    MATCH_name_reg1_73[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a32;
-
-                                break;
-                            case 4:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a33;
-
-                                break;
-                            case 6:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a34;
-
-                                break;
-                            case 7:
-                                MATCH_name =
-                                    MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
-                                                       /* reg1 at 0 */];
-                                goto MATCH_label_a26;
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-
-                                switch((MATCH_w_16_0 >> 9 & 0x7)
-                                        /* reg1 at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 5:
-                                    MATCH_name =
-                                        MATCH_name_reg1_73[(MATCH_w_16_0 >> 9 & 0x7)
-                                                           /* reg1 at 0 */];
-                                    goto MATCH_label_a32;
-
-                                    break;
-                                case 4:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    goto MATCH_label_a33;
-
-                                    break;
-                                case 6:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    goto MATCH_label_a34;
-
-                                    break;
-                                case 7:
-                                    MATCH_name =
-                                        MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
-                                                           /* reg1 at 0 */];
-                                    goto MATCH_label_a26;
-
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 9 & 0x7)
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 9 & 0x7)
                                       -- reg1 at 0 --*/
-                                break;
-                            case 2:
-                            case 3:
+                                                break;
+                                            case 2:
+                                            case 3:
 
-                                switch((MATCH_w_16_0 >> 9 & 0x7)
-                                        /* reg1 at 0 */) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                case 5:
-                                    goto MATCH_label_a1;
-                                    break;
-                                case 6:
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    goto MATCH_label_a34;
+                                                switch((MATCH_w_16_0 >> 9 & 0x7)
+                                                        /* reg1 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 1:
+                                                    case 2:
+                                                    case 3:
+                                                    case 4:
+                                                    case 5:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    case 6:
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        goto MATCH_label_a34;
 
-                                    break;
-                                case 7:
-                                    MATCH_name =
-                                        MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
-                                                           /* reg1 at 0 */];
-                                    goto MATCH_label_a26;
+                                                        break;
+                                                    case 7:
+                                                        MATCH_name =
+                                                            MATCH_name_reg1_57[(MATCH_w_16_0 >> 9 & 0x7)
+                                                                               /* reg1 at 0 */];
+                                                        goto MATCH_label_a26;
 
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 >> 9 & 0x7)
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 >> 9 & 0x7)
                                       -- reg1 at 0 --*/
+                                                break;
+                                            case 4:
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
                                 break;
-                            case 4:
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                        case 0:
-                        case 3:
-                            goto MATCH_label_a1;
-                            break;
-                        case 1:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 2:
                             case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a35;
 
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a35;
+                                switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                    {
+                                    case 0:
+                                    case 3:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 1:
 
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a36;
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a35;
 
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name =
-                                        MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a36;
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a35;
 
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a36;
 
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 2:
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a36;
 
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 2:
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a37;
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
 
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a37;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 2:
 
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a38;
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 2:
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a37;
 
-                                break;
-                            case 7:
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a37;
 
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 1:
-                                    MATCH_name =
-                                        MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a38;
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a38;
 
-                                    break;
-                                case 2:
-                                    MATCH_name =
-                                        MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a38;
+                                                break;
+                                            case 7:
 
-                                    break;
-                                case 3:
-                                    MATCH_name =
-                                        MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a38;
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 1:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a38;
 
-                                    break;
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_reg2_59[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a38;
+                                                        break;
+                                                    case 2:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a38;
 
-                                    break;
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 4:
+                                                        break;
+                                                    case 3:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a38;
 
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                                MATCH_name =
-                                    MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a24;
+                                                        break;
+                                                    case 4:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_59[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a38;
 
-                                break;
-                            case 1:
-                            case 3:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                            case 4:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                {
-                                    unsigned ea = addressToPC(MATCH_p);
-                                    unsigned i16 =
-                                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+                                                        break;
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 4:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a24;
+
+                                                break;
+                                            case 1:
+                                            case 3:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                            case 4:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                {
+                                                    unsigned ea = addressToPC(MATCH_p);
+                                                    unsigned i16 =
+                                                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
 
 #line 589 "machine/mc68k/decoder_low.m"
-                                    {
+                                                    {
 
-                                        // HACK! Needs work
+                                                        // HACK! Needs work
 
-                                        int bump = 0, bumpr;
+                                                        int bump = 0, bumpr;
 
-                                        RTs = instantiate (pc, "storem.l", DIS_I16,
+                                                        RTs = instantiate (pc, "storem.l", DIS_I16,
 
-                                        rmEA (ea, pc, bump, bumpr, 32));
+                                                        rmEA (ea, pc, bump, bumpr, 32));
 
-                                        result.numBytes += 2;
+                                                        result.numBytes += 2;
 
-                                        ADDBUMP;
+                                                        ADDBUMP;
 
-                                    }
-
-
+                                                    }
 
 
 
 
-                                }
 
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a39;
 
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    goto MATCH_label_a39;
+                                                }
 
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a39;
 
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 5:
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        goto MATCH_label_a39;
 
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                                MATCH_name =
-                                    MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a20;
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
 
-                                break;
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a20;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 5:
 
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a20;
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a20;
 
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a21;
+                                                break;
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a20;
 
-                                break;
-                            case 7:
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a20;
 
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 1:
-                                    MATCH_name =
-                                        MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a21;
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a21;
 
-                                    break;
-                                case 2:
-                                case 3:
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                case 4:
-                                    MATCH_name =
-                                        MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a28;
+                                                break;
+                                            case 7:
 
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 6:
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 1:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a21;
 
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                            case 4:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                            case 3:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                {
-                                    unsigned ea = addressToPC(MATCH_p);
-                                    unsigned i16 =
-                                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+                                                        break;
+                                                    case 2:
+                                                    case 3:
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    case 4:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_61[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a28;
+
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 6:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 4:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                            case 3:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                {
+                                                    unsigned ea = addressToPC(MATCH_p);
+                                                    unsigned i16 =
+                                                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
 
 #line 604 "machine/mc68k/decoder_low.m"
+                                                    {
+
+                                                        // HACK! Requires work
+
+                                                        int bump = 0, bumpr;
+
+                                                        RTs = instantiate (pc, "loadm.l", DIS_I16,
+
+                                                        mrEA (ea, pc, bump, bumpr, 32));
+
+                                                        result.numBytes += 2;
+
+                                                        ADDBUMP;
+
+                                                    }
+
+
+
+
+
+
+                                                }
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                goto MATCH_label_a40;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 4)
+                                                    {
+                                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                                        goto MATCH_label_a40;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                            case 3:
+                                            case 4:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a25;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                       /* adrm at 0 */];
+                                                goto MATCH_label_a26;
+
+                                                break;
+                                            case 7:
+
+                                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                                    {
+                                                    case 0:
+                                                    case 1:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a26;
+
+                                                        break;
+                                                    case 2:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a26;
+
+                                                        break;
+                                                    case 3:
+                                                        MATCH_name =
+                                                            MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
+                                                                               /* reg2 at 0 */];
+                                                        goto MATCH_label_a26;
+
+                                                        break;
+                                                    case 4:
+                                                    case 5:
+                                                    case 6:
+                                                    case 7:
+                                                        goto MATCH_label_a1;
+                                                        break;
+                                                    default:
+                                                        assert(0);
+                                                    } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                    break;
+                case 5:
+
+                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                        {
+                        case 0:
+                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
                                     {
+                                    case 0:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
-                                        // HACK! Requires work
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_60[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
-                                        int bump = 0, bumpr;
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
-                                        RTs = instantiate (pc, "loadm.l", DIS_I16,
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
-                                        mrEA (ea, pc, bump, bumpr, 32));
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a45;
 
-                                        result.numBytes += 2;
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a45;
 
-                                        ADDBUMP;
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
 
-                                    }
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            else
 
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_58[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a44;
 
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a45;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a45;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            break;
+                        case 1:
+                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_64[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a47;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a47;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            else
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_62[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a46;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a47;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a47;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            break;
+                        case 2:
+                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a49;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a49;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            else
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a48;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a49;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a49;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            break;
+                        case 3:
+                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_cond_96[(MATCH_w_16_0 >> 8 & 0xf)
+                                                               /* cond at 0 */];
+                                        goto MATCH_label_a50;
+
+                                        break;
+                                    case 1:
+                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                        MATCH_name =
+                                            MATCH_name_cond_97[(MATCH_w_16_0 >> 8 & 0xf)
+                                                               /* cond at 0 */];
+                                        goto MATCH_label_a51;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                    case 7:
+                                        MATCH_name =
+                                            MATCH_name_cond_98[(MATCH_w_16_0 >> 8 & 0xf)
+                                                               /* cond at 0 */];
+                                        goto MATCH_label_a52;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            else
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_cond_96[(MATCH_w_16_0 >> 8 & 0xf)
+                                                               /* cond at 0 */];
+                                        goto MATCH_label_a50;
+
+                                        break;
+                                    case 1:
+                                        MATCH_w_16_16 = getWord(2 + MATCH_p);
+                                        MATCH_name =
+                                            MATCH_name_cond_97[(MATCH_w_16_0 >> 8 & 0xf)
+                                                               /* cond at 0 */];
+                                        goto MATCH_label_a51;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_cond_98[(MATCH_w_16_0 >> 8 & 0xf)
+                                                               /* cond at 0 */];
+                                        goto MATCH_label_a52;
+
+                                        break;
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                    break;
+                case 6:
+                    if (2 <= (MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */ &&
+                            (MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */ < 16)
+                        {
+                            MATCH_name =
+                                MATCH_name_cond_99[(MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */];
+                            {
+                                char *name = MATCH_name;
+                                unsigned a = addressToPC(MATCH_p);
+
+#line 729 "machine/mc68k/decoder_low.m"
+                                {
+
+                                    // Bcc
+
+                                    RTs = instantiate (pc, name, BTA (a, result, pc));
 
                                 }
 
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                goto MATCH_label_a40;
 
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 4) {
-                                    MATCH_w_16_16 = getWord(2 + MATCH_p);
-                                    goto MATCH_label_a40;
 
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
 
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 7:
 
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
+
+                            }
+
+                        } /*opt-block*/
+                    else
+                        {
+                            MATCH_name =
+                                MATCH_name_cond_99[(MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */];
+                            {
+                                char *name = MATCH_name;
+                                unsigned a = addressToPC(MATCH_p);
+
+#line 721 "machine/mc68k/decoder_low.m"
+                                {
+
+                                    // _uBranch is  bra | bsr
+
+                                    strcpy(sslName, name);
+
+                                    if (strcmp (sslName, "bsr") == 0)
+
+                                        strcpy (sslName, "jsr");
+
+                                    RTs = instantiate (pc, sslName, BTA (a, result, pc));
+
+                                }
+
+
+
+
+
+
+                            }
+
+                        } /*opt-block*/
+
+                    break;
+                case 7:
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 0)
+                        {
+                            unsigned i8 = (MATCH_w_16_0 & 0xff) /* data8 at 0 */;
+                            unsigned n = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+
+#line 734 "machine/mc68k/decoder_low.m"
+                            {
+
+                                // moveq (semantics of move immediate long)
+
+                                RTs = instantiate (pc, "movel", DIS_I8, DIS_DN(32));
+
+                            }
+
+
+
+
+
+
+                        } /*opt-block*//*opt-block+*/
+                    else
+                        goto MATCH_label_a1;  /*opt-block+*/
+
+                    break;
+                case 8:
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
                             case 0:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a59;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a60;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a61;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a61;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a62;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a62;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
                             case 1:
-                            case 3:
-                            case 4:
-                                goto MATCH_label_a1;
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a64;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a64;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
                                 break;
                             case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a25;
 
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 1:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a66;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name =
+                                                    MATCH_name_reg2_107[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a66;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    case 1:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a58;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_109[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                    else
+
+                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                            {
+                            case 0:
+                            case 2:
+                            case 3:
+                            case 4:
+
+                                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a53;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_sz_100[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a41;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_sz_100[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a54;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                break;
+                            case 1:
+                                goto MATCH_label_a1;
                                 break;
                             case 5:
                             case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
-                                                       /* adrm at 0 */];
-                                goto MATCH_label_a26;
 
+                                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a56;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a42;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a57;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a58;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                                 break;
                             case 7:
+                                if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 5)
 
-                                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                                case 0:
-                                case 1:
-                                    MATCH_name =
-                                        MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a26;
+                                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                        {
+                                        case 0:
+                                            MATCH_name =
+                                                MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                /* sz at 0 */];
+                                            goto MATCH_label_a56;
 
-                                    break;
-                                case 2:
-                                    MATCH_name =
-                                        MATCH_name_reg2_63[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a26;
+                                            break;
+                                        case 1:
+                                            MATCH_name =
+                                                MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                  /* sz at 0 */];
+                                            goto MATCH_label_a42;
 
-                                    break;
-                                case 3:
-                                    MATCH_name =
-                                        MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
-                                                           /* reg2 at 0 */];
-                                    goto MATCH_label_a26;
+                                            break;
+                                        case 2:
+                                            MATCH_name =
+                                                MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                  /* sz at 0 */];
+                                            goto MATCH_label_a57;
 
-                                    break;
-                                case 4:
-                                case 5:
-                                case 6:
-                                case 7:
-                                    goto MATCH_label_a1;
-                                    break;
-                                default:
-                                    assert(0);
-                                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                            break;
+                                        case 3:
+                                            MATCH_name =
+                                                MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                /* sz at 0 */];
+                                            goto MATCH_label_a58;
+
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                else
+                                    goto MATCH_label_a1;  /*opt-block+*/
                                 break;
                             default:
                                 assert(0);
                             } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                break;
-            case 5:
-
-                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                case 0:
+                    break;
+                case 9:
                     if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
 
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_60[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a59;
 
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a60;
 
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
 
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a45;
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
 
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a45;
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
 
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a62;
 
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "submb.ex";
+                                                goto MATCH_label_a62;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a75;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a76;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a64;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "submw.ex";
+                                                goto MATCH_label_a64;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a77;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a78;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a66;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "subml.ex";
+                                                goto MATCH_label_a66;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a80;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "subal.ex";
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                     else
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
 
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_58[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a44;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a45;
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a45;
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a68;
 
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
+                                        break;
+                                    case 7:
 
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "subrb.ex";
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a70;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "subrw.ex";
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a72;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "subrl.ex";
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a74;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "subaw.ex";
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                     break;
-                case 1:
+                case 10:
+                case 15:
+                    goto MATCH_label_a1;
+                    break;
+                case 11:
                     if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
 
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_64[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a81;
 
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a60;
 
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a81;
 
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a47;
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a81;
 
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a47;
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a82;
 
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "eorb.ex";
+                                                goto MATCH_label_a82;
 
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a83;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a76;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a83;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a83;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a84;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "eorw.ex";
+                                                goto MATCH_label_a84;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a85;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a78;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a85;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a85;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a86;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "eorl.ex";
+                                                goto MATCH_label_a86;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a80;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "cmpal.ex";
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                     else
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
 
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_62[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a46;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a47;
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a47;
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a68;
 
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
+                                        break;
+                                    case 7:
 
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "cmpb.ex";
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a70;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "cmpw.ex";
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a72;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "cmpl.ex";
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a74;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "cmpaw.ex";
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                     break;
-                case 2:
+                case 12:
                     if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
 
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_68[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a59;
 
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a60;
 
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
 
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a49;
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
 
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a49;
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
 
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a62;
 
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "andmb.ex";
+                                                goto MATCH_label_a62;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        {
+                                            char *name = MATCH_name;
+                                            unsigned n =
+                                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+                                            unsigned n2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+#line 970 "machine/mc68k/decoder_low.m"
+                                            {
+
+                                                RTs = instantiate (pc, name, DIS_DN(32), DIS_DN2(32));
+
+                                            }
+
+
+
+
+
+
+                                        }
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        {
+                                            char *name = MATCH_name;
+                                            unsigned n =
+                                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+                                            unsigned n2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+#line 974 "machine/mc68k/decoder_low.m"
+                                            {
+
+                                                RTs = instantiate (pc, name, DIS_AN, DIS_AN2);
+
+                                            }
+
+
+
+
+
+
+                                        }
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a64;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "andmw.ex";
+                                                goto MATCH_label_a64;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        {
+                                            char *name = MATCH_name;
+                                            unsigned n =
+                                                (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+                                            unsigned n2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+#line 978 "machine/mc68k/decoder_low.m"
+                                            {
+
+                                                RTs = instantiate (pc, name, DIS_DN(32), DIS_AN2);
+
+                                            }
+
+
+
+
+
+
+
+
+                                        }
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a66;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "andml.ex";
+                                                goto MATCH_label_a66;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    case 1:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a55;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a58;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "muls.ex";
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a58;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                     else
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                            {
+                            case 0:
+                            case 2:
+                            case 3:
+                            case 4:
 
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_66[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a53;
 
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_sz_142[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a41;
 
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a48;
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_sz_142[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a54;
 
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a49;
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_sz_12[(MATCH_w_16_0 >> 6 & 0x3)
+                                                             /* sz at 0 */];
+                                        goto MATCH_label_a55;
 
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a49;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                break;
+                            case 1:
+                                goto MATCH_label_a1;
+                                break;
+                            case 5:
+                            case 6:
 
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
+                                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
+                                                            /* sz at 0 */];
+                                        goto MATCH_label_a56;
 
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a42;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
+                                                              /* sz at 0 */];
+                                        goto MATCH_label_a57;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
+                                                             /* sz at 0 */];
+                                        goto MATCH_label_a58;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                break;
+                            case 7:
+                                if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 5)
+
+                                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                        {
+                                        case 0:
+                                            MATCH_name =
+                                                MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                /* sz at 0 */];
+                                            goto MATCH_label_a56;
+
+                                            break;
+                                        case 1:
+                                            MATCH_name =
+                                                MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                  /* sz at 0 */];
+                                            goto MATCH_label_a42;
+
+                                            break;
+                                        case 2:
+                                            MATCH_name =
+                                                MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                  /* sz at 0 */];
+                                            goto MATCH_label_a57;
+
+                                            break;
+                                        case 3:
+                                            MATCH_name =
+                                                MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
+                                                                 /* sz at 0 */];
+                                            goto MATCH_label_a58;
+
+                                            break;
+                                        default:
+                                            assert(0);
+                                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                else
+                                    goto MATCH_label_a1;  /*opt-block+*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
                     break;
-                case 3:
-                    if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                            (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                case 13:
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_cond_96[(MATCH_w_16_0 >> 8 & 0xf)
-                                                   /* cond at 0 */];
-                            goto MATCH_label_a50;
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
 
-                            break;
-                        case 1:
-                            MATCH_w_16_16 = getWord(2 + MATCH_p);
-                            MATCH_name =
-                                MATCH_name_cond_97[(MATCH_w_16_0 >> 8 & 0xf)
-                                                   /* cond at 0 */];
-                            goto MATCH_label_a51;
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a59;
 
-                            break;
-                        case 5:
-                        case 6:
-                        case 7:
-                            MATCH_name =
-                                MATCH_name_cond_98[(MATCH_w_16_0 >> 8 & 0xf)
-                                                   /* cond at 0 */];
-                            goto MATCH_label_a52;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a60;
 
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a61;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a62;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "addmb.ex";
+                                                goto MATCH_label_a62;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a75;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a76;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a63;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a64;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "addmw.ex";
+                                                goto MATCH_label_a64;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a77;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a78;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a65;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a66;
+
+                                        break;
+                                    case 7:
+                                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
+                                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                            {
+                                                MATCH_name = "addml.ex";
+                                                goto MATCH_label_a66;
+
+                                            } /*opt-block*/
+                                        else
+                                            goto MATCH_label_a1;  /*opt-block+*/
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a79;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a80;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "addal.ex";
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_107[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_109[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a80;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                     else
 
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 2:
-                        case 3:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_cond_96[(MATCH_w_16_0 >> 8 & 0xf)
-                                                   /* cond at 0 */];
-                            goto MATCH_label_a50;
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
 
-                            break;
-                        case 1:
-                            MATCH_w_16_16 = getWord(2 + MATCH_p);
-                            MATCH_name =
-                                MATCH_name_cond_97[(MATCH_w_16_0 >> 8 & 0xf)
-                                                   /* cond at 0 */];
-                            goto MATCH_label_a51;
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_cond_98[(MATCH_w_16_0 >> 8 & 0xf)
-                                                   /* cond at 0 */];
-                            goto MATCH_label_a52;
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
 
-                            break;
-                        case 7:
-                            goto MATCH_label_a1;
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a67;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a68;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "addrb.ex";
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a68;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a69;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a70;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "addrw.ex";
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a70;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a71;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a72;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "addrl.ex";
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
+                                                                       /* reg2 at 0 */];
+                                                goto MATCH_label_a72;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a73;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a74;
+
+                                        break;
+                                    case 7:
+
+                                        switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                MATCH_name = "addaw.ex";
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_107[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
+                                                                        /* reg2 at 0 */];
+                                                goto MATCH_label_a74;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                    break;
+                case 14:
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a95;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a95;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a95;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a95;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a96;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a96;
+
+                                        break;
+                                    case 7:
+                                        MATCH_name =
+                                            MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a96;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a97;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a97;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a97;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a97;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a98;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a98;
+
+                                        break;
+                                    case 7:
+                                        MATCH_name =
+                                            MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a98;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a99;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a99;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a99;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a99;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a100;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a100;
+
+                                        break;
+                                    case 7:
+                                        MATCH_name =
+                                            MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a100;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                    {
+                                    case 0:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a102;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "aslm.ex";
+                                                        goto MATCH_label_a102;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 1:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a102;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "lslm.ex";
+                                                        goto MATCH_label_a102;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 2:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_186[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_186[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a102;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "roxlm.ex";
+                                                        goto MATCH_label_a102;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 3:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_188[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_186[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a101;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_188[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a102;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "rolm.ex";
+                                                        goto MATCH_label_a102;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 4:
+                                    case 5:
+                                    case 6:
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                    else
+
+                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                            {
+                            case 0:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a87;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a87;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a87;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a87;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a88;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a88;
+
+                                        break;
+                                    case 7:
+                                        MATCH_name =
+                                            MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a88;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 1:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a89;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a89;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a89;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a89;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a90;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a90;
+
+                                        break;
+                                    case 7:
+                                        MATCH_name =
+                                            MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a90;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 2:
+
+                                switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                    {
+                                    case 0:
+                                        MATCH_name =
+                                            MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a91;
+
+                                        break;
+                                    case 1:
+                                        MATCH_name =
+                                            MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a91;
+
+                                        break;
+                                    case 2:
+                                        MATCH_name =
+                                            MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a91;
+
+                                        break;
+                                    case 3:
+                                        MATCH_name =
+                                            MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a91;
+
+                                        break;
+                                    case 4:
+                                        MATCH_name =
+                                            MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a92;
+
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        MATCH_name =
+                                            MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                /* adrm at 0 */];
+                                        goto MATCH_label_a92;
+
+                                        break;
+                                    case 7:
+                                        MATCH_name =
+                                            MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
+                                                               /* adrm at 0 */];
+                                        goto MATCH_label_a92;
+
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                break;
+                            case 3:
+
+                                switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                    {
+                                    case 0:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a94;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "asrm.ex";
+                                                        goto MATCH_label_a94;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 1:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a94;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "lsrm.ex";
+                                                        goto MATCH_label_a94;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 2:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a94;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "roxrm.ex";
+                                                        goto MATCH_label_a94;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 3:
+
+                                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_a1;
+                                                break;
+                                            case 2:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 3:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 4:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a93;
+
+                                                break;
+                                            case 5:
+                                            case 6:
+                                                MATCH_name =
+                                                    MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
+                                                                        /* adrm at 0 */];
+                                                goto MATCH_label_a94;
+
+                                                break;
+                                            case 7:
+                                                if (0 <= (MATCH_w_16_0 & 0x7)
+                                                        /* reg2 at 0 */ &&
+                                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2)
+                                                    {
+                                                        MATCH_name = "rorm.ex";
+                                                        goto MATCH_label_a94;
+
+                                                    } /*opt-block*/
+                                                else
+                                                    goto MATCH_label_a1;  /*opt-block+*/
+
+                                                break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                                        break;
+                                    case 4:
+                                    case 5:
+                                    case 6:
+                                    case 7:
+                                        goto MATCH_label_a1;
+                                        break;
+                                    default:
+                                        assert(0);
+                                    } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                                break;
+                            default:
+                                assert(0);
+                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
                     break;
                 default:
                     assert(0);
-                } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                break;
-            case 6:
-                if (2 <= (MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */ &&
-                        (MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */ < 16) {
-                    MATCH_name =
-                        MATCH_name_cond_99[(MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */];
-                    {
-                        char *name = MATCH_name;
-                        unsigned a = addressToPC(MATCH_p);
-
-#line 729 "machine/mc68k/decoder_low.m"
-                        {
-
-                            // Bcc
-
-                            RTs = instantiate (pc, name, BTA (a, result, pc));
-
-                        }
-
-
-
-
-
-
-                    }
-
-                } /*opt-block*/
-                else {
-                    MATCH_name =
-                        MATCH_name_cond_99[(MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */];
-                    {
-                        char *name = MATCH_name;
-                        unsigned a = addressToPC(MATCH_p);
-
-#line 721 "machine/mc68k/decoder_low.m"
-                        {
-
-                            // _uBranch is  bra | bsr
-
-                            strcpy(sslName, name);
-
-                            if (strcmp (sslName, "bsr") == 0)
-
-                                strcpy (sslName, "jsr");
-
-                            RTs = instantiate (pc, sslName, BTA (a, result, pc));
-
-                        }
-
-
-
-
-
-
-                    }
-
-                } /*opt-block*/
-
-                break;
-            case 7:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 0) {
-                    unsigned i8 = (MATCH_w_16_0 & 0xff) /* data8 at 0 */;
-                    unsigned n = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-
-#line 734 "machine/mc68k/decoder_low.m"
-                    {
-
-                        // moveq (semantics of move immediate long)
-
-                        RTs = instantiate (pc, "movel", DIS_I8, DIS_DN(32));
-
-                    }
-
-
-
-
-
-
-                } /*opt-block*//*opt-block+*/
-                else
-                    goto MATCH_label_a1;  /*opt-block+*/
-
-                break;
-            case 8:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a59;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_74[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a60;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a62;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a62;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                            goto MATCH_label_a1;
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a64;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a64;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 1:
-                            goto MATCH_label_a1;
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a66;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name =
-                                    MATCH_name_reg2_107[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a66;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        case 1:
-                            goto MATCH_label_a1;
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a58;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name =
-                                    MATCH_name_reg2_109[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_65[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                    case 0:
-                    case 2:
-                    case 3:
-                    case 4:
-
-                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_sz_1[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a53;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_sz_100[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a41;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_sz_100[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a54;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        break;
-                    case 1:
-                        goto MATCH_label_a1;
-                        break;
-                    case 5:
-                    case 6:
-
-                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a56;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a42;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a57;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a58;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        break;
-                    case 7:
-                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 5)
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_name =
-                                    MATCH_name_sz_3[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a56;
-
-                                break;
-                            case 1:
-                                MATCH_name =
-                                    MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
-                                                      /* sz at 0 */];
-                                goto MATCH_label_a42;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_sz_101[(MATCH_w_16_0 >> 6 & 0x3)
-                                                      /* sz at 0 */];
-                                goto MATCH_label_a57;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        else
-                            goto MATCH_label_a1;  /*opt-block+*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                break;
-            case 9:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a59;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_84[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a60;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a62;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "submb.ex";
-                                goto MATCH_label_a62;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a75;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_86[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a76;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a64;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "submw.ex";
-                                goto MATCH_label_a64;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a77;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_88[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a78;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a66;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "subml.ex";
-                                goto MATCH_label_a66;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_90[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a80;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "subal.ex";
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_76[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a68;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "subrb.ex";
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_67[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_78[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a70;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "subrw.ex";
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_69[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_79[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a72;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "subrl.ex";
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_71[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_82[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a74;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "subaw.ex";
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_77[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_75[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                break;
-            case 10:
-            case 15:
-                goto MATCH_label_a1;
-                break;
-            case 11:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a81;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_106[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a60;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a81;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a81;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a82;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "eorb.ex";
-                                goto MATCH_label_a82;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a83;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_108[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a76;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a83;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a83;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a84;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "eorw.ex";
-                                goto MATCH_label_a84;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a85;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_110[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a78;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a85;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a85;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a86;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "eorl.ex";
-                                goto MATCH_label_a86;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_112[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a80;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "cmpal.ex";
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_92[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a68;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "cmpb.ex";
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_80[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_94[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a70;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "cmpw.ex";
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_81[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_102[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a72;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "cmpl.ex";
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_83[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_104[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a74;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "cmpaw.ex";
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_87[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_85[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                break;
-            case 12:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a59;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_114[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a60;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a62;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "andmb.ex";
-                                goto MATCH_label_a62;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            {
-                                char *name = MATCH_name;
-                                unsigned n =
-                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-                                unsigned n2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-#line 970 "machine/mc68k/decoder_low.m"
-                                {
-
-                                    RTs = instantiate (pc, name, DIS_DN(32), DIS_DN2(32));
-
-                                }
-
-
-
-
-
-
-                            }
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_116[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            {
-                                char *name = MATCH_name;
-                                unsigned n =
-                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-                                unsigned n2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-#line 974 "machine/mc68k/decoder_low.m"
-                                {
-
-                                    RTs = instantiate (pc, name, DIS_AN, DIS_AN2);
-
-                                }
-
-
-
-
-
-
-                            }
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a64;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "andmw.ex";
-                                goto MATCH_label_a64;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            goto MATCH_label_a1;
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_118[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            {
-                                char *name = MATCH_name;
-                                unsigned n =
-                                    (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-                                unsigned n2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-#line 978 "machine/mc68k/decoder_low.m"
-                                {
-
-                                    RTs = instantiate (pc, name, DIS_DN(32), DIS_AN2);
-
-                                }
-
-
-
-
-
-
-
-
-                            }
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a66;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "andml.ex";
-                                goto MATCH_label_a66;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        case 1:
-                            goto MATCH_label_a1;
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a58;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "muls.ex";
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_89[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                    case 0:
-                    case 2:
-                    case 3:
-                    case 4:
-
-                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_sz_5[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a53;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_sz_142[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a41;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_sz_142[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a54;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_sz_12[(MATCH_w_16_0 >> 6 & 0x3)
-                                                 /* sz at 0 */];
-                            goto MATCH_label_a55;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        break;
-                    case 1:
-                        goto MATCH_label_a1;
-                        break;
-                    case 5:
-                    case 6:
-
-                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
-                                                /* sz at 0 */];
-                            goto MATCH_label_a56;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a42;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
-                                                  /* sz at 0 */];
-                            goto MATCH_label_a57;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
-                                                 /* sz at 0 */];
-                            goto MATCH_label_a58;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        break;
-                    case 7:
-                        if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 5)
-
-                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                            case 0:
-                                MATCH_name =
-                                    MATCH_name_sz_7[(MATCH_w_16_0 >> 6 & 0x3)
-                                                    /* sz at 0 */];
-                                goto MATCH_label_a56;
-
-                                break;
-                            case 1:
-                                MATCH_name =
-                                    MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
-                                                      /* sz at 0 */];
-                                goto MATCH_label_a42;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_sz_143[(MATCH_w_16_0 >> 6 & 0x3)
-                                                      /* sz at 0 */];
-                                goto MATCH_label_a57;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_sz_14[(MATCH_w_16_0 >> 6 & 0x3)
-                                                     /* sz at 0 */];
-                                goto MATCH_label_a58;
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        else
-                            goto MATCH_label_a1;  /*opt-block+*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                break;
-            case 13:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a59;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_128[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a60;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a61;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a62;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "addmb.ex";
-                                goto MATCH_label_a62;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a75;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_130[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a76;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a63;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a64;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "addmw.ex";
-                                goto MATCH_label_a64;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a77;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_132[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a78;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a65;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a66;
-
-                            break;
-                        case 7:
-                            if (0 <= (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ &&
-                                    (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                MATCH_name = "addml.ex";
-                                goto MATCH_label_a66;
-
-                            } /*opt-block*/
-                            else
-                                goto MATCH_label_a1;  /*opt-block+*/
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_160[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_134[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a79;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a80;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "addal.ex";
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_107[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_109[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a80;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_120[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a67;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a68;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "addrb.ex";
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_91[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a68;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_122[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a69;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a70;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "addrw.ex";
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_93[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a70;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_150[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_124[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a71;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a72;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "addrl.ex";
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_95[(MATCH_w_16_0 & 0x7)
-                                                       /* reg2 at 0 */];
-                                goto MATCH_label_a72;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_152[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_126[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_156[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_154[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a73;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_158[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a74;
-
-                            break;
-                        case 7:
-
-                            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                            case 0:
-                            case 1:
-                                MATCH_name = "addaw.ex";
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_reg2_105[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_reg2_107[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_reg2_103[(MATCH_w_16_0 & 0x7)
-                                                        /* reg2 at 0 */];
-                                goto MATCH_label_a74;
-
-                                break;
-                            case 5:
-                            case 6:
-                            case 7:
-                                goto MATCH_label_a1;
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                break;
-            case 14:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a95;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_144[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a95;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a95;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a95;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a96;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a96;
-
-                            break;
-                        case 7:
-                            MATCH_name =
-                                MATCH_name_adrm_44[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a96;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a97;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_146[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a97;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a97;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a97;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a98;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a98;
-
-                            break;
-                        case 7:
-                            MATCH_name =
-                                MATCH_name_adrm_49[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a98;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a99;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_148[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a99;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a99;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a99;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_179[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a100;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a100;
-
-                            break;
-                        case 7:
-                            MATCH_name =
-                                MATCH_name_adrm_51[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a100;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                        case 0:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_180[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a102;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "aslm.ex";
-                                    goto MATCH_label_a102;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 1:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_181[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a102;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "lslm.ex";
-                                    goto MATCH_label_a102;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 2:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_186[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_182[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_186[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a102;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "roxlm.ex";
-                                    goto MATCH_label_a102;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 3:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_188[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_186[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_184[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a101;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_188[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a102;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "rolm.ex";
-                                    goto MATCH_label_a102;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-                            goto MATCH_label_a1;
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                else
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_162[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a87;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_136[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a87;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a87;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a87;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a88;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a88;
-
-                            break;
-                        case 7:
-                            MATCH_name =
-                                MATCH_name_adrm_35[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a88;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 1:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_164[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a89;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_138[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a89;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a89;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a89;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a90;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a90;
-
-                            break;
-                        case 7:
-                            MATCH_name =
-                                MATCH_name_adrm_37[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a90;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 2:
-
-                        switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                        case 0:
-                            MATCH_name =
-                                MATCH_name_adrm_166[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a91;
-
-                            break;
-                        case 1:
-                            MATCH_name =
-                                MATCH_name_adrm_140[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a91;
-
-                            break;
-                        case 2:
-                            MATCH_name =
-                                MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a91;
-
-                            break;
-                        case 3:
-                            MATCH_name =
-                                MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a91;
-
-                            break;
-                        case 4:
-                            MATCH_name =
-                                MATCH_name_adrm_168[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a92;
-
-                            break;
-                        case 5:
-                        case 6:
-                            MATCH_name =
-                                MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
-                                                    /* adrm at 0 */];
-                            goto MATCH_label_a92;
-
-                            break;
-                        case 7:
-                            MATCH_name =
-                                MATCH_name_adrm_42[(MATCH_w_16_0 >> 3 & 0x7)
-                                                   /* adrm at 0 */];
-                            goto MATCH_label_a92;
-
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                        break;
-                    case 3:
-
-                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
-                        case 0:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_169[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a94;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "asrm.ex";
-                                    goto MATCH_label_a94;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 1:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_170[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a94;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "lsrm.ex";
-                                    goto MATCH_label_a94;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 2:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_171[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a94;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "roxrm.ex";
-                                    goto MATCH_label_a94;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 3:
-
-                            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-                            case 0:
-                            case 1:
-                                goto MATCH_label_a1;
-                                break;
-                            case 2:
-                                MATCH_name =
-                                    MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 3:
-                                MATCH_name =
-                                    MATCH_name_adrm_175[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 4:
-                                MATCH_name =
-                                    MATCH_name_adrm_173[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a93;
-
-                                break;
-                            case 5:
-                            case 6:
-                                MATCH_name =
-                                    MATCH_name_adrm_177[(MATCH_w_16_0 >> 3 & 0x7)
-                                                        /* adrm at 0 */];
-                                goto MATCH_label_a94;
-
-                                break;
-                            case 7:
-                                if (0 <= (MATCH_w_16_0 & 0x7)
-                                        /* reg2 at 0 */ &&
-                                        (MATCH_w_16_0 & 0x7) /* reg2 at 0 */ < 2) {
-                                    MATCH_name = "rorm.ex";
-                                    goto MATCH_label_a94;
-
-                                } /*opt-block*/
-                                else
-                                    goto MATCH_label_a1;  /*opt-block+*/
-
-                                break;
-                            default:
-                                assert(0);
-                            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-                            break;
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-                            goto MATCH_label_a1;
-                            break;
-                        default:
-                            assert(0);
-                        } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 12 & 0xf) -- op at 0 --*/
+                } /* (MATCH_w_16_0 >> 12 & 0xf) -- op at 0 --*/
 
         } goto MATCH_finished_a;
 
@@ -9319,21 +9628,23 @@ MATCH_label_a1:
         (void)0; /*placeholder for label*/
 
 #line 1123 "machine/mc68k/decoder_low.m"
-        {   // the toolkit reserves "else" as a keyword, hence this code
+        {
+            // the toolkit reserves "else" as a keyword, hence this code
 
-            if (!prevIsTrap) {
+            if (!prevIsTrap)
+                {
 
-                ostrstream ost;
+                    ostrstream ost;
 
-                ost << "Undecoded instruction " << hex << getWord(pc+delta);
+                    ost << "Undecoded instruction " << hex << getWord(pc+delta);
 
-                ost << " at " << pc;
+                    ost << " at " << pc;
 
-                warning(str(ost));
+                    warning(str(ost));
 
-                RTs = NULL;
+                    RTs = NULL;
 
-            }
+                }
 
             if (prevIsTrap)
 
@@ -9763,19 +10074,20 @@ MATCH_label_a14:
 
                 (t2->getThirdIdx() >= 8));
 
-                if (sgnex) {
+                if (sgnex)
+                    {
 
-                    // Yes, therefore this is a sign extent to 32 bits
+                        // Yes, therefore this is a sign extent to 32 bits
 
-                    rt = sgnExTemp(t1, siz, 32, t3);
+                        rt = sgnExTemp(t1, siz, 32, t3);
 
-                    siz = 32;
+                        siz = 32;
 
-                    t2->getType().setSize(32);
+                        t2->getType().setSize(32);
 
-                    sslName[4] = 'l';       // So the second assignment will be long
+                        sslName[4] = 'l';       // So the second assignment will be long
 
-                }
+                    }
 
                 if (!sgnex)     // else
 
@@ -10747,21 +11059,22 @@ MATCH_label_a46:
 
                 (dst->getThirdIdx() >= 8);
 
-                if (b) {
+                if (b)
+                    {
 
-                    // We have addq/subq to an address register. These do not
+                        // We have addq/subq to an address register. These do not
 
-                    // affect the flags (all others do). Also, the instruction
+                        // affect the flags (all others do). Also, the instruction
 
-                    // is always 32 bits. So we give it a different SSL name
+                        // is always 32 bits. So we give it a different SSL name
 
-                    strcpy(sslName, name);
+                        strcpy(sslName, name);
 
-                    sslName[3] = '\0';
+                        sslName[3] = '\0';
 
-                    strcat(sslName, "qa");     // addqw -> addqa
+                        strcat(sslName, "qa");     // addqw -> addqa
 
-                }
+                    }
 
                 if (!b)                         // Can't use else
 
@@ -10832,21 +11145,22 @@ MATCH_label_a48:
 
                 (dst->getThirdIdx() >= 8);
 
-                if (b) {
+                if (b)
+                    {
 
-                    // We have addq/subq to an address register. These do not
+                        // We have addq/subq to an address register. These do not
 
-                    // affect the flags (all others do). So we give it a different
+                        // affect the flags (all others do). So we give it a different
 
-                    // SSL name
+                        // SSL name
 
-                    strcpy(sslName, name);
+                        strcpy(sslName, name);
 
-                    sslName[3] = '\0';
+                        sslName[3] = '\0';
 
-                    strcat(sslName, "qa");      // subl -> subqa
+                        strcat(sslName, "qa");      // subl -> subqa
 
-                }
+                    }
 
                 if (!b)                         // Can't use else
 

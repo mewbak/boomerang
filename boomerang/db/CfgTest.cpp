@@ -35,10 +35,10 @@ static bool logset = false;
 void CfgTest::setUp ()
 {
     if (!logset)
-    {
-        logset = true;
-        Boomerang::get()->setLogger(new NullLogger());
-    }
+        {
+            logset = true;
+            Boomerang::get()->setLogger(new NullLogger());
+        }
 }
 
 /*==============================================================================
@@ -84,9 +84,9 @@ void CfgTest::testDominators ()
     BB_IT it;
     PBB bb = cfg->getFirstBB(it);
     while (bb && bb->getLowAddr() != FRONTIER_FIVE)
-    {
-        bb = cfg->getNextBB(it);
-    }
+        {
+            bb = cfg->getNextBB(it);
+        }
     CPPUNIT_ASSERT(bb);
 
     std::ostringstream expected, actual;
@@ -141,9 +141,9 @@ void CfgTest::testSemiDominators ()
     BB_IT it;
     PBB bb = cfg->getFirstBB(it);
     while (bb && bb->getLowAddr() != SEMI_L)
-    {
-        bb = cfg->getNextBB(it);
-    }
+        {
+            bb = cfg->getNextBB(it);
+        }
     CPPUNIT_ASSERT(bb);
     int nL = df->pbbToNode(bb);
 

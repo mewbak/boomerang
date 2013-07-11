@@ -8,17 +8,17 @@ struct pair twofib(int n)
 {
     struct pair r;
     if (n == 0)
-    {
-        r.a = 0;
-        r.b = 1;
-    }
+        {
+            r.a = 0;
+            r.b = 1;
+        }
     else
-    {
-        r = twofib(n-1);
-        int a = r.a;
-        r.a = r.b;
-        r.b += a;
-    }
+        {
+            r = twofib(n-1);
+            int a = r.a;
+            r.a = r.b;
+            r.b += a;
+        }
     return r;
 }
 

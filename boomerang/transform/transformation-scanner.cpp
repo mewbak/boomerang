@@ -91,7 +91,7 @@ int read();
 #endif
 /* size of default input buffer */
 #ifndef YY_BUF_SIZE
-#define YY_BUF_SIZE (YY_READ_BUF_SIZE * 2) 
+#define YY_BUF_SIZE (YY_READ_BUF_SIZE * 2)
 #endif
 
 /***********************************/
@@ -165,8 +165,8 @@ int read();
 /* default declaration of generated scanner - a define so the user can
  * easily add parameters
  */
-#define YY_DECL int yylex YY_PROTO(( void )) 
-#else 
+#define YY_DECL int yylex YY_PROTO(( void ))
+#else
 /* c++ */
 #define ECHO yy___echo()
 #define YY_INPUT(buf,result,max_size) \
@@ -182,7 +182,7 @@ int read();
 #define YY_NULL 0
 #define YY_END_OF_BUFFER_CHAR 0
 /* special action meaning "start processing a new file" */
-#define YY_NEW_FILE yy___newfile 
+#define YY_NEW_FILE yy___newfile
 /* enter a start condition.  This macro really ought to take a parameter,
  * but we do it the disgusting crufty way forced on us by the ()-less
  * definition of BEGIN
@@ -194,7 +194,7 @@ int read();
 
 
 
-/* % section 1 definitions go here */ 
+/* % section 1 definitions go here */
 #line 1 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
 #define INITIAL 0
 /*==============================================================================
@@ -268,14 +268,14 @@ int read();
 
 
 struct yy_buffer_state
-    {
+{
     YY_TransformationScanner_IFILE  *yy_input_file;
 
     YY_TransformationScanner_CHAR *yy_ch_buf;               /* input buffer */
     YY_TransformationScanner_CHAR *yy_buf_pos;      /* current position in input buffer */
 
     /* size of input buffer in bytes, not including room for EOB characters */
-    int yy_buf_size;    
+    int yy_buf_size;
 
     /* number of characters read into yy_ch_buf, not including EOB characters */
     int yy_n_chars;
@@ -287,7 +287,7 @@ struct yy_buffer_state
      */
 #define EOF_PENDING 1
 #define EOF_DONE 2
-    };
+};
 
 /* we provide macros for accessing buffer states in case in the
  * future we want to put the buffer states in a more general
@@ -338,45 +338,56 @@ static void yyunput YY_PROTO(( YY_TransformationScanner_CHAR c, YY_Transformatio
 /* c++ */
 #ifndef YY_TransformationScanner_ECHO_NOCODE
 void YY_TransformationScanner_CLASS::yy___echo()
-{YY_TransformationScanner_ECHO_CODE
+{
+    YY_TransformationScanner_ECHO_CODE
 }
 #endif
 #ifndef YY_TransformationScanner_INPUT_NOCODE
 int  YY_TransformationScanner_CLASS::yy___input(char * buffer,int &result,int max_size)
-{YY_TransformationScanner_INPUT_CODE
+{
+    YY_TransformationScanner_INPUT_CODE
 }
 #endif
 #ifndef YY_TransformationScanner_FATAL_ERROR_NOCODE
 void YY_TransformationScanner_CLASS::yy___fatal_error(char *msg)
-{YY_TransformationScanner_FATAL_ERROR_CODE
+{
+    YY_TransformationScanner_FATAL_ERROR_CODE
 }
 #endif
 #ifndef YY_TransformationScanner_WRAP_NOCODE
 int  YY_TransformationScanner_CLASS::yy___wrap()
-{YY_TransformationScanner_WRAP_CODE
+{
+    YY_TransformationScanner_WRAP_CODE
 }
 #endif
 void YY_TransformationScanner_CLASS::yy_initialize()
 {
- yy___in=0;yy___out=0;yy_init = 1;
- yy_start=0;
- yy___text=0;yy___leng=0;
- YY_TransformationScanner_CURRENT_BUFFER=0;
- yy_did_buffer_switch_on_eof=0;
- yy_c_buf_p=0;yy_hold_char=0;yy_n_chars=0;
+    yy___in=0;
+    yy___out=0;
+    yy_init = 1;
+    yy_start=0;
+    yy___text=0;
+    yy___leng=0;
+    YY_TransformationScanner_CURRENT_BUFFER=0;
+    yy_did_buffer_switch_on_eof=0;
+    yy_c_buf_p=0;
+    yy_hold_char=0;
+    yy_n_chars=0;
 #if YY_TransformationScanner_DEBUG != 0
- YY_TransformationScanner_DEBUG_FLAG=YY_TransformationScanner_DEBUG_INIT;
+    YY_TransformationScanner_DEBUG_FLAG=YY_TransformationScanner_DEBUG_INIT;
 #endif
 }
 
 YY_TransformationScanner_CLASS::YY_TransformationScanner_CLASS(YY_TransformationScanner_CONSTRUCTOR_PARAM) YY_TransformationScanner_CONSTRUCTOR_INIT
-{yy_initialize();
- YY_TransformationScanner_CONSTRUCTOR_CODE;
+{
+    yy_initialize();
+    YY_TransformationScanner_CONSTRUCTOR_CODE;
 }
-YY_TransformationScanner_CLASS::~YY_TransformationScanner_CLASS() 
-{YY_TransformationScanner_DESTRUCTOR_CODE;
- if(YY_TransformationScanner_CURRENT_BUFFER)
-  YY_TransformationScanner_DELETE_BUFFER(YY_TransformationScanner_CURRENT_BUFFER);
+YY_TransformationScanner_CLASS::~YY_TransformationScanner_CLASS()
+{
+    YY_TransformationScanner_DESTRUCTOR_CODE;
+    if(YY_TransformationScanner_CURRENT_BUFFER)
+        YY_TransformationScanner_DELETE_BUFFER(YY_TransformationScanner_CURRENT_BUFFER);
 }
 
 #endif
@@ -390,213 +401,221 @@ YY_TransformationScanner_CLASS::~YY_TransformationScanner_CLASS()
 #define YY_USER_INIT
 #endif
 
-/* % data tables for the DFA go here */ 
+/* % data tables for the DFA go here */
 #define YY_END_OF_BUFFER 74
 typedef int yy_state_type;
 static const short int yy_accept[160] =
-    {   0,
-        0,    0,   74,   72,   71,   71,   59,   72,   65,   58,
-       72,   53,   54,   63,   62,   50,   61,   57,   64,   19,
-       19,   51,   47,   66,   52,   67,   16,   16,   16,   55,
-       56,   68,   16,   16,   16,   16,   16,   16,   16,   16,
-       16,   16,   16,   48,   69,   49,   60,   46,    0,   24,
-        0,   32,   41,   33,    0,    0,   30,   38,   28,   39,
-       29,   40,    0,   22,    1,   31,   23,   18,    0,   19,
-        0,   19,   37,   43,   45,   44,   36,   15,   16,    0,
-        0,   34,   12,   16,   16,   16,   16,   16,   11,   16,
-       10,   16,   16,   16,   16,   35,   42,   20,   25,    0,
+{
+    0,
+    0,    0,   74,   72,   71,   71,   59,   72,   65,   58,
+    72,   53,   54,   63,   62,   50,   61,   57,   64,   19,
+    19,   51,   47,   66,   52,   67,   16,   16,   16,   55,
+    56,   68,   16,   16,   16,   16,   16,   16,   16,   16,
+    16,   16,   16,   48,   69,   49,   60,   46,    0,   24,
+    0,   32,   41,   33,    0,    0,   30,   38,   28,   39,
+    29,   40,    0,   22,    1,   31,   23,   18,    0,   19,
+    0,   19,   37,   43,   45,   44,   36,   15,   16,    0,
+    0,   34,   12,   16,   16,   16,   16,   16,   11,   16,
+    10,   16,   16,   16,   16,   35,   42,   20,   25,    0,
 
-       22,   22,    0,   23,   18,    0,   21,   17,   27,   26,
-       16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
-        0,   22,    0,   22,    0,   23,   21,   17,   16,   16,
-       16,   16,   16,   16,   16,   13,   16,   16,    0,   22,
-        9,   16,   16,   14,    5,   16,   16,    6,    3,   16,
-       16,   16,    2,    4,   16,   16,    8,    7,    0
-    } ;
+    22,   22,    0,   23,   18,    0,   21,   17,   27,   26,
+    16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+    0,   22,    0,   22,    0,   23,   21,   17,   16,   16,
+    16,   16,   16,   16,   16,   13,   16,   16,    0,   22,
+    9,   16,   16,   14,    5,   16,   16,    6,    3,   16,
+    16,   16,    2,    4,   16,   16,    8,    7,    0
+} ;
 
 static const YY_CHAR yy_ec[128] =
-    {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        2,    2,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    4,    5,    1,    1,    6,    7,    8,    9,
-       10,   11,   12,   13,   14,   15,   16,   17,   18,   18,
-       18,   18,   18,   18,   18,   18,   18,   19,   20,   21,
-       22,   23,   24,   25,   26,   26,   26,   26,   27,   28,
-       25,   25,   25,   25,   25,   29,   25,   25,   25,   25,
-       25,   25,   25,   25,   30,   25,   25,   31,   25,   25,
-       32,   33,   34,   35,   25,    1,   36,   37,   38,   39,
+{
+    0,
+    1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
+    2,    2,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    2,    4,    5,    1,    1,    6,    7,    8,    9,
+    10,   11,   12,   13,   14,   15,   16,   17,   18,   18,
+    18,   18,   18,   18,   18,   18,   18,   19,   20,   21,
+    22,   23,   24,   25,   26,   26,   26,   26,   27,   28,
+    25,   25,   25,   25,   25,   29,   25,   25,   25,   25,
+    25,   25,   25,   25,   30,   25,   25,   31,   25,   25,
+    32,   33,   34,   35,   25,    1,   36,   37,   38,   39,
 
-       40,   41,   25,   42,   43,   25,   44,   45,   46,   47,
-       48,   49,   25,   50,   51,   52,   53,   25,   54,   31,
-       55,   56,   57,   58,   59,   60,    1
-    } ;
+    40,   41,   25,   42,   43,   25,   44,   45,   46,   47,
+    48,   49,   25,   50,   51,   52,   53,   25,   54,   31,
+    55,   56,   57,   58,   59,   60,    1
+} ;
 
 static const YY_CHAR yy_meta[61] =
-    {   0,
-        1,    1,    1,    1,    1,    1,    1,    2,    3,    1,
-        1,    1,    1,    1,    1,    1,    4,    4,    1,    1,
-        1,    1,    1,    3,    3,    4,    4,    4,    3,    3,
-        3,    1,    1,    1,    1,    4,    4,    4,    4,    4,
-        4,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    1,    1,    1,    1
-    } ;
+{
+    0,
+    1,    1,    1,    1,    1,    1,    1,    2,    3,    1,
+    1,    1,    1,    1,    1,    1,    4,    4,    1,    1,
+    1,    1,    1,    3,    3,    4,    4,    4,    3,    3,
+    3,    1,    1,    1,    1,    4,    4,    4,    4,    4,
+    4,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+    3,    3,    3,    3,    3,    3,    1,    1,    1,    1
+} ;
 
 static const short int yy_base[164] =
-    {   0,
-        0,    0,  330,  331,  331,  331,  303,   56,  296,   55,
-      284,  331,  331,  293,   51,  331,   52,   50,   58,   75,
-       53,  331,  331,   57,  292,   59,  303,  301,   78,  331,
-      331,  286,   63,   67,   55,   76,   79,   82,   85,   87,
-       88,   89,   90,  331,   78,  331,  331,  331,   96,  331,
-      304,  331,  331,  331,  101,  108,  331,  331,  331,  331,
-      331,  331,  291,  120,  331,  331,  123,  140,  109,  142,
-        0,    0,  282,  331,  331,  331,  281,  331,  293,  112,
-      268,  331,  331,  109,  115,  116,  101,  126,  331,   99,
-      331,  121,  145,  134,  157,  331,  331,  331,  331,  164,
+{
+    0,
+    0,    0,  330,  331,  331,  331,  303,   56,  296,   55,
+    284,  331,  331,  293,   51,  331,   52,   50,   58,   75,
+    53,  331,  331,   57,  292,   59,  303,  301,   78,  331,
+    331,  286,   63,   67,   55,   76,   79,   82,   85,   87,
+    88,   89,   90,  331,   78,  331,  331,  331,   96,  331,
+    304,  331,  331,  331,  101,  108,  331,  331,  331,  331,
+    331,  331,  291,  120,  331,  331,  123,  140,  109,  142,
+    0,    0,  282,  331,  331,  331,  281,  331,  293,  112,
+    268,  331,  331,  109,  115,  116,  101,  126,  331,   99,
+    331,  121,  145,  134,  157,  331,  331,  331,  331,  164,
 
-      331,  172,  174,  331,  173,  157,  187,  177,  331,  331,
-      175,  185,  147,  170,  199,  200,  201,  205,  210,  211,
-      206,  225,  217,  331,  219,  231,  331,  210,  216,  218,
-      235,  237,  291,  242,  243,  290,  288,  247,  240,  251,
-      286,  253,  256,  281,  331,  258,  264,  331,  280,  265,
-      266,  269,  279,  277,  272,  276,  275,  331,  331,  319,
-      323,  325,  278
-    } ;
+    331,  172,  174,  331,  173,  157,  187,  177,  331,  331,
+    175,  185,  147,  170,  199,  200,  201,  205,  210,  211,
+    206,  225,  217,  331,  219,  231,  331,  210,  216,  218,
+    235,  237,  291,  242,  243,  290,  288,  247,  240,  251,
+    286,  253,  256,  281,  331,  258,  264,  331,  280,  265,
+    266,  269,  279,  277,  272,  276,  275,  331,  331,  319,
+    323,  325,  278
+} ;
 
 static const short int yy_def[164] =
-    {   0,
-      159,    1,  159,  159,  159,  159,  159,  160,  159,  159,
-      161,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-       20,  159,  159,  159,  159,  159,  162,  162,  162,  159,
-      159,  159,  162,  162,  162,  162,  162,  162,  162,  162,
-      162,  162,  162,  159,  159,  159,  159,  159,  160,  159,
-      160,  159,  159,  159,  161,  161,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      163,   21,  159,  159,  159,  159,  159,  159,  162,  160,
-      161,  159,  159,  162,  162,  162,  162,  162,  159,  162,
-      159,  162,  162,  162,  162,  159,  159,  159,  159,  159,
+{
+    0,
+    159,    1,  159,  159,  159,  159,  159,  160,  159,  159,
+    161,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    20,  159,  159,  159,  159,  159,  162,  162,  162,  159,
+    159,  159,  162,  162,  162,  162,  162,  162,  162,  162,
+    162,  162,  162,  159,  159,  159,  159,  159,  160,  159,
+    160,  159,  159,  159,  161,  161,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    163,   21,  159,  159,  159,  159,  159,  159,  162,  160,
+    161,  159,  159,  162,  162,  162,  162,  162,  159,  162,
+    159,  162,  162,  162,  162,  159,  159,  159,  159,  159,
 
-      159,  159,  159,  159,  159,  159,  159,  163,  159,  159,
-      162,  162,  162,  162,  162,  162,  162,  162,  162,  162,
-      159,  159,  159,  159,  159,  159,  159,  159,  162,  162,
-      162,  162,  162,  162,  162,  162,  162,  162,  159,  159,
-      162,  162,  162,  162,  159,  162,  162,  159,  162,  162,
-      162,  162,  162,  162,  162,  162,  162,  159,    0,  159,
-      159,  159,  159
-    } ;
+    159,  159,  159,  159,  159,  159,  159,  163,  159,  159,
+    162,  162,  162,  162,  162,  162,  162,  162,  162,  162,
+    159,  159,  159,  159,  159,  159,  159,  159,  162,  162,
+    162,  162,  162,  162,  162,  162,  162,  162,  159,  159,
+    162,  162,  162,  162,  159,  162,  162,  159,  162,  162,
+    162,  162,  162,  162,  162,  162,  162,  159,    0,  159,
+    159,  159,  159
+} ;
 
 static const short int yy_nxt[392] =
-    {   0,
-        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
-       14,   15,   16,   17,   18,   19,   20,   21,   22,   23,
-       24,   25,   26,   27,   28,   28,   28,   28,   29,   28,
-       28,   30,    4,   31,   32,   33,   34,   35,   28,   28,
-       36,   28,   28,   37,   28,   38,   28,   28,   39,   40,
-       41,   42,   28,   43,   28,   28,   44,   45,   46,   47,
-       50,   53,   58,   78,   63,   60,   64,   64,   65,   72,
-       72,   78,   59,   61,   62,   78,   54,   73,   74,   66,
-       76,   77,   80,  159,   78,   81,   78,   78,   51,   67,
-       78,   68,   68,   78,   83,   78,   78,   78,   78,   96,
+{
+    0,
+    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
+    14,   15,   16,   17,   18,   19,   20,   21,   22,   23,
+    24,   25,   26,   27,   28,   28,   28,   28,   29,   28,
+    28,   30,    4,   31,   32,   33,   34,   35,   28,   28,
+    36,   28,   28,   37,   28,   38,   28,   28,   39,   40,
+    41,   42,   28,   43,   28,   28,   44,   45,   46,   47,
+    50,   53,   58,   78,   63,   60,   64,   64,   65,   72,
+    72,   78,   59,   61,   62,   78,   54,   73,   74,   66,
+    76,   77,   80,  159,   78,   81,   78,   78,   51,   67,
+    78,   68,   68,   78,   83,   78,   78,   78,   78,   96,
 
-       50,   69,   86,   70,   70,   71,   85,   78,   98,   78,
-      159,   87,   84,   89,   69,   55,   50,   78,   91,   70,
-      106,   88,  106,   78,   78,  107,  107,   70,   51,   78,
-       92,   95,   90,   56,   78,   97,   64,   64,   93,  102,
-      102,  116,   78,   94,   51,  114,  100,  101,  101,  103,
-      104,  104,  112,   78,   67,   78,   68,   68,  111,  100,
-      101,  113,  103,  104,  101,   78,   69,  104,  105,  105,
-       70,   70,  115,  107,  107,  121,  117,  121,   78,   69,
-      122,  122,  119,   78,  105,  125,   70,  125,  102,  102,
-      126,  126,  105,   78,   70,  131,  120,  118,  123,  124,
+    50,   69,   86,   70,   70,   71,   85,   78,   98,   78,
+    159,   87,   84,   89,   69,   55,   50,   78,   91,   70,
+    106,   88,  106,   78,   78,  107,  107,   70,   51,   78,
+    92,   95,   90,   56,   78,   97,   64,   64,   93,  102,
+    102,  116,   78,   94,   51,  114,  100,  101,  101,  103,
+    104,  104,  112,   78,   67,   78,   68,   68,  111,  100,
+    101,  113,  103,  104,  101,   78,   69,  104,  105,  105,
+    70,   70,  115,  107,  107,  121,  117,  121,   78,   69,
+    122,  122,  119,   78,  105,  125,   70,  125,  102,  102,
+    126,  126,  105,   78,   70,  131,  120,  118,  123,  124,
 
-      124,  105,  105,  107,  107,  128,  128,   78,   78,   78,
-      129,  123,  124,   78,  127,  127,  124,  105,   78,   78,
-      132,  128,  122,  122,   78,  105,   78,  127,  139,  128,
-      139,  127,  130,  140,  140,  126,  126,  133,  128,  128,
-      135,  122,  122,   78,  136,   78,  134,  126,  126,  137,
-       78,   78,  101,  101,  128,   78,  140,  140,  104,  104,
-      138,   78,  128,  142,   78,  101,   78,  140,  140,  101,
-      141,  104,   78,   78,   78,  104,  144,   78,  124,  124,
-       78,  108,  143,   78,  158,   78,  149,   78,   78,   78,
-      147,  124,  150,  146,   78,  124,  148,  152,   78,  145,
+    124,  105,  105,  107,  107,  128,  128,   78,   78,   78,
+    129,  123,  124,   78,  127,  127,  124,  105,   78,   78,
+    132,  128,  122,  122,   78,  105,   78,  127,  139,  128,
+    139,  127,  130,  140,  140,  126,  126,  133,  128,  128,
+    135,  122,  122,   78,  136,   78,  134,  126,  126,  137,
+    78,   78,  101,  101,  128,   78,  140,  140,  104,  104,
+    138,   78,  128,  142,   78,  101,   78,  140,  140,  101,
+    141,  104,   78,   78,   78,  104,  144,   78,  124,  124,
+    78,  108,  143,   78,  158,   78,  149,   78,   78,   78,
+    147,  124,  150,  146,   78,  124,  148,  152,   78,  145,
 
-       56,   78,  110,  109,  153,   99,  159,   82,  151,   78,
-      157,   78,  155,   75,   57,  154,   56,   52,  156,   49,
-       49,   49,   49,   55,   48,   55,   55,   79,   79,  159,
-        3,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159
+    56,   78,  110,  109,  153,   99,  159,   82,  151,   78,
+    157,   78,  155,   75,   57,  154,   56,   52,  156,   49,
+    49,   49,   49,   55,   48,   55,   55,   79,   79,  159,
+    3,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159
 
-    } ;
+} ;
 
 static const short int yy_chk[392] =
-    {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        8,   10,   15,   35,   18,   17,   18,   18,   19,   21,
-       21,   33,   15,   17,   17,   34,   10,   24,   24,   19,
-       26,   26,   29,   21,   36,   29,   29,   37,    8,   20,
-       38,   20,   20,   39,   33,   40,   41,   42,   43,   45,
+{
+    0,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    8,   10,   15,   35,   18,   17,   18,   18,   19,   21,
+    21,   33,   15,   17,   17,   34,   10,   24,   24,   19,
+    26,   26,   29,   21,   36,   29,   29,   37,    8,   20,
+    38,   20,   20,   39,   33,   40,   41,   42,   43,   45,
 
-       49,   20,   35,   20,   20,   20,   34,   90,   55,   87,
-       56,   36,   33,   38,   20,   56,   80,   84,   40,   20,
-       69,   37,   69,   85,   86,   69,   69,   20,   49,   92,
-       41,   43,   39,   55,   88,   45,   64,   64,   42,   67,
-       67,   90,   94,   42,   80,   87,   64,   64,   64,   67,
-       67,   67,   85,   93,   68,  113,   68,   68,   84,   64,
-       64,   86,   67,   67,   64,   95,   68,   67,   68,   68,
-       70,   70,   88,  106,  106,  100,   92,  100,  114,   68,
-      100,  100,   94,  111,   68,  103,   70,  103,  102,  102,
-      103,  103,   68,  112,   70,  113,   95,   93,  102,  102,
+    49,   20,   35,   20,   20,   20,   34,   90,   55,   87,
+    56,   36,   33,   38,   20,   56,   80,   84,   40,   20,
+    69,   37,   69,   85,   86,   69,   69,   20,   49,   92,
+    41,   43,   39,   55,   88,   45,   64,   64,   42,   67,
+    67,   90,   94,   42,   80,   87,   64,   64,   64,   67,
+    67,   67,   85,   93,   68,  113,   68,   68,   84,   64,
+    64,   86,   67,   67,   64,   95,   68,   67,   68,   68,
+    70,   70,   88,  106,  106,  100,   92,  100,  114,   68,
+    100,  100,   94,  111,   68,  103,   70,  103,  102,  102,
+    103,  103,   68,  112,   70,  113,   95,   93,  102,  102,
 
-      102,  105,  105,  107,  107,  108,  108,  115,  116,  117,
-      111,  102,  102,  118,  107,  107,  102,  105,  119,  120,
-      114,  108,  121,  121,  129,  105,  130,  107,  123,  108,
-      123,  107,  112,  123,  123,  125,  125,  115,  128,  128,
-      117,  122,  122,  131,  118,  132,  116,  126,  126,  119,
-      134,  135,  122,  122,  128,  138,  139,  139,  126,  126,
-      120,  142,  128,  130,  143,  122,  146,  140,  140,  122,
-      129,  126,  147,  150,  151,  126,  132,  152,  140,  140,
-      155,  163,  131,  157,  156,  154,  138,  153,  149,  144,
-      135,  140,  142,  134,  141,  140,  137,  146,  136,  133,
+    102,  105,  105,  107,  107,  108,  108,  115,  116,  117,
+    111,  102,  102,  118,  107,  107,  102,  105,  119,  120,
+    114,  108,  121,  121,  129,  105,  130,  107,  123,  108,
+    123,  107,  112,  123,  123,  125,  125,  115,  128,  128,
+    117,  122,  122,  131,  118,  132,  116,  126,  126,  119,
+    134,  135,  122,  122,  128,  138,  139,  139,  126,  126,
+    120,  142,  128,  130,  143,  122,  146,  140,  140,  122,
+    129,  126,  147,  150,  151,  126,  132,  152,  140,  140,
+    155,  163,  131,  157,  156,  154,  138,  153,  149,  144,
+    135,  140,  142,  134,  141,  140,  137,  146,  136,  133,
 
-       81,   79,   77,   73,  147,   63,   51,   32,  143,   28,
-      155,   27,  151,   25,   14,  150,   11,    9,  152,  160,
-      160,  160,  160,  161,    7,  161,  161,  162,  162,    3,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
-      159
+    81,   79,   77,   73,  147,   63,   51,   32,  143,   28,
+    155,   27,  151,   25,   14,  150,   11,    9,  152,  160,
+    160,  160,  160,  161,    7,  161,  161,  162,  162,    3,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159,  159,  159,  159,  159,  159,  159,  159,  159,  159,
+    159
 
-    } ;
+} ;
 
 static yy_state_type yy_last_accepting_state;
 static YY_CHAR *yy_last_accepting_cpos;
 
 #if YY_TransformationScanner_DEBUG != 0
 static const short int yy_rule_linenum[73] =
-    {   0,
-       58,   60,   61,   62,   63,   64,   65,   66,   67,   68,
-       69,   70,   71,   72,   73,   75,   77,   78,   79,   80,
-       82,   83,   84,   86,   88,   89,   90,   91,   92,   93,
-       94,   95,   96,   97,   98,   99,  100,  101,  102,  103,
-      104,  105,  106,  107,  108,  109,  110,  111,  112,  113,
-      114,  115,  116,  117,  118,  119,  120,  121,  122,  123,
-      124,  125,  126,  127,  128,  129,  130,  131,  132,  133,
-      135,  136
-    } ;
+{
+    0,
+    58,   60,   61,   62,   63,   64,   65,   66,   67,   68,
+    69,   70,   71,   72,   73,   75,   77,   78,   79,   80,
+    82,   83,   84,   86,   88,   89,   90,   91,   92,   93,
+    94,   95,   96,   97,   98,   99,  100,  101,  102,  103,
+    104,  105,  106,  107,  108,  109,  110,  111,  112,  113,
+    114,  115,  116,  117,  118,  119,  120,  121,  122,  123,
+    124,  125,  126,  127,  128,  129,  130,  131,  132,  133,
+    135,  136
+} ;
 
 #endif
 /* the intent behind this definition is that it'll catch
@@ -625,566 +644,566 @@ YY_DECL
 YY_TransformationScanner_LEX_RETURN YY_TransformationScanner_CLASS::YY_TransformationScanner_LEX ( YY_TransformationScanner_LEX_PARAM)
 
 #endif
-    {
+{
     register yy_state_type yy_current_state;
     register YY_TransformationScanner_CHAR *yy_cp, *yy_bp;
     register int yy_act;
 
-/* % user's declarations go here */ 
+    /* % user's declarations go here */
 
 
-/* % end of prolog */ 
+    /* % end of prolog */
 #line 401 "/opt/flexpp/lib/flexskel.cc"
 
     if ( yy_init )
-	{
-	 
-	 {
-	 YY_USER_INIT;
-	 }
-	if ( ! yy_start )
-	    yy_start = 1;       /* first start state */
+{
 
-	if ( ! yy___in )
-	    yy___in = YY_TransformationScanner_IFILE_DEFAULT;
+    {
+        YY_USER_INIT;
+    }
+    if ( ! yy_start )
+            yy_start = 1;       /* first start state */
 
-	if ( ! yy___out )
-	    yy___out = YY_TransformationScanner_OFILE_DEFAULT;
+        if ( ! yy___in )
+            yy___in = YY_TransformationScanner_IFILE_DEFAULT;
 
-	if ( YY_TransformationScanner_CURRENT_BUFFER )
-	    YY_TransformationScanner_INIT_BUFFER( YY_TransformationScanner_CURRENT_BUFFER, yy___in );
-	else
-	    YY_TransformationScanner_CURRENT_BUFFER = YY_TransformationScanner_CREATE_BUFFER( yy___in, YY_BUF_SIZE );
+        if ( ! yy___out )
+            yy___out = YY_TransformationScanner_OFILE_DEFAULT;
 
-	YY_TransformationScanner_LOAD_BUFFER_STATE();
-	yy_init=0;
-	}
+        if ( YY_TransformationScanner_CURRENT_BUFFER )
+            YY_TransformationScanner_INIT_BUFFER( YY_TransformationScanner_CURRENT_BUFFER, yy___in );
+        else
+            YY_TransformationScanner_CURRENT_BUFFER = YY_TransformationScanner_CREATE_BUFFER( yy___in, YY_BUF_SIZE );
 
-    while ( 1 )         /* loops until end-of-file is reached */
-	{
-/* % yymore()-related code goes here */ 
+        YY_TransformationScanner_LOAD_BUFFER_STATE();
+        yy_init=0;
+    }
+
+while ( 1 )         /* loops until end-of-file is reached */
+{
+    /* % yymore()-related code goes here */
 #line 429 "/opt/flexpp/lib/flexskel.cc"
-	yy_cp = yy_c_buf_p;
+    yy_cp = yy_c_buf_p;
 
-	/* support of yy___text */
-	*yy_cp = yy_hold_char;
+    /* support of yy___text */
+    *yy_cp = yy_hold_char;
 
-	/* yy_bp points to the position in yy_ch_buf of the start of the
-	 * current run.
-	 */
-	yy_bp = yy_cp;
+    /* yy_bp points to the position in yy_ch_buf of the start of the
+     * current run.
+     */
+    yy_bp = yy_cp;
 
-/* % code to set up and find next match goes here */ 
-	yy_current_state = yy_start;
+    /* % code to set up and find next match goes here */
+    yy_current_state = yy_start;
 yy_match:
-	do
-	    {
-	    register YY_CHAR yy_c = yy_ec[(unsigned char)*yy_cp];
-	    if ( yy_accept[yy_current_state] )
-		{
-		yy_last_accepting_state = yy_current_state;
-		yy_last_accepting_cpos = yy_cp;
-		}
-	    while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
-		{
-		yy_current_state = yy_def[yy_current_state];
-		if ( yy_current_state >= 160 )
-		    yy_c = yy_meta[(unsigned char)yy_c];
-		}
-	    yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	    ++yy_cp;
-	    }
-	while ( yy_current_state != 159 );
-	yy_cp = yy_last_accepting_cpos;
-	yy_current_state = yy_last_accepting_state;
+    do
+        {
+            register YY_CHAR yy_c = yy_ec[(unsigned char)*yy_cp];
+                if ( yy_accept[yy_current_state] )
+                    {
+                        yy_last_accepting_state = yy_current_state;
+                        yy_last_accepting_cpos = yy_cp;
+                    }
+                while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
+                    {
+                        yy_current_state = yy_def[yy_current_state];
+                        if ( yy_current_state >= 160 )
+                            yy_c = yy_meta[(unsigned char)yy_c];
+                    }
+                yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+                ++yy_cp;
+            }
+        while ( yy_current_state != 159 );
+        yy_cp = yy_last_accepting_cpos;
+        yy_current_state = yy_last_accepting_state;
 #line 440 "/opt/flexpp/lib/flexskel.cc"
 
 yy_find_action:
-/* % code to find the action number goes here */ 
-	yy_act = yy_accept[yy_current_state];
+        /* % code to find the action number goes here */
+        yy_act = yy_accept[yy_current_state];
 #line 443 "/opt/flexpp/lib/flexskel.cc"
 
-	YY_DO_BEFORE_ACTION;
-	YY_USER_ACTION;
+        YY_DO_BEFORE_ACTION;
+        YY_USER_ACTION;
 
 do_action:      /* this label is used only to access EOF actions */
 #if YY_TransformationScanner_DEBUG != 0
-	if ( yy___flex_debug )
-		{
-		if ( yy_act == 0 )
+        if ( yy___flex_debug )
+            {
+                if ( yy_act == 0 )
 #ifndef YY_TransformationScanner_IOSTREAM
-			fprintf( yy___stderr , "--scanner backtracking\n" );
+                    fprintf( yy___stderr , "--scanner backtracking\n" );
 #else
-			yy___stderr <<"--scanner backtracking"<<endl;
+                    yy___stderr <<"--scanner backtracking"<<endl;
 #endif
-		else if ( yy_act < YY_END_OF_BUFFER -1 )
+                else if ( yy_act < YY_END_OF_BUFFER -1 )
 #ifndef YY_TransformationScanner_IOSTREAM
-			fprintf( yy___stderr , 
-			 "--accepting rule at line %d (\"%s\")\n",
-			 yy_rule_linenum[yy_act], yy___text );
+                    fprintf( yy___stderr ,
+                             "--accepting rule at line %d (\"%s\")\n",
+                             yy_rule_linenum[yy_act], yy___text );
 #else
-			yy___stderr <<"--accepting rule at line "
-                          <<(int)yy_rule_linenum[yy_act]
-                          <<" (\""<<(char *)yy___text<<"\")"<<endl;
+                    yy___stderr <<"--accepting rule at line "
+                    <<(int)yy_rule_linenum[yy_act]
+                    <<" (\""<<(char *)yy___text<<"\")"<<endl;
 #endif
-		else if ( yy_act == YY_END_OF_BUFFER -1 )
+                else if ( yy_act == YY_END_OF_BUFFER -1 )
 #ifndef YY_TransformationScanner_IOSTREAM
-			fprintf( yy___stderr , 
-			 "--accepting default rule (\"%s\")\n",
-			 yy___text );
+                    fprintf( yy___stderr ,
+                             "--accepting default rule (\"%s\")\n",
+                             yy___text );
 #else
-			yy___stderr <<"--accepting default rule"
-                          <<" (\""<<(char *)yy___text<<"\")"<<endl;
+                    yy___stderr <<"--accepting default rule"
+                    <<" (\""<<(char *)yy___text<<"\")"<<endl;
 #endif
-		else if ( yy_act == YY_END_OF_BUFFER )
+                else if ( yy_act == YY_END_OF_BUFFER )
 #ifndef YY_TransformationScanner_IOSTREAM
-			fprintf( yy___stderr , "--(end of buffer or a NUL)\n" );
+                    fprintf( yy___stderr , "--(end of buffer or a NUL)\n" );
 #else
-			yy___stderr <<"--(end of buffer or a NUL)"<<endl;
+                    yy___stderr <<"--(end of buffer or a NUL)"<<endl;
 #endif
-		else
+                else
 #ifndef YY_TransformationScanner_IOSTREAM
-			fprintf( yy___stderr , "--EOF\n" );
+                    fprintf( yy___stderr , "--EOF\n" );
 #else
-			yy___stderr <<"--EOF"<<endl;
+                    yy___stderr <<"--EOF"<<endl;
 #endif
-		}
+            }
 #endif
-	switch ( yy_act )
-	    {
-/* % actions go here */ 
-	    case 0: /* must backtrack */
-	    /* undo the effects of YY_DO_BEFORE_ACTION */
-	    *yy_cp = yy_hold_char;
-	    yy_cp = yy_last_accepting_cpos;
-	    yy_current_state = yy_last_accepting_state;
-	    goto yy_find_action;
+        switch ( yy_act )
+            {
+                /* % actions go here */
+            case 0: /* must backtrack */
+                /* undo the effects of YY_DO_BEFORE_ACTION */
+                *yy_cp = yy_hold_char;
+                yy_cp = yy_last_accepting_cpos;
+                yy_current_state = yy_last_accepting_state;
+                goto yy_find_action;
 
-case 1:
+            case 1:
 #line 58 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ comment(); }
-	YY_BREAK
-case 2:
+            { comment(); }
+            YY_BREAK
+            case 2:
 #line 60 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::SIZEOF; }
-	YY_BREAK
-case 3:
+            { count(); return TransformationParser::SIZEOF; }
+            YY_BREAK
+            case 3:
 #line 61 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::WHERE; }
-	YY_BREAK
-case 4:
+            { count(); return TransformationParser::WHERE; }
+            YY_BREAK
+            case 4:
 #line 62 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::BECOMES; }
-	YY_BREAK
-case 5:
+            { count(); return TransformationParser::BECOMES; }
+            YY_BREAK
+            case 5:
 #line 63 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::KIND; }
-	YY_BREAK
-case 6:
+            { count(); return TransformationParser::KIND; }
+            YY_BREAK
+            case 6:
 #line 64 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::TYPE; }
-	YY_BREAK
-case 7:
+            { count(); return TransformationParser::TYPE; }
+            YY_BREAK
+            case 7:
 #line 65 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::POINTER; }
-	YY_BREAK
-case 8:
+            { count(); return TransformationParser::POINTER; }
+            YY_BREAK
+            case 8:
 #line 66 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::COMPOUND; }
-	YY_BREAK
-case 9:
+            { count(); return TransformationParser::COMPOUND; }
+            YY_BREAK
+            case 9:
 #line 67 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::ARRAY; }
-	YY_BREAK
-case 10:
+            { count(); return TransformationParser::ARRAY; }
+            YY_BREAK
+            case 10:
 #line 68 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::REGOF; }
-	YY_BREAK
-case 11:
+            { count(); return TransformationParser::REGOF; }
+            YY_BREAK
+            case 11:
 #line 69 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::MEMOF; }
-	YY_BREAK
-case 12:
+            { count(); return TransformationParser::MEMOF; }
+            YY_BREAK
+            case 12:
 #line 70 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::ADDROF; }
-	YY_BREAK
-case 13:
+            { count(); return TransformationParser::ADDROF; }
+            YY_BREAK
+            case 13:
 #line 71 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::BOOL_TRUE; }
-	YY_BREAK
-case 14:
+            { count(); return TransformationParser::BOOL_TRUE; }
+            YY_BREAK
+            case 14:
 #line 72 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::BOOL_FALSE; }
-	YY_BREAK
-case 15:
+            { count(); return TransformationParser::BOOL_FALSE; }
+            YY_BREAK
+            case 15:
 #line 73 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); yylval.str = strdup(yytext); yylval.str[strlen(yylval.str)-1] = 0; return TransformationParser::FUNC; }
-	YY_BREAK
-case 16:
+            { count(); yylval.str = strdup(yytext); yylval.str[strlen(yylval.str)-1] = 0; return TransformationParser::FUNC; }
+            YY_BREAK
+            case 16:
 #line 75 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); yylval.str = strdup(yytext); return TransformationParser::IDENTIFIER; }
-	YY_BREAK
-case 17:
+            { count(); yylval.str = strdup(yytext); return TransformationParser::IDENTIFIER; }
+            YY_BREAK
+            case 17:
 #line 77 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); sscanf(yytext, "0x%x", &yylval.ival); return TransformationParser::CONSTANT; }
-	YY_BREAK
-case 18:
+            { count(); sscanf(yytext, "0x%x", &yylval.ival); return TransformationParser::CONSTANT; }
+            YY_BREAK
+            case 18:
 #line 78 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::CONSTANT; }
-	YY_BREAK
-case 19:
+            { count(); return TransformationParser::CONSTANT; }
+            YY_BREAK
+            case 19:
 #line 79 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); sscanf(yytext, "%d", &yylval.ival); return TransformationParser::CONSTANT; }
-	YY_BREAK
-case 20:
+            { count(); sscanf(yytext, "%d", &yylval.ival); return TransformationParser::CONSTANT; }
+            YY_BREAK
+            case 20:
 #line 80 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::CONSTANT; }
-	YY_BREAK
-case 21:
+            { count(); return TransformationParser::CONSTANT; }
+            YY_BREAK
+            case 21:
 #line 82 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::CONSTANT; }
-	YY_BREAK
-case 22:
+            { count(); return TransformationParser::CONSTANT; }
+            YY_BREAK
+            case 22:
 #line 83 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::CONSTANT; }
-	YY_BREAK
-case 23:
+            { count(); return TransformationParser::CONSTANT; }
+            YY_BREAK
+            case 23:
 #line 84 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::CONSTANT; }
-	YY_BREAK
-case 24:
+            { count(); return TransformationParser::CONSTANT; }
+            YY_BREAK
+            case 24:
 #line 86 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); yylval.str = strdup(yytext); return TransformationParser::STRING_LITERAL; }
-	YY_BREAK
-case 25:
+            { count(); yylval.str = strdup(yytext); return TransformationParser::STRING_LITERAL; }
+            YY_BREAK
+            case 25:
 #line 88 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::ELLIPSIS; }
-	YY_BREAK
-case 26:
+            { count(); return TransformationParser::ELLIPSIS; }
+            YY_BREAK
+            case 26:
 #line 89 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::RIGHT_ASSIGN; }
-	YY_BREAK
-case 27:
+            { count(); return TransformationParser::RIGHT_ASSIGN; }
+            YY_BREAK
+            case 27:
 #line 90 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::LEFT_ASSIGN; }
-	YY_BREAK
-case 28:
+            { count(); return TransformationParser::LEFT_ASSIGN; }
+            YY_BREAK
+            case 28:
 #line 91 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::ADD_ASSIGN; }
-	YY_BREAK
-case 29:
+            { count(); return TransformationParser::ADD_ASSIGN; }
+            YY_BREAK
+            case 29:
 #line 92 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::SUB_ASSIGN; }
-	YY_BREAK
-case 30:
+            { count(); return TransformationParser::SUB_ASSIGN; }
+            YY_BREAK
+            case 30:
 #line 93 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::MUL_ASSIGN; }
-	YY_BREAK
-case 31:
+            { count(); return TransformationParser::MUL_ASSIGN; }
+            YY_BREAK
+            case 31:
 #line 94 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::DIV_ASSIGN; }
-	YY_BREAK
-case 32:
+            { count(); return TransformationParser::DIV_ASSIGN; }
+            YY_BREAK
+            case 32:
 #line 95 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::MOD_ASSIGN; }
-	YY_BREAK
-case 33:
+            { count(); return TransformationParser::MOD_ASSIGN; }
+            YY_BREAK
+            case 33:
 #line 96 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::AND_ASSIGN; }
-	YY_BREAK
-case 34:
+            { count(); return TransformationParser::AND_ASSIGN; }
+            YY_BREAK
+            case 34:
 #line 97 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::XOR_ASSIGN; }
-	YY_BREAK
-case 35:
+            { count(); return TransformationParser::XOR_ASSIGN; }
+            YY_BREAK
+            case 35:
 #line 98 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::OR_ASSIGN; }
-	YY_BREAK
-case 36:
+            { count(); return TransformationParser::OR_ASSIGN; }
+            YY_BREAK
+            case 36:
 #line 99 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::RIGHT_OP; }
-	YY_BREAK
-case 37:
+            { count(); return TransformationParser::RIGHT_OP; }
+            YY_BREAK
+            case 37:
 #line 100 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::LEFT_OP; }
-	YY_BREAK
-case 38:
+            { count(); return TransformationParser::LEFT_OP; }
+            YY_BREAK
+            case 38:
 #line 101 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::INC_OP; }
-	YY_BREAK
-case 39:
+            { count(); return TransformationParser::INC_OP; }
+            YY_BREAK
+            case 39:
 #line 102 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::DEC_OP; }
-	YY_BREAK
-case 40:
+            { count(); return TransformationParser::DEC_OP; }
+            YY_BREAK
+            case 40:
 #line 103 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::PTR_OP; }
-	YY_BREAK
-case 41:
+            { count(); return TransformationParser::PTR_OP; }
+            YY_BREAK
+            case 41:
 #line 104 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::AND_OP; }
-	YY_BREAK
-case 42:
+            { count(); return TransformationParser::AND_OP; }
+            YY_BREAK
+            case 42:
 #line 105 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::OR_OP; }
-	YY_BREAK
-case 43:
+            { count(); return TransformationParser::OR_OP; }
+            YY_BREAK
+            case 43:
 #line 106 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::LE_OP; }
-	YY_BREAK
-case 44:
+            { count(); return TransformationParser::LE_OP; }
+            YY_BREAK
+            case 44:
 #line 107 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::GE_OP; }
-	YY_BREAK
-case 45:
+            { count(); return TransformationParser::GE_OP; }
+            YY_BREAK
+            case 45:
 #line 108 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::EQ_OP; }
-	YY_BREAK
-case 46:
+            { count(); return TransformationParser::EQ_OP; }
+            YY_BREAK
+            case 46:
 #line 109 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return TransformationParser::NE_OP; }
-	YY_BREAK
-case 47:
+            { count(); return TransformationParser::NE_OP; }
+            YY_BREAK
+            case 47:
 #line 110 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return ';'; }
-	YY_BREAK
-case 48:
+            { count(); return ';'; }
+            YY_BREAK
+            case 48:
 #line 111 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '{'; }
-	YY_BREAK
-case 49:
+            { count(); return '{'; }
+            YY_BREAK
+            case 49:
 #line 112 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '}'; }
-	YY_BREAK
-case 50:
+            { count(); return '}'; }
+            YY_BREAK
+            case 50:
 #line 113 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return ','; }
-	YY_BREAK
-case 51:
+            { count(); return ','; }
+            YY_BREAK
+            case 51:
 #line 114 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return ':'; }
-	YY_BREAK
-case 52:
+            { count(); return ':'; }
+            YY_BREAK
+            case 52:
 #line 115 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '='; }
-	YY_BREAK
-case 53:
+            { count(); return '='; }
+            YY_BREAK
+            case 53:
 #line 116 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '('; }
-	YY_BREAK
-case 54:
+            { count(); return '('; }
+            YY_BREAK
+            case 54:
 #line 117 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return ')'; }
-	YY_BREAK
-case 55:
+            { count(); return ')'; }
+            YY_BREAK
+            case 55:
 #line 118 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '['; }
-	YY_BREAK
-case 56:
+            { count(); return '['; }
+            YY_BREAK
+            case 56:
 #line 119 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return ']'; }
-	YY_BREAK
-case 57:
+            { count(); return ']'; }
+            YY_BREAK
+            case 57:
 #line 120 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '.'; }
-	YY_BREAK
-case 58:
+            { count(); return '.'; }
+            YY_BREAK
+            case 58:
 #line 121 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '&'; }
-	YY_BREAK
-case 59:
+            { count(); return '&'; }
+            YY_BREAK
+            case 59:
 #line 122 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '!'; }
-	YY_BREAK
-case 60:
+            { count(); return '!'; }
+            YY_BREAK
+            case 60:
 #line 123 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '~'; }
-	YY_BREAK
-case 61:
+            { count(); return '~'; }
+            YY_BREAK
+            case 61:
 #line 124 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '-'; }
-	YY_BREAK
-case 62:
+            { count(); return '-'; }
+            YY_BREAK
+            case 62:
 #line 125 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '+'; }
-	YY_BREAK
-case 63:
+            { count(); return '+'; }
+            YY_BREAK
+            case 63:
 #line 126 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '*'; }
-	YY_BREAK
-case 64:
+            { count(); return '*'; }
+            YY_BREAK
+            case 64:
 #line 127 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '/'; }
-	YY_BREAK
-case 65:
+            { count(); return '/'; }
+            YY_BREAK
+            case 65:
 #line 128 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '%'; }
-	YY_BREAK
-case 66:
+            { count(); return '%'; }
+            YY_BREAK
+            case 66:
 #line 129 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '<'; }
-	YY_BREAK
-case 67:
+            { count(); return '<'; }
+            YY_BREAK
+            case 67:
 #line 130 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '>'; }
-	YY_BREAK
-case 68:
+            { count(); return '>'; }
+            YY_BREAK
+            case 68:
 #line 131 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '^'; }
-	YY_BREAK
-case 69:
+            { count(); return '^'; }
+            YY_BREAK
+            case 69:
 #line 132 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '|'; }
-	YY_BREAK
-case 70:
+            { count(); return '|'; }
+            YY_BREAK
+            case 70:
 #line 133 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); return '?'; }
-	YY_BREAK
-case 71:
+            { count(); return '?'; }
+            YY_BREAK
+            case 71:
 #line 135 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ count(); }
-	YY_BREAK
-case 72:
+            { count(); }
+            YY_BREAK
+            case 72:
 #line 136 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-{ /* ignore bad characters */ }
-	YY_BREAK
-case 73:
+            { /* ignore bad characters */ }
+            YY_BREAK
+            case 73:
 #line 138 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
-ECHO;
-	YY_BREAK
-case YY_STATE_EOF(INITIAL):
-    yyterminate();
+                ECHO;
+                YY_BREAK
+            case YY_STATE_EOF(INITIAL):
+                yyterminate();
 #line 493 "/opt/flexpp/lib/flexskel.cc"
 
-	    case YY_END_OF_BUFFER:
-		{
-		/* amount of text matched not including the EOB char */
-		int yy_amount_of_matched_text = yy_cp - yy___text - 1;
+            case YY_END_OF_BUFFER:
+            {
+                /* amount of text matched not including the EOB char */
+                int yy_amount_of_matched_text = yy_cp - yy___text - 1;
 
-		/* undo the effects of YY_DO_BEFORE_ACTION */
-		*yy_cp = yy_hold_char;
+                /* undo the effects of YY_DO_BEFORE_ACTION */
+                *yy_cp = yy_hold_char;
 
-		/* note that here we test for yy_c_buf_p "<=" to the position
-		 * of the first EOB in the buffer, since yy_c_buf_p will
-		 * already have been incremented past the NUL character
-		 * (since all states make transitions on EOB to the end-
-		 * of-buffer state).  Contrast this with the test in yyinput().
-		 */
-		if ( yy_c_buf_p <= &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars] )
-		    /* this was really a NUL */
-		    {
-		    yy_state_type yy_next_state;
+                /* note that here we test for yy_c_buf_p "<=" to the position
+                 * of the first EOB in the buffer, since yy_c_buf_p will
+                 * already have been incremented past the NUL character
+                 * (since all states make transitions on EOB to the end-
+                 * of-buffer state).  Contrast this with the test in yyinput().
+                 */
+                if ( yy_c_buf_p <= &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars] )
+                    /* this was really a NUL */
+                    {
+                        yy_state_type yy_next_state;
 
-		    yy_c_buf_p = yy___text + yy_amount_of_matched_text;
+                        yy_c_buf_p = yy___text + yy_amount_of_matched_text;
 
-		    yy_current_state = yy_get_previous_state();
+                        yy_current_state = yy_get_previous_state();
 
-		    /* okay, we're now positioned to make the
-		     * NUL transition.  We couldn't have
-		     * yy_get_previous_state() go ahead and do it
-		     * for us because it doesn't know how to deal
-		     * with the possibility of jamming (and we
-		     * don't want to build jamming into it because
-		     * then it will run more slowly)
-		     */
+                        /* okay, we're now positioned to make the
+                         * NUL transition.  We couldn't have
+                         * yy_get_previous_state() go ahead and do it
+                         * for us because it doesn't know how to deal
+                         * with the possibility of jamming (and we
+                         * don't want to build jamming into it because
+                         * then it will run more slowly)
+                         */
 
-		    yy_next_state = yy_try_NUL_trans( yy_current_state );
+                        yy_next_state = yy_try_NUL_trans( yy_current_state );
 
-		    yy_bp = yy___text + YY_MORE_ADJ;
+                        yy_bp = yy___text + YY_MORE_ADJ;
 
-		    if ( yy_next_state )
-			{
-			/* consume the NUL */
-			yy_cp = ++yy_c_buf_p;
-			yy_current_state = yy_next_state;
-			goto yy_match;
-			}
+                        if ( yy_next_state )
+                            {
+                                /* consume the NUL */
+                                yy_cp = ++yy_c_buf_p;
+                                yy_current_state = yy_next_state;
+                                goto yy_match;
+                            }
 
-		    else
-			{
-/* % code to do backtracking for compressed tables and set up yy_cp goes here */ 
-			    yy_cp = yy_last_accepting_cpos;
-			    yy_current_state = yy_last_accepting_state;
+                        else
+                            {
+                                /* % code to do backtracking for compressed tables and set up yy_cp goes here */
+                                yy_cp = yy_last_accepting_cpos;
+                                yy_current_state = yy_last_accepting_state;
 #line 541 "/opt/flexpp/lib/flexskel.cc"
-			goto yy_find_action;
-			}
-		    }
+                                goto yy_find_action;
+                            }
+                    }
 
-		else switch ( yy_get_next_buffer() )
-		    {
-		    case EOB_ACT_END_OF_FILE:
-			{
-			yy_did_buffer_switch_on_eof = 0;
+                else switch ( yy_get_next_buffer() )
+                        {
+                        case EOB_ACT_END_OF_FILE:
+                        {
+                            yy_did_buffer_switch_on_eof = 0;
 
-			if ( yywrap() )
-			    {
-			    /* note: because we've taken care in
-			     * yy_get_next_buffer() to have set up yy___text,
-			     * we can now set up yy_c_buf_p so that if some
-			     * total hoser (like flex itself) wants
-			     * to call the scanner after we return the
-			     * YY_NULL, it'll still work - another YY_NULL
-			     * will get returned.
-			     */
-			    yy_c_buf_p = yy___text + YY_MORE_ADJ;
+                            if ( yywrap() )
+                                {
+                                    /* note: because we've taken care in
+                                     * yy_get_next_buffer() to have set up yy___text,
+                                     * we can now set up yy_c_buf_p so that if some
+                                     * total hoser (like flex itself) wants
+                                     * to call the scanner after we return the
+                                     * YY_NULL, it'll still work - another YY_NULL
+                                     * will get returned.
+                                     */
+                                    yy_c_buf_p = yy___text + YY_MORE_ADJ;
 
-			    yy_act = YY_STATE_EOF((yy_start - 1) / 2);
-			    goto do_action;
-			    }
+                                    yy_act = YY_STATE_EOF((yy_start - 1) / 2);
+                                    goto do_action;
+                                }
 
-			else
-			    {
-			    if ( ! yy_did_buffer_switch_on_eof )
-				YY_NEW_FILE;
-			    }
-			}
-			break;
+                            else
+                                {
+                                    if ( ! yy_did_buffer_switch_on_eof )
+                                        YY_NEW_FILE;
+                                }
+                        }
+                        break;
 
-		    case EOB_ACT_CONTINUE_SCAN:
-			yy_c_buf_p = yy___text + yy_amount_of_matched_text;
+                        case EOB_ACT_CONTINUE_SCAN:
+                            yy_c_buf_p = yy___text + yy_amount_of_matched_text;
 
-			yy_current_state = yy_get_previous_state();
+                            yy_current_state = yy_get_previous_state();
 
-			yy_cp = yy_c_buf_p;
-			yy_bp = yy___text + YY_MORE_ADJ;
-			goto yy_match;
+                            yy_cp = yy_c_buf_p;
+                            yy_bp = yy___text + YY_MORE_ADJ;
+                            goto yy_match;
 
-		    case EOB_ACT_LAST_MATCH:
-			yy_c_buf_p =
-			    &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars];
+                        case EOB_ACT_LAST_MATCH:
+                            yy_c_buf_p =
+                                &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars];
 
-			yy_current_state = yy_get_previous_state();
+                            yy_current_state = yy_get_previous_state();
 
-			yy_cp = yy_c_buf_p;
-			yy_bp = yy___text + YY_MORE_ADJ;
-			goto yy_find_action;
-		    }
-		break;
-		}
+                            yy_cp = yy_c_buf_p;
+                            yy_bp = yy___text + YY_MORE_ADJ;
+                            goto yy_find_action;
+                        }
+                break;
+            }
 
-	    default:
+            default:
 #if YY_TransformationScanner_DEBUG != 0
 #ifndef YY_TransformationScanner_IOSTREAM
-		fprintf(yy___stderr , "action # %d\n", yy_act );
+                fprintf(yy___stderr , "action # %d\n", yy_act );
 #else
-		yy___stderr <<"action # "<<(int)yy_act<<endl;
+                yy___stderr <<"action # "<<(int)yy_act<<endl;
 #endif
 #endif
-		YY_FATAL_ERROR(
-			"fatal flex scanner internal error--no action found" );
-	    }
-	}
-	yyterminate();/* avoid the no return value error message on MS-C7/dos */
+                YY_FATAL_ERROR(
+                    "fatal flex scanner internal error--no action found" );
+            }
     }
+yyterminate();/* avoid the no return value error message on MS-C7/dos */
+}
 
 
 /* yy_get_next_buffer - try to read in a new buffer
  *
  * synopsis
  *     int yy_get_next_buffer();
- *     
+ *
  * returns a code representing an action
- *     EOB_ACT_LAST_MATCH - 
+ *     EOB_ACT_LAST_MATCH -
  *     EOB_ACT_CONTINUE_SCAN - continue scanning from current position
  *     EOB_ACT_END_OF_FILE - end of file
  */
@@ -1193,15 +1212,15 @@ static int yy_get_next_buffer()
 #else
 int YY_TransformationScanner_CLASS::yy_get_next_buffer()
 #endif
-    {
+{
     register YY_TransformationScanner_CHAR *dest = YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf;
     register YY_TransformationScanner_CHAR *source = yy___text - 1; /* copy prev. char, too */
     register int number_to_move, i;
     int ret_val;
 
     if ( yy_c_buf_p > &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars + 1] )
-	YY_FATAL_ERROR(
-		"fatal flex scanner internal error--end of buffer missed" );
+        YY_FATAL_ERROR(
+            "fatal flex scanner internal error--end of buffer missed" );
 
     /* try to read more data */
 
@@ -1209,46 +1228,46 @@ int YY_TransformationScanner_CLASS::yy_get_next_buffer()
     number_to_move = yy_c_buf_p - yy___text;
 
     for ( i = 0; i < number_to_move; ++i )
-	*(dest++) = *(source++);
+        *(dest++) = *(source++);
 
     if ( YY_TransformationScanner_CURRENT_BUFFER->yy_eof_status != EOF_NOT_SEEN )
-	/* don't do the read, it's not guaranteed to return an EOF,
-	 * just force an EOF
-	 */
-	yy_n_chars = 0;
+        /* don't do the read, it's not guaranteed to return an EOF,
+         * just force an EOF
+         */
+        yy_n_chars = 0;
 
     else
-	{
-	int num_to_read = YY_TransformationScanner_CURRENT_BUFFER->yy_buf_size - number_to_move - 1;
+        {
+            int num_to_read = YY_TransformationScanner_CURRENT_BUFFER->yy_buf_size - number_to_move - 1;
 
-	if ( num_to_read > YY_READ_BUF_SIZE )
-	    num_to_read = YY_READ_BUF_SIZE;
+            if ( num_to_read > YY_READ_BUF_SIZE )
+                num_to_read = YY_READ_BUF_SIZE;
 
-	else if ( num_to_read <= 0 )
-	    YY_FATAL_ERROR( "fatal error - scanner input buffer overflow" );
+            else if ( num_to_read <= 0 )
+                YY_FATAL_ERROR( "fatal error - scanner input buffer overflow" );
 
-	/* read in more data */
-	YY_INPUT( (&YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[number_to_move]),
-		  yy_n_chars, num_to_read );
-	}
+            /* read in more data */
+            YY_INPUT( (&YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[number_to_move]),
+                      yy_n_chars, num_to_read );
+        }
 
     if ( yy_n_chars == 0 )
-	{
-	if ( number_to_move - YY_MORE_ADJ == 1 )
-	    {
-	    ret_val = EOB_ACT_END_OF_FILE;
-	    YY_TransformationScanner_CURRENT_BUFFER->yy_eof_status = EOF_DONE;
-	    }
+        {
+            if ( number_to_move - YY_MORE_ADJ == 1 )
+                {
+                    ret_val = EOB_ACT_END_OF_FILE;
+                    YY_TransformationScanner_CURRENT_BUFFER->yy_eof_status = EOF_DONE;
+                }
 
-	else
-	    {
-	    ret_val = EOB_ACT_LAST_MATCH;
-	    YY_TransformationScanner_CURRENT_BUFFER->yy_eof_status = EOF_PENDING;
-	    }
-	}
+            else
+                {
+                    ret_val = EOB_ACT_LAST_MATCH;
+                    YY_TransformationScanner_CURRENT_BUFFER->yy_eof_status = EOF_PENDING;
+                }
+        }
 
     else
-	ret_val = EOB_ACT_CONTINUE_SCAN;
+        ret_val = EOB_ACT_CONTINUE_SCAN;
 
     yy_n_chars += number_to_move;
     YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars] = YY_END_OF_BUFFER_CHAR;
@@ -1263,7 +1282,7 @@ int YY_TransformationScanner_CLASS::yy_get_next_buffer()
     yy___text = &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[1];
 
     return ( ret_val );
-    }
+}
 
 
 /* yy_get_previous_state - get the state just before the EOB char was reached
@@ -1277,39 +1296,39 @@ static yy_state_type yy_get_previous_state()
 #else
 long YY_TransformationScanner_CLASS::yy_get_previous_state_()
 #endif
-    {
+{
     register yy_state_type yy_current_state;
     register YY_TransformationScanner_CHAR *yy_cp;
 
-/* % code to get the start state into yy_current_state goes here */ 
+    /* % code to get the start state into yy_current_state goes here */
     yy_current_state = yy_start;
 #line 717 "/opt/flexpp/lib/flexskel.cc"
 
     for ( yy_cp = yy___text + YY_MORE_ADJ; yy_cp < yy_c_buf_p; ++yy_cp )
-	{
-/* % code to find the next state goes here */ 
-	register YY_CHAR yy_c = (*yy_cp ? yy_ec[(unsigned char)*yy_cp] : 1);
-	if ( yy_accept[yy_current_state] )
-	    {
-	    yy_last_accepting_state = yy_current_state;
-	    yy_last_accepting_cpos = yy_cp;
-	    }
-	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
-	    {
-	    yy_current_state = yy_def[yy_current_state];
-	    if ( yy_current_state >= 160 )
-		yy_c = yy_meta[(unsigned char)yy_c];
-	    }
-	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+        {
+            /* % code to find the next state goes here */
+            register YY_CHAR yy_c = (*yy_cp ? yy_ec[(unsigned char)*yy_cp] : 1);
+            if ( yy_accept[yy_current_state] )
+                {
+                    yy_last_accepting_state = yy_current_state;
+                    yy_last_accepting_cpos = yy_cp;
+                }
+            while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
+                {
+                    yy_current_state = yy_def[yy_current_state];
+                    if ( yy_current_state >= 160 )
+                        yy_c = yy_meta[(unsigned char)yy_c];
+                }
+            yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 #line 721 "/opt/flexpp/lib/flexskel.cc"
-	}
+        }
 
 #ifndef YY_USE_CLASS
     return ( yy_current_state );
 #else
     return (long)( yy_current_state );
 #endif
-    }
+}
 
 
 /* yy_try_NUL_trans - try to make a transition on the NUL character
@@ -1329,27 +1348,27 @@ register yy_state_type yy_current_state;
 long YY_TransformationScanner_CLASS::yy_try_NUL_trans_(long yy_current_state_)
 #endif
 
-    {
+{
 #ifndef YY_USE_CLASS
 #else
     yy_state_type yy_current_state=(yy_state_type)yy_current_state_;
 #endif
     register int yy_is_jam;
-/* % code to find the next state, and perhaps do backtracking, goes here */ 
+    /* % code to find the next state, and perhaps do backtracking, goes here */
     register YY_CHAR *yy_cp = yy_c_buf_p;
 
     register YY_CHAR yy_c = 1;
     if ( yy_accept[yy_current_state] )
-	{
-	yy_last_accepting_state = yy_current_state;
-	yy_last_accepting_cpos = yy_cp;
-	}
+        {
+            yy_last_accepting_state = yy_current_state;
+            yy_last_accepting_cpos = yy_cp;
+        }
     while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
-	{
-	yy_current_state = yy_def[yy_current_state];
-	if ( yy_current_state >= 160 )
-	    yy_c = yy_meta[(unsigned char)yy_c];
-	}
+        {
+            yy_current_state = yy_def[yy_current_state];
+            if ( yy_current_state >= 160 )
+                yy_c = yy_meta[(unsigned char)yy_c];
+        }
     yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
     yy_is_jam = (yy_current_state == 159);
 #line 755 "/opt/flexpp/lib/flexskel.cc"
@@ -1359,7 +1378,7 @@ long YY_TransformationScanner_CLASS::yy_try_NUL_trans_(long yy_current_state_)
 #else
     return (long)( yy_is_jam ? 0 : yy_current_state );
 #endif
-    }
+}
 
 #ifndef YY_USE_CLASS
 #ifdef YY_USE_PROTOS
@@ -1373,33 +1392,34 @@ register YY_TransformationScanner_CHAR *yy_bp;
 void YY_TransformationScanner_CLASS::yyunput( YY_TransformationScanner_CHAR c, YY_TransformationScanner_CHAR *yy_bp )
 #endif
 
-    {
+{
     register YY_TransformationScanner_CHAR *yy_cp = yy_c_buf_p;
 
     /* undo effects of setting up yy___text */
     *yy_cp = yy_hold_char;
 
     if ( yy_cp < YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf + 2 )
-	{ /* need to shift things up to make room */
-	register int number_to_move = yy_n_chars + 2; /* +2 for EOB chars */
-	register YY_TransformationScanner_CHAR *dest =
-	    &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[YY_TransformationScanner_CURRENT_BUFFER->yy_buf_size + 2];
-	register YY_TransformationScanner_CHAR *source =
-	    &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[number_to_move];
+        {
+            /* need to shift things up to make room */
+            register int number_to_move = yy_n_chars + 2; /* +2 for EOB chars */
+            register YY_TransformationScanner_CHAR *dest =
+                &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[YY_TransformationScanner_CURRENT_BUFFER->yy_buf_size + 2];
+            register YY_TransformationScanner_CHAR *source =
+                &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[number_to_move];
 
-	while ( source > YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf )
-	    *--dest = *--source;
+            while ( source > YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf )
+                *--dest = *--source;
 
-	yy_cp += dest - source;
-	yy_bp += dest - source;
-	yy_n_chars = YY_TransformationScanner_CURRENT_BUFFER->yy_buf_size;
+            yy_cp += dest - source;
+            yy_bp += dest - source;
+            yy_n_chars = YY_TransformationScanner_CURRENT_BUFFER->yy_buf_size;
 
-	if ( yy_cp < YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf + 2 )
-	    YY_FATAL_ERROR( "flex scanner push-back overflow" );
-	}
+            if ( yy_cp < YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf + 2 )
+                YY_FATAL_ERROR( "flex scanner push-back overflow" );
+        }
 
     if ( yy_cp > yy_bp && yy_cp[-1] == '\n' )
-	yy_cp[-2] = '\n';
+        yy_cp[-2] = '\n';
 
     *--yy_cp = c;
 
@@ -1407,7 +1427,7 @@ void YY_TransformationScanner_CLASS::yyunput( YY_TransformationScanner_CHAR c, Y
      *       macro to now work correctly
      */
     YY_DO_BEFORE_ACTION; /* set up yy___text again */
-    }
+}
 
 #ifndef YY_USE_CLASS
 #ifdef __cplusplus
@@ -1418,73 +1438,74 @@ static int input()
 #else
 int YY_TransformationScanner_CLASS::input()
 #endif
-    {
+{
     int c;
     YY_TransformationScanner_CHAR *yy_cp = yy_c_buf_p;
 
     *yy_cp = yy_hold_char;
 
     if ( *yy_c_buf_p == YY_END_OF_BUFFER_CHAR )
-	{
-	/* yy_c_buf_p now points to the character we want to return.
-	 * If this occurs *before* the EOB characters, then it's a
-	 * valid NUL; if not, then we've hit the end of the buffer.
-	 */
-	if ( yy_c_buf_p < &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars] )
-	    /* this was really a NUL */
-	    *yy_c_buf_p = '\0';
+        {
+            /* yy_c_buf_p now points to the character we want to return.
+             * If this occurs *before* the EOB characters, then it's a
+             * valid NUL; if not, then we've hit the end of the buffer.
+             */
+            if ( yy_c_buf_p < &YY_TransformationScanner_CURRENT_BUFFER->yy_ch_buf[yy_n_chars] )
+                /* this was really a NUL */
+                *yy_c_buf_p = '\0';
 
-	else
-	    { /* need more input */
-	    yy___text = yy_c_buf_p;
-	    ++yy_c_buf_p;
+            else
+                {
+                    /* need more input */
+                    yy___text = yy_c_buf_p;
+                    ++yy_c_buf_p;
 
-	    switch ( yy_get_next_buffer() )
-		{
-		case EOB_ACT_END_OF_FILE:
-		    {
-		    if ( yywrap() )
-			{
-			yy_c_buf_p = yy___text + YY_MORE_ADJ;
-			return ( EOF );
-			}
+                    switch ( yy_get_next_buffer() )
+                        {
+                        case EOB_ACT_END_OF_FILE:
+                        {
+                            if ( yywrap() )
+                                {
+                                    yy_c_buf_p = yy___text + YY_MORE_ADJ;
+                                    return ( EOF );
+                                }
 
-		    YY_NEW_FILE;
+                            YY_NEW_FILE;
 #ifndef YY_USE_CLASS
 #ifdef __cplusplus
-		    return ( yyinput() );
+                            return ( yyinput() );
 #else
-		    return ( input() );
+                            return ( input() );
 #endif
 #else
-		    return ( input() );
+                            return ( input() );
 #endif
-		    }
-		    break;
+                        }
+                        break;
 
-		case EOB_ACT_CONTINUE_SCAN:
-		    yy_c_buf_p = yy___text + YY_MORE_ADJ;
-		    break;
+                        case EOB_ACT_CONTINUE_SCAN:
+                            yy_c_buf_p = yy___text + YY_MORE_ADJ;
+                            break;
 
-		case EOB_ACT_LAST_MATCH:
+                        case EOB_ACT_LAST_MATCH:
 #ifndef YY_USE_CLASS
 #ifdef __cplusplus
-		    YY_FATAL_ERROR( "unexpected last match in yyinput()" );
+                            YY_FATAL_ERROR( "unexpected last match in yyinput()" );
 #else
-		    YY_FATAL_ERROR( "unexpected last match in input()" );
+                            YY_FATAL_ERROR( "unexpected last match in input()" );
 #endif
 #else
-		    YY_FATAL_ERROR( "unexpected last match in YY_TransformationScanner_CLASS::input()" );
+                            YY_FATAL_ERROR( "unexpected last match in YY_TransformationScanner_CLASS::input()" );
 #endif
-		}
-	    }
-	}
+                        }
+                }
+        }
 
     c = *yy_c_buf_p;
     yy_hold_char = *++yy_c_buf_p;
 
     return ( c );
-    }
+}
 
 
 #ifndef YY_USE_CLASS
@@ -1498,10 +1519,10 @@ YY_TransformationScanner_IFILE  *input_file;
 void YY_TransformationScanner_CLASS::YY_TransformationScanner_RESTART ( YY_TransformationScanner_IFILE  *input_file )
 #endif
 
-    {
+{
     YY_TransformationScanner_INIT_BUFFER( YY_TransformationScanner_CURRENT_BUFFER, input_file );
     YY_TransformationScanner_LOAD_BUFFER_STATE();
-    }
+}
 
 
 #ifndef YY_USE_CLASS
@@ -1515,17 +1536,17 @@ YY_BUFFER_STATE new_buffer;
 void YY_TransformationScanner_CLASS::YY_TransformationScanner_SWITCH_TO_BUFFER( YY_BUFFER_STATE new_buffer )
 #endif
 
-    {
+{
     if ( YY_TransformationScanner_CURRENT_BUFFER == new_buffer )
-	return;
+        return;
 
     if ( YY_TransformationScanner_CURRENT_BUFFER )
-	{
-	/* flush out information for old buffer */
-	*yy_c_buf_p = yy_hold_char;
-	YY_TransformationScanner_CURRENT_BUFFER->yy_buf_pos = yy_c_buf_p;
-	YY_TransformationScanner_CURRENT_BUFFER->yy_n_chars = yy_n_chars;
-	}
+        {
+            /* flush out information for old buffer */
+            *yy_c_buf_p = yy_hold_char;
+            YY_TransformationScanner_CURRENT_BUFFER->yy_buf_pos = yy_c_buf_p;
+            YY_TransformationScanner_CURRENT_BUFFER->yy_n_chars = yy_n_chars;
+        }
 
     YY_TransformationScanner_CURRENT_BUFFER = new_buffer;
     YY_TransformationScanner_LOAD_BUFFER_STATE();
@@ -1536,7 +1557,7 @@ void YY_TransformationScanner_CLASS::YY_TransformationScanner_SWITCH_TO_BUFFER( 
      * to go ahead and always set it.
      */
     yy_did_buffer_switch_on_eof = 1;
-    }
+}
 
 
 #ifndef YY_USE_CLASS
@@ -1549,12 +1570,12 @@ void YY_TransformationScanner_LOAD_BUFFER_STATE()
 void YY_TransformationScanner_CLASS::YY_TransformationScanner_LOAD_BUFFER_STATE(  )
 #endif
 
-    {
+{
     yy_n_chars = YY_TransformationScanner_CURRENT_BUFFER->yy_n_chars;
     yy___text = yy_c_buf_p = YY_TransformationScanner_CURRENT_BUFFER->yy_buf_pos;
     yy___in = YY_TransformationScanner_CURRENT_BUFFER->yy_input_file;
     yy_hold_char = *yy_c_buf_p;
-    }
+}
 
 
 #ifndef YY_USE_CLASS
@@ -1569,13 +1590,13 @@ int size;
 YY_BUFFER_STATE YY_TransformationScanner_CLASS::YY_TransformationScanner_CREATE_BUFFER( YY_TransformationScanner_IFILE  *file, int size )
 #endif
 
-    {
+{
     YY_BUFFER_STATE b;
 
     b = (YY_BUFFER_STATE) malloc( sizeof( struct yy_buffer_state ) );
 
     if ( ! b )
-	YY_FATAL_ERROR( "out of dynamic memory in YY_TransformationScanner_CREATE_BUFFER()" );
+        YY_FATAL_ERROR( "out of dynamic memory in YY_TransformationScanner_CREATE_BUFFER()" );
 
     b->yy_buf_size = size;
 
@@ -1585,12 +1606,12 @@ YY_BUFFER_STATE YY_TransformationScanner_CLASS::YY_TransformationScanner_CREATE_
     b->yy_ch_buf = (YY_TransformationScanner_CHAR *) malloc( (unsigned) (b->yy_buf_size + 2) );
 
     if ( ! b->yy_ch_buf )
-	YY_FATAL_ERROR( "out of dynamic memory in YY_TransformationScanner_CREATE_BUFFER()" );
+        YY_FATAL_ERROR( "out of dynamic memory in YY_TransformationScanner_CREATE_BUFFER()" );
 
     YY_TransformationScanner_INIT_BUFFER( b, file );
 
     return ( b );
-    }
+}
 
 
 #ifndef YY_USE_CLASS
@@ -1604,13 +1625,13 @@ YY_BUFFER_STATE b;
 void YY_TransformationScanner_CLASS::YY_TransformationScanner_DELETE_BUFFER( YY_BUFFER_STATE b )
 #endif
 
-    {
+{
     if ( b == YY_TransformationScanner_CURRENT_BUFFER )
-	YY_TransformationScanner_CURRENT_BUFFER = (YY_BUFFER_STATE) 0;
+        YY_TransformationScanner_CURRENT_BUFFER = (YY_BUFFER_STATE) 0;
 
     free( (char *) b->yy_ch_buf );
     free( (char *) b );
-    }
+}
 
 
 #ifndef YY_USE_CLASS
@@ -1625,7 +1646,7 @@ YY_TransformationScanner_IFILE  *file;
 void YY_TransformationScanner_CLASS::YY_TransformationScanner_INIT_BUFFER( YY_BUFFER_STATE b, YY_TransformationScanner_IFILE  *file)
 #endif
 
-    {
+{
     b->yy_input_file = file;
 
     /* we put in the '\n' and start reading from [1] so that an
@@ -1645,42 +1666,43 @@ void YY_TransformationScanner_CLASS::YY_TransformationScanner_INIT_BUFFER( YY_BU
     b->yy_buf_pos = &b->yy_ch_buf[1];
 
     b->yy_eof_status = EOF_NOT_SEEN;
-    }
+}
 #line 138 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
 
 
 void TransformationScanner::comment()
 {
-	char c, c1;
+    char c, c1;
 
 loop:
-	while ((c = input()) != '*' && c != 0)
-		/*putchar(c)*/;
+    while ((c = input()) != '*' && c != 0)
+        /*putchar(c)*/;
 
-	if ((c1 = input()) != '/' && c != 0)
-	{
-		/*unput(c1);*/
-		goto loop;
-	}
+    if ((c1 = input()) != '/' && c != 0)
+        {
+            /*unput(c1);*/
+            goto loop;
+        }
 
-	if (c != 0)
-		/*putchar(c1)*/;
+    if (c != 0)
+        /*putchar(c1)*/;
 }
 
 void TransformationScanner::count()
 {
-	int i;
+    int i;
 
-	for (i = 0; yytext[i] != '\0'; i++)
-		if (yytext[i] == '\n')
-			column = 0;
-		else if (yytext[i] == '\t')
-			column += 8 - (column % 8);
-		else
-			column++;
+    for (i = 0; yytext[i] != '\0'; i++)
+        if (yytext[i] == '\n')
+            column = 0;
+        else if (yytext[i] == '\t')
+            column += 8 - (column % 8);
+        else
+            column++;
 
-        strcat(lineBuf, yytext);
-        if (strchr(lineBuf, '\n')) {
+    strcat(lineBuf, yytext);
+    if (strchr(lineBuf, '\n'))
+        {
             char buf[MAX_LINE];
             strcpy(buf, lineBuf);
             strcpy(lineBuf, strchr(buf, '\n')+1);

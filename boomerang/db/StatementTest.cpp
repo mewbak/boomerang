@@ -39,10 +39,10 @@ static bool logset = false;
 void StatementTest::setUp ()
 {
     if (!logset)
-    {
-        logset = true;
-        Boomerang::get()->setLogger(new NullLogger());
-    }
+        {
+            logset = true;
+            Boomerang::get()->setLogger(new NullLogger());
+        }
 }
 
 /*==============================================================================
@@ -1459,11 +1459,11 @@ void StatementTest::testFindConstants ()
     std::list<Const*>::iterator it;
     std::ostringstream ost1;
     for (it = lc.begin(); it != lc.end(); )
-    {
-        ost1 << *it;
-        if (++it != lc.end())
-            ost1 << ", ";
-    }
+        {
+            ost1 << *it;
+            if (++it != lc.end())
+                ost1 << ", ";
+        }
     std::string actual = ost1.str();
     std::string expected("3, 4");
     CPPUNIT_ASSERT_EQUAL(expected, actual);

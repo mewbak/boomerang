@@ -84,7 +84,8 @@ public:
         sset.clear();    // Clear the set
     }
     bool		operator==(const StatementSet& o) const
-    {   // Compare if equal
+    {
+        // Compare if equal
         return sset == o.sset;
     }
     bool		operator<(const StatementSet& o) const;	// Compare if less
@@ -142,7 +143,8 @@ public:
         aset.clear();    // Clear the set
     }
     bool		operator==(const AssignSet& o) const
-    {   // Compare if equal
+    {
+        // Compare if equal
         return aset == o.aset;
     }
     bool		operator<(const AssignSet& o) const;	// Compare if less
@@ -266,11 +268,13 @@ public:
         svec.clear();
     }
     bool		operator==(const StatementVec& o) const
-    {   // Compare if equal
+    {
+        // Compare if equal
         return svec == o.svec;
     }
     bool		operator<(const StatementVec& o) const
-    {   // Compare if less
+    {
+        // Compare if less
         return svec < o.svec;
     }
     void		append(Statement* s)

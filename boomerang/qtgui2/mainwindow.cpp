@@ -83,27 +83,27 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings("Boomerang", "Boomerang");
     QStringList inputfiles = settings.value("inputfiles").toStringList();
     for (int n = 0; n < inputfiles.count(); n++)
-    {
-        if (ui.inputFileComboBox->findText(inputfiles.at(n)) == -1)
-            ui.inputFileComboBox->addItem(inputfiles.at(n));
-    }
+        {
+            if (ui.inputFileComboBox->findText(inputfiles.at(n)) == -1)
+                ui.inputFileComboBox->addItem(inputfiles.at(n));
+        }
     QString inputfile = settings.value("inputfile").toString();
     int i = ui.inputFileComboBox->findText(inputfile);
     if (i != -1)
         ui.inputFileComboBox->setCurrentIndex(i);
     QStringList outputpaths = settings.value("outputpaths").toStringList();
     for (int n = 0; n < outputpaths.count(); n++)
-    {
-        if (ui.outputPathComboBox->findText(outputpaths.at(n)) == -1)
-            ui.outputPathComboBox->addItem(outputpaths.at(n));
-    }
+        {
+            if (ui.outputPathComboBox->findText(outputpaths.at(n)) == -1)
+                ui.outputPathComboBox->addItem(outputpaths.at(n));
+        }
     i = ui.outputPathComboBox->findText(settings.value("outputpath").toString());
     ui.outputPathComboBox->setCurrentIndex(i);
     if (!ui.inputFileComboBox->currentText().isEmpty())
-    {
-        d->changeInputFile(ui.inputFileComboBox->currentText());
-        ui.toLoadButton->setDisabled(false);
-    }
+        {
+            d->changeInputFile(ui.inputFileComboBox->currentText());
+            ui.toLoadButton->setDisabled(false);
+        }
     loadingSettings = false;
 }
 
@@ -114,16 +114,16 @@ void MainWindow::saveSettings()
     QSettings settings("Boomerang", "Boomerang");
     QStringList inputfiles;
     for (int n = 0; n < ui.inputFileComboBox->count(); n++)
-    {
-        inputfiles.append(ui.inputFileComboBox->itemText(n));
-    }
+        {
+            inputfiles.append(ui.inputFileComboBox->itemText(n));
+        }
     settings.setValue("inputfiles", inputfiles);
     settings.setValue("inputfile", ui.inputFileComboBox->itemText(ui.inputFileComboBox->currentIndex()));
     QStringList outputPaths;
     for (int n = 0; n < ui.outputPathComboBox->count(); n++)
-    {
-        outputPaths.append(ui.outputPathComboBox->itemText(n));
-    }
+        {
+            outputPaths.append(ui.outputPathComboBox->itemText(n));
+        }
     settings.setValue("outputpaths", outputPaths);
     settings.setValue("outputpath", ui.outputPathComboBox->itemText(ui.outputPathComboBox->currentIndex()));
 }
@@ -132,44 +132,44 @@ void MainWindow::on_inputFileBrowseButton_clicked()
 {
     QString s = QFileDialog::getOpenFileName(this, tr("Select a file to decompile..."), "test", "Windows Binaries (*.exe *.dll *.scr *.sys);;Other Binaries (*.*)");
     if (!s.isEmpty())
-    {
-        if (ui.inputFileComboBox->findText(s) == -1)
         {
-            ui.inputFileComboBox->addItem(s);
-            ui.inputFileComboBox->setCurrentIndex(ui.inputFileComboBox->findText(s));
-            saveSettings();
+            if (ui.inputFileComboBox->findText(s) == -1)
+                {
+                    ui.inputFileComboBox->addItem(s);
+                    ui.inputFileComboBox->setCurrentIndex(ui.inputFileComboBox->findText(s));
+                    saveSettings();
+                }
+            decompilerThread->getDecompiler()->changeInputFile(s);
+            if (!ui.outputPathComboBox->currentText().isEmpty())
+                ui.toLoadButton->setDisabled(false);
         }
-        decompilerThread->getDecompiler()->changeInputFile(s);
-        if (!ui.outputPathComboBox->currentText().isEmpty())
-            ui.toLoadButton->setDisabled(false);
-    }
 }
 
 void MainWindow::on_outputPathBrowseButton_clicked()
 {
     QString s = QFileDialog::getExistingDirectory(this, tr("Select a location to write output..."), "output");
     if (!s.isEmpty())
-    {
-        if (ui.outputPathComboBox->findText(s) == -1)
         {
-            ui.outputPathComboBox->addItem(s);
-            saveSettings();
+            if (ui.outputPathComboBox->findText(s) == -1)
+                {
+                    ui.outputPathComboBox->addItem(s);
+                    saveSettings();
+                }
+            ui.outputPathComboBox->setEditText(s);
+            if (!ui.inputFileComboBox->currentText().isEmpty())
+                ui.toLoadButton->setDisabled(false);
         }
-        ui.outputPathComboBox->setEditText(s);
-        if (!ui.inputFileComboBox->currentText().isEmpty())
-            ui.toLoadButton->setDisabled(false);
-    }
 }
 
 void MainWindow::on_inputFileComboBox_editTextChanged(const QString &text)
 {
     decompilerThread->getDecompiler()->changeInputFile(text);
     if (ui.inputFileComboBox->findText(text) == -1)
-    {
-        ui.inputFileComboBox->addItem(text);
-        ui.inputFileComboBox->setCurrentIndex(ui.inputFileComboBox->findText(text));
-        saveSettings();
-    }
+        {
+            ui.inputFileComboBox->addItem(text);
+            ui.inputFileComboBox->setCurrentIndex(ui.inputFileComboBox->findText(text));
+            saveSettings();
+        }
     if (!ui.outputPathComboBox->currentText().isEmpty())
         ui.toLoadButton->setDisabled(false);
 }
@@ -208,56 +208,56 @@ void MainWindow::on_actionOpen_activated()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a file to open..."));
     if (!filename.isEmpty())
-    {
-        QTextEdit *n = new QTextEdit();
-        QFile file(filename);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            return;
-        QTextStream in(&file);
-        QString contents = in.readAll();
-        file.close();
-        n->insertPlainText(contents);
-        openFiles[n] = filename;
-        if (filename.endsWith(".h"))
-            signatureFiles.insert(n);
-        connect(n, SIGNAL(textChanged()), this, SLOT(currentTabTextChanged()));
-        QString name = filename;
-        name = name.right(name.length() - filename.lastIndexOf(QRegExp("[/\\\\]")) - 1);
-        ui.tabWidget->addTab(n, name);
-        ui.tabWidget->setCurrentWidget(n);
-    }
+        {
+            QTextEdit *n = new QTextEdit();
+            QFile file(filename);
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+                return;
+            QTextStream in(&file);
+            QString contents = in.readAll();
+            file.close();
+            n->insertPlainText(contents);
+            openFiles[n] = filename;
+            if (filename.endsWith(".h"))
+                signatureFiles.insert(n);
+            connect(n, SIGNAL(textChanged()), this, SLOT(currentTabTextChanged()));
+            QString name = filename;
+            name = name.right(name.length() - filename.lastIndexOf(QRegExp("[/\\\\]")) - 1);
+            ui.tabWidget->addTab(n, name);
+            ui.tabWidget->setCurrentWidget(n);
+        }
 }
 
 void MainWindow::on_actionSave_activated()
 {
     if (openFiles.find(ui.tabWidget->currentWidget()) != openFiles.end())
-    {
-        QString filename = openFiles[ui.tabWidget->currentWidget()];
-        QFile file(filename);
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
-            return;
-        QTextEdit *edit = (QTextEdit*)ui.tabWidget->currentWidget();
-        file.write(edit->toPlainText().toAscii());
-        file.close();
-        QString text = ui.tabWidget->tabText(ui.tabWidget->currentIndex());
-        if (text.right(1) == "*")
-            ui.tabWidget->setTabText(ui.tabWidget->currentIndex(), text.left(text.length()-1));
-        if (signatureFiles.find(ui.tabWidget->currentWidget()) != signatureFiles.end())
         {
-            decompilerThread->getDecompiler()->rereadLibSignatures();
+            QString filename = openFiles[ui.tabWidget->currentWidget()];
+            QFile file(filename);
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+                return;
+            QTextEdit *edit = (QTextEdit*)ui.tabWidget->currentWidget();
+            file.write(edit->toPlainText().toAscii());
+            file.close();
+            QString text = ui.tabWidget->tabText(ui.tabWidget->currentIndex());
+            if (text.right(1) == "*")
+                ui.tabWidget->setTabText(ui.tabWidget->currentIndex(), text.left(text.length()-1));
+            if (signatureFiles.find(ui.tabWidget->currentWidget()) != signatureFiles.end())
+                {
+                    decompilerThread->getDecompiler()->rereadLibSignatures();
+                }
         }
-    }
 }
 
 void MainWindow::on_actionClose_activated()
 {
     if (openFiles.find(ui.tabWidget->currentWidget()) != openFiles.end())
-    {
-        on_actionSave_activated();
-        openFiles.erase(ui.tabWidget->currentWidget());
-        signatureFiles.erase(ui.tabWidget->currentWidget());
-        ui.tabWidget->removeTab(ui.tabWidget->currentIndex());
-    }
+        {
+            on_actionSave_activated();
+            openFiles.erase(ui.tabWidget->currentWidget());
+            signatureFiles.erase(ui.tabWidget->currentWidget());
+            ui.tabWidget->removeTab(ui.tabWidget->currentIndex());
+        }
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)
@@ -316,14 +316,14 @@ void MainWindow::showDecodePage()
     ui.stackedWidget->setCurrentIndex(2);
 
     if (!ui.actionEnable->isChecked())
-    {
-        ui.userProcs->removeColumn(2);
-    }
+        {
+            ui.userProcs->removeColumn(2);
+        }
     else
-    {
-        ui.userProcs->setColumnCount(3);
-        ui.userProcs->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Debug")));
-    }
+        {
+            ui.userProcs->setColumnCount(3);
+            ui.userProcs->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Debug")));
+        }
 
     ui.actionDecode->setDisabled(false);
 }
@@ -424,36 +424,36 @@ void MainWindow::showConsideringProc(const QString &parent, const QString &name)
 {
     QList<QTreeWidgetItem *> foundit = ui.decompileProcsTreeWidget->findItems(name, Qt::MatchExactly | Qt::MatchRecursive);
     if (foundit.isEmpty())
-    {
-        QStringList texts(name);
-        if (parent.isEmpty())
         {
-            ui.decompileProcsTreeWidget->addTopLevelItem(new QTreeWidgetItem(texts));
+            QStringList texts(name);
+            if (parent.isEmpty())
+                {
+                    ui.decompileProcsTreeWidget->addTopLevelItem(new QTreeWidgetItem(texts));
+                }
+            else
+                {
+                    QList<QTreeWidgetItem *> found = ui.decompileProcsTreeWidget->findItems(parent, Qt::MatchExactly | Qt::MatchRecursive);
+                    if (!found.isEmpty())
+                        {
+                            QTreeWidgetItem *n = new QTreeWidgetItem(found.first(), texts);
+                            n->setData(0, 1, name);
+                            ui.decompileProcsTreeWidget->expandItem(found.first());
+                            ui.decompileProcsTreeWidget->scrollToItem(n);
+                            ui.decompileProcsTreeWidget->setCurrentItem(n, 0);
+                        }
+                }
         }
-        else
-        {
-            QList<QTreeWidgetItem *> found = ui.decompileProcsTreeWidget->findItems(parent, Qt::MatchExactly | Qt::MatchRecursive);
-            if (!found.isEmpty())
-            {
-                QTreeWidgetItem *n = new QTreeWidgetItem(found.first(), texts);
-                n->setData(0, 1, name);
-                ui.decompileProcsTreeWidget->expandItem(found.first());
-                ui.decompileProcsTreeWidget->scrollToItem(n);
-                ui.decompileProcsTreeWidget->setCurrentItem(n, 0);
-            }
-        }
-    }
 }
 
 void MainWindow::showDecompilingProc(const QString &name)
 {
     QList<QTreeWidgetItem *> foundit = ui.decompileProcsTreeWidget->findItems(name, Qt::MatchExactly | Qt::MatchRecursive);
     if (!foundit.isEmpty())
-    {
-        ui.decompileProcsTreeWidget->setCurrentItem(foundit.first(), 0);
-        foundit.first()->setTextColor(0, QColor("blue"));
-        decompiledCount++;
-    }
+        {
+            ui.decompileProcsTreeWidget->setCurrentItem(foundit.first(), 0);
+            foundit.first()->setTextColor(0, QColor("blue"));
+            decompiledCount++;
+        }
     ui.progressDecompile->setRange(0, ui.userProcs->rowCount());
     ui.progressDecompile->setValue(decompiledCount);
 }
@@ -473,11 +473,11 @@ void MainWindow::showNewUserProc(const QString &name, unsigned int addr)
     ui.userProcs->setItem(nrows, 1, new QTableWidgetItem(name));
     ui.userProcs->item(nrows, 1)->setData(1, name);
     if (ui.actionEnable->isChecked())
-    {
-        QTableWidgetItem *d = new QTableWidgetItem("");
-        d->setCheckState(Qt::Checked);
-        ui.userProcs->setItem(nrows, 2, d);
-    }
+        {
+            QTableWidgetItem *d = new QTableWidgetItem("");
+            d->setCheckState(Qt::Checked);
+            ui.userProcs->setItem(nrows, 2, d);
+        }
     ui.userProcs->resizeColumnsToContents();
     ui.userProcs->resizeRowsToContents();
 }
@@ -487,10 +487,10 @@ void MainWindow::showNewLibProc(const QString &name, const QString &params)
     int nrows = ui.libProcs->rowCount();
     for (int i = 0; i < nrows; i++)
         if (ui.libProcs->item(i, 0)->text() == name)
-        {
-            ui.libProcs->item(i, 1)->setText(params);
-            return;
-        }
+            {
+                ui.libProcs->item(i, 1)->setText(params);
+                return;
+            }
     ui.libProcs->setRowCount(nrows + 1);
     ui.libProcs->setItem(nrows, 0, new QTableWidgetItem(name));
     ui.libProcs->setItem(nrows, 1, new QTableWidgetItem(params));
@@ -504,10 +504,10 @@ void MainWindow::showRemoveUserProc(const QString &name, unsigned int addr)
     int nrows = ui.userProcs->rowCount();
     for (int i = 0; i < nrows; i++)
         if (ui.userProcs->item(i, 0)->text() == s)
-        {
-            ui.userProcs->removeRow(i);
-            break;
-        }
+            {
+                ui.userProcs->removeRow(i);
+                break;
+            }
     ui.userProcs->resizeColumnsToContents();
     ui.userProcs->resizeRowsToContents();
 }
@@ -517,10 +517,10 @@ void MainWindow::showRemoveLibProc(const QString &name)
     int nrows = ui.libProcs->rowCount();
     for (int i = 0; i < nrows; i++)
         if (ui.libProcs->item(i, 0)->text() == name)
-        {
-            ui.libProcs->removeRow(i);
-            break;
-        }
+            {
+                ui.libProcs->removeRow(i);
+                break;
+            }
     ui.libProcs->resizeColumnsToContents();
     ui.libProcs->resizeRowsToContents();
 }
@@ -552,13 +552,13 @@ void MainWindow::showNewProcInCluster(const QString &name, const QString &cluste
     cname = cname.append(".c");
     QList<QTreeWidgetItem *> found = ui.clusters->findItems(cname, Qt::MatchExactly);
     if (!found.isEmpty())
-    {
-        QTreeWidgetItem *n = new QTreeWidgetItem(found.first(), QStringList(name));
-        ui.clusters->scrollToItem(n);
-        ui.clusters->setCurrentItem(n, 0);
-        ui.clusters->expandItem(found.first());
-        codeGenCount++;
-    }
+        {
+            QTreeWidgetItem *n = new QTreeWidgetItem(found.first(), QStringList(name));
+            ui.clusters->scrollToItem(n);
+            ui.clusters->setCurrentItem(n, 0);
+            ui.clusters->expandItem(found.first());
+            codeGenCount++;
+        }
     ui.progressGenerateCode->setRange(0, ui.userProcs->rowCount());
     ui.progressGenerateCode->setValue(codeGenCount);
 }
@@ -574,10 +574,10 @@ void MainWindow::showDebuggingPoint(const QString &name, const QString &descript
 
     for (int i = 0; i < ui.userProcs->rowCount(); i++)
         if (ui.userProcs->item(i, 1)->text() == name && ui.userProcs->item(i, 2)->checkState() != Qt::Checked)
-        {
-            on_actionStep_activated();
-            return;
-        }
+            {
+                on_actionStep_activated();
+                return;
+            }
 
     showRTLEditor(name);
 }
@@ -587,15 +587,15 @@ void MainWindow::showRTLEditor(const QString &name)
     RTLEditor *n = NULL;
     for (int i = 0; i < ui.tabWidget->count(); i++)
         if (ui.tabWidget->tabText(i) == name)
-        {
-            n = dynamic_cast<RTLEditor*>(ui.tabWidget->widget(i));
-            break;
-        }
+            {
+                n = dynamic_cast<RTLEditor*>(ui.tabWidget->widget(i));
+                break;
+            }
     if (n == NULL)
-    {
-        n = new RTLEditor(decompilerThread->getDecompiler(), name);
-        ui.tabWidget->addTab(n, name);
-    }
+        {
+            n = new RTLEditor(decompilerThread->getDecompiler(), name);
+            ui.tabWidget->addTab(n, name);
+        }
     else
         n->updateContents();
     ui.tabWidget->setCurrentWidget(n);
@@ -609,15 +609,15 @@ void MainWindow::on_userProcs_cellDoubleClicked(int row, int column)
 void MainWindow::on_userProcs_cellChanged(int row, int column)
 {
     if (column == 0)
-    {
-        // TODO: should we allow the user to change the address of a proc?
-    }
+        {
+            // TODO: should we allow the user to change the address of a proc?
+        }
     if (column == 1)
-    {
-        QString old_name = ui.userProcs->item(row, 1)->data(1).toString();
-        decompilerThread->getDecompiler()->renameProc(old_name, ui.userProcs->item(row, 1)->text());
-        ui.userProcs->item(row, 1)->setData(1, ui.userProcs->item(row, 1)->text());
-    }
+        {
+            QString old_name = ui.userProcs->item(row, 1)->data(1).toString();
+            decompilerThread->getDecompiler()->renameProc(old_name, ui.userProcs->item(row, 1)->text());
+            ui.userProcs->item(row, 1)->setData(1, ui.userProcs->item(row, 1)->text());
+        }
 }
 
 void MainWindow::on_clusters_itemDoubleClicked(QTreeWidgetItem *item, int column)
@@ -628,27 +628,27 @@ void MainWindow::on_clusters_itemDoubleClicked(QTreeWidgetItem *item, int column
     QTextEdit *n = NULL;
     for (int i = 0; i < ui.tabWidget->count(); i++)
         if (ui.tabWidget->tabText(i) == top->text(0))
-        {
-            n = dynamic_cast<QTextEdit*>(ui.tabWidget->widget(i));
-            break;
-        }
+            {
+                n = dynamic_cast<QTextEdit*>(ui.tabWidget->widget(i));
+                break;
+            }
     if (n == NULL)
-    {
-        n = new QTextEdit();
-        QString name = top->text(0);
-        name = name.left(name.lastIndexOf("."));
-        QString filename = decompilerThread->getDecompiler()->getClusterFile(name);
-        QFile file(filename);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            return;
-        QTextStream in(&file);
-        QString contents = in.readAll();
-        file.close();
-        n->insertPlainText(contents);
-        openFiles[n] = filename;
-        connect(n, SIGNAL(textChanged()), this, SLOT(currentTabTextChanged()));
-        ui.tabWidget->addTab(n, top->text(0));
-    }
+        {
+            n = new QTextEdit();
+            QString name = top->text(0);
+            name = name.left(name.lastIndexOf("."));
+            QString filename = decompilerThread->getDecompiler()->getClusterFile(name);
+            QFile file(filename);
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+                return;
+            QTextStream in(&file);
+            QString contents = in.readAll();
+            file.close();
+            n->insertPlainText(contents);
+            openFiles[n] = filename;
+            connect(n, SIGNAL(textChanged()), this, SLOT(currentTabTextChanged()));
+            ui.tabWidget->addTab(n, top->text(0));
+        }
     ui.tabWidget->setCurrentWidget(n);
 }
 
@@ -662,23 +662,23 @@ void MainWindow::on_actionEnable_toggled(bool b)
     decompilerThread->getDecompiler()->setDebugging(b);
     decompilerThread->getDecompiler()->stopWaiting();
     if (b)
-    {
-        statusBar()->show();
-        if (step == NULL)
         {
-            step = new QToolButton();
-            step->setToolButtonStyle(Qt::ToolButtonTextOnly);
-            step->setText("Step");
-            step->setDefaultAction(ui.actionStep);
+            statusBar()->show();
+            if (step == NULL)
+                {
+                    step = new QToolButton();
+                    step->setToolButtonStyle(Qt::ToolButtonTextOnly);
+                    step->setText("Step");
+                    step->setDefaultAction(ui.actionStep);
+                }
+            statusBar()->addPermanentWidget(step);
         }
-        statusBar()->addPermanentWidget(step);
-    }
     else
-    {
-        if (step)
-            statusBar()->removeWidget(step);
-        statusBar()->hide();
-    }
+        {
+            if (step)
+                statusBar()->removeWidget(step);
+            statusBar()->hide();
+        }
 
 }
 
@@ -691,17 +691,17 @@ void MainWindow::on_actionStep_activated()
 void MainWindow::on_userProcs_horizontalHeader_sectionClicked(int logicalIndex)
 {
     if (logicalIndex == 2)
-    {
-        for (int i = 0; i < ui.userProcs->rowCount(); i++)
         {
-            if (ui.userProcs->item(i, 2) == NULL)
-            {
-                ui.userProcs->setItem(i, 2, new QTableWidgetItem(""));
-            }
-            Qt::CheckState state = ui.userProcs->item(i, 2)->checkState();
-            ui.userProcs->item(i, 2)->setCheckState(state == Qt::Checked ? Qt::Unchecked : Qt::Checked);
+            for (int i = 0; i < ui.userProcs->rowCount(); i++)
+                {
+                    if (ui.userProcs->item(i, 2) == NULL)
+                        {
+                            ui.userProcs->setItem(i, 2, new QTableWidgetItem(""));
+                        }
+                    Qt::CheckState state = ui.userProcs->item(i, 2)->checkState();
+                    ui.userProcs->item(i, 2)->setCheckState(state == Qt::Checked ? Qt::Unchecked : Qt::Checked);
+                }
         }
-    }
 }
 
 void MainWindow::on_libProcs_cellDoubleClicked(int row, int column)
@@ -711,21 +711,21 @@ void MainWindow::on_libProcs_cellDoubleClicked(int row, int column)
     QString params = ui.libProcs->item(row, 1)->text();
     bool existing = true;
     if (params == "<unknown>")
-    {
-        existing = false;
-        // uhh, time to guess?
-        for (int i = row; i >= 0; i--)
         {
-            params = ui.libProcs->item(i, 1)->text();
-            if (params != "<unknown>")
-            {
-                name = ui.libProcs->item(i, 0)->text();
-                break;
-            }
+            existing = false;
+            // uhh, time to guess?
+            for (int i = row; i >= 0; i--)
+                {
+                    params = ui.libProcs->item(i, 1)->text();
+                    if (params != "<unknown>")
+                        {
+                            name = ui.libProcs->item(i, 0)->text();
+                            break;
+                        }
+                }
+            if (name.isEmpty())
+                return;
         }
-        if (name.isEmpty())
-            return;
-    }
     else
         name = ui.libProcs->item(row, 0)->text();
 
@@ -741,79 +741,79 @@ void MainWindow::on_libProcs_cellDoubleClicked(int row, int column)
     QTextEdit *n = NULL;
     for (int i = 0; i < ui.tabWidget->count(); i++)
         if (ui.tabWidget->tabText(i) == sigFile || ui.tabWidget->tabText(i) == sigFileStar)
-        {
-            n = dynamic_cast<QTextEdit*>(ui.tabWidget->widget(i));
-            break;
-        }
+            {
+                n = dynamic_cast<QTextEdit*>(ui.tabWidget->widget(i));
+                break;
+            }
     if (n == NULL)
-    {
-        n = new QTextEdit();
-        QFile file(filename);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            return;
-        QTextStream in(&file);
-        QString contents = in.readAll();
-        file.close();
-        n->insertPlainText(contents);
-        openFiles[n] = filename;
-        signatureFiles.insert(n);
-        connect(n, SIGNAL(textChanged()), this, SLOT(currentTabTextChanged()));
-        ui.tabWidget->addTab(n, sigFile);
-    }
+        {
+            n = new QTextEdit();
+            QFile file(filename);
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+                return;
+            QTextStream in(&file);
+            QString contents = in.readAll();
+            file.close();
+            n->insertPlainText(contents);
+            openFiles[n] = filename;
+            signatureFiles.insert(n);
+            connect(n, SIGNAL(textChanged()), this, SLOT(currentTabTextChanged()));
+            ui.tabWidget->addTab(n, sigFile);
+        }
     ui.tabWidget->setCurrentWidget(n);
     if (existing)
         n->find(name, QTextDocument::FindBackward | QTextDocument::FindCaseSensitively | QTextDocument::FindWholeWords);
     else
-    {
-        QTextCursor cursor = n->textCursor();
-        cursor.clearSelection();
-        cursor.movePosition(QTextCursor::End);
-        n->setTextCursor(cursor);
-        QString comment = "// unknown library proc: ";
-        comment.append(ui.libProcs->item(row, 0)->text());
-        comment.append("\n");
-        n->insertPlainText(comment);
-    }
+        {
+            QTextCursor cursor = n->textCursor();
+            cursor.clearSelection();
+            cursor.movePosition(QTextCursor::End);
+            n->setTextCursor(cursor);
+            QString comment = "// unknown library proc: ";
+            comment.append(ui.libProcs->item(row, 0)->text());
+            comment.append("\n");
+            n->insertPlainText(comment);
+        }
 }
 
 void MainWindow::on_actionCut_activated()
 {
     if (ui.tabWidget->currentIndex() != 0)
-    {
-        QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
-        if (n)
-            n->cut();
-    }
+        {
+            QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
+            if (n)
+                n->cut();
+        }
 }
 
 void MainWindow::on_actionCopy_activated()
 {
     if (ui.tabWidget->currentIndex() != 0)
-    {
-        QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
-        if (n)
-            n->copy();
-    }
+        {
+            QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
+            if (n)
+                n->copy();
+        }
 }
 
 void MainWindow::on_actionPaste_activated()
 {
     if (ui.tabWidget->currentIndex() != 0)
-    {
-        QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
-        if (n)
-            n->paste();
-    }
+        {
+            QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
+            if (n)
+                n->paste();
+        }
 }
 
 void MainWindow::on_actionDelete_activated()
 {
     if (ui.tabWidget->currentIndex() != 0)
-    {
-        QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
-        if (n)
-            n->textCursor().removeSelectedText();
-    }
+        {
+            QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
+            if (n)
+                n->textCursor().removeSelectedText();
+        }
 }
 
 void MainWindow::on_actionFind_activated()
@@ -828,11 +828,11 @@ void MainWindow::on_actionGo_To_activated()
 void MainWindow::on_actionSelect_All_activated()
 {
     if (ui.tabWidget->currentIndex() != 0)
-    {
-        QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
-        if (n)
-            n->selectAll();
-    }
+        {
+            QTextEdit *n = dynamic_cast<QTextEdit*>(ui.tabWidget->currentWidget());
+            if (n)
+                n->selectAll();
+        }
 }
 
 void MainWindow::on_actionLoad_activated()
@@ -883,10 +883,10 @@ void MainWindow::on_actionBoomerang_Website_activated()
     QProcess *browser = new QProcess( this );
     browser->start("firefox http://boomerang.sourceforge.net");
     if (browser->state() == QProcess::NotRunning)
-    {
-        QMessageBox::critical(this, "Critical!","Firefox reports error!",
-                              QMessageBox::Ok | QMessageBox::Default, QMessageBox::NoButton);
-    }
+        {
+            QMessageBox::critical(this, "Critical!","Firefox reports error!",
+                                  QMessageBox::Ok | QMessageBox::Default, QMessageBox::NoButton);
+        }
 #endif
 }
 

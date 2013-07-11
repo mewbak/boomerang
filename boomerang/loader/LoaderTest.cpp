@@ -133,10 +133,10 @@ void LoaderTest::testHppaLoad ()
     n = pBF->GetNumSections();
     ost << "Number of sections = " << std::dec << n << "\r\n";
     for (int i=0; i < n; i++)
-    {
-        si = pBF->GetSectionInfo(i);
-        ost << si->pSectionName << "\t";
-    }
+        {
+            si = pBF->GetSectionInfo(i);
+            ost << si->pSectionName << "\t";
+        }
     pBF->UnLoad();
     // Note: the string below needs to have embedded tabs. Edit with caution!
     std::string expected("Number of sections = 4\r\n"
@@ -162,10 +162,10 @@ void LoaderTest::testPalmLoad ()
     n = pBF->GetNumSections();
     ost << "Number of sections = " << std::dec << n << "\r\n";
     for (int i=0; i < n; i++)
-    {
-        si = pBF->GetSectionInfo(i);
-        ost << si->pSectionName << "\t";
-    }
+        {
+            si = pBF->GetSectionInfo(i);
+            ost << si->pSectionName << "\t";
+        }
     pBF->UnLoad();
     // Note: the string below needs to have embedded tabs. Edit with caution!
     std::string expected("Number of sections = 8\r\n"
@@ -193,10 +193,10 @@ void LoaderTest::testWinLoad ()
     n = pBF->GetNumSections();
     ost << "Number of sections = " << std::dec << n << "\r\n";
     for (int i=0; i < n; i++)
-    {
-        si = pBF->GetSectionInfo(i);
-        ost << si->pSectionName << "\t";
-    }
+        {
+            si = pBF->GetSectionInfo(i);
+            ost << si->pSectionName << "\t";
+        }
 
     // Note: the string below needs to have embedded tabs. Edit with caution!
     std::string expected("Number of sections = 5\r\n"
@@ -548,31 +548,31 @@ void LoaderTest::testMicroDis1 ()
     void* p = pent_hello_text;
     i = 0;
     while (totalSize < (int)n)
-    {
-        int size = microX86Dis(p);
-        if (size >= 0x40)
         {
-            std::cout << "Not handled instruction at offset 0x" << std::hex <<
-                      (ADDRESS)p - (ADDRESS)pent_hello_text << std::endl;
-            CPPUNIT_ASSERT(size != 0x40);
-            return;
+            int size = microX86Dis(p);
+            if (size >= 0x40)
+                {
+                    std::cout << "Not handled instruction at offset 0x" << std::hex <<
+                              (ADDRESS)p - (ADDRESS)pent_hello_text << std::endl;
+                    CPPUNIT_ASSERT(size != 0x40);
+                    return;
+                }
+            int expected = lengths[i++];
+            if (expected != size)
+                {
+                    std::cout << "At offset 0x" << std::hex <<
+                              (ADDRESS)p - (ADDRESS)pent_hello_text << " ("
+                              << (int)*((unsigned char*)p) << " "
+                              << (int)*((unsigned char*)p+1) << " "
+                              << (int)*((unsigned char*)p+2) << " "
+                              << (int)*((unsigned char*)p+3) << " "
+                              << ") expected " <<
+                              std::dec << expected << ", actual " << size << std::endl;
+                    CPPUNIT_ASSERT_EQUAL(expected, size);
+                }
+            p = (void*) ((char*)p + size);
+            totalSize += size;
         }
-        int expected = lengths[i++];
-        if (expected != size)
-        {
-            std::cout << "At offset 0x" << std::hex <<
-                      (ADDRESS)p - (ADDRESS)pent_hello_text << " ("
-                      << (int)*((unsigned char*)p) << " "
-                      << (int)*((unsigned char*)p+1) << " "
-                      << (int)*((unsigned char*)p+2) << " "
-                      << (int)*((unsigned char*)p+3) << " "
-                      << ") expected " <<
-                      std::dec << expected << ", actual " << size << std::endl;
-            CPPUNIT_ASSERT_EQUAL(expected, size);
-        }
-        p = (void*) ((char*)p + size);
-        totalSize += size;
-    }
     CPPUNIT_ASSERT_EQUAL((int)n, totalSize);
 }
 

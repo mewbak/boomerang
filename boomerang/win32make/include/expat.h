@@ -38,7 +38,8 @@ typedef unsigned char XML_Bool;
    Otherwise, the #define hackery is quite ugly and would have been
    dropped.
 */
-enum XML_Status {
+enum XML_Status
+{
     XML_STATUS_ERROR = 0,
 #define XML_STATUS_ERROR XML_STATUS_ERROR
     XML_STATUS_OK = 1,
@@ -47,7 +48,8 @@ enum XML_Status {
 #define XML_STATUS_SUSPENDED XML_STATUS_SUSPENDED
 };
 
-enum XML_Error {
+enum XML_Error
+{
     XML_ERROR_NONE,
     XML_ERROR_NO_MEMORY,
     XML_ERROR_SYNTAX,
@@ -90,7 +92,8 @@ enum XML_Error {
     XML_ERROR_SUSPEND_PE
 };
 
-enum XML_Content_Type {
+enum XML_Content_Type
+{
     XML_CTYPE_EMPTY = 1,
     XML_CTYPE_ANY,
     XML_CTYPE_MIXED,
@@ -99,7 +102,8 @@ enum XML_Content_Type {
     XML_CTYPE_SEQ
 };
 
-enum XML_Content_Quant {
+enum XML_Content_Quant
+{
     XML_CQUANT_NONE,
     XML_CQUANT_OPT,
     XML_CQUANT_REP,
@@ -977,7 +981,8 @@ XMLPARSEAPI(XML_Expat_Version)
 XML_ExpatVersionInfo(void);
 
 /* Added in Expat 1.95.5. */
-enum XML_FeatureEnum {
+enum XML_FeatureEnum
+{
     XML_FEATURE_END = 0,
     XML_FEATURE_UNICODE,
     XML_FEATURE_UNICODE_WCHAR_T,

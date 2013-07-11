@@ -1,5 +1,6 @@
 #include "hppa-names.h"
-char *b_06_names[] = {
+char *b_06_names[] =
+{
     "%r0",
     "%r1",
     "%r2",
@@ -33,7 +34,8 @@ char *b_06_names[] = {
     "%r30",
     "%r31",
 };
-char *cr_06_names[] = {
+char *cr_06_names[] =
+{
     "%cr0",
     "%cr1",
     "%cr2",
@@ -67,7 +69,8 @@ char *cr_06_names[] = {
     "%cr30",
     "%cr31",
 };
-char *ct_06_names[] = {
+char *ct_06_names[] =
+{
     "%cr0",
     "%cr1",
     "%cr2",
@@ -101,7 +104,8 @@ char *ct_06_names[] = {
     "%cr30",
     "%cr31",
 };
-char *r_06_names[] = {
+char *r_06_names[] =
+{
     "%r0",
     "%r1",
     "%r2",
@@ -135,7 +139,8 @@ char *r_06_names[] = {
     "%r30",
     "%r31",
 };
-char *r_11_names[] = {
+char *r_11_names[] =
+{
     "%r0",
     "%r1",
     "%r2",
@@ -170,7 +175,8 @@ char *r_11_names[] = {
     "%r31",
 };
 char *s2_16_names[] = { "%s0", "%s1", "%s2", "%s3", };
-char *s3_16_names[] = {
+char *s3_16_names[] =
+{
     "%s0",
     "%s1",
     "%s2",
@@ -180,7 +186,8 @@ char *s3_16_names[] = {
     "%s6",
     "%s7",
 };
-char *t_06_names[] = {
+char *t_06_names[] =
+{
     "%r0",
     "%r1",
     "%r2",
@@ -214,7 +221,8 @@ char *t_06_names[] = {
     "%r30",
     "%r31",
 };
-char *t_11_names[] = {
+char *t_11_names[] =
+{
     "%r0",
     "%r1",
     "%r2",
@@ -248,7 +256,8 @@ char *t_11_names[] = {
     "%r30",
     "%r31",
 };
-char *t_27_names[] = {
+char *t_27_names[] =
+{
     "%r0",
     "%r1",
     "%r2",
@@ -282,7 +291,8 @@ char *t_27_names[] = {
     "%r30",
     "%r31",
 };
-char *x_11_names[] = {
+char *x_11_names[] =
+{
     "%r0",
     "%r1",
     "%r2",

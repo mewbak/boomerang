@@ -1,6 +1,7 @@
 #ifndef __mc68k_pat_H__
 #define __mc68k_pat_H__
-class InstructionPatterns {
+class InstructionPatterns
+{
 private:
     static int SP;
     static int FP;

@@ -7,15 +7,15 @@ int proc1 (int x, char* s)
 {
     int z;
     if (x > 2)
-    {
-        x = strlen(s);
-        z = strlen(s);
-        printf("%d", x + z);
-    }
+        {
+            x = strlen(s);
+            z = strlen(s);
+            printf("%d", x + z);
+        }
     else
-    {
-        x = strlen(s);
-    }
+        {
+            x = strlen(s);
+        }
     printf("%d, %d", x, z);
     return x;
 }

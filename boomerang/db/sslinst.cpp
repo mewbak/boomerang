@@ -134,10 +134,10 @@ int TableEntry::appendRTL(std::list<std::string>& p, RTL& r)
             match = (*a == *b), a++, b++)
         ;
     if (match)
-    {
-        rtl.appendRTL(r);
-        return 0;
-    }
+        {
+            rtl.appendRTL(r);
+            return 0;
+        }
     return -1;
 }
 
@@ -159,13 +159,13 @@ int RTLInstDict::appendToDict(std::string &n, std::list<std::string>& p, RTL& r)
     //delete [] opcode;
 
     if (idict.find(s) == idict.end())
-    {
-        idict[s] = TableEntry(p, r);
-    }
+        {
+            idict[s] = TableEntry(p, r);
+        }
     else
-    {
-        return idict[s].appendRTL(p, r);
-    }
+        {
+            return idict[s].appendRTL(p, r);
+        }
     return 0;
 }
 
@@ -207,11 +207,11 @@ bool RTLInstDict::readSSLFile(const std::string& SSLFileName)
     fixupParams();
 
     if (Boomerang::get()->debugDecoder)
-    {
-        std::cout << "\n=======Expanded RTL template dictionary=======\n";
-        print();
-        std::cout << "\n==============================================\n\n";
-    }
+        {
+            std::cout << "\n=======Expanded RTL template dictionary=======\n";
+            print();
+            std::cout << "\n==============================================\n\n";
+        }
 
     return true;
 }
@@ -226,23 +226,23 @@ void RTLInstDict::addRegister( const char *name, int id, int size, bool flt )
 {
     RegMap[name] = id;
     if ( id == -1 )
-    {
-        SpecialRegMap[name].s_name(name);
-        SpecialRegMap[name].s_size(size);
-        SpecialRegMap[name].s_float(flt);
-        SpecialRegMap[name].s_address(NULL);
-        SpecialRegMap[name].s_mappedIndex(-1);
-        SpecialRegMap[name].s_mappedOffset(-1);
-    }
+        {
+            SpecialRegMap[name].s_name(name);
+            SpecialRegMap[name].s_size(size);
+            SpecialRegMap[name].s_float(flt);
+            SpecialRegMap[name].s_address(NULL);
+            SpecialRegMap[name].s_mappedIndex(-1);
+            SpecialRegMap[name].s_mappedOffset(-1);
+        }
     else
-    {
-        DetRegMap[id].s_name(name);
-        DetRegMap[id].s_size(size);
-        DetRegMap[id].s_float(flt);
-        DetRegMap[id].s_address(NULL);
-        DetRegMap[id].s_mappedIndex(-1);
-        DetRegMap[id].s_mappedOffset(-1);
-    }
+        {
+            DetRegMap[id].s_name(name);
+            DetRegMap[id].s_size(size);
+            DetRegMap[id].s_float(flt);
+            DetRegMap[id].s_address(NULL);
+            DetRegMap[id].s_mappedIndex(-1);
+            DetRegMap[id].s_mappedOffset(-1);
+        }
 }
 
 
@@ -256,39 +256,39 @@ void RTLInstDict::print(std::ostream& os /*= std::cout*/)
 {
     for (std::map<std::string, TableEntry>::iterator p = idict.begin();
             p != idict.end(); p++)
-    {
-        // print the instruction name
-        os << (*p).first << "  ";
+        {
+            // print the instruction name
+            os << (*p).first << "  ";
 
-        // print the parameters
-        std::list<std::string>& params = (*p).second.params;
-        int i = params.size();
-        for (std::list<std::string>::iterator s = params.begin(); s != params.end(); s++,i--)
-            os << *s << (i != 1 ? "," : "");
-        os << "\n";
+            // print the parameters
+            std::list<std::string>& params = (*p).second.params;
+            int i = params.size();
+            for (std::list<std::string>::iterator s = params.begin(); s != params.end(); s++,i--)
+                os << *s << (i != 1 ? "," : "");
+            os << "\n";
 
-        // print the RTL
-        RTL& rtlist = (*p).second.rtl;
-        rtlist.print(os);
-        os << "\n";
-    }
+            // print the RTL
+            RTL& rtlist = (*p).second.rtl;
+            rtlist.print(os);
+            os << "\n";
+        }
 
 #if 0
     // Detailed register map
     os << "\nDetailed register map\n";
     std::map<int, Register, std::less<int> >::iterator rr;
     for (rr = DetRegMap.begin(); rr != DetRegMap.end(); rr++)
-    {
-        int n = rr->first;
-        Register* pr = &rr->second;
-        os << "number " << n <<
-           " name " << pr->g_name() <<
-           " size " << std::dec << pr->g_size() <<
-           " address 0x" << std::hex << (unsigned)pr->g_address() <<
-           " mappedIndex " << std::dec << pr->g_mappedIndex() <<
-           " mappedOffset " << pr->g_mappedOffset() <<
-           " flt " << pr->isFloat() << "\n";
-    }
+        {
+            int n = rr->first;
+            Register* pr = &rr->second;
+            os << "number " << n <<
+               " name " << pr->g_name() <<
+               " size " << std::dec << pr->g_size() <<
+               " address 0x" << std::hex << (unsigned)pr->g_address() <<
+               " mappedIndex " << std::dec << pr->g_mappedIndex() <<
+               " mappedOffset " << pr->g_mappedOffset() <<
+               " flt " << pr->isFloat() << "\n";
+        }
 #endif
 }
 
@@ -304,18 +304,18 @@ void RTLInstDict::fixupParams( )
     std::map<std::string,ParamEntry>::iterator param;
     int mark = 1;
     for ( param = DetParamMap.begin(); param != DetParamMap.end(); param++ )
-    {
-        param->second.mark = 0;
-    }
-    for ( param = DetParamMap.begin(); param != DetParamMap.end(); param++ )
-    {
-        std::list<std::string> funcParams;
-        bool haveCount = false;
-        if ( param->second.kind == PARAM_VARIANT )
         {
-            fixupParamsSub( param->first, funcParams, haveCount, mark++ );
+            param->second.mark = 0;
         }
-    }
+    for ( param = DetParamMap.begin(); param != DetParamMap.end(); param++ )
+        {
+            std::list<std::string> funcParams;
+            bool haveCount = false;
+            if ( param->second.kind == PARAM_VARIANT )
+                {
+                    fixupParamsSub( param->first, funcParams, haveCount, mark++ );
+                }
+        }
 }
 
 void RTLInstDict::fixupParamsSub( std::string s, std::list<std::string>& funcParams, bool& haveCount, int mark )
@@ -323,10 +323,10 @@ void RTLInstDict::fixupParamsSub( std::string s, std::list<std::string>& funcPar
     ParamEntry &param = DetParamMap[s];
 
     if ( param.params.size() == 0 )
-    {
-        std::cerr << "Error in SSL File: Variant operand " << s << " has no branches. Well that's really useful...\n";
-        return;
-    }
+        {
+            std::cerr << "Error in SSL File: Variant operand " << s << " has no branches. Well that's really useful...\n";
+            return;
+        }
     if ( param.mark == mark )
         return; /* Already seen this round. May indicate a cycle, but may not */
 
@@ -334,46 +334,47 @@ void RTLInstDict::fixupParamsSub( std::string s, std::list<std::string>& funcPar
 
     for ( std::list<std::string>::iterator it = param.params.begin();
             it != param.params.end(); it++ )
-    {
-        ParamEntry &sub = DetParamMap[*it];
-        if (sub.kind == PARAM_VARIANT )
         {
-            fixupParamsSub(*it, funcParams, haveCount, mark );
-            if (!haveCount)
-            {   /* Empty branch? */
-                continue;
-            }
-        }
-        else if (!haveCount )
-        {
-            haveCount = true;
-            char buf[10];
-            for (unsigned i=1; i <= sub.funcParams.size(); i++ )
-            {
-                sprintf( buf, "__lp%d", i );
-                funcParams.push_back(buf);
-            }
-        }
+            ParamEntry &sub = DetParamMap[*it];
+            if (sub.kind == PARAM_VARIANT )
+                {
+                    fixupParamsSub(*it, funcParams, haveCount, mark );
+                    if (!haveCount)
+                        {
+                            /* Empty branch? */
+                            continue;
+                        }
+                }
+            else if (!haveCount )
+                {
+                    haveCount = true;
+                    char buf[10];
+                    for (unsigned i=1; i <= sub.funcParams.size(); i++ )
+                        {
+                            sprintf( buf, "__lp%d", i );
+                            funcParams.push_back(buf);
+                        }
+                }
 
-        if (funcParams.size() != sub.funcParams.size() )
-        {
-            std::cerr << "Error in SSL File: Variant operand " << s << " does not have a fixed number of functional "
-                      "parameters:\n" << "Expected " << funcParams.size() << ", but branch " << *it << " has " <<
-                      sub.funcParams.size() << ".\n";
+            if (funcParams.size() != sub.funcParams.size() )
+                {
+                    std::cerr << "Error in SSL File: Variant operand " << s << " does not have a fixed number of functional "
+                              "parameters:\n" << "Expected " << funcParams.size() << ", but branch " << *it << " has " <<
+                              sub.funcParams.size() << ".\n";
+                }
+            else if (funcParams != sub.funcParams && sub.asgn != NULL )
+                {
+                    /* Rename so all the parameter names match */
+                    std::list<std::string>::iterator i,j;
+                    for ( i = funcParams.begin(), j = sub.funcParams.begin(); i != funcParams.end(); i++, j++ )
+                        {
+                            Exp* match = Location::param(j->c_str());
+                            Exp* replace = Location::param(i->c_str());
+                            sub.asgn->searchAndReplace( match, replace );
+                        }
+                    sub.funcParams = funcParams;
+                }
         }
-        else if (funcParams != sub.funcParams && sub.asgn != NULL )
-        {
-            /* Rename so all the parameter names match */
-            std::list<std::string>::iterator i,j;
-            for ( i = funcParams.begin(), j = sub.funcParams.begin(); i != funcParams.end(); i++, j++ )
-            {
-                Exp* match = Location::param(j->c_str());
-                Exp* replace = Location::param(i->c_str());
-                sub.asgn->searchAndReplace( match, replace );
-            }
-            sub.funcParams = funcParams;
-        }
-    }
 
 //	  if( param.funcParams.size() != funcParams.size() )
 //		  theSemTable.setItem( n, cFUNCTION, 0, 0, funcParams.size(),
@@ -398,10 +399,10 @@ std::pair<std::string,unsigned> RTLInstDict::getSignature(const char* name)
     // Look up the dictionary
     std::map<std::string,TableEntry>::iterator it = idict.find(opcode);
     if (it == idict.end())
-    {
-        std::cerr << "Error: no entry for `" << name << "' in RTL dictionary\n";
-        it = idict.find("NOP");		// At least, don't cause segfault
-    }
+        {
+            std::cerr << "Error: no entry for `" << name << "' in RTL dictionary\n";
+            it = idict.find("NOP");		// At least, don't cause segfault
+        }
 
     std::pair<std::string, unsigned> ret;
     ret = std::pair<std::string,unsigned>(opcode,(it->second).params.size());
@@ -421,15 +422,15 @@ std::pair<std::string,unsigned> RTLInstDict::getSignature(const char* name)
 bool RTLInstDict::partialType(Exp* exp, Type& ty)
 {
     if (exp->isSizeCast())
-    {
-        ty = IntegerType(((Const*)((Binary*)exp)->getSubExp1())->getInt());
-        return true;
-    }
+        {
+            ty = IntegerType(((Const*)((Binary*)exp)->getSubExp1())->getInt());
+            return true;
+        }
     if (exp->isFltConst())
-    {
-        ty = FloatType(64);
-        return true;
-    }
+        {
+            ty = FloatType(64);
+            return true;
+        }
     return false;
 }
 
@@ -448,17 +449,18 @@ std::list<Statement*>* RTLInstDict::instantiateRTL(std::string& name, ADDRESS na
     // FIXME: settings
 //	  if (progOptions.fastInstr) {
     if (0)
-    {
-        std::map<std::string, std::string>::iterator itf = fastMap.find(name);
-        if (itf != fastMap.end())
-            lname = &itf->second;
-    }
+        {
+            std::map<std::string, std::string>::iterator itf = fastMap.find(name);
+            if (itf != fastMap.end())
+                lname = &itf->second;
+        }
     // Retrieve the dictionary entry for the named instruction
     if ( idict.find(*lname) == idict.end() )
-    {   /* lname is not in dictionary */
-        std::cerr << "ERROR: unknown instruction " << *lname << " at 0x" << std::hex << natPC << ", ignoring.\n";
-        return NULL;
-    }
+        {
+            /* lname is not in dictionary */
+            std::cerr << "ERROR: unknown instruction " << *lname << " at 0x" << std::hex << natPC << ", ignoring.\n";
+            return NULL;
+        }
     TableEntry& entry = idict[*lname];
 
     return instantiateRTL( entry.rtl, natPC, entry.params, actuals );
@@ -485,29 +487,29 @@ std::list<Statement*>* RTLInstDict::instantiateRTL(RTL& rtl, ADDRESS natPC, std:
     // Iterate through each Statement of the new list of stmts
     std::list<Statement*>::iterator ss;
     for (ss = newList->begin(); ss != newList->end(); ss++)
-    {
-        // Search for the formals and replace them with the actuals
-        std::list<std::string>::iterator param = params.begin();
-        std::vector<Exp*>::const_iterator actual = actuals.begin();
-        for (; param != params.end(); param++, actual++)
         {
-            /* Simple parameter - just construct the formal to search for */
-            Exp* formal = Location::param(param->c_str());
-            (*ss)->searchAndReplace(formal, *actual);
-            //delete formal;
+            // Search for the formals and replace them with the actuals
+            std::list<std::string>::iterator param = params.begin();
+            std::vector<Exp*>::const_iterator actual = actuals.begin();
+            for (; param != params.end(); param++, actual++)
+                {
+                    /* Simple parameter - just construct the formal to search for */
+                    Exp* formal = Location::param(param->c_str());
+                    (*ss)->searchAndReplace(formal, *actual);
+                    //delete formal;
+                }
+            (*ss)->fixSuccessor();
+            if (Boomerang::get()->debugDecoder)
+                std::cout << "			" << *ss << "\n";
         }
-        (*ss)->fixSuccessor();
-        if (Boomerang::get()->debugDecoder)
-            std::cout << "			" << *ss << "\n";
-    }
 
     transformPostVars( newList, true );
 
     // Perform simplifications, e.g. *1 in Pentium addressing modes
     for (ss = newList->begin(); ss != newList->end(); ss++)
-    {
-        (*ss)->simplify();
-    }
+        {
+            (*ss)->simplify();
+        }
 
     return newList;
 }
@@ -546,155 +548,155 @@ std::list<Statement*>* RTLInstDict::transformPostVars(std::list<Statement*>* rts
 #ifdef DEBUG_POSTVAR
     std::cout << "Transforming from:\n";
     for (Exp_CIT p = rts->begin(); p != rts->end(); p++)
-    {
-        std::cout << setw(8) << " ";
-        (*p)->print(std::cout);
-        std::cout << "\n";
-    }
+        {
+            std::cout << setw(8) << " ";
+            (*p)->print(std::cout);
+            std::cout << "\n";
+        }
 #endif
 
     // First pass: Scan for post-variables and usages of their referents
     for ( rt = rts->begin(); rt != rts->end(); rt++ )
-    {
-        // ss appears to be a list of expressions to be searched
-        // It is either the LHS and RHS of an assignment, or it's the parameters of a flag call
-        Binary* ss;
-        if ( (*rt)->isAssign())
         {
-            Exp* lhs = ((Assign*)*rt)->getLeft();
-            Exp* rhs = ((Assign*)*rt)->getRight();
-
-            // Look for assignments to post-variables
-            if (lhs && lhs->isPostVar())
-            {
-                if ( vars.find(lhs) == vars.end() )
+            // ss appears to be a list of expressions to be searched
+            // It is either the LHS and RHS of an assignment, or it's the parameters of a flag call
+            Binary* ss;
+            if ( (*rt)->isAssign())
                 {
-                    // Add a record in the map for this postvar
-                    transPost& el = vars[lhs];
-                    el.used = false;
-                    el.type = ((Assign*)*rt)->getType();
+                    Exp* lhs = ((Assign*)*rt)->getLeft();
+                    Exp* rhs = ((Assign*)*rt)->getRight();
 
-                    // Constuct a temporary. We should probably be smarter and actually check that it's not otherwise
-                    // used here.
-                    std::string tmpname = el.type->getTempName() + (tmpcount++) + "post" ;
-                    el.tmp = Location::tempOf(new Const((char*)tmpname.c_str()));
+                    // Look for assignments to post-variables
+                    if (lhs && lhs->isPostVar())
+                        {
+                            if ( vars.find(lhs) == vars.end() )
+                                {
+                                    // Add a record in the map for this postvar
+                                    transPost& el = vars[lhs];
+                                    el.used = false;
+                                    el.type = ((Assign*)*rt)->getType();
 
-                    // Keep a copy of the referrent. For example, if the lhs is r[0]', base is r[0]
-                    el.base = lhs->getSubExp1();
-                    el.post = lhs;	   // The whole post-var, e.g. r[0]'
-                    el.isNew = true;
+                                    // Constuct a temporary. We should probably be smarter and actually check that it's not otherwise
+                                    // used here.
+                                    std::string tmpname = el.type->getTempName() + (tmpcount++) + "post" ;
+                                    el.tmp = Location::tempOf(new Const((char*)tmpname.c_str()));
 
-                    // The emulator generator sets optimise false
-                    // I think this forces always generating the temps (MVE)
-                    if ( !optimise )
-                    {
-                        el.used = true;
-                        el.isNew = false;
-                    }
+                                    // Keep a copy of the referrent. For example, if the lhs is r[0]', base is r[0]
+                                    el.base = lhs->getSubExp1();
+                                    el.post = lhs;	   // The whole post-var, e.g. r[0]'
+                                    el.isNew = true;
 
+                                    // The emulator generator sets optimise false
+                                    // I think this forces always generating the temps (MVE)
+                                    if ( !optimise )
+                                        {
+                                            el.used = true;
+                                            el.isNew = false;
+                                        }
+
+                                }
+                        }
+                    // For an assignment, the two expressions to search are the left and right hand sides (could just put the
+                    // whole assignment on, I suppose)
+                    ss = new Binary(opList,
+                                    lhs->clone(),
+                                    new Binary(opList,
+                                               rhs->clone(),
+                                               new Terminal(opNil)));
                 }
-            }
-            // For an assignment, the two expressions to search are the left and right hand sides (could just put the
-            // whole assignment on, I suppose)
-            ss = new Binary(opList,
-                            lhs->clone(),
-                            new Binary(opList,
-                                       rhs->clone(),
-                                       new Terminal(opNil)));
-        }
-        else if ( (*rt)->isFlagAssgn())
-        {
-            // An opFlagCall is assumed to be a Binary with a string and an opList of parameters
-            ss = (Binary*) ((Binary*)*rt)->getSubExp2();
-        }
-        else
-            ss = NULL;
-
-        /* Look for usages of post-variables' referents
-         * Trickier than you'd think, as we need to make sure to skip over the post-variables themselves. ie match
-         * r[0] but not r[0]'
-         * Note: back with SemStrs, we could use a match expression which was a wildcard prepended to the base
-         * expression; this would match either the base (r[0]) or the post-var (r[0]').
-         * Can't really use this with Exps, so we search twice; once for the base, and once for the post, and if we
-         * get more with the former, then we have a use of the base (consider r[0] + r[0]')
-         */
-        for (std::map<Exp*,transPost,lessExpStar>::iterator sr = vars.begin();
-                sr != vars.end(); sr++ )
-        {
-            if ( sr->second.isNew )
-            {
-                // Make sure we don't match a var in its defining statement
-                sr->second.isNew = false;
-                continue;
-            }
-            Binary* cur;
-            for (cur = ss; !cur->isNil(); cur = (Binary*)cur->getSubExp2())
-            {
-                if ( sr->second.used )
-                    break;		// Don't bother; already know it's used
-                Exp* s = cur->getSubExp1();
-                if ( !s ) continue;
-                if ( *s == *sr->second.base )
+            else if ( (*rt)->isFlagAssgn())
                 {
-                    sr->second.used = true;
-                    break;
+                    // An opFlagCall is assumed to be a Binary with a string and an opList of parameters
+                    ss = (Binary*) ((Binary*)*rt)->getSubExp2();
                 }
-                std::list<Exp*> res1, res2;
-                s->searchAll( sr->second.base, res1 );
-                s->searchAll( sr->second.post, res2 );
-                // Each match of a post will also match the base.
-                // But if there is a bare (non-post) use of the base, there will be a result in res1 that is not in res2
-                if (res1.size() > res2.size())
-                    sr->second.used = true;
-            }
+            else
+                ss = NULL;
+
+            /* Look for usages of post-variables' referents
+             * Trickier than you'd think, as we need to make sure to skip over the post-variables themselves. ie match
+             * r[0] but not r[0]'
+             * Note: back with SemStrs, we could use a match expression which was a wildcard prepended to the base
+             * expression; this would match either the base (r[0]) or the post-var (r[0]').
+             * Can't really use this with Exps, so we search twice; once for the base, and once for the post, and if we
+             * get more with the former, then we have a use of the base (consider r[0] + r[0]')
+             */
+            for (std::map<Exp*,transPost,lessExpStar>::iterator sr = vars.begin();
+                    sr != vars.end(); sr++ )
+                {
+                    if ( sr->second.isNew )
+                        {
+                            // Make sure we don't match a var in its defining statement
+                            sr->second.isNew = false;
+                            continue;
+                        }
+                    Binary* cur;
+                    for (cur = ss; !cur->isNil(); cur = (Binary*)cur->getSubExp2())
+                        {
+                            if ( sr->second.used )
+                                break;		// Don't bother; already know it's used
+                            Exp* s = cur->getSubExp1();
+                            if ( !s ) continue;
+                            if ( *s == *sr->second.base )
+                                {
+                                    sr->second.used = true;
+                                    break;
+                                }
+                            std::list<Exp*> res1, res2;
+                            s->searchAll( sr->second.base, res1 );
+                            s->searchAll( sr->second.post, res2 );
+                            // Each match of a post will also match the base.
+                            // But if there is a bare (non-post) use of the base, there will be a result in res1 that is not in res2
+                            if (res1.size() > res2.size())
+                                sr->second.used = true;
+                        }
+                }
         }
-    }
 
     // Second pass: Replace post-variables with temporaries where needed
     for ( rt = rts->begin(); rt != rts->end(); rt++ )
-    {
-        for (std::map<Exp*,transPost,lessExpStar>::iterator sr = vars.begin();
-                sr != vars.end(); sr++ )
         {
-            if ( sr->second.used )
-            {
-                (*rt)->searchAndReplace(sr->first, sr->second.tmp);
-            }
-            else
-            {
-                (*rt)->searchAndReplace(sr->first, sr->second.base);
-            }
+            for (std::map<Exp*,transPost,lessExpStar>::iterator sr = vars.begin();
+                    sr != vars.end(); sr++ )
+                {
+                    if ( sr->second.used )
+                        {
+                            (*rt)->searchAndReplace(sr->first, sr->second.tmp);
+                        }
+                    else
+                        {
+                            (*rt)->searchAndReplace(sr->first, sr->second.base);
+                        }
+                }
         }
-    }
 
     // Finally: Append assignments where needed from temps to base vars
     // Example: esp' = esp-4; m[esp'] = modrm; FLAG(esp)
     // all the esp' are replaced with say tmp1, you need a "esp = tmp1" at the end to actually make the change
     for ( std::map<Exp*,transPost,lessExpStar>::iterator sr = vars.begin();
             sr != vars.end(); sr++ )
-    {
-        if ( sr->second.used )
         {
-            Assign* te = new Assign(sr->second.type,
-                                    sr->second.base->clone(),
-                                    sr->second.tmp);
-            rts->push_back( te );
+            if ( sr->second.used )
+                {
+                    Assign* te = new Assign(sr->second.type,
+                                            sr->second.base->clone(),
+                                            sr->second.tmp);
+                    rts->push_back( te );
+                }
+            else
+                {
+                    // The temp is either used (uncloned) in the assignment, or is deleted here
+                    //delete sr->second.tmp;
+                }
         }
-        else
-        {
-            // The temp is either used (uncloned) in the assignment, or is deleted here
-            //delete sr->second.tmp;
-        }
-    }
 
 #ifdef DEBUG_POSTVAR
     std::cout << "\nTo =>\n";
     for (std::list<Exp*>::iterator p = rts->begin(); p != rts->end(); p++)
-    {
-        std::cout << setw(8) << " ";
-        (*p)->print(std::cout);
-        std::cout << "\n";
-    }
+        {
+            std::cout << setw(8) << " ";
+            (*p)->print(std::cout);
+            std::cout << "\n";
+        }
     std::cout << "\n";
 #endif
 

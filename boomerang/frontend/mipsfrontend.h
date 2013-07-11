@@ -43,7 +43,8 @@ public:
      */
     virtual ~MIPSFrontEnd();
 
-    virtual platform getFrontEndId() {
+    virtual platform getFrontEndId()
+    {
         return PLAT_MIPS;
     }
 

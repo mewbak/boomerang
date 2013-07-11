@@ -44,10 +44,10 @@ DOS4GWBinaryFile::DOS4GWBinaryFile() : m_pFileName(0)
 DOS4GWBinaryFile::~DOS4GWBinaryFile()
 {
     for (int i = 0; i < m_iNumSections; i++)
-    {
-        if (m_pSections[i].pSectionName)
-            ; //delete [] m_pSections[i].pSectionName;
-    }
+        {
+            if (m_pSections[i].pSectionName)
+                ; //delete [] m_pSections[i].pSectionName;
+        }
     // if (m_pSections) delete [] m_pSections;
 }
 
@@ -104,50 +104,50 @@ ADDRESS DOS4GWBinaryFile::GetMainEntryPoint()
         lim = p + textSize;
 
     while (p < lim)
-    {
-        op1 = *(unsigned char*) (p + base);
-        op2 = *(unsigned char*) (p + base + 1);
-        //std::cerr << std::hex << "At " << p << ", ops " << (unsigned)op1 << ", " << (unsigned)op2 << std::dec << "\n";
-        switch (op1)
         {
-        case 0xE8:
-        {
-            // An ordinary call
-            if (gotSubEbp)
-            {
-                // This is the call we want. Get the offset from the call instruction
-                addr = nativeOrigin + p + 5 + LMMH(*(p + base + 1));
-                // std::cerr << "__CMain at " << std::hex << addr << "\n";
-                return addr;
-            }
-            lastOrdCall = p;
-            lastWasCall = true;
-            break;
+            op1 = *(unsigned char*) (p + base);
+            op2 = *(unsigned char*) (p + base + 1);
+            //std::cerr << std::hex << "At " << p << ", ops " << (unsigned)op1 << ", " << (unsigned)op2 << std::dec << "\n";
+            switch (op1)
+                {
+                case 0xE8:
+                {
+                    // An ordinary call
+                    if (gotSubEbp)
+                        {
+                            // This is the call we want. Get the offset from the call instruction
+                            addr = nativeOrigin + p + 5 + LMMH(*(p + base + 1));
+                            // std::cerr << "__CMain at " << std::hex << addr << "\n";
+                            return addr;
+                        }
+                    lastOrdCall = p;
+                    lastWasCall = true;
+                    break;
+                }
+                case 0x2B: // 0x2B 0xED is sub ebp,ebp
+                    if (op2 == 0xED && lastWasCall)
+                        gotSubEbp = true;
+                    lastWasCall = false;
+                    break;
+                default:
+                    gotSubEbp = false;
+                    lastWasCall = false;
+                    break;
+                case 0xEB: // Short relative jump
+                    if (op2 >= 0x80) // Branch backwards?
+                        break; // Yes, just ignore it
+                    // Otherwise, actually follow the branch. May have to modify this some time...
+                    p += op2 + 2; // +2 for the instruction itself, and op2 for the displacement
+                    continue; // Don't break, we have the new "pc" set already
+                }
+            int size = microX86Dis(p + base);
+            if (size == 0x40)
+                {
+                    fprintf(stderr, "Warning! Microdisassembler out of step at offset 0x%x\n", p);
+                    size = 1;
+                }
+            p += size;
         }
-        case 0x2B: // 0x2B 0xED is sub ebp,ebp
-            if (op2 == 0xED && lastWasCall)
-                gotSubEbp = true;
-            lastWasCall = false;
-            break;
-        default:
-            gotSubEbp = false;
-            lastWasCall = false;
-            break;
-        case 0xEB: // Short relative jump
-            if (op2 >= 0x80) // Branch backwards?
-                break; // Yes, just ignore it
-            // Otherwise, actually follow the branch. May have to modify this some time...
-            p += op2 + 2; // +2 for the instruction itself, and op2 for the displacement
-            continue; // Don't break, we have the new "pc" set already
-        }
-        int size = microX86Dis(p + base);
-        if (size == 0x40)
-        {
-            fprintf(stderr, "Warning! Microdisassembler out of step at offset 0x%x\n", p);
-            size = 1;
-        }
-        p += size;
-    }
     return NO_ADDRESS;
 }
 
@@ -167,10 +167,10 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
     fread(m_pLXHeader, sizeof (LXHeader), 1, fp);
 
     if (m_pLXHeader->sigLo != 'L' || (m_pLXHeader->sigHi != 'X' && m_pLXHeader->sigHi != 'E'))
-    {
-        fprintf(stderr, "error loading file %s, bad LE/LX magic\n", sName);
-        return false;
-    }
+        {
+            fprintf(stderr, "error loading file %s, bad LE/LX magic\n", sName);
+            return false;
+        }
 
     fseek(fp, lxoff + LMMH(m_pLXHeader->objtbloffset), SEEK_SET);
     m_pLXObjects = new LXObject[LMMH(m_pLXHeader->numobjsinmodule)];
@@ -182,13 +182,13 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
     unsigned npagetblentries = 0;
     m_cbImage = 0;
     for (unsigned n = 0; n < LMMH(m_pLXHeader->numobjsinmodule); n++)
-    {
-        if (LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1 > npagetblentries)
-            npagetblentries = LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1;
-        if (LMMH(m_pLXObjects[n].ObjectFlags) & 0x40)
-            if (LMMH(m_pLXObjects[n].RelocBaseAddr) + LMMH(m_pLXObjects[n].VirtualSize) > m_cbImage)
-                m_cbImage = LMMH(m_pLXObjects[n].RelocBaseAddr) + LMMH(m_pLXObjects[n].VirtualSize);
-    }
+        {
+            if (LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1 > npagetblentries)
+                npagetblentries = LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1;
+            if (LMMH(m_pLXObjects[n].ObjectFlags) & 0x40)
+                if (LMMH(m_pLXObjects[n].RelocBaseAddr) + LMMH(m_pLXObjects[n].VirtualSize) > m_cbImage)
+                    m_cbImage = LMMH(m_pLXObjects[n].RelocBaseAddr) + LMMH(m_pLXObjects[n].VirtualSize);
+        }
     m_cbImage -= LMMH(m_pLXObjects[0].RelocBaseAddr);
 
     fseek(fp, lxoff + LMMH(m_pLXHeader->objpagetbloffset), SEEK_SET);
@@ -200,11 +200,11 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
     m_cbImage = 0;
     for (unsigned n = 0; n < LMMH(m_pLXHeader->numobjsinmodule); n++)
         if (LMMH(m_pLXObjects[n].ObjectFlags) & 0x40)
-        {
-            if (LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1 > npages)
-                npages = LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1;
-            m_cbImage = LMMH(m_pLXObjects[n].RelocBaseAddr) + LMMH(m_pLXObjects[n].VirtualSize);
-        }
+            {
+                if (LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1 > npages)
+                    npages = LMMH(m_pLXObjects[n].PageTblIdx) + LMMH(m_pLXObjects[n].NumPageTblEntries) - 1;
+                m_cbImage = LMMH(m_pLXObjects[n].RelocBaseAddr) + LMMH(m_pLXObjects[n].VirtualSize);
+            }
 
     m_cbImage -= LMMH(m_pLXObjects[0].RelocBaseAddr);
 
@@ -214,27 +214,27 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
     m_pSections = new SectionInfo[m_iNumSections];
     for (unsigned n = 0; n < LMMH(m_pLXHeader->numobjsinmodule); n++)
         if (LMMH(m_pLXObjects[n].ObjectFlags) & 0x40)
-        {
-            printf("vsize %x reloc %x flags %x page %i npage %i\n",
-                   LMMH(m_pLXObjects[n].VirtualSize), LMMH(m_pLXObjects[n].RelocBaseAddr),
-                   LMMH(m_pLXObjects[n].ObjectFlags), LMMH(m_pLXObjects[n].PageTblIdx),
-                   LMMH(m_pLXObjects[n].NumPageTblEntries));
+            {
+                printf("vsize %x reloc %x flags %x page %i npage %i\n",
+                       LMMH(m_pLXObjects[n].VirtualSize), LMMH(m_pLXObjects[n].RelocBaseAddr),
+                       LMMH(m_pLXObjects[n].ObjectFlags), LMMH(m_pLXObjects[n].PageTblIdx),
+                       LMMH(m_pLXObjects[n].NumPageTblEntries));
 
-            m_pSections[n].pSectionName = new char[9];
-            sprintf(m_pSections[n].pSectionName, "seg%i", n); // no section names in LX
-            m_pSections[n].uNativeAddr = (ADDRESS) LMMH(m_pLXObjects[n].RelocBaseAddr);
-            m_pSections[n].uHostAddr = (ADDRESS) (LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr) + base);
-            m_pSections[n].uSectionSize = LMMH(m_pLXObjects[n].VirtualSize);
-            DWord Flags = LMMH(m_pLXObjects[n].ObjectFlags);
-            m_pSections[n].bBss = 0; // TODO
-            m_pSections[n].bCode = Flags & 0x4 ? 1 : 0;
-            m_pSections[n].bData = Flags & 0x4 ? 0 : 1;
-            m_pSections[n].bReadOnly = Flags & 0x1 ? 0 : 1;
+                m_pSections[n].pSectionName = new char[9];
+                sprintf(m_pSections[n].pSectionName, "seg%i", n); // no section names in LX
+                m_pSections[n].uNativeAddr = (ADDRESS) LMMH(m_pLXObjects[n].RelocBaseAddr);
+                m_pSections[n].uHostAddr = (ADDRESS) (LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr) + base);
+                m_pSections[n].uSectionSize = LMMH(m_pLXObjects[n].VirtualSize);
+                DWord Flags = LMMH(m_pLXObjects[n].ObjectFlags);
+                m_pSections[n].bBss = 0; // TODO
+                m_pSections[n].bCode = Flags & 0x4 ? 1 : 0;
+                m_pSections[n].bData = Flags & 0x4 ? 0 : 1;
+                m_pSections[n].bReadOnly = Flags & 0x1 ? 0 : 1;
 
-            fseek(fp, m_pLXHeader->datapagesoffset + (LMMH(m_pLXObjects[n].PageTblIdx) - 1) * LMMH(m_pLXHeader->pagesize), SEEK_SET);
-            char *p = base + LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr);
-            fread(p, LMMH(m_pLXObjects[n].NumPageTblEntries), LMMH(m_pLXHeader->pagesize), fp);
-        }
+                fseek(fp, m_pLXHeader->datapagesoffset + (LMMH(m_pLXObjects[n].PageTblIdx) - 1) * LMMH(m_pLXHeader->pagesize), SEEK_SET);
+                char *p = base + LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr);
+                fread(p, LMMH(m_pLXObjects[n].NumPageTblEntries), LMMH(m_pLXHeader->pagesize), fp);
+            }
 
     // TODO: decode entry tables
 
@@ -341,32 +341,32 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
     LXFixup fixup;
     unsigned srcpage = 0;
     do
-    {
-        fread(&fixup, sizeof (fixup), 1, fp);
-        if (fixup.src != 7 || (fixup.flags & ~0x50))
         {
-            fprintf(stderr, "unknown fixup type %02x %02x\n", fixup.src, fixup.flags);
-            return false;
-        }
-        //printf("srcpage = %i srcoff = %x object = %02x trgoff = %x\n", srcpage + 1, fixup.srcoff, fixup.object, fixup.trgoff);
-        unsigned long src = srcpage * LMMH(m_pLXHeader->pagesize) + (short) LMMHw(fixup.srcoff);
-        unsigned short object = 0;
-        if (fixup.flags & 0x40)
-            fread(&object, 2, 1, fp);
-        else
-            fread(&object, 1, 1, fp);
-        unsigned int trgoff = 0;
-        if (fixup.flags & 0x10)
-            fread(&trgoff, 4, 1, fp);
-        else
-            fread(&trgoff, 2, 1, fp);
-        unsigned long target = LMMH(m_pLXObjects[object - 1].RelocBaseAddr) + LMMHw(trgoff);
-        //        printf("relocate dword at %x to point to %x\n", src, target);
-        *(unsigned int *) (base + src) = target;
+            fread(&fixup, sizeof (fixup), 1, fp);
+            if (fixup.src != 7 || (fixup.flags & ~0x50))
+                {
+                    fprintf(stderr, "unknown fixup type %02x %02x\n", fixup.src, fixup.flags);
+                    return false;
+                }
+            //printf("srcpage = %i srcoff = %x object = %02x trgoff = %x\n", srcpage + 1, fixup.srcoff, fixup.object, fixup.trgoff);
+            unsigned long src = srcpage * LMMH(m_pLXHeader->pagesize) + (short) LMMHw(fixup.srcoff);
+            unsigned short object = 0;
+            if (fixup.flags & 0x40)
+                fread(&object, 2, 1, fp);
+            else
+                fread(&object, 1, 1, fp);
+            unsigned int trgoff = 0;
+            if (fixup.flags & 0x10)
+                fread(&trgoff, 4, 1, fp);
+            else
+                fread(&trgoff, 2, 1, fp);
+            unsigned long target = LMMH(m_pLXObjects[object - 1].RelocBaseAddr) + LMMHw(trgoff);
+            //        printf("relocate dword at %x to point to %x\n", src, target);
+            *(unsigned int *) (base + src) = target;
 
-        while (ftell(fp) - (LMMH(m_pLXHeader->fixuprecordtbloffset) + lxoff) >= LMMH(fixuppagetbl[srcpage + 1]))
-            srcpage++;
-    }
+            while (ftell(fp) - (LMMH(m_pLXHeader->fixuprecordtbloffset) + lxoff) >= LMMH(fixuppagetbl[srcpage + 1]))
+                srcpage++;
+        }
     while (srcpage < npages);
 
     fclose(fp);
@@ -407,12 +407,12 @@ ADDRESS DOS4GWBinaryFile::GetAddressByName(const char* pName,
     // Use linear search
     std::map<ADDRESS, std::string>::iterator it = dlprocptrs.begin();
     while (it != dlprocptrs.end())
-    {
-        // std::cerr << "Symbol: " << it->second.c_str() << " at 0x" << std::hex << it->first << "\n";
-        if (strcmp(it->second.c_str(), pName) == 0)
-            return it->first;
-        it++;
-    }
+        {
+            // std::cerr << "Symbol: " << it->second.c_str() << " at 0x" << std::hex << it->first << "\n";
+            if (strcmp(it->second.c_str(), pName) == 0)
+                return it->first;
+            it++;
+        }
     return NO_ADDRESS;
 }
 

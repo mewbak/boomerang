@@ -62,7 +62,8 @@ NJMCDecoder::NJMCDecoder(Prog* prog) : prog(prog)
  *				   ... - Semantic String ptrs representing actual operands
  * RETURNS:		   an instantiated list of Exps
  *============================================================================*/
-std::list<Statement*>* NJMCDecoder::instantiate(ADDRESS pc, const char* name, ...) {
+std::list<Statement*>* NJMCDecoder::instantiate(ADDRESS pc, const char* name, ...)
+{
     // Get the signature of the instruction and extract its parts
     std::pair<std::string,unsigned> sig = RTLDict.getSignature(name);
     std::string opcode = sig.first;
@@ -76,23 +77,27 @@ std::list<Statement*>* NJMCDecoder::instantiate(ADDRESS pc, const char* name, ..
         actuals[i] = va_arg(args,Exp*);
     va_end(args);
 
-    if (DEBUG_DECODER) {
-        // Display a disassembly of this instruction if requested
-        std::cout << std::hex << pc << std::dec << ": " << name << " ";
-        for (std::vector<Exp*>::iterator itd = actuals.begin(); itd != actuals.end(); itd++) {
-            if ((*itd)->isIntConst()) {
-                int val = ((Const*)(*itd))->getInt();
-                if (val > 100 || val < -100)
-                    std::cout << std::hex << "0x" << val << std::dec;
-                else
-                    std::cout << val;
-            } else
-                (*itd)->print(std::cout);
-            if (itd != actuals.end()-1)
-                std::cout << ", ";
+    if (DEBUG_DECODER)
+        {
+            // Display a disassembly of this instruction if requested
+            std::cout << std::hex << pc << std::dec << ": " << name << " ";
+            for (std::vector<Exp*>::iterator itd = actuals.begin(); itd != actuals.end(); itd++)
+                {
+                    if ((*itd)->isIntConst())
+                        {
+                            int val = ((Const*)(*itd))->getInt();
+                            if (val > 100 || val < -100)
+                                std::cout << std::hex << "0x" << val << std::dec;
+                            else
+                                std::cout << val;
+                        }
+                    else
+                        (*itd)->print(std::cout);
+                    if (itd != actuals.end()-1)
+                        std::cout << ", ";
+                }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
-    }
 
     std::list<Statement*>* instance = RTLDict.instantiateRTL(opcode, pc, actuals);
 
@@ -108,30 +113,34 @@ std::list<Statement*>* NJMCDecoder::instantiate(ADDRESS pc, const char* name, ..
  *				   ... - Exp* representing actual operands
  * RETURNS:		   an instantiated list of Exps
  *============================================================================*/
-Exp* NJMCDecoder::instantiateNamedParam(char* name, ...) {
-    if (RTLDict.ParamSet.find(name) == RTLDict.ParamSet.end()) {
-        std::cerr << "No entry for named parameter '" << name << "'\n";
-        return 0;
-    }
+Exp* NJMCDecoder::instantiateNamedParam(char* name, ...)
+{
+    if (RTLDict.ParamSet.find(name) == RTLDict.ParamSet.end())
+        {
+            std::cerr << "No entry for named parameter '" << name << "'\n";
+            return 0;
+        }
     assert(RTLDict.DetParamMap.find(name) != RTLDict.DetParamMap.end());
     ParamEntry &ent = RTLDict.DetParamMap[name];
-    if (ent.kind != PARAM_ASGN && ent.kind != PARAM_LAMBDA ) {
-        std::cerr << "Attempt to instantiate expressionless parameter '" << name << "'\n";
-        return 0;
-    }
+    if (ent.kind != PARAM_ASGN && ent.kind != PARAM_LAMBDA )
+        {
+            std::cerr << "Attempt to instantiate expressionless parameter '" << name << "'\n";
+            return 0;
+        }
     // Start with the RHS
     assert(ent.asgn->getKind() == STMT_ASSIGN);
     Exp* result = ((Assign*)ent.asgn)->getRight()->clone();
 
     va_list args;
     va_start(args,name);
-    for( std::list<std::string>::iterator it = ent.params.begin(); it != ent.params.end(); it++ ) {
-        Exp* formal = new Location(opParam, new Const((char*)it->c_str()), NULL);
-        Exp* actual = va_arg(args, Exp*);
-        bool change;
-        result = result->searchReplaceAll(formal, actual, change);
-        delete formal;
-    }
+    for( std::list<std::string>::iterator it = ent.params.begin(); it != ent.params.end(); it++ )
+        {
+            Exp* formal = new Location(opParam, new Const((char*)it->c_str()), NULL);
+            Exp* actual = va_arg(args, Exp*);
+            bool change;
+            result = result->searchReplaceAll(formal, actual, change);
+            delete formal;
+        }
     return result;
 }
 
@@ -149,10 +158,11 @@ Exp* NJMCDecoder::instantiateNamedParam(char* name, ...) {
  *============================================================================*/
 void NJMCDecoder::substituteCallArgs(char *name, Exp*& exp, ...)
 {
-    if (RTLDict.ParamSet.find(name) == RTLDict.ParamSet.end()) {
-        std::cerr << "No entry for named parameter '" << name << "'\n";
-        return;
-    }
+    if (RTLDict.ParamSet.find(name) == RTLDict.ParamSet.end())
+        {
+            std::cerr << "No entry for named parameter '" << name << "'\n";
+            return;
+        }
     ParamEntry &ent = RTLDict.DetParamMap[name];
     /*if (ent.kind != PARAM_ASGN && ent.kind != PARAM_LAMBDA) {
     	std::cerr << "Attempt to instantiate expressionless parameter '" << name << "'\n";
@@ -161,13 +171,14 @@ void NJMCDecoder::substituteCallArgs(char *name, Exp*& exp, ...)
 
     va_list args;
     va_start(args, exp);
-    for (std::list<std::string>::iterator it = ent.funcParams.begin(); it != ent.funcParams.end(); it++) {
-        Exp* formal = new Location(opParam, new Const((char*)it->c_str()), NULL);
-        Exp* actual = va_arg(args, Exp*);
-        bool change;
-        exp = exp->searchReplaceAll(formal, actual, change);
-        delete formal;
-    }
+    for (std::list<std::string>::iterator it = ent.funcParams.begin(); it != ent.funcParams.end(); it++)
+        {
+            Exp* formal = new Location(opParam, new Const((char*)it->c_str()), NULL);
+            Exp* actual = va_arg(args, Exp*);
+            bool change;
+            exp = exp->searchReplaceAll(formal, actual, change);
+            delete formal;
+        }
 }
 
 /*==============================================================================
@@ -223,7 +234,8 @@ Exp* NJMCDecoder::dis_Num(unsigned num)
  * RETURNS:			<none>
  *============================================================================*/
 void NJMCDecoder::unconditionalJump(const char* name, int size, ADDRESS relocd, int delta, ADDRESS pc,
-                                    std::list<Statement*>* stmts, DecodeResult& result) {
+                                    std::list<Statement*>* stmts, DecodeResult& result)
+{
     result.rtl = new RTL(pc, stmts);
     result.numBytes = size;
     GotoStatement* jump = new GotoStatement();
@@ -244,7 +256,8 @@ void NJMCDecoder::unconditionalJump(const char* name, int size, ADDRESS relocd, 
  * RETURNS:			<none>
  *============================================================================*/
 void NJMCDecoder::computedJump(const char* name, int size, Exp* dest, ADDRESS pc, std::list<Statement*>* stmts,
-                               DecodeResult& result) {
+                               DecodeResult& result)
+{
     result.rtl = new RTL(pc, stmts);
     result.numBytes = size;
     GotoStatement* jump = new GotoStatement();
@@ -266,7 +279,8 @@ void NJMCDecoder::computedJump(const char* name, int size, Exp* dest, ADDRESS pc
  * RETURNS:			<none>
  *============================================================================*/
 void NJMCDecoder::computedCall(const char* name, int size, Exp* dest, ADDRESS pc, std::list<Statement*>* stmts,
-                               DecodeResult& result) {
+                               DecodeResult& result)
+{
     result.rtl = new RTL(pc, stmts);
     result.numBytes = size;
     CallStatement* call = new CallStatement();

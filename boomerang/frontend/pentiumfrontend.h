@@ -23,7 +23,8 @@ public:
 
     virtual 			~PentiumFrontEnd();
 
-    virtual platform	getFrontEndId() {
+    virtual platform	getFrontEndId()
+    {
         return PLAT_PENTIUM;
     }
 

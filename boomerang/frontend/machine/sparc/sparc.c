@@ -50,16 +50,20 @@ int debug;
 
 #define ADDROF(x) ( (uint32_t)(((char *)&x) - mem) )
 
-static inline sint32_t float32ToSint32( float32_t f ) {
+static inline sint32_t float32ToSint32( float32_t f )
+{
     return *((sint32_t *)&f);
 }
-static inline sint64_t float64ToSint64( float64_t f ) {
+static inline sint64_t float64ToSint64( float64_t f )
+{
     return *((sint64_t *)&f);
 }
-static inline float32_t sint32ToFloat32( sint32_t i ) {
+static inline float32_t sint32ToFloat32( sint32_t i )
+{
     return *((float32_t *)&i);
 }
-static inline float64_t sint64ToFloat64( sint64_t i ) {
+static inline float64_t sint64ToFloat64( sint64_t i )
+{
     return *((float64_t *)&i);
 }
 
@@ -120,29 +124,34 @@ sint32_t disassembleaddress_( int pc, char * buf, size_t buflen, char ** opname 
 {
     sint32_t nextPC;
     match [nextPC] pc to
-    | "dispA" (rs1, simm13) => {
+    | "dispA" (rs1, simm13) =>
+    {
         char tmp2[15];
         IMMEDTOSTRING( tmp2, simm13, 15 );
         snprintf( buf, buflen, "%s + %s", rs1Names[rs1], tmp2);
         if( opname ) *opname = "dispA";
     }
-    | "absoluteA" (simm13) => {
+    | "absoluteA" (simm13) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, simm13, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "absoluteA";
     }
-    | "indexA" (rs1, rs2) => {
+    | "indexA" (rs1, rs2) =>
+    {
         snprintf( buf, buflen, "%s + %s", rs1Names[rs1], rs2Names[rs2]);
         if( opname ) *opname = "indexA";
     }
-    | "indirectA" (rs1) => {
+    | "indirectA" (rs1) =>
+    {
         snprintf( buf, buflen, "%s", rs1Names[rs1]);
         if( opname ) *opname = "indirectA";
     }
-    else {
-        BADOPCODE(pc);
-    };
+    else
+        {
+            BADOPCODE(pc);
+        };
     endmatch
     return nextPC;
 }
@@ -150,19 +159,22 @@ sint32_t disassemblereg_or_imm( int pc, char * buf, size_t buflen, char ** opnam
 {
     sint32_t nextPC;
     match [nextPC] pc to
-    | "imode" (simm13) => {
+    | "imode" (simm13) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, simm13, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "imode";
     }
-    | "rmode" (rs2) => {
+    | "rmode" (rs2) =>
+    {
         snprintf( buf, buflen, "%s", rs2Names[rs2]);
         if( opname ) *opname = "rmode";
     }
-    else {
-        BADOPCODE(pc);
-    };
+    else
+        {
+            BADOPCODE(pc);
+        };
     endmatch
     return nextPC;
 }
@@ -170,17 +182,20 @@ sint32_t disassembleregaddr( int pc, char * buf, size_t buflen, char ** opname )
 {
     sint32_t nextPC;
     match [nextPC] pc to
-    | "indexR" (rs1, rs2) => {
+    | "indexR" (rs1, rs2) =>
+    {
         snprintf( buf, buflen, "%s + %s", rs1Names[rs1], rs2Names[rs2]);
         if( opname ) *opname = "indexR";
     }
-    | "indirectR" (rs1) => {
+    | "indirectR" (rs1) =>
+    {
         snprintf( buf, buflen, "%s", rs1Names[rs1]);
         if( opname ) *opname = "indirectR";
     }
-    else {
-        BADOPCODE(pc);
-    };
+    else
+        {
+            BADOPCODE(pc);
+        };
     endmatch
     return nextPC;
 }
@@ -190,19 +205,22 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
 {
     sint32_t nextPC;
     match [nextPC] pc to
-    | "ADD" (rs1, reg_or_imm, rd) => {
+    | "ADD" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ADD";
     }
-    | "ADDX" (rs1, reg_or_imm, rd) => {
+    | "ADDX" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ADDX";
     }
-    | "WRASR" (rs1, reg_or_imm, rdi) => {
+    | "WRASR" (rs1, reg_or_imm, rdi) =>
+    {
         char tmp2[7];
         char tmp3[15];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
@@ -210,795 +228,940 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "%s, %s, %%asr%s", rs1Names[rs1], tmp2, tmp3);
         if( opname ) *opname = "WRASR";
     }
-    | "WRY" (rs1, reg_or_imm) => {
+    | "WRY" (rs1, reg_or_imm) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %%y", rs1Names[rs1], tmp2);
         if( opname ) *opname = "WRY";
     }
-    | "ADDXcc" (rs1, reg_or_imm, rd) => {
+    | "ADDXcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ADDXcc";
     }
-    | "ADDcc" (rs1, reg_or_imm, rd) => {
+    | "ADDcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ADDcc";
     }
-    | "AND" (rs1, reg_or_imm, rd) => {
+    | "AND" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "AND";
     }
-    | "ANDN" (rs1, reg_or_imm, rd) => {
+    | "ANDN" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ANDN";
     }
-    | "ANDNcc" (rs1, reg_or_imm, rd) => {
+    | "ANDNcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ANDNcc";
     }
-    | "ANDcc" (rs1, reg_or_imm, rd) => {
+    | "ANDcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ANDcc";
     }
-    | "BA" (reloc) => {
+    | "BA" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BA";
     }
-    | "BA,a" (reloc) => {
+    | "BA,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BA,a";
     }
-    | "BCC" (reloc) => {
+    | "BCC" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BCC";
     }
-    | "BCC,a" (reloc) => {
+    | "BCC,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BCC,a";
     }
-    | "BCS" (reloc) => {
+    | "BCS" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BCS";
     }
-    | "BCS,a" (reloc) => {
+    | "BCS,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BCS,a";
     }
-    | "BE" (reloc) => {
+    | "BE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BE";
     }
-    | "BE,a" (reloc) => {
+    | "BE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BE,a";
     }
-    | "BG" (reloc) => {
+    | "BG" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BG";
     }
-    | "BG,a" (reloc) => {
+    | "BG,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BG,a";
     }
-    | "BGE" (reloc) => {
+    | "BGE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BGE";
     }
-    | "BGE,a" (reloc) => {
+    | "BGE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BGE,a";
     }
-    | "BGU" (reloc) => {
+    | "BGU" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BGU";
     }
-    | "BGU,a" (reloc) => {
+    | "BGU,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BGU,a";
     }
-    | "BL" (reloc) => {
+    | "BL" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BL";
     }
-    | "BL,a" (reloc) => {
+    | "BL,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BL,a";
     }
-    | "BLE" (reloc) => {
+    | "BLE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BLE";
     }
-    | "BLE,a" (reloc) => {
+    | "BLE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BLE,a";
     }
-    | "BLEU" (reloc) => {
+    | "BLEU" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BLEU";
     }
-    | "BLEU,a" (reloc) => {
+    | "BLEU,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BLEU,a";
     }
-    | "BN" (reloc) => {
+    | "BN" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BN";
     }
-    | "BN,a" (reloc) => {
+    | "BN,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BN,a";
     }
-    | "BNE" (reloc) => {
+    | "BNE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BNE";
     }
-    | "BNE,a" (reloc) => {
+    | "BNE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BNE,a";
     }
-    | "BNEG" (reloc) => {
+    | "BNEG" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BNEG";
     }
-    | "BNEG,a" (reloc) => {
+    | "BNEG,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BNEG,a";
     }
-    | "BPOS" (reloc) => {
+    | "BPOS" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BPOS";
     }
-    | "BPOS,a" (reloc) => {
+    | "BPOS,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BPOS,a";
     }
-    | "BVC" (reloc) => {
+    | "BVC" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BVC";
     }
-    | "BVC,a" (reloc) => {
+    | "BVC,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BVC,a";
     }
-    | "BVS" (reloc) => {
+    | "BVS" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BVS";
     }
-    | "BVS,a" (reloc) => {
+    | "BVS,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "BVS,a";
     }
-    | "CB0" (reloc) => {
+    | "CB0" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB0";
     }
-    | "CB0,a" (reloc) => {
+    | "CB0,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB0,a";
     }
-    | "CB01" (reloc) => {
+    | "CB01" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB01";
     }
-    | "CB01,a" (reloc) => {
+    | "CB01,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB01,a";
     }
-    | "CB012" (reloc) => {
+    | "CB012" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB012";
     }
-    | "CB012,a" (reloc) => {
+    | "CB012,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB012,a";
     }
-    | "CB013" (reloc) => {
+    | "CB013" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB013";
     }
-    | "CB013,a" (reloc) => {
+    | "CB013,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB013,a";
     }
-    | "CB02" (reloc) => {
+    | "CB02" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB02";
     }
-    | "CB02,a" (reloc) => {
+    | "CB02,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB02,a";
     }
-    | "CB023" (reloc) => {
+    | "CB023" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB023";
     }
-    | "CB023,a" (reloc) => {
+    | "CB023,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB023,a";
     }
-    | "CB03" (reloc) => {
+    | "CB03" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB03";
     }
-    | "CB03,a" (reloc) => {
+    | "CB03,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB03,a";
     }
-    | "CB1" (reloc) => {
+    | "CB1" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB1";
     }
-    | "CB1,a" (reloc) => {
+    | "CB1,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB1,a";
     }
-    | "CB12" (reloc) => {
+    | "CB12" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB12";
     }
-    | "CB12,a" (reloc) => {
+    | "CB12,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB12,a";
     }
-    | "CB123" (reloc) => {
+    | "CB123" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB123";
     }
-    | "CB123,a" (reloc) => {
+    | "CB123,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB123,a";
     }
-    | "CB13" (reloc) => {
+    | "CB13" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB13";
     }
-    | "CB13,a" (reloc) => {
+    | "CB13,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB13,a";
     }
-    | "CB2" (reloc) => {
+    | "CB2" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB2";
     }
-    | "CB2,a" (reloc) => {
+    | "CB2,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB2,a";
     }
-    | "CB23" (reloc) => {
+    | "CB23" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB23";
     }
-    | "CB23,a" (reloc) => {
+    | "CB23,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB23,a";
     }
-    | "CB3" (reloc) => {
+    | "CB3" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB3";
     }
-    | "CB3,a" (reloc) => {
+    | "CB3,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CB3,a";
     }
-    | "CBA" (reloc) => {
+    | "CBA" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CBA";
     }
-    | "CBA,a" (reloc) => {
+    | "CBA,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CBA,a";
     }
-    | "CBN" (reloc) => {
+    | "CBN" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CBN";
     }
-    | "CBN,a" (reloc) => {
+    | "CBN,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "CBN,a";
     }
-    | "FABSs" (fs2s, fds) => {
+    | "FABSs" (fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FABSs";
     }
-    | "FADDd" (fs1d, fs2d, fdd) => {
+    | "FADDd" (fs1d, fs2d, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1dNames[fs1d], fs2dNames[fs2d], fddNames[fdd]);
         if( opname ) *opname = "FADDd";
     }
-    | "FADDq" (fs1q, fs2q, fdq) => {
+    | "FADDq" (fs1q, fs2q, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1qNames[fs1q], fs2qNames[fs2q], fdqNames[fdq]);
         if( opname ) *opname = "FADDq";
     }
-    | "FADDs" (fs1s, fs2s, fds) => {
+    | "FADDs" (fs1s, fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1sNames[fs1s], fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FADDs";
     }
-    | "FBA" (reloc) => {
+    | "FBA" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBA";
     }
-    | "FBA,a" (reloc) => {
+    | "FBA,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBA,a";
     }
-    | "FBE" (reloc) => {
+    | "FBE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBE";
     }
-    | "FBE,a" (reloc) => {
+    | "FBE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBE,a";
     }
-    | "FBG" (reloc) => {
+    | "FBG" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBG";
     }
-    | "FBG,a" (reloc) => {
+    | "FBG,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBG,a";
     }
-    | "FBGE" (reloc) => {
+    | "FBGE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBGE";
     }
-    | "FBGE,a" (reloc) => {
+    | "FBGE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBGE,a";
     }
-    | "FBL" (reloc) => {
+    | "FBL" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBL";
     }
-    | "FBL,a" (reloc) => {
+    | "FBL,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBL,a";
     }
-    | "FBLE" (reloc) => {
+    | "FBLE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBLE";
     }
-    | "FBLE,a" (reloc) => {
+    | "FBLE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBLE,a";
     }
-    | "FBLG" (reloc) => {
+    | "FBLG" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBLG";
     }
-    | "FBLG,a" (reloc) => {
+    | "FBLG,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBLG,a";
     }
-    | "FBN" (reloc) => {
+    | "FBN" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBN";
     }
-    | "FBN,a" (reloc) => {
+    | "FBN,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBN,a";
     }
-    | "FBNE" (reloc) => {
+    | "FBNE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBNE";
     }
-    | "FBNE,a" (reloc) => {
+    | "FBNE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBNE,a";
     }
-    | "FBO" (reloc) => {
+    | "FBO" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBO";
     }
-    | "FBO,a" (reloc) => {
+    | "FBO,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBO,a";
     }
-    | "FBU" (reloc) => {
+    | "FBU" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBU";
     }
-    | "FBU,a" (reloc) => {
+    | "FBU,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBU,a";
     }
-    | "FBUE" (reloc) => {
+    | "FBUE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUE";
     }
-    | "FBUE,a" (reloc) => {
+    | "FBUE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUE,a";
     }
-    | "FBUG" (reloc) => {
+    | "FBUG" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUG";
     }
-    | "FBUG,a" (reloc) => {
+    | "FBUG,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUG,a";
     }
-    | "FBUGE" (reloc) => {
+    | "FBUGE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUGE";
     }
-    | "FBUGE,a" (reloc) => {
+    | "FBUGE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUGE,a";
     }
-    | "FBUL" (reloc) => {
+    | "FBUL" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUL";
     }
-    | "FBUL,a" (reloc) => {
+    | "FBUL,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBUL,a";
     }
-    | "FBULE" (reloc) => {
+    | "FBULE" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBULE";
     }
-    | "FBULE,a" (reloc) => {
+    | "FBULE,a" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FBULE,a";
     }
-    | "FCMPEd" (fs1d, fs2d) => {
+    | "FCMPEd" (fs1d, fs2d) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs1dNames[fs1d], fs2dNames[fs2d]);
         if( opname ) *opname = "FCMPEd";
     }
-    | "FCMPEq" (fs1q, fs2q) => {
+    | "FCMPEq" (fs1q, fs2q) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs1qNames[fs1q], fs2qNames[fs2q]);
         if( opname ) *opname = "FCMPEq";
     }
-    | "FCMPEs" (fs1s, fs2s) => {
+    | "FCMPEs" (fs1s, fs2s) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs1sNames[fs1s], fs2sNames[fs2s]);
         if( opname ) *opname = "FCMPEs";
     }
-    | "FCMPd" (fs1d, fs2d) => {
+    | "FCMPd" (fs1d, fs2d) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs1dNames[fs1d], fs2dNames[fs2d]);
         if( opname ) *opname = "FCMPd";
     }
-    | "FCMPq" (fs1q, fs2q) => {
+    | "FCMPq" (fs1q, fs2q) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs1qNames[fs1q], fs2qNames[fs2q]);
         if( opname ) *opname = "FCMPq";
     }
-    | "FCMPs" (fs1s, fs2s) => {
+    | "FCMPs" (fs1s, fs2s) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs1sNames[fs1s], fs2sNames[fs2s]);
         if( opname ) *opname = "FCMPs";
     }
-    | "FDIVd" (fs1d, fs2d, fdd) => {
+    | "FDIVd" (fs1d, fs2d, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1dNames[fs1d], fs2dNames[fs2d], fddNames[fdd]);
         if( opname ) *opname = "FDIVd";
     }
-    | "FDIVq" (fs1q, fs2q, fdq) => {
+    | "FDIVq" (fs1q, fs2q, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1qNames[fs1q], fs2qNames[fs2q], fdqNames[fdq]);
         if( opname ) *opname = "FDIVq";
     }
-    | "FDIVs" (fs1s, fs2s, fds) => {
+    | "FDIVs" (fs1s, fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1sNames[fs1s], fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FDIVs";
     }
-    | "FLUSH" (address_) => {
+    | "FLUSH" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "FLUSH";
     }
-    | "FMOVs" (fs2s, fds) => {
+    | "FMOVs" (fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FMOVs";
     }
-    | "FMULd" (fs1d, fs2d, fdd) => {
+    | "FMULd" (fs1d, fs2d, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1dNames[fs1d], fs2dNames[fs2d], fddNames[fdd]);
         if( opname ) *opname = "FMULd";
     }
-    | "FMULq" (fs1q, fs2q, fdq) => {
+    | "FMULq" (fs1q, fs2q, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1qNames[fs1q], fs2qNames[fs2q], fdqNames[fdq]);
         if( opname ) *opname = "FMULq";
     }
-    | "FMULs" (fs1s, fs2s, fds) => {
+    | "FMULs" (fs1s, fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1sNames[fs1s], fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FMULs";
     }
-    | "FNEGs" (fs2s, fds) => {
+    | "FNEGs" (fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FNEGs";
     }
-    | "FSQRTd" (fs2d, fdd) => {
+    | "FSQRTd" (fs2d, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2dNames[fs2d], fddNames[fdd]);
         if( opname ) *opname = "FSQRTd";
     }
-    | "FSQRTq" (fs2q, fdq) => {
+    | "FSQRTq" (fs2q, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2qNames[fs2q], fdqNames[fdq]);
         if( opname ) *opname = "FSQRTq";
     }
-    | "FSQRTs" (fs2s, fds) => {
+    | "FSQRTs" (fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FSQRTs";
     }
-    | "FSUBd" (fs1d, fs2d, fdd) => {
+    | "FSUBd" (fs1d, fs2d, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1dNames[fs1d], fs2dNames[fs2d], fddNames[fdd]);
         if( opname ) *opname = "FSUBd";
     }
-    | "FSUBq" (fs1q, fs2q, fdq) => {
+    | "FSUBq" (fs1q, fs2q, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1qNames[fs1q], fs2qNames[fs2q], fdqNames[fdq]);
         if( opname ) *opname = "FSUBq";
     }
-    | "FSUBs" (fs1s, fs2s, fds) => {
+    | "FSUBs" (fs1s, fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1sNames[fs1s], fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FSUBs";
     }
-    | "FdMULq" (fs1q, fs2q, fdq) => {
+    | "FdMULq" (fs1q, fs2q, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1qNames[fs1q], fs2qNames[fs2q], fdqNames[fdq]);
         if( opname ) *opname = "FdMULq";
     }
-    | "FdTOi" (fs2d, fds) => {
+    | "FdTOi" (fs2d, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2dNames[fs2d], fdsNames[fds]);
         if( opname ) *opname = "FdTOi";
     }
-    | "FdTOq" (fs2d, fdq) => {
+    | "FdTOq" (fs2d, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2dNames[fs2d], fdqNames[fdq]);
         if( opname ) *opname = "FdTOq";
     }
-    | "FdTOs" (fs2d, fds) => {
+    | "FdTOs" (fs2d, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2dNames[fs2d], fdsNames[fds]);
         if( opname ) *opname = "FdTOs";
     }
-    | "FiTOd" (fs2s, fdd) => {
+    | "FiTOd" (fs2s, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fddNames[fdd]);
         if( opname ) *opname = "FiTOd";
     }
-    | "FiTOq" (fs2s, fdq) => {
+    | "FiTOq" (fs2s, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdqNames[fdq]);
         if( opname ) *opname = "FiTOq";
     }
-    | "FiTOs" (fs2s, fds) => {
+    | "FiTOs" (fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FiTOs";
     }
-    | "FqTOd" (fs2q, fdd) => {
+    | "FqTOd" (fs2q, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2qNames[fs2q], fddNames[fdd]);
         if( opname ) *opname = "FqTOd";
     }
-    | "FqTOi" (fs2q, fds) => {
+    | "FqTOi" (fs2q, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2qNames[fs2q], fdsNames[fds]);
         if( opname ) *opname = "FqTOi";
     }
-    | "FqTOs" (fs2q, fds) => {
+    | "FqTOs" (fs2q, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2qNames[fs2q], fdsNames[fds]);
         if( opname ) *opname = "FqTOs";
     }
-    | "FsMULd" (fs1d, fs2d, fdd) => {
+    | "FsMULd" (fs1d, fs2d, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s, %s", fs1dNames[fs1d], fs2dNames[fs2d], fddNames[fdd]);
         if( opname ) *opname = "FsMULd";
     }
-    | "FsTOd" (fs2s, fdd) => {
+    | "FsTOd" (fs2s, fdd) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fddNames[fdd]);
         if( opname ) *opname = "FsTOd";
     }
-    | "FsTOi" (fs2s, fds) => {
+    | "FsTOi" (fs2s, fds) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdsNames[fds]);
         if( opname ) *opname = "FsTOi";
     }
-    | "FsTOq" (fs2s, fdq) => {
+    | "FsTOq" (fs2s, fdq) =>
+    {
         snprintf( buf, buflen, "%s, %s", fs2sNames[fs2s], fdqNames[fdq]);
         if( opname ) *opname = "FsTOq";
     }
-    | "JMPL" (address_, rd) => {
+    | "JMPL" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s, %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "JMPL";
     }
-    | "LD" (address_, rd) => {
+    | "LD" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "LD";
     }
-    | "LDA" (regaddr, asi, rd) => {
+    | "LDA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1006,25 +1169,29 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "LDA";
     }
-    | "LDC" (address_, cd) => {
+    | "LDC" (address_, cd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, cdNames[cd]);
         if( opname ) *opname = "LDC";
     }
-    | "LDCSR" (address_) => {
+    | "LDCSR" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %%csr", tmp1);
         if( opname ) *opname = "LDCSR";
     }
-    | "LDD" (address_, rd) => {
+    | "LDD" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "LDD";
     }
-    | "LDDA" (regaddr, asi, rd) => {
+    | "LDDA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1032,37 +1199,43 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "LDDA";
     }
-    | "LDDC" (address_, cd) => {
+    | "LDDC" (address_, cd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, cdNames[cd]);
         if( opname ) *opname = "LDDC";
     }
-    | "LDDF" (address_, fdd) => {
+    | "LDDF" (address_, fdd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, fddNames[fdd]);
         if( opname ) *opname = "LDDF";
     }
-    | "LDF" (address_, fds) => {
+    | "LDF" (address_, fds) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, fdsNames[fds]);
         if( opname ) *opname = "LDF";
     }
-    | "LDFSR" (address_) => {
+    | "LDFSR" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %%fsr", tmp1);
         if( opname ) *opname = "LDFSR";
     }
-    | "LDSB" (address_, rd) => {
+    | "LDSB" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "LDSB";
     }
-    | "LDSBA" (regaddr, asi, rd) => {
+    | "LDSBA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1070,13 +1243,15 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "LDSBA";
     }
-    | "LDSH" (address_, rd) => {
+    | "LDSH" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "LDSH";
     }
-    | "LDSHA" (regaddr, asi, rd) => {
+    | "LDSHA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1084,13 +1259,15 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "LDSHA";
     }
-    | "LDSTUB" (address_, rd) => {
+    | "LDSTUB" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "LDSTUB";
     }
-    | "LDSTUBA" (regaddr, asi, rd) => {
+    | "LDSTUBA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1098,13 +1275,15 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "LDSTUBA";
     }
-    | "LDUB" (address_, rd) => {
+    | "LDUB" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "LDUB";
     }
-    | "LDUBA" (regaddr, asi, rd) => {
+    | "LDUBA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1112,13 +1291,15 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "LDUBA";
     }
-    | "LDUH" (address_, rd) => {
+    | "LDUH" (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "LDUH";
     }
-    | "LDUHA" (regaddr, asi, rd) => {
+    | "LDUHA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1126,129 +1307,152 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "LDUHA";
     }
-    | "MULScc" (rs1, reg_or_imm, rd) => {
+    | "MULScc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "MULScc";
     }
-    | "NOP" () => {
+    | "NOP" () =>
+    {
         buf[0] = '\0';
         if( opname ) *opname = "NOP";
     }
-    | "OR" (rs1, reg_or_imm, rd) => {
+    | "OR" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "OR";
     }
-    | "ORN" (rs1, reg_or_imm, rd) => {
+    | "ORN" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ORN";
     }
-    | "ORNcc" (rs1, reg_or_imm, rd) => {
+    | "ORNcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ORNcc";
     }
-    | "ORcc" (rs1, reg_or_imm, rd) => {
+    | "ORcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "ORcc";
     }
-    | "RDASR" (rs1i, rd) => {
+    | "RDASR" (rs1i, rd) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, rs1i, 15 );
         snprintf( buf, buflen, "%%asr%s, %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "RDASR";
     }
-    | "RDPSR" (rd) => {
+    | "RDPSR" (rd) =>
+    {
         snprintf( buf, buflen, "%%psr, %s", rdNames[rd]);
         if( opname ) *opname = "RDPSR";
     }
-    | "RDTBR" (rd) => {
+    | "RDTBR" (rd) =>
+    {
         snprintf( buf, buflen, "%%tbr, %s", rdNames[rd]);
         if( opname ) *opname = "RDTBR";
     }
-    | "RDWIM" (rd) => {
+    | "RDWIM" (rd) =>
+    {
         snprintf( buf, buflen, "%%wim, %s", rdNames[rd]);
         if( opname ) *opname = "RDWIM";
     }
-    | "RDY" (rd) => {
+    | "RDY" (rd) =>
+    {
         snprintf( buf, buflen, "%%y,   %s", rdNames[rd]);
         if( opname ) *opname = "RDY";
     }
-    | "RESTORE" (rs1, reg_or_imm, rd) => {
+    | "RESTORE" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "RESTORE";
     }
-    | "RETT" (address_) => {
+    | "RETT" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "RETT";
     }
-    | "SAVE" (rs1, reg_or_imm, rd) => {
+    | "SAVE" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SAVE";
     }
-    | "SDIV" (rs1, reg_or_imm, rd) => {
+    | "SDIV" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SDIV";
     }
-    | "SDIVcc" (rs1, reg_or_imm, rd) => {
+    | "SDIVcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SDIVcc";
     }
-    | "SLL" (rs1, reg_or_imm, rd) => {
+    | "SLL" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SLL";
     }
-    | "SMUL" (rs1, reg_or_imm, rd) => {
+    | "SMUL" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SMUL";
     }
-    | "SMULcc" (rs1, reg_or_imm, rd) => {
+    | "SMULcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SMULcc";
     }
-    | "SRA" (rs1, reg_or_imm, rd) => {
+    | "SRA" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SRA";
     }
-    | "SRL" (rs1, reg_or_imm, rd) => {
+    | "SRL" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SRL";
     }
-    | "ST" (rd, address_) => {
+    | "ST" (rd, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", rdNames[rd], tmp2);
         if( opname ) *opname = "ST";
     }
-    | "STA" (rd, regaddr, asi) => {
+    | "STA" (rd, regaddr, asi) =>
+    {
         char tmp2[10];
         char tmp3[15];
         disassembleregaddr( regaddr, tmp2, sizeof(tmp2), NULL );
@@ -1256,13 +1460,15 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "%s, [%s]%s", rdNames[rd], tmp2, tmp3);
         if( opname ) *opname = "STA";
     }
-    | "STB" (rd, address_) => {
+    | "STB" (rd, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", rdNames[rd], tmp2);
         if( opname ) *opname = "STB";
     }
-    | "STBA" (rd, regaddr, asi) => {
+    | "STBA" (rd, regaddr, asi) =>
+    {
         char tmp2[10];
         char tmp3[15];
         disassembleregaddr( regaddr, tmp2, sizeof(tmp2), NULL );
@@ -1270,29 +1476,34 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "%s, [%s]%s", rdNames[rd], tmp2, tmp3);
         if( opname ) *opname = "STBA";
     }
-    | "STBAR" () => {
+    | "STBAR" () =>
+    {
         buf[0] = '\0';
         if( opname ) *opname = "STBAR";
     }
-    | "STC" (cd, address_) => {
+    | "STC" (cd, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", cdNames[cd], tmp2);
         if( opname ) *opname = "STC";
     }
-    | "STCSR" (address_) => {
+    | "STCSR" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%%csr, [%s]", tmp1);
         if( opname ) *opname = "STCSR";
     }
-    | "STD" (rd, address_) => {
+    | "STD" (rd, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", rdNames[rd], tmp2);
         if( opname ) *opname = "STD";
     }
-    | "STDA" (rd, regaddr, asi) => {
+    | "STDA" (rd, regaddr, asi) =>
+    {
         char tmp2[10];
         char tmp3[15];
         disassembleregaddr( regaddr, tmp2, sizeof(tmp2), NULL );
@@ -1300,49 +1511,57 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "%s, [%s]%s", rdNames[rd], tmp2, tmp3);
         if( opname ) *opname = "STDA";
     }
-    | "STDC" (cd, address_) => {
+    | "STDC" (cd, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", cdNames[cd], tmp2);
         if( opname ) *opname = "STDC";
     }
-    | "STDCQ" (address_) => {
+    | "STDCQ" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%%cq,  [%s]", tmp1);
         if( opname ) *opname = "STDCQ";
     }
-    | "STDF" (fdd, address_) => {
+    | "STDF" (fdd, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", fddNames[fdd], tmp2);
         if( opname ) *opname = "STDF";
     }
-    | "STDFQ" (address_) => {
+    | "STDFQ" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%%fq,  [%s]", tmp1);
         if( opname ) *opname = "STDFQ";
     }
-    | "STF" (fds, address_) => {
+    | "STF" (fds, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", fdsNames[fds], tmp2);
         if( opname ) *opname = "STF";
     }
-    | "STFSR" (address_) => {
+    | "STFSR" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%%fsr, [%s]", tmp1);
         if( opname ) *opname = "STFSR";
     }
-    | "STH" (rd, address_) => {
+    | "STH" (rd, address_) =>
+    {
         char tmp2[13];
         disassembleaddress_( address_, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, [%s]", rdNames[rd], tmp2);
         if( opname ) *opname = "STH";
     }
-    | "STHA" (rd, regaddr, asi) => {
+    | "STHA" (rd, regaddr, asi) =>
+    {
         char tmp2[10];
         char tmp3[15];
         disassembleregaddr( regaddr, tmp2, sizeof(tmp2), NULL );
@@ -1350,37 +1569,43 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "%s, [%s]%s", rdNames[rd], tmp2, tmp3);
         if( opname ) *opname = "STHA";
     }
-    | "SUB" (rs1, reg_or_imm, rd) => {
+    | "SUB" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SUB";
     }
-    | "SUBX" (rs1, reg_or_imm, rd) => {
+    | "SUBX" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SUBX";
     }
-    | "SUBXcc" (rs1, reg_or_imm, rd) => {
+    | "SUBXcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SUBXcc";
     }
-    | "SUBcc" (rs1, reg_or_imm, rd) => {
+    | "SUBcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "SUBcc";
     }
-    | "SWAP." (address_, rd) => {
+    | "SWAP." (address_, rd) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "[%s], %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "SWAP.";
     }
-    | "SWAPA" (regaddr, asi, rd) => {
+    | "SWAPA" (regaddr, asi, rd) =>
+    {
         char tmp1[10];
         char tmp2[15];
         disassembleregaddr( regaddr, tmp1, sizeof(tmp1), NULL );
@@ -1388,213 +1613,248 @@ int disassembleInstruction( int pc, char *buf, size_t buflen, char **opname )
         snprintf( buf, buflen, "[%s]%s, %s", tmp1, tmp2, rdNames[rd]);
         if( opname ) *opname = "SWAPA";
     }
-    | "TA" (address_) => {
+    | "TA" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TA";
     }
-    | "TADDcc" (rs1, reg_or_imm, rd) => {
+    | "TADDcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "TADDcc";
     }
-    | "TADDccTV" (rs1, reg_or_imm, rd) => {
+    | "TADDccTV" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "TADDccTV";
     }
-    | "TCC" (address_) => {
+    | "TCC" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TCC";
     }
-    | "TCS" (address_) => {
+    | "TCS" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TCS";
     }
-    | "TE" (address_) => {
+    | "TE" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TE";
     }
-    | "TG" (address_) => {
+    | "TG" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TG";
     }
-    | "TGE" (address_) => {
+    | "TGE" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TGE";
     }
-    | "TGU" (address_) => {
+    | "TGU" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TGU";
     }
-    | "TL" (address_) => {
+    | "TL" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TL";
     }
-    | "TLE" (address_) => {
+    | "TLE" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TLE";
     }
-    | "TLEU" (address_) => {
+    | "TLEU" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TLEU";
     }
-    | "TN" (address_) => {
+    | "TN" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TN";
     }
-    | "TNE" (address_) => {
+    | "TNE" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TNE";
     }
-    | "TNEG" (address_) => {
+    | "TNEG" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TNEG";
     }
-    | "TPOS" (address_) => {
+    | "TPOS" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TPOS";
     }
-    | "TSUBcc" (rs1, reg_or_imm, rd) => {
+    | "TSUBcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "TSUBcc";
     }
-    | "TSUBccTV" (rs1, reg_or_imm, rd) => {
+    | "TSUBccTV" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "TSUBccTV";
     }
-    | "TVC" (address_) => {
+    | "TVC" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TVC";
     }
-    | "TVS" (address_) => {
+    | "TVS" (address_) =>
+    {
         char tmp1[13];
         disassembleaddress_( address_, tmp1, sizeof(tmp1), NULL );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "TVS";
     }
-    | "UDIV" (rs1, reg_or_imm, rd) => {
+    | "UDIV" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "UDIV";
     }
-    | "UDIVcc" (rs1, reg_or_imm, rd) => {
+    | "UDIVcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "UDIVcc";
     }
-    | "UMUL" (rs1, reg_or_imm, rd) => {
+    | "UMUL" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "UMUL";
     }
-    | "UMULcc" (rs1, reg_or_imm, rd) => {
+    | "UMULcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "UMULcc";
     }
-    | "UNIMP" (imm22) => {
+    | "UNIMP" (imm22) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, imm22, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "UNIMP";
     }
-    | "WRPSR" (rs1, reg_or_imm) => {
+    | "WRPSR" (rs1, reg_or_imm) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %%psr", rs1Names[rs1], tmp2);
         if( opname ) *opname = "WRPSR";
     }
-    | "WRTBR" (rs1, reg_or_imm) => {
+    | "WRTBR" (rs1, reg_or_imm) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %%tbr", rs1Names[rs1], tmp2);
         if( opname ) *opname = "WRTBR";
     }
-    | "WRWIM" (rs1, reg_or_imm) => {
+    | "WRWIM" (rs1, reg_or_imm) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %%wim", rs1Names[rs1], tmp2);
         if( opname ) *opname = "WRWIM";
     }
-    | "XNOR" (rs1, reg_or_imm, rd) => {
+    | "XNOR" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "XNOR";
     }
-    | "XNORcc" (rs1, reg_or_imm, rd) => {
+    | "XNORcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "XNORcc";
     }
-    | "XOR" (rs1, reg_or_imm, rd) => {
+    | "XOR" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "XOR";
     }
-    | "XORcc" (rs1, reg_or_imm, rd) => {
+    | "XORcc" (rs1, reg_or_imm, rd) =>
+    {
         char tmp2[7];
         disassemblereg_or_imm( reg_or_imm, tmp2, sizeof(tmp2), NULL );
         snprintf( buf, buflen, "%s, %s, %s", rs1Names[rs1], tmp2, rdNames[rd]);
         if( opname ) *opname = "XORcc";
     }
-    | "call__" (reloc) => {
+    | "call__" (reloc) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, reloc, 15 );
         snprintf( buf, buflen, "%s", tmp1);
         if( opname ) *opname = "call__";
     }
-    | "sethi" (val, rd) => {
+    | "sethi" (val, rd) =>
+    {
         char tmp1[15];
         IMMEDTOSTRING( tmp1, val, 15 );
         snprintf( buf, buflen, "%%hi(%s), %s", tmp1, rdNames[rd]);
         if( opname ) *opname = "sethi";
     }
-    else {
-        BADOPCODE(pc);
-    };
+    else
+        {
+            BADOPCODE(pc);
+        };
     endmatch
     return nextPC;
 
@@ -1611,16 +1871,18 @@ int sprintDisassembleInst( int pc, char *buf, int buflen,
     int npc = disassembleInstruction( pc, operands,
                                       sizeof(operands), &opname );
     pos += snprintf( buf+pos, buflen-pos, fmt.addrfmt, pc );
-    if( fmt.showHex ) {
-        for( int i=0; i < fmt.hexlen; i+=fmt.hexwidth, pc+=fmt.hexwidth ) {
-            if( pc < npc )
-                pos += snprintf( buf+pos, buflen-pos, fmt.hexfmt,
-                                 (int)mem[pc]&((1<<(8*fmt.hexwidth))-1) );
-            else
-                pos += snprintf( buf+pos, buflen-pos, "%*c",
-                                 fmt.hexwidth*2+1, ' ' );
+    if( fmt.showHex )
+        {
+            for( int i=0; i < fmt.hexlen; i+=fmt.hexwidth, pc+=fmt.hexwidth )
+                {
+                    if( pc < npc )
+                        pos += snprintf( buf+pos, buflen-pos, fmt.hexfmt,
+                                         (int)mem[pc]&((1<<(8*fmt.hexwidth))-1) );
+                    else
+                        pos += snprintf( buf+pos, buflen-pos, "%*c",
+                                         fmt.hexwidth*2+1, ' ' );
+                }
         }
-    }
     pos += snprintf( buf+pos, buflen-pos, "%-*s", fmt.opnamelen, opname );
     pos += snprintf( buf+pos, buflen-pos, " " );
     pos += snprintf( buf+pos, buflen-pos, "%-*s", fmt.operandlen, operands );
@@ -1628,7 +1890,8 @@ int sprintDisassembleInst( int pc, char *buf, int buflen,
 }
 
 
-void unimplemented( int pc ) {
+void unimplemented( int pc )
+{
     char buf[80];
     sprintDisassembleInst( pc, buf, sizeof(buf) );
     fprintf(stderr, "Unimplmented instruction: %s\n", buf );
@@ -1723,7 +1986,8 @@ void inline executeADDCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     sint32_t tmp;
     tmp = regs.rd[op_rs1];
     regs.rd[op_rd] = (regs.rd[op_rs1] + op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = (((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) &  ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))) | (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) &  ! ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) & ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))));
         regs.r_CF = ((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) | ( ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L))) & (((sint8_t)((sint8_t)((tmp>>31)&0x1L))) | ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L))))));
@@ -1742,7 +2006,8 @@ void inline executeADDXCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     sint32_t tmp;
     tmp = regs.rd[op_rs1];
     regs.rd[op_rd] = ((regs.rd[op_rs1] + op_regorimm) + ((sint32_t)((uint32_t)((uint8_t)(regs.r_CF&0x1L)))));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = (((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) &  ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))) | (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) &  ! ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) & ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))));
         regs.r_CF = ((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) | ( ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L))) & (((sint8_t)((sint8_t)((tmp>>31)&0x1L))) | ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L))))));
@@ -1757,7 +2022,8 @@ void inline executeAND( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeANDCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] & op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -1772,7 +2038,8 @@ void inline executeANDN( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeANDNCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] & ((0 - op_regorimm) - 1));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -2285,7 +2552,8 @@ void inline executeFCMPD( sint8_t op_fs1d, sint8_t op_fs2d )
 {
     float64_t tmpd;
     tmpd = ((*(regs_fdd[op_fs1d])) - (*(regs_fdd[op_fs2d])));
-    {   regs.r_FZF = (((*(regs_fdd[op_fs1d])) == (*(regs_fdd[op_fs2d]))) ? 1 : 0);
+    {
+        regs.r_FZF = (((*(regs_fdd[op_fs1d])) == (*(regs_fdd[op_fs2d]))) ? 1 : 0);
         regs.r_FLF = (((*(regs_fdd[op_fs1d])) < (*(regs_fdd[op_fs2d]))) ? 1 : 0);
         regs.r_FGF = (((*(regs_fdd[op_fs1d])) > (*(regs_fdd[op_fs2d]))) ? 1 : 0);
     }
@@ -2295,7 +2563,8 @@ void inline executeFCMPED( sint8_t op_fs1d, sint8_t op_fs2d )
 {
     float64_t tmpd;
     tmpd = ((*(regs_fdd[op_fs1d])) - (*(regs_fdd[op_fs2d])));
-    {   regs.r_FZF = (((*(regs_fdd[op_fs1d])) == (*(regs_fdd[op_fs2d]))) ? 1 : 0);
+    {
+        regs.r_FZF = (((*(regs_fdd[op_fs1d])) == (*(regs_fdd[op_fs2d]))) ? 1 : 0);
         regs.r_FLF = (((*(regs_fdd[op_fs1d])) < (*(regs_fdd[op_fs2d]))) ? 1 : 0);
         regs.r_FGF = (((*(regs_fdd[op_fs1d])) > (*(regs_fdd[op_fs2d]))) ? 1 : 0);
     }
@@ -2305,7 +2574,8 @@ void inline executeFCMPEQ( sint8_t op_fs1q, sint8_t op_fs2q )
 {
     float128_t tmpD;
     tmpD = ((*(regs_fdq[op_fs1q])) - (*(regs_fdq[op_fs2q])));
-    {   regs.r_FZF = (((*(regs_fdq[op_fs1q])) == (*(regs_fdq[op_fs2q]))) ? 1 : 0);
+    {
+        regs.r_FZF = (((*(regs_fdq[op_fs1q])) == (*(regs_fdq[op_fs2q]))) ? 1 : 0);
         regs.r_FLF = (((*(regs_fdq[op_fs1q])) < (*(regs_fdq[op_fs2q]))) ? 1 : 0);
         regs.r_FGF = (((*(regs_fdq[op_fs1q])) > (*(regs_fdq[op_fs2q]))) ? 1 : 0);
     }
@@ -2315,7 +2585,8 @@ void inline executeFCMPES( sint8_t op_fs1s, sint8_t op_fs2s )
 {
     float32_t tmpf;
     tmpf = ((*(regs_fds[op_fs1s])) - (*(regs_fds[op_fs2s])));
-    {   regs.r_FZF = (((*(regs_fds[op_fs1s])) == (*(regs_fds[op_fs2s]))) ? 1 : 0);
+    {
+        regs.r_FZF = (((*(regs_fds[op_fs1s])) == (*(regs_fds[op_fs2s]))) ? 1 : 0);
         regs.r_FLF = (((*(regs_fds[op_fs1s])) < (*(regs_fds[op_fs2s]))) ? 1 : 0);
         regs.r_FGF = (((*(regs_fds[op_fs1s])) > (*(regs_fds[op_fs2s]))) ? 1 : 0);
     }
@@ -2325,7 +2596,8 @@ void inline executeFCMPQ( sint8_t op_fs1q, sint8_t op_fs2q )
 {
     float128_t tmpD;
     tmpD = ((*(regs_fdq[op_fs1q])) - (*(regs_fdq[op_fs2q])));
-    {   regs.r_FZF = (((*(regs_fdq[op_fs1q])) == (*(regs_fdq[op_fs2q]))) ? 1 : 0);
+    {
+        regs.r_FZF = (((*(regs_fdq[op_fs1q])) == (*(regs_fdq[op_fs2q]))) ? 1 : 0);
         regs.r_FLF = (((*(regs_fdq[op_fs1q])) < (*(regs_fdq[op_fs2q]))) ? 1 : 0);
         regs.r_FGF = (((*(regs_fdq[op_fs1q])) > (*(regs_fdq[op_fs2q]))) ? 1 : 0);
     }
@@ -2335,7 +2607,8 @@ void inline executeFCMPS( sint8_t op_fs1s, sint8_t op_fs2s )
 {
     float32_t tmpf;
     tmpf = ((*(regs_fds[op_fs1s])) - (*(regs_fds[op_fs2s])));
-    {   regs.r_FZF = (((*(regs_fds[op_fs1s])) == (*(regs_fds[op_fs2s]))) ? 1 : 0);
+    {
+        regs.r_FZF = (((*(regs_fds[op_fs1s])) == (*(regs_fds[op_fs2s]))) ? 1 : 0);
         regs.r_FLF = (((*(regs_fds[op_fs1s])) < (*(regs_fds[op_fs2s]))) ? 1 : 0);
         regs.r_FGF = (((*(regs_fds[op_fs1s])) > (*(regs_fds[op_fs2s]))) ? 1 : 0);
     }
@@ -2556,7 +2829,8 @@ void inline executeMULSCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     tmp2 = ((((sint8_t)((sint8_t)(regs.r_Y&0x1L))) == 1) ? op_regorimm : 0);
     regs.r_Y = (((sint32_t)(((uint32_t)regs.r_Y) >> ((uint32_t)1))) | (regs.rd[op_rs1] << 31));
     regs.rd[op_rd] = (tmp + tmp2);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = (((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((tmp2>>31)&0x1L)))) &  ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))) | (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) &  ! ((sint8_t)((sint8_t)((tmp2>>31)&0x1L)))) & ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))));
         regs.r_CF = ((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((tmp2>>31)&0x1L)))) | ( ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L))) & (((sint8_t)((sint8_t)((tmp>>31)&0x1L))) | ((sint8_t)((sint8_t)((tmp2>>31)&0x1L))))));
@@ -2576,7 +2850,8 @@ void inline executeOR( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeORCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] | op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -2591,7 +2866,8 @@ void inline executeORN( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeORNCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] | ((0 - op_regorimm) - 1));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -2708,7 +2984,8 @@ void inline executeSDIVCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeSDIVCCQ( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] / op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_CF = 0;
     }
@@ -2747,7 +3024,8 @@ void inline executeSMULCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     tmpl = (((sint64_t)regs.rd[op_rs1]) * ((sint64_t)op_regorimm));
     regs.rd[op_rd] = ((sint32_t)tmpl);
     regs.r_Y = ((sint32_t)((sint32_t)((tmpl>>32)&0xffffffffL)));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -2757,7 +3035,8 @@ void inline executeSMULCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeSMULCCQ( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] * op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -2837,7 +3116,8 @@ void inline executeSUBCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     sint32_t tmp;
     tmp = regs.rd[op_rs1];
     regs.rd[op_rd] = (regs.rd[op_rs1] - op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = (((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) &  ! ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) &  ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))) | (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) & ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))));
         regs.r_CF = (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) | (((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L))) & ( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) | ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L))))));
@@ -2856,7 +3136,8 @@ void inline executeSUBXCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     sint32_t tmp;
     tmp = regs.rd[op_rs1];
     regs.rd[op_rd] = ((regs.rd[op_rs1] - op_regorimm) - ((sint32_t)((uint32_t)((uint8_t)(regs.r_CF&0x1L)))));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = (((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) &  ! ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) &  ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))) | (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) & ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)))));
         regs.r_CF = (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) | (((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L))) & ( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) | ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L))))));
@@ -2881,7 +3162,8 @@ void inline executeTADDCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     sint32_t tmp;
     tmp = regs.rd[op_rs1];
     regs.rd[op_rd] = (regs.rd[op_rs1] + op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_CF = ((((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) | ( ! ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L))) & (((sint8_t)((sint8_t)((tmp>>31)&0x1L))) | ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L))))));
     }
@@ -2957,7 +3239,8 @@ void inline executeTSUBCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
     sint32_t tmp;
     tmp = regs.rd[op_rs1];
     regs.rd[op_rd] = (regs.rd[op_rs1] - op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_CF = (( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) & ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L)))) | (((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L))) & ( ! ((sint8_t)((sint8_t)((tmp>>31)&0x1L))) | ((sint8_t)((sint8_t)((op_regorimm>>31)&0x1L))))));
     }
@@ -2990,7 +3273,8 @@ void inline executeUDIVCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeUDIVCCQ( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = ((sint32_t)(((uint32_t)regs.rd[op_rs1]) / ((uint32_t)op_regorimm)));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_CF = 0;
     }
@@ -3024,7 +3308,8 @@ void inline executeUMULCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeUMULCCQ( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = ((sint32_t)(((uint32_t)regs.rd[op_rs1]) * ((uint32_t)op_regorimm)));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -3038,7 +3323,8 @@ void inline executeUMULQ( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 
 void inline executeUMULTCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -3073,7 +3359,8 @@ void inline executeXNOR( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeXNORCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] ^ ((0 - op_regorimm) - 1));
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -3088,7 +3375,8 @@ void inline executeXOR( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 void inline executeXORCC( sint8_t op_rs1, sint32_t op_regorimm, sint8_t op_rd )
 {
     regs.rd[op_rd] = (regs.rd[op_rs1] ^ op_regorimm);
-    {   regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
+    {
+        regs.r_NF = ((sint8_t)((sint8_t)((regs.rd[op_rd]>>31)&0x1L)));
         regs.r_ZF = ((regs.rd[op_rd] == 0) ? 1 : 0);
         regs.r_OF = 0;
         regs.r_CF = 0;
@@ -3306,18 +3594,20 @@ void executeOneInstruction()
 
 void run( )
 {
-    while(1) {
+    while(1)
+        {
 #ifndef NDEBUG
-        icount++;
-        if( debug ) {
-            char buf[80];
-            sprintDisassembleInst( regs.r_pc, buf, sizeof(buf) );
-            dumpMainRegisters( stderr );
-            fprintf( stderr, "%5ld|%s\n", icount, buf );
-        }
+            icount++;
+            if( debug )
+                {
+                    char buf[80];
+                    sprintDisassembleInst( regs.r_pc, buf, sizeof(buf) );
+                    dumpMainRegisters( stderr );
+                    fprintf( stderr, "%5ld|%s\n", icount, buf );
+                }
 #endif
-        executeOneInstruction();
-    }
+            executeOneInstruction();
+        }
 }
 
 

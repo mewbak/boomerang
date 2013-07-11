@@ -1,6 +1,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
-class FrontSparcTest : public CPPUNIT_NS::TestFixture {
+class FrontSparcTest : public CPPUNIT_NS::TestFixture
+{
     CPPUNIT_TEST_SUITE( FrontSparcTest );
     CPPUNIT_TEST( test1 );
     CPPUNIT_TEST( test2 );

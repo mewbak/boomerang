@@ -1,6 +1,7 @@
 #ifndef __sparc_pat_H__
 #define __sparc_pat_H__
-class InstructionPatterns {
+class InstructionPatterns
+{
 private:
     static int SP;
     static int FP;

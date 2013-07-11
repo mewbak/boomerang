@@ -51,7 +51,8 @@ class Statement;
 class CallStatement;
 
 // Control flow types
-enum INSTTYPE {
+enum INSTTYPE
+{
     I_UNCOND,				 // unconditional branch
     I_COND,					 // conditional branch
     I_N_COND,				 // case branch

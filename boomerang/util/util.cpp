@@ -91,15 +91,15 @@ bool hasExt(const std::string& s, const char* ext)
     std::string tailStr = std::string(".") + std::string(ext);
     unsigned int i = s.rfind(tailStr);
     if (i == std::string::npos)
-    {
-        return false;
-    }
+        {
+            return false;
+        }
     else
-    {
-        unsigned int sLen = s.length();
-        unsigned int tailStrLen = tailStr.length();
-        return ((i + tailStrLen) == sLen);
-    }
+        {
+            unsigned int sLen = s.length();
+            unsigned int tailStrLen = tailStr.length();
+            return ((i + tailStrLen) == sLen);
+        }
 }
 
 /*==============================================================================
@@ -114,13 +114,13 @@ std::string changeExt(const std::string& s, const char* ext)
 {
     size_t i = s.rfind(".");
     if (i == std::string::npos)
-    {
-        return s + ext;
-    }
+        {
+            return s + ext;
+        }
     else
-    {
-        return s.substr(0, i) + ext;
-    }
+        {
+            return s.substr(0, i) + ext;
+        }
 }
 
 /*==============================================================================
@@ -137,16 +137,16 @@ std::string searchAndReplace( const std::string &in, const std::string &match,
 {
     std::string result;
     for ( int n = 0; n != -1; )
-    {
-        int l = in.find(match,n);
-        result.append( in.substr(n,(l==-1?in.length() : l )-n) );
-        if ( l != -1 )
         {
-            result.append( rep );
-            l+=match.length();
+            int l = in.find(match,n);
+            result.append( in.substr(n,(l==-1?in.length() : l )-n) );
+            if ( l != -1 )
+                {
+                    result.append( rep );
+                    l+=match.length();
+                }
+            n = l;
         }
-        n = l;
-    }
     return result;
 }
 
@@ -213,13 +213,13 @@ void escapeXMLChars(std::string &s)
         "&lt;", "&gt;", "&amp;"
     };
     for (unsigned i = 0; i < s.size(); i++)
-    {
-        unsigned n = bad.find(s[i]);
-        if (n != std::string::npos)
         {
-            s.replace(i, 1, replace[n]);
+            unsigned n = bad.find(s[i]);
+            if (n != std::string::npos)
+                {
+                    s.replace(i, 1, replace[n]);
+                }
         }
-    }
 }
 
 // Turn things like newline, return, tab into \n, \r, \t etc
@@ -233,33 +233,33 @@ char* escapeStr( const char* str )
 
     // test each character
     for (; *str; str++)
-    {
-        if (isprint((unsigned char)*str) && *str != '\"' )
         {
-            // it's printable, so just print it
-            out << *str;
-        }
-        else
-        {
-            // in fact, this shouldn't happen, except for "
-            // maybe it's a known escape sequence
-            escapedSucessfully=false;
-            for (int i=0; escaped[i] && !escapedSucessfully ; i++)
-            {
-                if (*str == escaped[i])
+            if (isprint((unsigned char)*str) && *str != '\"' )
                 {
-                    out << "\\" << unescaped[i];
-                    escapedSucessfully=true;
+                    // it's printable, so just print it
+                    out << *str;
                 }
-            }
-            if (!escapedSucessfully)
-            {
-                // it isn't so just use the \xhh escape
-                out << "\\x" << std::hex << std::setfill('0') << std::setw(2) << (int)*str;
-                out << std::setfill(' ');
-            }
+            else
+                {
+                    // in fact, this shouldn't happen, except for "
+                    // maybe it's a known escape sequence
+                    escapedSucessfully=false;
+                    for (int i=0; escaped[i] && !escapedSucessfully ; i++)
+                        {
+                            if (*str == escaped[i])
+                                {
+                                    out << "\\" << unescaped[i];
+                                    escapedSucessfully=true;
+                                }
+                        }
+                    if (!escapedSucessfully)
+                        {
+                            // it isn't so just use the \xhh escape
+                            out << "\\x" << std::hex << std::setfill('0') << std::setw(2) << (int)*str;
+                            out << std::setfill(' ');
+                        }
+                }
         }
-    }
 
     char* ret = new char[out.str().size()+1];
     strcpy(ret, out.str().c_str());

@@ -36,10 +36,10 @@ void RTLEditor::mousePressEvent(QMouseEvent *event)
     // allow clicking on subscripts
     QString name = anchorAt(event->pos());
     if (!name.isEmpty())
-    {
-        scrollToAnchor(name.mid(1));
-        return;
-    }
+        {
+            scrollToAnchor(name.mid(1));
+            return;
+        }
     QTextEdit::mousePressEvent(event);
 }
 

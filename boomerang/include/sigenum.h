@@ -2,7 +2,8 @@
 #ifndef __SIGENUM__
 #define __SIGENUM__
 
-enum platform {
+enum platform
+{
     PLAT_PENTIUM,
     PLAT_SPARC,
     PLAT_M68K,
@@ -13,7 +14,8 @@ enum platform {
     PLAT_GENERIC
 };
 
-enum callconv {
+enum callconv
+{
     CONV_C,			// Standard C, no callee pop
     CONV_PASCAL,	// callee pop
     CONV_THISCALL,	// MSVC "thiscall": one parameter in register ecx

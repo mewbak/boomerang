@@ -1,6 +1,7 @@
 #include "sparc-names.h"
 char *a_names[] = { "", ",a", };
-char *cd_names[] = {
+char *cd_names[] =
+{
     "%c0",
     "%c1",
     "%c2",
@@ -34,7 +35,8 @@ char *cd_names[] = {
     "%c30",
     "%c31",
 };
-char *fdd_names[] = {
+char *fdd_names[] =
+{
     "%f0to1",
     "a",
     "%f2to3",
@@ -68,7 +70,8 @@ char *fdd_names[] = {
     "%f30to31",
     "p",
 };
-char *fdq_names[] = {
+char *fdq_names[] =
+{
     "%f0to3",
     "q",
     "r",
@@ -102,7 +105,8 @@ char *fdq_names[] = {
     "M",
     "N",
 };
-char *fds_names[] = {
+char *fds_names[] =
+{
     "%f0",
     "%f1",
     "%f2",
@@ -136,7 +140,8 @@ char *fds_names[] = {
     "%f30",
     "%f31",
 };
-char *fs1d_names[] = {
+char *fs1d_names[] =
+{
     "%f0to1",
     "a",
     "%f2to3",
@@ -170,7 +175,8 @@ char *fs1d_names[] = {
     "%f30to31",
     "p",
 };
-char *fs1q_names[] = {
+char *fs1q_names[] =
+{
     "%f0to3",
     "q",
     "r",
@@ -204,7 +210,8 @@ char *fs1q_names[] = {
     "M",
     "N",
 };
-char *fs1s_names[] = {
+char *fs1s_names[] =
+{
     "%f0",
     "%f1",
     "%f2",
@@ -238,7 +245,8 @@ char *fs1s_names[] = {
     "%f30",
     "%f31",
 };
-char *fs2d_names[] = {
+char *fs2d_names[] =
+{
     "%f0to1",
     "a",
     "%f2to3",
@@ -272,7 +280,8 @@ char *fs2d_names[] = {
     "%f30to31",
     "p",
 };
-char *fs2q_names[] = {
+char *fs2q_names[] =
+{
     "%f0to3",
     "q",
     "r",
@@ -306,7 +315,8 @@ char *fs2q_names[] = {
     "M",
     "N",
 };
-char *fs2s_names[] = {
+char *fs2s_names[] =
+{
     "%f0",
     "%f1",
     "%f2",
@@ -340,7 +350,8 @@ char *fs2s_names[] = {
     "%f30",
     "%f31",
 };
-char *rd_names[] = {
+char *rd_names[] =
+{
     "%g0",
     "%g1",
     "%g2",
@@ -374,7 +385,8 @@ char *rd_names[] = {
     "%fp",
     "%i7",
 };
-char *rs1_names[] = {
+char *rs1_names[] =
+{
     "%g0",
     "%g1",
     "%g2",
@@ -408,7 +420,8 @@ char *rs1_names[] = {
     "%fp",
     "%i7",
 };
-char *rs2_names[] = {
+char *rs2_names[] =
+{
     "%g0",
     "%g1",
     "%g2",

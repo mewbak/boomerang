@@ -129,42 +129,42 @@ to use flat name space bindings */
 #define MH_NOMULTIDEFS	0x200		/* this umbrella guarantees no multiple
 defintions of symbols in its
 sub-images so the two-level namespace
-        hints can always be used. */
+    hints can always be used. */
 #define MH_NOFIXPREBINDING 0x400	/* do not have dyld notify the
-        prebinding agent about this
-        executable */
+    prebinding agent about this
+    executable */
 #define MH_PREBINDABLE  0x800           /* the binary is not prebound but can
-        have its prebinding redone. only used
-        when MH_PREBOUND is not set. */
+    have its prebinding redone. only used
+    when MH_PREBOUND is not set. */
 #define MH_ALLMODSBOUND 0x1000		/* indicates that this binary binds to
-        all two-level namespace modules of
-            its dependent libraries. only used
-            when MH_PREBINDABLE and MH_TWOLEVEL
-            are both set. */
+    all two-level namespace modules of
+    its dependent libraries. only used
+    when MH_PREBINDABLE and MH_TWOLEVEL
+    are both set. */
 #define MH_CANONICAL    0x4000		/* the binary has been canonicalized
-            via the unprebind operation */
+    via the unprebind operation */
 
-    /*
-     * The load commands directly follow the mach_header.  The total size of all
-     * of the commands is given by the sizeofcmds field in the mach_header.  All
-     * load commands must have as their first two fields cmd and cmdsize.  The cmd
-     * field is filled in with a constant for that command type.  Each command type
-     * has a structure specifically for it.  The cmdsize field is the size in bytes
-     * of the particular load command structure plus anything that follows it that
-     * is a part of the load command (i.e. section structures, strings, etc.).  To
-     * advance to the next load command the cmdsize can be added to the offset or
-     * pointer of the current load command.  The cmdsize MUST be a multiple of
-     * 4 bytes (this is forever the maximum alignment of any load commands).
-     * The padded bytes must be zero.  All tables in the object file must also
-     * follow these rules so the file can be memory mapped.  Otherwise the pointers
-     * to these tables will not work well or at all on some machines.  With all
-     * padding zeroed like objects will compare byte for byte.
-     */
-            struct load_command
-        {
-            unsigned long cmd; /* type of load command */
-            unsigned long cmdsize; /* total size of command in bytes */
-        };
+/*
+ * The load commands directly follow the mach_header.  The total size of all
+ * of the commands is given by the sizeofcmds field in the mach_header.  All
+ * load commands must have as their first two fields cmd and cmdsize.  The cmd
+ * field is filled in with a constant for that command type.  Each command type
+ * has a structure specifically for it.  The cmdsize field is the size in bytes
+ * of the particular load command structure plus anything that follows it that
+ * is a part of the load command (i.e. section structures, strings, etc.).  To
+ * advance to the next load command the cmdsize can be added to the offset or
+ * pointer of the current load command.  The cmdsize MUST be a multiple of
+ * 4 bytes (this is forever the maximum alignment of any load commands).
+ * The padded bytes must be zero.  All tables in the object file must also
+ * follow these rules so the file can be memory mapped.  Otherwise the pointers
+ * to these tables will not work well or at all on some machines.  With all
+ * padding zeroed like objects will compare byte for byte.
+ */
+    struct load_command
+{
+    unsigned long cmd; /* type of load command */
+    unsigned long cmdsize; /* total size of command in bytes */
+};
 
 /*
  * After MacOS X 10.1 when a new load command is added that is required to be

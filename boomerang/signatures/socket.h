@@ -1,7 +1,8 @@
 
 typedef int sa_family_t;
 
-typedef struct {
+typedef struct
+{
     unsigned char sa_len;
     sa_family_t sa_family;
     char sa_data[14];

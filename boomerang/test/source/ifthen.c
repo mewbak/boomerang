@@ -20,11 +20,11 @@ void main(int argc)
 
     x = 2;
     if (b < 4)
-    {
+        {
 
-        x = 3;
-        a = b;
-    }
+            x = 3;
+            a = b;
+        }
 
     // In this block, there is no need for a phi-function for b
     x = 4;

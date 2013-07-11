@@ -78,1184 +78,1217 @@ DecodeResult& NJMCDecoder::decodeInstruction (ADDRESS pc, int delta,
     int addr, regs, locals, stackSize, d16, d32, reg;
     ADDRESS saveHostPC = hostPC;
     Logue* logue;
-    if ((logue = InstructionPatterns::std_call(csr, hostPC, addr)) != NULL) {
-        /*
-         * Direct call
-         */
-        HLCall* newCall = new HLCall(pc, 0, RTs);
-        result.rtl = newCall;
-        result.numBytes = hostPC - saveHostPC;
+    if ((logue = InstructionPatterns::std_call(csr, hostPC, addr)) != NULL)
+        {
+            /*
+             * Direct call
+             */
+            HLCall* newCall = new HLCall(pc, 0, RTs);
+            result.rtl = newCall;
+            result.numBytes = hostPC - saveHostPC;
 
-        // Set the destination expression
-        newCall->setDest(addr - delta);
-        newCall->setPrologue(logue);
+            // Set the destination expression
+            newCall->setDest(addr - delta);
+            newCall->setPrologue(logue);
 
-        // Save RTL for the latest call
-        //lastCall = newCall;
-        SHOW_ASM("std_call "<<addr)
-    }
+            // Save RTL for the latest call
+            //lastCall = newCall;
+            SHOW_ASM("std_call "<<addr)
+        }
 
     else if ((logue = InstructionPatterns::near_call(csr, hostPC, addr))
-             != NULL) {
-        /*
-         * Call with short displacement (16 bit instruction)
-         */
-        HLCall* newCall = new HLCall(pc, 0, RTs);
-        result.rtl = newCall;
-        result.numBytes = hostPC - saveHostPC;
+             != NULL)
+        {
+            /*
+             * Call with short displacement (16 bit instruction)
+             */
+            HLCall* newCall = new HLCall(pc, 0, RTs);
+            result.rtl = newCall;
+            result.numBytes = hostPC - saveHostPC;
 
-        // Set the destination expression
-        newCall->setDest(addr - delta);
-        newCall->setPrologue(logue);
+            // Set the destination expression
+            newCall->setDest(addr - delta);
+            newCall->setPrologue(logue);
 
-        // Save RTL for the latest call
-        //lastCall = newCall;
-        SHOW_ASM("near_call " << addr)
-    }
+            // Save RTL for the latest call
+            //lastCall = newCall;
+            SHOW_ASM("near_call " << addr)
+        }
 
     else if ((logue = InstructionPatterns::pea_pea_add_rts(csr, hostPC, d32))
-             != NULL) {
-        /*
-         * pea E(pc) pea 4(pc) / addil #d32, (a7) / rts
-         * Handle as a call
-         */
-        HLCall* newCall = new HLCall(pc, 0, RTs);
-        result.rtl = newCall;
-        result.numBytes = hostPC - saveHostPC;
+             != NULL)
+        {
+            /*
+             * pea E(pc) pea 4(pc) / addil #d32, (a7) / rts
+             * Handle as a call
+             */
+            HLCall* newCall = new HLCall(pc, 0, RTs);
+            result.rtl = newCall;
+            result.numBytes = hostPC - saveHostPC;
 
-        // Set the destination expression. It's d32 past the address of the
-        // d32 itself, which is pc+10
-        newCall->setDest(pc + 10 + d32);
-        newCall->setPrologue(logue);
+            // Set the destination expression. It's d32 past the address of the
+            // d32 itself, which is pc+10
+            newCall->setDest(pc + 10 + d32);
+            newCall->setPrologue(logue);
 
-        // Save RTL for the latest call
-        //lastCall = newCall;
-        SHOW_ASM("pea/pea/add/rts " << pc+10+d32)
-    }
+            // Save RTL for the latest call
+            //lastCall = newCall;
+            SHOW_ASM("pea/pea/add/rts " << pc+10+d32)
+        }
 
     else if ((logue = InstructionPatterns::pea_add_rts(csr, hostPC, d32))
-             != NULL) {
-        /*
-         * pea 4(pc) / addil #d32, (a7) / rts
-         * Handle as a call followed by a return
-         */
-        HLCall* newCall = new HLCall(pc, 0, RTs);
-        result.rtl = newCall;
-        result.numBytes = hostPC - saveHostPC;
+             != NULL)
+        {
+            /*
+             * pea 4(pc) / addil #d32, (a7) / rts
+             * Handle as a call followed by a return
+             */
+            HLCall* newCall = new HLCall(pc, 0, RTs);
+            result.rtl = newCall;
+            result.numBytes = hostPC - saveHostPC;
 
-        // Set the destination expression. It's d32 past the address of the
-        // d32 itself, which is pc+6
-        newCall->setDest(pc + 6 + d32);
-        newCall->setPrologue(logue);
+            // Set the destination expression. It's d32 past the address of the
+            // d32 itself, which is pc+6
+            newCall->setDest(pc + 6 + d32);
+            newCall->setPrologue(logue);
 
-        // This call effectively is followed by a return
-        newCall->setReturnAfterCall(true);
+            // This call effectively is followed by a return
+            newCall->setReturnAfterCall(true);
 
-        // Save RTL for the latest call
-        //lastCall = newCall;
-        SHOW_ASM("pea/add/rts " << pc+6+d32)
-    }
+            // Save RTL for the latest call
+            //lastCall = newCall;
+            SHOW_ASM("pea/add/rts " << pc+6+d32)
+        }
 
     else if ((logue = InstructionPatterns::trap_syscall(csr, hostPC, d16))
-             != NULL) {
-        /*
-         * trap / AXXX  (d16 set to the XXX)
-         * Handle as a library call
-         */
-        HLCall* newCall = new HLCall(pc, 0, RTs);
-        result.rtl = newCall;
-        result.numBytes = hostPC - saveHostPC;
+             != NULL)
+        {
+            /*
+             * trap / AXXX  (d16 set to the XXX)
+             * Handle as a library call
+             */
+            HLCall* newCall = new HLCall(pc, 0, RTs);
+            result.rtl = newCall;
+            result.numBytes = hostPC - saveHostPC;
 
-        // Set the destination expression. For now, we put AAAAA000+d16 there
-        newCall->setDest(0xAAAAA000 + d16);
-        newCall->setPrologue(logue);
+            // Set the destination expression. For now, we put AAAAA000+d16 there
+            newCall->setDest(0xAAAAA000 + d16);
+            newCall->setPrologue(logue);
 
-        SHOW_ASM("trap/syscall " << hex << 0xA000 + d16)
-    }
+            SHOW_ASM("trap/syscall " << hex << 0xA000 + d16)
+        }
 
     /*
      * CALLEE PROLOGUES
      */
     else if ((logue = InstructionPatterns::link_save(csr, hostPC,
                       locals, d16)) != NULL)
-    {
-        /*
-         * Standard link with save of registers using movem
-         */
-        if (proc != NULL) {
+        {
+            /*
+             * Standard link with save of registers using movem
+             */
+            if (proc != NULL)
+                {
 
-            // Record the prologue of this callee
-            assert(logue->getType() == Logue::CALLEE_PROLOGUE);
-            proc->setPrologue((CalleePrologue*)logue);
+                    // Record the prologue of this callee
+                    assert(logue->getType() == Logue::CALLEE_PROLOGUE);
+                    proc->setPrologue((CalleePrologue*)logue);
+                }
+            result.rtl = new RTlist(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("link_save " << locals)
         }
-        result.rtl = new RTlist(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("link_save " << locals)
-    }
 
     else if ((logue = InstructionPatterns::link_save1(csr, hostPC,
                       locals, reg)) != NULL)
-    {
-        /*
-         * Standard link with save of 1 D register using move dn,-(a7)
-         */
-        if (proc != NULL) {
+        {
+            /*
+             * Standard link with save of 1 D register using move dn,-(a7)
+             */
+            if (proc != NULL)
+                {
 
-            // Record the prologue of this callee
-            assert(logue->getType() == Logue::CALLEE_PROLOGUE);
-            proc->setPrologue((CalleePrologue*)logue);
+                    // Record the prologue of this callee
+                    assert(logue->getType() == Logue::CALLEE_PROLOGUE);
+                    proc->setPrologue((CalleePrologue*)logue);
+                }
+            result.rtl = new RTlist(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("link_save1 " << locals)
         }
-        result.rtl = new RTlist(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("link_save1 " << locals)
-    }
 
     else if ((logue = InstructionPatterns::push_lea(csr, hostPC,
                       locals, reg)) != NULL)
-    {
-        /*
-         * Just save of 1 D register using move dn,-(a7);
-         * then an lea d16(a7), a7 to allocate the stack
-         */
-        //locals = 0;             // No locals for this prologue
-        if (proc != NULL) {
+        {
+            /*
+             * Just save of 1 D register using move dn,-(a7);
+             * then an lea d16(a7), a7 to allocate the stack
+             */
+            //locals = 0;             // No locals for this prologue
+            if (proc != NULL)
+                {
 
-            // Record the prologue of this callee
-            assert(logue->getType() == Logue::CALLEE_PROLOGUE);
-            proc->setPrologue((CalleePrologue*)logue);
+                    // Record the prologue of this callee
+                    assert(logue->getType() == Logue::CALLEE_PROLOGUE);
+                    proc->setPrologue((CalleePrologue*)logue);
+                }
+            result.rtl = new RTlist(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("push_lea " << locals)
         }
-        result.rtl = new RTlist(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("push_lea " << locals)
-    }
 
     else if ((logue = InstructionPatterns::std_link(csr, hostPC,
                       locals)) != NULL)
-    {
-        /*
-         * Standard link
-         */
-        if (proc != NULL) {
+        {
+            /*
+             * Standard link
+             */
+            if (proc != NULL)
+                {
 
-            // Record the prologue of this callee
-            assert(logue->getType() == Logue::CALLEE_PROLOGUE);
-            proc->setPrologue((CalleePrologue*)logue);
+                    // Record the prologue of this callee
+                    assert(logue->getType() == Logue::CALLEE_PROLOGUE);
+                    proc->setPrologue((CalleePrologue*)logue);
+                }
+            result.rtl = new RTlist(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("std_link "<< locals)
         }
-        result.rtl = new RTlist(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("std_link "<< locals)
-    }
 
     else if ((logue = InstructionPatterns::bare_ret(csr, hostPC))
              != NULL)
-    {
-        /*
-         * Just a bare rts instruction
-         */
-        if (proc != NULL) {
+        {
+            /*
+             * Just a bare rts instruction
+             */
+            if (proc != NULL)
+                {
 
-            // Record the prologue of this callee
-            assert(logue->getType() == Logue::CALLEE_PROLOGUE);
-            proc->setPrologue((CalleePrologue*)logue);
-            proc->setEpilogue(new CalleeEpilogue("__dummy",list<string>()));
-        }
-        result.rtl = new HLReturn(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("bare_ret")
-    }
-
-    else if ((logue = InstructionPatterns::std_ret(csr, hostPC)) != NULL) {
-        /*
-         * An unlink and return
-         */
-        if (proc!= NULL) {
-
-            // Record the epilogue of this callee
-            assert(logue->getType() == Logue::CALLEE_EPILOGUE);
-            proc->setEpilogue((CalleeEpilogue*)logue);
+                    // Record the prologue of this callee
+                    assert(logue->getType() == Logue::CALLEE_PROLOGUE);
+                    proc->setPrologue((CalleePrologue*)logue);
+                    proc->setEpilogue(new CalleeEpilogue("__dummy",list<string>()));
+                }
+            result.rtl = new HLReturn(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("bare_ret")
         }
 
-        result.rtl = new HLReturn(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("std_ret")
-    }
+    else if ((logue = InstructionPatterns::std_ret(csr, hostPC)) != NULL)
+        {
+            /*
+             * An unlink and return
+             */
+            if (proc!= NULL)
+                {
+
+                    // Record the epilogue of this callee
+                    assert(logue->getType() == Logue::CALLEE_EPILOGUE);
+                    proc->setEpilogue((CalleeEpilogue*)logue);
+                }
+
+            result.rtl = new HLReturn(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("std_ret")
+        }
 
     else if ((logue = InstructionPatterns::rest_ret(csr, hostPC, d16)) != NULL)
-    {
-        /*
-         * A restore (movem stack to registers) then return
-         */
-        if (proc!= NULL) {
+        {
+            /*
+             * A restore (movem stack to registers) then return
+             */
+            if (proc!= NULL)
+                {
 
-            // Record the epilogue of this callee
-            assert(logue->getType() == Logue::CALLEE_EPILOGUE);
-            proc->setEpilogue((CalleeEpilogue*)logue);
+                    // Record the epilogue of this callee
+                    assert(logue->getType() == Logue::CALLEE_EPILOGUE);
+                    proc->setEpilogue((CalleeEpilogue*)logue);
+                }
+
+            result.rtl = new HLReturn(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("rest_ret")
         }
-
-        result.rtl = new HLReturn(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("rest_ret")
-    }
 
     else if ((logue = InstructionPatterns::rest1_ret(csr, hostPC, reg)) != NULL)
-    {
-        /*
-         * A pop (move (a7)+ to one D register) then unlink and return
-         */
-        if (proc!= NULL) {
+        {
+            /*
+             * A pop (move (a7)+ to one D register) then unlink and return
+             */
+            if (proc!= NULL)
+                {
 
-            // Record the epilogue of this callee
-            assert(logue->getType() == Logue::CALLEE_EPILOGUE);
-            proc->setEpilogue((CalleeEpilogue*)logue);
+                    // Record the epilogue of this callee
+                    assert(logue->getType() == Logue::CALLEE_EPILOGUE);
+                    proc->setEpilogue((CalleeEpilogue*)logue);
+                }
+
+            result.rtl = new HLReturn(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("rest1_ret")
         }
-
-        result.rtl = new HLReturn(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("rest1_ret")
-    }
 
     else if ((logue = InstructionPatterns::pop_ret(csr, hostPC, reg)) != NULL)
-    {
-        /*
-         * A pop (move (a7)+ to one D register) then just return
-         */
-        if (proc!= NULL) {
+        {
+            /*
+             * A pop (move (a7)+ to one D register) then just return
+             */
+            if (proc!= NULL)
+                {
 
-            // Record the epilogue of this callee
-            assert(logue->getType() == Logue::CALLEE_EPILOGUE);
-            proc->setEpilogue((CalleeEpilogue*)logue);
+                    // Record the epilogue of this callee
+                    assert(logue->getType() == Logue::CALLEE_EPILOGUE);
+                    proc->setEpilogue((CalleeEpilogue*)logue);
+                }
+
+            result.rtl = new HLReturn(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+            SHOW_ASM("pop_ret")
         }
-
-        result.rtl = new HLReturn(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-        SHOW_ASM("pop_ret")
-    }
 
     else if ((logue = InstructionPatterns::clear_stack(csr, hostPC, stackSize))
              != NULL)
-    {
-        /*
-         * Remove parameters from the stack
-         */
-        RTs = instantiate(pc, "clear_stack", dis_Num(stackSize));
-
-        result.rtl = new RTlist(pc, RTs);
-        result.numBytes = hostPC - saveHostPC;
-    }
-
-    else {
-
-        ADDRESS nextPC;
-        int bump = 0, bumpr;
-        SemStr* ss;
-
-
-
-
         {
-            dword MATCH_p =
+            /*
+             * Remove parameters from the stack
+             */
+            RTs = instantiate(pc, "clear_stack", dis_Num(stackSize));
+
+            result.rtl = new RTlist(pc, RTs);
+            result.numBytes = hostPC - saveHostPC;
+        }
+
+    else
+        {
+
+            ADDRESS nextPC;
+            int bump = 0, bumpr;
+            SemStr* ss;
 
 
-                hostPC
-                ;
-            char *MATCH_name;
-            static char *MATCH_name_cond_12[] = {
-                "bra", (char *)0, "bhi", "bls", "bcc", "bcs", "bne", "beq", "bvc", "bvs",
-                "bpl", "bmi", "bge", "blt", "bgt", "ble",
-            };
-            unsigned /* [0..65535] */ MATCH_w_16_0;
+
+
             {
-                MATCH_w_16_0 = getWord(MATCH_p);
+                dword MATCH_p =
 
-                switch((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */) {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                    goto MATCH_label_de0;
-                    break;
-                case 4:
-                    if ((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 2)
-                        if ((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 7)
-                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-                                goto MATCH_label_de0;  /*opt-block+*/
+
+                    hostPC
+                    ;
+                char *MATCH_name;
+                static char *MATCH_name_cond_12[] =
+                {
+                    "bra", (char *)0, "bhi", "bls", "bcc", "bcs", "bne", "beq", "bvc", "bvs",
+                    "bpl", "bmi", "bge", "blt", "bgt", "ble",
+                };
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+
+                    switch((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */)
+                        {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 15:
+                            goto MATCH_label_de0;
+                            break;
+                        case 4:
+                            if ((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 2)
+                                if ((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */ == 7)
+                                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+                                        goto MATCH_label_de0;  /*opt-block+*/
+                                    else
+
+                                        switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                            {
+                                            case 0:
+                                            case 1:
+                                                goto MATCH_label_de0;
+                                                break;
+                                            case 2:
+                                            {
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                /*
+
+                                                 * Register call
+
+                                                 */
+
+                                                // Mike: there should probably be a HLNwayCall class for this!
+
+                                                HLCall* newCall = new HLCall(pc, 0, RTs);
+
+                                                // Record the fact that this is a computed call
+
+                                                newCall->setIsComputed();
+
+                                                // Set the destination expression
+
+                                                newCall->setDest(cEA(ea, pc, 32));
+
+                                                result.rtl = newCall;
+
+                                                // Only one instruction, so size of result is size of this decode
+
+                                                result.numBytes = nextPC - hostPC;
+
+
+
+
+
+
+                                            }
+
+                                            break;
+                                            case 3:
+                                            {
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                /*
+
+                                                 * Register jump
+
+                                                 */
+
+                                                HLNwayJump* newJump = new HLNwayJump(pc, RTs);
+
+                                                // Record the fact that this is a computed call
+
+                                                newJump->setIsComputed();
+
+                                                // Set the destination expression
+
+                                                newJump->setDest(cEA(ea, pc, 32));
+
+                                                result.rtl = newJump;
+
+                                                // Only one instruction, so size of result is size of this decode
+
+                                                result.numBytes = nextPC - hostPC;
+
+
+
+                                                /*
+
+                                                 * Unconditional branches
+
+                                                 */
+
+
+
+
+                                            }
+
+                                            break;
+                                            default:
+                                                assert(0);
+                                            } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                                else
+                                    goto MATCH_label_de0;  /*opt-block+*/
                             else
+                                goto MATCH_label_de0;  /*opt-block+*/
+                            break;
+                        case 5:
 
-                                switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
+                            switch((MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */)
+                                {
                                 case 0:
+                                case 1:
+                                case 8:
+                                case 9:
+                                    goto MATCH_label_de0;
+                                    break;
+                                case 2:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "shi";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JSG)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 3:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "sls";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JULE)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 4:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "scc";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JUGE)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 5:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "scs";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JUL)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 6:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "sne";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JNE)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 7:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "seq";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JE)
+
+                                                //| svc(ea) [name] =>
+
+                                                //  ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                //	RTs = instantiate(pc, name, ss);
+
+                                                //	SETS(name, ss, HLJCOND_)
+
+                                                //| svs(ea) [name] =>
+
+                                                //  ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                //	RTs = instantiate(pc, name, ss);
+
+                                                //	SETS(name, ss, HLJCOND_)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 10:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "spl";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JPOS)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 11:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "smi";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JMI)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 12:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "sge";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JSGE)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 13:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "slt";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JSL)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 14:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "sgt";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JSG)
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                case 15:
+                                    if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
+                                            2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
+                                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
+                                            (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+                                        {
+                                            MATCH_name = "sle";
+                                            {
+                                                char *name = MATCH_name;
+                                                unsigned ea = addressToPC(MATCH_p);
+                                                nextPC = 2 + MATCH_p;
+
+
+
+
+                                                ss = daEA(ea, pc, bump, bumpr, 1);
+
+                                                RTs = instantiate(pc, name, ss);
+
+                                                SETS(name, ss, HLJCOND_JSLE)
+
+                                                // HACK: Still need to do .ex versions of set, jsr, jmp
+
+
+
+
+
+
+                                            }
+
+                                        } /*opt-block*/
+                                    else
+                                        goto MATCH_label_de0;  /*opt-block+*/
+
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 8 & 0xf) -- cond at 0 --*/
+                            break;
+                        case 6:
+
+                            switch((MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */)
+                                {
+                                case 0:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        UNCOND_JUMP(name, nextPC - hostPC, ss);
+
+
+
+                                        /*
+
+                                         * Conditional branches
+
+                                         */
+
+
+
+
+                                    }
+
+                                    break;
                                 case 1:
                                     goto MATCH_label_de0;
                                     break;
                                 case 2:
-                                {
-                                    unsigned ea = addressToPC(MATCH_p);
-                                    nextPC = 2 + MATCH_p;
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
 
 
 
 
-                                    /*
+                                        ss = BTA(d, result, pc);
 
-                                     * Register call
-
-                                     */
-
-                                    // Mike: there should probably be a HLNwayCall class for this!
-
-                                    HLCall* newCall = new HLCall(pc, 0, RTs);
-
-                                    // Record the fact that this is a computed call
-
-                                    newCall->setIsComputed();
-
-                                    // Set the destination expression
-
-                                    newCall->setDest(cEA(ea, pc, 32));
-
-                                    result.rtl = newCall;
-
-                                    // Only one instruction, so size of result is size of this decode
-
-                                    result.numBytes = nextPC - hostPC;
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JUG)
 
 
 
 
+                                    }
 
-
-                                }
-
-                                break;
+                                    break;
                                 case 3:
-                                {
-                                    unsigned ea = addressToPC(MATCH_p);
-                                    nextPC = 2 + MATCH_p;
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
 
 
 
 
-                                    /*
+                                        ss = BTA(d, result, pc);
 
-                                     * Register jump
-
-                                     */
-
-                                    HLNwayJump* newJump = new HLNwayJump(pc, RTs);
-
-                                    // Record the fact that this is a computed call
-
-                                    newJump->setIsComputed();
-
-                                    // Set the destination expression
-
-                                    newJump->setDest(cEA(ea, pc, 32));
-
-                                    result.rtl = newJump;
-
-                                    // Only one instruction, so size of result is size of this decode
-
-                                    result.numBytes = nextPC - hostPC;
-
-
-
-                                    /*
-
-                                     * Unconditional branches
-
-                                     */
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JULE)
 
 
 
 
-                                }
+                                    }
 
-                                break;
+                                    break;
+                                case 4:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JUGE)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 5:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JUL)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 6:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JNE)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 7:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JE)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 8:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, (JCOND_TYPE)0)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 9:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, (JCOND_TYPE)0)
+
+
+
+
+
+                                        // MVE: I'm assuming that we won't ever see shi(-(a7)) or the like.
+
+                                        // This would unbalance the stack, although it would be legal for
+
+                                        // address registers other than a7. For now, we ignore the possibility
+
+                                        // of having to bump a register
+
+
+
+
+                                    }
+
+                                    break;
+                                case 10:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JPOS)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 11:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JMI)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 12:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSGE)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 13:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSL)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 14:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSG)
+
+
+
+
+                                    }
+
+                                    break;
+                                case 15:
+                                    MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
+                                                                    /* cond at 0 */];
+                                    {
+                                        char *name = MATCH_name;
+                                        unsigned d = addressToPC(MATCH_p);
+                                        nextPC = 2 + MATCH_p;
+
+
+
+
+                                        ss = BTA(d, result, pc);
+
+                                        COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSLE)
+
+
+
+
+                                    }
+
+                                    break;
                                 default:
                                     assert(0);
-                                } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-                    else
-                        goto MATCH_label_de0;  /*opt-block+*/
-                    break;
-                case 5:
-
-                    switch((MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */) {
-                    case 0:
-                    case 1:
-                    case 8:
-                    case 9:
-                        goto MATCH_label_de0;
-                        break;
-                    case 2:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "shi";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JSG)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 3:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "sls";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JULE)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 4:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "scc";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JUGE)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 5:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "scs";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JUL)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 6:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "sne";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JNE)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 7:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "seq";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JE)
-
-                                //| svc(ea) [name] =>
-
-                                //  ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                //	RTs = instantiate(pc, name, ss);
-
-                                //	SETS(name, ss, HLJCOND_)
-
-                                //| svs(ea) [name] =>
-
-                                //  ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                //	RTs = instantiate(pc, name, ss);
-
-                                //	SETS(name, ss, HLJCOND_)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 10:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "spl";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JPOS)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 11:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "smi";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JMI)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 12:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "sge";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JSGE)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 13:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "slt";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JSL)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 14:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "sgt";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JSG)
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    case 15:
-                        if (((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 0 ||
-                                2 <= (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ &&
-                                (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ < 5) &&
-                                (MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3) {
-                            MATCH_name = "sle";
-                            {
-                                char *name = MATCH_name;
-                                unsigned ea = addressToPC(MATCH_p);
-                                nextPC = 2 + MATCH_p;
-
-
-
-
-                                ss = daEA(ea, pc, bump, bumpr, 1);
-
-                                RTs = instantiate(pc, name, ss);
-
-                                SETS(name, ss, HLJCOND_JSLE)
-
-                                // HACK: Still need to do .ex versions of set, jsr, jmp
-
-
-
-
-
-
-                            }
-
-                        } /*opt-block*/
-                        else
-                            goto MATCH_label_de0;  /*opt-block+*/
-
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 8 & 0xf) -- cond at 0 --*/
-                    break;
-                case 6:
-
-                    switch((MATCH_w_16_0 >> 8 & 0xf) /* cond at 0 */) {
-                    case 0:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            UNCOND_JUMP(name, nextPC - hostPC, ss);
-
-
-
-                            /*
-
-                             * Conditional branches
-
-                             */
-
-
-
-
-                        }
-
-                        break;
-                    case 1:
-                        goto MATCH_label_de0;
-                        break;
-                    case 2:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JUG)
-
-
-
-
-                        }
-
-                        break;
-                    case 3:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JULE)
-
-
-
-
-                        }
-
-                        break;
-                    case 4:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JUGE)
-
-
-
-
-                        }
-
-                        break;
-                    case 5:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JUL)
-
-
-
-
-                        }
-
-                        break;
-                    case 6:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JNE)
-
-
-
-
-                        }
-
-                        break;
-                    case 7:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JE)
-
-
-
-
-                        }
-
-                        break;
-                    case 8:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, (JCOND_TYPE)0)
-
-
-
-
-                        }
-
-                        break;
-                    case 9:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, (JCOND_TYPE)0)
-
-
-
-
-
-                            // MVE: I'm assuming that we won't ever see shi(-(a7)) or the like.
-
-                            // This would unbalance the stack, although it would be legal for
-
-                            // address registers other than a7. For now, we ignore the possibility
-
-                            // of having to bump a register
-
-
-
-
-                        }
-
-                        break;
-                    case 10:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JPOS)
-
-
-
-
-                        }
-
-                        break;
-                    case 11:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JMI)
-
-
-
-
-                        }
-
-                        break;
-                    case 12:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSGE)
-
-
-
-
-                        }
-
-                        break;
-                    case 13:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSL)
-
-
-
-
-                        }
-
-                        break;
-                    case 14:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSG)
-
-
-
-
-                        }
-
-                        break;
-                    case 15:
-                        MATCH_name = MATCH_name_cond_12[(MATCH_w_16_0 >> 8 & 0xf)
-                                                        /* cond at 0 */];
-                        {
-                            char *name = MATCH_name;
-                            unsigned d = addressToPC(MATCH_p);
-                            nextPC = 2 + MATCH_p;
-
-
-
-
-                            ss = BTA(d, result, pc);
-
-                            COND_JUMP(name, nextPC - hostPC, ss, HLJCOND_JSLE)
-
-
-
-
-                        }
-
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 8 & 0xf) -- cond at 0 --*/
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 >> 12 & 0xf) -- op at 0 --*/
-
-            }
-            goto MATCH_finished_de;
+                                } /* (MATCH_w_16_0 >> 8 & 0xf) -- cond at 0 --*/
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 >> 12 & 0xf) -- op at 0 --*/
+
+                }
+                goto MATCH_finished_de;
 
 MATCH_label_de0:
-            (void)0; /*placeholder for label*/
-            {
-                nextPC = MATCH_p;
+                (void)0; /*placeholder for label*/
+                {
+                    nextPC = MATCH_p;
 
 
 
-                result.rtl = new RTlist(pc,
+                    result.rtl = new RTlist(pc,
 
-                                        decodeLowLevelInstruction(hostPC, pc, result));
-
-
+                                            decodeLowLevelInstruction(hostPC, pc, result));
 
 
-            }
-            goto MATCH_finished_de;
+
+
+                }
+                goto MATCH_finished_de;
 
 MATCH_finished_de:
-            (void)0; /*placeholder for label*/
+                (void)0; /*placeholder for label*/
+
+            }
+
 
         }
-
-
-    }
     return result;
 }
 
@@ -1307,45 +1340,47 @@ SemStr* NJMCDecoder::BTA(ADDRESS d, DecodeResult& result, ADDRESS pc)
         unsigned /* [0..65535] */ MATCH_w_16_16;
         {
             MATCH_w_16_0 = getWord(MATCH_p);
-            if ((MATCH_w_16_0 & 0xff) /* data8 at 0 */ == 0) {
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
+            if ((MATCH_w_16_0 & 0xff) /* data8 at 0 */ == 0)
                 {
-                    int /* [~32768..32767] */ dsp16 =
-                        sign_extend((MATCH_w_16_16 & 0xffff) /* d16 at 16 */, 16);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        int /* [~32768..32767] */ dsp16 =
+                            sign_extend((MATCH_w_16_16 & 0xffff) /* d16 at 16 */, 16);
+
+
+                        {
+
+                            ret->push(pc+2 + dsp16);
+
+                            result.numBytes += 2;
+
+                        }
+
+
+
+
+
+
+                    }
+
+                } /*opt-block*/
+            else
+                {
+                    unsigned dsp8 = (MATCH_w_16_0 & 0xff) /* data8 at 0 */;
 
 
                     {
 
-                        ret->push(pc+2 + dsp16);
+                        // Casts needed to work around MLTK bug
 
-                        result.numBytes += 2;
+                        ret->push(pc+2 + (int)(char)dsp8);
 
                     }
 
 
 
 
-
-
-                }
-
-            } /*opt-block*/
-            else {
-                unsigned dsp8 = (MATCH_w_16_0 & 0xff) /* data8 at 0 */;
-
-
-                {
-
-                    // Casts needed to work around MLTK bug
-
-                    ret->push(pc+2 + (int)(char)dsp8);
-
-                }
-
-
-
-
-            } /*opt-block*//*opt-block+*/
+                } /*opt-block*//*opt-block+*/
 
         }
         goto MATCH_finished_ce;
@@ -1448,86 +1483,87 @@ SemStr* NJMCDecoder::alEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pADirect(reg2, size);
+                    ret = pDDirect(reg2, size);
 
 
 
 
-            }
-
-            break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPreDec(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
-
-
-
+                }
 
                 break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                case 1:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pADirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pIndirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 5:
+                case 6:
+                case 7:
+
+
+                    pIllegalMode(pc);
+
+
+
+
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_be;
@@ -1558,86 +1594,87 @@ SemStr* NJMCDecoder::amEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pADirect(reg2, size);
+                    ret = pDDirect(reg2, size);
 
 
 
 
-            }
-
-            break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPreDec(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
-
-
-
+                }
 
                 break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                case 1:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pADirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pIndirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 5:
+                case 6:
+                case 7:
+
+
+                    pIllegalMode(pc);
+
+
+
+
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_ae;
@@ -1668,86 +1705,87 @@ SemStr* NJMCDecoder::awlEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pADirect(reg2, size);
+                    ret = pDDirect(reg2, size);
 
 
 
 
-            }
-
-            break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPreDec(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
-
-
-
+                }
 
                 break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                case 1:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pADirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pIndirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 5:
+                case 6:
+                case 7:
+
+
+                    pIllegalMode(pc);
+
+
+
+
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_zd;
@@ -1776,16 +1814,17 @@ SemStr* NJMCDecoder::cEA(ADDRESS ea, ADDRESS pc, int size)
         unsigned /* [0..65535] */ MATCH_w_16_0;
         {
             MATCH_w_16_0 = getWord(MATCH_p);
-            if ((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 2) {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            if ((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 2)
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pIndirect(reg2, size);
+                    ret = pIndirect(reg2, size);
 
 
 
 
-            } /*opt-block*//*opt-block+*/
+                } /*opt-block*//*opt-block+*/
             else
 
 
@@ -1823,74 +1862,75 @@ SemStr* NJMCDecoder::dEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
+                    ret = pDDirect(reg2, size);
 
 
 
+
+                }
 
                 break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                case 1:
+                case 5:
+                case 6:
+                case 7:
 
 
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
+                    pIllegalMode(pc);
 
 
 
 
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                    break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pPreDec(reg2, bump, bumpr, size);
+                    ret = pIndirect(reg2, size);
 
 
 
 
-            }
+                }
 
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_xd;
@@ -1921,74 +1961,75 @@ SemStr* NJMCDecoder::daEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
+                    ret = pDDirect(reg2, size);
 
 
 
+
+                }
 
                 break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                case 1:
+                case 5:
+                case 6:
+                case 7:
 
 
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
+                    pIllegalMode(pc);
 
 
 
 
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                    break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pPreDec(reg2, bump, bumpr, size);
+                    ret = pIndirect(reg2, size);
 
 
 
 
-            }
+                }
 
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_wd;
@@ -2019,74 +2060,75 @@ SemStr* NJMCDecoder::dBEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
+                    ret = pDDirect(reg2, size);
 
 
 
+
+                }
 
                 break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                case 1:
+                case 5:
+                case 6:
+                case 7:
 
 
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
+                    pIllegalMode(pc);
 
 
 
 
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                    break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pPreDec(reg2, bump, bumpr, size);
+                    ret = pIndirect(reg2, size);
 
 
 
 
-            }
+                }
 
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_vd;
@@ -2117,74 +2159,75 @@ SemStr* NJMCDecoder::dWEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
+                    ret = pDDirect(reg2, size);
 
 
 
+
+                }
 
                 break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                case 1:
+                case 5:
+                case 6:
+                case 7:
 
 
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
+                    pIllegalMode(pc);
 
 
 
 
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                    break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pPreDec(reg2, bump, bumpr, size);
+                    ret = pIndirect(reg2, size);
 
 
 
 
-            }
+                }
 
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_ud;
@@ -2215,62 +2258,63 @@ SemStr* NJMCDecoder::maEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 5:
-            case 6:
-            case 7:
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 5:
+                case 6:
+                case 7:
 
 
-                pIllegalMode(pc);
+                    pIllegalMode(pc);
 
 
 
+
+                    break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pIndirect(reg2, size);
+
+
+
+
+                }
 
                 break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
+                    ret = pPostInc(reg2, bump, bumpr, size);
 
 
 
 
-            }
+                }
 
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPreDec(reg2, bump, bumpr, size);
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
+                    ret = pPreDec(reg2, bump, bumpr, size);
 
 
-            }
 
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+                }
+
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_td;
@@ -2301,86 +2345,87 @@ SemStr* NJMCDecoder::msEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pDDirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pADirect(reg2, size);
+                    ret = pDDirect(reg2, size);
 
 
 
 
-            }
-
-            break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPreDec(reg2, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
-
-
-
+                }
 
                 break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                case 1:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pADirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pIndirect(reg2, size);
+
+
+
+
+                }
+
+                break;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPostInc(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pPreDec(reg2, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 5:
+                case 6:
+                case 7:
+
+
+                    pIllegalMode(pc);
+
+
+
+
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_sd;
@@ -2411,86 +2456,87 @@ SemStr* NJMCDecoder::mdEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-            case 0:
-            {
-                unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                {
+                case 0:
+                {
+                    unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
 
 
-                ret = pDDirect(reg1, size);
-
-
-
-
-            }
-
-            break;
-            case 1:
-            {
-                unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-
-
-                ret = pADirect(reg1, size);
+                    ret = pDDirect(reg1, size);
 
 
 
 
-            }
-
-            break;
-            case 2:
-            {
-                unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-
-
-                ret = pIndirect(reg1, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-
-
-                ret = pPostInc(reg1, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-
-
-                ret = pPreDec(reg1, bump, bumpr, size);
-
-
-
-
-            }
-
-            break;
-            case 5:
-            case 6:
-            case 7:
-
-
-                pIllegalMode(pc);
-
-
-
+                }
 
                 break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                case 1:
+                {
+                    unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+
+
+                    ret = pADirect(reg1, size);
+
+
+
+
+                }
+
+                break;
+                case 2:
+                {
+                    unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+
+
+                    ret = pIndirect(reg1, size);
+
+
+
+
+                }
+
+                break;
+                case 3:
+                {
+                    unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+
+
+                    ret = pPostInc(reg1, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 4:
+                {
+                    unsigned reg1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+
+
+                    ret = pPreDec(reg1, bump, bumpr, size);
+
+
+
+
+                }
+
+                break;
+                case 5:
+                case 6:
+                case 7:
+
+
+                    pIllegalMode(pc);
+
+
+
+
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
 
         }
         goto MATCH_finished_rd;
@@ -2521,50 +2567,51 @@ SemStr* NJMCDecoder::mrEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
 
 
-                pIllegalMode(pc);
+                    pIllegalMode(pc);
 
 
 
+
+                    break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pIndirect(reg2, size);
+
+
+
+
+                }
 
                 break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                case 3:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 3:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPostInc(reg2, bump, bumpr, size);
+                    ret = pPostInc(reg2, bump, bumpr, size);
 
 
 
 
-            }
+                }
 
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_qd;
@@ -2595,50 +2642,51 @@ SemStr* NJMCDecoder::rmEA(ADDRESS ea, ADDRESS pc, int& bump, int& bumpr,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 3:
-            case 5:
-            case 6:
-            case 7:
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 3:
+                case 5:
+                case 6:
+                case 7:
 
 
-                pIllegalMode(pc);
+                    pIllegalMode(pc);
 
 
 
+
+                    break;
+                case 2:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    ret = pIndirect(reg2, size);
+
+
+
+
+                }
 
                 break;
-            case 2:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+                case 4:
+                {
+                    unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
-                ret = pIndirect(reg2, size);
-
-
-
-
-            }
-
-            break;
-            case 4:
-            {
-                unsigned reg2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                ret = pPreDec(reg2, bump, bumpr, size);
+                    ret = pPreDec(reg2, bump, bumpr, size);
 
 
 
 
-            }
+                }
 
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_pd;
@@ -2802,4297 +2850,53 @@ SemStr* NJMCDecoder::alEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_od0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
                 {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
                 case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
                 case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
                 case 2:
                 case 3:
                 case 4:
-                case 5:
-                case 6:
-                case 7:
                     goto MATCH_label_od0;
                     break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_od;
-
-MATCH_label_od0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_od;
-
-MATCH_finished_od:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
+                case 5:
                 {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_nd;
-
-MATCH_finished_nd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_md;
-
-MATCH_finished_md:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ld;
-
-MATCH_finished_ld:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_kd;
-
-MATCH_finished_kd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::amEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                           ADDRESS pc, int delta, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_jd0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 3:
-
-
-                {
-                    mode = 3;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 4:
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
                     {
-                        mode = 6;
+                        mode = 0;
+                        reg2 = r2;
                         result.numBytes += 2;
                     }
 
 
 
 
-                    break;
-                    case 1:
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
                     {
-                        mode = 7;
+                        mode = 1;
+                        reg2 = r2;
                         result.numBytes += 2;
                     }
 
 
 
 
-                    break;
-                    case 2:
+                }
 
-
-                    {
-                        mode = 8;
-                        result.numBytes += 4;
-                    }
-
-
-
-
-                    break;
-                    case 3:
-                        goto MATCH_label_jd0;
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                    break;
-                case 5:
-                case 6:
+                break;
                 case 7:
-                    goto MATCH_label_jd0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
-        }
-        goto MATCH_finished_jd;
-
-MATCH_label_jd0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_jd;
-
-MATCH_finished_jd:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_id;
-
-MATCH_finished_id:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_hd;
-
-MATCH_finished_hd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(d16, delta, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_gd;
-
-MATCH_finished_gd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_fd;
-
-MATCH_finished_fd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ed;
-
-MATCH_finished_ed:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_dd;
-
-MATCH_finished_dd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 6 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
-                        (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
-                         (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
-                        1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
-                    goto MATCH_label_cd0;  /*opt-block+*/
-                else {
-                    unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
-
-
-                    ret = pImmB(d8);
-
-
-
-
-                } /*opt-block*//*opt-block+*/
-
-            }
-            goto MATCH_finished_cd;
-
-MATCH_label_cd0:
-            (void)0; /*placeholder for label*/
-
-
-            pNonzeroByte(pc);
-
-
-
-            goto MATCH_finished_cd;
-
-MATCH_finished_cd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 7 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
-
-
-                    ret = pImmW(d16);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_bd;
-
-MATCH_finished_bd:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 8 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pImmL(d32);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ad;
-
-MATCH_finished_ad:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::awlEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                            ADDRESS pc, int delta, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_zc0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 3:
-
-
-                {
-                    mode = 3;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 4:
-                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-
-
-                    {
-                        mode = 8;
-                        result.numBytes += 4;
-                    }
-
-
-                    /*opt-block+*/
-                    else
-
-
-                    {
-                        mode = 7;
-                        result.numBytes += 2;
-                    }
-
-
-                    /*opt-block+*/
-
-                    break;
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_zc0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_zc;
-
-MATCH_label_zc0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_zc;
-
-MATCH_finished_zc:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_yc;
-
-MATCH_finished_yc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_xc;
-
-MATCH_finished_xc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(d16, delta, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_wc;
-
-MATCH_finished_wc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_vc;
-
-MATCH_finished_vc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_uc;
-
-MATCH_finished_uc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_tc;
-
-MATCH_finished_tc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 7 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
-
-
-                    ret = pImmW(d16);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_sc;
-
-MATCH_finished_sc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 8 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pImmL(d32);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_rc;
-
-MATCH_finished_rc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::cEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                          ADDRESS pc, int delta, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_qc0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 3:
-
-
-                {
-                    mode = 3;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_qc0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_qc;
-
-MATCH_label_qc0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_qc;
-
-MATCH_finished_qc:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_pc;
-
-MATCH_finished_pc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_oc;
-
-MATCH_finished_oc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned label =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(label, delta, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_nc;
-
-MATCH_finished_nc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_mc;
-
-MATCH_finished_mc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_lc;
-
-MATCH_finished_lc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_kc;
-
-MATCH_finished_kc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::dEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                          ADDRESS pc, int delta, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_jc0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 3:
-
-
-                {
-                    mode = 3;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 4:
-
-                    switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */) {
-                    case 0:
-
-
-                    {
-                        mode = 6;
-                        result.numBytes += 2;
-                    }
-
-
-
-
-                    break;
-                    case 1:
-
-
-                    {
-                        mode = 7;
-                        result.numBytes += 2;
-                    }
-
-
-
-
-                    break;
-                    case 2:
-
-
-                    {
-                        mode = 8;
-                        result.numBytes += 4;
-                    }
-
-
-
-
-                    break;
-                    case 3:
-                        goto MATCH_label_jc0;
-                        break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
-                    break;
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_jc0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_jc;
-
-MATCH_label_jc0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_jc;
-
-MATCH_finished_jc:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ic;
-
-MATCH_finished_ic:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_hc;
-
-MATCH_finished_hc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned label =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(label, delta, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_gc;
-
-MATCH_finished_gc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_fc;
-
-MATCH_finished_fc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ec;
-
-MATCH_finished_ec:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_dc;
-
-MATCH_finished_dc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 6 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
-                        (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
-                         (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
-                        1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
-                    goto MATCH_label_cc0;  /*opt-block+*/
-                else {
-                    unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
-
-
-                    ret = pImmB(d8);
-
-
-
-
-                } /*opt-block*//*opt-block+*/
-
-            }
-            goto MATCH_finished_cc;
-
-MATCH_label_cc0:
-            (void)0; /*placeholder for label*/
-
-
-            pNonzeroByte(pc);
-
-
-
-            goto MATCH_finished_cc;
-
-MATCH_finished_cc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 7 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
-
-
-                    ret = pImmW(d16);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_bc;
-
-MATCH_finished_bc:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 8 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pImmL(d32);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ac;
-
-MATCH_finished_ac:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::daEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                           ADDRESS pc, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_zb0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_zb0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_zb;
-
-MATCH_label_zb0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_zb;
-
-MATCH_finished_zb:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_yb;
-
-MATCH_finished_yb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_xb;
-
-MATCH_finished_xb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_wb;
-
-MATCH_finished_wb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_vb;
-
-MATCH_finished_vb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::dBEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                           ADDRESS pc, int delta, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_ub0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 3:
-
-
-                {
-                    mode = 3;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 4:
-
-
-                {
-                    mode = 6;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_ub0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_ub;
-
-MATCH_label_ub0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_ub;
-
-MATCH_finished_ub:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_tb;
-
-MATCH_finished_tb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_sb;
-
-MATCH_finished_sb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned label =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(label, delta, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_rb;
-
-MATCH_finished_rb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_qb;
-
-MATCH_finished_qb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_pb;
-
-MATCH_finished_pb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ob;
-
-MATCH_finished_ob:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 6 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
-                        (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
-                         (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
-                        1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
-                    goto MATCH_label_nb0;  /*opt-block+*/
-                else {
-                    unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
-
-
-                    ret = pImmB(d8);
-
-
-
-
-                } /*opt-block*//*opt-block+*/
-
-            }
-            goto MATCH_finished_nb;
-
-MATCH_label_nb0:
-            (void)0; /*placeholder for label*/
-
-
-            pNonzeroByte(pc);
-
-
-
-            goto MATCH_finished_nb;
-
-MATCH_finished_nb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::dWEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                           ADDRESS pc, int delta, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_mb0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 3:
-
-
-                {
-                    mode = 3;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 4:
-
-
-                {
-                    mode = 7;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_mb0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_mb;
-
-MATCH_label_mb0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_mb;
-
-MATCH_finished_mb:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_lb;
-
-MATCH_finished_lb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_kb;
-
-MATCH_finished_kb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned label =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(label, delta, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_jb;
-
-MATCH_finished_jb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ib;
-
-MATCH_finished_ib:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_hb;
-
-MATCH_finished_hb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_gb;
-
-MATCH_finished_gb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 7 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
-
-
-                    ret = pImmW(d16);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_fb;
-
-MATCH_finished_fb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::maEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                           ADDRESS pc, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_eb0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_eb0;
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_eb;
-
-MATCH_label_eb0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_eb;
-
-MATCH_finished_eb:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_db;
-
-MATCH_finished_db:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_cb;
-
-MATCH_finished_cb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_bb;
-
-MATCH_finished_bb:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_ab;
-
-MATCH_finished_ab:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::msEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                           ADDRESS pc, int delta, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_z0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-                case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 1:
-                case 5:
-                case 6:
-                case 7:
-                    goto MATCH_label_z0;
-                    break;
-                case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 3:
-
-
-                {
-                    mode = 3;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
-                case 4:
-
-                    switch((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */) {
-                    case 0:
-                    case 2:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                    case 13:
-                    case 14:
-                    case 15:
-                        goto MATCH_label_z0;
-                        break;
-                    case 1:
-
-
-                    {
-                        mode = 6;
-                        result.numBytes += 2;
-                    }
-
-
-
-
-                    break;
-                    case 3:
-
-
-                    {
-                        mode = 7;
-                        result.numBytes += 2;
-                    }
-
-
-
-
-                    break;
-                    default:
-                        assert(0);
-                    } /* (MATCH_w_16_0 >> 12 & 0xf) -- op at 0 --*/
-                    break;
-                default:
-                    assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
-
-        }
-        goto MATCH_finished_z;
-
-MATCH_label_z0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_z;
-
-MATCH_finished_z:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 0 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pADisp(d16, reg2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_y;
-
-MATCH_finished_y:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_x;
-
-MATCH_finished_x:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned label =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(label, delta, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_w;
-
-MATCH_finished_w:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_v;
-
-MATCH_finished_v:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_u;
-
-MATCH_finished_u:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 6 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
-                        (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
-                         (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
-                        (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
-                        1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
-                        (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
-                    goto MATCH_label_t0;  /*opt-block+*/
-                else {
-                    unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
-
-
-                    ret = pImmB(d8);
-
-
-
-
-                } /*opt-block*//*opt-block+*/
-
-            }
-            goto MATCH_finished_t;
-
-MATCH_label_t0:
-            (void)0; /*placeholder for label*/
-
-
-            pNonzeroByte(pc);
-
-
-
-            goto MATCH_finished_t;
-
-MATCH_finished_t:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 7 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
-
-
-                    ret = pImmW(d16);
-
-
-
-
-                }
-
-            }
-            goto MATCH_finished_s;
-
-MATCH_finished_s:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::msEAXL(ADDRESS eaxl, int d32, DecodeResult& result,
-                            ADDRESS pc, int size)
-{
-    SemStr* ret;
-    int reg2, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eaxl
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
-            case 0:
-            case 2:
-            case 3:
-            case 5:
-            case 6:
-            case 7:
-                goto MATCH_label_r0;
-                break;
-            case 1:
-                if ((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 7)
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-                /*opt-block+*/
-                else
-                    goto MATCH_label_r0;  /*opt-block+*/
-
-                break;
-            case 4:
-                if ((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */ == 2 &&
-                        (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 7)
-
-
-                {
-                    mode = 8;
-                    result.numBytes += 4;
-                }
-
-
-                /*opt-block+*/
-                else
-                    goto MATCH_label_r0;  /*opt-block+*/
-
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-
-        }
-        goto MATCH_finished_r;
-
-MATCH_label_r0:
-        (void)0; /*placeholder for label*/
-
-
-        pIllegalMode(pc);
-
-
-
-        goto MATCH_finished_r;
-
-MATCH_finished_r:
-        (void)0; /*placeholder for label*/
-
-    }
-
-
-
-    switch (mode) {
-    case 5 : {
-        ret = pAbsL(d32, size);
-        break;
-    }
-    case 8 : {
-        ret = pImmL(d32);
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
-    return ret;
-}
-
-
-SemStr* NJMCDecoder::mdEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-                           ADDRESS pc, int size)
-{
-    SemStr* ret;
-    int reg1, mode;
-
-
-
-
-    {
-        dword MATCH_p =
-
-
-            eax
-            ;
-        unsigned /* [0..65535] */ MATCH_w_16_0;
-        {
-            MATCH_w_16_0 = getWord(MATCH_p);
-
-            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 7:
-                if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
-                    if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
-
-                        switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */) {
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
                         case 0:
 
 
@@ -7123,53 +2927,4405 @@ SemStr* NJMCDecoder::mdEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
                         case 5:
                         case 6:
                         case 7:
-                            goto MATCH_label_q0;
+                            goto MATCH_label_od0;
                             break;
                         default:
                             assert(0);
-                        } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_od;
+
+MATCH_label_od0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_od;
+
+MATCH_finished_od:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_nd;
+
+MATCH_finished_nd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_md;
+
+MATCH_finished_md:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ld;
+
+MATCH_finished_ld:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_kd;
+
+MATCH_finished_kd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::amEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                           ADDRESS pc, int delta, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_jd0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+
+                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                {
+                                case 0:
+
+
+                                {
+                                    mode = 6;
+                                    result.numBytes += 2;
+                                }
+
+
+
+
+                                break;
+                                case 1:
+
+
+                                {
+                                    mode = 7;
+                                    result.numBytes += 2;
+                                }
+
+
+
+
+                                break;
+                                case 2:
+
+
+                                {
+                                    mode = 8;
+                                    result.numBytes += 4;
+                                }
+
+
+
+
+                                break;
+                                case 3:
+                                    goto MATCH_label_jd0;
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                            break;
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_jd0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_jd;
+
+MATCH_label_jd0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_jd;
+
+MATCH_finished_jd:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_id;
+
+MATCH_finished_id:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_hd;
+
+MATCH_finished_hd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(d16, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_gd;
+
+MATCH_finished_gd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_fd;
+
+MATCH_finished_fd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ed;
+
+MATCH_finished_ed:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_dd;
+
+MATCH_finished_dd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 6 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
+                            (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
+                             (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
+                            1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
+                        goto MATCH_label_cd0;  /*opt-block+*/
+                    else
+                        {
+                            unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
+
+
+                            ret = pImmB(d8);
+
+
+
+
+                        } /*opt-block*//*opt-block+*/
+
+                }
+                goto MATCH_finished_cd;
+
+MATCH_label_cd0:
+                (void)0; /*placeholder for label*/
+
+
+                pNonzeroByte(pc);
+
+
+
+                goto MATCH_finished_cd;
+
+MATCH_finished_cd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 7 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
+
+
+                        ret = pImmW(d16);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_bd;
+
+MATCH_finished_bd:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 8 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pImmL(d32);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ad;
+
+MATCH_finished_ad:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::awlEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                            ADDRESS pc, int delta, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_zc0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+                            if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+
+
+                                {
+                                    mode = 8;
+                                    result.numBytes += 4;
+                                }
+
+
+                            /*opt-block+*/
+                            else
+
+
+                                {
+                                    mode = 7;
+                                    result.numBytes += 2;
+                                }
+
+
+                            /*opt-block+*/
+
+                            break;
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_zc0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_zc;
+
+MATCH_label_zc0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_zc;
+
+MATCH_finished_zc:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_yc;
+
+MATCH_finished_yc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_xc;
+
+MATCH_finished_xc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(d16, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_wc;
+
+MATCH_finished_wc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_vc;
+
+MATCH_finished_vc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_uc;
+
+MATCH_finished_uc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_tc;
+
+MATCH_finished_tc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 7 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
+
+
+                        ret = pImmW(d16);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_sc;
+
+MATCH_finished_sc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 8 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pImmL(d32);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_rc;
+
+MATCH_finished_rc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::cEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                          ADDRESS pc, int delta, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_qc0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_qc0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_qc;
+
+MATCH_label_qc0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_qc;
+
+MATCH_finished_qc:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_pc;
+
+MATCH_finished_pc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_oc;
+
+MATCH_finished_oc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned label =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(label, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_nc;
+
+MATCH_finished_nc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_mc;
+
+MATCH_finished_mc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_lc;
+
+MATCH_finished_lc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_kc;
+
+MATCH_finished_kc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::dEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                          ADDRESS pc, int delta, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_jc0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+
+                            switch((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */)
+                                {
+                                case 0:
+
+
+                                {
+                                    mode = 6;
+                                    result.numBytes += 2;
+                                }
+
+
+
+
+                                break;
+                                case 1:
+
+
+                                {
+                                    mode = 7;
+                                    result.numBytes += 2;
+                                }
+
+
+
+
+                                break;
+                                case 2:
+
+
+                                {
+                                    mode = 8;
+                                    result.numBytes += 4;
+                                }
+
+
+
+
+                                break;
+                                case 3:
+                                    goto MATCH_label_jc0;
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 6 & 0x3) -- sz at 0 --*/
+                            break;
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_jc0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_jc;
+
+MATCH_label_jc0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_jc;
+
+MATCH_finished_jc:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ic;
+
+MATCH_finished_ic:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_hc;
+
+MATCH_finished_hc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned label =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(label, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_gc;
+
+MATCH_finished_gc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_fc;
+
+MATCH_finished_fc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ec;
+
+MATCH_finished_ec:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_dc;
+
+MATCH_finished_dc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 6 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
+                            (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
+                             (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
+                            1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
+                        goto MATCH_label_cc0;  /*opt-block+*/
+                    else
+                        {
+                            unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
+
+
+                            ret = pImmB(d8);
+
+
+
+
+                        } /*opt-block*//*opt-block+*/
+
+                }
+                goto MATCH_finished_cc;
+
+MATCH_label_cc0:
+                (void)0; /*placeholder for label*/
+
+
+                pNonzeroByte(pc);
+
+
+
+                goto MATCH_finished_cc;
+
+MATCH_finished_cc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 7 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
+
+
+                        ret = pImmW(d16);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_bc;
+
+MATCH_finished_bc:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 8 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pImmL(d32);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ac;
+
+MATCH_finished_ac:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::daEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                           ADDRESS pc, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_zb0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_zb0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_zb;
+
+MATCH_label_zb0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_zb;
+
+MATCH_finished_zb:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_yb;
+
+MATCH_finished_yb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_xb;
+
+MATCH_finished_xb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_wb;
+
+MATCH_finished_wb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_vb;
+
+MATCH_finished_vb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::dBEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                           ADDRESS pc, int delta, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_ub0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+
+
+                        {
+                            mode = 6;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_ub0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_ub;
+
+MATCH_label_ub0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_ub;
+
+MATCH_finished_ub:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_tb;
+
+MATCH_finished_tb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_sb;
+
+MATCH_finished_sb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned label =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(label, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_rb;
+
+MATCH_finished_rb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_qb;
+
+MATCH_finished_qb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_pb;
+
+MATCH_finished_pb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ob;
+
+MATCH_finished_ob:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 6 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
+                            (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
+                             (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
+                            1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
+                        goto MATCH_label_nb0;  /*opt-block+*/
+                    else
+                        {
+                            unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
+
+
+                            ret = pImmB(d8);
+
+
+
+
+                        } /*opt-block*//*opt-block+*/
+
+                }
+                goto MATCH_finished_nb;
+
+MATCH_label_nb0:
+                (void)0; /*placeholder for label*/
+
+
+                pNonzeroByte(pc);
+
+
+
+                goto MATCH_finished_nb;
+
+MATCH_finished_nb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::dWEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                           ADDRESS pc, int delta, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_mb0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+
+
+                        {
+                            mode = 7;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_mb0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_mb;
+
+MATCH_label_mb0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_mb;
+
+MATCH_finished_mb:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_lb;
+
+MATCH_finished_lb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_kb;
+
+MATCH_finished_kb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned label =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(label, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_jb;
+
+MATCH_finished_jb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ib;
+
+MATCH_finished_ib:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_hb;
+
+MATCH_finished_hb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_gb;
+
+MATCH_finished_gb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 7 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
+
+
+                        ret = pImmW(d16);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_fb;
+
+MATCH_finished_fb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::maEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                           ADDRESS pc, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_eb0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_eb0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_eb;
+
+MATCH_label_eb0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_eb;
+
+MATCH_finished_eb:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_db;
+
+MATCH_finished_db:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_cb;
+
+MATCH_finished_cb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_bb;
+
+MATCH_finished_bb:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_ab;
+
+MATCH_finished_ab:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::msEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                           ADDRESS pc, int delta, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    goto MATCH_label_z0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_z0;
+                            break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+
+                            switch((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */)
+                                {
+                                case 0:
+                                case 2:
+                                case 4:
+                                case 5:
+                                case 6:
+                                case 7:
+                                case 8:
+                                case 9:
+                                case 10:
+                                case 11:
+                                case 12:
+                                case 13:
+                                case 14:
+                                case 15:
+                                    goto MATCH_label_z0;
+                                    break;
+                                case 1:
+
+
+                                {
+                                    mode = 6;
+                                    result.numBytes += 2;
+                                }
+
+
+
+
+                                break;
+                                case 3:
+
+
+                                {
+                                    mode = 7;
+                                    result.numBytes += 2;
+                                }
+
+
+
+
+                                break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 12 & 0xf) -- op at 0 --*/
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+
+        }
+        goto MATCH_finished_z;
+
+MATCH_label_z0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_z;
+
+MATCH_finished_z:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 0 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pADisp(d16, reg2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_y;
+
+MATCH_finished_y:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_x;
+
+MATCH_finished_x:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned label =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(label, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_w;
+
+MATCH_finished_w:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_v;
+
+MATCH_finished_v:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_u;
+
+MATCH_finished_u:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 6 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    if ((MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 0 &&
+                            (1 <= (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ &&
+                             (MATCH_w_16_0 >> 8 & 0x7) /* null at 0 */ < 8) ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */ == 1 ||
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ == 0 &&
+                            (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */ == 1 ||
+                            1 <= (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ &&
+                            (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */ < 8)
+                        goto MATCH_label_t0;  /*opt-block+*/
+                    else
+                        {
+                            unsigned d8 = (MATCH_w_16_0 & 0xff) /* disp8 at 0 */;
+
+
+                            ret = pImmB(d8);
+
+
+
+
+                        } /*opt-block*//*opt-block+*/
+
+                }
+                goto MATCH_finished_t;
+
+MATCH_label_t0:
+                (void)0; /*placeholder for label*/
+
+
+                pNonzeroByte(pc);
+
+
+
+                goto MATCH_finished_t;
+
+MATCH_finished_t:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        case 7 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
+
+
+                        ret = pImmW(d16);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_s;
+
+MATCH_finished_s:
+                (void)0; /*placeholder for label*/
+
+            }
+
+
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::msEAXL(ADDRESS eaxl, int d32, DecodeResult& result,
+                            ADDRESS pc, int size)
+{
+    SemStr* ret;
+    int reg2, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eaxl
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                {
+                case 0:
+                case 2:
+                case 3:
+                case 5:
+                case 6:
+                case 7:
+                    goto MATCH_label_r0;
+                    break;
+                case 1:
+                    if ((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 7)
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+                    /*opt-block+*/
+                    else
+                        goto MATCH_label_r0;  /*opt-block+*/
+
+                    break;
+                case 4:
+                    if ((MATCH_w_16_0 >> 12 & 0xf) /* op at 0 */ == 2 &&
+                            (MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */ == 7)
+
+
+                        {
+                            mode = 8;
+                            result.numBytes += 4;
+                        }
+
+
+                    /*opt-block+*/
+                    else
+                        goto MATCH_label_r0;  /*opt-block+*/
+
+                    break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
+
+        }
+        goto MATCH_finished_r;
+
+MATCH_label_r0:
+        (void)0; /*placeholder for label*/
+
+
+        pIllegalMode(pc);
+
+
+
+        goto MATCH_finished_r;
+
+MATCH_finished_r:
+        (void)0; /*placeholder for label*/
+
+    }
+
+
+
+    switch (mode)
+        {
+        case 5 :
+        {
+            ret = pAbsL(d32, size);
+            break;
+        }
+        case 8 :
+        {
+            ret = pImmL(d32);
+            break;
+        }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
+    return ret;
+}
+
+
+SemStr* NJMCDecoder::mdEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
+                           ADDRESS pc, int size)
+{
+    SemStr* ret;
+    int reg1, mode;
+
+
+
+
+    {
+        dword MATCH_p =
+
+
+            eax
+            ;
+        unsigned /* [0..65535] */ MATCH_w_16_0;
+        {
+            MATCH_w_16_0 = getWord(MATCH_p);
+
+            switch((MATCH_w_16_0 >> 6 & 0x7) /* MDadrm at 0 */)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 7:
+                    if ((MATCH_w_16_0 >> 8 & 0x1) /* sb at 0 */ == 1)
+                        if ((MATCH_w_16_0 >> 6 & 0x3) /* sz at 0 */ == 3)
+
+                            switch((MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */)
+                                {
+                                case 0:
+
+
+                                {
+                                    mode = 4;
+                                    result.numBytes += 2;
+                                }
+
+
+
+
+                                break;
+                                case 1:
+
+
+                                {
+                                    mode = 5;
+                                    result.numBytes += 4;
+                                }
+
+
+
+
+                                break;
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                case 7:
+                                    goto MATCH_label_q0;
+                                    break;
+                                default:
+                                    assert(0);
+                                } /* (MATCH_w_16_0 >> 9 & 0x7) -- reg1 at 0 --*/
+                        else
+                            goto MATCH_label_q0;  /*opt-block+*/
                     else
                         goto MATCH_label_q0;  /*opt-block+*/
-                else
-                    goto MATCH_label_q0;  /*opt-block+*/
+                    break;
+                case 5:
+                {
+                    unsigned r1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg1 = r1;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
                 break;
-            case 5:
-            {
-                unsigned r1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-
-
+                case 6:
                 {
-                    mode = 0;
-                    reg1 = r1;
-                    result.numBytes += 2;
+                    unsigned r1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg1 = r1;
+                        result.numBytes += 2;
+                    }
+
+
+
+
                 }
 
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r1 = (MATCH_w_16_0 >> 9 & 0x7) /* reg1 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg1 = r1;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
+                break;
+                default:
+                    assert(0);
+                } /* (MATCH_w_16_0 >> 6 & 0x7) -- MDadrm at 0 --*/
 
         }
         goto MATCH_finished_q;
@@ -7191,160 +7347,165 @@ MATCH_finished_q:
 
 
 
-    switch (mode) {
-    case 0 : {
-
-
-
+    switch (mode)
         {
-            dword MATCH_p =
+        case 0 :
+        {
 
 
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
+
             {
-                MATCH_w_16_0 = getWord(MATCH_p);
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
                 {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
 
 
-                    ret = pADisp(d16, reg1, size);
+                        ret = pADisp(d16, reg1, size);
 
 
 
+
+                    }
 
                 }
-
-            }
-            goto MATCH_finished_p;
+                goto MATCH_finished_p;
 
 MATCH_finished_p:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg1, iT, iR, iS, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_o;
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg1, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_o;
 
 MATCH_finished_o:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_n;
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned d16 = (MATCH_w_16_0 & 0xffff) /* d16 at 0 */;
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_n;
 
 MATCH_finished_n:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_m;
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_m;
 
 MATCH_finished_m:
-            (void)0; /*placeholder for label*/
+                (void)0; /*placeholder for label*/
 
+            }
+
+
+            break;
         }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
     return ret;
 }
 
@@ -7368,112 +7529,114 @@ SemStr* NJMCDecoder::mrEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_l0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
                 {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
                 case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
                 case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
                 case 2:
-
-
-                {
-                    mode = 2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
                 case 3:
-
-
+                case 4:
+                    goto MATCH_label_l0;
+                    break;
+                case 5:
                 {
-                    mode = 3;
-                    result.numBytes += 2;
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
                 }
 
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
 
 
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
 
                 break;
-                case 4:
-                case 5:
-                case 6:
                 case 7:
-                    goto MATCH_label_l0;
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+
+
+                        {
+                            mode = 2;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 3:
+
+
+                        {
+                            mode = 3;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_l0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
                     break;
                 default:
                     assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_l;
@@ -7495,239 +7658,246 @@ MATCH_finished_l:
 
 
 
-    switch (mode) {
-    case 0 : {
-
-
-
+    switch (mode)
         {
-            dword MATCH_p =
+        case 0 :
+        {
 
 
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
+
             {
-                MATCH_w_16_0 = getWord(MATCH_p);
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
                 {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
 
 
-                    ret = pADisp(d16, reg2, size);
+                        ret = pADisp(d16, reg2, size);
 
 
 
+
+                    }
 
                 }
-
-            }
-            goto MATCH_finished_k;
+                goto MATCH_finished_k;
 
 MATCH_finished_k:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_j;
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_j;
 
 MATCH_finished_j:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 2 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    unsigned label =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
-                        addressToPC(MATCH_p);
-
-
-                    ret = pPcDisp(label, delta, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_i;
+
+
+            break;
+        }
+        case 2 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        unsigned label =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16) +
+                            addressToPC(MATCH_p);
+
+
+                        ret = pPcDisp(label, delta, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_i;
 
 MATCH_finished_i:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 3 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-
-
-                    ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_h;
+
+
+            break;
+        }
+        case 3 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+
+
+                        ret = pPcIndex(d8, iT, iR, iS, pc+2, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_h;
 
 MATCH_finished_h:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_g;
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_g;
 
 MATCH_finished_g:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_f;
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_f;
 
 MATCH_finished_f:
-            (void)0; /*placeholder for label*/
+                (void)0; /*placeholder for label*/
 
+            }
+
+
+            break;
         }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
     return ret;
 }
 
@@ -7751,90 +7921,92 @@ SemStr* NJMCDecoder::rmEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
         {
             MATCH_w_16_0 = getWord(MATCH_p);
 
-            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                goto MATCH_label_e0;
-                break;
-            case 5:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
+            switch((MATCH_w_16_0 >> 3 & 0x7) /* adrm at 0 */)
                 {
-                    mode = 0;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 6:
-            {
-                unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
-
-
-                {
-                    mode = 1;
-                    reg2 = r2;
-                    result.numBytes += 2;
-                }
-
-
-
-
-            }
-
-            break;
-            case 7:
-
-                switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */) {
                 case 0:
-
-
-                {
-                    mode = 4;
-                    result.numBytes += 2;
-                }
-
-
-
-
-                break;
                 case 1:
-
-
-                {
-                    mode = 5;
-                    result.numBytes += 4;
-                }
-
-
-
-
-                break;
                 case 2:
                 case 3:
                 case 4:
-                case 5:
-                case 6:
-                case 7:
                     goto MATCH_label_e0;
+                    break;
+                case 5:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 0;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 6:
+                {
+                    unsigned r2 = (MATCH_w_16_0 & 0x7) /* reg2 at 0 */;
+
+
+                    {
+                        mode = 1;
+                        reg2 = r2;
+                        result.numBytes += 2;
+                    }
+
+
+
+
+                }
+
+                break;
+                case 7:
+
+                    switch((MATCH_w_16_0 & 0x7) /* reg2 at 0 */)
+                        {
+                        case 0:
+
+
+                        {
+                            mode = 4;
+                            result.numBytes += 2;
+                        }
+
+
+
+
+                        break;
+                        case 1:
+
+
+                        {
+                            mode = 5;
+                            result.numBytes += 4;
+                        }
+
+
+
+
+                        break;
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                            goto MATCH_label_e0;
+                            break;
+                        default:
+                            assert(0);
+                        } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
                     break;
                 default:
                     assert(0);
-                } /* (MATCH_w_16_0 & 0x7) -- reg2 at 0 --*/
-                break;
-            default:
-                assert(0);
-            } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
+                } /* (MATCH_w_16_0 >> 3 & 0x7) -- adrm at 0 --*/
 
         }
         goto MATCH_finished_e;
@@ -7856,161 +8028,166 @@ MATCH_finished_e:
 
 
 
-    switch (mode) {
-    case 0 : {
-
-
-
+    switch (mode)
         {
-            dword MATCH_p =
+        case 0 :
+        {
 
 
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
+
             {
-                MATCH_w_16_0 = getWord(MATCH_p);
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
                 {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
 
 
-                    ret = pADisp(d16, reg2, size);
+                        ret = pADisp(d16, reg2, size);
 
 
 
+
+                    }
 
                 }
-
-            }
-            goto MATCH_finished_d;
+                goto MATCH_finished_d;
 
 MATCH_finished_d:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 1 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~128..127] */ d8 =
-                        sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
-                    unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
-                    unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
-                    unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
-
-
-                    ret = pAIndex(d8, reg2, iT, iR, iS, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_c;
+
+
+            break;
+        }
+        case 1 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~128..127] */ d8 =
+                            sign_extend((MATCH_w_16_0 & 0xff) /* disp8 at 0 */, 8);
+                        unsigned iR = (MATCH_w_16_0 >> 12 & 0x7) /* iReg at 0 */;
+                        unsigned iS = (MATCH_w_16_0 >> 11 & 0x1) /* iSize at 0 */;
+                        unsigned iT = (MATCH_w_16_0 >> 15 & 0x1) /* iType at 0 */;
+
+
+                        ret = pAIndex(d8, reg2, iT, iR, iS, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_c;
 
 MATCH_finished_c:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 4 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                {
-                    int /* [~32768..32767] */ d16 =
-                        sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
-
-
-                    ret = pAbsW(d16, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_b;
+
+
+            break;
+        }
+        case 4 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    {
+                        int /* [~32768..32767] */ d16 =
+                            sign_extend((MATCH_w_16_0 & 0xffff) /* d16 at 0 */, 16);
+
+
+                        ret = pAbsW(d16, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_b;
 
 MATCH_finished_b:
-            (void)0; /*placeholder for label*/
-
-        }
-
-
-        break;
-    }
-    case 5 : {
-
-
-
-        {
-            dword MATCH_p =
-
-
-                x
-                ;
-            unsigned /* [0..65535] */ MATCH_w_16_0;
-            unsigned /* [0..65535] */ MATCH_w_16_16;
-            {
-                MATCH_w_16_0 = getWord(MATCH_p);
-                MATCH_w_16_16 = getWord(2 + MATCH_p);
-                {
-                    unsigned d32 =
-                        ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
-                        (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
-
-
-                    ret = pAbsL(d32, size);
-
-
-
-
-                }
+                (void)0; /*placeholder for label*/
 
             }
-            goto MATCH_finished_a;
+
+
+            break;
+        }
+        case 5 :
+        {
+
+
+
+            {
+                dword MATCH_p =
+
+
+                    x
+                    ;
+                unsigned /* [0..65535] */ MATCH_w_16_0;
+                unsigned /* [0..65535] */ MATCH_w_16_16;
+                {
+                    MATCH_w_16_0 = getWord(MATCH_p);
+                    MATCH_w_16_16 = getWord(2 + MATCH_p);
+                    {
+                        unsigned d32 =
+                            ((MATCH_w_16_0 & 0xffff) /* d16 at 0 */ << 16) +
+                            (MATCH_w_16_16 & 0xffff) /* d16 at 16 */;
+
+
+                        ret = pAbsL(d32, size);
+
+
+
+
+                    }
+
+                }
+                goto MATCH_finished_a;
 
 MATCH_finished_a:
-            (void)0; /*placeholder for label*/
+                (void)0; /*placeholder for label*/
 
+            }
+
+
+            break;
         }
-
-
-        break;
-    }
-    default :
-        pIllegalMode(pc);
-        break;
-    }
+        default :
+            pIllegalMode(pc);
+            break;
+        }
     return ret;
 }
 

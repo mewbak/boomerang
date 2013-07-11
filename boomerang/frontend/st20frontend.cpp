@@ -45,7 +45,8 @@
 #include "boomerang.h"
 #include "signature.h"
 
-ST20FrontEnd::ST20FrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff) : FrontEnd(pBF, prog, pbff) {
+ST20FrontEnd::ST20FrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff) : FrontEnd(pBF, prog, pbff)
+{
     decoder = new ST20Decoder();
 }
 
@@ -59,25 +60,28 @@ ST20FrontEnd::~ST20FrontEnd()
 std::vector<Exp*> &ST20FrontEnd::getDefaultParams()
 {
     static std::vector<Exp*> params;
-    if (params.size() == 0) {
+    if (params.size() == 0)
+        {
 #if 0
-        for (int r=0; r<=2; r++) {
-            params.push_back(Location::regOf(r));
-        }
+            for (int r=0; r<=2; r++)
+                {
+                    params.push_back(Location::regOf(r));
+                }
 #endif
-        params.push_back(Location::memOf(Location::regOf(3)));
-    }
+            params.push_back(Location::memOf(Location::regOf(3)));
+        }
     return params;
 }
 
 std::vector<Exp*> &ST20FrontEnd::getDefaultReturns()
 {
     static std::vector<Exp*> returns;
-    if (returns.size() == 0) {
-        returns.push_back(Location::regOf(0));
-        returns.push_back(Location::regOf(3));
+    if (returns.size() == 0)
+        {
+            returns.push_back(Location::regOf(0));
+            returns.push_back(Location::regOf(3));
 //		returns.push_back(new Terminal(opPC));
-    }
+        }
     return returns;
 }
 
@@ -97,7 +101,8 @@ ADDRESS ST20FrontEnd::getMainEntryPoint( bool &gotMain )
 
 
 bool ST20FrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag /* = false */,
-                               bool spec /* = false */) {
+                               bool spec /* = false */)
+{
 
     // Call the base class to do most of the work
     if (!FrontEnd::processProc(uAddr, pProc, os, frag, spec))

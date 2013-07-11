@@ -181,35 +181,35 @@ Location::Location(OPER op, Exp *exp, UserProc *proc) : Unary(op, exp), proc(pro
 {
     assert(op == opRegOf || op == opMemOf || op == opLocal || op == opGlobal || op == opParam || op == opTemp);
     if (proc == NULL)
-    {
-        // eep.. this almost always causes problems
-        Exp *e = exp;
-        if (e)
         {
-            bool giveUp = false;
-            while (this->proc == NULL && !giveUp)
-            {
-                switch (e->getOper())
+            // eep.. this almost always causes problems
+            Exp *e = exp;
+            if (e)
                 {
-                case opRegOf:
-                case opMemOf:
-                case opTemp:
-                case opLocal:
-                case opGlobal:
-                case opParam:
-                    this->proc = ((Location*)e)->getProc();
-                    giveUp = true;
-                    break;
-                case opSubscript:
-                    e = e->getSubExp1();
-                    break;
-                default:
-                    giveUp = true;
-                    break;
+                    bool giveUp = false;
+                    while (this->proc == NULL && !giveUp)
+                        {
+                            switch (e->getOper())
+                                {
+                                case opRegOf:
+                                case opMemOf:
+                                case opTemp:
+                                case opLocal:
+                                case opGlobal:
+                                case opParam:
+                                    this->proc = ((Location*)e)->getProc();
+                                    giveUp = true;
+                                    break;
+                                case opSubscript:
+                                    e = e->getSubExp1();
+                                    break;
+                                default:
+                                    giveUp = true;
+                                    break;
+                                }
+                        }
                 }
-            }
         }
-    }
 }
 
 Location::Location(Location& o) : Unary(o.op, o.subExp1->clone()), proc(o.proc)
@@ -426,17 +426,17 @@ bool Const::operator==(const Exp& o) const
     if ((conscript && conscript != ((Const&)o).conscript) || ((Const&)o).conscript)
         return false;
     switch (op)
-    {
-    case opIntConst:
-        return u.i == ((Const&)o).u.i;
-    case opFltConst:
-        return u.d == ((Const&)o).u.d;
-    case opStrConst:
-        return (strcmp(u.p, ((Const&)o).u.p) == 0);
-    default:
-        LOG << "Operator== invalid operator " << operStrings[op] << "\n";
-        assert(0);
-    }
+        {
+        case opIntConst:
+            return u.i == ((Const&)o).u.i;
+        case opFltConst:
+            return u.d == ((Const&)o).u.d;
+        case opStrConst:
+            return (strcmp(u.p, ((Const&)o).u.p) == 0);
+        default:
+            LOG << "Operator== invalid operator " << operStrings[op] << "\n";
+            assert(0);
+        }
     return false;
 }
 bool Unary::operator==(const Exp& o) const
@@ -519,23 +519,23 @@ bool Const::operator< (const Exp& o) const
     if (op < o.getOper()) return true;
     if (op > o.getOper()) return false;
     if (conscript)
-    {
-        if (conscript < ((Const&)o).conscript) return true;
-        if (conscript > ((Const&)o).conscript) return false;
-    }
+        {
+            if (conscript < ((Const&)o).conscript) return true;
+            if (conscript > ((Const&)o).conscript) return false;
+        }
     else if (((Const&)o).conscript) return true;
     switch (op)
-    {
-    case opIntConst:
-        return u.i < ((Const&)o).u.i;
-    case opFltConst:
-        return u.d < ((Const&)o).u.d;
-    case opStrConst:
-        return strcmp(u.p, ((Const&)o).u.p) < 0;
-    default:
-        LOG << "Operator< invalid operator " << operStrings[op] << "\n";
-        assert(0);
-    }
+        {
+        case opIntConst:
+            return u.i < ((Const&)o).u.i;
+        case opFltConst:
+            return u.d < ((Const&)o).u.d;
+        case opStrConst:
+            return strcmp(u.p, ((Const&)o).u.p) < 0;
+        default:
+            LOG << "Operator< invalid operator " << operStrings[op] << "\n";
+            assert(0);
+        }
     return false;
 }
 bool Terminal::operator< (const Exp& o) const
@@ -572,14 +572,16 @@ bool Ternary::operator< (const Exp& o) const
 }
 
 bool TypedExp::operator<< (const Exp& o) const
-{   // Type insensitive
+{
+    // Type insensitive
     if (op < o.getOper()) return true;
     if (op > o.getOper()) return false;
     return *subExp1 << *((Unary&)o).getSubExp1();
 }
 
 bool TypedExp::operator<  (const Exp& o) const
-{   // Type sensitive
+{
+    // Type sensitive
     if (op < o.getOper()) return true;
     if (op > o.getOper()) return false;
     if (*type < *((TypedExp&)o).type) return true;
@@ -696,31 +698,31 @@ void Const::print(std::ostream& os, bool html)
 {
     setLexBegin(os.tellp());
     switch (op)
-    {
-    case opIntConst:
-        if (u.i < -1000 || u.i > 1000)
-            os << "0x" << std::hex << u.i << std::dec;
-        else
-            os << std::dec << u.i;
-        break;
-    case opLongConst:
-        if ((long long)u.ll < -1000LL || (long long)u.ll > 1000LL)
-            os << "0x" << std::hex << u.ll << std::dec << "LL";
-        else
-            os << std::dec << u.ll << "LL";
-        break;
-    case opFltConst:
-        char buf[64];
-        sprintf(buf, "%.4f", u.d);		// FIXME: needs an intelligent printer
-        os << buf;
-        break;
-    case opStrConst:
-        os << "\"" << u.p << "\"";
-        break;
-    default:
-        LOG << "Const::print invalid operator " << operStrings[op] << "\n";
-        assert(0);
-    }
+        {
+        case opIntConst:
+            if (u.i < -1000 || u.i > 1000)
+                os << "0x" << std::hex << u.i << std::dec;
+            else
+                os << std::dec << u.i;
+            break;
+        case opLongConst:
+            if ((long long)u.ll < -1000LL || (long long)u.ll > 1000LL)
+                os << "0x" << std::hex << u.ll << std::dec << "LL";
+            else
+                os << std::dec << u.ll << "LL";
+            break;
+        case opFltConst:
+            char buf[64];
+            sprintf(buf, "%.4f", u.d);		// FIXME: needs an intelligent printer
+            os << buf;
+            break;
+        case opStrConst:
+            os << "\"" << u.p << "\"";
+            break;
+        default:
+            LOG << "Const::print invalid operator " << operStrings[op] << "\n";
+            assert(0);
+        }
     if (conscript)
         os << "\\" << std::dec << conscript << "\\";
     setLexEnd(os.tellp());
@@ -743,16 +745,16 @@ void Binary::printr(std::ostream& os, bool html)
     // The "r" is for recursive: the idea is that we don't want parentheses at the outer level, but a subexpression
     // (recursed from a higher level), we want the parens (at least for standard infix operators)
     switch (op)
-    {
-    case opSize:
-    case opList:		// Otherwise, you get (a, (b, (c, d)))
-        // There may be others
-        // These are the noparen cases
-        print(os, html);
-        return;
-    default:
-        break;
-    }
+        {
+        case opSize:
+        case opList:		// Otherwise, you get (a, (b, (c, d)))
+            // There may be others
+            // These are the noparen cases
+            print(os, html);
+            return;
+        default:
+            break;
+        }
     // Normal case: we want the parens
     // std::ostream::operator<< uses print(), which does not have the parens
     os << "(";
@@ -767,56 +769,56 @@ void Binary::print(std::ostream& os, bool html)
     Exp* p2 = ((Binary*)this)->getSubExp2();
     // Special cases
     switch (op)
-    {
-    case opSize:
-        // This can still be seen after decoding and before type analysis after m[...]
-        // *size* is printed after the expression, even though it comes from the first subexpression
-        p2->printr(os, html);
-        os << "*";
-        p1->printr(os, html);
-        os << "*";
-        return;
-    case opFlagCall:
-        // The name of the flag function (e.g. ADDFLAGS) should be enough
-        ((Const*)p1)->printNoQuotes(os);
-        os << "( ";
-        p2->printr(os, html);
-        os << " )";
-        return;
-    case opExpTable:
-    case opNameTable:
-        if (op == opExpTable)
-            os << "exptable(";
-        else
-            os << "nametable(";
-        os << p1 << ", " << p2 << ")";
-        return;
+        {
+        case opSize:
+            // This can still be seen after decoding and before type analysis after m[...]
+            // *size* is printed after the expression, even though it comes from the first subexpression
+            p2->printr(os, html);
+            os << "*";
+            p1->printr(os, html);
+            os << "*";
+            return;
+        case opFlagCall:
+            // The name of the flag function (e.g. ADDFLAGS) should be enough
+            ((Const*)p1)->printNoQuotes(os);
+            os << "( ";
+            p2->printr(os, html);
+            os << " )";
+            return;
+        case opExpTable:
+        case opNameTable:
+            if (op == opExpTable)
+                os << "exptable(";
+            else
+                os << "nametable(";
+            os << p1 << ", " << p2 << ")";
+            return;
 
-    case opList:
-        // Because "," is the lowest precedence operator, we don't need printr here.
-        // Also, same as UQBT, so easier to test
-        p1->print(os, html);
-        if (!p2->isNil())
-            os << ", ";
-        p2->print(os, html);
-        return;
+        case opList:
+            // Because "," is the lowest precedence operator, we don't need printr here.
+            // Also, same as UQBT, so easier to test
+            p1->print(os, html);
+            if (!p2->isNil())
+                os << ", ";
+            p2->print(os, html);
+            return;
 
-    case opMemberAccess:
-        p1->print(os, html);
-        os << ".";
-        ((Const*)p2)->printNoQuotes(os);
-        return;
+        case opMemberAccess:
+            p1->print(os, html);
+            os << ".";
+            ((Const*)p2)->printNoQuotes(os);
+            return;
 
-    case opArrayIndex:
-        p1->print(os, html);
-        os << "[";
-        p2->print(os, html);
-        os << "]";
-        return;
+        case opArrayIndex:
+            p1->print(os, html);
+            os << "[";
+            p2->print(os, html);
+            os << "]";
+            return;
 
-    default:
-        break;
-    }
+        default:
+            break;
+        }
 
     // Ordinary infix operators. Emit parens around the binary
     if (p1 == NULL)
@@ -824,135 +826,135 @@ void Binary::print(std::ostream& os, bool html)
     else
         p1->printr(os, html);
     switch (op)
-    {
-    case opPlus:
-        os << " + ";
-        break;
-    case opMinus:
-        os << " - ";
-        break;
-    case opMult:
-        os << " * ";
-        break;
-    case opMults:
-        os << " *! ";
-        break;
-    case opDiv:
-        os << " / ";
-        break;
-    case opDivs:
-        os << " /! ";
-        break;
-    case opMod:
-        os << " % ";
-        break;
-    case opMods:
-        os << " %! ";
-        break;
-    case opFPlus:
-        os << " +f ";
-        break;
-    case opFMinus:
-        os << " -f ";
-        break;
-    case opFMult:
-        os << " *f ";
-        break;
-    case opFDiv:
-        os << " /f ";
-        break;
-    case opPow:
-        os << " pow ";
-        break;	// Raising to power
+        {
+        case opPlus:
+            os << " + ";
+            break;
+        case opMinus:
+            os << " - ";
+            break;
+        case opMult:
+            os << " * ";
+            break;
+        case opMults:
+            os << " *! ";
+            break;
+        case opDiv:
+            os << " / ";
+            break;
+        case opDivs:
+            os << " /! ";
+            break;
+        case opMod:
+            os << " % ";
+            break;
+        case opMods:
+            os << " %! ";
+            break;
+        case opFPlus:
+            os << " +f ";
+            break;
+        case opFMinus:
+            os << " -f ";
+            break;
+        case opFMult:
+            os << " *f ";
+            break;
+        case opFDiv:
+            os << " /f ";
+            break;
+        case opPow:
+            os << " pow ";
+            break;	// Raising to power
 
-    case opAnd:
-        os << " and ";
-        break;
-    case opOr:
-        os << " or ";
-        break;
-    case opBitAnd:
-        os << " & ";
-        break;
-    case opBitOr :
-        os << " | ";
-        break;
-    case opBitXor:
-        os << " ^ ";
-        break;
-    case opEquals:
-        os << " = ";
-        break;
-    case opNotEqual:
-        os << " ~= ";
-        break;
-    case opLess:
-        if (html) os << " &lt; ";
-        else os << " < ";
-        break;
-    case opGtr:
-        if (html) os << " &gt; ";
-        else os << " > ";
-        break;
-    case opLessEq:
-        if (html) os << " &lt;= ";
-        else os << " <= ";
-        break;
-    case opGtrEq:
-        if (html) os << " &gt;= ";
-        else os << " >= ";
-        break;
-    case opLessUns:
-        if (html) os << " &lt;u ";
-        else os << " <u ";
-        break;
-    case opGtrUns:
-        if (html) os << " &gt;u ";
-        else os << " >u ";
-        break;
-    case opLessEqUns:
-        if (html) os << " &lt;u ";
-        else os<< " <=u ";
-        break;
-    case opGtrEqUns:
-        if (html) os << " &gt;=u ";
-        else os << " >=u ";
-        break;
-    case opUpper:
-        os << " GT ";
-        break;
-    case opLower:
-        os << " LT ";
-        break;
-    case opShiftL:
-        if (html) os << " &lt;&lt; ";
-        else os << " << ";
-        break;
-    case opShiftR:
-        if (html) os << " &gt;&gt; ";
-        else os << " >> ";
-        break;
-    case opShiftRA:
-        if (html) os << " &gt;&gt;A ";
-        else os << " >>A ";
-        break;
-    case opRotateL:
-        os << " rl ";
-        break;
-    case opRotateR:
-        os << " rr ";
-        break;
-    case opRotateLC:
-        os << " rlc ";
-        break;
-    case opRotateRC:
-        os << " rrc ";
-        break;
+        case opAnd:
+            os << " and ";
+            break;
+        case opOr:
+            os << " or ";
+            break;
+        case opBitAnd:
+            os << " & ";
+            break;
+        case opBitOr :
+            os << " | ";
+            break;
+        case opBitXor:
+            os << " ^ ";
+            break;
+        case opEquals:
+            os << " = ";
+            break;
+        case opNotEqual:
+            os << " ~= ";
+            break;
+        case opLess:
+            if (html) os << " &lt; ";
+            else os << " < ";
+            break;
+        case opGtr:
+            if (html) os << " &gt; ";
+            else os << " > ";
+            break;
+        case opLessEq:
+            if (html) os << " &lt;= ";
+            else os << " <= ";
+            break;
+        case opGtrEq:
+            if (html) os << " &gt;= ";
+            else os << " >= ";
+            break;
+        case opLessUns:
+            if (html) os << " &lt;u ";
+            else os << " <u ";
+            break;
+        case opGtrUns:
+            if (html) os << " &gt;u ";
+            else os << " >u ";
+            break;
+        case opLessEqUns:
+            if (html) os << " &lt;u ";
+            else os<< " <=u ";
+            break;
+        case opGtrEqUns:
+            if (html) os << " &gt;=u ";
+            else os << " >=u ";
+            break;
+        case opUpper:
+            os << " GT ";
+            break;
+        case opLower:
+            os << " LT ";
+            break;
+        case opShiftL:
+            if (html) os << " &lt;&lt; ";
+            else os << " << ";
+            break;
+        case opShiftR:
+            if (html) os << " &gt;&gt; ";
+            else os << " >> ";
+            break;
+        case opShiftRA:
+            if (html) os << " &gt;&gt;A ";
+            else os << " >>A ";
+            break;
+        case opRotateL:
+            os << " rl ";
+            break;
+        case opRotateR:
+            os << " rr ";
+            break;
+        case opRotateLC:
+            os << " rlc ";
+            break;
+        case opRotateRC:
+            os << " rrc ";
+            break;
 
-    default:
-        LOG << "Binary::print invalid operator " << operStrings[op] << "\n";
-        assert(0);
-    }
+        default:
+            LOG << "Binary::print invalid operator " << operStrings[op] << "\n";
+            assert(0);
+        }
 
     if (p2 == NULL)
         os << "<NULL>";
@@ -968,79 +970,79 @@ void Binary::print(std::ostream& os, bool html)
 void Terminal::print(std::ostream& os, bool html)
 {
     switch (op)
-    {
-    case opPC:
-        os << "%pc";
-        break;
-    case opFlags:
-        os << "%flags";
-        break;
-    case opFflags:
-        os << "%fflags";
-        break;
-    case opCF:
-        os << "%CF";
-        break;
-    case opZF:
-        os << "%ZF";
-        break;
-    case opOF:
-        os << "%OF";
-        break;
-    case opNF:
-        os << "%NF";
-        break;
-    case opDF:
-        os << "%DF";
-        break;
-    case opAFP:
-        os << "%afp";
-        break;
-    case opAGP:
-        os << "%agp";
-        break;
-    case opWild:
-        os << "WILD";
-        break;
-    case opAnull:
-        os << "%anul";
-        break;
-    case opFpush:
-        os << "FPUSH";
-        break;
-    case opFpop:
-        os << "FPOP";
-        break;
-    case opWildMemOf:
-        os<< "m[WILD]";
-        break;
-    case opWildRegOf:
-        os<< "r[WILD]";
-        break;
-    case opWildAddrOf:
-        os<< "a[WILD]";
-        break;
-    case opWildIntConst:
-        os<<"WILDINT";
-        break;
-    case opWildStrConst:
-        os<<"WILDSTR";
-        break;
-    case opNil:
-        break;
-    case opTrue:
-        os << "true";
-        break;
-    case opFalse:
-        os << "false";
-        break;
-    case opDefineAll:
-        os << "<all>";
-        break;
-    default:
-        LOG << "Terminal::print invalid operator " << operStrings[op] << "\n";
-        assert(0);
-    }
+        {
+        case opPC:
+            os << "%pc";
+            break;
+        case opFlags:
+            os << "%flags";
+            break;
+        case opFflags:
+            os << "%fflags";
+            break;
+        case opCF:
+            os << "%CF";
+            break;
+        case opZF:
+            os << "%ZF";
+            break;
+        case opOF:
+            os << "%OF";
+            break;
+        case opNF:
+            os << "%NF";
+            break;
+        case opDF:
+            os << "%DF";
+            break;
+        case opAFP:
+            os << "%afp";
+            break;
+        case opAGP:
+            os << "%agp";
+            break;
+        case opWild:
+            os << "WILD";
+            break;
+        case opAnull:
+            os << "%anul";
+            break;
+        case opFpush:
+            os << "FPUSH";
+            break;
+        case opFpop:
+            os << "FPOP";
+            break;
+        case opWildMemOf:
+            os<< "m[WILD]";
+            break;
+        case opWildRegOf:
+            os<< "r[WILD]";
+            break;
+        case opWildAddrOf:
+            os<< "a[WILD]";
+            break;
+        case opWildIntConst:
+            os<<"WILDINT";
+            break;
+        case opWildStrConst:
+            os<<"WILDSTR";
+            break;
+        case opNil:
+            break;
+        case opTrue:
+            os << "true";
+            break;
+        case opFalse:
+            os << "false";
+            break;
+        case opDefineAll:
+            os << "<all>";
+            break;
+        default:
+            LOG << "Terminal::print invalid operator " << operStrings[op] << "\n";
+            assert(0);
+        }
 }
 
 //	//	//	//
@@ -1050,195 +1052,195 @@ void Unary::print(std::ostream& os, bool html)
 {
     Exp* p1 = ((Unary*)this)->getSubExp1();
     switch (op)
-    {
-        //	//	//	//	//	//	//
-        //	x[ subexpression ]	//
-        //	//	//	//	//	//	//
-    case opRegOf:
-        // Make a special case for the very common case of r[intConst]
-        if (p1->isIntConst())
         {
-            os << "r" << std::dec << ((Const*)p1)->getInt();
-            break;
-        }
-        else if (p1->isTemp())
-        {
-            // Just print the temp {   // balance }s
-            p1->print(os, html);
-            break;
-        }
-        // Else fall through
-    case opMemOf:
-    case opAddrOf:
-    case opVar:
-    case opTypeOf:
-    case opKindOf:
-        switch (op)
-        {
+            //	//	//	//	//	//	//
+            //	x[ subexpression ]	//
+            //	//	//	//	//	//	//
         case opRegOf:
-            os << "r[";
-            break;	// e.g. r[r2]
+            // Make a special case for the very common case of r[intConst]
+            if (p1->isIntConst())
+                {
+                    os << "r" << std::dec << ((Const*)p1)->getInt();
+                    break;
+                }
+            else if (p1->isTemp())
+                {
+                    // Just print the temp {   // balance }s
+                    p1->print(os, html);
+                    break;
+                }
+            // Else fall through
         case opMemOf:
-            os << "m[";
-            break;
         case opAddrOf:
-            os << "a[";
-            break;
         case opVar:
-            os << "v[";
-            break;
         case opTypeOf:
-            os << "T[";
-            break;
         case opKindOf:
-            os << "K[";
-            break;
-        default:
-            break;		// Suppress compiler warning
-        }
-        if (op == opVar) ((Const*)p1)->printNoQuotes(os);
-        // Use print, not printr, because this is effectively the top level again (because the [] act as
-        // parentheses)
-        else
-        {
-            p1->print(os, html);
-        }
-        os << "]";
-        break;
-
-        //	//	//	//	//	//	//
-        //	  Unary operators	//
-        //	//	//	//	//	//	//
-
-    case opNot:
-    case opLNot:
-    case opNeg:
-    case opFNeg:
-        if (op == opNot)  os << "~";
-        else if (op == opLNot) os << "L~";
-        else if (op == opFNeg) os << "~f ";
-        else				   os << "-";
-        p1->printr(os, html);
-        return;
-
-    case opSignExt:
-        p1->printr(os, html);
-        os << "!";			// Operator after expression
-        return;
-
-        //	//	//	//	//	//	//	//
-        //	Function-like operators //
-        //	//	//	//	//	//	//	//
-
-    case opSQRTs:
-    case opSQRTd:
-    case opSQRTq:
-    case opSqrt:
-    case opSin:
-    case opCos:
-    case opTan:
-    case opArcTan:
-    case opLog2:
-    case opLog10:
-    case opLoge:
-    case opPow:
-    case opMachFtr:
-    case opSuccessor:
-        switch (op)
-        {
-        case opSQRTs:
-            os << "SQRTs(";
-            break;
-        case opSQRTd:
-            os << "SQRTd(";
-            break;
-        case opSQRTq:
-            os << "SQRTq(";
-            break;
-        case opSqrt:
-            os << "sqrt(";
-            break;
-        case opSin:
-            os << "sin(";
-            break;
-        case opCos:
-            os << "cos(";
-            break;
-        case opTan:
-            os << "tan(";
-            break;
-        case opArcTan:
-            os << "arctan(";
-            break;
-        case opLog2:
-            os << "log2(";
-            break;
-        case opLog10:
-            os << "log10(";
-            break;
-        case opLoge:
-            os << "loge(";
-            break;
-        case opExecute:
-            os<< "execute(";
-            break;
-        case opMachFtr:
-            os << "machine(";
-            break;
-        case opSuccessor:
-            os << "succ(";
-            break;
-        default:
-            break;			// For warning
-        }
-        p1->printr(os, html);
-        os << ")";
-        return;
-
-        //	Misc	//
-    case opSgnEx:	   // Different because the operator appears last
-        p1->printr(os, html);
-        os << "! ";
-        return;
-    case opTemp:
-        if (p1->getOper() == opWildStrConst)
-        {
-            os << "t[";
-            ((Const*)p1)->printNoQuotes(os);
+            switch (op)
+                {
+                case opRegOf:
+                    os << "r[";
+                    break;	// e.g. r[r2]
+                case opMemOf:
+                    os << "m[";
+                    break;
+                case opAddrOf:
+                    os << "a[";
+                    break;
+                case opVar:
+                    os << "v[";
+                    break;
+                case opTypeOf:
+                    os << "T[";
+                    break;
+                case opKindOf:
+                    os << "K[";
+                    break;
+                default:
+                    break;		// Suppress compiler warning
+                }
+            if (op == opVar) ((Const*)p1)->printNoQuotes(os);
+            // Use print, not printr, because this is effectively the top level again (because the [] act as
+            // parentheses)
+            else
+                {
+                    p1->print(os, html);
+                }
             os << "]";
+            break;
+
+            //	//	//	//	//	//	//
+            //	  Unary operators	//
+            //	//	//	//	//	//	//
+
+        case opNot:
+        case opLNot:
+        case opNeg:
+        case opFNeg:
+            if (op == opNot)  os << "~";
+            else if (op == opLNot) os << "L~";
+            else if (op == opFNeg) os << "~f ";
+            else				   os << "-";
+            p1->printr(os, html);
             return;
+
+        case opSignExt:
+            p1->printr(os, html);
+            os << "!";			// Operator after expression
+            return;
+
+            //	//	//	//	//	//	//	//
+            //	Function-like operators //
+            //	//	//	//	//	//	//	//
+
+        case opSQRTs:
+        case opSQRTd:
+        case opSQRTq:
+        case opSqrt:
+        case opSin:
+        case opCos:
+        case opTan:
+        case opArcTan:
+        case opLog2:
+        case opLog10:
+        case opLoge:
+        case opPow:
+        case opMachFtr:
+        case opSuccessor:
+            switch (op)
+                {
+                case opSQRTs:
+                    os << "SQRTs(";
+                    break;
+                case opSQRTd:
+                    os << "SQRTd(";
+                    break;
+                case opSQRTq:
+                    os << "SQRTq(";
+                    break;
+                case opSqrt:
+                    os << "sqrt(";
+                    break;
+                case opSin:
+                    os << "sin(";
+                    break;
+                case opCos:
+                    os << "cos(";
+                    break;
+                case opTan:
+                    os << "tan(";
+                    break;
+                case opArcTan:
+                    os << "arctan(";
+                    break;
+                case opLog2:
+                    os << "log2(";
+                    break;
+                case opLog10:
+                    os << "log10(";
+                    break;
+                case opLoge:
+                    os << "loge(";
+                    break;
+                case opExecute:
+                    os<< "execute(";
+                    break;
+                case opMachFtr:
+                    os << "machine(";
+                    break;
+                case opSuccessor:
+                    os << "succ(";
+                    break;
+                default:
+                    break;			// For warning
+                }
+            p1->printr(os, html);
+            os << ")";
+            return;
+
+            //	Misc	//
+        case opSgnEx:	   // Different because the operator appears last
+            p1->printr(os, html);
+            os << "! ";
+            return;
+        case opTemp:
+            if (p1->getOper() == opWildStrConst)
+                {
+                    os << "t[";
+                    ((Const*)p1)->printNoQuotes(os);
+                    os << "]";
+                    return;
+                }
+            // Temp: just print the string, no quotes
+        case opGlobal:
+        case opLocal:
+        case opParam:
+            // Print a more concise form than param["foo"] (just foo)
+            ((Const*)p1)->printNoQuotes(os);
+            return;
+        case opInitValueOf:
+            p1->printr(os, html);
+            os << "'";
+            return;
+        case opPhi:
+            os << "phi(";
+            p1->print(os, html);
+            os << ")";
+            return;
+        case opFtrunc:
+            os << "ftrunc(";
+            p1->print(os, html);
+            os << ")";
+            return;
+        case opFabs:
+            os << "fabs(";
+            p1->print(os, html);
+            os << ")";
+            return;
+        default:
+            LOG << "Unary::print invalid operator " << operStrings[op] <<
+                "\n";
+            assert(0);
         }
-        // Temp: just print the string, no quotes
-    case opGlobal:
-    case opLocal:
-    case opParam:
-        // Print a more concise form than param["foo"] (just foo)
-        ((Const*)p1)->printNoQuotes(os);
-        return;
-    case opInitValueOf:
-        p1->printr(os, html);
-        os << "'";
-        return;
-    case opPhi:
-        os << "phi(";
-        p1->print(os, html);
-        os << ")";
-        return;
-    case opFtrunc:
-        os << "ftrunc(";
-        p1->print(os, html);
-        os << ")";
-        return;
-    case opFabs:
-        os << "fabs(";
-        p1->print(os, html);
-        os << ")";
-        return;
-    default:
-        LOG << "Unary::print invalid operator " << operStrings[op] <<
-            "\n";
-        assert(0);
-    }
 }
 
 //	//	//	//
@@ -1248,24 +1250,24 @@ void Ternary::printr(std::ostream& os, bool html)
 {
     // The function-like operators don't need parentheses
     switch (op)
-    {
-        // The "function-like" ternaries
-    case opTruncu:
-    case opTruncs:
-    case opZfill:
-    case opSgnEx:
-    case opFsize:
-    case opItof:
-    case opFtoi:
-    case opFround:
-    case opFtrunc:
-    case opOpTable:
-        // No paren case
-        print(os);
-        return;
-    default:
-        break;
-    }
+        {
+            // The "function-like" ternaries
+        case opTruncu:
+        case opTruncs:
+        case opZfill:
+        case opSgnEx:
+        case opFsize:
+        case opItof:
+        case opFtoi:
+        case opFround:
+        case opFtrunc:
+        case opOpTable:
+            // No paren case
+            print(os);
+            return;
+        default:
+            break;
+        }
     // All other cases, we use the parens
     os << "(" << this << ")";
 }
@@ -1276,94 +1278,94 @@ void Ternary::print(std::ostream& os, bool html)
     Exp* p2 = ((Ternary*)this)->getSubExp2();
     Exp* p3 = ((Ternary*)this)->getSubExp3();
     switch (op)
-    {
-        // The "function-like" ternaries
-    case opTruncu:
-    case opTruncs:
-    case opZfill:
-    case opSgnEx:
-    case opFsize:
-    case opItof:
-    case opFtoi:
-    case opFround:
-    case opFtrunc:
-    case opOpTable:
-        switch (op)
         {
+            // The "function-like" ternaries
         case opTruncu:
-            os << "truncu(";
-            break;
         case opTruncs:
-            os << "truncs(";
-            break;
         case opZfill:
-            os << "zfill(";
-            break;
         case opSgnEx:
-            os << "sgnex(";
-            break;
         case opFsize:
-            os << "fsize(";
-            break;
         case opItof:
-            os << "itof(";
-            break;
         case opFtoi:
-            os << "ftoi(";
-            break;
         case opFround:
-            os << "fround(";
-            break;
         case opFtrunc:
-            os << "ftrunc(";
-            break;
         case opOpTable:
-            os << "optable(";
-            break;
+            switch (op)
+                {
+                case opTruncu:
+                    os << "truncu(";
+                    break;
+                case opTruncs:
+                    os << "truncs(";
+                    break;
+                case opZfill:
+                    os << "zfill(";
+                    break;
+                case opSgnEx:
+                    os << "sgnex(";
+                    break;
+                case opFsize:
+                    os << "fsize(";
+                    break;
+                case opItof:
+                    os << "itof(";
+                    break;
+                case opFtoi:
+                    os << "ftoi(";
+                    break;
+                case opFround:
+                    os << "fround(";
+                    break;
+                case opFtrunc:
+                    os << "ftrunc(";
+                    break;
+                case opOpTable:
+                    os << "optable(";
+                    break;
+                default:
+                    break;			// For warning
+                }
+            // Use print not printr here, since , has the lowest precendence of all.
+            // Also it makes it the same as UQBT, so it's easier to test
+            if (p1) p1->print(os, html);
+            else os << "<NULL>";
+            os << ",";
+            if (p2) p2->print(os, html);
+            else os << "<NULL>";
+            os << ",";
+            if (p3) p3->print(os, html);
+            else os << "<NULL>";
+            os << ")";
+            return;
         default:
-            break;			// For warning
+            break;
         }
-        // Use print not printr here, since , has the lowest precendence of all.
-        // Also it makes it the same as UQBT, so it's easier to test
-        if (p1) p1->print(os, html);
-        else os << "<NULL>";
-        os << ",";
-        if (p2) p2->print(os, html);
-        else os << "<NULL>";
-        os << ",";
-        if (p3) p3->print(os, html);
-        else os << "<NULL>";
-        os << ")";
-        return;
-    default:
-        break;
-    }
     // Else must be ?: or @ (traditional ternary operators)
     if (p1) p1->printr(os, html);
     else os << "<NULL>";
     if (op == opTern)
-    {
-        os << " ? ";
-        if (p2) p2->printr(os, html);
-        else os << "<NULL>";
-        os << " : ";		// Need wide spacing here
-        if (p3) p3->print(os, html);
-        else os << "<NULL>";
-    }
+        {
+            os << " ? ";
+            if (p2) p2->printr(os, html);
+            else os << "<NULL>";
+            os << " : ";		// Need wide spacing here
+            if (p3) p3->print(os, html);
+            else os << "<NULL>";
+        }
     else if (op == opAt)
-    {
-        os << "@";
-        if (p2) p2->printr(os, html);
-        else os << "NULL>";
-        os << ":";
-        if (p3) p3->printr(os, html);
-        else os << "NULL>";
-    }
+        {
+            os << "@";
+            if (p2) p2->printr(os, html);
+            else os << "NULL>";
+            os << ":";
+            if (p3) p3->printr(os, html);
+            else os << "NULL>";
+        }
     else
-    {
-        LOG << "Ternary::print invalid operator " << operStrings[op] << "\n";
-        assert(0);
-    }
+        {
+            LOG << "Ternary::print invalid operator " << operStrings[op] << "\n";
+            assert(0);
+        }
 }
 
 //	//	//	//
@@ -1391,13 +1393,13 @@ void RefExp::print(std::ostream& os, bool html)
         os << "{";
     if (def == (Statement*)-1) os << "WILD";
     else if (def)
-    {
-        if (html)
-            os << "<a href=\"#stmt" << std::dec << def->getNumber() << "\">";
-        def->printNum(os);
-        if (html)
-            os << "</a>";
-    }
+        {
+            if (html)
+                os << "<a href=\"#stmt" << std::dec << def->getNumber() << "\">";
+            def->printNum(os);
+            if (html)
+                os << "</a>";
+        }
     else
         os << "-";			// So you can tell the difference with {0}
     if (html)
@@ -1450,10 +1452,10 @@ void Exp::createDotFile(char* name)
     std::ofstream of;
     of.open(name);
     if (!of)
-    {
-        LOG << "Could not open " << name << " to write dotty file\n";
-        return;
-    }
+        {
+            LOG << "Could not open " << name << " to write dotty file\n";
+            return;
+        }
     of << "digraph Exp {\n";
     appendDotFile(of);
     of << "}";
@@ -1469,23 +1471,23 @@ void Const::appendDotFile(std::ofstream& of)
     of << "e" << std::hex << (int)this << " [shape=record,label=\"{";
     of << operStrings[op] << "\\n0x" << std::hex << (int)this << " | ";
     switch (op)
-    {
-    case opIntConst:
-        of << std::dec << u.i;
-        break;
-    case opFltConst:
-        of << u.d;
-        break;
-    case opStrConst:
-        of << "\\\"" << u.p << "\\\"";
-        break;
-        // Might want to distinguish this better, e.g. "(func*)myProc"
-    case opFuncConst:
-        of << u.pp->getName();
-        break;
-    default:
-        break;
-    }
+        {
+        case opIntConst:
+            of << std::dec << u.i;
+            break;
+        case opFltConst:
+            of << u.d;
+            break;
+        case opStrConst:
+            of << "\\\"" << u.p << "\\\"";
+            break;
+            // Might want to distinguish this better, e.g. "(func*)myProc"
+        case opFuncConst:
+            of << u.pp->getName();
+            break;
+        default:
+            break;
+        }
     of << " }\"];\n";
 }
 
@@ -1673,58 +1675,58 @@ Exp* Exp::match(Exp *pattern)
     if (*this == *pattern)
         return new Terminal(opNil);
     if (pattern->getOper() == opVar)
-    {
-        return new Binary(opList,
-                          new Binary(opEquals, pattern->clone(), this->clone()),
-                          new Terminal(opNil));
-    }
+        {
+            return new Binary(opList,
+                              new Binary(opEquals, pattern->clone(), this->clone()),
+                              new Terminal(opNil));
+        }
     return NULL;
 }
 Exp* Unary::match(Exp *pattern)
 {
     assert(subExp1);
     if (op == pattern->getOper())
-    {
-        return subExp1->match(pattern->getSubExp1());
-    }
+        {
+            return subExp1->match(pattern->getSubExp1());
+        }
     return Exp::match(pattern);
 }
 Exp* Binary::match(Exp *pattern)
 {
     assert(subExp1 && subExp2);
     if (op == pattern->getOper())
-    {
-        Exp *b_lhs = subExp1->match(pattern->getSubExp1());
-        if (b_lhs == NULL)
-            return NULL;
-        Exp *b_rhs = subExp2->match(pattern->getSubExp2());
-        if (b_rhs == NULL)
-            return NULL;
-        if (b_lhs->getOper() == opNil)
-            return b_rhs;
-        if (b_rhs->getOper() == opNil)
-            return b_lhs;
+        {
+            Exp *b_lhs = subExp1->match(pattern->getSubExp1());
+            if (b_lhs == NULL)
+                return NULL;
+            Exp *b_rhs = subExp2->match(pattern->getSubExp2());
+            if (b_rhs == NULL)
+                return NULL;
+            if (b_lhs->getOper() == opNil)
+                return b_rhs;
+            if (b_rhs->getOper() == opNil)
+                return b_lhs;
 #if 0
-        LOG << "got lhs list " << b_lhs << " and rhs list " << b_rhs << "\n";
+            LOG << "got lhs list " << b_lhs << " and rhs list " << b_rhs << "\n";
 #endif
-        Exp *result = new Terminal(opNil);
-        for (Exp *l = b_lhs; l->getOper() != opNil; l = l->getSubExp2())
+            Exp *result = new Terminal(opNil);
+            for (Exp *l = b_lhs; l->getOper() != opNil; l = l->getSubExp2())
+                for (Exp *r = b_rhs; r->getOper() != opNil; r = r->getSubExp2())
+                    if (*l->getSubExp1()->getSubExp1() == *r->getSubExp1()->getSubExp1() &&
+                            !(*l->getSubExp1()->getSubExp2() == *r->getSubExp1()->getSubExp2()))
+                        {
+#if 0
+                            LOG << "disagreement in match: " << l->getSubExp1()->getSubExp2() << " != " <<
+                                r->getSubExp1()->getSubExp2() << "\n";
+#endif
+                            return NULL;		// must be agreement between LHS and RHS
+                        }
+                    else
+                        result = new Binary(opList, l->getSubExp1()->clone(), result);
             for (Exp *r = b_rhs; r->getOper() != opNil; r = r->getSubExp2())
-                if (*l->getSubExp1()->getSubExp1() == *r->getSubExp1()->getSubExp1() &&
-                        !(*l->getSubExp1()->getSubExp2() == *r->getSubExp1()->getSubExp2()))
-                {
-#if 0
-                    LOG << "disagreement in match: " << l->getSubExp1()->getSubExp2() << " != " <<
-                        r->getSubExp1()->getSubExp2() << "\n";
-#endif
-                    return NULL;		// must be agreement between LHS and RHS
-                }
-                else
-                    result = new Binary(opList, l->getSubExp1()->clone(), result);
-        for (Exp *r = b_rhs; r->getOper() != opNil; r = r->getSubExp2())
-            result = new Binary(opList, r->getSubExp1()->clone(), result);
-        return result;
-    }
+                result = new Binary(opList, r->getSubExp1()->clone(), result);
+            return result;
+        }
     return Exp::match(pattern);
 }
 Exp* RefExp::match(Exp *pattern)
@@ -1744,9 +1746,9 @@ Exp* RefExp::match(Exp *pattern)
 Exp* TypeVal::match(Exp *pattern)
 {
     if (op == pattern->getOper())
-    {
-        return val->match(pattern->getType());
-    }
+        {
+            return val->match(pattern->getType());
+        }
     return Exp::match(pattern);
 }
 #endif
@@ -1757,22 +1759,22 @@ Exp* TypeVal::match(Exp *pattern)
 const char *tlstrchr(const char *str, char ch)
 {
     while (str && *str)
-    {
-        if (*str == ch)
-            return str;
-        if (*str == '[' || *str == '{' || *str == '(')
         {
-            char close = ']';
-            if (*str == '{')
-                close = '}';
-            if (*str == '(')
-                close = ')';
-            while (*str && *str != close)
+            if (*str == ch)
+                return str;
+            if (*str == '[' || *str == '{' || *str == '(')
+                {
+                    char close = ']';
+                    if (*str == '{')
+                        close = '}';
+                    if (*str == '(')
+                        close = ')';
+                    while (*str && *str != close)
+                        str++;
+                }
+            if (*str)
                 str++;
         }
-        if (*str)
-            str++;
-    }
     return NULL;
 }
 
@@ -1792,10 +1794,10 @@ bool Exp::match(const char *pattern, std::map<std::string, Exp*> &bindings)
 
     // alright, is pattern an acceptable variable?
     if (ISVARIABLE(pattern))
-    {
-        bindings[pattern] = this;
-        return true;
-    }
+        {
+            bindings[pattern] = this;
+            return true;
+        }
 
     // no, fail
     return false;
@@ -1809,11 +1811,11 @@ bool Unary::match(const char *pattern, std::map<std::string, Exp*> &bindings)
 #endif
     if (op == opAddrOf && pattern[0] == 'a' && pattern[1] == '[' &&
             pattern[strlen(pattern)-1] == ']')
-    {
-        char *sub1 = strdup(pattern+2);
-        sub1[strlen(sub1)-1] = 0;
-        return subExp1->match(sub1, bindings);
-    }
+        {
+            char *sub1 = strdup(pattern+2);
+            sub1[strlen(sub1)-1] = 0;
+            return subExp1->match(sub1, bindings);
+        }
     return false;
 }
 bool Binary::match(const char *pattern, std::map<std::string, Exp*> &bindings)
@@ -1824,57 +1826,57 @@ bool Binary::match(const char *pattern, std::map<std::string, Exp*> &bindings)
     LOG << "binary::match " << this << " to " << pattern << ".\n";
 #endif
     if (op == opMemberAccess && tlstrchr(pattern, '.'))
-    {
-        char *sub1 = strdup(pattern);
-        char *sub2 = (char*)tlstrchr(sub1, '.');
-        *sub2++ = 0;
-        if (subExp1->match(sub1, bindings))
         {
-            assert(subExp2->isStrConst());
-            if (!strcmp(sub2, ((Const*)subExp2)->getStr()))
-                return true;
-            if (ISVARIABLE(sub2))
-            {
-                bindings[sub2] = subExp2;
-                return true;
-            }
+            char *sub1 = strdup(pattern);
+            char *sub2 = (char*)tlstrchr(sub1, '.');
+            *sub2++ = 0;
+            if (subExp1->match(sub1, bindings))
+                {
+                    assert(subExp2->isStrConst());
+                    if (!strcmp(sub2, ((Const*)subExp2)->getStr()))
+                        return true;
+                    if (ISVARIABLE(sub2))
+                        {
+                            bindings[sub2] = subExp2;
+                            return true;
+                        }
+                }
         }
-    }
     if (op == opArrayIndex)
-    {
-        if (pattern[strlen(pattern)-1] != ']')
-            return false;
-        char *sub1 = strdup(pattern);
-        char *sub2 = strrchr(sub1, '[');
-        *sub2++ = 0;
-        sub2[strlen(sub2)-1] = 0;
-        if (subExp1->match(sub1, bindings) && subExp2->match(sub2, bindings))
-            return true;
-    }
+        {
+            if (pattern[strlen(pattern)-1] != ']')
+                return false;
+            char *sub1 = strdup(pattern);
+            char *sub2 = strrchr(sub1, '[');
+            *sub2++ = 0;
+            sub2[strlen(sub2)-1] = 0;
+            if (subExp1->match(sub1, bindings) && subExp2->match(sub2, bindings))
+                return true;
+        }
     if (op == opPlus && tlstrchr(pattern, '+'))
-    {
-        char *sub1 = strdup(pattern);
-        char *sub2 = (char*)tlstrchr(sub1, '+');
-        *sub2++ = 0;
-        while (*sub2 == ' ')
-            sub2++;
-        while (sub1[strlen(sub1)-1] == ' ')
-            sub1[strlen(sub1)-1] = 0;
-        if (subExp1->match(sub1, bindings) && subExp2->match(sub2, bindings))
-            return true;
-    }
+        {
+            char *sub1 = strdup(pattern);
+            char *sub2 = (char*)tlstrchr(sub1, '+');
+            *sub2++ = 0;
+            while (*sub2 == ' ')
+                sub2++;
+            while (sub1[strlen(sub1)-1] == ' ')
+                sub1[strlen(sub1)-1] = 0;
+            if (subExp1->match(sub1, bindings) && subExp2->match(sub2, bindings))
+                return true;
+        }
     if (op == opMinus && tlstrchr(pattern, '-'))
-    {
-        char *sub1 = strdup(pattern);
-        char *sub2 = (char*)tlstrchr(sub1, '-');
-        *sub2++ = 0;
-        while (*sub2 == ' ')
-            sub2++;
-        while (sub1[strlen(sub1)-1] == ' ')
-            sub1[strlen(sub1)-1] = 0;
-        if (subExp1->match(sub1, bindings) && subExp2->match(sub2, bindings))
-            return true;
-    }
+        {
+            char *sub1 = strdup(pattern);
+            char *sub2 = (char*)tlstrchr(sub1, '-');
+            *sub2++ = 0;
+            while (*sub2 == ' ')
+                sub2++;
+            while (sub1[strlen(sub1)-1] == ' ')
+                sub1[strlen(sub1)-1] = 0;
+            if (subExp1->match(sub1, bindings) && subExp2->match(sub2, bindings))
+                return true;
+        }
     return false;
 }
 bool Ternary::match(const char *pattern, std::map<std::string, Exp*> &bindings)
@@ -1895,25 +1897,25 @@ bool RefExp::match(const char *pattern, std::map<std::string, Exp*> &bindings)
 #endif
     const char *end = pattern + strlen(pattern) - 1;
     if (end > pattern && *end == '}')
-    {
-        end--;
-        if (*end == '-' && def == NULL)
         {
-            char *sub = strdup(pattern);
-            *(sub + (end - 1 - pattern)) = 0;
-            return subExp1->match(sub, bindings);
+            end--;
+            if (*end == '-' && def == NULL)
+                {
+                    char *sub = strdup(pattern);
+                    *(sub + (end - 1 - pattern)) = 0;
+                    return subExp1->match(sub, bindings);
+                }
+            end = strrchr(end, '{');
+            if (end)
+                {
+                    if (atoi(end + 1) == def->getNumber())
+                        {
+                            char *sub = strdup(pattern);
+                            *(sub + (end - pattern)) = 0;
+                            return subExp1->match(sub, bindings);
+                        }
+                }
         }
-        end = strrchr(end, '{');
-        if (end)
-        {
-            if (atoi(end + 1) == def->getNumber())
-            {
-                char *sub = strdup(pattern);
-                *(sub + (end - pattern)) = 0;
-                return subExp1->match(sub, bindings);
-            }
-        }
-    }
     return false;
 }
 bool Const::match(const char *pattern, std::map<std::string, Exp*> &bindings)
@@ -1942,18 +1944,18 @@ bool Location::match(const char *pattern, std::map<std::string, Exp*> &bindings)
     LOG << "location::match " << this << " to " << pattern << ".\n";
 #endif
     if (op == opMemOf || op == opRegOf)
-    {
-        char ch = 'm';
-        if (op == opRegOf)
-            ch = 'r';
-        if (pattern[0] != ch || pattern[1] != '[')
-            return false;
-        if (pattern[strlen(pattern)-1] != ']')
-            return false;
-        char *sub = strdup(pattern + 2);
-        *(sub + strlen(sub) - 1) = 0;
-        return subExp1->match(sub, bindings);
-    }
+        {
+            char ch = 'm';
+            if (op == opRegOf)
+                ch = 'r';
+            if (pattern[0] != ch || pattern[1] != '[')
+                return false;
+            if (pattern[strlen(pattern)-1] != ']')
+                return false;
+            char *sub = strdup(pattern + 2);
+            *(sub + strlen(sub) - 1) = 0;
+            return subExp1->match(sub, bindings);
+        }
     return false;
 }
 
@@ -1975,11 +1977,11 @@ void Exp::doSearch(Exp* search, Exp*& pSrc, std::list<Exp**>& li, bool once)
     bool compare;
     compare = (*search == *pSrc);
     if (compare)
-    {
-        li.push_back(&pSrc);				// Success
-        if (once)
-            return;							// No more to do
-    }
+        {
+            li.push_back(&pSrc);				// Success
+            if (once)
+                return;							// No more to do
+        }
     // Either want to find all occurrences, or did not match at this level
     // Recurse into children, unless a matching opSubscript
     if (!compare || pSrc->op != opSubscript)
@@ -2056,16 +2058,16 @@ Exp* Exp::searchReplaceAll(Exp* search, Exp* replace, bool& change, bool once /*
     doSearch(search, top, li, false);
     std::list<Exp**>::iterator it;
     for (it = li.begin(); it != li.end(); it++)
-    {
-        Exp** pp = *it;
-        //if (*pp) //delete *pp;		 // Delete any existing
-        *pp = replace->clone();		// Do the replacement
-        if (once)
         {
-            change = true;
-            return top;
+            Exp** pp = *it;
+            //if (*pp) //delete *pp;		 // Delete any existing
+            *pp = replace->clone();		// Do the replacement
+            if (once)
+                {
+                    change = true;
+                    return top;
+                }
         }
-    }
     change = (li.size() != 0);
     return top;
 }
@@ -2088,10 +2090,10 @@ bool Exp::search(Exp* search, Exp*& result)
     Exp* top = this;
     doSearch(search, top, li, false);
     if (li.size())
-    {
-        result = *li.front();
-        return true;
-    }
+        {
+            result = *li.front();
+            return true;
+        }
     return false;
 }
 
@@ -2114,10 +2116,10 @@ bool Exp::searchAll(Exp* search, std::list<Exp*>& result)
     doSearch(search, pSrc, li, false);
     std::list<Exp**>::iterator it;
     for (it = li.begin(); it != li.end(); it++)
-    {
-        // li is list of Exp**; result is list of Exp*
-        result.push_back(**it);
-    }
+        {
+            // li is list of Exp**; result is list of Exp*
+            result.push_back(**it);
+        }
     return li.size() != 0;
 }
 
@@ -2146,39 +2148,39 @@ void Exp::partitionTerms(std::list<Exp*>& positives, std::list<Exp*>& negatives,
 {
     Exp* p1, *p2;
     switch (op)
-    {
-    case opPlus:
-        p1 = ((Binary*)this)->getSubExp1();
-        p2 = ((Binary*)this)->getSubExp2();
-        p1->partitionTerms(positives, negatives, integers, negate);
-        p2->partitionTerms(positives, negatives, integers, negate);
-        break;
-    case opMinus:
-        p1 = ((Binary*)this)->getSubExp1();
-        p2 = ((Binary*)this)->getSubExp2();
-        p1->partitionTerms(positives, negatives, integers, negate);
-        p2->partitionTerms(positives, negatives, integers, !negate);
-        break;
-    case opTypedExp:
-        p1 = ((Binary*)this)->getSubExp1();
-        p1->partitionTerms(positives, negatives, integers, negate);
-        break;
-    case opIntConst:
-    {
-        int k = ((Const*)this)->getInt();
-        if (negate)
-            integers.push_back(-k);
-        else
-            integers.push_back(k);
-        break;
-    }
-    default:
-        // These can be any other expression tree
-        if (negate)
-            negatives.push_back(this);
-        else
-            positives.push_back(this);
-    }
+        {
+        case opPlus:
+            p1 = ((Binary*)this)->getSubExp1();
+            p2 = ((Binary*)this)->getSubExp2();
+            p1->partitionTerms(positives, negatives, integers, negate);
+            p2->partitionTerms(positives, negatives, integers, negate);
+            break;
+        case opMinus:
+            p1 = ((Binary*)this)->getSubExp1();
+            p2 = ((Binary*)this)->getSubExp2();
+            p1->partitionTerms(positives, negatives, integers, negate);
+            p2->partitionTerms(positives, negatives, integers, !negate);
+            break;
+        case opTypedExp:
+            p1 = ((Binary*)this)->getSubExp1();
+            p1->partitionTerms(positives, negatives, integers, negate);
+            break;
+        case opIntConst:
+        {
+            int k = ((Const*)this)->getInt();
+            if (negate)
+                integers.push_back(-k);
+            else
+                integers.push_back(k);
+            break;
+        }
+        default:
+            // These can be any other expression tree
+            if (negate)
+                negatives.push_back(this);
+            else
+                positives.push_back(this);
+        }
 }
 
 /*==============================================================================
@@ -2193,10 +2195,10 @@ void Exp::partitionTerms(std::list<Exp*>& positives, std::list<Exp*>& negatives,
 Exp* Unary::simplifyArith()
 {
     if (op == opMemOf || op == opRegOf || op == opAddrOf || op == opSubscript)
-    {
-        // assume we want to simplify the subexpression
-        subExp1 = subExp1->simplifyArith();
-    }
+        {
+            // assume we want to simplify the subexpression
+            subExp1 = subExp1->simplifyArith();
+        }
     return this;			// Else, do nothing
 }
 
@@ -2230,72 +2232,72 @@ Exp* Binary::simplifyArith()
     std::list<Exp*>::iterator pp = positives.begin();
     std::list<Exp*>::iterator nn = negatives.begin();
     while (pp != positives.end())
-    {
-        bool inc = true;
-        while (nn != negatives.end())
         {
-            if (**pp == **nn)
-            {
-                // A positive and a negative that are equal; therefore they cancel
-                pp = positives.erase(pp);	// Erase the pointers, not the Exps
-                nn = negatives.erase(nn);
-                inc = false;				// Don't increment pp now
-                break;
-            }
-            nn++;
+            bool inc = true;
+            while (nn != negatives.end())
+                {
+                    if (**pp == **nn)
+                        {
+                            // A positive and a negative that are equal; therefore they cancel
+                            pp = positives.erase(pp);	// Erase the pointers, not the Exps
+                            nn = negatives.erase(nn);
+                            inc = false;				// Don't increment pp now
+                            break;
+                        }
+                    nn++;
+                }
+            if (pp == positives.end()) break;
+            if (inc) pp++;
         }
-        if (pp == positives.end()) break;
-        if (inc) pp++;
-    }
 
     // Summarise the set of integers to a single number.
     int sum = std::accumulate(integers.begin(),integers.end(),0);
 
     // Now put all these elements back together and return the result
     if (positives.size() == 0)
-    {
-        if (negatives.size() == 0)
         {
-            return new Const(sum);
+            if (negatives.size() == 0)
+                {
+                    return new Const(sum);
+                }
+            else
+                // No positives, some negatives. sum - Acc
+                return new Binary(opMinus, new Const(sum),
+                                  Exp::Accumulate(negatives));
         }
-        else
-            // No positives, some negatives. sum - Acc
-            return new Binary(opMinus, new Const(sum),
-                              Exp::Accumulate(negatives));
-    }
     if (negatives.size() == 0)
-    {
-        // Positives + sum
-        if (sum == 0)
         {
-            // Just positives
-            return Exp::Accumulate(positives);
+            // Positives + sum
+            if (sum == 0)
+                {
+                    // Just positives
+                    return Exp::Accumulate(positives);
+                }
+            else
+                {
+                    OPER op = opPlus;
+                    if (sum < 0)
+                        {
+                            op = opMinus;
+                            sum = -sum;
+                        }
+                    return new Binary(op, Exp::Accumulate(positives), new Const(sum));
+                }
         }
-        else
-        {
-            OPER op = opPlus;
-            if (sum < 0)
-            {
-                op = opMinus;
-                sum = -sum;
-            }
-            return new Binary(op, Exp::Accumulate(positives), new Const(sum));
-        }
-    }
     // Some positives, some negatives
     if (sum == 0)
-    {
-        // positives - negatives
-        return new Binary(opMinus, Exp::Accumulate(positives),
-                          Exp::Accumulate(negatives));
-    }
+        {
+            // positives - negatives
+            return new Binary(opMinus, Exp::Accumulate(positives),
+                              Exp::Accumulate(negatives));
+        }
     // General case: some positives, some negatives, a sum
     OPER op = opPlus;
     if (sum < 0)
-    {
-        op = opMinus;		// Return (pos - negs) - sum
-        sum = -sum;
-    }
+        {
+            op = opMinus;		// Return (pos - negs) - sum
+            sum = -sum;
+        }
     return new Binary(op,
                       new Binary(opMinus,
                                  Exp::Accumulate(positives),
@@ -2354,16 +2356,16 @@ Exp* Exp::simplify()
     //res = ExpTransformer::applyAllTo(res, bMod);
     //return res;
     do
-    {
-        bMod = false;
-        //Exp *before = res->clone();
-        res = res->polySimplify(bMod);// Call the polymorphic simplify
-        /*	  if (bMod) {
-        	LOG << "polySimplify hit: " << before << " to " << res << "\n";
-        	// polySimplify is now redundant, if you see this in the log you need to update one of the files in the
-        	// transformations directory to include a rule for the reported transform.
-        } */
-    }
+        {
+            bMod = false;
+            //Exp *before = res->clone();
+            res = res->polySimplify(bMod);// Call the polymorphic simplify
+            /*	  if (bMod) {
+            	LOG << "polySimplify hit: " << before << " to " << res << "\n";
+            	// polySimplify is now redundant, if you see this in the log you need to update one of the files in the
+            	// transformations directory to include a rule for the reported transform.
+            } */
+        }
     while (bMod);				// If modified at this (or a lower) level, redo
     // The below is still important. E.g. want to canonicalise sums, so we know that a + K + b is the same as a + b + K
     // No! This slows everything down, and it's slow enough as it is. Call only where needed:
@@ -2389,129 +2391,129 @@ Exp* Unary::polySimplify(bool& bMod)
     subExp1 = subExp1->polySimplify(bMod);
 
     if (op == opNot || op == opLNot)
-    {
-        switch (subExp1->getOper())
         {
-        case opEquals:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opNotEqual);
-            bMod = true;
-            return res;
-        case opNotEqual:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opEquals);
-            bMod = true;
-            return res;
-        case opLess:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opGtrEq);
-            bMod = true;
-            return res;
-        case opLessEq:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opGtr);
-            bMod = true;
-            return res;
-        case opGtr:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opLessEq);
-            bMod = true;
-            return res;
-        case opGtrEq:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opLess);
-            bMod = true;
-            return res;
-        case opLessUns:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opGtrEqUns);
-            bMod = true;
-            return res;
-        case opLessEqUns:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opGtrUns);
-            bMod = true;
-            return res;
-        case opGtrUns:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opLessEqUns);
-            bMod = true;
-            return res;
-        case opGtrEqUns:
-            res = ((Unary*)res)->getSubExp1();
-            res->setOper(opLessUns);
-            bMod = true;
-            return res;
+            switch (subExp1->getOper())
+                {
+                case opEquals:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opNotEqual);
+                    bMod = true;
+                    return res;
+                case opNotEqual:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opEquals);
+                    bMod = true;
+                    return res;
+                case opLess:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opGtrEq);
+                    bMod = true;
+                    return res;
+                case opLessEq:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opGtr);
+                    bMod = true;
+                    return res;
+                case opGtr:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opLessEq);
+                    bMod = true;
+                    return res;
+                case opGtrEq:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opLess);
+                    bMod = true;
+                    return res;
+                case opLessUns:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opGtrEqUns);
+                    bMod = true;
+                    return res;
+                case opLessEqUns:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opGtrUns);
+                    bMod = true;
+                    return res;
+                case opGtrUns:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opLessEqUns);
+                    bMod = true;
+                    return res;
+                case opGtrEqUns:
+                    res = ((Unary*)res)->getSubExp1();
+                    res->setOper(opLessUns);
+                    bMod = true;
+                    return res;
+                default:
+                    break;
+                }
+        }
+
+    switch (op)
+        {
+        case opNeg:
+        case opNot:
+        case opLNot:
+        case opSize:
+        {
+            OPER subOP = subExp1->getOper();
+            if (subOP == opIntConst)
+                {
+                    // -k, ~k, or !k
+                    OPER op2 = op;
+                    res = ((Unary*)res)->getSubExp1();
+                    int k = ((Const*)res)->getInt();
+                    switch (op2)
+                        {
+                        case opNeg:
+                            k = -k;
+                            break;
+                        case opNot:
+                            k = ~k;
+                            break;
+                        case opLNot:
+                            k = !k;
+                            break;
+                        case opSize: /* No change required */
+                            break;
+                        default:
+                            break;
+                        }
+                    ((Const*)res)->setInt(k);
+                    bMod = true;
+                }
+            else if (op == subOP)
+                {
+                    res = ((Unary*)res)->getSubExp1();
+                    res = ((Unary*)res)->getSubExp1();
+                    bMod = true;
+                    break;
+                }
+        }
+        break;
+        case opAddrOf:
+            // check for a[m[x]], becomes x
+            if (subExp1->getOper() == opMemOf)
+                {
+                    res = ((Unary*)res)->getSubExp1();
+                    res = ((Unary*)res)->getSubExp1();
+                    bMod = true;
+                    return res;
+                }
+            break;
+        case opMemOf:
+        case opRegOf:
+        {
+            subExp1 = subExp1->polySimplify(bMod);
+            // The below IS bad now. It undoes the simplification of
+            // m[r29 + -4] to m[r29 - 4]
+            // If really needed, do another polySimplify, or swap the order
+            //subExp1 = subExp1->simplifyArith();		// probably bad
+        }
+        break;
         default:
             break;
         }
-    }
-
-    switch (op)
-    {
-    case opNeg:
-    case opNot:
-    case opLNot:
-    case opSize:
-    {
-        OPER subOP = subExp1->getOper();
-        if (subOP == opIntConst)
-        {
-            // -k, ~k, or !k
-            OPER op2 = op;
-            res = ((Unary*)res)->getSubExp1();
-            int k = ((Const*)res)->getInt();
-            switch (op2)
-            {
-            case opNeg:
-                k = -k;
-                break;
-            case opNot:
-                k = ~k;
-                break;
-            case opLNot:
-                k = !k;
-                break;
-            case opSize: /* No change required */
-                break;
-            default:
-                break;
-            }
-            ((Const*)res)->setInt(k);
-            bMod = true;
-        }
-        else if (op == subOP)
-        {
-            res = ((Unary*)res)->getSubExp1();
-            res = ((Unary*)res)->getSubExp1();
-            bMod = true;
-            break;
-        }
-    }
-    break;
-    case opAddrOf:
-        // check for a[m[x]], becomes x
-        if (subExp1->getOper() == opMemOf)
-        {
-            res = ((Unary*)res)->getSubExp1();
-            res = ((Unary*)res)->getSubExp1();
-            bMod = true;
-            return res;
-        }
-        break;
-    case opMemOf:
-    case opRegOf:
-    {
-        subExp1 = subExp1->polySimplify(bMod);
-        // The below IS bad now. It undoes the simplification of
-        // m[r29 + -4] to m[r29 - 4]
-        // If really needed, do another polySimplify, or swap the order
-        //subExp1 = subExp1->simplifyArith();		// probably bad
-    }
-    break;
-    default:
-        break;
-    }
 
     return res;
 }
@@ -2530,212 +2532,212 @@ Exp* Binary::polySimplify(bool& bMod)
 
     if (	(opSub1 == opIntConst) &&
             (opSub2 == opIntConst))
-    {
-        // k1 op k2, where k1 and k2 are integer constants
-        int k1 = ((Const*)subExp1)->getInt();
-        int k2 = ((Const*)subExp2)->getInt();
-        bool change = true;
-        switch (op)
         {
-        case opPlus:
-            k1 = k1 + k2;
-            break;
-        case opMinus:
-            k1 = k1 - k2;
-            break;
-        case opDiv:
-            k1 = (int) ((unsigned)k1 / (unsigned)k2);
-            break;
-        case opDivs:
-            k1 = k1 / k2;
-            break;
-        case opMod:
-            k1 = (int) ((unsigned)k1 % (unsigned)k2);
-            break;
-        case opMods:
-            k1 = k1 % k2;
-            break;
-        case opMult:
-            k1 = (int) ((unsigned)k1 * (unsigned)k2);
-            break;
-        case opMults:
-            k1 = k1 * k2;
-            break;
-        case opShiftL:
-            k1 = k1 << k2;
-            break;
-        case opShiftR:
-            k1 = k1 >> k2;
-            break;
-        case opShiftRA:
-            k1 = (k1 >> k2) | (((1 << k2) -1) << (32 - k2));
-            break;
-        case opBitOr:
-            k1 = k1 | k2;
-            break;
-        case opBitAnd:
-            k1 = k1 & k2;
-            break;
-        case opBitXor:
-            k1 = k1 ^ k2;
-            break;
-        case opEquals:
-            k1 = (k1 == k2);
-            break;
-        case opNotEqual:
-            k1 = (k1 != k2);
-            break;
-        case opLess:
-            k1 = (k1 <	k2);
-            break;
-        case opGtr:
-            k1 = (k1 >	k2);
-            break;
-        case opLessEq:
-            k1 = (k1 <= k2);
-            break;
-        case opGtrEq:
-            k1 = (k1 >= k2);
-            break;
-        case opLessUns:
-            k1 = ((unsigned)k1 < (unsigned)k2);
-            break;
-        case opGtrUns:
-            k1 = ((unsigned)k1 > (unsigned)k2);
-            break;
-        case opLessEqUns:
-            k1 = ((unsigned)k1 <=(unsigned)k2);
-            break;
-        case opGtrEqUns:
-            k1 = ((unsigned)k1 >=(unsigned)k2);
-            break;
-        default:
-            change = false;
+            // k1 op k2, where k1 and k2 are integer constants
+            int k1 = ((Const*)subExp1)->getInt();
+            int k2 = ((Const*)subExp2)->getInt();
+            bool change = true;
+            switch (op)
+                {
+                case opPlus:
+                    k1 = k1 + k2;
+                    break;
+                case opMinus:
+                    k1 = k1 - k2;
+                    break;
+                case opDiv:
+                    k1 = (int) ((unsigned)k1 / (unsigned)k2);
+                    break;
+                case opDivs:
+                    k1 = k1 / k2;
+                    break;
+                case opMod:
+                    k1 = (int) ((unsigned)k1 % (unsigned)k2);
+                    break;
+                case opMods:
+                    k1 = k1 % k2;
+                    break;
+                case opMult:
+                    k1 = (int) ((unsigned)k1 * (unsigned)k2);
+                    break;
+                case opMults:
+                    k1 = k1 * k2;
+                    break;
+                case opShiftL:
+                    k1 = k1 << k2;
+                    break;
+                case opShiftR:
+                    k1 = k1 >> k2;
+                    break;
+                case opShiftRA:
+                    k1 = (k1 >> k2) | (((1 << k2) -1) << (32 - k2));
+                    break;
+                case opBitOr:
+                    k1 = k1 | k2;
+                    break;
+                case opBitAnd:
+                    k1 = k1 & k2;
+                    break;
+                case opBitXor:
+                    k1 = k1 ^ k2;
+                    break;
+                case opEquals:
+                    k1 = (k1 == k2);
+                    break;
+                case opNotEqual:
+                    k1 = (k1 != k2);
+                    break;
+                case opLess:
+                    k1 = (k1 <	k2);
+                    break;
+                case opGtr:
+                    k1 = (k1 >	k2);
+                    break;
+                case opLessEq:
+                    k1 = (k1 <= k2);
+                    break;
+                case opGtrEq:
+                    k1 = (k1 >= k2);
+                    break;
+                case opLessUns:
+                    k1 = ((unsigned)k1 < (unsigned)k2);
+                    break;
+                case opGtrUns:
+                    k1 = ((unsigned)k1 > (unsigned)k2);
+                    break;
+                case opLessEqUns:
+                    k1 = ((unsigned)k1 <=(unsigned)k2);
+                    break;
+                case opGtrEqUns:
+                    k1 = ((unsigned)k1 >=(unsigned)k2);
+                    break;
+                default:
+                    change = false;
+                }
+            if (change)
+                {
+                    ;//delete res;
+                    res = new Const(k1);
+                    bMod = true;
+                    return res;
+                }
         }
-        if (change)
-        {
-            ;//delete res;
-            res = new Const(k1);
-            bMod = true;
-            return res;
-        }
-    }
 
     if (	((op == opBitXor) || (op == opMinus)) &&
             (*subExp1 == *subExp2))
-    {
-        // x ^ x or x - x: result is zero
-        res = new Const(0);
-        bMod = true;
-        return res;
-    }
+        {
+            // x ^ x or x - x: result is zero
+            res = new Const(0);
+            bMod = true;
+            return res;
+        }
 
     if (	((op == opBitOr) || (op == opBitAnd)) &&
             (*subExp1 == *subExp2))
-    {
-        // x | x or x & x: result is x
-        res = subExp1;
-        bMod = true;
-        return res;
-    }
+        {
+            // x | x or x & x: result is x
+            res = subExp1;
+            bMod = true;
+            return res;
+        }
 
     if (	op == opEquals &&
             *subExp1 == *subExp2)
-    {
-        // x == x: result is true
-        ;//delete this;
-        res = new Terminal(opTrue);
-        bMod = true;
-        return res;
-    }
+        {
+            // x == x: result is true
+            ;//delete this;
+            res = new Terminal(opTrue);
+            bMod = true;
+            return res;
+        }
 
     // Might want to commute to put an integer constant on the RHS
     // Later simplifications can rely on this (ADD other ops as necessary)
     if (	opSub1 == opIntConst &&
             (op == opPlus || op == opMult || op == opMults || op == opBitOr || op == opBitAnd ))
-    {
-        commute();
-        // Swap opSub1 and opSub2 as well
-        OPER t = opSub1;
-        opSub1 = opSub2;
-        opSub2 = t;
-        // This is not counted as a modification
-    }
+        {
+            commute();
+            // Swap opSub1 and opSub2 as well
+            OPER t = opSub1;
+            opSub1 = opSub2;
+            opSub2 = t;
+            // This is not counted as a modification
+        }
 
     // Similarly for boolean constants
     if (	subExp1->isBoolConst() &&
             !subExp2->isBoolConst() &&
             (op == opAnd || op == opOr))
-    {
-        commute();
-        // Swap opSub1 and opSub2 as well
-        OPER t = opSub1;
-        opSub1 = opSub2;
-        opSub2 = t;
-        // This is not counted as a modification
-    }
+        {
+            commute();
+            // Swap opSub1 and opSub2 as well
+            OPER t = opSub1;
+            opSub1 = opSub2;
+            opSub2 = t;
+            // This is not counted as a modification
+        }
 
     // Similarly for adding stuff to the addresses of globals
     if (subExp2->isAddrOf() && subExp2->getSubExp1()->isSubscript() &&
             subExp2->getSubExp1()->getSubExp1()->isGlobal() &&
             op == opPlus)
-    {
-        commute();
-        // Swap opSub1 and opSub2 as well
-        OPER t = opSub1;
-        opSub1 = opSub2;
-        opSub2 = t;
-        // This is not counted as a modification
-    }
+        {
+            commute();
+            // Swap opSub1 and opSub2 as well
+            OPER t = opSub1;
+            opSub1 = opSub2;
+            opSub2 = t;
+            // This is not counted as a modification
+        }
 
     // check for (x + a) + b where a and b are constants, becomes x + a+b
     if (	op == opPlus &&
             opSub1 == opPlus &&
             opSub2 == opIntConst &&
             subExp1->getSubExp2()->getOper() == opIntConst)
-    {
-        int n = ((Const*)subExp2)->getInt();
-        res = ((Binary*)res)->getSubExp1();
-        ((Const*)res->getSubExp2())->setInt(((Const*)res->getSubExp2())->getInt() + n);
-        bMod = true;
-        return res;
-    }
+        {
+            int n = ((Const*)subExp2)->getInt();
+            res = ((Binary*)res)->getSubExp1();
+            ((Const*)res->getSubExp2())->setInt(((Const*)res->getSubExp2())->getInt() + n);
+            bMod = true;
+            return res;
+        }
 
     // check for (x - a) + b where a and b are constants, becomes x + -a+b
     if (	op == opPlus &&
             opSub1 == opMinus && opSub2 == opIntConst &&
             subExp1->getSubExp2()->getOper() == opIntConst)
-    {
-        int n = ((Const*)subExp2)->getInt();
-        res = ((Binary*)res)->getSubExp1();
-        res->setOper(opPlus);
-        ((Const*)res->getSubExp2())->setInt((-((Const*)res->getSubExp2())->getInt()) + n);
-        bMod = true;
-        return res;
-    }
+        {
+            int n = ((Const*)subExp2)->getInt();
+            res = ((Binary*)res)->getSubExp1();
+            res->setOper(opPlus);
+            ((Const*)res->getSubExp2())->setInt((-((Const*)res->getSubExp2())->getInt()) + n);
+            bMod = true;
+            return res;
+        }
 
     // check for (x * k) - x, becomes x * (k-1)
     // same with +
     if (	(op == opMinus || op == opPlus) &&
             (opSub1 == opMults || opSub1 == opMult) &&
             *subExp2 == *subExp1->getSubExp1())
-    {
-        res = ((Binary*)res)->getSubExp1();
-        res->setSubExp2(new Binary(op, res->getSubExp2(), new Const(1)));
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp1();
+            res->setSubExp2(new Binary(op, res->getSubExp2(), new Const(1)));
+            bMod = true;
+            return res;
+        }
 
     // check for x + (x * k), becomes x * (k+1)
     if (	op == opPlus &&
             (opSub2 == opMults || opSub2 == opMult) &&
             *subExp1 == *subExp2->getSubExp1())
-    {
-        res = ((Binary*)res)->getSubExp2();
-        res->setSubExp2(new Binary(opPlus, res->getSubExp2(), new Const(1)));
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp2();
+            res->setSubExp2(new Binary(opPlus, res->getSubExp2(), new Const(1)));
+            bMod = true;
+            return res;
+        }
 
     // Turn a + -K into a - K (K is int const > 0)
     // Also a - -K into a + K (K is int const > 0)
@@ -2743,148 +2745,148 @@ Exp* Binary::polySimplify(bool& bMod)
     if (	(op == opPlus || op == opMinus) &&
             opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() < 0)
-    {
-        ((Const*)subExp2)->setInt(-((Const*)subExp2)->getInt());
-        op = op == opPlus ? opMinus : opPlus;
-    }
+        {
+            ((Const*)subExp2)->setInt(-((Const*)subExp2)->getInt());
+            op = op == opPlus ? opMinus : opPlus;
+        }
 
     // Check for exp + 0  or  exp - 0  or  exp | 0
     if (	(op == opPlus || op == opMinus || op == opBitOr) &&
             opSub2 == opIntConst && ((Const*)subExp2)->getInt() == 0)
-    {
-        res = ((Binary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for exp or false
     if (	op == opOr &&
             subExp2->isFalse())
-    {
-        res = ((Binary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for exp * 0  or exp & 0
     if (	(op == opMult || op == opMults || op == opBitAnd) &&
             opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 0)
-    {
-        ;//delete res;
-        res = new Const(0);
-        bMod = true;
-        return res;
-    }
+        {
+            ;//delete res;
+            res = new Const(0);
+            bMod = true;
+            return res;
+        }
 
     // Check for exp and false
     if (	op == opAnd &&
             subExp2->isFalse())
-    {
-        ;//delete res;
-        res = new Terminal(opFalse);
-        bMod = true;
-        return res;
-    }
+        {
+            ;//delete res;
+            res = new Terminal(opFalse);
+            bMod = true;
+            return res;
+        }
 
     // Check for exp * 1
     if (	(op == opMult || op == opMults) &&
             opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 1)
-    {
-        res = ((Unary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Unary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for exp * x / x
     if (	(op == opDiv || op == opDivs) && (opSub1 == opMult || opSub1 == opMults) &&
             *subExp2 == *subExp1->getSubExp2())
-    {
-        res = ((Unary*)res)->getSubExp1();
-        res = ((Unary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Unary*)res)->getSubExp1();
+            res = ((Unary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for exp / 1, becomes exp
     if (	(op == opDiv || op == opDivs) &&
             opSub2 == opIntConst && ((Const*)subExp2)->getInt() == 1)
-    {
-        res = ((Binary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for exp % 1, becomes 0
     if (	(op == opMod || op == opMods) &&
             opSub2 == opIntConst && ((Const*)subExp2)->getInt() == 1)
-    {
-        res = new Const(0);
-        bMod = true;
-        return res;
-    }
+        {
+            res = new Const(0);
+            bMod = true;
+            return res;
+        }
 
     // Check for exp * x % x, becomes 0
     if (	(op == opMod || op == opMods) && (opSub1 == opMult || opSub1 == opMults) &&
             *subExp2 == *subExp1->getSubExp2())
-    {
-        res = new Const(0);
-        bMod = true;
-        return res;
-    }
+        {
+            res = new Const(0);
+            bMod = true;
+            return res;
+        }
 
     // Check for exp AND -1 (bitwise AND)
     if (	(op == opBitAnd) &&
             opSub2 == opIntConst && ((Const*)subExp2)->getInt() == -1)
-    {
-        res = ((Unary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Unary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for exp AND TRUE (logical AND)
     if (	((op == opAnd) &&
              // Is the below really needed?
              ((opSub2 == opIntConst && ((Const*)subExp2)->getInt() != 0))) || subExp2->isTrue())
-    {
-        res = ((Unary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Unary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for exp OR TRUE (logical OR)
     if (	((op == opOr) &&
              ((opSub2 == opIntConst &&
                ((Const*)subExp2)->getInt() != 0))) || subExp2->isTrue())
-    {
-        ;//delete res;
-        res = new Terminal(opTrue);
-        bMod = true;
-        return res;
-    }
+        {
+            ;//delete res;
+            res = new Terminal(opTrue);
+            bMod = true;
+            return res;
+        }
 
     // Check for [exp] << k where k is a positive integer const
     int k;
     if (	op == opShiftL &&
             opSub2 == opIntConst &&
             ((k = ((Const*)subExp2)->getInt(), (k >= 0 && k < 32))))
-    {
-        res->setOper(opMult);
-        ((Const*)subExp2)->setInt(1 << k);
-        bMod = true;
-        return res;
-    }
+        {
+            res->setOper(opMult);
+            ((Const*)subExp2)->setInt(1 << k);
+            bMod = true;
+            return res;
+        }
 
     if (	op == opShiftR &&
             opSub2 == opIntConst &&
             ((k = ((Const*)subExp2)->getInt(), (k >= 0 && k < 32))))
-    {
-        res->setOper(opDiv);
-        ((Const*)subExp2)->setInt(1 << k);
-        bMod = true;
-        return res;
-    }
+        {
+            res->setOper(opDiv);
+            ((Const*)subExp2)->setInt(1 << k);
+            bMod = true;
+            return res;
+        }
 
     /*
     	// Check for -x compare y, becomes x compare -y
@@ -2916,30 +2918,10 @@ Exp* Binary::polySimplify(bool& bMod)
     // Check for (x == y) == 1, becomes x == y
     if (	op == opEquals && opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 1 && opSub1 == opEquals)
-    {
-        ;//delete subExp2;
-        Binary *b = (Binary*)subExp1;
-        subExp2 = b->subExp2;
-        b->subExp2 = 0;
-        subExp1 = b->subExp1;
-        b->subExp1 = 0;
-        ;//delete b;
-        bMod = true;
-        return res;
-    }
-
-    // Check for x + -y == 0, becomes x == y
-    if (	op == opEquals && opSub2 == opIntConst &&
-            ((Const*)subExp2)->getInt() == 0 && opSub1 == opPlus &&
-            ((Binary*)subExp1)->subExp2->getOper() == opIntConst)
-    {
-        Binary *b = (Binary*)subExp1;
-        int n = ((Const*)b->subExp2)->getInt();
-        if (n < 0)
         {
             ;//delete subExp2;
+            Binary *b = (Binary*)subExp1;
             subExp2 = b->subExp2;
-            ((Const*)subExp2)->setInt(-((Const*)subExp2)->getInt());
             b->subExp2 = 0;
             subExp1 = b->subExp1;
             b->subExp1 = 0;
@@ -2947,50 +2929,70 @@ Exp* Binary::polySimplify(bool& bMod)
             bMod = true;
             return res;
         }
-    }
+
+    // Check for x + -y == 0, becomes x == y
+    if (	op == opEquals && opSub2 == opIntConst &&
+            ((Const*)subExp2)->getInt() == 0 && opSub1 == opPlus &&
+            ((Binary*)subExp1)->subExp2->getOper() == opIntConst)
+        {
+            Binary *b = (Binary*)subExp1;
+            int n = ((Const*)b->subExp2)->getInt();
+            if (n < 0)
+                {
+                    ;//delete subExp2;
+                    subExp2 = b->subExp2;
+                    ((Const*)subExp2)->setInt(-((Const*)subExp2)->getInt());
+                    b->subExp2 = 0;
+                    subExp1 = b->subExp1;
+                    b->subExp1 = 0;
+                    ;//delete b;
+                    bMod = true;
+                    return res;
+                }
+        }
 
     // Check for (x == y) == 0, becomes x != y
     if (	op == opEquals &&
             opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 0 && opSub1 == opEquals)
-    {
-        ;//delete subExp2;
-        Binary *b = (Binary*)subExp1;
-        subExp2 = b->subExp2;
-        b->subExp2 = 0;
-        subExp1 = b->subExp1;
-        b->subExp1 = 0;
-        ;//delete b;
-        bMod = true;
-        res->setOper(opNotEqual);
-        return res;
-    }
+        {
+            ;//delete subExp2;
+            Binary *b = (Binary*)subExp1;
+            subExp2 = b->subExp2;
+            b->subExp2 = 0;
+            subExp1 = b->subExp1;
+            b->subExp1 = 0;
+            ;//delete b;
+            bMod = true;
+            res->setOper(opNotEqual);
+            return res;
+        }
 
     // Check for (x == y) != 1, becomes x != y
     if (	op == opNotEqual && opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 1 && opSub1 == opEquals)
-    {
-        ;//delete subExp2;
-        Binary *b = (Binary*)subExp1;
-        subExp2 = b->subExp2;
-        b->subExp2 = 0;
-        subExp1 = b->subExp1;
-        b->subExp1 = 0;
-        ;//delete b;
-        bMod = true;
-        res->setOper(opNotEqual);
-        return res;
-    }
+        {
+            ;//delete subExp2;
+            Binary *b = (Binary*)subExp1;
+            subExp2 = b->subExp2;
+            b->subExp2 = 0;
+            subExp1 = b->subExp1;
+            b->subExp1 = 0;
+            ;//delete b;
+            bMod = true;
+            res->setOper(opNotEqual);
+            return res;
+        }
 
     // Check for (x == y) != 0, becomes x == y
     if (	op == opNotEqual &&
             opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 0 && opSub1 == opEquals)
-    {
-        res = ((Binary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // Check for (0 - x) != 0, becomes x != 0
     if (	op == opNotEqual &&
@@ -2998,43 +3000,43 @@ Exp* Binary::polySimplify(bool& bMod)
             ((Const*)subExp2)->getInt() == 0 && opSub1 == opMinus &&
             subExp1->getSubExp1()->isIntConst() &&
             ((Const*)subExp1->getSubExp1())->getInt() == 0)
-    {
-        res = new Binary(opNotEqual, subExp1->getSubExp2()->clone(), subExp2->clone());
-        bMod = true;
-        return res;
-    }
+        {
+            res = new Binary(opNotEqual, subExp1->getSubExp2()->clone(), subExp2->clone());
+            bMod = true;
+            return res;
+        }
 
     // Check for (x > y) == 0, becomes x <= y
     if (	op == opEquals && opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 0 && opSub1 == opGtr)
-    {
-        ;//delete subExp2;
-        Binary *b = (Binary*)subExp1;
-        subExp2 = b->subExp2;
-        b->subExp2 = 0;
-        subExp1 = b->subExp1;
-        b->subExp1 = 0;
-        ;//delete b;
-        bMod = true;
-        res->setOper(opLessEq);
-        return res;
-    }
+        {
+            ;//delete subExp2;
+            Binary *b = (Binary*)subExp1;
+            subExp2 = b->subExp2;
+            b->subExp2 = 0;
+            subExp1 = b->subExp1;
+            b->subExp1 = 0;
+            ;//delete b;
+            bMod = true;
+            res->setOper(opLessEq);
+            return res;
+        }
 
     // Check for (x >u y) == 0, becomes x <=u y
     if (	op == opEquals && opSub2 == opIntConst &&
             ((Const*)subExp2)->getInt() == 0 && opSub1 == opGtrUns)
-    {
-        ;//delete subExp2;
-        Binary *b = (Binary*)subExp1;
-        subExp2 = b->subExp2;
-        b->subExp2 = 0;
-        subExp1 = b->subExp1;
-        b->subExp1 = 0;
-        ;//delete b;
-        bMod = true;
-        res->setOper(opLessEqUns);
-        return res;
-    }
+        {
+            ;//delete subExp2;
+            Binary *b = (Binary*)subExp1;
+            subExp2 = b->subExp2;
+            b->subExp2 = 0;
+            subExp1 = b->subExp1;
+            b->subExp1 = 0;
+            ;//delete b;
+            bMod = true;
+            res->setOper(opLessEqUns);
+            return res;
+        }
 
     Binary *b1 = (Binary*)subExp1;
     Binary *b2 = (Binary*)subExp2;
@@ -3044,73 +3046,73 @@ Exp* Binary::polySimplify(bool& bMod)
             ((*b1->subExp1 == *b2->subExp1 &&
               *b1->subExp2 == *b2->subExp2) || (*b1->subExp1 == *b2->subExp2 &&
                       *b1->subExp2 == *b2->subExp1)))
-    {
-        res = ((Binary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // For (a || b) or (a && b) recurse on a and b
     if (op == opOr || op == opAnd)
-    {
-        subExp1 = subExp1->polySimplify(bMod);
-        subExp2 = subExp2->polySimplify(bMod);
-        return res;
-    }
+        {
+            subExp1 = subExp1->polySimplify(bMod);
+            subExp2 = subExp2->polySimplify(bMod);
+            return res;
+        }
 
     // check for (x & x), becomes x
     if (	op == opBitAnd &&
             *subExp1 == *subExp2)
-    {
-        res = ((Binary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // check for a + a*n, becomes a*(n+1) where n is an int
     if (	op == opPlus &&
             opSub2 == opMult &&
             *subExp1 == *subExp2->getSubExp1() &&
             subExp2->getSubExp2()->getOper() == opIntConst)
-    {
-        res = ((Binary*)res)->getSubExp2();
-        ((Const*)res->getSubExp2())->setInt(((Const*)res->getSubExp2())->getInt()+1);
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Binary*)res)->getSubExp2();
+            ((Const*)res->getSubExp2())->setInt(((Const*)res->getSubExp2())->getInt()+1);
+            bMod = true;
+            return res;
+        }
 
     // check for a*n*m, becomes a*(n*m) where n and m are ints
     if (	op == opMult &&
             opSub1 == opMult &&
             opSub2 == opIntConst &&
             subExp1->getSubExp2()->getOper() == opIntConst)
-    {
-        int m = ((Const*)subExp2)->getInt();
-        res = ((Binary*)res)->getSubExp1();
-        ((Const*)res->getSubExp2())->setInt(((Const*)res->getSubExp2())->getInt()*m);
-        bMod = true;
-        return res;
-    }
+        {
+            int m = ((Const*)subExp2)->getInt();
+            res = ((Binary*)res)->getSubExp1();
+            ((Const*)res->getSubExp2())->setInt(((Const*)res->getSubExp2())->getInt()*m);
+            bMod = true;
+            return res;
+        }
 
     // check for !(a == b) becomes a != b
     if (	op == opLNot &&
             opSub1 == opEquals)
-    {
-        res = ((Unary*)res)->getSubExp1();
-        res->setOper(opNotEqual);
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Unary*)res)->getSubExp1();
+            res->setOper(opNotEqual);
+            bMod = true;
+            return res;
+        }
 
     // check for !(a != b) becomes a == b
     if (	op == opLNot &&
             opSub1 == opNotEqual)
-    {
-        res = ((Unary*)res)->getSubExp1();
-        res->setOper(opEquals);
-        bMod = true;
-        return res;
-    }
+        {
+            res = ((Unary*)res)->getSubExp1();
+            res->setOper(opEquals);
+            bMod = true;
+            return res;
+        }
 
 #if 0		// FIXME! ADHOC TA assumed!
     // check for (exp + x) + n where exp is a pointer to a compound type becomes (exp + n) + x
@@ -3118,17 +3120,17 @@ Exp* Binary::polySimplify(bool& bMod)
             subExp1->getOper() == opPlus &&
             subExp1->getSubExp1()->getType() &&
             subExp2->getOper() == opIntConst)
-    {
-        Type *ty = subExp1->getSubExp1()->getType();
-        if (ty->resolvesToPointer() &&
-                ty->asPointer()->getPointsTo()->resolvesToCompound())
         {
-            res = new Binary(opPlus, subExp1->getSubExp1(), subExp2);
-            res = new Binary(opPlus, res, subExp1->getSubExp2());
-            bMod = true;
-            return res;
+            Type *ty = subExp1->getSubExp1()->getType();
+            if (ty->resolvesToPointer() &&
+                    ty->asPointer()->getPointsTo()->resolvesToCompound())
+                {
+                    res = new Binary(opPlus, subExp1->getSubExp1(), subExp2);
+                    res = new Binary(opPlus, res, subExp1->getSubExp2());
+                    bMod = true;
+                    return res;
+                }
         }
-    }
 #endif
 
     // FIXME: suspect this was only needed for ADHOC TA
@@ -3136,131 +3138,131 @@ Exp* Binary::polySimplify(bool& bMod)
     // becomes &m[exp].m + r where m is the member at offset n and r is n - the offset to member m
     Type* ty = NULL;			// Type of subExp1
     if (subExp1->isSubscript())
-    {
-        Statement* def = ((RefExp*)subExp1)->getDef();
-        if (def)
-            ty = def->getTypeFor(((RefExp*)subExp1)->getSubExp1());
-    }
+        {
+            Statement* def = ((RefExp*)subExp1)->getDef();
+            if (def)
+                ty = def->getTypeFor(((RefExp*)subExp1)->getSubExp1());
+        }
     if (	op == opPlus &&
             ty && ty->resolvesToPointer() &&  ty->asPointer()->getPointsTo()->resolvesToCompound() &&
             opSub2 == opIntConst)
-    {
-        unsigned n = (unsigned)((Const*)subExp2)->getInt();
-        CompoundType *c = ty->asPointer()->getPointsTo()->asCompound();
-        if (n*8 < c->getSize())
         {
-            unsigned r = c->getOffsetRemainder(n*8);
-            assert((r % 8) == 0);
-            const char *nam = c->getNameAtOffset(n*8);
-            if (nam != NULL && std::string("pad") != nam)
-            {
-                Location *l = Location::memOf(subExp1);
-                //l->setType(c);
-                res = new Binary(opPlus,
-                                 new Unary(opAddrOf,
-                                           new Binary(opMemberAccess,
-                                                      l,
-                                                      new Const(strdup(nam)))),
-                                 new Const(r / 8));
-                if (VERBOSE)
-                    LOG << "(trans1) replacing " << this << " with " << res << "\n";
-                bMod = true;
-                return res;
-            }
+            unsigned n = (unsigned)((Const*)subExp2)->getInt();
+            CompoundType *c = ty->asPointer()->getPointsTo()->asCompound();
+            if (n*8 < c->getSize())
+                {
+                    unsigned r = c->getOffsetRemainder(n*8);
+                    assert((r % 8) == 0);
+                    const char *nam = c->getNameAtOffset(n*8);
+                    if (nam != NULL && std::string("pad") != nam)
+                        {
+                            Location *l = Location::memOf(subExp1);
+                            //l->setType(c);
+                            res = new Binary(opPlus,
+                                             new Unary(opAddrOf,
+                                                       new Binary(opMemberAccess,
+                                                                  l,
+                                                                  new Const(strdup(nam)))),
+                                             new Const(r / 8));
+                            if (VERBOSE)
+                                LOG << "(trans1) replacing " << this << " with " << res << "\n";
+                            bMod = true;
+                            return res;
+                        }
+                }
         }
-    }
 
 #if 0		// FIXME: ADHOC TA assumed
     // check for exp + x where exp is a pointer to an array
     // becomes &exp[x / b] + (x % b) where b is the size of the base type in bytes
     if (	op == opPlus &&
             subExp1->getType())
-    {
-        Exp *x = subExp2;
-        Exp *l = subExp1;
-        Type *ty = l->getType();
-        if (	ty && ty->resolvesToPointer() &&
-                ty->asPointer()->getPointsTo()->resolvesToArray())
         {
-            ArrayType *a = ty->asPointer()->getPointsTo()->asArray();
-            int b = a->getBaseType()->getSize() / 8;
-            int br = a->getBaseType()->getSize() % 8;
-            assert(br == 0);
-            if (x->getOper() != opIntConst || ((Const*)x)->getInt() >= b || a->getBaseType()->isArray())
-            {
-                res = new Binary(opPlus,
-                                 new Unary(opAddrOf,
-                                           new Binary(opArrayIndex,
-                                                      Location::memOf(l->clone()),
-                                                      new Binary(opDiv, x->clone(), new Const(b)))),
-                                 new Binary(opMod, x->clone(), new Const(b)));
-                if (VERBOSE)
-                    LOG << "replacing " << this << " with " << res << "\n";
-                if (l->getOper() == opSubscript)
+            Exp *x = subExp2;
+            Exp *l = subExp1;
+            Type *ty = l->getType();
+            if (	ty && ty->resolvesToPointer() &&
+                    ty->asPointer()->getPointsTo()->resolvesToArray())
                 {
-                    RefExp *r = (RefExp*)l;
-                    if (r->getDef() && r->getDef()->isPhi())
-                    {
-                        PhiAssign *pa = (PhiAssign*)r->getDef();
-                        LOG << "argh: " << pa->getStmtAt(1) << "\n";
-                    }
+                    ArrayType *a = ty->asPointer()->getPointsTo()->asArray();
+                    int b = a->getBaseType()->getSize() / 8;
+                    int br = a->getBaseType()->getSize() % 8;
+                    assert(br == 0);
+                    if (x->getOper() != opIntConst || ((Const*)x)->getInt() >= b || a->getBaseType()->isArray())
+                        {
+                            res = new Binary(opPlus,
+                                             new Unary(opAddrOf,
+                                                       new Binary(opArrayIndex,
+                                                                  Location::memOf(l->clone()),
+                                                                  new Binary(opDiv, x->clone(), new Const(b)))),
+                                             new Binary(opMod, x->clone(), new Const(b)));
+                            if (VERBOSE)
+                                LOG << "replacing " << this << " with " << res << "\n";
+                            if (l->getOper() == opSubscript)
+                                {
+                                    RefExp *r = (RefExp*)l;
+                                    if (r->getDef() && r->getDef()->isPhi())
+                                        {
+                                            PhiAssign *pa = (PhiAssign*)r->getDef();
+                                            LOG << "argh: " << pa->getStmtAt(1) << "\n";
+                                        }
+                                }
+                            bMod = true;
+                            return res;
+                        }
                 }
-                bMod = true;
-                return res;
-            }
         }
-    }
 #endif
 
     if (	op == opFMinus &&
             subExp1->getOper() == opFltConst &&
             ((Const*)subExp1)->getFlt() == 0.0)
-    {
-        res = new Unary(opFNeg, subExp2);
-        bMod = true;
-        return res;
-    }
+        {
+            res = new Unary(opFNeg, subExp2);
+            bMod = true;
+            return res;
+        }
 
     if (	(op == opPlus || op == opMinus) &&
             (subExp1->getOper() == opMults || subExp1->getOper() == opMult) &&
             subExp2->getOper() == opIntConst &&
             subExp1->getSubExp2()->getOper() == opIntConst)
-    {
-        int n1 = ((Const*)subExp2)->getInt();
-        int n2 = ((Const*)subExp1->getSubExp2())->getInt();
-        if (n1 == n2)
         {
-            res = new Binary(subExp1->getOper(),
-                             new Binary(op,
-                                        subExp1->getSubExp1()->clone(),
-                                        new Const(1)),
-                             new Const(n1));
-            bMod = true;
-            return res;
+            int n1 = ((Const*)subExp2)->getInt();
+            int n2 = ((Const*)subExp1->getSubExp2())->getInt();
+            if (n1 == n2)
+                {
+                    res = new Binary(subExp1->getOper(),
+                                     new Binary(op,
+                                                subExp1->getSubExp1()->clone(),
+                                                new Const(1)),
+                                     new Const(n1));
+                    bMod = true;
+                    return res;
+                }
         }
-    }
 
     if (	(op == opPlus || op == opMinus) &&
             subExp1->getOper() == opPlus &&
             subExp2->getOper() == opIntConst &&
             (subExp1->getSubExp2()->getOper() == opMults || subExp1->getSubExp2()->getOper() == opMult) &&
             subExp1->getSubExp2()->getSubExp2()->getOper() == opIntConst)
-    {
-        int n1 = ((Const*)subExp2)->getInt();
-        int n2 = ((Const*)subExp1->getSubExp2()->getSubExp2())->getInt();
-        if (n1 == n2)
         {
-            res = new Binary(opPlus,
-                             subExp1->getSubExp1(),
-                             new Binary(subExp1->getSubExp2()->getOper(),
-                                        new Binary(op,
-                                                   subExp1->getSubExp2()->getSubExp1()->clone(),
-                                                   new Const(1)),
-                                        new Const(n1)));
-            bMod = true;
-            return res;
+            int n1 = ((Const*)subExp2)->getInt();
+            int n2 = ((Const*)subExp1->getSubExp2()->getSubExp2())->getInt();
+            if (n1 == n2)
+                {
+                    res = new Binary(opPlus,
+                                     subExp1->getSubExp1(),
+                                     new Binary(subExp1->getSubExp2()->getOper(),
+                                                new Binary(op,
+                                                           subExp1->getSubExp2()->getSubExp1()->clone(),
+                                                           new Const(1)),
+                                                new Const(n1)));
+                    bMod = true;
+                    return res;
+                }
         }
-    }
 
     // check for ((x * a) + (y * b)) / c where a, b and c are all integers and a and b divide evenly by c
     // becomes: (x * a/c) + (y * b/c)
@@ -3271,19 +3273,19 @@ Exp* Binary::polySimplify(bool& bMod)
             subExp1->getSubExp2()->getOper() == opMult &&
             subExp1->getSubExp1()->getSubExp2()->getOper() == opIntConst &&
             subExp1->getSubExp2()->getSubExp2()->getOper() == opIntConst)
-    {
-        int a = ((Const*)subExp1->getSubExp1()->getSubExp2())->getInt();
-        int b = ((Const*)subExp1->getSubExp2()->getSubExp2())->getInt();
-        int c = ((Const*)subExp2)->getInt();
-        if ((a%c) == 0 && (b%c) == 0)
         {
-            res = new Binary(opPlus,
-                             new Binary(opMult, subExp1->getSubExp1()->getSubExp1(), new Const(a/c)),
-                             new Binary(opMult, subExp1->getSubExp2()->getSubExp1(), new Const(b/c)));
-            bMod = true;
-            return res;
+            int a = ((Const*)subExp1->getSubExp1()->getSubExp2())->getInt();
+            int b = ((Const*)subExp1->getSubExp2()->getSubExp2())->getInt();
+            int c = ((Const*)subExp2)->getInt();
+            if ((a%c) == 0 && (b%c) == 0)
+                {
+                    res = new Binary(opPlus,
+                                     new Binary(opMult, subExp1->getSubExp1()->getSubExp1(), new Const(a/c)),
+                                     new Binary(opMult, subExp1->getSubExp2()->getSubExp1(), new Const(b/c)));
+                    bMod = true;
+                    return res;
+                }
         }
-    }
 
     // check for ((x * a) + (y * b)) % c where a, b and c are all integers
     // becomes: (y * b) % c if a divides evenly by c
@@ -3295,69 +3297,69 @@ Exp* Binary::polySimplify(bool& bMod)
             subExp1->getSubExp2()->getOper() == opMult &&
             subExp1->getSubExp1()->getSubExp2()->getOper() == opIntConst &&
             subExp1->getSubExp2()->getSubExp2()->getOper() == opIntConst)
-    {
-        int a = ((Const*)subExp1->getSubExp1()->getSubExp2())->getInt();
-        int b = ((Const*)subExp1->getSubExp2()->getSubExp2())->getInt();
-        int c = ((Const*)subExp2)->getInt();
-        if ((a%c) == 0 && (b%c) == 0)
         {
-            res = new Const(0);
-            bMod = true;
-            return res;
+            int a = ((Const*)subExp1->getSubExp1()->getSubExp2())->getInt();
+            int b = ((Const*)subExp1->getSubExp2()->getSubExp2())->getInt();
+            int c = ((Const*)subExp2)->getInt();
+            if ((a%c) == 0 && (b%c) == 0)
+                {
+                    res = new Const(0);
+                    bMod = true;
+                    return res;
+                }
+            if ((a%c) == 0)
+                {
+                    res = new Binary(opMod, subExp1->getSubExp2()->clone(), new Const(c));
+                    bMod = true;
+                    return res;
+                }
+            if ((b%c) == 0)
+                {
+                    res = new Binary(opMod, subExp1->getSubExp1()->clone(), new Const(c));
+                    bMod = true;
+                    return res;
+                }
         }
-        if ((a%c) == 0)
-        {
-            res = new Binary(opMod, subExp1->getSubExp2()->clone(), new Const(c));
-            bMod = true;
-            return res;
-        }
-        if ((b%c) == 0)
-        {
-            res = new Binary(opMod, subExp1->getSubExp1()->clone(), new Const(c));
-            bMod = true;
-            return res;
-        }
-    }
 
     // Check for 0 - (0 <u exp1) & exp2 => exp2
     if (	op == opBitAnd &&
             opSub1 == opMinus)
-    {
-        Exp* leftOfMinus = ((Binary*)subExp1)->getSubExp1();
-        if (leftOfMinus->isIntConst() && ((Const*)leftOfMinus)->getInt() == 0)
         {
-            Exp* rightOfMinus = ((Binary*)subExp1)->getSubExp2();
-            if (rightOfMinus->getOper() == opLessUns)
-            {
-                Exp* leftOfLess = ((Binary*)rightOfMinus)->getSubExp1();
-                if (leftOfLess->isIntConst() &&
-                        ((Const*)leftOfLess)->getInt() == 0)
+            Exp* leftOfMinus = ((Binary*)subExp1)->getSubExp1();
+            if (leftOfMinus->isIntConst() && ((Const*)leftOfMinus)->getInt() == 0)
                 {
-                    res = getSubExp2();
-                    bMod = true;
-                    return res;
+                    Exp* rightOfMinus = ((Binary*)subExp1)->getSubExp2();
+                    if (rightOfMinus->getOper() == opLessUns)
+                        {
+                            Exp* leftOfLess = ((Binary*)rightOfMinus)->getSubExp1();
+                            if (leftOfLess->isIntConst() &&
+                                    ((Const*)leftOfLess)->getInt() == 0)
+                                {
+                                    res = getSubExp2();
+                                    bMod = true;
+                                    return res;
+                                }
+                        }
                 }
-            }
         }
-    }
 
     // Replace opSize(n, loc) with loc and set the type if needed
     if (	op == opSize &&
             subExp2->isLocation())
-    {
+        {
 #if 0		// FIXME: ADHOC TA assumed here
-        Location *loc = (Location*)subExp2;
-        unsigned n = (unsigned)((Const*)subExp1)->getInt();
-        Type *ty = loc->getType();
-        if (ty == NULL)
-            loc->setType(new SizeType(n));
-        else if (ty->getSize() != n)
-            ty->setSize(n);
+            Location *loc = (Location*)subExp2;
+            unsigned n = (unsigned)((Const*)subExp1)->getInt();
+            Type *ty = loc->getType();
+            if (ty == NULL)
+                loc->setType(new SizeType(n));
+            else if (ty->getSize() != n)
+                ty->setSize(n);
 #endif
-        res = ((Binary*)res)->getSubExp2();
-        bMod = true;
-        return res;
-    }
+            res = ((Binary*)res)->getSubExp2();
+            bMod = true;
+            return res;
+        }
 
     return res;
 }
@@ -3374,141 +3376,141 @@ Exp* Ternary::polySimplify(bool& bMod)
     if (	op == opTern &&
             subExp2->getOper() == opIntConst &&
             subExp3->getOper() == opIntConst)
-    {
-        Const *s2 = (Const*)subExp2;
-        Const *s3 = (Const*)subExp3;
-
-        if (s2->getInt() == 1 && s3->getInt() == 0)
         {
-            res = this->getSubExp1();
-            bMod = true;
-            return res;
+            Const *s2 = (Const*)subExp2;
+            Const *s3 = (Const*)subExp3;
+
+            if (s2->getInt() == 1 && s3->getInt() == 0)
+                {
+                    res = this->getSubExp1();
+                    bMod = true;
+                    return res;
+                }
         }
-    }
 
     // 1 ? x : y -> x
     if (	op == opTern &&
             subExp1->getOper() == opIntConst &&
             ((Const*)subExp1)->getInt() == 1)
-    {
-        res = this->getSubExp2();
-        bMod = true;
-        return res;
-    }
+        {
+            res = this->getSubExp2();
+            bMod = true;
+            return res;
+        }
 
     // 0 ? x : y -> y
     if (	op == opTern &&
             subExp1->getOper() == opIntConst &&
             ((Const*)subExp1)->getInt() == 0)
-    {
-        res = this->getSubExp3();
-        bMod = true;
-        return res;
-    }
+        {
+            res = this->getSubExp3();
+            bMod = true;
+            return res;
+        }
 
     if (	(op == opSgnEx || op == opZfill) &&
             subExp3->getOper() == opIntConst)
-    {
-        res = this->getSubExp3();
-        bMod = true;
-        return res;
-    }
+        {
+            res = this->getSubExp3();
+            bMod = true;
+            return res;
+        }
 
     if (	op == opFsize &&
             subExp3->getOper() == opItof &&
             *subExp1 == *subExp3->getSubExp2() &&
             *subExp2 == *subExp3->getSubExp1())
-    {
-        res = this->getSubExp3();
-        bMod = true;
-        return res;
-    }
+        {
+            res = this->getSubExp3();
+            bMod = true;
+            return res;
+        }
 
     if (	op == opFsize &&
             subExp3->getOper() == opFltConst)
-    {
-        res = this->getSubExp3();
-        bMod = true;
-        return res;
-    }
+        {
+            res = this->getSubExp3();
+            bMod = true;
+            return res;
+        }
 
     if (	op == opItof &&
             subExp3->getOper() == opIntConst &&
             subExp2->getOper() == opIntConst &&
             ((Const*)subExp2)->getInt() == 32)
-    {
-        unsigned n = ((Const*)subExp3)->getInt();
-        res = new Const(*(float*)&n);
-        bMod = true;
-        return res;
-    }
+        {
+            unsigned n = ((Const*)subExp3)->getInt();
+            res = new Const(*(float*)&n);
+            bMod = true;
+            return res;
+        }
 
     if (	op == opFsize &&
             subExp3->getOper() == opMemOf &&
             subExp3->getSubExp1()->getOper() == opIntConst)
-    {
-        unsigned u = ((Const*)subExp3->getSubExp1())->getInt();
-        Location *l = dynamic_cast<Location*>(subExp3);
-        UserProc *p = l->getProc();
-        if (p)
         {
-            Prog *prog = p->getProg();
-            bool ok;
-            double d = prog->getFloatConstant(u, ok, ((Const*)subExp1)->getInt());
-            if (ok)
-            {
-                if (VERBOSE)
-                    LOG << "replacing " << subExp3 << " with " << d << " in " << this << "\n";
-                subExp3 = new Const(d);
-                bMod = true;
-                return res;
-            }
+            unsigned u = ((Const*)subExp3->getSubExp1())->getInt();
+            Location *l = dynamic_cast<Location*>(subExp3);
+            UserProc *p = l->getProc();
+            if (p)
+                {
+                    Prog *prog = p->getProg();
+                    bool ok;
+                    double d = prog->getFloatConstant(u, ok, ((Const*)subExp1)->getInt());
+                    if (ok)
+                        {
+                            if (VERBOSE)
+                                LOG << "replacing " << subExp3 << " with " << d << " in " << this << "\n";
+                            subExp3 = new Const(d);
+                            bMod = true;
+                            return res;
+                        }
+                }
         }
-    }
 
     if (op == opTruncu && subExp3->isIntConst())
-    {
-        int from = ((Const*)subExp1)->getInt();
-        int to = ((Const*)subExp2)->getInt();
-        unsigned int val = ((Const*)subExp3)->getInt();
-        if (from == 32)
         {
-            if (to == 16)
-            {
-                res = new Const(val & 0xffff);
-                bMod = true;
-                return res;
-            }
-            if (to == 8)
-            {
-                res = new Const(val & 0xff);
-                bMod = true;
-                return res;
-            }
+            int from = ((Const*)subExp1)->getInt();
+            int to = ((Const*)subExp2)->getInt();
+            unsigned int val = ((Const*)subExp3)->getInt();
+            if (from == 32)
+                {
+                    if (to == 16)
+                        {
+                            res = new Const(val & 0xffff);
+                            bMod = true;
+                            return res;
+                        }
+                    if (to == 8)
+                        {
+                            res = new Const(val & 0xff);
+                            bMod = true;
+                            return res;
+                        }
+                }
         }
-    }
 
     if (op == opTruncs && subExp3->isIntConst())
-    {
-        int from = ((Const*)subExp1)->getInt();
-        int to = ((Const*)subExp2)->getInt();
-        int val = ((Const*)subExp3)->getInt();
-        if (from == 32)
         {
-            if (to == 16)
-            {
-                res = new Const(val & 0xffff);
-                bMod = true;
-                return res;
-            }
-            if (to == 8)
-            {
-                res = new Const(val & 0xff);
-                bMod = true;
-                return res;
-            }
+            int from = ((Const*)subExp1)->getInt();
+            int to = ((Const*)subExp2)->getInt();
+            int val = ((Const*)subExp3)->getInt();
+            if (from == 32)
+                {
+                    if (to == 16)
+                        {
+                            res = new Const(val & 0xffff);
+                            bMod = true;
+                            return res;
+                        }
+                    if (to == 8)
+                        {
+                            res = new Const(val & 0xff);
+                            bMod = true;
+                            return res;
+                        }
+                }
         }
-    }
 
     return res;
 }
@@ -3518,12 +3520,12 @@ Exp* TypedExp::polySimplify(bool& bMod)
     Exp *res = this;
 
     if (subExp1->getOper() == opRegOf)
-    {
-        // type cast on a reg of.. hmm.. let's remove this
-        res = ((Unary*)res)->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            // type cast on a reg of.. hmm.. let's remove this
+            res = ((Unary*)res)->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     subExp1 = subExp1->simplify();
     return res;
@@ -3536,31 +3538,32 @@ Exp* RefExp::polySimplify(bool& bMod)
 
     Exp *tmp = subExp1->polySimplify(bMod);
     if (bMod)
-    {
-        subExp1 = tmp;
-        return res;
-    }
+        {
+            subExp1 = tmp;
+            return res;
+        }
 
     /* This is a nasty hack.  We assume that %DF{0} is 0.  This happens when string instructions are used without first
      * clearing the direction flag.  By convention, the direction flag is assumed to be clear on entry to a procedure.
      */
     if (subExp1->getOper() == opDF && def == NULL)
-    {
-        res = new Const(0);
-        bMod = true;
-        return res;
-    }
+        {
+            res = new Const(0);
+            bMod = true;
+            return res;
+        }
 
     // another hack, this time for aliasing
     // FIXME: do we really want this now? Pentium specific, and only handles ax/eax (not al or ah)
     if (subExp1->isRegN(0) &&							// r0 (ax)
             def && def->isAssign() &&
             ((Assign*)def)->getLeft()->isRegN(24))
-    {   // r24 (eax)
-        res = new TypedExp(new IntegerType(16), new RefExp(Location::regOf(24), def));
-        bMod = true;
-        return res;
-    }
+        {
+            // r24 (eax)
+            res = new TypedExp(new IntegerType(16), new RefExp(Location::regOf(24), def));
+            bMod = true;
+            return res;
+        }
 
     // Was code here for bypassing phi statements that are now redundant
 
@@ -3579,34 +3582,34 @@ Exp* Unary::simplifyAddr()
 {
     Exp* sub;
     if (op == opMemOf && subExp1->isAddrOf())
-    {
-        Unary* s = (Unary*)getSubExp1();
-        return s->getSubExp1();
-    }
-    if (op != opAddrOf)
-    {
-        // Not a[ anything ]. Recurse
-        subExp1 = subExp1->simplifyAddr();
-        return this;
-    }
-    if (subExp1->getOper() == opMemOf)
-    {
-        Unary* s = (Unary*)getSubExp1();
-        return s->getSubExp1();
-    }
-    if (subExp1->getOper() == opSize)
-    {
-        sub = subExp1->getSubExp2();
-        if (sub->getOper() == opMemOf)
         {
-            // Remove the a[
-            Binary* b = (Binary*)getSubExp1();
-            // Remove the size[
-            Unary* u = (Unary*)b->getSubExp2();
-            // Remove the m[
-            return u->getSubExp1();
+            Unary* s = (Unary*)getSubExp1();
+            return s->getSubExp1();
         }
-    }
+    if (op != opAddrOf)
+        {
+            // Not a[ anything ]. Recurse
+            subExp1 = subExp1->simplifyAddr();
+            return this;
+        }
+    if (subExp1->getOper() == opMemOf)
+        {
+            Unary* s = (Unary*)getSubExp1();
+            return s->getSubExp1();
+        }
+    if (subExp1->getOper() == opSize)
+        {
+            sub = subExp1->getSubExp2();
+            if (sub->getOper() == opMemOf)
+                {
+                    // Remove the a[
+                    Binary* b = (Binary*)getSubExp1();
+                    // Remove the size[
+                    Unary* u = (Unary*)b->getSubExp2();
+                    // Remove the m[
+                    return u->getSubExp1();
+                }
+        }
 
     // a[ something else ]. Still recurse, just in case
     subExp1 = subExp1->simplifyAddr();
@@ -3675,11 +3678,11 @@ void Exp::printAsHL(std::ostream& os /*= cout*/)
     ost << this;					// Print to the string stream
     std::string s(ost.str());
     if ((s.length() >= 4) && (s[1] == '['))
-    {
-        // r[nn]; change to rnn
-        s.erase(1, 1);				// '['
-        s.erase(s.length()-1);		// ']'
-    }
+        {
+            // r[nn]; change to rnn
+            s.erase(1, 1);				// '['
+            s.erase(s.length()-1);		// ']'
+        }
     os << s;						// Print to the output stream
 }
 
@@ -3715,22 +3718,22 @@ Exp* Exp::fixSuccessor()
     // Assume only one successor function in any 1 expression
     if (search(new Unary(opSuccessor,
                          Location::regOf(new Terminal(opWild))), result))
-    {
-        // Result has the matching expression, i.e. succ(r[K])
-        Exp* sub1 = ((Unary*)result)->getSubExp1();
-        assert(sub1->getOper() == opRegOf);
-        Exp* sub2 = ((Unary*)sub1)->getSubExp1();
-        assert(sub2->getOper() == opIntConst);
-        // result	 sub1	sub2
-        // succ(	  r[   Const K	])
-        // Note: we need to clone the r[K] part, since it will be ;//deleted as
-        // part of the searchReplace below
-        Unary* replace = (Unary*)sub1->clone();
-        Const* c = (Const*)replace->getSubExp1();
-        c->setInt(c->getInt()+1);		// Do the increment
-        Exp* res = searchReplace(result, replace, change);
-        return res;
-    }
+        {
+            // Result has the matching expression, i.e. succ(r[K])
+            Exp* sub1 = ((Unary*)result)->getSubExp1();
+            assert(sub1->getOper() == opRegOf);
+            Exp* sub2 = ((Unary*)sub1)->getSubExp1();
+            assert(sub2->getOper() == opIntConst);
+            // result	 sub1	sub2
+            // succ(	  r[   Const K	])
+            // Note: we need to clone the r[K] part, since it will be ;//deleted as
+            // part of the searchReplace below
+            Unary* replace = (Unary*)sub1->clone();
+            Const* c = (Const*)replace->getSubExp1();
+            c->setInt(c->getInt()+1);		// Do the increment
+            Exp* res = searchReplace(result, replace, change);
+            return res;
+        }
     return this;
 }
 
@@ -3754,10 +3757,10 @@ Exp* Exp::killFill()
     doSearch(&srch2, res, result, false);
     std::list<Exp**>::iterator it;
     for (it = result.begin(); it != result.end(); it++)
-    {
-        // Kill the sign extend bits
-        **it = ((Ternary*)(**it))->getSubExp3();
-    }
+        {
+            // Kill the sign extend bits
+            **it = ((Ternary*)(**it))->getSubExp3();
+        }
     return res;
 }
 
@@ -3779,19 +3782,19 @@ Exp *Exp::removeSubscripts(bool& allZero)
     LocationSet::iterator xx;
     allZero = true;
     for (xx = locs.begin(); xx != locs.end(); xx++)
-    {
-        if ((*xx)->getOper() == opSubscript)
         {
-            RefExp *r1 = (RefExp*)*xx;
-            Statement* def = r1->getDef();
-            if (!(def == NULL || def->getNumber() == 0))
-            {
-                allZero = false;
-            }
-            bool change;
-            e = e->searchReplaceAll(*xx, r1->getSubExp1()/*->clone()*/, change);
+            if ((*xx)->getOper() == opSubscript)
+                {
+                    RefExp *r1 = (RefExp*)*xx;
+                    Statement* def = r1->getDef();
+                    if (!(def == NULL || def->getNumber() == 0))
+                        {
+                            allZero = false;
+                        }
+                    bool change;
+                    e = e->searchReplaceAll(*xx, r1->getSubExp1()/*->clone()*/, change);
+                }
         }
-    }
     return e;
 }
 
@@ -3829,89 +3832,89 @@ Exp* Exp::genConstraints(Exp* result)
 Exp* Const::genConstraints(Exp* result)
 {
     if (result->isTypeVal())
-    {
-        // result is a constant type, or possibly a partial type such as ptr(alpha)
-        Type* t = ((TypeVal*)result)->getType();
-        bool match = false;
-        switch (op)
         {
-        case opLongConst:
-            // An integer constant is compatible with any size of integer, as long is it is in the right range
-            // (no test yet) FIXME: is there an endianness issue here?
-        case opIntConst:
-            match = t->isInteger();
-            // An integer constant can also match a pointer to something.  Assume values less than 0x100 can't be a
-            // pointer
-            if ((unsigned)u.i >= 0x100)
-                match |= t->isPointer();
-            // We can co-erce 32 bit constants to floats
-            match |= t->isFloat();
-            break;
-        case opStrConst:
-            match = (t->isPointer()) && (
-                        ((PointerType*)t)->getPointsTo()->isChar() ||
-                        (((PointerType*)t)->getPointsTo()->isArray() &&
-                         ((ArrayType*)((PointerType*)t)->getPointsTo())->getBaseType()->isChar()));
-            break;
-        case opFltConst:
-            match = t->isFloat();
-            break;
-        default:
-            break;
+            // result is a constant type, or possibly a partial type such as ptr(alpha)
+            Type* t = ((TypeVal*)result)->getType();
+            bool match = false;
+            switch (op)
+                {
+                case opLongConst:
+                    // An integer constant is compatible with any size of integer, as long is it is in the right range
+                    // (no test yet) FIXME: is there an endianness issue here?
+                case opIntConst:
+                    match = t->isInteger();
+                    // An integer constant can also match a pointer to something.  Assume values less than 0x100 can't be a
+                    // pointer
+                    if ((unsigned)u.i >= 0x100)
+                        match |= t->isPointer();
+                    // We can co-erce 32 bit constants to floats
+                    match |= t->isFloat();
+                    break;
+                case opStrConst:
+                    match = (t->isPointer()) && (
+                                ((PointerType*)t)->getPointsTo()->isChar() ||
+                                (((PointerType*)t)->getPointsTo()->isArray() &&
+                                 ((ArrayType*)((PointerType*)t)->getPointsTo())->getBaseType()->isChar()));
+                    break;
+                case opFltConst:
+                    match = t->isFloat();
+                    break;
+                default:
+                    break;
+                }
+            if (match)
+                {
+                    // This constant may require a cast or a change of format. So we generate a constraint.
+                    // Don't clone 'this', so it can be co-erced after type analysis
+                    return new Binary(opEquals,
+                                      new Unary(opTypeOf, this),
+                                      result->clone());
+                }
+            else
+                // Doesn't match
+                return new Terminal(opFalse);
         }
-        if (match)
-        {
-            // This constant may require a cast or a change of format. So we generate a constraint.
-            // Don't clone 'this', so it can be co-erced after type analysis
-            return new Binary(opEquals,
-                              new Unary(opTypeOf, this),
-                              result->clone());
-        }
-        else
-            // Doesn't match
-            return new Terminal(opFalse);
-    }
     // result is a type variable, which is constrained by this constant
     Type* t;
     switch (op)
-    {
-    case opIntConst:
-    {
-        // We have something like local1 = 1234.  Either they are both integer, or both pointer
-        Type* intt = new IntegerType(0);
-        Type* alph = PointerType::newPtrAlpha();
-        return new Binary(opOr,
-                          new Binary(opAnd,
-                                     new Binary(opEquals,
-                                                result->clone(),
-                                                new TypeVal(intt)),
-                                     new Binary(opEquals,
-                                                new Unary(opTypeOf,
-                                                        // Note: don't clone 'this', so we can change the Const after type analysis!
-                                                        this),
-                                                new TypeVal(intt))),
-                          new Binary(opAnd,
-                                     new Binary(opEquals,
-                                                result->clone(),
-                                                new TypeVal(alph)),
-                                     new Binary(opEquals,
-                                                new Unary(opTypeOf,
-                                                        this),
-                                                new TypeVal(alph))));
-        break;
-    }
-    case opLongConst:
-        t = new IntegerType(64);
-        break;
-    case opStrConst:
-        t = new PointerType(new CharType());
-        break;
-    case opFltConst:
-        t = new FloatType();	// size is not known. Assume double for now
-        break;
-    default:
-        return false;
-    }
+        {
+        case opIntConst:
+        {
+            // We have something like local1 = 1234.  Either they are both integer, or both pointer
+            Type* intt = new IntegerType(0);
+            Type* alph = PointerType::newPtrAlpha();
+            return new Binary(opOr,
+                              new Binary(opAnd,
+                                         new Binary(opEquals,
+                                                    result->clone(),
+                                                    new TypeVal(intt)),
+                                         new Binary(opEquals,
+                                                    new Unary(opTypeOf,
+                                                            // Note: don't clone 'this', so we can change the Const after type analysis!
+                                                            this),
+                                                    new TypeVal(intt))),
+                              new Binary(opAnd,
+                                         new Binary(opEquals,
+                                                    result->clone(),
+                                                    new TypeVal(alph)),
+                                         new Binary(opEquals,
+                                                    new Unary(opTypeOf,
+                                                            this),
+                                                    new TypeVal(alph))));
+            break;
+        }
+        case opLongConst:
+            t = new IntegerType(64);
+            break;
+        case opStrConst:
+            t = new PointerType(new CharType());
+            break;
+        case opFltConst:
+            t = new FloatType();	// size is not known. Assume double for now
+            break;
+        default:
+            return false;
+        }
     TypeVal* tv = new TypeVal(t);
     Exp* e = new Binary(opEquals, result->clone(), tv);
     return e;
@@ -3920,23 +3923,23 @@ Exp* Const::genConstraints(Exp* result)
 Exp* Unary::genConstraints(Exp* result)
 {
     if (result->isTypeVal())
-    {
-        // TODO: need to check for conflicts
-        return new Terminal(opTrue);
-    }
+        {
+            // TODO: need to check for conflicts
+            return new Terminal(opTrue);
+        }
 
     switch (op)
-    {
-    case opRegOf:
-    case opParam:		// Should be no params at constraint time
-    case opGlobal:
-    case opLocal:
-        return new Binary(opEquals,
-                          new Unary(opTypeOf, this->clone()),
-                          result->clone());
-    default:
-        break;
-    }
+        {
+        case opRegOf:
+        case opParam:		// Should be no params at constraint time
+        case opGlobal:
+        case opLocal:
+            return new Binary(opEquals,
+                              new Unary(opTypeOf, this->clone()),
+                              result->clone());
+        default:
+            break;
+        }
     return new Terminal(opTrue);
 }
 
@@ -3945,70 +3948,70 @@ Exp* Ternary::genConstraints(Exp* result)
     Type* argHasToBe = NULL;
     Type* retHasToBe = NULL;
     switch (op)
-    {
-    case opFsize:
-    case opItof:
-    case opFtoi:
-    case opSgnEx:
-    {
-        assert(subExp1->isIntConst());
-        assert(subExp2->isIntConst());
-        int fromSize = ((Const*)subExp1)->getInt();
-        int	  toSize = ((Const*)subExp2)->getInt();
-        // Fall through
-        switch (op)
         {
         case opFsize:
-            argHasToBe = new FloatType(fromSize);
-            retHasToBe = new FloatType(toSize);
-            break;
         case opItof:
-            argHasToBe = new IntegerType(fromSize);
-            retHasToBe = new FloatType(toSize);
-            break;
         case opFtoi:
-            argHasToBe = new FloatType(fromSize);
-            retHasToBe = new IntegerType(toSize);
-            break;
         case opSgnEx:
-            argHasToBe = new IntegerType(fromSize);
-            retHasToBe = new IntegerType(toSize);
-            break;
+        {
+            assert(subExp1->isIntConst());
+            assert(subExp2->isIntConst());
+            int fromSize = ((Const*)subExp1)->getInt();
+            int	  toSize = ((Const*)subExp2)->getInt();
+            // Fall through
+            switch (op)
+                {
+                case opFsize:
+                    argHasToBe = new FloatType(fromSize);
+                    retHasToBe = new FloatType(toSize);
+                    break;
+                case opItof:
+                    argHasToBe = new IntegerType(fromSize);
+                    retHasToBe = new FloatType(toSize);
+                    break;
+                case opFtoi:
+                    argHasToBe = new FloatType(fromSize);
+                    retHasToBe = new IntegerType(toSize);
+                    break;
+                case opSgnEx:
+                    argHasToBe = new IntegerType(fromSize);
+                    retHasToBe = new IntegerType(toSize);
+                    break;
+                default:
+                    break;
+                }
+        }
         default:
             break;
         }
-    }
-    default:
-        break;
-    }
     Exp* res = NULL;
     if (retHasToBe)
-    {
-        if (result->isTypeVal())
         {
-            // result is a constant type, or possibly a partial type such as
-            // ptr(alpha)
-            Type* t = ((TypeVal*)result)->getType();
-            // Compare broad types
-            if (! (*retHasToBe *= *t))
-                return new Terminal(opFalse);
-            // else just constrain the arg
+            if (result->isTypeVal())
+                {
+                    // result is a constant type, or possibly a partial type such as
+                    // ptr(alpha)
+                    Type* t = ((TypeVal*)result)->getType();
+                    // Compare broad types
+                    if (! (*retHasToBe *= *t))
+                        return new Terminal(opFalse);
+                    // else just constrain the arg
+                }
+            else
+                {
+                    // result is a type variable, constrained by this Ternary
+                    res = new Binary(opEquals,
+                                     result,
+                                     new TypeVal(retHasToBe));
+                }
         }
-        else
-        {
-            // result is a type variable, constrained by this Ternary
-            res = new Binary(opEquals,
-                             result,
-                             new TypeVal(retHasToBe));
-        }
-    }
     if (argHasToBe)
-    {
-        // Constrain the argument
-        Exp* con = subExp3->genConstraints(new TypeVal(argHasToBe));
-        if (res) res = new Binary(opAnd, res, con);
-        else res = con;
-    }
+        {
+            // Constrain the argument
+            Exp* con = subExp3->genConstraints(new TypeVal(argHasToBe));
+            if (res) res = new Binary(opAnd, res, con);
+            else res = con;
+        }
     if (res == NULL)
         return new Terminal(opTrue);
     return res;
@@ -4018,17 +4021,17 @@ Exp* RefExp::genConstraints(Exp* result)
 {
     OPER subOp = subExp1->getOper();
     switch (subOp)
-    {
-    case opRegOf:
-    case opParam:
-    case opGlobal:
-    case opLocal:
-        return new Binary(opEquals,
-                          new Unary(opTypeOf, this->clone()),
-                          result->clone());
-    default:
-        break;
-    }
+        {
+        case opRegOf:
+        case opParam:
+        case opGlobal:
+        case opLocal:
+            return new Binary(opEquals,
+                              new Unary(opTypeOf, this->clone()),
+                              result->clone());
+        default:
+            break;
+        }
     return new Terminal(opTrue);
 }
 
@@ -4053,156 +4056,156 @@ Exp* Binary::genConstraints(Exp* result)
     IntegerType* intType = new IntegerType(0);	// Wild size (=0)
     TypeVal intVal(intType);
     switch (op)
-    {
-    case opFPlus:
-    case opFMinus:
-    case opFMult:
-    case opFDiv:
-    {
-        if (restrictTo && !restrictTo->isFloat())
-            // Result can only be float
-            return new Terminal(opFalse);
-
-        // MVE: what about sizes?
-        FloatType* ft = new FloatType();
-        TypeVal* ftv = new TypeVal(ft);
-        res = constrainSub(ftv, ftv);
-        if (!restrictTo)
-            // Also constrain the result
-            res = new Binary(opAnd, res,
-                             new Binary(opEquals, result->clone(), ftv));
-        return res;
-        break;
-    }
-
-    case opBitAnd:
-    case opBitOr:
-    case opBitXor:
-    {
-        if (restrictTo && !restrictTo->isInteger())
-            // Result can only be integer
-            return new Terminal(opFalse);
-
-        // MVE: What about sizes?
-        IntegerType* it = new IntegerType();
-        TypeVal* itv = new TypeVal(it);
-        res = constrainSub(itv, itv);
-        if (!restrictTo)
-            // Also constrain the result
-            res = new Binary(opAnd, res,
-                             new Binary(opEquals, result->clone(), itv));
-        return res;
-        break;
-    }
-
-    case opPlus:
-    {
-        // A pointer to anything
-        Type* ptrType = PointerType::newPtrAlpha();
-        TypeVal ptrVal(ptrType);	// Type value of ptr to anything
-        if (!restrictTo || (restrictTo && restrictTo->isInteger()))
         {
-            // int + int -> int
-            res = constrainSub(&intVal, &intVal);
+        case opFPlus:
+        case opFMinus:
+        case opFMult:
+        case opFDiv:
+        {
+            if (restrictTo && !restrictTo->isFloat())
+                // Result can only be float
+                return new Terminal(opFalse);
+
+            // MVE: what about sizes?
+            FloatType* ft = new FloatType();
+            TypeVal* ftv = new TypeVal(ft);
+            res = constrainSub(ftv, ftv);
             if (!restrictTo)
+                // Also constrain the result
                 res = new Binary(opAnd, res,
-                                 new Binary(opEquals, result->clone(),
-                                            intVal.clone()));
+                                 new Binary(opEquals, result->clone(), ftv));
+            return res;
+            break;
         }
 
-        if (!restrictTo || (restrictTo && restrictTo->isPointer()))
+        case opBitAnd:
+        case opBitOr:
+        case opBitXor:
         {
-            // ptr + int -> ptr
-            Exp* res2 = constrainSub(&ptrVal, &intVal);
-            if (!restrictTo)
-                res2 = new Binary(opAnd, res2,
-                                  new Binary(opEquals, result->clone(),
-                                             ptrVal.clone()));
-            if (res) res = new Binary(opOr, res, res2);
-            else	 res = res2;
+            if (restrictTo && !restrictTo->isInteger())
+                // Result can only be integer
+                return new Terminal(opFalse);
 
-            // int + ptr -> ptr
-            res2 = constrainSub(&intVal, &ptrVal);
+            // MVE: What about sizes?
+            IntegerType* it = new IntegerType();
+            TypeVal* itv = new TypeVal(it);
+            res = constrainSub(itv, itv);
             if (!restrictTo)
-                res2 = new Binary(opAnd, res2,
-                                  new Binary(opEquals, result->clone(),
-                                             ptrVal.clone()));
-            if (res) res = new Binary(opOr, res, res2);
-            else	 res = res2;
-        }
-
-        if (res) return res->simplify();
-        else return new Terminal(opFalse);
-    }
-
-    case opMinus:
-    {
-        Type* ptrType = PointerType::newPtrAlpha();
-        TypeVal ptrVal(ptrType);
-        if (!restrictTo || (restrictTo && restrictTo->isInteger()))
-        {
-            // int - int -> int
-            res = constrainSub(&intVal, &intVal);
-            if (!restrictTo)
+                // Also constrain the result
                 res = new Binary(opAnd, res,
-                                 new Binary(opEquals, result->clone(),
-                                            intVal.clone()));
-
-            // ptr - ptr -> int
-            Exp* res2 = constrainSub(&ptrVal, &ptrVal);
-            if (!restrictTo)
-                res2 = new Binary(opAnd, res2,
-                                  new Binary(opEquals, result->clone(),
-                                             intVal.clone()));
-            if (res) res = new Binary(opOr, res, res2);
-            else	 res = res2;
+                                 new Binary(opEquals, result->clone(), itv));
+            return res;
+            break;
         }
 
-        if (!restrictTo || (restrictTo && restrictTo->isPointer()))
+        case opPlus:
         {
-            // ptr - int -> ptr
-            Exp* res2 = constrainSub(&ptrVal, &intVal);
-            if (!restrictTo)
-                res2 = new Binary(opAnd, res2,
-                                  new Binary(opEquals, result->clone(),
-                                             ptrVal.clone()));
-            if (res) res = new Binary(opOr, res, res2);
-            else	 res = res2;
+            // A pointer to anything
+            Type* ptrType = PointerType::newPtrAlpha();
+            TypeVal ptrVal(ptrType);	// Type value of ptr to anything
+            if (!restrictTo || (restrictTo && restrictTo->isInteger()))
+                {
+                    // int + int -> int
+                    res = constrainSub(&intVal, &intVal);
+                    if (!restrictTo)
+                        res = new Binary(opAnd, res,
+                                         new Binary(opEquals, result->clone(),
+                                                    intVal.clone()));
+                }
+
+            if (!restrictTo || (restrictTo && restrictTo->isPointer()))
+                {
+                    // ptr + int -> ptr
+                    Exp* res2 = constrainSub(&ptrVal, &intVal);
+                    if (!restrictTo)
+                        res2 = new Binary(opAnd, res2,
+                                          new Binary(opEquals, result->clone(),
+                                                     ptrVal.clone()));
+                    if (res) res = new Binary(opOr, res, res2);
+                    else	 res = res2;
+
+                    // int + ptr -> ptr
+                    res2 = constrainSub(&intVal, &ptrVal);
+                    if (!restrictTo)
+                        res2 = new Binary(opAnd, res2,
+                                          new Binary(opEquals, result->clone(),
+                                                     ptrVal.clone()));
+                    if (res) res = new Binary(opOr, res, res2);
+                    else	 res = res2;
+                }
+
+            if (res) return res->simplify();
+            else return new Terminal(opFalse);
         }
 
-        if (res) return res->simplify();
-        else return new Terminal(opFalse);
-    }
-
-    case opSize:
-    {
-        // This used to be considered obsolete, but now, it is used to carry the size of memOf's from the decoder to
-        // here
-        assert(subExp1->isIntConst());
-        int sz = ((Const*)subExp1)->getInt();
-        if (restrictTo)
+        case opMinus:
         {
-            int rsz = restrictTo->getSize();
-            if (rsz == 0)
-            {
-                // This is now restricted to the current restrictTo, but
-                // with a known size
-                Type* it = restrictTo->clone();
-                it->setSize(sz);
-                return new Binary(opEquals,
-                                  new Unary(opTypeOf, subExp2),
-                                  new TypeVal(it));
-            }
-            return new Terminal(
-                       (rsz == sz) ? opTrue : opFalse);
-        }
-        // We constrain the size but not the basic type
-        return new Binary(opEquals, result->clone(), new TypeVal(new SizeType(sz)));
-    }
+            Type* ptrType = PointerType::newPtrAlpha();
+            TypeVal ptrVal(ptrType);
+            if (!restrictTo || (restrictTo && restrictTo->isInteger()))
+                {
+                    // int - int -> int
+                    res = constrainSub(&intVal, &intVal);
+                    if (!restrictTo)
+                        res = new Binary(opAnd, res,
+                                         new Binary(opEquals, result->clone(),
+                                                    intVal.clone()));
 
-    default:
-        break;
-    }
+                    // ptr - ptr -> int
+                    Exp* res2 = constrainSub(&ptrVal, &ptrVal);
+                    if (!restrictTo)
+                        res2 = new Binary(opAnd, res2,
+                                          new Binary(opEquals, result->clone(),
+                                                     intVal.clone()));
+                    if (res) res = new Binary(opOr, res, res2);
+                    else	 res = res2;
+                }
+
+            if (!restrictTo || (restrictTo && restrictTo->isPointer()))
+                {
+                    // ptr - int -> ptr
+                    Exp* res2 = constrainSub(&ptrVal, &intVal);
+                    if (!restrictTo)
+                        res2 = new Binary(opAnd, res2,
+                                          new Binary(opEquals, result->clone(),
+                                                     ptrVal.clone()));
+                    if (res) res = new Binary(opOr, res, res2);
+                    else	 res = res2;
+                }
+
+            if (res) return res->simplify();
+            else return new Terminal(opFalse);
+        }
+
+        case opSize:
+        {
+            // This used to be considered obsolete, but now, it is used to carry the size of memOf's from the decoder to
+            // here
+            assert(subExp1->isIntConst());
+            int sz = ((Const*)subExp1)->getInt();
+            if (restrictTo)
+                {
+                    int rsz = restrictTo->getSize();
+                    if (rsz == 0)
+                        {
+                            // This is now restricted to the current restrictTo, but
+                            // with a known size
+                            Type* it = restrictTo->clone();
+                            it->setSize(sz);
+                            return new Binary(opEquals,
+                                              new Unary(opTypeOf, subExp2),
+                                              new TypeVal(it));
+                        }
+                    return new Terminal(
+                               (rsz == sz) ? opTrue : opFalse);
+                }
+            // We constrain the size but not the basic type
+            return new Binary(opEquals, result->clone(), new TypeVal(new SizeType(sz)));
+        }
+
+        default:
+            break;
+        }
     return new Terminal(opTrue);
 }
 
@@ -4211,22 +4214,22 @@ Exp* Location::polySimplify(bool& bMod)
     Exp *res = Unary::polySimplify(bMod);
 
     if (res->getOper() == opMemOf && res->getSubExp1()->getOper() == opAddrOf)
-    {
-        if (VERBOSE)
-            LOG << "polySimplify " << res << "\n";
-        res = res->getSubExp1()->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            if (VERBOSE)
+                LOG << "polySimplify " << res << "\n";
+            res = res->getSubExp1()->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     // check for m[a[loc.x]] becomes loc.x
     if (res->getOper() == opMemOf && res->getSubExp1()->getOper() == opAddrOf &&
             res->getSubExp1()->getSubExp1()->getOper() == opMemberAccess)
-    {
-        res = subExp1->getSubExp1();
-        bMod = true;
-        return res;
-    }
+        {
+            res = subExp1->getSubExp1();
+            bMod = true;
+            return res;
+        }
 
     return res;
 }
@@ -4236,9 +4239,9 @@ void Location::getDefinitions(LocationSet& defs)
     // This is a hack to fix aliasing (replace with something general)
     // FIXME! This is x86 specific too. Use -O for overlapped registers!
     if (op == opRegOf && ((Const*)subExp1)->getInt() == 24)
-    {
-        defs.insert(Location::regOf(0));
-    }
+        {
+            defs.insert(Location::regOf(0));
+        }
 }
 
 
@@ -4260,33 +4263,33 @@ Exp* Binary::simplifyConstraint()
     subExp1 = subExp1->simplifyConstraint();
     subExp2 = subExp2->simplifyConstraint();
     switch (op)
-    {
-    case opEquals:
-    {
-        if (subExp1->isTypeVal() && subExp2->isTypeVal())
         {
-            // FIXME: ADHOC TA assumed
-            Type* t1 = ((TypeVal*)subExp1)->getType();
-            Type* t2 = ((TypeVal*)subExp2)->getType();
-            if (!t1->isPointerToAlpha() && !t2->isPointerToAlpha())
-            {
-                delete this;
-                if (*t1 == *t2)
-                    return new Terminal(opTrue);
-                else
-                    return new Terminal(opFalse);
-            }
+        case opEquals:
+        {
+            if (subExp1->isTypeVal() && subExp2->isTypeVal())
+                {
+                    // FIXME: ADHOC TA assumed
+                    Type* t1 = ((TypeVal*)subExp1)->getType();
+                    Type* t2 = ((TypeVal*)subExp2)->getType();
+                    if (!t1->isPointerToAlpha() && !t2->isPointerToAlpha())
+                        {
+                            delete this;
+                            if (*t1 == *t2)
+                                return new Terminal(opTrue);
+                            else
+                                return new Terminal(opFalse);
+                        }
+                }
+            break;
         }
-        break;
-    }
 
-    case opOr:
-    case opAnd:
-    case opNot:
-        return simplify();
-    default:
-        break;
-    }
+        case opOr:
+        case opAnd:
+        case opNot:
+            return simplify();
+        default:
+            break;
+        }
     return this;
 }
 
@@ -4488,16 +4491,16 @@ Exp* TypeVal::accept(ExpModifier* v)
 void child(Exp* e, int ind)
 {
     if (e == NULL)
-    {
-        std::cerr << std::setw(ind+4) << " " << "<NULL>\n" << std::flush;
-        return;
-    }
+        {
+            std::cerr << std::setw(ind+4) << " " << "<NULL>\n" << std::flush;
+            return;
+        }
     void* vt = *(void**)e;
     if (vt == NULL)
-    {
-        std::cerr << std::setw(ind+4) << " " << "<NULL VT>\n" << std::flush;
-        return;
-    }
+        {
+            std::cerr << std::setw(ind+4) << " " << "<NULL VT>\n" << std::flush;
+            return;
+        }
     e->printx(ind+4);
 }
 
@@ -4528,22 +4531,22 @@ void Const::printx(int ind)
 {
     std::cerr << std::setw(ind) << " " << operStrings[op] << " ";
     switch (op)
-    {
-    case opIntConst:
-        std::cerr << std::dec << u.i;
-        break;
-    case opStrConst:
-        std::cerr << "\"" << u.p << "\"";
-        break;
-    case opFltConst:
-        std::cerr << u.d;
-        break;
-    case opFuncConst:
-        std::cerr << u.pp->getName();
-        break;
-    default:
-        std::cerr << std::hex << "?" << (int)op << "?";
-    }
+        {
+        case opIntConst:
+            std::cerr << std::dec << u.i;
+            break;
+        case opStrConst:
+            std::cerr << "\"" << u.p << "\"";
+            break;
+        case opFltConst:
+            std::cerr << u.d;
+            break;
+        case opFuncConst:
+            std::cerr << u.pp->getName();
+            break;
+        default:
+            std::cerr << std::hex << "?" << (int)op << "?";
+        }
     if (conscript)
         std::cerr << " \\" << std::dec << conscript << "\\";
     std::cerr << std::flush << "\n";
@@ -4581,13 +4584,13 @@ const char* Exp::getAnyStrConst()
 {
     Exp* e = this;
     if (op == opAddrOf)
-    {
-        e = ((Location*)this)->getSubExp1();
-        if (e->op == opSubscript)
-            e = ((Unary*)e)->getSubExp1();
-        if (e->op == opMemOf)
-            e = ((Location*)e)->getSubExp1();
-    }
+        {
+            e = ((Location*)this)->getSubExp1();
+            if (e->op == opSubscript)
+                e = ((Unary*)e)->getSubExp1();
+            if (e->op == opMemOf)
+                e = ((Location*)e)->getSubExp1();
+        }
     if (e->op != opStrConst) return NULL;
     return ((Const*)e)->getStr();
 }
@@ -4671,14 +4674,14 @@ Exp* Exp::propagateAllRpt(bool& changed)
     changed = false;
     Exp* ret = this;
     while (true)
-    {
-        ep.clearChanged();			// Want to know if changed this *last* accept()
-        ret = ret->accept(&ep);
-        if (ep.isChanged())
-            changed = true;
-        else
-            break;
-    }
+        {
+            ep.clearChanged();			// Want to know if changed this *last* accept()
+            ret = ret->accept(&ep);
+            if (ep.isChanged())
+                changed = true;
+            else
+                break;
+        }
     return ret;
 }
 
@@ -4714,7 +4717,8 @@ public:
     ConstMemo(int m) : Memo(m)
     { }
 
-    union {
+    union
+    {
         int i;
         ADDRESS a;
         QWord ll;

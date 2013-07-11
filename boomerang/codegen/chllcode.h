@@ -57,7 +57,8 @@ Comma						left to right	,
 */
 
 /// Operator precedence
-enum PREC {
+enum PREC
+{
     PREC_NONE=0,			///< Outer level (no parens required)
     PREC_COMMA,				///< Comma
     PREC_ASSIGN,			///< Assignment

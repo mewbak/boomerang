@@ -38,11 +38,13 @@ CPPUNIT_TEST_SUITE_REGISTRATION( FrontPentTest );
  * RETURNS:			<nothing>
  *============================================================================*/
 static bool logset = false;
-void FrontPentTest::setUp () {
-    if (!logset) {
-        logset = true;
-        Boomerang::get()->setLogger(new NullLogger());
-    }
+void FrontPentTest::setUp ()
+{
+    if (!logset)
+        {
+            logset = true;
+            Boomerang::get()->setLogger(new NullLogger());
+        }
 }
 
 /*==============================================================================
@@ -52,14 +54,16 @@ void FrontPentTest::setUp () {
  * PARAMETERS:		<none>
  * RETURNS:			<nothing>
  *============================================================================*/
-void FrontPentTest::tearDown () {
+void FrontPentTest::tearDown ()
+{
 }
 
 /*==============================================================================
  * FUNCTION:		FrontPentTest::test1
  * OVERVIEW:		Test decoding some pentium instructions
  *============================================================================*/
-void FrontPentTest::test1 () {
+void FrontPentTest::test1 ()
+{
     std::ostringstream ost;
 
     BinaryFileFactory bff;
@@ -105,7 +109,8 @@ void FrontPentTest::test1 () {
     // delete pBF;
 }
 
-void FrontPentTest::test2() {
+void FrontPentTest::test2()
+{
     DecodeResult inst;
     std::string expected;
 
@@ -145,7 +150,8 @@ void FrontPentTest::test2() {
     // delete pBF;
 }
 
-void FrontPentTest::test3() {
+void FrontPentTest::test3()
+{
     DecodeResult inst;
     std::string expected;
 
@@ -184,7 +190,8 @@ void FrontPentTest::test3() {
     // delete pBF;
 }
 
-void FrontPentTest::testBranch() {
+void FrontPentTest::testBranch()
+{
     DecodeResult inst;
     std::string expected;
 
@@ -229,7 +236,8 @@ void FrontPentTest::testBranch() {
     // delete pBF;
 }
 
-void FrontPentTest::testFindMain() {
+void FrontPentTest::testFindMain()
+{
     // Test the algorithm for finding main, when there is a call to __libc_start_main
     // Also tests the loader hack
     BinaryFileFactory bff;

@@ -39,10 +39,10 @@ static bool logset = false;
 void DfaTest::setUp ()
 {
     if (!logset)
-    {
-        logset = true;
-        Boomerang::get()->setLogger(new NullLogger());
-    }
+        {
+            logset = true;
+            Boomerang::get()->setLogger(new NullLogger());
+        }
 }
 
 /*==============================================================================

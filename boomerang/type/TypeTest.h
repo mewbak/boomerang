@@ -1,6 +1,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
-class TypeTest : public CPPUNIT_NS::TestFixture {
+class TypeTest : public CPPUNIT_NS::TestFixture
+{
     CPPUNIT_TEST_SUITE(TypeTest);
     CPPUNIT_TEST(testTypeLong);
     CPPUNIT_TEST(testNotEqual);

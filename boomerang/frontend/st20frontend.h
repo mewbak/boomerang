@@ -26,7 +26,8 @@ public:
      */
     virtual ~ST20FrontEnd();
 
-    virtual platform getFrontEndId() {
+    virtual platform getFrontEndId()
+    {
         return PLAT_ST20;
     }
 

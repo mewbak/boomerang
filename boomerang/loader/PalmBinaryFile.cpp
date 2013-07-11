@@ -46,13 +46,13 @@ PalmBinaryFile::~PalmBinaryFile()
         if (m_pSections[i].pSectionName != 0)
             delete [] m_pSections[i].pSectionName;
     if (m_pImage)
-    {
-        delete [] m_pImage;
-    }
+        {
+            delete [] m_pImage;
+        }
     if (m_pData)
-    {
-        delete [] m_pData;
-    }
+        {
+            delete [] m_pData;
+        }
 }
 
 bool PalmBinaryFile::RealLoad(const char* sName)
@@ -63,10 +63,10 @@ bool PalmBinaryFile::RealLoad(const char* sName)
     m_pFileName = sName;
 
     if ((fp = fopen(sName, "rb")) == NULL)
-    {
-        fprintf(stderr, "Could not open binary file %s\n", sName);
-        return false;
-    }
+        {
+            fprintf(stderr, "Could not open binary file %s\n", sName);
+            return false;
+        }
 
     fseek(fp, 0, SEEK_END);
     long size = ftell(fp);
@@ -74,27 +74,27 @@ bool PalmBinaryFile::RealLoad(const char* sName)
     // Allocate a buffer for the image
     m_pImage = new unsigned char[size];
     if (m_pImage == 0)
-    {
-        fprintf(stderr, "Could not allocate %ld bytes for image\n", size);
-        return false;
-    }
+        {
+            fprintf(stderr, "Could not allocate %ld bytes for image\n", size);
+            return false;
+        }
     memset(m_pImage, size, 0);
 
     fseek(fp, 0, SEEK_SET);
     if (fread(m_pImage, 1, size, fp) != (unsigned)size)
-    {
-        fprintf(stderr, "Error reading binary file %s\n", sName);
-        return false;
-    }
+        {
+            fprintf(stderr, "Error reading binary file %s\n", sName);
+            return false;
+        }
 
     // Check type at offset 0x3C; should be "appl" (or "palm"; ugh!)
     if ((strncmp((char*)(m_pImage+0x3C), "appl", 4) != 0) &&
             (strncmp((char*)(m_pImage+0x3C), "panl", 4) != 0) &&
             (strncmp((char*)(m_pImage+0x3C), "libr", 4) != 0))
-    {
-        fprintf(stderr, "%s is not a standard .prc file\n", sName);
-        return false;
-    }
+        {
+            fprintf(stderr, "%s is not a standard .prc file\n", sName);
+            return false;
+        }
 
     // Get the number of resource headers (one section per resource)
     m_iNumSections = (m_pImage[0x4C] << 8) + m_pImage[0x4D];
@@ -102,51 +102,51 @@ bool PalmBinaryFile::RealLoad(const char* sName)
     // Allocate the section information
     m_pSections = new SectionInfo[m_iNumSections];
     if (m_pSections == 0)
-    {
-        fprintf(stderr, "Could not allocate section info array of %d items\n",
-                m_iNumSections);
-        if (m_pImage)
         {
-            delete m_pImage;
-            m_pImage = 0;
+            fprintf(stderr, "Could not allocate section info array of %d items\n",
+                    m_iNumSections);
+            if (m_pImage)
+                {
+                    delete m_pImage;
+                    m_pImage = 0;
+                }
         }
-    }
 
     // Iterate through the resource headers (generating section info structs)
     unsigned char* p = m_pImage + 0x4E;          // First resource header
     unsigned off = 0;
     for (int i=0; i < m_iNumSections; i++)
-    {
-        // First get the name (4 alpha)
-        strncpy(buf, (char*)p, 4);
-        buf[4] = '\0';
-        std::string name(buf);
-        // Now get the identifier (2 byte binary)
-        unsigned id = (p[4] << 8) + p[5];
-        sprintf(buf, "%d", id);
-        // Join the id to the name, e.g. code0, data12
-        name += buf;
-        m_pSections[i].pSectionName = new char[name.size()+1];
-        strcpy(m_pSections[i].pSectionName, name.c_str());
-        p += 4+2;
-        off = UINT4(p);
-        p += 4;
-        m_pSections[i].uNativeAddr = off;
-        m_pSections[i].uHostAddr = off + (ADDRESS)m_pImage;
-
-        // Guess the length
-        if (i > 0)
         {
-            m_pSections[i-1].uSectionSize = off - m_pSections[i-1].uNativeAddr;
-            m_pSections[i].uSectionEntrySize = 1;        // No info available
+            // First get the name (4 alpha)
+            strncpy(buf, (char*)p, 4);
+            buf[4] = '\0';
+            std::string name(buf);
+            // Now get the identifier (2 byte binary)
+            unsigned id = (p[4] << 8) + p[5];
+            sprintf(buf, "%d", id);
+            // Join the id to the name, e.g. code0, data12
+            name += buf;
+            m_pSections[i].pSectionName = new char[name.size()+1];
+            strcpy(m_pSections[i].pSectionName, name.c_str());
+            p += 4+2;
+            off = UINT4(p);
+            p += 4;
+            m_pSections[i].uNativeAddr = off;
+            m_pSections[i].uHostAddr = off + (ADDRESS)m_pImage;
+
+            // Guess the length
+            if (i > 0)
+                {
+                    m_pSections[i-1].uSectionSize = off - m_pSections[i-1].uNativeAddr;
+                    m_pSections[i].uSectionEntrySize = 1;        // No info available
+                }
+
+            // Decide if code or data; note that code0 is a special case (not code)
+            m_pSections[i].bCode =
+                (name != "code0") && (name.substr(0, 4) == "code");
+            m_pSections[i].bData = name.substr(0, 4) == "data";
+
         }
-
-        // Decide if code or data; note that code0 is a special case (not code)
-        m_pSections[i].bCode =
-            (name != "code0") && (name.substr(0, 4) == "code");
-        m_pSections[i].bData = name.substr(0, 4) == "data";
-
-    }
 
     // Set the length for the last section
     m_pSections[m_iNumSections-1].uSectionSize = size - off;
@@ -154,17 +154,17 @@ bool PalmBinaryFile::RealLoad(const char* sName)
     // Create a separate, uncompressed, initialised data section
     SectionInfo* pData = GetSectionInfoByName("data0");
     if (pData == 0)
-    {
-        fprintf(stderr, "No data section!\n");
-        return false;
-    }
+        {
+            fprintf(stderr, "No data section!\n");
+            return false;
+        }
 
     SectionInfo* pCode0 = GetSectionInfoByName("code0");
     if (pCode0 == 0)
-    {
-        fprintf(stderr, "No code 0 section!\n");
-        return false;
-    }
+        {
+            fprintf(stderr, "No code 0 section!\n");
+            return false;
+        }
 
     // When the info is all boiled down, the two things we need from the
     // code 0 section are at offset 0, the size of data above a5, and at
@@ -176,10 +176,10 @@ bool PalmBinaryFile::RealLoad(const char* sName)
     // Allocate a new data section
     m_pData = new unsigned char[sizeData];
     if (m_pData == 0)
-    {
-        fprintf(stderr, "Could not allocate %u bytes for data section\n",
-                sizeData);
-    }
+        {
+            fprintf(stderr, "Could not allocate %u bytes for data section\n",
+                    sizeData);
+        }
 
     // Uncompress the data. Skip first long (offset of CODE1 "xrefs")
     p = (unsigned char*)(pData->uHostAddr+4);
@@ -189,96 +189,96 @@ bool PalmBinaryFile::RealLoad(const char* sName)
     bool done = false;
     while (!done && (p < (unsigned char*)(pData->uHostAddr +
                                           pData->uSectionSize)))
-    {
-        unsigned char rle = *p++;
-        if (rle == 0)
         {
-            done = true;
-            break;
+            unsigned char rle = *p++;
+            if (rle == 0)
+                {
+                    done = true;
+                    break;
+                }
+            else if (rle == 1)
+                {
+                    // 0x01 b_0 b_1
+                    // => 0x00 0x00 0x00 0x00 0xFF 0xFF b_0 b_1
+                    *q++ = 0;
+                    *q++ = 0;
+                    *q++ = 0;
+                    *q++ = 0;
+                    *q++ = 0xFF;
+                    *q++ = 0xFF;
+                    *q++ = *p++;
+                    *q++ = *p++;
+                }
+            else if (rle == 2)
+                {
+                    // 0x02 b_0 b_1 b_2
+                    // => 0x00 0x00 0x00 0x00 0xFF b_0 b_1 b_2
+                    *q++ = 0;
+                    *q++ = 0;
+                    *q++ = 0;
+                    *q++ = 0;
+                    *q++ = 0xFF;
+                    *q++ = *p++;
+                    *q++ = *p++;
+                    *q++ = *p++;
+                }
+            else if (rle == 3)
+                {
+                    // 0x03 b_0 b_1 b_2
+                    // => 0xA9 0xF0 0x00 0x00 b_0 b_1 0x00 b_2
+                    *q++ = 0xA9;
+                    *q++ = 0xF0;
+                    *q++ = 0;
+                    *q++ = 0;
+                    *q++ = *p++;
+                    *q++ = *p++;
+                    *q++ = 0;
+                    *q++ = *p++;
+                }
+            else if (rle == 4)
+                {
+                    // 0x04 b_0 b_1 b_2 b_3
+                    // => 0xA9 axF0 0x00 b_0 b_1 b_3 0x00 b_3
+                    *q++ = 0xA9;
+                    *q++ = 0xF0;
+                    *q++ = 0;
+                    *q++ = *p++;
+                    *q++ = *p++;
+                    *q++ = *p++;
+                    *q++ = 0;
+                    *q++ = *p++;
+                }
+            else if (rle < 0x10)
+                {
+                    // 5-0xF are invalid.
+                    assert(0);
+                }
+            else if (rle >= 0x80)
+                {
+                    // n+1 bytes of literal data
+                    for (int k=0; k <= (rle-0x80); k++)
+                        *q++ = *p++;
+                }
+            else if (rle >= 40)
+                {
+                    // n+1 repetitions of 0
+                    for (int k=0; k <= (rle-0x40); k++)
+                        *q++ = 0;
+                }
+            else if (rle >= 20)
+                {
+                    // n+2 repetitions of b
+                    unsigned char b = *p++;
+                    for (int k=0; k < (rle-0x20+2); k++)
+                        *q++ = b;
+                }
+            else
+                {
+                    // 0x10: n+1 repetitions of 0xFF
+                    for (int k=0; k <= (rle-0x10); k++)
+                        *q++ = 0xFF;
+                }
         }
-        else if (rle == 1)
-        {
-            // 0x01 b_0 b_1
-            // => 0x00 0x00 0x00 0x00 0xFF 0xFF b_0 b_1
-            *q++ = 0;
-            *q++ = 0;
-            *q++ = 0;
-            *q++ = 0;
-            *q++ = 0xFF;
-            *q++ = 0xFF;
-            *q++ = *p++;
-            *q++ = *p++;
-        }
-        else if (rle == 2)
-        {
-            // 0x02 b_0 b_1 b_2
-            // => 0x00 0x00 0x00 0x00 0xFF b_0 b_1 b_2
-            *q++ = 0;
-            *q++ = 0;
-            *q++ = 0;
-            *q++ = 0;
-            *q++ = 0xFF;
-            *q++ = *p++;
-            *q++ = *p++;
-            *q++ = *p++;
-        }
-        else if (rle == 3)
-        {
-            // 0x03 b_0 b_1 b_2
-            // => 0xA9 0xF0 0x00 0x00 b_0 b_1 0x00 b_2
-            *q++ = 0xA9;
-            *q++ = 0xF0;
-            *q++ = 0;
-            *q++ = 0;
-            *q++ = *p++;
-            *q++ = *p++;
-            *q++ = 0;
-            *q++ = *p++;
-        }
-        else if (rle == 4)
-        {
-            // 0x04 b_0 b_1 b_2 b_3
-            // => 0xA9 axF0 0x00 b_0 b_1 b_3 0x00 b_3
-            *q++ = 0xA9;
-            *q++ = 0xF0;
-            *q++ = 0;
-            *q++ = *p++;
-            *q++ = *p++;
-            *q++ = *p++;
-            *q++ = 0;
-            *q++ = *p++;
-        }
-        else if (rle < 0x10)
-        {
-            // 5-0xF are invalid.
-            assert(0);
-        }
-        else if (rle >= 0x80)
-        {
-            // n+1 bytes of literal data
-            for (int k=0; k <= (rle-0x80); k++)
-                *q++ = *p++;
-        }
-        else if (rle >= 40)
-        {
-            // n+1 repetitions of 0
-            for (int k=0; k <= (rle-0x40); k++)
-                *q++ = 0;
-        }
-        else if (rle >= 20)
-        {
-            // n+2 repetitions of b
-            unsigned char b = *p++;
-            for (int k=0; k < (rle-0x20+2); k++)
-                *q++ = b;
-        }
-        else
-        {
-            // 0x10: n+1 repetitions of 0xFF
-            for (int k=0; k <= (rle-0x10); k++)
-                *q++ = 0xFF;
-        }
-    }
 
     if (!done)
         fprintf(stderr, "Warning! Compressed data section premature end\n");
@@ -298,10 +298,10 @@ bool PalmBinaryFile::RealLoad(const char* sName)
 void PalmBinaryFile::UnLoad()
 {
     if (m_pImage)
-    {
-        delete [] m_pImage;
-        m_pImage = 0;
-    }
+        {
+            delete [] m_pImage;
+            m_pImage = 0;
+        }
 }
 
 // This is provided for completeness only...
@@ -371,14 +371,14 @@ size_t PalmBinaryFile::getImageSize()
 const char* PalmBinaryFile::SymbolByAddress(ADDRESS dwAddr)
 {
     if ((dwAddr & 0xFFFFF000) == 0xAAAAA000)
-    {
-        // This is the convention used to indicate an A-line system call
-        unsigned offset = dwAddr & 0xFFF;
-        if (offset < numTrapStrings)
-            return trapNames[offset];
-        else
-            return 0;
-    }
+        {
+            // This is the convention used to indicate an A-line system call
+            unsigned offset = dwAddr & 0xFFF;
+            if (offset < numTrapStrings)
+                return trapNames[offset];
+            else
+                return 0;
+        }
     if (dwAddr == GetMainEntryPoint())
         return "PilotMain";
     else return 0;
@@ -461,21 +461,21 @@ SWord* findPattern(SWord* start, const SWord* patt, int pattSize, int max)
 {
     const SWord* last = start + max;
     for (; start < last; start++)
-    {
-        bool found = true;
-        for (int i=0; i < pattSize; i++)
         {
-            SWord curr = patt[i];
-            if ((curr != WILD) && (curr != start[i]))
-            {
-                found = false;
-                break;              // Mismatch
-            }
+            bool found = true;
+            for (int i=0; i < pattSize; i++)
+                {
+                    SWord curr = patt[i];
+                    if ((curr != WILD) && (curr != start[i]))
+                        {
+                            found = false;
+                            break;              // Mismatch
+                        }
+                }
+            if (found)
+                // All parts of the pattern matched
+                return start;
         }
-        if (found)
-            // All parts of the pattern matched
-            return start;
-    }
     // Each start position failed
     return 0;
 }
@@ -495,35 +495,35 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
     SWord* res = findPattern(startCode, CWFirstJump,
                              sizeof(CWFirstJump) / sizeof(SWord), 1);
     if (res)
-    {
-        // We have the code warrior first jump. Get the addil operand
-        int addilOp = (startCode[5] << 16) + startCode[6];
-        SWord* startupCode = (SWord*)((int)startCode + 10 + addilOp);
-        // Now check the next 60 SWords for the call to PilotMain
-        res = findPattern(startupCode, CWCallMain,
-                          sizeof(CWCallMain) / sizeof(SWord), 60);
-        if (res)
         {
-            // Get the addil operand
-            addilOp = (res[5] << 16) + res[6];
-            // That operand plus the address of that operand is PilotMain
-            return (ADDRESS)res + 10 + addilOp - delta;
+            // We have the code warrior first jump. Get the addil operand
+            int addilOp = (startCode[5] << 16) + startCode[6];
+            SWord* startupCode = (SWord*)((int)startCode + 10 + addilOp);
+            // Now check the next 60 SWords for the call to PilotMain
+            res = findPattern(startupCode, CWCallMain,
+                              sizeof(CWCallMain) / sizeof(SWord), 60);
+            if (res)
+                {
+                    // Get the addil operand
+                    addilOp = (res[5] << 16) + res[6];
+                    // That operand plus the address of that operand is PilotMain
+                    return (ADDRESS)res + 10 + addilOp - delta;
+                }
+            else
+                {
+                    fprintf( stderr, "Could not find call to PilotMain in CW app\n" );
+                    return 0;
+                }
         }
-        else
-        {
-            fprintf( stderr, "Could not find call to PilotMain in CW app\n" );
-            return 0;
-        }
-    }
     // Check for gcc call to main
     res = findPattern(startCode, GccCallMain,
                       sizeof(GccCallMain) / sizeof(SWord), 75);
     if (res)
-    {
-        // Get the operand to the bsr
-        SWord bsrOp = res[7];
-        return (ADDRESS)res + 14 + bsrOp - delta;
-    }
+        {
+            // Get the operand to the bsr
+            SWord bsrOp = res[7];
+            return (ADDRESS)res + 14 + bsrOp - delta;
+        }
 
     fprintf(stderr,"Cannot find call to PilotMain\n");
     return 0;
@@ -532,30 +532,30 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
 void PalmBinaryFile::GenerateBinFiles(const std::string& path) const
 {
     for (int i=0; i < m_iNumSections; i++)
-    {
-        SectionInfo* pSect = m_pSections + i;
-        if ((strncmp(pSect->pSectionName, "code", 4) != 0) &&
-                (strncmp(pSect->pSectionName, "data", 4) != 0))
         {
-            // Save this section in a file
-            // First construct the file name
-            char name[20];
-            strncpy(name, pSect->pSectionName, 4);
-            sprintf(name+4, "%04x.bin", atoi(pSect->pSectionName+4));
-            std::string fullName(path);
-            fullName += name;
-            // Create the file
-            FILE* f = fopen(fullName.c_str(), "w");
-            if (f == NULL)
-            {
-                fprintf( stderr, "Could not open %s for writing binary file\n",
-                         fullName.c_str() );
-                return;
-            }
-            fwrite((void*)pSect->uHostAddr, pSect->uSectionSize, 1, f);
-            fclose(f);
+            SectionInfo* pSect = m_pSections + i;
+            if ((strncmp(pSect->pSectionName, "code", 4) != 0) &&
+                    (strncmp(pSect->pSectionName, "data", 4) != 0))
+                {
+                    // Save this section in a file
+                    // First construct the file name
+                    char name[20];
+                    strncpy(name, pSect->pSectionName, 4);
+                    sprintf(name+4, "%04x.bin", atoi(pSect->pSectionName+4));
+                    std::string fullName(path);
+                    fullName += name;
+                    // Create the file
+                    FILE* f = fopen(fullName.c_str(), "w");
+                    if (f == NULL)
+                        {
+                            fprintf( stderr, "Could not open %s for writing binary file\n",
+                                     fullName.c_str() );
+                            return;
+                        }
+                    fwrite((void*)pSect->uHostAddr, pSect->uSectionSize, 1, f);
+                    fclose(f);
+                }
         }
-    }
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile

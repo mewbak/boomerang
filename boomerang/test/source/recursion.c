@@ -40,23 +40,23 @@ void c(int x)
 {
     printf("c(%d)\n", x);
     switch (x)
-    {
-    case 2:
-        d(2);
-        break;
-    case 3:
-        f(3);
-        break;
-    case 4:
-        h(4);
-        break;
-    case 5:
-        j(5);
-        break;
-    case 6:
-        l(6);
-        break;
-    }
+        {
+        case 2:
+            d(2);
+            break;
+        case 3:
+            f(3);
+            break;
+        case 4:
+            h(4);
+            break;
+        case 5:
+            j(5);
+            break;
+        case 6:
+            l(6);
+            break;
+        }
 }
 
 void d(int x)

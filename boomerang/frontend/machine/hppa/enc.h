@@ -4,67 +4,89 @@
 enum c_c_tag { c_arith_dw_TAG = 6, c_arith_none_TAG = 7, c_arith_w_TAG = 5,
                c_bbs_dw_TAG = 4, c_bbs_w_TAG = 3, c_cmpb_dw_TAG = 2, c_cmpb_w_TAG = 1,
              };
-typedef struct c_c_instance {
+typedef struct c_c_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             unsigned c3_16:3;
         } c_arith_dw;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_arith_none;
-        struct {
+        struct
+        {
             unsigned c3_16:3;
         } c_arith_w;
-        struct {
+        struct
+        {
             unsigned c_16:1;
         } c_bbs_dw;
-        struct {
+        struct
+        {
             unsigned c_16:1;
         } c_bbs_w;
-        struct {
+        struct
+        {
             unsigned c3_16:3;
         } c_cmpb_dw;
-        struct {
+        struct
+        {
             unsigned c3_16:3;
         } c_cmpb_w;
     } u;
 } c_c_Instance;
 enum c_null_tag { c_br_nnull_TAG = 1, c_br_null_TAG = 2, };
-typedef struct c_null_instance {
+typedef struct c_null_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             char avoid_empty_structures;
         } c_br_nnull;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_br_null;
     } u;
 } c_null_Instance;
 enum c_wcr_tag { c_mfctl_TAG = 2, c_mfctl_w_TAG = 1, };
-typedef struct c_wcr_instance {
+typedef struct c_wcr_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             unsigned r_06:5;
         } c_mfctl;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_mfctl_w;
     } u;
 } c_wcr_Instance;
 enum c_bit_tag { c_bitpos_dw_TAG = 2, c_bitpos_w_TAG = 1, c_bitsar_TAG = 3, };
-typedef struct c_bit_instance {
+typedef struct c_bit_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             unsigned p_06:5;
         } c_bitpos_dw;
-        struct {
+        struct
+        {
             unsigned p_06:5;
         } c_bitpos_w;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_bitsar;
     } u;
@@ -72,22 +94,29 @@ typedef struct c_bit_instance {
 enum c_addr_tag { c_addr_m_TAG = 4, c_addr_ma_TAG = 2, c_addr_mb_TAG = 1,
                   c_addr_s_TAG = 3, c_addr_sm_TAG = 5,
                 };
-typedef struct c_addr_instance {
+typedef struct c_addr_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             char avoid_empty_structures;
         } c_addr_m;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_addr_ma;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_addr_mb;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_addr_s;
-        struct {
+        struct
+        {
             char avoid_empty_structures;
         } c_addr_sm;
     } u;
@@ -95,39 +124,47 @@ typedef struct c_addr_instance {
 enum addr_tag { addr_index_TAG = 1, addr_ldo_TAG = 6, addr_lldisp_TAG = 4,
                 addr_lsdisp_TAG = 2, addr_sldisp_TAG = 5, addr_ssdisp_TAG = 3,
               };
-typedef struct addr_instance {
+typedef struct addr_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             c_addr_Instance  c_addr;
             int x;
             int ss;
             int b;
         } addr_index;
-        struct {
+        struct
+        {
             c_addr_Instance  c_addr;
             int ldisp;
             int b;
         } addr_ldo;
-        struct {
+        struct
+        {
             c_addr_Instance  c_addr;
             int ldisp;
             int ss;
             int b;
         } addr_lldisp;
-        struct {
+        struct
+        {
             c_addr_Instance  c_addr;
             int im5;
             int ss;
             int b;
         } addr_lsdisp;
-        struct {
+        struct
+        {
             c_addr_Instance  c_addr;
             int ldisp;
             int ss;
             int b;
         } addr_sldisp;
-        struct {
+        struct
+        {
             c_addr_Instance  c_addr;
             int im5;
             int ss;
@@ -136,24 +173,31 @@ typedef struct addr_instance {
     } u;
 } addr_Instance;
 enum c_faddr_tag { c_faddrs_TAG = 1, };
-typedef struct c_faddr_instance {
+typedef struct c_faddr_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             char avoid_empty_structures;
         } c_faddrs;
     } u;
 } c_faddr_Instance;
 enum faddr_tag { index_faddr_TAG = 1, sdisps_faddr_TAG = 2, };
-typedef struct faddr_instance {
+typedef struct faddr_instance
+{
     int tag;
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             int x;
             int s;
             int b;
         } index_faddr;
-        struct {
+        struct
+        {
             int d;
             int s;
             int b;

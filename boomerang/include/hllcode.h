@@ -281,10 +281,10 @@ public:
     {
         if (this == pFor) return cur;
         for (unsigned i = 0; i < statements.size(); i++)
-        {
-            SyntaxNode *n = statements[i]->getEnclosingLoop(pFor, cur);
-            if (n) return n;
-        }
+            {
+                SyntaxNode *n = statements[i]->getEnclosingLoop(pFor, cur);
+                if (n) return n;
+            }
         return NULL;
     }
 

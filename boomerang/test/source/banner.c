@@ -135,31 +135,31 @@ int main()
     argc = 2;
 
     for (argv++; --argc; argv++)
-    {
-        len = strlen(*argv);
-        if (len > 10)
-            len = 10;
-        for (a = 0; a < 7; a++)
         {
-            for (b = 0; b < len; b++)
-            {
-                if ((ind = (*argv)[b] - ' ') < 0)
-                    ind = 0;
-                for (c = 0; c < 7; c++)
+            len = strlen(*argv);
+            if (len > 10)
+                len = 10;
+            for (a = 0; a < 7; a++)
                 {
-                    line[b * 8 + c] = glyphs[(ind / 8 * 7) + a][(ind % 8 * 7) + c];
+                    for (b = 0; b < len; b++)
+                        {
+                            if ((ind = (*argv)[b] - ' ') < 0)
+                                ind = 0;
+                            for (c = 0; c < 7; c++)
+                                {
+                                    line[b * 8 + c] = glyphs[(ind / 8 * 7) + a][(ind % 8 * 7) + c];
+                                }
+                            line[b * 8 + 7] = ' ';
+                        }
+                    for (b = len * 8 - 1; b >= 0; b--)
+                        {
+                            if (line[b] != ' ')
+                                break;
+                            line[b] = '\0';
+                        }
+                    puts(line);
                 }
-                line[b * 8 + 7] = ' ';
-            }
-            for (b = len * 8 - 1; b >= 0; b--)
-            {
-                if (line[b] != ' ')
-                    break;
-                line[b] = '\0';
-            }
-            puts(line);
+            puts("");
         }
-        puts("");
-    }
     return 0;
 }

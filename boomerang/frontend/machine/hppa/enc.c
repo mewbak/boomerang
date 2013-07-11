@@ -13,7 +13,8 @@ c_cmpb_w c3_16 is
   | (COMIBF) op == 35 & c3_16 = c3_16
 
 ***********/
-c_c_Instance c_cmpb_w(unsigned /* [0..7] */ c3_16) {
+c_c_Instance c_cmpb_w(unsigned /* [0..7] */ c3_16)
+{
     c_c_Instance _i = { c_cmpb_w_TAG };
     if (!((unsigned)(c3_16) < 0x8))
         (*fail) ("c3_16 = %d won't fit in 3 unsigned bits");
@@ -28,7 +29,8 @@ c_cmpb_dw c3_16 is
   | (CMPIBdw) op == 59 & c3_16 = c3_16
 
 ***********/
-c_c_Instance c_cmpb_dw(unsigned /* [0..7] */ c3_16) {
+c_c_Instance c_cmpb_dw(unsigned /* [0..7] */ c3_16)
+{
     c_c_Instance _i = { c_cmpb_dw_TAG };
     if (!((unsigned)(c3_16) < 0x8))
         (*fail) ("c3_16 = %d won't fit in 3 unsigned bits");
@@ -42,7 +44,8 @@ c_bbs_w c_16 is
   | (ins_bbs_w) op == 48 & d_18 ==  0 & c_16 = c_16
 
 ***********/
-c_c_Instance c_bbs_w(unsigned /* [0..1] */ c_16) {
+c_c_Instance c_bbs_w(unsigned /* [0..1] */ c_16)
+{
     c_c_Instance _i = { c_bbs_w_TAG };
     if (!((unsigned)(c_16) < 0x2))
         (*fail) ("c_16 = %d won't fit in 1 unsigned bits");
@@ -56,7 +59,8 @@ c_bbs_dw c_16 is
   | (ins_bbs_dw) op == 48 & d_18 ==  1 & c_16 = c_16
 
 ***********/
-c_c_Instance c_bbs_dw(unsigned /* [0..1] */ c_16) {
+c_c_Instance c_bbs_dw(unsigned /* [0..1] */ c_16)
+{
     c_c_Instance _i = { c_bbs_dw_TAG };
     if (!((unsigned)(c_16) < 0x2))
         (*fail) ("c_16 = %d won't fit in 1 unsigned bits");
@@ -118,7 +122,8 @@ c_arith_w c3_16 is
   | (SUBI.v) op == 37 & ext_20 ==  1 & c3_16 = c3_16
 
 ***********/
-c_c_Instance c_arith_w(unsigned /* [0..7] */ c3_16) {
+c_c_Instance c_arith_w(unsigned /* [0..7] */ c3_16)
+{
     c_c_Instance _i = { c_arith_w_TAG };
     if (!((unsigned)(c3_16) < 0x8))
         (*fail) ("c3_16 = %d won't fit in 3 unsigned bits");
@@ -174,7 +179,8 @@ c_arith_dw c3_16 is
   | (arith_dw) op ==  2 & ext6_20 == 23 & d_26 ==  1 & c3_16 = c3_16
 
 ***********/
-c_c_Instance c_arith_dw(unsigned /* [0..7] */ c3_16) {
+c_c_Instance c_arith_dw(unsigned /* [0..7] */ c3_16)
+{
     c_c_Instance _i = { c_arith_dw_TAG };
     if (!((unsigned)(c3_16) < 0x8))
         (*fail) ("c3_16 = %d won't fit in 3 unsigned bits");
@@ -186,7 +192,8 @@ c_c_Instance c_arith_dw(unsigned /* [0..7] */ c3_16) {
 c_arith_none  is (ins_arith_none) op == 10
 
 ***********/
-c_c_Instance c_arith_none(void) {
+c_c_Instance c_arith_none(void)
+{
     c_c_Instance _i = { c_arith_none_TAG };
     return _i;
 }
@@ -207,7 +214,8 @@ c_br_nnull  is
   | (ins_br_nnull) op == 57 & n_30 ==  0
 
 ***********/
-c_null_Instance c_br_nnull(void) {
+c_null_Instance c_br_nnull(void)
+{
     c_null_Instance _i = { c_br_nnull_TAG };
     return _i;
 }
@@ -228,7 +236,8 @@ c_br_null  is
   | (ins_br_null) op == 57 & n_30 ==  1
 
 ***********/
-c_null_Instance c_br_null(void) {
+c_null_Instance c_br_null(void)
+{
     c_null_Instance _i = { c_br_null_TAG };
     return _i;
 }
@@ -237,7 +246,8 @@ c_null_Instance c_br_null(void) {
 c_mfctl_w  is (MFCTL.w) op ==  0 & ext8_19 == 69 & ext_17 ==  1
 
 ***********/
-c_wcr_Instance c_mfctl_w(void) {
+c_wcr_Instance c_mfctl_w(void)
+{
     c_wcr_Instance _i = { c_mfctl_w_TAG };
     return _i;
 }
@@ -246,7 +256,8 @@ c_wcr_Instance c_mfctl_w(void) {
 c_mfctl r_06 is (MFCTL) op ==  0 & ext8_19 == 69 & ext_17 ==  0 & r_06 = r_06
 
 ***********/
-c_wcr_Instance c_mfctl(unsigned /* [0..31] */ r_06) {
+c_wcr_Instance c_mfctl(unsigned /* [0..31] */ r_06)
+{
     c_wcr_Instance _i = { c_mfctl_TAG };
     if (!((unsigned)(r_06) < 0x20))
         (*fail) ("r_06 = %d won't fit in 5 unsigned bits");
@@ -258,7 +269,8 @@ c_wcr_Instance c_mfctl(unsigned /* [0..31] */ r_06) {
 c_bitpos_w p_06 is (ins_bb_w) op == 49 & d_18 ==  0 & p_06 = p_06
 
 ***********/
-c_bit_Instance c_bitpos_w(unsigned /* [0..31] */ p_06) {
+c_bit_Instance c_bitpos_w(unsigned /* [0..31] */ p_06)
+{
     c_bit_Instance _i = { c_bitpos_w_TAG };
     if (!((unsigned)(p_06) < 0x20))
         (*fail) ("p_06 = %d won't fit in 5 unsigned bits");
@@ -270,7 +282,8 @@ c_bit_Instance c_bitpos_w(unsigned /* [0..31] */ p_06) {
 c_bitpos_dw p_06 is (ins_bb_dw) op == 49 & d_18 ==  1 & p_06 = p_06
 
 ***********/
-c_bit_Instance c_bitpos_dw(unsigned /* [0..31] */ p_06) {
+c_bit_Instance c_bitpos_dw(unsigned /* [0..31] */ p_06)
+{
     c_bit_Instance _i = { c_bitpos_dw_TAG };
     if (!((unsigned)(p_06) < 0x20))
         (*fail) ("p_06 = %d won't fit in 5 unsigned bits");
@@ -282,7 +295,8 @@ c_bit_Instance c_bitpos_dw(unsigned /* [0..31] */ p_06) {
 c_bitsar  is (BVB) op == 48
 
 ***********/
-c_bit_Instance c_bitsar(void) {
+c_bit_Instance c_bitsar(void)
+{
     c_bit_Instance _i = { c_bitsar_TAG };
     return _i;
 }
@@ -311,7 +325,8 @@ c_addr_mb  is
   m_26 ==  1
 
 ***********/
-c_addr_Instance c_addr_mb(void) {
+c_addr_Instance c_addr_mb(void)
+{
     c_addr_Instance _i = { c_addr_mb_TAG };
     return _i;
 }
@@ -340,7 +355,8 @@ c_addr_ma  is
   m_26 ==  1
 
 ***********/
-c_addr_Instance c_addr_ma(void) {
+c_addr_Instance c_addr_ma(void)
+{
     c_addr_Instance _i = { c_addr_ma_TAG };
     return _i;
 }
@@ -359,7 +375,8 @@ c_addr_s  is
   m_26 ==  0
 
 ***********/
-c_addr_Instance c_addr_s(void) {
+c_addr_Instance c_addr_s(void)
+{
     c_addr_Instance _i = { c_addr_s_TAG };
     return _i;
 }
@@ -378,7 +395,8 @@ c_addr_m  is
   m_26 ==  1
 
 ***********/
-c_addr_Instance c_addr_m(void) {
+c_addr_Instance c_addr_m(void)
+{
     c_addr_Instance _i = { c_addr_m_TAG };
     return _i;
 }
@@ -397,7 +415,8 @@ c_addr_sm  is
   m_26 ==  1
 
 ***********/
-c_addr_Instance c_addr_sm(void) {
+c_addr_Instance c_addr_sm(void)
+{
     c_addr_Instance _i = { c_addr_sm_TAG };
     return _i;
 }
@@ -444,7 +463,8 @@ addr_index c_addr x(ss,b) is
   END (* c_addr *)
 
 ***********/
-addr_Instance addr_index(c_addr_Instance c_addr, int x, int ss, int b) {
+addr_Instance addr_index(c_addr_Instance c_addr, int x, int ss, int b)
+{
     addr_Instance _i = { addr_index_TAG };
     _i.u.addr_index.c_addr = c_addr;
     _i.u.addr_index.x = x;
@@ -495,7 +515,8 @@ addr_lsdisp c_addr im5(ss,b) is
   END (* c_addr *)
 
 ***********/
-addr_Instance addr_lsdisp(c_addr_Instance c_addr, int im5, int ss, int b) {
+addr_Instance addr_lsdisp(c_addr_Instance c_addr, int im5, int ss, int b)
+{
     addr_Instance _i = { addr_lsdisp_TAG };
     _i.u.addr_lsdisp.c_addr = c_addr;
     _i.u.addr_lsdisp.im5 = im5;
@@ -546,7 +567,8 @@ addr_ssdisp c_addr im5(ss,b) is
   END (* c_addr *)
 
 ***********/
-addr_Instance addr_ssdisp(c_addr_Instance c_addr, int im5, int ss, int b) {
+addr_Instance addr_ssdisp(c_addr_Instance c_addr, int im5, int ss, int b)
+{
     addr_Instance _i = { addr_ssdisp_TAG };
     _i.u.addr_ssdisp.c_addr = c_addr;
     _i.u.addr_ssdisp.im5 = im5;
