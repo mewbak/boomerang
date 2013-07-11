@@ -15,7 +15,7 @@
  *======================================================================================================*/
 
 /*
- * $Revision: 1.26 $
+ * $Revision$
  *
  * 30 Aug 05 - Mike: Added init_dfa() etc for garbage collection safety
  */

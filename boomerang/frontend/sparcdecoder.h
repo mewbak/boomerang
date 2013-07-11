@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.7 $	// 1.6.6.2
+ * $Revision$	// 1.6.6.2
  *
  * 06 Jun 02 - Trent: Created.
  * 04 Dec 02 - Mike: Added dis_RegLhs() and dis_RegRhs()

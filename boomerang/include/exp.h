@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the Exp class and its subclasses.
  *============================================================================*/
 /*
- * $Revision: 1.139 $	// 1.119.2.11
+ * $Revision$	// 1.119.2.11
  *
  * 05 Apr 02 - Mike: Created
  * 05 Apr 02 - Mike: Added clone(), copy constructors

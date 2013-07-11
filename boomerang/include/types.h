@@ -1,6 +1,6 @@
 /*
  * types.h: some often used basic type definitions
- * $Revision: 1.10 $
+ * $Revision$
  */
 #ifndef __TYPES_H__
 #define __TYPES_H__

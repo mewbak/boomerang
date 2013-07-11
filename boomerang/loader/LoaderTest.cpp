@@ -4,7 +4,7 @@
  *              tests the BinaryFile and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.13 $
+ * $Revision$
  *
  * 05 Apr 02 - Mike: Created
  * 14 Jun 02 - Mike: Added windows test for calc.exe

@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of the utility functions (including class Type)
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision$
  * 09 Apr 02 - Mike: Created
  */
 

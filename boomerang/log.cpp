@@ -1,5 +1,5 @@
 /*
- *$Revision: 1.11 $	// 1.6.6.1
+ *$Revision$	// 1.6.6.1
  */
 #include "log.h"
 #include <sstream>

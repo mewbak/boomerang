@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.216 $	// 1.172.2.20
+ * $Revision$	// 1.172.2.20
  * 05 Apr 02 - Mike: Created
  */
 

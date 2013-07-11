@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.71 $	// 1.44.2.1
+ * $Revision$	// 1.44.2.1
  *
  * 28 Apr 02 - Mike: getTempType() returns a Type* now
  * 26 Aug 03 - Mike: Fixed operator< (had to re-introduce an enum... ugh)

@@ -13,7 +13,7 @@
  *				so that symbols can be accessed by symbol or by name
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision$
  *
  * 12 Jul 05 - Mike: threw out the bsearch() code and implemented dual maps instead
 */

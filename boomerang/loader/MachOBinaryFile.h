@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 
-/* $Revision: 1.5 $
+/* $Revision$
  * This file contains the definition of the MachOBinaryFile class, and some
  * other definitions specific to the Mac OS-X version of the BinaryFile object
 */

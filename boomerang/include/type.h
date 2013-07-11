@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.64 $
+ * $Revision$
  *
  * 20 Mar 01 - Mike: Added operator*= (compare, ignore sign, and consider all floats > 64 bits to be the same
  * 26 Apr 01 - Mike: Added class typeLessSI

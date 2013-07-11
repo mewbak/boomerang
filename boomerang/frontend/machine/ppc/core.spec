@@ -2,7 +2,7 @@
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Power PC processor
 #
-# $Revision: 1.10 $
+# $Revision$
 
 #### Copyright (c) 1995 Flavors Technology, Inc.
 #### This file may be distributed freely as long as this notice remains.

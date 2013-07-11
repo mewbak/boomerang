@@ -15,7 +15,7 @@
  *		 a single register.
  *============================================================================*/
 
-/* $Revision: 1.7 $
+/* $Revision$
  *
  * 28 Apr 02 - Mike: Mods for boomerang
  */

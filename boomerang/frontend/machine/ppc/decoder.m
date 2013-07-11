@@ -12,7 +12,7 @@
  * OVERVIEW:   Implementation of the PPC specific parts of the PPCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.26 $	// 1.24.2.1
+/* $Revision$	// 1.24.2.1
  *
  * 23/Nov/04 - Jay Sweeney and Alajandro Dubrovsky: Created
  * 26/Sep/05 - Mike: Added Xsab_, Xsax_; DIS_INDEX uses RAZ not RA now; A2c_ -> Ac_ (does single as well as double prec)

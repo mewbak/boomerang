@@ -19,7 +19,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.346 $	// 1.238.2.44
+ * $Revision$	// 1.238.2.44
  *
  * 14 Mar 02 - Mike: Fixed a problem caused with 16-bit pushes in richards2
  * 20 Apr 02 - Mike: Mods for boomerang

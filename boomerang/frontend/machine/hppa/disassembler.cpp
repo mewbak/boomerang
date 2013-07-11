@@ -9,7 +9,7 @@
  (C) 2000-2001 The University of Queensland, BT group
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision$
  *
  * Simon Long 2000.11.30
  * 03 May 01 - Mike: Added constructor names (use -c); don't truncate opcode

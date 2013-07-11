@@ -11,7 +11,7 @@
 # OVERVIEW:   A pattern specification for logues on the HP PA/RISC architecture.
 #============================================================================*/
 
-# $Revision: 1.1 $
+# $Revision$
 #
 # 27 Apr 01 - Mike: Created
 # 02 May 01 - Mike: Added gcc_frame

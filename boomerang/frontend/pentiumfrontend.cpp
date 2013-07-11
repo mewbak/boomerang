@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.69 $	// 1.51.2.3
+ * $Revision$	// 1.51.2.3
  *
  * 21 Oct 98 - Mike: converted from frontsparc.cc
  * 21 May 02 - Mike: Mods for boomerang

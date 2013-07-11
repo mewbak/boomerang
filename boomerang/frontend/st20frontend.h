@@ -1,5 +1,5 @@
 /*
- * $Revision: 1.3 $	// 1.1.2.2
+ * $Revision$	// 1.1.2.2
  */
 #ifndef ST20FRONTEND_H
 #define ST20FRONTEND_H

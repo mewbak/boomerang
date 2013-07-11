@@ -17,7 +17,7 @@
  *			   bindings for a single procedure in the program.
  *============================================================================*/
 /*
- *	$Revision: 1.25 $	// 1.23.2.8
+ *	$Revision$	// 1.23.2.8
  */
 
 #ifndef _HLLCODE_H_

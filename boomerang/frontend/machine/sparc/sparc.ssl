@@ -15,7 +15,7 @@
 # SPARC RTL
 # --------------------------------------------------------------------------
  
-# $Revision: 1.9 $
+# $Revision$
 # Jun-Dec 97 - Shane: Created
 # 30 Apr 01 - Nathan: Minor clean-up to trap instructions, changed logicals to 
 #                   use 0- rather than !

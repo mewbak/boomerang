@@ -18,7 +18,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.28 $	// 1.27.2.2
+ * $Revision$	// 1.27.2.2
  *
  * 27 Apr 02 - Mike: Mods for boomerang
  * 17 Jul 02 - Mike: readSSLFile resets internal state as well

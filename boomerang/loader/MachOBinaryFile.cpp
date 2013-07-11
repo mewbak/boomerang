@@ -10,7 +10,7 @@
  */
 
 /* File: MachOBinaryFile.cc
- * $Revision: 1.9 $
+ * $Revision$
  * Desc: This file contains the implementation of the class MachOBinaryFile.
  */
 

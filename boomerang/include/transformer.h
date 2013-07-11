@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the tranformer and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision$
  *
  * 17 Apr 04 - Trent: Created
  */

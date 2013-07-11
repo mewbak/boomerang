@@ -202,7 +202,7 @@ int read();
  * OVERVIEW:   Scanner for transformation language.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision$
  * 17 Apr 04 - Trent: Created
  */
 #define YY_TransformationScanner_FLEX_SCANNER

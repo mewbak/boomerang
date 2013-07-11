@@ -7,7 +7,7 @@
  * (C) 2001 The University of Queensland, BT group
  *============================================================================*/
 /*
-    $Revision: 1.1 $
+    $Revision$
     Compile with:
     % cc -xO4 -xinline= -o test/sparc/minmax2 test/source/minmax2.c
 

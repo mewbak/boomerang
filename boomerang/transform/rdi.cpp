@@ -6,7 +6,7 @@
  * OVERVIEW:   Implementation of the RDIExpTransformer and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision$
  * 17 Apr 04 - Trent: Created
  */
 

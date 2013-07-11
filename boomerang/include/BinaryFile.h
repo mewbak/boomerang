@@ -13,7 +13,7 @@
  * Desc: This file contains the definition of the abstract class BinaryFile
 */
 
-/* $Revision: 1.32 $
+/* $Revision$
  * This class attempts to provide a relatively machine independent interface for programs that read binary files.
  * Created by Mike, 97
  * 01 Aug 01 - Mike: Changed the definition of GetGlobalPointerInfo()

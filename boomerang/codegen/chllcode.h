@@ -8,7 +8,7 @@
  */
 
 /*
- * $Revision: 1.28 $	// 1.24.2.8
+ * $Revision$	// 1.24.2.8
  *
  * 22 Nov 02 - Mike: Re-ordered initialisations to keep gcc quiet
  */

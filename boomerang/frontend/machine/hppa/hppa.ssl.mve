@@ -5,7 +5,7 @@
 # (C) 2001 The University of Queensland, BT group
 ################################################################################
 
-# $Revision: 1.1 $
+# $Revision$
 
 #    Apr 01 - Simon: Created
 # 01 May 01 - Mike: Worked around a problem with BORR_VAL; ARITH_CB needed {};

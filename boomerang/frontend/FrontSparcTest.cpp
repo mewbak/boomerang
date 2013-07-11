@@ -4,7 +4,7 @@
  *				tests the sparc front end
  *============================================================================*/
 /*
- * $Revision: 1.29 $
+ * $Revision$
  *
  * 05 Apr 02 - Mike: Created
  * 21 May 02 - Mike: Mods for gcc 3.1

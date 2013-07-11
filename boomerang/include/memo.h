@@ -12,7 +12,7 @@
  * OVERVIEW:	declaration of the memo class.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision$
  * 24 Aug 04 - Trent: Created
  */
 

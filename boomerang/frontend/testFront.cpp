@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of the Frontend and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision$
  * 08 Apr 02 - Mike: Created
  * 23 May 02 - Mike: Added pentium tests
  */

@@ -21,7 +21,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.55 $	// 1.51.2.1
+ * $Revision$	// 1.51.2.1
  *
  * 08 Apr 02 - Mike: Mods for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer

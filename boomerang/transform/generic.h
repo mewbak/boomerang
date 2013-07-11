@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the generic exp tranformer.
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision$
  *
  * 17 Apr 04 - Trent: Created
  */

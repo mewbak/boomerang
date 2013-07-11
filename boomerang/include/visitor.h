@@ -18,7 +18,7 @@
  *				StmtPartModifier (as above with special case for whole of LHS)
  *============================================================================*/
 /*
- * $Revision: 1.39 $	// 1.13.2.11
+ * $Revision$	// 1.13.2.11
  *
  * 14 Jun 04 - Mike: Created, from work started by Trent in 2003
  *

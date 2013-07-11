@@ -18,7 +18,7 @@
  */
 
 /*
- * $Revision: 1.4 $
+ * $Revision$
  *
  *    Apr 01 - Cristina: Created
  * 11 May 01 - Nathan: Print text section name (suppresses warning)

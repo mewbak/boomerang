@@ -12,7 +12,7 @@
 # OVERVIEW: This is the New Jersey Machine Code Toolkit core specification file
 #           for the Sparc V8 processor
 #
-# $Revision: 1.4 $
+# $Revision$
 #
 # 3 Mar 98 - Cristina
 #	changed branch^a constructor to return the 'a' value as well.

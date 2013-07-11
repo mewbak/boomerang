@@ -17,7 +17,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.45 $	// 1.35.2.5
+ * $Revision$	// 1.35.2.5
  *
  * 17 May 02 - Mike: Mods for boomerang
  * 22 Nov 02 - Mike: Added check for invalid instructions; prints opcode

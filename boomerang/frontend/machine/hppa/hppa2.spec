@@ -8,7 +8,7 @@
 # (C) 2000-01 The University of Queensland, BT group
 #===============================================================================
 
-# $Revision: 1.1 $
+# $Revision$
 #  April 01 - Simon: Initial revision
 # 01 May 01 - Simon: Fixed a problem with arith_imm's (bit numbers wrong?)
 # 04 May 01 - Mike: Merged two .spec files

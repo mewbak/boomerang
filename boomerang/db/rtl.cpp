@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.38 $	// 1.33.2.3
+ * $Revision$	// 1.33.2.3
  *
  * 08 Apr 02 - Mike: Changes for boomerang
  * 13 May 02 - Mike: expList is no longer a pointer

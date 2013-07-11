@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.4 $
+ * $Revision$
  *
  * 14 May 01 - Mike: Created from frontsparc.cc
  * 17 May 01 - Mike: Modified SCD logic to take account of register interference

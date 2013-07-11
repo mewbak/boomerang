@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.30 $
+ * $Revision$
  * 10 Apr 02 - Trent: Created
  * 03 Dec 02 - Trent: reduced to just parse types and signatures
  */

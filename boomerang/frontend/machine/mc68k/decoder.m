@@ -17,8 +17,8 @@
  * (C) 2000 The University of Queensland, BT Group & Sun Microsystems, Inc.
  *============================================================================*/
 
-/* $Revision: 1.1 $
- * $Id: decoder.m,v 1.1 2002-08-08 05:59:31 quantumg Exp $
+/* $Revision$
+ * $Id$
  * Created by Mike 15 Feb 2000
  * 21 Feb 2000 - Mike: support for -(an) and (an)+ (bump and bumpr)
  * 21 Mar 2000 - Mike: pPcDisp generates expressions with idCodeAddr

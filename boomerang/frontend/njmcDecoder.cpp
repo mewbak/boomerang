@@ -14,7 +14,7 @@
  * OVERVIEW:   This file contains the machine independent decoding functionality.
  *============================================================================*/
 /*
- * $Revision: 1.21 $	// 1.19.2.3
+ * $Revision$	// 1.19.2.3
  *
  * 27 Apr 02 - Mike: Mods for boomerang
  */

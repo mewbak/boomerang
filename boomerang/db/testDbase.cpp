@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of the Exp and related classes.
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision$
  *	  Apr 02 - Mike: Created
  * 03 Apr 02 - Mike: Modified to use CppUnit 1.6.2.
  * 18 Apr 02 - Mike: Test prog as well

@@ -6,7 +6,7 @@
  * OVERVIEW:   Provides the definition for the signature classes.
  *============================================================================*/
 /*
- * $Revision: 1.68 $	// 1.53.2.11
+ * $Revision$	// 1.53.2.11
  *
  * 12 Jul 02 - Trent: Created
  *

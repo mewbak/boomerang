@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.3 $
+ * $Revision$
  * 14 Feb 00 - Mike: converted from front386.cc
  * 23 Feb 00 - Mike: added logic for isReturnAfterCall
  * 09 Nov 00 - Cristina: Added support to generate rtl code to a file

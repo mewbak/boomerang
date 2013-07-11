@@ -10,7 +10,7 @@
  * Desc: This file contains the definition of the class HpSomBinaryFile.
  */
 
-/* $Revision: 1.8 $
+/* $Revision$
  *
  * 22 Jun 00 - Mike: Initial revision
  * 09 May 01 - Mike: Read the imports table so can identify library functions

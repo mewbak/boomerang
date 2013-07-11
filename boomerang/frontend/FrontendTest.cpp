@@ -4,7 +4,7 @@
  *				tests the FrontEnd and related classes
  *============================================================================*/
 /*
- * $Revision: 1.5 $
+ * $Revision$
  *
  * 05 Apr 02 - Mike: Created
  */

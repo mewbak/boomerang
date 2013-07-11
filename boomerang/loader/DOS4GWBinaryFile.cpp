@@ -10,7 +10,7 @@
  */
 
 /* File: DOS4GWBinaryFile.cc
- * $Revision: 1.6 $
+ * $Revision$
  * Desc: This file contains the implementation of the class DOS4GWBinaryFile.
  */
 

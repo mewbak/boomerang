@@ -4,7 +4,7 @@
  *				tests the Exp and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.37 $
+ * $Revision$
  *
  * 05 Apr 02 - Mike: Fixed problems caused by lack of clone() calls
  * 09 Apr 02 - Mike: Compare, searchReplace

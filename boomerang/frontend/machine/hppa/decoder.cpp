@@ -10,7 +10,7 @@
  * (C) 1996-2001 The University of Queensland, BT Group
  *============================================================================*/
 
-/* $Revision: 1.1 $
+/* $Revision$
  *
  *    Apr 01 - Simon: Created
  * 04 May 01 - Mike: Create RTLs not strings; moved addressing mode functions

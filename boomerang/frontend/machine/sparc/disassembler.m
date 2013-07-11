@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision$
  *
  *    Apr 01 - Cristina: Created
  * 18 May 01 - Mike: Slight mods to accomodate other disassemblers; moved

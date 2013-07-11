@@ -4,7 +4,7 @@
  *				denote what the top level operator is
  *============================================================================*/
 /*
- * $Revision: 1.27 $	// 1.25.6.3
+ * $Revision$	// 1.25.6.3
  *
  * 05 Apr 02 - Mike: Created
  * 12 Apr 02 - Mike: INDEX -> OPER

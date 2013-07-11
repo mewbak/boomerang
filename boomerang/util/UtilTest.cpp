@@ -4,7 +4,7 @@
  *              tests the Type class and some utility functions
  *============================================================================*/
 /*
- * $Revision: 1.1 $
+ * $Revision$
  *
  * 09 Apr 02 - Mike: Created
  */

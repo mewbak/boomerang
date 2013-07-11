@@ -13,7 +13,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.25 $	// 1.15.2.13
+ * $Revision$	// 1.15.2.13
  *
  * 26 Aug 03 - Mike: Split off from statement.cpp
  * 21 Jun 05 - Mike: Added AssignSet

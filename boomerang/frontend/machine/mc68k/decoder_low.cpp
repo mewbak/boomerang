@@ -8,8 +8,8 @@
  *             NJMCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.1 $
- * $Id: decoder_low.cpp,v 1.1 2002-08-08 05:59:31 quantumg Exp $
+/* $Revision$
+ * $Id$
  * Created by Cristina 04 Feb 2000
  *
  * Based on:

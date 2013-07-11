@@ -202,7 +202,7 @@ int read();
  * OVERVIEW:   Scanner for ANSI C.
  *============================================================================*/
 /*
- * $Revision: 1.17 $
+ * $Revision$
  * 10 Apr 02 - Trent: Created
  */
 #define YY_AnsiCScanner_FLEX_SCANNER

@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.1 $
+ * $Revision$
  *
  * 30 Nov 00 - Simon: Created
  * 22 Mar 01 - Simon: fixed low_sign_ext problem with ADDI

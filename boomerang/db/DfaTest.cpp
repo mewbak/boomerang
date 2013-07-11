@@ -4,7 +4,7 @@
  *				tests the data flow based type analysis code
  *============================================================================*/
 /*
- * $Revision: 1.4 $
+ * $Revision$
  *
  * 19 Oct 04 - Mike: Created
  */

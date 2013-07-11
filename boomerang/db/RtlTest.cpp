@@ -4,7 +4,7 @@
  *				tests the RTL and derived classes
  *============================================================================*/
 /*
- * $Revision: 1.22 $
+ * $Revision$
  *
  * 13 May 02 - Mike: Created
  */

@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.20 $
+/* $Revision$
  * This file contains the definition of the Win32BinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
 */

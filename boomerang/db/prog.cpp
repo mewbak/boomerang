@@ -16,7 +16,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.170 $	// 1.126.2.14
+ * $Revision$	// 1.126.2.14
  *
  * 18 Apr 02 - Mike: Mods for boomerang
  * 26 Apr 02 - Mike: common.hs read relative to BOOMDIR

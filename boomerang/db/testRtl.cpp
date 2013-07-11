@@ -3,7 +3,7 @@
  * OVERVIEW:   Command line test of the Rtl class
  *============================================================================*/
 /*
- * $Revision: 1.2 $
+ * $Revision$
  * 15 Jul 02 - Mike: Created from testDbase
  * 29 Jul 03 - Mike: Created from testAll
 */

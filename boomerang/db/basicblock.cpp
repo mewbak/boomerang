@@ -15,7 +15,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.138 $	// 1.93.2.8
+ * $Revision$	// 1.93.2.8
  * Dec 97 - created by Mike
  * 18 Apr 02 - Mike: Changes for boomerang
  * 04 Dec 02 - Mike: Added isJmpZ

@@ -18,7 +18,7 @@
 #include "BinaryFile.h"
 #include <string>
 
-/* $Revision: 1.1 $
+/* $Revision$
  * This file contains the definition of the DOS4GWBinaryFile class, and some
  * other definitions specific to the exe version of the BinaryFile object
  */

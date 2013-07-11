@@ -12,7 +12,7 @@
  * Desc: This file contains the definition of the class ExeBinaryFile.
  */
 
-/* $Revision: 1.5 $
+/* $Revision$
  * This file contains the definition of the ExeBinaryFile class, and some other
     definitions specific to the exe version of the BinaryFile object/
    At present, there is no support for a symbol table. Exe files do

@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * $Revision: 1.53 $
+ * $Revision$
  *
  * ELF binary file format.
  *	This file implements the class ElfBinaryFile, derived from class BinaryFile.

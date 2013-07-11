@@ -12,7 +12,7 @@
  * OVERVIEW:   This file contains the high level decoding functionality, for matching ST-20 instructions.
  *============================================================================*/ 
 /*
- * $Revision: 1.3 $	// 1.2.2.2
+ * $Revision$	// 1.2.2.2
  *
  * 10 Mar 05 - Mike: Created.
 */

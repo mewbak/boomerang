@@ -4,7 +4,7 @@
  *				tests the sslparser.y etc
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision$
  *
  * 13 May 02 - Mike: Created
  */

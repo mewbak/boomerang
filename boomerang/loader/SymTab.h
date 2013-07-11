@@ -18,7 +18,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.6 $
+ * $Revision$
  *
  * 12 Jul 05 - Mike: New implementation with two maps
 */

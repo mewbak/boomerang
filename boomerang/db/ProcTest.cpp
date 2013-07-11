@@ -4,7 +4,7 @@
  *				tests the Proc class
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision$
  *
  * 23 Apr 02 - Mike: Created
  * 10 Mar 03 - Mike: Mods to not use Prog::pBF (no longer public)

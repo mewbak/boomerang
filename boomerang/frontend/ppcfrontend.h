@@ -1,5 +1,5 @@
 /*
- *$Revision: 1.3 $	// 1.1.2.1
+ *$Revision$	// 1.1.2.1
  */
 #ifndef PPCFRONTEND_H
 #define PPCFRONTEND_H

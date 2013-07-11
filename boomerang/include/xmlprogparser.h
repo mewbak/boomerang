@@ -12,7 +12,7 @@
  * OVERVIEW:	parses persisted XML output and creates a new prog.
  *============================================================================*/
 /*
- * $Revision: 1.10 $
+ * $Revision$
  * 13 Jun 04 - Trent: Created.
  */
 

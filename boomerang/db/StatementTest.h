@@ -4,7 +4,7 @@
  *				tests the dataflow subsystems
  *============================================================================*/
 /*
- * $Revision: 1.7 $
+ * $Revision$
  *
  * 14 Jan 03 - Trent: Created
  */

@@ -10,7 +10,7 @@
  */
 
 /* File: Win32BinaryFile.cc
- * $Revision: 1.37 $
+ * $Revision$
  * Desc: This file contains the implementation of the class Win32BinaryFile.
  */
 

@@ -15,8 +15,8 @@
  *             NJMCDecoder class.
  *============================================================================*/
 
-/* $Revision: 1.2 $
- * $Id: decoder_low.m,v 1.2 2004-06-24 05:41:02 emmerik Exp $
+/* $Revision$
+ * $Id$
  * Created by Cristina 04 Feb 2000
  *
  * Based on: 

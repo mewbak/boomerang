@@ -14,7 +14,7 @@
  *============================================================================*/
 
 /*
- * $Revision: 1.234 $	// 1.148.2.38
+ * $Revision$	// 1.148.2.38
  * 03 Jul 02 - Trent: Created
  * 25 Jul 03 - Mike: dataflow.cpp, hrtl.cpp -> statement.cpp
  */
