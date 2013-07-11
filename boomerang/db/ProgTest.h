@@ -3,19 +3,19 @@
 #include "prog.h"
 
 class ProgTest : public CPPUNIT_NS::TestFixture
-  {
+{
     CPPUNIT_TEST_SUITE( ProgTest );
     CPPUNIT_TEST( testName );
     CPPUNIT_TEST_SUITE_END();
 
-  protected:
+protected:
     Prog*  m_prog;
 
-  public:
+public:
     void setUp ();
     void tearDown ();
 
-  protected:
+protected:
     void testName ();
-  };
+};
 

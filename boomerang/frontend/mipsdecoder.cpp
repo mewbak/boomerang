@@ -8,15 +8,15 @@
 *
 *   \file decoder.m
 *
-* PURPOSE 
+* PURPOSE
 *
 * Decoding MIPS
 *
-* AUTHOR 
+* AUTHOR
 *
 *   \author Markus Gothe, nietzsche@lysator.liu.se
 *
-* REVISION 
+* REVISION
 *
 *   $Id: mipsdecoder.cpp,v 1.1 2007-11-18 17:26:03 thenihilist Exp $
 *
@@ -50,19 +50,21 @@ void MIPSDecoder::unused(int x)
 
 /********************************************************************************
  * FUNCTION:       MIPSDecoder::MIPSDecoder
- * OVERVIEW:       
+ * OVERVIEW:
  * PARAMETERS:     None
  * RETURNS:                N/A
  *********************************************************************************/
 MIPSDecoder::MIPSDecoder(Prog* prog) : NJMCDecoder(prog)
 {
-  std::string file = Boomerang::get()->getProgPath() + "frontend/machine/mips/mips.ssl";
-  RTLDict.readSSLFile(file.c_str());
+    std::string file = Boomerang::get()->getProgPath() + "frontend/machine/mips/mips.ssl";
+    RTLDict.readSSLFile(file.c_str());
 }
 
 // For now...
 int MIPSDecoder::decodeAssemblyInstruction(unsigned, int)
-{ return 0; }
+{
+    return 0;
+}
 
 /********************************************************************************
  * FUNCTION:	   MIPSDecoder::decodeInstruction
@@ -84,18 +86,18 @@ int MIPSDecoder::decodeAssemblyInstruction(unsigned, int)
 
 // Stub from PPC...
 DecodeResult& MIPSDecoder::decodeInstruction(ADDRESS pc, int delta)
-{ 
-static DecodeResult result;
-ADDRESS hostPC = pc+delta;
+{
+    static DecodeResult result;
+    ADDRESS hostPC = pc+delta;
 
 // Clear the result structure;
-result.reset();
+    result.reset();
 
 // The actual list of instantiated statements
-std::list<Statement*>* stmts = NULL;
+    std::list<Statement*>* stmts = NULL;
 
-ADDRESS nextPC = NO_ADDRESS;
-	return result;
+    ADDRESS nextPC = NO_ADDRESS;
+    return result;
 }
 
 

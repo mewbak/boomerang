@@ -10,13 +10,13 @@ typedef int blkcnt_t;
 
 typedef long time_t;
 struct timespec
-  {
+{
     time_t	tv_sec;
     long	tv_nsec;
-  };
+};
 
 struct stat
-  {
+{
     dev_t st_dev;
     unsigned int pad1;
     ino_t st_ino;
@@ -34,5 +34,5 @@ struct stat
     timespec st_ctime;
     unsigned pad4;
     unsigned pad5;
-  };
+};
 

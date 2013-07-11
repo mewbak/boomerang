@@ -38,7 +38,7 @@ void UtilTest::tearDown ()
 *============================================================================*/
 void UtilTest::test_hasExt()
 {
-  CPPUNIT_FAIL("Unimplemented hasExt test");
+    CPPUNIT_FAIL("Unimplemented hasExt test");
 }
 
 /*==============================================================================
@@ -47,7 +47,7 @@ void UtilTest::test_hasExt()
 *============================================================================*/
 void UtilTest::test_changeExt()
 {
-  CPPUNIT_FAIL("Unimplemented changeExt test");
+    CPPUNIT_FAIL("Unimplemented changeExt test");
 }
 
 /*==============================================================================
@@ -56,5 +56,5 @@ void UtilTest::test_changeExt()
 *============================================================================*/
 void UtilTest::test_searchAndReplace()
 {
-  CPPUNIT_FAIL("Unimplemented searchAndReplace test");
+    CPPUNIT_FAIL("Unimplemented searchAndReplace test");
 }

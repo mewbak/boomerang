@@ -4,7 +4,7 @@ typedef unsigned char   cc_t;
 typedef unsigned int speed_t;
 
 typedef struct
-  {
+{
     tcflag_t        c_iflag;
     tcflag_t        c_oflag;
     tcflag_t        c_cflag;
@@ -12,7 +12,7 @@ typedef struct
     cc_t            c_cc[20];
     speed_t         c_ispeed;
     speed_t         c_ospeed;
-  }
+}
 termios;
 
 speed_t cfgetispeed(const termios *t);

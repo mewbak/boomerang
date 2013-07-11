@@ -25,19 +25,19 @@ void BasicBlock::getAvailInAt(Statement *stmt, StatementSet &reachin, int phase)
 // Proc
 Signature *Proc::getSignature()
 {
-  return NULL;
+    return NULL;
 }
 Cfg* UserProc::getCFG()
 {
-  return NULL;
+    return NULL;
 }
 const char* Proc::getName()
 {
-  return "";
+    return "";
 }
 Prog *Proc::getProg()
 {
-  return NULL;
+    return NULL;
 }
 void UserProc::getReturnSet(LocationSet &ret)
 {}
@@ -45,19 +45,19 @@ void UserProc::getReturnSet(LocationSet &ret)
 // Prog
 char *Prog::getStringConstant(ADDRESS uaddr)
 {
-  return NULL;
+    return NULL;
 }
 Proc* Prog::findProc(ADDRESS uAddr) const
-  {
+{
     return NULL;
-  }
+}
 void Prog::analyse()
 {}
 
 // signature
 std::list<Exp*> *Signature::getCallerSave(Prog* prog)
 {
-  return NULL;
+    return NULL;
 }
 
 // frontend

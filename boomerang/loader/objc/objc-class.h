@@ -34,7 +34,7 @@
  *	Class Template
  */
 struct objc_class
-  {
+{
     struct objc_class *isa;
     struct objc_class *super_class;
     const char *name;
@@ -47,7 +47,7 @@ struct objc_class
 
     struct objc_cache *cache;
     struct objc_protocol_list *protocols;
-  };
+};
 #define CLS_GETINFO(cls,infomask)	((cls)->info & (infomask))
 #define CLS_SETINFO(cls,infomask)	((cls)->info |= (infomask))
 
@@ -114,13 +114,13 @@ struct objc_class
 typedef struct objc_category *Category;
 
 struct objc_category
-  {
+{
     char *category_name;
     char *class_name;
     struct objc_method_list *instance_methods;
     struct objc_method_list *class_methods;
     struct objc_protocol_list *protocols;
-  };
+};
 
 /*
  *	Instance Variable Template
@@ -128,23 +128,23 @@ struct objc_category
 typedef struct objc_ivar *Ivar;
 
 struct objc_ivar
-  {
+{
     char *ivar_name;
     char *ivar_type;
     int ivar_offset;
 #ifdef __alpha__
     int space;
 #endif
-  };
+};
 
 struct objc_ivar_list
-  {
+{
     int ivar_count;
 #ifdef __alpha__
     int space;
 #endif
     struct objc_ivar ivar_list[1];		/* variable length structure */
-  };
+};
 
 OBJC_EXPORT Ivar object_setInstanceVariable(id, const char *name, void *);
 OBJC_EXPORT Ivar object_getInstanceVariable(id, const char *name, void **);
@@ -155,14 +155,14 @@ OBJC_EXPORT Ivar object_getInstanceVariable(id, const char *name, void **);
 typedef struct objc_method *Method;
 
 struct objc_method
-  {
+{
     SEL method_name;
     char *method_types;
     IMP method_imp;
-  };
+};
 
 struct objc_method_list
-  {
+{
     struct objc_method_list *obsolete;
 
     int method_count;
@@ -170,7 +170,7 @@ struct objc_method_list
     int space;
 #endif
     struct objc_method method_list[1];	/* variable length structure */
-  };
+};
 
 /* Protocol support */
 
@@ -178,11 +178,11 @@ struct objc_method_list
 struct Protocol;
 
 struct objc_protocol_list
-  {
+{
     struct objc_protocol_list *next;
     int count;
     Protocol *list[1];
-  };
+};
 
 /* Definitions of filer types */
 
@@ -220,11 +220,11 @@ typedef struct objc_cache *	Cache;
 #define CACHE_BUCKET_VALID(B) (B)
 #define CACHE_HASH(sel, mask) (((uarith_t)(sel)>>2) & (mask))
 struct objc_cache
-  {
+{
     unsigned int mask;            /* total = mask + 1 */
     unsigned int occupied;
     Method buckets[1];
-  };
+};
 
 /* operations */
 OBJC_EXPORT id class_createInstance(Class, unsigned idxIvars);

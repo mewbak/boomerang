@@ -44,7 +44,7 @@ typedef char * GC_PTR;
 
 # ifdef __cplusplus
 extern "C"
-  {
+{
 # endif
 
 
@@ -888,9 +888,9 @@ extern "C"
      * should be built to call GC_CreateThread.
      */
     GC_API HANDLE GC_CreateThread(
-      LPSECURITY_ATTRIBUTES lpThreadAttributes,
-      DWORD dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress,
-      LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId );
+        LPSECURITY_ATTRIBUTES lpThreadAttributes,
+        DWORD dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress,
+        LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId );
 
 # if defined(_WIN32_WCE)
     /*
@@ -898,10 +898,10 @@ extern "C"
      * to call GC_WinMain after initializing the garbage collector.
      */
     int WINAPI GC_WinMain(
-      HINSTANCE hInstance,
-      HINSTANCE hPrevInstance,
-      LPWSTR lpCmdLine,
-      int nCmdShow );
+        HINSTANCE hInstance,
+        HINSTANCE hPrevInstance,
+        LPWSTR lpCmdLine,
+        int nCmdShow );
 
 #  ifndef GC_BUILD
 #    define WinMain GC_WinMain
@@ -954,7 +954,7 @@ extern "C"
 #endif
 
 #ifdef __cplusplus
-  }  /* end of extern "C" */
+}  /* end of extern "C" */
 #endif
 
 #endif /* _GC_H */

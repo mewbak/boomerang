@@ -3,7 +3,7 @@
 #include "cfg.h"
 
 class CfgTest : public CPPUNIT_NS::TestFixture
-  {
+{
     CPPUNIT_TEST_SUITE( CfgTest );
     CPPUNIT_TEST( testDominators );
     CPPUNIT_TEST( testSemiDominators );
@@ -12,18 +12,18 @@ class CfgTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST( testRenameVars );
     CPPUNIT_TEST_SUITE_END();
 
-  protected:
+protected:
     Cfg*  m_prog;
 
-  public:
+public:
     void setUp ();
     void tearDown ();
 
-  protected:
+protected:
     void testDominators ();
     void testSemiDominators ();
     void testPlacePhi ();
     void testPlacePhi2();
     void testRenameVars();
-  };
+};
 

@@ -23,9 +23,9 @@
 #include "table.h"
 
 class InsNameElem
-  {
+{
 
-  public:
+public:
     InsNameElem(const char *name);
     virtual ~InsNameElem(void);
     virtual int ntokens(void);
@@ -39,27 +39,27 @@ class InsNameElem
     void reset(void);
     int getvalue(void);
 
-  protected:
+protected:
     InsNameElem* nextelem;
     std::string elemname;
     int value;
-  };
+};
 
 class InsOptionElem : public InsNameElem
-  {
+{
 
-  public:
+public:
     InsOptionElem(const char *name);
     virtual int ntokens(void);
     virtual std::string getinstruction(void);
     virtual std::string getinspattern(void);
 
-  };
+};
 
 class InsListElem : public InsNameElem
-  {
+{
 
-  public:
+public:
     InsListElem(const char *name, Table* t, const char *idx);
     virtual int ntokens(void);
     virtual std::string getinstruction(void);
@@ -68,9 +68,9 @@ class InsListElem : public InsNameElem
 
     std::string getindex(void);
 
-  protected:
+protected:
     std::string indexname;
     Table* thetable;
-  };
+};
 
 #endif

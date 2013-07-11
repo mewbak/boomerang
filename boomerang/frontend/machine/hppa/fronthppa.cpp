@@ -169,7 +169,7 @@ bool optimise_DelayCopy(ADDRESS src, ADDRESS dest, int delta, ADDRESS uUpper)
  * FUNCTION:        handleBranch
  * OVERVIEW:        Adds the destination of a branch to the queue of address
  *                  that must be decoded (if this destination has not already
- *                  been visited). 
+ *                  been visited).
  * PARAMETERS:      newBB - the new basic block delimited by the branch
  *                    instruction. May be NULL if this block has been built
  *                    before.
@@ -182,7 +182,7 @@ bool optimise_DelayCopy(ADDRESS src, ADDRESS dest, int delta, ADDRESS uUpper)
  *                  be changed to point to a new BB beginning with the dest
  *============================================================================*/
 void handleBranch(ADDRESS dest, ADDRESS hiAddress, BasicBlock*& newBB, Cfg* cfg,
-    TARGETS& targets)
+                  TARGETS& targets)
 {
     if (newBB == NULL)
         return;
@@ -195,7 +195,7 @@ void handleBranch(ADDRESS dest, ADDRESS hiAddress, BasicBlock*& newBB, Cfg* cfg,
         ostrstream ost;
         ost << "branch to " << hex << dest << " goes beyond section.";
         error(str(ost));
-    }   
+    }
 }
 
 /*==============================================================================
@@ -215,7 +215,7 @@ void handleBranch(ADDRESS dest, ADDRESS hiAddress, BasicBlock*& newBB, Cfg* cfg,
  * RETURNS:           <nothing>
  *============================================================================*/
 void handleCall(ADDRESS dest, BasicBlock* callBB, Cfg* cfg, ADDRESS address,
-    int offset = 0)
+                int offset = 0)
 {
     if (callBB == NULL)
         return;
@@ -275,8 +275,8 @@ void case_unhandled_stub(ADDRESS addr)
  *                      this one
  *============================================================================*/
 bool case_CALL_NCT(ADDRESS& address, DecodeResult& inst,
-    DecodeResult& delay_inst, list<HRTL*>*& BB_rtls, 
-    UserProc* proc, std::list<CallStatement*>& callList, ofstream &os, bool isPattern = false )
+                   DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
+                   UserProc* proc, std::list<CallStatement*>& callList, ofstream &os, bool isPattern = false )
 {
     // Aliases for the call and delay RTLs
     HLCall* call_rtl = static_cast<HLCall*>(inst.rtl);
@@ -291,7 +291,7 @@ bool case_CALL_NCT(ADDRESS& address, DecodeResult& inst,
     // Emit the delay instruction, unless a the delay instruction is a nop,
     // or we have a pattern, or are followed by a restore
     if ((delay_inst.type != NOP) && !delayPattern &&
-	  !call_rtl->isReturnAfterCall()) {
+            !call_rtl->isReturnAfterCall()) {
         delay_rtl->updateAddress(address);
         BB_rtls->push_back(delay_rtl);
         if (progOptions.rtl)
@@ -424,8 +424,8 @@ bool case_CALL_NCT(ADDRESS& address, DecodeResult& inst,
  * RETURNS:          <nothing>
  *============================================================================*/
 void case_SD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
-    DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
-    Cfg* cfg, TARGETS& targets, ofstream &os)
+                 DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
+                 Cfg* cfg, TARGETS& targets, ofstream &os)
 {
 
     // Aliases for the SD and delay RTLs
@@ -436,7 +436,7 @@ void case_SD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
     // delay instruction now if the optimisation won't apply
     if (delay_inst.type != NOP) {
         if (optimise_DelayCopy(address, SD_rtl->getFixedDest(), delta,
-          hiAddress))
+                               hiAddress))
             SD_rtl->adjustFixedDest(-4);
         else {
             // Move the delay instruction before the SD. Must update the address
@@ -457,7 +457,10 @@ void case_SD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
 
     // Add the one-way branch BB
     PBB pBB = cfg->newBB(BB_rtls, ONEWAY, 1);
-    if (pBB == 0) { BB_rtls = NULL; return; }
+    if (pBB == 0) {
+        BB_rtls = NULL;
+        return;
+    }
 
     // Visit the destination, and add the out-edge
     ADDRESS uDest = SD_rtl->getFixedDest();
@@ -492,8 +495,8 @@ void case_SD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
  *                      this one
  *============================================================================*/
 bool case_DD_NCT(ADDRESS& address, int delta, DecodeResult& inst,
-    DecodeResult& delay_inst, list<HRTL*>*& BB_rtls, Cfg* cfg,
-    TARGETS& targets, UserProc* proc, std::list<CallStatement*>& callList, int size)
+                 DecodeResult& delay_inst, list<HRTL*>*& BB_rtls, Cfg* cfg,
+                 TARGETS& targets, UserProc* proc, std::list<CallStatement*>& callList, int size)
 {
     // Assume that if we find a call in the delay slot, it's actually a pattern
     // such as move/call/move
@@ -515,20 +518,20 @@ bool case_DD_NCT(ADDRESS& address, int delta, DecodeResult& inst,
     BasicBlock* newBB;
     bool bRet = true;
     switch (inst.rtl->getKind()) {
-        case CALL_HRTL:
-            // Will be a computed call
-            newBB = cfg->newBB(BB_rtls, COMPCALL, 1);
-            break;
-        case RET_HRTL:
-            newBB = cfg->newBB(BB_rtls, RET, 0);
-            bRet = false;
-            break;
-        case NWAYJUMP_HRTL:
-            newBB = cfg->newBB(BB_rtls, COMPJUMP, 0);
-            bRet = false;
-            break;
-        default:
-            break;
+    case CALL_HRTL:
+        // Will be a computed call
+        newBB = cfg->newBB(BB_rtls, COMPCALL, 1);
+        break;
+    case RET_HRTL:
+        newBB = cfg->newBB(BB_rtls, RET, 0);
+        bRet = false;
+        break;
+    case NWAYJUMP_HRTL:
+        newBB = cfg->newBB(BB_rtls, COMPJUMP, 0);
+        bRet = false;
+        break;
+    default:
+        break;
     }
     if (newBB == NULL) return false;
 
@@ -540,7 +543,7 @@ bool case_DD_NCT(ADDRESS& address, int delta, DecodeResult& inst,
         HLCall*   rtl_call   = static_cast<HLCall*>(inst.rtl);
 #if 0           // Sparc specific code, but we may need something similar
         BasicBlock* returnBB = optimise_CallReturn(rtl_call,
-            delay_inst.rtl, cfg);
+                               delay_inst.rtl, cfg);
         if (returnBB != NULL) {
             cfg->addOutEdge(newBB,returnBB);
 
@@ -622,12 +625,12 @@ bool case_DD_NCT(ADDRESS& address, int delta, DecodeResult& inst,
  *                      this one
  *============================================================================*/
 bool case_SCD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
-    DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
-    Cfg* cfg, TARGETS& targets)
+                  DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
+                  Cfg* cfg, TARGETS& targets)
 {
     HLJump*   rtl_jump   = static_cast<HLJump*>(inst.rtl);
     ADDRESS uDest = rtl_jump->getFixedDest();
-    
+
 #if 0
     // Assume that if we find a call in the delay slot, it's actually a pattern
     // such as move/call/move
@@ -755,8 +758,8 @@ bool case_SCD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
  *                      this one
  *============================================================================*/
 bool case_SCDAN_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
-    DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
-    Cfg* cfg, TARGETS& targets)
+                    DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
+                    Cfg* cfg, TARGETS& targets)
 {
     // We may have to move the delay instruction to an orphan
     // BB, which then branches to the target of the jump.
@@ -779,7 +782,7 @@ bool case_SCDAN_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
         handleBranch(uDest-4, hiAddress, pBB, cfg, targets);
     }
     else    // SCDAN; must move delay instr to orphan. Assume it's not a NOP
-            // (though if it is, no harm done)
+        // (though if it is, no harm done)
     {
         // Move the delay instruction to the dest of the branch, as an orphan
         // First add the branch.
@@ -833,7 +836,7 @@ bool case_SCDAN_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
  * RETURNS:          True if a good decode
  *============================================================================*/
 bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
-    bool spec /* = false */)
+                              bool spec /* = false */)
 {
     // Declare a queue of targets not yet processed yet. This has to be
     // individual to the procedure! (so not a global)
@@ -909,14 +912,14 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
             rtl->updateNumBytes(inst.numBytes);
 
 #define BRANCH_DS_ERROR 0   // If set, a branch to the delay slot of a delayed
-                            // CTI instruction is flagged as an error
+            // CTI instruction is flagged as an error
 #if BRANCH_DS_ERROR
             if ((rtl->getKind() == JUMP_HRTL) ||
-                (rtl->getKind() == CALL_HRTL) ||
-                (rtl->getKind() == JCOND_HRTL) ||
-                (rtl->getKind() == RET_HRTL)) {
+                    (rtl->getKind() == CALL_HRTL) ||
+                    (rtl->getKind() == JCOND_HRTL) ||
+                    (rtl->getKind() == RET_HRTL)) {
                 ADDRESS dest = rtl_jump->getFixedDest();
-                if ((dest != NO_ADDRESS) && (dest < hiAddress)){
+                if ((dest != NO_ADDRESS) && (dest < hiAddress)) {
                     unsigned inst_before_dest = *((unsigned*)(dest-4+delta));
 
                     // FIXME! This is sarc specific
@@ -925,15 +928,15 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                     unsigned bits24_19 = (inst_before_dest >> 19) & 0x3f;
                     unsigned bits29_25 = (inst_before_dest >> 25) & 0x1f;
                     if ((bits31_30 == 0x01) ||      // Call
-                        ((bits31_30 == 0x02) && (bits24_19 == 0x38)) || // Jmpl
-                        ((bits31_30 == 0x00) && (bits23_22 == 0x02) &&
-                         (bits29_25 != 0x18))) {// Branch, but not (f)ba,a
-                            // The above test includes floating point branches
-                            ostrstream ost;
-                            ost << "Target of branch at " << hex <<
-                                rtl->getAddress() <<
-                                " is delay slot of CTI at " << dest-4;
-                            error(str(ost));
+                            ((bits31_30 == 0x02) && (bits24_19 == 0x38)) || // Jmpl
+                            ((bits31_30 == 0x00) && (bits23_22 == 0x02) &&
+                             (bits29_25 != 0x18))) {// Branch, but not (f)ba,a
+                        // The above test includes floating point branches
+                        ostrstream ost;
+                        ost << "Target of branch at " << hex <<
+                            rtl->getAddress() <<
+                            " is delay slot of CTI at " << dest-4;
+                        error(str(ost));
                     }
                 }
             }
@@ -979,17 +982,17 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
             }
 
             case SU:
-            {   
+            {
                 // Ordinary, non-delay branch or call/return
                 if (rtl->getKind() == CALL_HRTL) {
                     // This is a call followed by a return, e.g. a BL to printf
                     case_CALL_NCT(address, inst, nop_inst, BB_rtls, proc,
-                      callList, os);
+                                  callList, os);
                 } else {
                     BB_rtls->push_back(rtl_jump);
                     PBB pBB = cfg->newBB(BB_rtls, ONEWAY, 1);
                     handleBranch(rtl_jump->getFixedDest(), uUpper, pBB, cfg,
-                      targets);
+                                 targets);
                     address += inst.numBytes;    // Update address for coverage
                 }
 
@@ -999,9 +1002,9 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
             }
 
             case SD:    // This includes cases where the link register is 2
-                        // (i.e. a call)
+                // (i.e. a call)
             {
-                DecodeResult delay_inst = 
+                DecodeResult delay_inst =
                     decoder.decodeInstruction(address+4, delta, proc);
                 HRTL* delay_rtl = delay_inst.rtl;
                 delay_rtl->updateNumBytes(delay_inst.numBytes);
@@ -1017,12 +1020,12 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
 
                         // This is a call followed by an NCT/NOP
                         sequentialDecode = case_CALL_NCT(address, inst,
-                            delay_inst, BB_rtls, proc, callList, os);
+                                                         delay_inst, BB_rtls, proc, callList, os);
                     }
                     else {
                         // This is a non-call followed by an NCT/NOP
                         case_SD_NCT(address, delta, uUpper, inst, delay_inst,
-                            BB_rtls, cfg, targets, os);
+                                    BB_rtls, cfg, targets, os);
 
                         // There is no fall through branch.
                         sequentialDecode = false;
@@ -1048,7 +1051,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
 
                     // Just so that we can check that our interpretation is
                     // correct the first time we hit this case...
-                case_unhandled_stub(address);
+                    case_unhandled_stub(address);
 
                     // Adjust the destination of the SD and emit it.
                     HLJump* delay_jump = static_cast<HLJump*>(delay_rtl);
@@ -1059,8 +1062,8 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                     // Create the appropriate BB
                     if (rtl->getKind() == CALL_HRTL) {
                         handleCall(dest, cfg->newBB(BB_rtls,CALL, 1), cfg,
-                            address, 8);
-                        
+                                   address, 8);
+
                         // Set the address of the lexical successor of the
                         // call that is to be decoded next. Set RTLs to
                         // NULL so that a new list of RTLs will be created
@@ -1091,11 +1094,11 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
 
             case DD:
             {
-                DecodeResult delay_inst; 
+                DecodeResult delay_inst;
                 if (inst.numBytes == 4) {
                     // Ordinary instruction. Look at the delay slot
                     delay_inst = decoder.decodeInstruction(address+4,
-                        delta, proc);
+                                                           delta, proc);
                     delay_inst.rtl->updateNumBytes(delay_inst.numBytes);
                 }
                 else {
@@ -1104,7 +1107,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                     // Should be no need to adjust the coverage; the number of
                     // bytes should take care of it
                 }
-                    
+
                 HRTL* delay_rtl = delay_inst.rtl;
 
                 // Display RTL representation if asked
@@ -1116,7 +1119,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                 case NCT:
                 {
                     sequentialDecode = case_DD_NCT(address, delta, inst,
-                        delay_inst, BB_rtls, cfg, targets, proc, callList, 8);
+                                                   delay_inst, BB_rtls, cfg, targets, proc, callList, 8);
                     break;
                 }
                 default:
@@ -1129,9 +1132,9 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
             case DU: {
                 // Same as DD case, but no delay slot to worry about
                 DecodeResult delay_inst = nop_inst;
-                    
+
                 sequentialDecode = case_DD_NCT(address, delta, inst,
-                  delay_inst, BB_rtls, cfg, targets, proc, callList, 4);
+                                               delay_inst, BB_rtls, cfg, targets, proc, callList, 4);
                 break;
             }
 
@@ -1150,7 +1153,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                 // We do just a binary comparison; that may fail to make this
                 // optimisation if the instr has relative fields.
 
-                DecodeResult delay_inst = 
+                DecodeResult delay_inst =
                     decoder.decodeInstruction(address+4,delta, proc);
                 HRTL* delay_rtl = delay_inst.rtl;
                 delay_rtl->updateNumBytes(delay_inst.numBytes);
@@ -1164,7 +1167,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                 case NCT:
                 {
                     sequentialDecode = case_SCD_NCT(address, delta, uUpper,
-                        inst, delay_inst, BB_rtls, cfg, targets);
+                                                    inst, delay_inst, BB_rtls, cfg, targets);
                     break;
                 }
                 default:
@@ -1178,7 +1181,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
             {
                 // Execute the delay instruction if the branch is taken;
                 // skip (anull) the delay instruction if branch not taken.
-                DecodeResult delay_inst = 
+                DecodeResult delay_inst =
                     decoder.decodeInstruction(address+4,delta, proc);
                 HRTL* delay_rtl = delay_inst.rtl;
                 delay_rtl->updateNumBytes(delay_inst.numBytes);
@@ -1196,7 +1199,8 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                     // Create the BB and add it to the CFG
                     PBB pBB = cfg->newBB(BB_rtls, TWOWAY, 2);
                     if (pBB == 0) {
-                        sequentialDecode = false; break;
+                        sequentialDecode = false;
+                        break;
                     }
                     // Visit the destination of the branch; add "true" leg
                     ADDRESS uDest = rtl_jump->getFixedDest();
@@ -1211,7 +1215,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                 case NCT:
                 {
                     sequentialDecode = case_SCDAN_NCT(address, delta, uUpper,
-                        inst, delay_inst, BB_rtls, cfg, targets);
+                                                      inst, delay_inst, BB_rtls, cfg, targets);
                     break;
                 }
 
@@ -1230,7 +1234,10 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                 BB_rtls->push_back(rtl);        // Add the jump
                 ADDRESS uDest = ((HLJump*)rtl)->getFixedDest();
                 PBB pBB = cfg->newBB(BB_rtls, TWOWAY, 2);
-                if (pBB == 0) { BB_rtls = NULL; continue;}
+                if (pBB == 0) {
+                    BB_rtls = NULL;
+                    continue;
+                }
                 handleBranch(uDest, uUpper, pBB, cfg, targets);
                 address += 4;           // "Delay slot" instruction is next
                 cfg->addOutEdge(pBB, address);  // False leg
@@ -1242,7 +1249,7 @@ bool FrontEndSrc::processProc(ADDRESS address, UserProc* proc, ofstream &os,
                 // These instructions have been identified as anulling the
                 // following instuction. First we decode the following instr
                 BB_rtls->push_back(rtl);        // Add the jump
-                DecodeResult follow_inst = 
+                DecodeResult follow_inst =
                     decoder.decodeInstruction(address+4,delta, proc);
                 HRTL* follow_rtl = follow_inst.rtl;
                 follow_rtl->updateNumBytes(follow_inst.numBytes);
@@ -1412,7 +1419,7 @@ void emitCopyPC(HRTLList* pRtls, ADDRESS uAddr)
  *============================================================================*/
 // Append one assignment to a list of RTLs
 void appendAssignment(SemStr* lhs, SemStr* rhs, int size, ADDRESS addr, HRTLList*
-    lrtl)
+                      lrtl)
 {
     RTAssgn* rta = new RTAssgn(lhs, rhs, size);
     // Create an RTL with this one RT
@@ -1440,19 +1447,19 @@ bool helperFunc(ADDRESS dest, ADDRESS addr, HRTLList* lrtl)
     if (name == "$$remU") {
         // %r26 % %r25
         *rhs << idMod << idRegOf << idIntConst << 26 <<
-                         idRegOf << idIntConst << 25;
+             idRegOf << idIntConst << 25;
     } else if (name == "$$remI") {
         // %r26 %! %r25
         *rhs << idMods << idRegOf << idIntConst << 26 <<
-                          idRegOf << idIntConst << 25;
+             idRegOf << idIntConst << 25;
     } else if (name == "$$divU") {
         // %r26 / %r25
         *rhs << idDiv << idRegOf << idIntConst << 26 <<
-                         idRegOf << idIntConst << 25;
+             idRegOf << idIntConst << 25;
     } else if (name == "$$divI") {
         // %r26 /! %r25
         *rhs << idDivs << idRegOf << idIntConst << 26 <<
-                          idRegOf << idIntConst << 25;
+             idRegOf << idIntConst << 25;
     } else if (name == "$$dyncall") {
         // *(r22)()
         list<RT*> ll;
@@ -1490,14 +1497,23 @@ void quadOperation(ADDRESS addr, HRTLList* lrtl, int op)
 {
     SemStr* lhs = new SemStr(Type(FLOATP, 128, true));
     SemStr* rhs = new SemStr(Type(FLOATP, 128, true));
-    lhs->push(idMemOf); lhs->push(idMemOf); lhs->push(idPlus);
-    lhs->push(idRegOf); lhs->push(idIntConst); lhs->push(14);
-    lhs->push(idIntConst); lhs->push(64);
+    lhs->push(idMemOf);
+    lhs->push(idMemOf);
+    lhs->push(idPlus);
+    lhs->push(idRegOf);
+    lhs->push(idIntConst);
+    lhs->push(14);
+    lhs->push(idIntConst);
+    lhs->push(64);
     rhs->push(op);
     rhs->push(idMemOf);
-    rhs->push(idRegOf); rhs->push(idIntConst); rhs->push(8);
+    rhs->push(idRegOf);
+    rhs->push(idIntConst);
+    rhs->push(8);
     rhs->push(idMemOf);
-    rhs->push(idRegOf); rhs->push(idIntConst); rhs->push(9);
+    rhs->push(idRegOf);
+    rhs->push(idIntConst);
+    rhs->push(9);
     appendAssignment(lhs, rhs, 128, addr, lrtl);
 }
 // This is the long version of helperFunc (i.e. -f not used). This does the
@@ -1512,19 +1528,21 @@ bool helperFuncLong(ADDRESS dest, ADDRESS addr, HRTLList* lrtl, string& name)
         // r[tmpl] = sgnex(32, 64, r8) * sgnex(32, 64, r9)
         *lhs << idRegOf << idTemp << tmpl;
         *rhs << idMult <<
-          idSgnEx << 32 << 64 << idRegOf << idIntConst << 8 <<
-          idSgnEx << 32 << 64 << idRegOf << idIntConst << 9;
+             idSgnEx << 32 << 64 << idRegOf << idIntConst << 8 <<
+             idSgnEx << 32 << 64 << idRegOf << idIntConst << 9;
         lrt->push_back(new RTAssgn(lhs, rhs, 64));
         // r8 = truncs(64, 32, r[tmpl]);
-        lhs = new SemStr; rhs = new SemStr;
+        lhs = new SemStr;
+        rhs = new SemStr;
         *lhs << idRegOf << idIntConst << 8;
         *rhs << idTruncs << 64 << 32 << idRegOf << idTemp << tmpl;
         lrt->push_back(new RTAssgn(lhs, rhs, 32));
         // r9 = r[tmpl]@32:63;
-        lhs = new SemStr; rhs = new SemStr;
+        lhs = new SemStr;
+        rhs = new SemStr;
         *lhs << idRegOf << idIntConst << 9;
         *rhs << idAt << idRegOf << idTemp << tmpl << idIntConst << 32 <<
-          idIntConst << 63;
+             idIntConst << 63;
         lrt->push_back(new RTAssgn(lhs, rhs, 32));
         HRTL* rtl = new RTL(addr, lrt);
         lrtl->push_back(rtl);
@@ -1533,19 +1551,21 @@ bool helperFuncLong(ADDRESS dest, ADDRESS addr, HRTLList* lrtl, string& name)
         // r[tmpl] = sgnex(32, 64, r8) *! sgnex(32, 64, r9)
         *lhs << idRegOf << idTemp << tmpl;
         *rhs << idMults <<
-          idSgnEx << 32 << 64 << idRegOf << idIntConst << 8 <<
-          idSgnEx << 32 << 64 << idRegOf << idIntConst << 9;
+             idSgnEx << 32 << 64 << idRegOf << idIntConst << 8 <<
+             idSgnEx << 32 << 64 << idRegOf << idIntConst << 9;
         lrt->push_back(new RTAssgn(lhs, rhs, 64));
         // r8 = truncs(64, 32, r[tmpl]);
-        lhs = new SemStr; rhs = new SemStr;
+        lhs = new SemStr;
+        rhs = new SemStr;
         *lhs << idRegOf << idIntConst << 8;
         *rhs << idTruncs << 64 << 32 << idRegOf << idTemp << tmpl;
         lrt->push_back(new RTAssgn(lhs, rhs, 32));
         // r9 = r[tmpl]@32:63;
-        lhs = new SemStr; rhs = new SemStr;
+        lhs = new SemStr;
+        rhs = new SemStr;
         *lhs << idRegOf << idIntConst << 9;
         *rhs << idAt << idRegOf << idTemp << tmpl << idIntConst << 32 <<
-          idIntConst << 63;
+             idIntConst << 63;
         lrt->push_back(new RTAssgn(lhs, rhs, 32));
         HRTL* rtl = new RTL(addr, lrt);
         lrtl->push_back(rtl);
@@ -1553,23 +1573,23 @@ bool helperFuncLong(ADDRESS dest, ADDRESS addr, HRTLList* lrtl, string& name)
     } else if (name == ".udiv") {
         // %o0 / %o1
         *rhs << idDiv <<
-          idRegOf << idIntConst << 8 << 
-          idRegOf << idIntConst << 9;
+             idRegOf << idIntConst << 8 <<
+             idRegOf << idIntConst << 9;
     } else if (name == ".div") {
         // %o0 /! %o1
         *rhs << idDivs <<
-          idRegOf << idIntConst << 8 << 
-          idRegOf << idIntConst << 9;
+             idRegOf << idIntConst << 8 <<
+             idRegOf << idIntConst << 9;
     } else if (name == ".urem") {
         // %o0 % %o1
         *rhs << idMod <<
-          idRegOf << idIntConst << 8 << 
-          idRegOf << idIntConst << 9;
+             idRegOf << idIntConst << 8 <<
+             idRegOf << idIntConst << 9;
     } else if (name == ".rem") {
         // %o0 %! %o1
         *rhs << idMods <<
-          idRegOf << idIntConst << 8 << 
-          idRegOf << idIntConst << 9;
+             idRegOf << idIntConst << 8 <<
+             idRegOf << idIntConst << 9;
 //  } else if (name.substr(0, 6) == ".stret") {
 //      // No operation. Just use %o0
 //      rhs->push(idRegOf); rhs->push(idIntConst); rhs->push(8);
@@ -1589,7 +1609,9 @@ bool helperFuncLong(ADDRESS dest, ADDRESS addr, HRTLList* lrtl, string& name)
         return true;
     } else {
         // Not a (known) helper function
-        delete lhs; delete rhs; delete lrt;
+        delete lhs;
+        delete rhs;
+        delete lrt;
         return false;
     }
     // Need to make an RTAssgn with %o0 = rhs
@@ -1619,7 +1641,9 @@ void setReturnLocations(CalleeEpilogue* epilogue, int iReg)
     // four Sparc return locations
     typeToSemStrMap retMap;
     SemStr ss;
-    ss.push(idRegOf); ss.push(idIntConst); ss.push(iReg);
+    ss.push(idRegOf);
+    ss.push(idIntConst);
+    ss.push(iReg);
     retMap.insert(pair<Type, SemStr>(Type(::INTEGER), ss));
     retMap.insert(pair<Type, SemStr>(Type(::DATA_ADDRESS), ss));
     // FIXME! This is sparc specific, but we haven't considered floating point

@@ -6,52 +6,52 @@
 
 int main(int argc)
 {
-  int x = 1;                      // A
-  if (argc > 2)
+    int x = 1;                      // A
+    if (argc > 2)
     {
-      do
+        do
         {
-          x = 2;                  // B
-          if (argc > 2) goto nine;
-          x = 3;                  // D
-          if (argc > 3)
+            x = 2;                  // B
+            if (argc > 2) goto nine;
+            x = 3;                  // D
+            if (argc > 3)
             {
-              x = 4;              // F
-              if (argc > 4)
+                x = 4;              // F
+                if (argc > 4)
                 {
 five:
-                  x = 5;          // I
-                  printf("5");
+                    x = 5;          // I
+                    printf("5");
                 }
-              else
-                x = 8;          // K
+                else
+                    x = 8;          // K
             }
-          else
+            else
             {
 nine:
-              x = 9;              // G
-              printf("9");
-              x = 10;             // J
-              goto five;
+                x = 9;              // G
+                printf("9");
+                x = 10;             // J
+                goto five;
             }
-          x = 6;                  // L
+            x = 6;                  // L
         }
-      while (argc < 6);
+        while (argc < 6);
     }
-  else
+    else
     {
-      do
+        do
         {
-          x = 11;                 // C
-          if (argc == 11) goto thirteen;
-          x = 12;
+            x = 11;                 // C
+            if (argc == 11) goto thirteen;
+            x = 12;
         }
-      while (argc < 12);
+        while (argc < 12);
 thirteen:
-      x = 13;                     // H
+        x = 13;                     // H
     }
-  x = 7;                          // M
-  return x;
+    x = 7;                          // M
+    return x;
 }
 
 

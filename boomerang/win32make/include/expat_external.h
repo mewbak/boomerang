@@ -72,7 +72,7 @@ platform's malloc() implementation.
 
 #ifdef __cplusplus
 extern "C"
-  {
+{
 #endif
 
 #ifdef XML_UNICODE_WCHAR_T

@@ -14,8 +14,8 @@ class RangeMap;
 class Type;
 
 class Log
-  {
-  public:
+{
+public:
     Log()
     { }
     virtual Log &operator<<(const char *str) = 0;
@@ -33,48 +33,48 @@ class Log
     virtual Log &operator<<(LocationSet *l);
     Log &operator<<(std::string& s)
     {
-      return operator<<(s.c_str());
+        return operator<<(s.c_str());
     }
     virtual ~Log()
     {};
     virtual void tail();
-  };
+};
 
 class FileLogger : public Log
-  {
-  protected:
+{
+protected:
     std::ofstream out;
-  public:
+public:
     FileLogger();		// Implemented in boomerang.cpp
     void	tail();
     virtual Log &operator<<(const char *str)
     {
-      out << str << std::flush;
-      return *this;
+        out << str << std::flush;
+        return *this;
     }
     virtual ~FileLogger()
     {};
-  };
+};
 class NullLogger : public Log
-  {
-  public:
+{
+public:
     virtual Log &operator<<(const char *str)
     {
-      // std::cerr << str;
-      return *this;
+        // std::cerr << str;
+        return *this;
     }
     virtual ~NullLogger()
     {};
-  };
+};
 
 // For older MSVC compilers
 #if defined(_MSC_VER) && (_MSC_VER <= 1200)
 static std::ostream& operator<<(std::ostream& s, QWord val)
 {
-  char szTmp[42]; // overkill, but who counts
-  sprintf(szTmp, "%I64u", val);
-  s << szTmp;
-  return s;
+    char szTmp[42]; // overkill, but who counts
+    sprintf(szTmp, "%I64u", val);
+    s << szTmp;
+    return s;
 }
 #endif
 

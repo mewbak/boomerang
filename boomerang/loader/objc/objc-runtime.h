@@ -36,30 +36,30 @@
 typedef struct objc_symtab *Symtab;
 
 struct objc_symtab
-  {
+{
     unsigned long 	sel_ref_cnt;
     SEL 		*refs;
     unsigned short 	cls_def_cnt;
     unsigned short 	cat_def_cnt;
     void  		*defs[1];	/* variable size */
-  };
+};
 
 typedef struct objc_module *Module;
 
 struct objc_module
-  {
+{
     unsigned long	version;
     unsigned long	size;
     const char	*name;
     Symtab 		symtab;
-  };
+};
 
 struct objc_super
-  {
+{
     id receiver;
     //Class class;
     Class pclass;
-  };
+};
 
 /* kernel operations */
 

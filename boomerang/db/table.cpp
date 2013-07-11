@@ -39,9 +39,9 @@ Table::Table(std::deque<std::string>& recs, TABLE_TYPE t /* = NAMETABLE */) :
 {}
 
 TABLE_TYPE Table::getType() const
-  {
+{
     return type;
-  }
+}
 
 OpTable::OpTable(std::deque<std::string>& ops) :
     Table(ops, OPTABLE)
@@ -53,7 +53,7 @@ ExprTable::ExprTable(std::deque<Exp*>& exprs) :
 
 ExprTable::~ExprTable(void)
 {
-  std::deque<Exp*>::iterator loc;
-  for (loc = expressions.begin(); loc != expressions.end(); loc++)
-    delete (*loc);
+    std::deque<Exp*>::iterator loc;
+    for (loc = expressions.begin(); loc != expressions.end(); loc++)
+        delete (*loc);
 }

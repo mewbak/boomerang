@@ -38,16 +38,16 @@ class RTL;
 #define MAX_STACK 1024
 
 typedef struct
-  {
+{
     const char *tag;
     void (XMLProgParser::*start_proc)(const char**);
     void (XMLProgParser::*end_proc)(Context *c, int e);
-  }
+}
 _tag;
 
 class XMLProgParser
-  {
-  public:
+{
+public:
     XMLProgParser()
     { }
     Prog *parse(const char *filename);
@@ -55,7 +55,7 @@ class XMLProgParser
     void handleElementStart(const char *el, const char **attr);
     void handleElementEnd(const char *el);
 
-  protected:
+protected:
 
     void parseFile(const char *filename);
     void parseChildren(Cluster *c);
@@ -156,6 +156,6 @@ class XMLProgParser
 
     void addId(const char **attr, void *x);
     void *findId(const char *id);
-  };
+};
 
 #endif

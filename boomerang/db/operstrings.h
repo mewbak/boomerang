@@ -3,7 +3,7 @@
 // surprised if the strings become out of date.
 
 const char* operStrings[] =
-  {
+{
     "opPlus",				// Binary addition
     "opMinus",				// Binary subtraction
     "opMult",				// Multiplication
@@ -170,7 +170,7 @@ const char* operStrings[] =
     "opFGF",				// floating point greater flag
     "opCTI",				// Control transfer instruction (boolean)
     "opNEXT",				// Next PC pseudo-register
-  };
+};
 
 
 

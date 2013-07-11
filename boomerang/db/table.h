@@ -26,37 +26,37 @@
 
 // Kinds of SSL specification tables
 enum TABLE_TYPE {
-  NAMETABLE,
-  OPTABLE,
-  EXPRTABLE
+    NAMETABLE,
+    OPTABLE,
+    EXPRTABLE
 };
 
 class Table
-  {
-  public:
+{
+public:
     Table(std::deque<std::string>& recs, TABLE_TYPE t = NAMETABLE);
     Table(TABLE_TYPE t);
     TABLE_TYPE getType() const;
     std::deque<std::string> records;
 
-  private:
+private:
     TABLE_TYPE type;
-  };
+};
 
 class OpTable : public Table
-  {
-  public:
+{
+public:
     OpTable(std::deque<std::string>& ops);
-  };
+};
 
 class Exp;
 
 class ExprTable : public Table
-  {
-  public:
+{
+public:
     ExprTable(std::deque<Exp*>& exprs);
     ~ExprTable(void);
     std::deque<Exp*> expressions;
-  };
+};
 
 #endif

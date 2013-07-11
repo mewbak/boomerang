@@ -35,15 +35,15 @@ class XMLProgParser;
 class Cluster;
 
 class Cluster
-  {
-  protected:
+{
+protected:
     std::string	name;
     std::vector<Cluster*> children;
     Cluster		*parent;
     std::ofstream out;
     std::string	stream_ext;
 
-  public:
+public:
     Cluster() : name(""), parent(NULL)
     { }
     Cluster(const char *name) : name(name), parent(NULL)
@@ -52,76 +52,76 @@ class Cluster
     {}
     const		char *getName()
     {
-      return name.c_str();
+        return name.c_str();
     }
     void		setName(const char *nam)
     {
-      name = nam;
+        name = nam;
     }
     unsigned int getNumChildren()
     {
-      return children.size();
+        return children.size();
     }
     Cluster		*getChild(int n)
     {
-      return children[n];
+        return children[n];
     }
     void		addChild(Cluster *n);
     void		removeChild(Cluster *n);
     Cluster		*getParent()
     {
-      return parent;
+        return parent;
     }
     bool		hasChildren()
     {
-      return children.size() > 0;
+        return children.size() > 0;
     }
     void		openStream(const char *ext);
     void		openStreams(const char *ext);
     void		closeStreams();
     std::ofstream &getStream()
     {
-      return out;
+        return out;
     }
     const char	*makeDirs();
     const char	*getOutPath(const char *ext);
     Cluster		*find(const char *nam);
     virtual bool		isAggregate()
     {
-      return false;
+        return false;
     }
 
     void		printTree(std::ostream &out);
-  protected:
+protected:
 
     friend class XMLProgParser;
-  };
+};
 
 class Module : public Cluster
-  {
-  public:
+{
+public:
     Module(const char *name) : Cluster(name)
     { }
-  };
+};
 
 class Class : public Cluster
-  {
-  protected:
+{
+protected:
     CompoundType *type;
 
-  public:
+public:
     Class(const char *name) : Cluster(name)
     {
-      type = new CompoundType();
+        type = new CompoundType();
     }
 
     // A Class tends to be aggregated into the parent Module,
     // this isn't the case with Java, but hey, we're not doing that yet.
     virtual bool isAggregate()
     {
-      return true;
+        return true;
     }
-  };
+};
 
 #endif /*__CLUSTER_H__*/
 

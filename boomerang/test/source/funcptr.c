@@ -2,22 +2,22 @@
 
 void hello()
 {
-  printf("Hello, ");
+    printf("Hello, ");
 }
 
 void world()
 {
-  printf("world!\n");
+    printf("world!\n");
 }
 
 typedef void (*FPTR)(void);
 
 int main()
 {
-  FPTR p;
-  p = hello;
-  (*p)();
-  p = world;
-  (*p)();
-  return 0;
+    FPTR p;
+    p = hello;
+    (*p)();
+    p = world;
+    (*p)();
+    return 0;
 }

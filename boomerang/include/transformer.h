@@ -17,10 +17,10 @@
 #include <list>
 
 class ExpTransformer
-  {
-  protected:
+{
+protected:
     static std::list<ExpTransformer*> transformers;
-  public:
+public:
     ExpTransformer();
     virtual				~ExpTransformer()
     { };		// Prevent gcc4 warning
@@ -29,7 +29,7 @@ class ExpTransformer
 
     virtual Exp			*applyTo(Exp *e, bool &bMod) = 0;
     static Exp			*applyAllTo(Exp *e, bool &bMod);
-  };
+};
 
 #endif
 

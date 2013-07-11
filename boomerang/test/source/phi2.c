@@ -5,23 +5,23 @@
 
 int proc1 (int x, char* s)
 {
-  int z;
-  if (x > 2)
+    int z;
+    if (x > 2)
     {
-      x = strlen(s);
-      z = strlen(s);
-      printf("%d", x + z);
+        x = strlen(s);
+        z = strlen(s);
+        printf("%d", x + z);
     }
-  else
+    else
     {
-      x = strlen(s);
+        x = strlen(s);
     }
-  printf("%d, %d", x, z);
-  return x;
+    printf("%d, %d", x, z);
+    return x;
 }
 
 int main (int argc, char* argv[])
 {
-  printf("%d\n", proc1(argc, argv[1]));
-  return 0;
+    printf("%d\n", proc1(argc, argv[1]));
+    return 0;
 }

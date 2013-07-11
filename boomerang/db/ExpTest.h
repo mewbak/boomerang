@@ -3,7 +3,7 @@
 #include "exp.h"
 
 class ExpTest : public CPPUNIT_NS::TestFixture
-  {
+{
     CPPUNIT_TEST_SUITE( ExpTest );
     CPPUNIT_TEST( test99 );
     CPPUNIT_TEST( testFlt );
@@ -47,15 +47,15 @@ class ExpTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST( testVisitors );
     CPPUNIT_TEST_SUITE_END();
 
-  protected:
+protected:
     Const*		m_99;
     Location*	m_rof2;
 
-  public:
+public:
     void setUp ();
     void tearDown ();
 
-  protected:
+protected:
     void test99 ();
     void testFlt ();
     void testRegOf2 ();
@@ -105,5 +105,5 @@ class ExpTest : public CPPUNIT_NS::TestFixture
     void testAddUsedLocs();
     void testSubscriptVars();
     void testVisitors();
-  };
+};
 

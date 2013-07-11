@@ -52,21 +52,21 @@ class CallStatement;
 
 // Control flow types
 enum INSTTYPE {
-  I_UNCOND,				 // unconditional branch
-  I_COND,					 // conditional branch
-  I_N_COND,				 // case branch
-  I_CALL,					 // procedure call
-  I_RET,					 // return
-  I_COMPJUMP,				 // computed jump
-  I_COMPCALL				 // computed call
+    I_UNCOND,				 // unconditional branch
+    I_COND,					 // conditional branch
+    I_N_COND,				 // case branch
+    I_CALL,					 // procedure call
+    I_RET,					 // return
+    I_COMPJUMP,				 // computed jump
+    I_COMPCALL				 // computed call
 };
 
 // Put the target queue logic into this small class
 class TargetQueue
-  {
+{
     std::queue<ADDRESS> targets;
 
-  public:
+public:
 
     /*
      * FUNCTION:	visit
@@ -101,15 +101,15 @@ class TargetQueue
      */
     void		dump();
 
-  }
+}
 ;	// class TargetQueue
 
 
 typedef bool (*PHELPER)(ADDRESS dest, ADDRESS addr, std::list<RTL*>* lrtl);
 
 class FrontEnd
-  {
-  protected:
+{
+protected:
 //	  const int NOP_SIZE;			// Size of a no-op instruction (in bytes)
 //	  const int NOP_INST;			// No-op pattern
     NJMCDecoder	*decoder;		// The decoder
@@ -124,7 +124,7 @@ class FrontEnd
     std::map<ADDRESS, std::string> refHints;
     // Map from address to previously decoded RTLs for decoded indirect control transfer instructions
     std::map<ADDRESS, RTL*> previouslyDecoded;
-  public:
+public:
     /*
      * Constructor. Takes some parameters to save passing these around a lot
      */
@@ -137,13 +137,13 @@ class FrontEnd
     // Add a symbol to the loader
     void		AddSymbol(ADDRESS addr, const char *nam)
     {
-      pBF->AddSymbol(addr, nam);
+        pBF->AddSymbol(addr, nam);
     }
 
     // Add a "hint" that an instruction at the given address references a named global
     void		addRefHint(ADDRESS addr, const char *nam)
     {
-      refHints[addr] = nam;
+        refHints[addr] = nam;
     }
 
     /**
@@ -167,7 +167,7 @@ class FrontEnd
 
     BinaryFile 	*getBinaryFile()
     {
-      return pBF;
+        return pBF;
     }
 
     /*
@@ -185,7 +185,7 @@ class FrontEnd
      */
     NJMCDecoder *getDecoder()
     {
-      return decoder;
+        return decoder;
     }
 
     /*
@@ -227,7 +227,7 @@ class FrontEnd
      * Returns true on a good decode
      */
     virtual bool		processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag = false,
-                              bool spec = false);
+                                    bool spec = false);
 
     /*
      * Given the dest of a call, determine if this is a machine specific helper function with special semantics.
@@ -235,7 +235,7 @@ class FrontEnd
      */
     virtual bool		helperFunc(ADDRESS dest, ADDRESS addr, std::list<RTL*>* lrtl)
     {
-      return false;
+        return false;
     }
 
     /*
@@ -290,10 +290,10 @@ class FrontEnd
      */
     void		addDecodedRtl(ADDRESS a, RTL* rtl)
     {
-      previouslyDecoded[a] = rtl;
+        previouslyDecoded[a] = rtl;
     }
 
-  }
+}
 ;	// class FrontEnd
 
 

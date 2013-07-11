@@ -39,7 +39,7 @@
 
 @interface Object
 {
-  Class isa;	/* A pointer to the instance's class structure */
+    Class isa;	/* A pointer to the instance's class structure */
 }
 
 /* Initializing classes and instances */
@@ -103,8 +103,10 @@ aClassObject;
 
 /* Obtaining method descriptors from protocols */
 
-- (struct objc_method_description *) descriptionForMethod:(SEL)aSel;
-+ (struct objc_method_description *) descriptionForInstanceMethod:(SEL)aSel;
+- (struct objc_method_description *) descriptionForMethod:
+(SEL)aSel;
++ (struct objc_method_description *) descriptionForInstanceMethod:
+(SEL)aSel;
 
 /* Obtaining method handles */
 
@@ -175,7 +177,8 @@ aClassObject;
 
 @interface Object (Archiving)
 
-- startArchiving: (void *)stream;
+- startArchiving:
+(void *)stream;
 - finishUnarchiving;
 
 @end
@@ -185,7 +188,8 @@ aClassObject;
 @interface Object (DynamicLoading)
 
 //+ finishLoading:(headerType *)header;
-+ finishLoading:(struct mach_header *)header;
++ finishLoading:
+(struct mach_header *)header;
 + startUnloading;
 
 @end

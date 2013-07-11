@@ -58,8 +58,8 @@ Register::Register(const Register& r) : name(NULL), size(r.size),
     address(r.address),	mappedIndex(r.mappedIndex),
     mappedOffset(r.mappedOffset), flt(r.flt)
 {
-  if (r.name != NULL)
-    name = strdup(r.name);
+    if (r.name != NULL)
+        name = strdup(r.name);
 }
 
 /*==============================================================================
@@ -70,19 +70,19 @@ Register::Register(const Register& r) : name(NULL), size(r.size),
  *============================================================================*/
 Register Register::operator=(const Register& r2)
 {
-  // copy operator
+    // copy operator
 
-  //if (name != NULL)
-  //free(name);
-  name = r2.name;
-  size = r2.size;
-  flt	 = r2.flt;
-  address = r2.address;
+    //if (name != NULL)
+    //free(name);
+    name = r2.name;
+    size = r2.size;
+    flt	 = r2.flt;
+    address = r2.address;
 
-  mappedIndex = r2.mappedIndex;
-  mappedOffset = r2.mappedOffset;
+    mappedIndex = r2.mappedIndex;
+    mappedOffset = r2.mappedOffset;
 
-  return(*this);
+    return(*this);
 }
 
 /*==============================================================================
@@ -92,13 +92,13 @@ Register Register::operator=(const Register& r2)
  * RETURNS:		  True if the same
  *============================================================================*/
 bool Register::operator==(const Register& r2) const
-  {
+{
     // compare on name
     assert(name != NULL && r2.name != NULL);
     if (strcmp(name, r2.name) != 0)
-      return false;
+        return false;
     return true;
-  }
+}
 
 /*==============================================================================
  * FUNCTION:	  Register::operator<
@@ -107,14 +107,14 @@ bool Register::operator==(const Register& r2) const
  * RETURNS:		  true if this name is less than the given Register's name
  *============================================================================*/
 bool Register::operator<(const Register& r2) const
-  {
+{
     assert(name != NULL && r2.name != NULL);
 
     // compare on name
     if (strcmp(name, r2.name) < 0)
-      return true;
+        return true;
     return false;
-  }
+}
 
 /*==============================================================================
  * FUNCTION:	  Register::s_name
@@ -124,11 +124,11 @@ bool Register::operator<(const Register& r2) const
  *============================================================================*/
 void Register::s_name(const char *s)
 {
-  assert(s != NULL);
+    assert(s != NULL);
 
-  //if (name != NULL)
-  //free(name);
-  name = strdup(s);
+    //if (name != NULL)
+    //free(name);
+    name = strdup(s);
 }
 
 /*==============================================================================
@@ -138,13 +138,13 @@ void Register::s_name(const char *s)
  * RETURNS:		  The name as a character string
  *============================================================================*/
 char *Register::g_name() const
-  {
+{
     static char outname[100];
 
     strncpy(outname, name, 100);
     outname[99] = '\0';
     return(outname);
-  }
+}
 
 /*==============================================================================
  * FUNCTION:	  Register::g_type
@@ -153,8 +153,8 @@ char *Register::g_name() const
  * RETURNS:		  The type as a pointer to a Type object
  *============================================================================*/
 Type* Register::g_type() const
-  {
+{
     if (flt)
-      return new FloatType(size);
+        return new FloatType(size);
     return new IntegerType(size);
-  }
+}

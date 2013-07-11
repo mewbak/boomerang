@@ -12,7 +12,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 class StatementTest : public CPPUNIT_NS::TestFixture
-  {
+{
     CPPUNIT_TEST_SUITE( StatementTest );
     CPPUNIT_TEST( testEmpty );
     CPPUNIT_TEST( testFlow );
@@ -42,11 +42,11 @@ class StatementTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST( testFindConstants );
     CPPUNIT_TEST_SUITE_END();
 
-  public:
+public:
     void setUp ();
     void tearDown ();
 
-  protected:
+protected:
     void testEmpty ();
     void testFlow ();
     void testKill ();
@@ -72,5 +72,5 @@ class StatementTest : public CPPUNIT_NS::TestFixture
     void testBypass();
     void testStripSizes();
     void testFindConstants();
-  };
+};
 

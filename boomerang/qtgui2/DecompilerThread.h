@@ -12,10 +12,10 @@ class Cluster;
 class QTableWidget;
 
 class Decompiler : public QObject, public Watcher
-  {
+{
     Q_OBJECT
 
-  public:
+public:
     Decompiler() : QObject(), debugging(false), waiting(false)
     { }
 
@@ -35,7 +35,7 @@ class Decompiler : public QObject, public Watcher
 
     void setDebugging(bool d)
     {
-      debugging = d;
+        debugging = d;
     }
     void setUseDFTA(bool d);
     void setNoDecodeChildren(bool d);
@@ -43,7 +43,7 @@ class Decompiler : public QObject, public Watcher
     void addEntryPoint(ADDRESS a, const char *nam);
     void removeEntryPoint(ADDRESS a);
 
-  public slots:
+public slots:
     void changeInputFile(const QString &f);
     void changeOutputPath(const QString &path);
     void load();
@@ -52,7 +52,7 @@ class Decompiler : public QObject, public Watcher
     void generateCode();
     void stopWaiting();
 
-  signals:
+signals:
     void loading();
     void decoding();
     void decompiling();
@@ -77,7 +77,7 @@ class Decompiler : public QObject, public Watcher
 
     void debuggingPoint(const QString &name, const QString &description);
 
-  protected:
+protected:
 
     bool debugging, waiting;
 
@@ -90,20 +90,20 @@ class Decompiler : public QObject, public Watcher
     void emitClusterAndChildren(Cluster *root);
 
     std::vector<ADDRESS> user_entrypoints;
-  };
+};
 
 class DecompilerThread : public QThread
-  {
+{
     Q_OBJECT
 
-  public:
+public:
     DecompilerThread() : QThread(), decompiler(NULL)
     { }
 
     Decompiler *getDecompiler();
 
-  protected:
+protected:
     void run();
 
     Decompiler *decompiler;
-  };
+};

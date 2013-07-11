@@ -43,14 +43,14 @@ class LocationSet;
 
 // A class to implement sets of statements
 class StatementSet
-  {
+{
     std::set<Statement*> sset;							// For now, use use standard sets
 
-  public:
+public:
     typedef std::set<Statement*>::iterator iterator;
 
     ~StatementSet()
-  {}
+    {}
     void		makeUnion(StatementSet& other);		// Set union
     void		makeDiff (StatementSet& other);		// Set difference
     void		makeIsect(StatementSet& other);		// Set intersection
@@ -58,20 +58,20 @@ class StatementSet
 
     unsigned	size()
     {
-      return sset.size();    // Number of elements
+        return sset.size();    // Number of elements
     }
     iterator	begin()
     {
-      return sset.begin();
+        return sset.begin();
     }
     iterator	end()
     {
-      return sset.end();
+        return sset.end();
     }
 
     void		insert(Statement* s)
     {
-      sset.insert(s);    // Insertion
+        sset.insert(s);    // Insertion
     }
     bool		remove(Statement* s);					// Removal; rets false if not found
     bool		removeIfDefines(Exp* given);			// Remove if given exp is defined
@@ -81,31 +81,31 @@ class StatementSet
     // statement defines loc
     void		clear()
     {
-      sset.clear();    // Clear the set
+        sset.clear();    // Clear the set
     }
     bool		operator==(const StatementSet& o) const
-      {	// Compare if equal
+    {   // Compare if equal
         return sset == o.sset;
-      }
+    }
     bool		operator<(const StatementSet& o) const;	// Compare if less
     void		print(std::ostream& os);				// Print to os
     void		printNums(std::ostream& os);			// Print statements as numbers
     char*		prints();								// Print to string (for debug)
     void		dump();									// Print to standard error for debugging
-  }
+}
 ;		// class StatementSet
 
 // As above, but the Statements are known to be Assigns, and are sorted sensibly
 class AssignSet
-  {
+{
     std::set<Assign*, lessAssign> aset;			// For now, use use standard sets
 
-  public:
+public:
     typedef std::set<Assign*, lessAssign>::iterator iterator;
     typedef std::set<Assign*, lessAssign>::const_iterator const_iterator;
 
     ~AssignSet()
-  {}
+    {}
     void		makeUnion(AssignSet& other);		// Set union
     void		makeDiff (AssignSet& other);		// Set difference
     void		makeIsect(AssignSet& other);		// Set intersection
@@ -113,22 +113,22 @@ class AssignSet
 
     unsigned	size()
     {
-      return aset.size();    // Number of elements
+        return aset.size();    // Number of elements
     }
     //Statement* getFirst(StmtSetIter& it);	  		// Get the first Statement
     //Statement* getNext (StmtSetIter& it);	  		// Get next
     iterator	begin()
     {
-      return aset.begin();
+        return aset.begin();
     }
     iterator	end()
     {
-      return aset.end();
+        return aset.end();
     }
 
     void		insert(Assign* a)
     {
-      aset.insert(a);    // Insertion
+        aset.insert(a);    // Insertion
     }
     bool		remove(Assign* a);						// Removal; rets false if not found
     bool		removeIfDefines(Exp* given);			// Remove if given exp is defined
@@ -139,49 +139,49 @@ class AssignSet
 
     void		clear()
     {
-      aset.clear();    // Clear the set
+        aset.clear();    // Clear the set
     }
     bool		operator==(const AssignSet& o) const
-      {	// Compare if equal
+    {   // Compare if equal
         return aset == o.aset;
-      }
+    }
     bool		operator<(const AssignSet& o) const;	// Compare if less
     void		print(std::ostream& os);				// Print to os
     void		printNums(std::ostream& os);			// Print statements as numbers
     char*		prints();								// Print to string (for debug)
     void		dump();									// Print to standard error for debugging
     //bool	isLast(StmtSetIter& it);					// returns true if it is at end
-  }
+}
 ;		// class AssignSet
 
 class StatementList
-  {
+{
     std::list<Statement*> slist;		  				// For now, use use standard list
 
-  public:
+public:
     typedef std::list<Statement*>::iterator iterator;
     typedef std::list<Statement*>::reverse_iterator reverse_iterator;
     ~StatementList()
     {}
     unsigned	size()
     {
-      return slist.size();    // Number of elements
+        return slist.size();    // Number of elements
     }
     iterator	begin()
     {
-      return slist.begin();
+        return slist.begin();
     }
     iterator	end()
     {
-      return slist.end();
+        return slist.end();
     }
     reverse_iterator rbegin()
     {
-      return slist.rbegin();
+        return slist.rbegin();
     }
     reverse_iterator rend()
     {
-      return slist.rend();
+        return slist.rend();
     }
 
     // A special intersection operator; this becomes the intersection of StatementList a (assumed to be a list of
@@ -191,7 +191,7 @@ class StatementList
 
     void		append(Statement* s)
     {
-      slist.push_back(s);    // Insert at end
+        slist.push_back(s);    // Insert at end
     }
     void		append(StatementList& sl);			// Append whole StatementList
     void		append(StatementSet& sl);			// Append whole StatementSet
@@ -201,60 +201,60 @@ class StatementList
     // Use like this: it = mystatementlist.erase(it);
     iterator	erase(iterator it)
     {
-      return slist.erase(it);
+        return slist.erase(it);
     }
     iterator	erase(iterator first, iterator last)
     {
-      return slist.erase(first, last);
+        return slist.erase(first, last);
     }
     iterator	insert(iterator it, Statement* s)
     {
-      return slist.insert(it, s);
+        return slist.insert(it, s);
     }
     bool		exists(Statement* s);				// Search; returns false if not found
     char*		prints();							// Print to string (for debugging)
     void		dump();								// Print to standard error for debugging
     void		clear()
     {
-      slist.clear();
+        slist.clear();
     }
     void		makeCloneOf(StatementList& o);		// Make this a clone of o
     bool		existsOnLeft(Exp* loc);				// True if loc exists on the LHS of any Assignment in this list
     Assignment*	findOnLeft(Exp* loc);				// Return the first stmt with loc on the LHS
-  }
+}
 ;		// class StatementList
 
 class StatementVec
-  {
+{
     std::vector<Statement*> svec;			// For now, use use standard vector
 
-  public:
+public:
     typedef std::vector<Statement*>::iterator iterator;
     typedef std::vector<Statement*>::reverse_iterator reverse_iterator;
     unsigned	size()
     {
-      return svec.size();    // Number of elements
+        return svec.size();    // Number of elements
     }
     iterator	begin()
     {
-      return svec.begin();
+        return svec.begin();
     }
     iterator	end()
     {
-      return svec.end();
+        return svec.end();
     }
     reverse_iterator rbegin()
     {
-      return svec.rbegin();
+        return svec.rbegin();
     }
     reverse_iterator rend()
     {
-      return svec.rend();
+        return svec.rend();
     }
     // Get/put at position idx (0 based)
     Statement* operator[](int idx)
     {
-      return svec[idx];
+        return svec[idx];
     }
     void		putAt(int idx, Statement* s);
     iterator	remove(iterator it);
@@ -263,39 +263,39 @@ class StatementVec
     void		printNums(std::ostream& os);
     void		clear()
     {
-      svec.clear();
+        svec.clear();
     }
     bool		operator==(const StatementVec& o) const
-      {	// Compare if equal
+    {   // Compare if equal
         return svec == o.svec;
-      }
+    }
     bool		operator<(const StatementVec& o) const
-      {	// Compare if less
+    {   // Compare if less
         return svec < o.svec;
-      }
+    }
     void		append(Statement* s)
     {
-      svec.push_back(s);
+        svec.push_back(s);
     }
     void		erase(iterator it)
     {
-      svec.erase(it);
+        svec.erase(it);
     }
-  }
+}
 ;	// class StatementVec
 
 // For various purposes, we need sets of locations (registers or memory)
 class LocationSet
-  {
+{
     // We use a standard set, but with a special "less than" operator so that the sets are ordered
     // by expression value. If this is not done, then two expressions with the same value (say r[10])
     // but that happen to have different addresses (because they came from different statements)
     // would both be stored in the set (instead of the required set behaviour, where only one is stored)
     std::set<Exp*, lessExpStar> lset;
-  public:
+public:
     typedef std::set<Exp*, lessExpStar>::iterator iterator;
     LocationSet()
-  {}						// Default constructor
+    {}						// Default constructor
     ~LocationSet()
     {}						// virtual destructor kills warning
     LocationSet(const LocationSet& o);		// Copy constructor
@@ -304,30 +304,30 @@ class LocationSet
     void		makeDiff (LocationSet& other);			// Set difference
     void		clear()
     {
-      lset.clear();    // Clear the set
+        lset.clear();    // Clear the set
     }
     iterator	begin()
     {
-      return lset.begin();
+        return lset.begin();
     }
     iterator	end()
     {
-      return lset.end();
+        return lset.end();
     }
     void		insert(Exp* loc)
     {
-      lset.insert(loc);    // Insert the given location
+        lset.insert(loc);    // Insert the given location
     }
     void		remove(Exp* loc);						// Remove the given location
     void		remove(iterator ll)
     {
-      lset.erase(ll);    // Remove location, given iterator
+        lset.erase(ll);    // Remove location, given iterator
     }
     void		removeIfDefines(StatementSet& given);	// Remove locs defined in given
     unsigned	size() const
-      {
+    {
         return lset.size();    // Number of elements
-      }
+    }
     bool		operator==(const LocationSet& o) const; // Compare
     void		substitute(Assign& a);					// Substitute the given assignment to all
     void		print(std::ostream& os);				// Print to os
@@ -340,40 +340,40 @@ class LocationSet
     // Return an iterator to the found item (or end() if not). Only really makes sense if e has a wildcard
     iterator	find(Exp* e)
     {
-      return lset.find(e);
+        return lset.find(e);
     }
     // Find a location with a different def, but same expression. For example, pass r28{10},
     // return true if r28{20} in the set. If return true, dr points to the first different ref
     bool		findDifferentRef(RefExp* e, Exp *&dr);
     void		addSubscript(Statement* def /* , Cfg* cfg */);		// Add a subscript to all elements
-  }
+}
 ;	// class LocationSet
 
 class Range
-  {
-  protected:
+{
+protected:
     int stride, lowerBound, upperBound;
     Exp *base;
 
-  public:
+public:
     Range();
     Range(int stride, int lowerBound, int upperBound, Exp *base);
 
     Exp			*getBase()
     {
-      return base;
+        return base;
     }
     int			getStride()
     {
-      return stride;
+        return stride;
     }
     int			getLowerBound()
     {
-      return lowerBound;
+        return lowerBound;
     }
     int			getUpperBound()
     {
-      return upperBound;
+        return upperBound;
     }
     void		unionWith(Range &r);
     void		widenWith(Range &r);
@@ -382,23 +382,23 @@ class Range
 
     static const int MAX = 2147483647;
     static const int MIN = -2147483647;
-  };
+};
 
 class RangeMap
-  {
-  protected:
+{
+protected:
     std::map<Exp*, Range, lessExpStar> ranges;
 
-  public:
+public:
     RangeMap()
     { }
     void		addRange(Exp *loc, Range &r)
     {
-      ranges[loc] = r;
+        ranges[loc] = r;
     }
     bool		hasRange(Exp *loc)
     {
-      return ranges.find(loc) != ranges.end();
+        return ranges.find(loc) != ranges.end();
     }
     Range		&getRange(Exp *loc);
     void		unionwith(RangeMap &other);
@@ -408,14 +408,14 @@ class RangeMap
     void		killAllMemOfs();
     void		clear()
     {
-      ranges.clear();
+        ranges.clear();
     }
     bool		isSubset(RangeMap &other);
     bool		empty()
     {
-      return ranges.empty();
+        return ranges.empty();
     }
-  };
+};
 
 /// A class to store connections in a graph, e.g. for interferences of types or live ranges, or the phi_unite relation
 /// that phi statements imply
@@ -424,9 +424,9 @@ class RangeMap
 // space efficient manner), but then you still need maps from expression to bit number. So here a standard map is used,
 // and when a -> b is inserted, b->a is redundantly inserted.
 class ConnectionGraph
-  {
+{
     std::multimap<Exp*, Exp*, lessExpStar> emap;				// The map
-  public:
+public:
     typedef std::multimap<Exp*, Exp*, lessExpStar>::iterator iterator;
     ConnectionGraph()
     {}
@@ -435,11 +435,11 @@ class ConnectionGraph
     void		connect(Exp* a, Exp* b);
     iterator	begin()
     {
-      return emap.begin();
+        return emap.begin();
     }
     iterator	end()
     {
-      return emap.end();
+        return emap.end();
     }
     int			count(Exp* a);					// Return a count of locations connected to a
     bool		isConnected(Exp* a, Exp* b);	// Return true if a is connected to b
@@ -447,6 +447,6 @@ class ConnectionGraph
     void		update(Exp* a, Exp* b, Exp* c);
     iterator	remove(iterator aa);			// Remove the mapping at *aa
     void		dump();							// Dump for debugging
-  };
+};
 
 #endif	// #ifdef __MANAGED_H__

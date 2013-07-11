@@ -157,7 +157,7 @@ void TypeTest::testDataInterval() {
     dim.addItem(0x1004, "second", new FloatType(64));
     std::string actual(dim.prints());
     std::string expected("0x1000 first int\n"
-            "0x1004 second double\n");
+                         "0x1004 second double\n");
     CPPUNIT_ASSERT_EQUAL(expected, actual);
 
     DataIntervalEntry* pdie = dim.find(0x1000);

@@ -26,7 +26,7 @@
 /*********	Type definitions	************/
 
 typedef struct _malloc_zone_t
-  {
+{
     /* Only zone implementors should depend on the layout of this structure;
     Regular callers should use the access functions below */
     void	*reserved1;
@@ -43,7 +43,7 @@ typedef struct _malloc_zone_t
     void	*reserved4;
     struct malloc_introspection_t	*introspect;
     void	*reserved5;
-  }
+}
 malloc_zone_t;
 
 /*********	Creation and destruction	************/
@@ -98,10 +98,10 @@ extern const char *malloc_get_zone_name(malloc_zone_t *zone);
 /* Returns the name of a zone */
 
 typedef struct
-  {
+{
     vm_address_t	address;
     vm_size_t		size;
-  }
+}
 vm_range_t;
 
 typedef kern_return_t memory_reader_t(task_t remote_task, vm_address_t remote_address, vm_size_t size, void **local_memory);
@@ -116,7 +116,7 @@ typedef void vm_range_recorder_t(task_t, void *, unsigned type, vm_range_t *, un
 /* given a task and context, "records" the specified addresses */
 
 typedef struct malloc_introspection_t
-  {
+{
     kern_return_t (*enumerator)(task_t task, void *, unsigned type_mask, vm_address_t zone_address, memory_reader_t reader, vm_range_recorder_t recorder); /* enumerates all the malloc pointers in use */
     size_t	(*good_size)(malloc_zone_t *zone, size_t size);
     boolean_t 	(*check)(malloc_zone_t *zone); /* Consistency checker */
@@ -124,7 +124,7 @@ typedef struct malloc_introspection_t
     void	(*log)(malloc_zone_t *zone, void *address); /* Enables logging of activity */
     void	(*force_lock)(malloc_zone_t *zone); /* Forces locking zone */
     void	(*force_unlock)(malloc_zone_t *zone); /* Forces unlocking zone */
-  }
+}
 malloc_introspection_t;
 
 extern void malloc_printf(const char *format, ...);

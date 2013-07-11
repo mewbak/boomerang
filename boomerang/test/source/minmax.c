@@ -42,9 +42,9 @@
 #include <stdio.h>
 int main(int argc)
 {
-  if (argc < -2) argc = -2;
-  if (argc > 3) argc = 3;
+    if (argc < -2) argc = -2;
+    if (argc > 3) argc = 3;
 
-  printf("MinMax adjusted number of arguments is %d\n", argc);
-  return 0;
+    printf("MinMax adjusted number of arguments is %d\n", argc);
+    return 0;
 }

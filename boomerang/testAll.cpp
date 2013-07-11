@@ -14,65 +14,65 @@
 #ifndef USE_OLD_TESTING
 int main (int argc, char* argv[])
 {
-  if (argc>2)
-    chdir(argv[1]);
-  // Create the event manager and test controller
-  CPPUNIT_NS::TestResult controller;
+    if (argc>2)
+        chdir(argv[1]);
+    // Create the event manager and test controller
+    CPPUNIT_NS::TestResult controller;
 
-  // Add a listener that colllects test result
-  CPPUNIT_NS::TestResultCollector result;
-  controller.addListener( &result );
+    // Add a listener that colllects test result
+    CPPUNIT_NS::TestResultCollector result;
+    controller.addListener( &result );
 
-  // Add a listener that print dots as test run.
-  CPPUNIT_NS::BriefTestProgressListener progress;
-  controller.addListener( &progress );
+    // Add a listener that print dots as test run.
+    CPPUNIT_NS::BriefTestProgressListener progress;
+    controller.addListener( &progress );
 
-  CPPUNIT_NS::TestRunner runner;
-  CPPUNIT_NS::TestFactoryRegistry& registry = CPPUNIT_NS::TestFactoryRegistry::getRegistry();
+    CPPUNIT_NS::TestRunner runner;
+    CPPUNIT_NS::TestFactoryRegistry& registry = CPPUNIT_NS::TestFactoryRegistry::getRegistry();
 
-  // run all tests if none specified on command line
-  CPPUNIT_NS::Test* test_to_run = registry.makeTest();
-  if (argc>2)
+    // run all tests if none specified on command line
+    CPPUNIT_NS::Test* test_to_run = registry.makeTest();
+    if (argc>2)
     {
-      try
+        try
         {
-          test_to_run = test_to_run->findTest(argv[2]);
+            test_to_run = test_to_run->findTest(argv[2]);
         }
-      catch (std::invalid_argument &inv_arg)
+        catch (std::invalid_argument &inv_arg)
         {
-          fprintf(stderr,inv_arg.what());
-          return -1;
+            fprintf(stderr,inv_arg.what());
+            return -1;
         }
     }
-  runner.addTest( test_to_run );
-  runner.run(controller, "");
-  return result.wasSuccessful() ? 0 : -1;
+    runner.addTest( test_to_run );
+    runner.run(controller, "");
+    return result.wasSuccessful() ? 0 : -1;
 }
 #else
 
 int
 main( int argc, char* argv[] )
 {
-  // Create the event manager and test controller
-  CPPUNIT_NS::TestResult controller;
+    // Create the event manager and test controller
+    CPPUNIT_NS::TestResult controller;
 
-  // Add a listener that colllects test result
-  CPPUNIT_NS::TestResultCollector result;
-  controller.addListener( &result );
+    // Add a listener that colllects test result
+    CPPUNIT_NS::TestResultCollector result;
+    controller.addListener( &result );
 
-  // Add a listener that print dots as test run.
-  CPPUNIT_NS::BriefTestProgressListener progress;
-  controller.addListener( &progress );
+    // Add a listener that print dots as test run.
+    CPPUNIT_NS::BriefTestProgressListener progress;
+    controller.addListener( &progress );
 
-  // Add the top suite to the test runner
-  CPPUNIT_NS::TestRunner runner;
-  runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-  runner.run( controller );
+    // Add the top suite to the test runner
+    CPPUNIT_NS::TestRunner runner;
+    runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
+    runner.run( controller );
 
-  // Print test in a compiler compatible format.
-  CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
-  outputter.write();
+    // Print test in a compiler compatible format.
+    CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
+    outputter.write();
 
-  return result.wasSuccessful() ? 0 : 1;
+    return result.wasSuccessful() ? 0 : 1;
 }
 #endif

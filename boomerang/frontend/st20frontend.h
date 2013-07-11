@@ -20,23 +20,25 @@ class CallStatement;
 class ST20FrontEnd : public FrontEnd
 {
 public:
-  ST20FrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
-	/**
-	 * Virtual destructor.
-	 */
-virtual ~ST20FrontEnd();
+    ST20FrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
+    /**
+     * Virtual destructor.
+     */
+    virtual ~ST20FrontEnd();
 
-virtual platform getFrontEndId() { return PLAT_ST20; }
+    virtual platform getFrontEndId() {
+        return PLAT_ST20;
+    }
 
-virtual bool		processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag = false,
-						bool spec = false);
+    virtual bool		processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag = false,
+                                    bool spec = false);
 
 
-virtual std::vector<Exp*> &getDefaultParams();
-virtual std::vector<Exp*> &getDefaultReturns();
+    virtual std::vector<Exp*> &getDefaultParams();
+    virtual std::vector<Exp*> &getDefaultReturns();
 
-virtual ADDRESS getMainEntryPoint( bool &gotMain );
-	
+    virtual ADDRESS getMainEntryPoint( bool &gotMain );
+
 };
 
 #endif

@@ -12,11 +12,11 @@ void loadString(std::istream &is, std::string &str)
 {}
 int loadFID(std::istream &is)
 {
-  return 0;
+    return 0;
 }
 int loadLen(std::istream &is)
 {
-  return 0;
+    return 0;
 }
 void saveValue(std::ostream &os, bool b, bool wantlen)
 {}

@@ -4,15 +4,15 @@
 *
 *   \file mipsfrontend.h
 *
-* PURPOSE 
+* PURPOSE
 *
 *   Skeleton for MIPS disassembly.
 *
-* AUTHOR 
+* AUTHOR
 *
 *   \author Markus Gothe, nietzsche@lysator.liu.se
 *
-* REVISION 
+* REVISION
 *
 *   $Id: mipsfrontend.h,v 1.1 2007-11-18 16:52:12 thenihilist Exp $
 *
@@ -37,21 +37,23 @@ class CallStatement;
 class MIPSFrontEnd : public FrontEnd
 {
 public:
-	MIPSFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
-	/**
-	 * Virtual destructor.
-	 */
-virtual ~MIPSFrontEnd();
+    MIPSFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
+    /**
+     * Virtual destructor.
+     */
+    virtual ~MIPSFrontEnd();
 
-virtual platform getFrontEndId() { return PLAT_MIPS; }
+    virtual platform getFrontEndId() {
+        return PLAT_MIPS;
+    }
 
-virtual bool processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag = false, bool spec = false);
+    virtual bool processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag = false, bool spec = false);
 
-virtual std::vector<Exp*> &getDefaultParams();
-virtual std::vector<Exp*> &getDefaultReturns();
+    virtual std::vector<Exp*> &getDefaultParams();
+    virtual std::vector<Exp*> &getDefaultReturns();
 
-virtual ADDRESS getMainEntryPoint( bool &gotMain );
-	
+    virtual ADDRESS getMainEntryPoint( bool &gotMain );
+
 };
 
 #endif

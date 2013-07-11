@@ -34,9 +34,9 @@
 typedef struct objc_class *Class;
 
 typedef struct objc_object
-  {
+{
     Class isa;
-  }
+}
 *id;
 
 typedef struct objc_selector 	*SEL;

@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 char *glyphs[] =
-  {
+{
     "         ###  ### ###  # #   ##### ###   #  ##     ###  ",
     "         ###  ### ###  # #  #  #  ## #  #  #  #    ###   ",
     "         ###   #   # ########  #   ### #    ##      #   ",
@@ -120,45 +120,46 @@ char *glyphs[] =
     "   ##      #      #  ##                 ##        # # # ",
     "   ##      #     #    #        #        #        # # # #",
     "  #  #     #    #     #        #        #         # # # ",
-    " #    #    #   ######  ###     #     ###         # # # #"};
+    " #    #    #   ######  ###     #     ###         # # # #"
+};
 
 
 int main()
 {
-  int argc;
-  char **argv = malloc(12);
-  int a, b, c, len, ind;
-  char line[80];
+    int argc;
+    char **argv = malloc(12);
+    int a, b, c, len, ind;
+    char line[80];
 
-  argv[1] = "HelloWorld";
-  argc = 2;
+    argv[1] = "HelloWorld";
+    argc = 2;
 
-  for (argv++; --argc; argv++)
+    for (argv++; --argc; argv++)
     {
-      len = strlen(*argv);
-      if (len > 10)
-        len = 10;
-      for (a = 0; a < 7; a++)
+        len = strlen(*argv);
+        if (len > 10)
+            len = 10;
+        for (a = 0; a < 7; a++)
         {
-          for (b = 0; b < len; b++)
+            for (b = 0; b < len; b++)
             {
-              if ((ind = (*argv)[b] - ' ') < 0)
-                ind = 0;
-              for (c = 0; c < 7; c++)
+                if ((ind = (*argv)[b] - ' ') < 0)
+                    ind = 0;
+                for (c = 0; c < 7; c++)
                 {
-                  line[b * 8 + c] = glyphs[(ind / 8 * 7) + a][(ind % 8 * 7) + c];
+                    line[b * 8 + c] = glyphs[(ind / 8 * 7) + a][(ind % 8 * 7) + c];
                 }
-              line[b * 8 + 7] = ' ';
+                line[b * 8 + 7] = ' ';
             }
-          for (b = len * 8 - 1; b >= 0; b--)
+            for (b = len * 8 - 1; b >= 0; b--)
             {
-              if (line[b] != ' ')
-                break;
-              line[b] = '\0';
+                if (line[b] != ' ')
+                    break;
+                line[b] = '\0';
             }
-          puts(line);
+            puts(line);
         }
-      puts("");
+        puts("");
     }
-  return 0;
+    return 0;
 }

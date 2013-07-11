@@ -1,19 +1,19 @@
 typedef struct
-  {
+{
     short e_termination;
     short e_exit;
-  }
+}
 exit_status;
 
 typedef struct
-  {
+{
     int tv_sec;
     int tv_usec;
-  }
+}
 timeval;
 
 typedef struct
-  {
+{
     short ut_type;
     pid_t ut_pid;
     char ut_line[32];
@@ -25,7 +25,7 @@ typedef struct
     timeval ut_tv;
     int ut_addr_v6[4];
     char __unused[20];
-  }
+}
 utmp;
 
 utmp *getutent(void);

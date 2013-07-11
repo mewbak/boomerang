@@ -21,8 +21,8 @@
 #define MEMO_H
 
 class Memo
-  {
-  public:
+{
+public:
     Memo(int m) : mId(m)
     { }
     int mId;
@@ -30,14 +30,14 @@ class Memo
     { }
     virtual ~Memo()
     { }			// Kill gcc warning
-  };
+};
 
 class Memoisable
-  {
-  public:
+{
+public:
     Memoisable()
     {
-      cur_memo = memos.begin();
+        cur_memo = memos.begin();
     }
     virtual ~Memoisable()
     { }
@@ -52,10 +52,10 @@ class Memoisable
     bool canRestore(bool dec = false);
     void restoreMemo(bool dec = false);
 
-  protected:
+protected:
     std::list<Memo*> memos;
     std::list<Memo*>::iterator cur_memo;
-  };
+};
 
 #endif
 

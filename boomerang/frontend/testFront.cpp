@@ -20,23 +20,23 @@
 
 int main(int argc, char** argv)
 {
-	CppUnit::TestSuite suite;
+    CppUnit::TestSuite suite;
 
 //	FrontSparcTest fst("FrontSparcTest");
 //	  FrontendTest fet("FrontendTest");
 //	FrontPentTest fpt("FrontPentTest");
-	FrontPentTest fSt("FrontPentTest");
+    FrontPentTest fSt("FrontPentTest");
 
 //	fst.registerTests(&suite);
 //	fpt.registerTests(&suite);
-	fSt.registerTests(&suite);
+    fSt.registerTests(&suite);
 
-	CppUnit::TextTestResult res;
+    CppUnit::TextTestResult res;
 
-	prog.readLibParams();		 // Read library signatures (once!)
-	suite.run( &res );
-	std::cout << res << std::endl;
+    prog.readLibParams();		 // Read library signatures (once!)
+    suite.run( &res );
+    std::cout << res << std::endl;
 
-	return 0;
+    return 0;
 }
 

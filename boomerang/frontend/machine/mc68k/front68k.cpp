@@ -53,27 +53,32 @@ queue < ADDRESS> qLabels;       // Queue of labels this procedure
 void initCti();             // Imp in cti68k.cc
 
 struct SemCmp
-{ bool operator() (const SemStr& ss1, const SemStr& ss2) const; };
+{
+    bool operator() (const SemStr& ss1, const SemStr& ss2) const;
+};
 bool SemCmp::operator() (const SemStr& ss1, const SemStr& ss2) const
-{ return ss1 < ss2; }
-    
+{
+    return ss1 < ss2;
+}
+
 // A map from semantic string to integer (for identifying branch statements)
 static map<SemStr, int, SemCmp> condMap;
 
 int arrConds[12][7] = {
-{ idZF},                                        // HLJCOND_JE: Z
-{ idNot, idZF},                                 // HLJCOND_JNE: ~Z
-{ idBitXor, idNF, idOF},                        // HLJCOND_JSL: N ^ O
-{ idBitOr, idBitXor, idNF, idOF, idZF},         // HLJCOND_JSLE: (N ^ O) | Z
-{ idNot, idBitXor, idNF, idOF },                // HLJCOND_JGES: ~(N ^ O)
-{ idBitAnd, idNot, idBitXor, idNF, idOF,
-    idNot, idZF},                               // HLJCOND_JSG: ~(N ^ O) & ~Z
-{ idCF},                                        // HLJCOND_JUL: C
-{ idBitOr, idCF, idZF},                         // HLJCOND_JULE: C | Z
-{ idNot, idCF},                                 // HLJCOND_JUGE: ~C
-{ idBitAnd, idNot, idCF, idNot, idZF},          // HLJCOND_JUG: ~C & ~Z
-{ idNF},                                        // HLJCOND_JMI: N
-{ idNot, idNF},                                 // HLJCOND_JPOS: ~N
+    { idZF},                                        // HLJCOND_JE: Z
+    { idNot, idZF},                                 // HLJCOND_JNE: ~Z
+    { idBitXor, idNF, idOF},                        // HLJCOND_JSL: N ^ O
+    { idBitOr, idBitXor, idNF, idOF, idZF},         // HLJCOND_JSLE: (N ^ O) | Z
+    { idNot, idBitXor, idNF, idOF },                // HLJCOND_JGES: ~(N ^ O)
+    {   idBitAnd, idNot, idBitXor, idNF, idOF,
+        idNot, idZF
+    },                               // HLJCOND_JSG: ~(N ^ O) & ~Z
+    { idCF},                                        // HLJCOND_JUL: C
+    { idBitOr, idCF, idZF},                         // HLJCOND_JULE: C | Z
+    { idNot, idCF},                                 // HLJCOND_JUGE: ~C
+    { idBitAnd, idNot, idCF, idNot, idZF},          // HLJCOND_JUG: ~C & ~Z
+    { idNF},                                        // HLJCOND_JMI: N
+    { idNot, idNF},                                 // HLJCOND_JPOS: ~N
 };
 
 // Ugly. The lengths of the above arrays.
@@ -82,7 +87,7 @@ int condLengths[12] = {1, 2, 3, 5, 4, 7, 1, 3, 2, 5, 1, 2};
 /*==============================================================================
  * FUNCTION:      initFront
  * OVERVIEW:      Initialise the front end.
- * PARAMETERS:    <none>                
+ * PARAMETERS:    <none>
  * RETURNS:       <nothing>
  *============================================================================*/
 void initFront()
@@ -123,7 +128,7 @@ JCOND_TYPE getCond(const SemStr* pCond)
  * RETURNS:       True if successful decode
  *============================================================================*/
 bool FrontEndSrc::processProc(ADDRESS uAddr, UserProc* pProc, ofstream &os,
-    bool spec /* = false */)
+                              bool spec /* = false */)
 {
     // Call the base class to do all of the work
     return FrontEnd::processProc(uAddr, pProc, os, spec);
@@ -143,7 +148,7 @@ bool FrontEndSrc::processProc(ADDRESS uAddr, UserProc* pProc, ofstream &os,
  * RETURNS:       <nothing>
  *============================================================================*/
 void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
-    NJMCDecoder& decoder)
+                 NJMCDecoder& decoder)
 {
     PBB pBB;                    // Pointer to the current basic block
     INSTTYPE type;              // Cfg type of instruction (e.g. IRET)
@@ -201,16 +206,18 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                 warning(str(ost));
                 // Emit the RTL anyway, so we have the address and maybe
                 // some other clues
-                BB_rtls->push_back(new RTL(uAddr));  
+                BB_rtls->push_back(new RTL(uAddr));
                 pBB = pCfg->newBB(BB_rtls, INVALID, 0);
-                sequentialDecode = false; BB_rtls = NULL; continue;
+                sequentialDecode = false;
+                BB_rtls = NULL;
+                continue;
             }
-    
+
             HLJump* rtl_jump = static_cast<HLJump*>(pRtl);
 
             // Display RTL representation if asked
             if (progOptions.rtl) pRtl->print();
-    
+
             ADDRESS uDest;
 
             switch (pRtl->getKind())
@@ -219,7 +226,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
             case JUMP_HRTL:
             {
                 uDest = rtl_jump->getFixedDest();
-    
+
                 // Handle one way jumps and computed jumps separately
                 if (uDest != NO_ADDRESS) {
                     BB_rtls->push_back(pRtl);
@@ -246,7 +253,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                         ost << "Error: Instruction at " << hex << uAddr;
                         ost << " branches beyond end of section, to ";
                         ost << uDest;
-                        error(str(ost)); 
+                        error(str(ost));
                     }
                 }
                 break;
@@ -267,12 +274,12 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                     string sKind("JUMP");
                     if (type == I_COMPCALL) sKind = "CALL";
                     ost << "COMPUTED " << sKind << " at "
-                    << hex << uAddr << endl;
+                        << hex << uAddr << endl;
                     warning(str(ost));
                     BB_rtls = NULL;    // New HRTLList for next BB
                 }
                 sequentialDecode = false;
-                break;     
+                break;
             }
 
 
@@ -300,11 +307,11 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                         ost << "Error: Instruction at " << hex << uAddr;
                         ost << " branches beyond end of section, to ";
                         ost << uDest;
-                        error(str(ost)); 
+                        error(str(ost));
                     }
 
                     // Add the fall-through outedge
-                    pCfg->addOutEdge(pBB, uAddr + inst.numBytes); 
+                    pCfg->addOutEdge(pBB, uAddr + inst.numBytes);
                 }
 
                 // Create the list of RTLs for the next basic block and continue
@@ -331,7 +338,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
 
                 }
                 else {      // Static call
-                
+
                     BB_rtls->push_back(pRtl);
 
                     // Find the address of the callee.
@@ -344,7 +351,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                     // Record the called address as the start of a new
                     // procedure if it didn't already exist.
                     if ((uNewAddr != NO_ADDRESS) &&
-                      prog.findProc(uNewAddr) == NULL) {
+                            prog.findProc(uNewAddr) == NULL) {
                         prog.visitProc(uNewAddr);
                         if (progOptions.trace)
                             cout << "p" << hex << uNewAddr << "\t" << flush;
@@ -370,7 +377,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                             // The only RTL in the basic block is a high level
                             // return that doesn't have any RTs.
                             rtls->push_back(new HLReturn(0, NULL));
-        
+
                             BasicBlock* returnBB = pCfg->newBB(rtls, RET, 0);
                             // Add out edge from call to return
                             pCfg->addOutEdge(pBB, returnBB);
@@ -380,7 +387,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                             pBB->setJumpReqd();
                             // Give the enclosing proc a dummy callee epilogue
                             pProc->setEpilogue(new CalleeEpilogue("__dummy",
-                                list<string>()));
+                                                                  list<string>()));
                             // Mike: do we need to set return locations?
                             // This ends the function
                             sequentialDecode = false;
@@ -398,7 +405,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                 // Create the list of RTLs for the next basic block and continue
                 // with the next instruction.
                 BB_rtls = NULL;
-                break;  
+                break;
             }
 
             case RET_HRTL:
@@ -424,7 +431,7 @@ void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
                 // Just emit the current instr to the current BB
                 BB_rtls->push_back(pRtl);
                 break;
-        
+
             } // switch (pRtl->getKind())
 
             uAddr += inst.numBytes;

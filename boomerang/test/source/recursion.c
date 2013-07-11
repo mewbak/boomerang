@@ -25,98 +25,98 @@ void l(int x);
 
 int main(int argc)
 {
-  printf("a(%d)\n", argc);
-  b(argc*3);
-  return 0;
+    printf("a(%d)\n", argc);
+    b(argc*3);
+    return 0;
 }
 
 void b(int x)
 {
-  printf("b(%d)\n", x);
-  c(x-1);
+    printf("b(%d)\n", x);
+    c(x-1);
 }
 
 void c(int x)
 {
-  printf("c(%d)\n", x);
-  switch (x)
+    printf("c(%d)\n", x);
+    switch (x)
     {
     case 2:
-      d(2);
-      break;
+        d(2);
+        break;
     case 3:
-      f(3);
-      break;
+        f(3);
+        break;
     case 4:
-      h(4);
-      break;
+        h(4);
+        break;
     case 5:
-      j(5);
-      break;
+        j(5);
+        break;
     case 6:
-      l(6);
-      break;
+        l(6);
+        break;
     }
 }
 
 void d(int x)
 {
-  printf("d(%d)\n", x);
-  if (x > 1)
-    e(x-1);
+    printf("d(%d)\n", x);
+    if (x > 1)
+        e(x-1);
 }
 
 void e(int x)
 {
-  printf("e(%d)\n", x);
-  c(x >> 1);
+    printf("e(%d)\n", x);
+    c(x >> 1);
 }
 
 void f(int x)
 {
-  printf("f(%d)\n", x);
-  if (x > 1)
-    g(x-1);
+    printf("f(%d)\n", x);
+    if (x > 1)
+        g(x-1);
 }
 
 void g(int x)
 {
-  printf("g(%d)\n", x);
-  if (x > 1)
-    f(x-1);
+    printf("g(%d)\n", x);
+    if (x > 1)
+        f(x-1);
 }
 
 void h(int x)
 {
-  printf("h(%d)\n", x);
-  if (x > 0)
-    i(x-1);
+    printf("h(%d)\n", x);
+    if (x > 0)
+        i(x-1);
 }
 
 void i(int x)
 {
-  printf("i(%d)\n", x);
+    printf("i(%d)\n", x);
 }
 
 void j(int x)
 {
-  printf("j(%d)\n", x);
-  if (x >= 2)
-    k(x);
+    printf("j(%d)\n", x);
+    if (x >= 2)
+        k(x);
 }
 
 void k(int x)
 {
-  printf("k(%d)\n", x);
-  if (x >= 2)
-    e(x-1);
+    printf("k(%d)\n", x);
+    if (x >= 2)
+        e(x-1);
 }
 
 void l(int x)
 {
-  printf("l(%d)\n", x);
-  if (x >= 2)
-    b(x+2);
+    printf("l(%d)\n", x);
+    if (x >= 2)
+        b(x+2);
 }
 
 

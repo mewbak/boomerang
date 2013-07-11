@@ -13,15 +13,15 @@ class DecompilerThread;
 class QToolButton;
 
 class MainWindow : public QMainWindow
-  {
+{
     Q_OBJECT
 
-  public:
+public:
     MainWindow(QWidget *parent = 0);
 
     void errorLoadingFile();
 
-  public slots:
+public slots:
     void loadComplete();
     void decodeComplete();
     void decompileComplete();
@@ -92,11 +92,11 @@ class MainWindow : public QMainWindow
     void closeCurrentTab();
     void currentTabTextChanged();
 
-  protected:
+protected:
     void showInitPage();
     void saveSettings();
 
-  private:
+private:
     Ui::MainWindow ui;
     DecompilerThread *decompilerThread;
 
@@ -108,7 +108,7 @@ class MainWindow : public QMainWindow
 
     QWidget *structs;
     bool loadingSettings;
-  };
+};
 
 #endif
 

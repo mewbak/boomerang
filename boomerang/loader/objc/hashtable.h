@@ -43,12 +43,12 @@ The objective C class HashTable is preferred when dealing with (key, values) ass
 As well-behaved scalable data structures, hash tables double in size when they start becoming full, thus guaranteeing both average constant time access and linear size. */
 
 typedef struct
-  {
+{
     uarith_t	(*hash)(const void *info, const void *data);
     int		(*isEqual)(const void *info, const void *data1, const void *data2);
     void	(*free)(const void *info, void *data);
     int		style; /* reserved for future expansion; currently 0 */
-  }
+}
 NXHashTablePrototype;
 
 /* the info argument allows a certain generality, such as freeing according to some owner information */
@@ -60,13 +60,13 @@ NXHashTablePrototype;
  */
 
 typedef struct
-  {
+{
     const NXHashTablePrototype	*prototype;
     unsigned			count;
     unsigned			nbBuckets;
     void			*buckets;
     const void			*info;
-  }
+}
 NXHashTable;
 /* private data structure; may change */
 
@@ -135,10 +135,10 @@ OBJC_EXPORT void *NXHashRemove (NXHashTable *table, const void *data);
 */
 
 typedef struct
-  {
+{
     int i;
     int j;
-  }
+}
 NXHashState;
 /* callers should not rely on actual contents of the struct */
 
@@ -202,8 +202,8 @@ allocations are made in a special read only zone. */
 
 OBJC_EXPORT NXAtom NXUniqueStringWithLength(const char *buffer, int length);
 /* assumes that buffer is a non NULL buffer of at least
-length characters.  Returns a previously created string or 
-a new string that is a copy of buffer. 
+length characters.  Returns a previously created string or
+a new string that is a copy of buffer.
 If buffer contains \0, string will be truncated.
 As for NXUniqueString, returned string should never be modified.  */
 

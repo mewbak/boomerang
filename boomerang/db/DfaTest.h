@@ -1,7 +1,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 class DfaTest : public CPPUNIT_NS::TestFixture
-  {
+{
     CPPUNIT_TEST_SUITE( DfaTest );
     CPPUNIT_TEST( testMeetInt );
     CPPUNIT_TEST( testMeetSize );
@@ -9,14 +9,14 @@ class DfaTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST( testMeetUnion );
     CPPUNIT_TEST_SUITE_END();
 
-  public:
+public:
     void setUp ();
     void tearDown ();
 
-  protected:
+protected:
     void testMeetInt();
     void testMeetSize();
     void testMeetPointer();
     void testMeetUnion();
-  };
+};
 

@@ -41,12 +41,12 @@
 
 
 typedef struct _NXHandler
-  {	/* a node in the handler chain */
+{   /* a node in the handler chain */
     jmp_buf jumpState;			/* place to longjmp to */
     struct _NXHandler *next;		/* ptr to next handler */
     int code;				/* error code of exception */
     const void *data1, *data2;		/* blind data for describing error */
-  }
+}
 NXHandler;
 
 

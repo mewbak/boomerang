@@ -34,10 +34,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CfgTest );
 static bool logset = false;
 void CfgTest::setUp ()
 {
-  if (!logset)
+    if (!logset)
     {
-      logset = true;
-      Boomerang::get()->setLogger(new NullLogger());
+        logset = true;
+        Boomerang::get()->setLogger(new NullLogger());
     }
 }
 
@@ -62,47 +62,47 @@ void CfgTest::tearDown ()
 
 void CfgTest::testDominators ()
 {
-  BinaryFileFactory bff;
-  BinaryFile *pBF = bff.Load(FRONTIER_PENTIUM);
-  CPPUNIT_ASSERT(pBF != 0);
-  Prog* prog = new Prog;
-  FrontEnd *pFE = new PentiumFrontEnd(pBF, prog, &bff);
-  Type::clearNamedTypes();
-  prog->setFrontEnd(pFE);
-  pFE->decode(prog);
+    BinaryFileFactory bff;
+    BinaryFile *pBF = bff.Load(FRONTIER_PENTIUM);
+    CPPUNIT_ASSERT(pBF != 0);
+    Prog* prog = new Prog;
+    FrontEnd *pFE = new PentiumFrontEnd(pBF, prog, &bff);
+    Type::clearNamedTypes();
+    prog->setFrontEnd(pFE);
+    pFE->decode(prog);
 
-  bool gotMain;
-  ADDRESS addr = pFE->getMainEntryPoint(gotMain);
-  CPPUNIT_ASSERT (addr != NO_ADDRESS);
+    bool gotMain;
+    ADDRESS addr = pFE->getMainEntryPoint(gotMain);
+    CPPUNIT_ASSERT (addr != NO_ADDRESS);
 
-  UserProc* pProc = (UserProc*) prog->getProc(0);
-  Cfg* cfg = pProc->getCFG();
-  DataFlow* df = pProc->getDataFlow();
-  df->dominators(cfg);
+    UserProc* pProc = (UserProc*) prog->getProc(0);
+    Cfg* cfg = pProc->getCFG();
+    DataFlow* df = pProc->getDataFlow();
+    df->dominators(cfg);
 
-  // Find BB "5" (as per Appel, Figure 19.5).
-  BB_IT it;
-  PBB bb = cfg->getFirstBB(it);
-  while (bb && bb->getLowAddr() != FRONTIER_FIVE)
+    // Find BB "5" (as per Appel, Figure 19.5).
+    BB_IT it;
+    PBB bb = cfg->getFirstBB(it);
+    while (bb && bb->getLowAddr() != FRONTIER_FIVE)
     {
-      bb = cfg->getNextBB(it);
+        bb = cfg->getNextBB(it);
     }
-  CPPUNIT_ASSERT(bb);
+    CPPUNIT_ASSERT(bb);
 
-  std::ostringstream expected, actual;
-  //expected << std::hex << FRONTIER_FIVE << " " << FRONTIER_THIRTEEN << " " << FRONTIER_TWELVE << " " <<
-  //	FRONTIER_FOUR << " ";
-  expected << std::hex << FRONTIER_THIRTEEN << " " << FRONTIER_FOUR << " " << FRONTIER_TWELVE << " " <<
-  FRONTIER_FIVE << " ";
-  int n5 = df->pbbToNode(bb);
-  std::set<int>::iterator ii;
-  std::set<int>& DFset = df->getDF(n5);
-  for (ii=DFset.begin(); ii != DFset.end(); ii++)
-    actual << std::hex << (unsigned)df->nodeToBB(*ii)->getLowAddr() << " ";
-  CPPUNIT_ASSERT_EQUAL(expected.str(), actual.str());
+    std::ostringstream expected, actual;
+    //expected << std::hex << FRONTIER_FIVE << " " << FRONTIER_THIRTEEN << " " << FRONTIER_TWELVE << " " <<
+    //	FRONTIER_FOUR << " ";
+    expected << std::hex << FRONTIER_THIRTEEN << " " << FRONTIER_FOUR << " " << FRONTIER_TWELVE << " " <<
+             FRONTIER_FIVE << " ";
+    int n5 = df->pbbToNode(bb);
+    std::set<int>::iterator ii;
+    std::set<int>& DFset = df->getDF(n5);
+    for (ii=DFset.begin(); ii != DFset.end(); ii++)
+        actual << std::hex << (unsigned)df->nodeToBB(*ii)->getLowAddr() << " ";
+    CPPUNIT_ASSERT_EQUAL(expected.str(), actual.str());
 
-  pBF->UnLoad();
-  delete pFE;
+    pBF->UnLoad();
+    delete pFE;
 }
 
 
@@ -118,51 +118,51 @@ void CfgTest::testDominators ()
 
 void CfgTest::testSemiDominators ()
 {
-  BinaryFileFactory bff;
-  BinaryFile* pBF = bff.Load(SEMI_PENTIUM);
-  CPPUNIT_ASSERT(pBF != 0);
-  Prog* prog = new Prog;
-  FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
-  Type::clearNamedTypes();
-  prog->setFrontEnd(pFE);
-  pFE->decode(prog);
+    BinaryFileFactory bff;
+    BinaryFile* pBF = bff.Load(SEMI_PENTIUM);
+    CPPUNIT_ASSERT(pBF != 0);
+    Prog* prog = new Prog;
+    FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
+    Type::clearNamedTypes();
+    prog->setFrontEnd(pFE);
+    pFE->decode(prog);
 
-  bool gotMain;
-  ADDRESS addr = pFE->getMainEntryPoint(gotMain);
-  CPPUNIT_ASSERT (addr != NO_ADDRESS);
+    bool gotMain;
+    ADDRESS addr = pFE->getMainEntryPoint(gotMain);
+    CPPUNIT_ASSERT (addr != NO_ADDRESS);
 
-  UserProc* pProc = (UserProc*) prog->getProc(0);
-  Cfg* cfg = pProc->getCFG();
+    UserProc* pProc = (UserProc*) prog->getProc(0);
+    Cfg* cfg = pProc->getCFG();
 
-  DataFlow* df = pProc->getDataFlow();
-  df->dominators(cfg);
+    DataFlow* df = pProc->getDataFlow();
+    df->dominators(cfg);
 
-  // Find BB "L (6)" (as per Appel, Figure 19.8).
-  BB_IT it;
-  PBB bb = cfg->getFirstBB(it);
-  while (bb && bb->getLowAddr() != SEMI_L)
+    // Find BB "L (6)" (as per Appel, Figure 19.8).
+    BB_IT it;
+    PBB bb = cfg->getFirstBB(it);
+    while (bb && bb->getLowAddr() != SEMI_L)
     {
-      bb = cfg->getNextBB(it);
+        bb = cfg->getNextBB(it);
     }
-  CPPUNIT_ASSERT(bb);
-  int nL = df->pbbToNode(bb);
+    CPPUNIT_ASSERT(bb);
+    int nL = df->pbbToNode(bb);
 
-  // The dominator for L should be B, where the semi dominator is D
-  // (book says F)
-  unsigned actual_dom	 = (unsigned)df->nodeToBB(df->getIdom(nL))->getLowAddr();
-  unsigned actual_semi = (unsigned)df->nodeToBB(df->getSemi(nL))->getLowAddr();
-  CPPUNIT_ASSERT_EQUAL((unsigned)SEMI_B, actual_dom);
-  CPPUNIT_ASSERT_EQUAL((unsigned)SEMI_D, actual_semi);
-  // Check the final dominator frontier as well; should be M and B
-  std::ostringstream expected, actual;
-  //expected << std::hex << SEMI_M << " " << SEMI_B << " ";
-  expected << std::hex << SEMI_B << " " << SEMI_M << " ";
-  std::set<int>::iterator ii;
-  std::set<int>& DFset = df->getDF(nL);
-  for (ii=DFset.begin(); ii != DFset.end(); ii++)
-    actual << std::hex << (unsigned)df->nodeToBB(*ii)->getLowAddr() << " ";
-  CPPUNIT_ASSERT_EQUAL(expected.str(), actual.str());
-  delete pFE;
+    // The dominator for L should be B, where the semi dominator is D
+    // (book says F)
+    unsigned actual_dom	 = (unsigned)df->nodeToBB(df->getIdom(nL))->getLowAddr();
+    unsigned actual_semi = (unsigned)df->nodeToBB(df->getSemi(nL))->getLowAddr();
+    CPPUNIT_ASSERT_EQUAL((unsigned)SEMI_B, actual_dom);
+    CPPUNIT_ASSERT_EQUAL((unsigned)SEMI_D, actual_semi);
+    // Check the final dominator frontier as well; should be M and B
+    std::ostringstream expected, actual;
+    //expected << std::hex << SEMI_M << " " << SEMI_B << " ";
+    expected << std::hex << SEMI_B << " " << SEMI_M << " ";
+    std::set<int>::iterator ii;
+    std::set<int>& DFset = df->getDF(nL);
+    for (ii=DFset.begin(); ii != DFset.end(); ii++)
+        actual << std::hex << (unsigned)df->nodeToBB(*ii)->getLowAddr() << " ";
+    CPPUNIT_ASSERT_EQUAL(expected.str(), actual.str());
+    delete pFE;
 }
 
 /*==============================================================================
@@ -171,40 +171,40 @@ void CfgTest::testSemiDominators ()
  *============================================================================*/
 void CfgTest::testPlacePhi ()
 {
-  BinaryFileFactory bff;
-  BinaryFile* pBF = bff.Load(FRONTIER_PENTIUM);
-  CPPUNIT_ASSERT(pBF != 0);
-  Prog* prog = new Prog;
-  FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
-  Type::clearNamedTypes();
-  prog->setFrontEnd(pFE);
-  pFE->decode(prog);
+    BinaryFileFactory bff;
+    BinaryFile* pBF = bff.Load(FRONTIER_PENTIUM);
+    CPPUNIT_ASSERT(pBF != 0);
+    Prog* prog = new Prog;
+    FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
+    Type::clearNamedTypes();
+    prog->setFrontEnd(pFE);
+    pFE->decode(prog);
 
-  UserProc* pProc = (UserProc*) prog->getProc(0);
-  Cfg* cfg = pProc->getCFG();
+    UserProc* pProc = (UserProc*) prog->getProc(0);
+    Cfg* cfg = pProc->getCFG();
 
-  // Simplify expressions (e.g. m[ebp + -8] -> m[ebp - 8]
-  prog->finishDecode();
+    // Simplify expressions (e.g. m[ebp + -8] -> m[ebp - 8]
+    prog->finishDecode();
 
-  DataFlow* df = pProc->getDataFlow();
-  df->dominators(cfg);
-  df->placePhiFunctions(pProc);
+    DataFlow* df = pProc->getDataFlow();
+    df->dominators(cfg);
+    df->placePhiFunctions(pProc);
 
-  // m[r29 - 8] (x for this program)
-  Exp* e = new Unary(opMemOf,
-                     new Binary(opMinus,
-                                Location::regOf(29),
-                                new Const(4)));
+    // m[r29 - 8] (x for this program)
+    Exp* e = new Unary(opMemOf,
+                       new Binary(opMinus,
+                                  Location::regOf(29),
+                                  new Const(4)));
 
-  // A_phi[x] should be the set {7 8 10 15 20 21} (all the join points)
-  std::ostringstream ost;
-  std::set<int>::iterator ii;
-  std::set<int>& A_phi = df->getA_phi(e);
-  for (ii = A_phi.begin(); ii != A_phi.end(); ++ii)
-    ost << *ii << " ";
-  std::string expected("7 8 10 15 20 21 ");
-  CPPUNIT_ASSERT_EQUAL(expected, ost.str());
-  delete pFE;
+    // A_phi[x] should be the set {7 8 10 15 20 21} (all the join points)
+    std::ostringstream ost;
+    std::set<int>::iterator ii;
+    std::set<int>& A_phi = df->getA_phi(e);
+    for (ii = A_phi.begin(); ii != A_phi.end(); ++ii)
+        ost << *ii << " ";
+    std::string expected("7 8 10 15 20 21 ");
+    CPPUNIT_ASSERT_EQUAL(expected, ost.str());
+    delete pFE;
 }
 
 /*==============================================================================
@@ -213,59 +213,59 @@ void CfgTest::testPlacePhi ()
  *============================================================================*/
 void CfgTest::testPlacePhi2 ()
 {
-  BinaryFileFactory bff;
-  BinaryFile* pBF = bff.Load(IFTHEN_PENTIUM);
-  CPPUNIT_ASSERT(pBF != 0);
-  Prog* prog = new Prog;
-  FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
-  Type::clearNamedTypes();
-  prog->setFrontEnd(pFE);
-  pFE->decode(prog);
+    BinaryFileFactory bff;
+    BinaryFile* pBF = bff.Load(IFTHEN_PENTIUM);
+    CPPUNIT_ASSERT(pBF != 0);
+    Prog* prog = new Prog;
+    FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
+    Type::clearNamedTypes();
+    prog->setFrontEnd(pFE);
+    pFE->decode(prog);
 
-  UserProc* pProc = (UserProc*) prog->getProc(0);
-  Cfg* cfg = pProc->getCFG();
-  DataFlow* df = pProc->getDataFlow();
+    UserProc* pProc = (UserProc*) prog->getProc(0);
+    Cfg* cfg = pProc->getCFG();
+    DataFlow* df = pProc->getDataFlow();
 
-  // Simplify expressions (e.g. m[ebp + -8] -> m[ebp - 8]
-  prog->finishDecode();
+    // Simplify expressions (e.g. m[ebp + -8] -> m[ebp - 8]
+    prog->finishDecode();
 
-  df->dominators(cfg);
-  df->placePhiFunctions(pProc);
+    df->dominators(cfg);
+    df->placePhiFunctions(pProc);
 
-  // In this program, x is allocated at [ebp-4], a at [ebp-8], and
-  // b at [ebp-12]
-  // We check that A_phi[ m[ebp-8] ] is 4, and that
-  // A_phi A_phi[ m[ebp-8] ] is null
-  // (block 4 comes out with n=4)
+    // In this program, x is allocated at [ebp-4], a at [ebp-8], and
+    // b at [ebp-12]
+    // We check that A_phi[ m[ebp-8] ] is 4, and that
+    // A_phi A_phi[ m[ebp-8] ] is null
+    // (block 4 comes out with n=4)
 
-  std::string expected = "4 ";
-  std::ostringstream actual;
-  // m[r29 - 8]
-  Exp* e = new Unary(opMemOf,
-                     new Binary(opMinus,
-                                Location::regOf(29),
-                                new Const(8)));
-  std::set<int>& s = df->getA_phi(e);
-  std::set<int>::iterator pp;
-  for (pp = s.begin(); pp != s.end(); pp++)
-    actual << *pp << " ";
-  CPPUNIT_ASSERT_EQUAL(expected, actual.str());
-  delete e;
+    std::string expected = "4 ";
+    std::ostringstream actual;
+    // m[r29 - 8]
+    Exp* e = new Unary(opMemOf,
+                       new Binary(opMinus,
+                                  Location::regOf(29),
+                                  new Const(8)));
+    std::set<int>& s = df->getA_phi(e);
+    std::set<int>::iterator pp;
+    for (pp = s.begin(); pp != s.end(); pp++)
+        actual << *pp << " ";
+    CPPUNIT_ASSERT_EQUAL(expected, actual.str());
+    delete e;
 
-  expected = "";
-  std::ostringstream actual2;
-  // m[r29 - 12]
-  e = new Unary(opMemOf,
-                new Binary(opMinus,
-                           Location::regOf(29),
-                           new Const(12)));
+    expected = "";
+    std::ostringstream actual2;
+    // m[r29 - 12]
+    e = new Unary(opMemOf,
+                  new Binary(opMinus,
+                             Location::regOf(29),
+                             new Const(12)));
 
-  std::set<int>& s2 = df->getA_phi(e);
-  for (pp = s2.begin(); pp != s2.end(); pp++)
-    actual2 << *pp << " ";
-  CPPUNIT_ASSERT_EQUAL(expected, actual2.str());
-  delete e;
-  delete pFE;
+    std::set<int>& s2 = df->getA_phi(e);
+    for (pp = s2.begin(); pp != s2.end(); pp++)
+        actual2 << *pp << " ";
+    CPPUNIT_ASSERT_EQUAL(expected, actual2.str());
+    delete e;
+    delete pFE;
 }
 
 /*==============================================================================
@@ -274,28 +274,28 @@ void CfgTest::testPlacePhi2 ()
  *============================================================================*/
 void CfgTest::testRenameVars ()
 {
-  BinaryFileFactory bff;
-  BinaryFile* pBF = bff.Load(FRONTIER_PENTIUM);
-  CPPUNIT_ASSERT(pBF != 0);
-  Prog* prog = new Prog;
-  FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
-  Type::clearNamedTypes();
-  prog->setFrontEnd(pFE);
-  pFE->decode(prog);
+    BinaryFileFactory bff;
+    BinaryFile* pBF = bff.Load(FRONTIER_PENTIUM);
+    CPPUNIT_ASSERT(pBF != 0);
+    Prog* prog = new Prog;
+    FrontEnd* pFE = new PentiumFrontEnd(pBF, prog, &bff);
+    Type::clearNamedTypes();
+    prog->setFrontEnd(pFE);
+    pFE->decode(prog);
 
-  UserProc* pProc = (UserProc*) prog->getProc(0);
-  Cfg* cfg = pProc->getCFG();
-  DataFlow* df = pProc->getDataFlow();
+    UserProc* pProc = (UserProc*) prog->getProc(0);
+    Cfg* cfg = pProc->getCFG();
+    DataFlow* df = pProc->getDataFlow();
 
-  // Simplify expressions (e.g. m[ebp + -8] -> m[ebp - 8]
-  prog->finishDecode();
+    // Simplify expressions (e.g. m[ebp + -8] -> m[ebp - 8]
+    prog->finishDecode();
 
-  df->dominators(cfg);
-  df->placePhiFunctions(pProc);
-  pProc->numberStatements();				// After placing phi functions!
-  df->renameBlockVars(pProc, 0, 1);		// Block 0, mem depth 1
+    df->dominators(cfg);
+    df->placePhiFunctions(pProc);
+    pProc->numberStatements();				// After placing phi functions!
+    df->renameBlockVars(pProc, 0, 1);		// Block 0, mem depth 1
 
-  // MIKE: something missing here?
+    // MIKE: something missing here?
 
-  delete pFE;
+    delete pFE;
 }

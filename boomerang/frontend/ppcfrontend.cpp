@@ -44,7 +44,7 @@
 
 PPCFrontEnd::PPCFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff) : FrontEnd(pBF, prog, pbff)
 {
-	decoder = new PPCDecoder(prog);
+    decoder = new PPCDecoder(prog);
 }
 
 
@@ -56,50 +56,50 @@ PPCFrontEnd::~PPCFrontEnd()
 
 std::vector<Exp*> &PPCFrontEnd::getDefaultParams()
 {
-	static std::vector<Exp*> params;
-	if (params.size() == 0) {
-		for (int r=31; r>=0; r--) {
-			params.push_back(Location::regOf(r));
-		}
-	}
-	return params;
+    static std::vector<Exp*> params;
+    if (params.size() == 0) {
+        for (int r=31; r>=0; r--) {
+            params.push_back(Location::regOf(r));
+        }
+    }
+    return params;
 }
 
 std::vector<Exp*> &PPCFrontEnd::getDefaultReturns()
 {
-	static std::vector<Exp*> returns;
-	if (returns.size() == 0) {
-		for (int r=31; r>=0; r--) {
-			returns.push_back(Location::regOf(r));
-		}
+    static std::vector<Exp*> returns;
+    if (returns.size() == 0) {
+        for (int r=31; r>=0; r--) {
+            returns.push_back(Location::regOf(r));
+        }
 
-	}
-	return returns;
+    }
+    return returns;
 }
 
-ADDRESS PPCFrontEnd::getMainEntryPoint( bool &gotMain ) 
+ADDRESS PPCFrontEnd::getMainEntryPoint( bool &gotMain )
 {
-	gotMain = true;
-	ADDRESS start = pBF->GetMainEntryPoint();
-	if( start != NO_ADDRESS ) return start;
+    gotMain = true;
+    ADDRESS start = pBF->GetMainEntryPoint();
+    if( start != NO_ADDRESS ) return start;
 
-	start = pBF->GetEntryPoint();
-	gotMain = false;
-	if( start == NO_ADDRESS ) return NO_ADDRESS;
+    start = pBF->GetEntryPoint();
+    gotMain = false;
+    if( start == NO_ADDRESS ) return NO_ADDRESS;
 
-	gotMain = true;
-	return start;
+    gotMain = true;
+    return start;
 }
 
 
 bool PPCFrontEnd::processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag /* = false */,
-		bool spec /* = false */) {
+                              bool spec /* = false */) {
 
-	// Call the base class to do most of the work
-	if (!FrontEnd::processProc(uAddr, pProc, os, frag, spec))
-		return false;
-	// This will get done twice; no harm
-	pProc->setEntryBB();
+    // Call the base class to do most of the work
+    if (!FrontEnd::processProc(uAddr, pProc, os, frag, spec))
+        return false;
+    // This will get done twice; no harm
+    pProc->setEntryBB();
 
-	return true;
+    return true;
 }

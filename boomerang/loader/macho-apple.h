@@ -55,13 +55,13 @@
  */
 struct mach_header
 {
-  unsigned long magic; /* mach magic number identifier */
-  cpu_type_t cputype; /* cpu specifier */
-  cpu_subtype_t cpusubtype; /* machine specifier */
-  unsigned long filetype; /* type of file */
-  unsigned long ncmds; /* number of load commands */
-  unsigned long sizeofcmds; /* the size of all the load commands */
-  unsigned long flags; /* flags */
+    unsigned long magic; /* mach magic number identifier */
+    cpu_type_t cputype; /* cpu specifier */
+    cpu_subtype_t cpusubtype; /* machine specifier */
+    unsigned long filetype; /* type of file */
+    unsigned long ncmds; /* number of load commands */
+    unsigned long sizeofcmds; /* the size of all the load commands */
+    unsigned long flags; /* flags */
 };
 
 /* Constant for the magic field of the mach_header */
@@ -129,42 +129,42 @@ to use flat name space bindings */
 #define MH_NOMULTIDEFS	0x200		/* this umbrella guarantees no multiple
 defintions of symbols in its
 sub-images so the two-level namespace
-  hints can always be used. */
+        hints can always be used. */
 #define MH_NOFIXPREBINDING 0x400	/* do not have dyld notify the
-  prebinding agent about this
-  executable */
+        prebinding agent about this
+        executable */
 #define MH_PREBINDABLE  0x800           /* the binary is not prebound but can
-  have its prebinding redone. only used
-  when MH_PREBOUND is not set. */
+        have its prebinding redone. only used
+        when MH_PREBOUND is not set. */
 #define MH_ALLMODSBOUND 0x1000		/* indicates that this binary binds to
-  all two-level namespace modules of
-  its dependent libraries. only used
-  when MH_PREBINDABLE and MH_TWOLEVEL
-  are both set. */
+        all two-level namespace modules of
+            its dependent libraries. only used
+            when MH_PREBINDABLE and MH_TWOLEVEL
+            are both set. */
 #define MH_CANONICAL    0x4000		/* the binary has been canonicalized
-  via the unprebind operation */
+            via the unprebind operation */
 
-/*
- * The load commands directly follow the mach_header.  The total size of all
- * of the commands is given by the sizeofcmds field in the mach_header.  All
- * load commands must have as their first two fields cmd and cmdsize.  The cmd
- * field is filled in with a constant for that command type.  Each command type
- * has a structure specifically for it.  The cmdsize field is the size in bytes
- * of the particular load command structure plus anything that follows it that
- * is a part of the load command (i.e. section structures, strings, etc.).  To
- * advance to the next load command the cmdsize can be added to the offset or
- * pointer of the current load command.  The cmdsize MUST be a multiple of
- * 4 bytes (this is forever the maximum alignment of any load commands).
- * The padded bytes must be zero.  All tables in the object file must also
- * follow these rules so the file can be memory mapped.  Otherwise the pointers
- * to these tables will not work well or at all on some machines.  With all
- * padding zeroed like objects will compare byte for byte.
- */
-  struct load_command
-{
-  unsigned long cmd; /* type of load command */
-  unsigned long cmdsize; /* total size of command in bytes */
-};
+    /*
+     * The load commands directly follow the mach_header.  The total size of all
+     * of the commands is given by the sizeofcmds field in the mach_header.  All
+     * load commands must have as their first two fields cmd and cmdsize.  The cmd
+     * field is filled in with a constant for that command type.  Each command type
+     * has a structure specifically for it.  The cmdsize field is the size in bytes
+     * of the particular load command structure plus anything that follows it that
+     * is a part of the load command (i.e. section structures, strings, etc.).  To
+     * advance to the next load command the cmdsize can be added to the offset or
+     * pointer of the current load command.  The cmdsize MUST be a multiple of
+     * 4 bytes (this is forever the maximum alignment of any load commands).
+     * The padded bytes must be zero.  All tables in the object file must also
+     * follow these rules so the file can be memory mapped.  Otherwise the pointers
+     * to these tables will not work well or at all on some machines.  With all
+     * padding zeroed like objects will compare byte for byte.
+     */
+            struct load_command
+        {
+            unsigned long cmd; /* type of load command */
+            unsigned long cmdsize; /* total size of command in bytes */
+        };
 
 /*
  * After MacOS X 10.1 when a new load command is added that is required to be
@@ -218,8 +218,8 @@ sub-images so the two-level namespace
  */
 union lc_str
 {
-  unsigned long offset; /* offset to the string */
-  char *ptr; /* pointer to the string */
+    unsigned long offset; /* offset to the string */
+    char *ptr; /* pointer to the string */
 };
 
 /*
@@ -236,17 +236,17 @@ union lc_str
  */
 struct segment_command
 {
-  unsigned long cmd; /* LC_SEGMENT */
-  unsigned long cmdsize; /* includes sizeof section structs */
-  char segname[16]; /* segment name */
-  unsigned long vmaddr; /* memory address of this segment */
-  unsigned long vmsize; /* memory size of this segment */
-  unsigned long fileoff; /* file offset of this segment */
-  unsigned long filesize; /* amount to map from the file */
-  vm_prot_t maxprot; /* maximum VM protection */
-  vm_prot_t initprot; /* initial VM protection */
-  unsigned long nsects; /* number of sections in segment */
-  unsigned long flags; /* flags */
+    unsigned long cmd; /* LC_SEGMENT */
+    unsigned long cmdsize; /* includes sizeof section structs */
+    char segname[16]; /* segment name */
+    unsigned long vmaddr; /* memory address of this segment */
+    unsigned long vmsize; /* memory size of this segment */
+    unsigned long fileoff; /* file offset of this segment */
+    unsigned long filesize; /* amount to map from the file */
+    vm_prot_t maxprot; /* maximum VM protection */
+    vm_prot_t initprot; /* initial VM protection */
+    unsigned long nsects; /* number of sections in segment */
+    unsigned long flags; /* flags */
 };
 
 /* Constants for the flags field of the segment_command */
@@ -254,51 +254,51 @@ struct segment_command
 the high part of the VM space, the low part
 is zero filled (for stacks in core files) */
 #define	SG_FVMLIB	0x2	/* this segment is the VM that is allocated by
-  a fixed VM library, for overlap checking in
-  the link editor */
+    a fixed VM library, for overlap checking in
+    the link editor */
 #define	SG_NORELOC	0x4	/* this segment has nothing that was relocated
-  in it and nothing relocated to it, that is
-  it maybe safely replaced without relocation*/
+    in it and nothing relocated to it, that is
+    it maybe safely replaced without relocation*/
 
-  /*
-   * A segment is made up of zero or more sections.  Non-MH_OBJECT files have
-   * all of their segments with the proper sections in each, and padded to the
-   * specified segment alignment when produced by the link editor.  The first
-   * segment of a MH_EXECUTE and MH_FVMLIB format file contains the mach_header
-   * and load commands of the object file before its first section.  The zero
-   * fill sections are always last in their segment (in all formats).  This
-   * allows the zeroed segment padding to be mapped into memory where zero fill
-   * sections might be.
-   *
-   * The MH_OBJECT format has all of its sections in one segment for
-   * compactness.  There is no padding to a specified segment boundary and the
-   * mach_header and load commands are not part of the segment.
-   *
-   * Sections with the same section name, sectname, going into the same segment,
-   * segname, are combined by the link editor.  The resulting section is aligned
-   * to the maximum alignment of the combined sections and is the new section's
-   * alignment.  The combined sections are aligned to their original alignment in
-   * the combined section.  Any padded bytes to get the specified alignment are
-   * zeroed.
-   *
-   * The format of the relocation entries referenced by the reloff and nreloc
-   * fields of the section structure for mach object files is described in the
-   * header file <reloc.h>.
-   */
-  struct section
-  {
-    char sectname[16]; /* name of this section */
-      char segname[16]; /* segment this section goes in */
-      unsigned long addr; /* memory address of this section */
-      unsigned long size; /* size in bytes of this section */
-      unsigned long offset; /* file offset of this section */
-      unsigned long align; /* section alignment (power of 2) */
-      unsigned long reloff; /* file offset of relocation entries */
-      unsigned long nreloc; /* number of relocation entries */
-      unsigned long flags; /* flags (section type and attributes)*/
-      unsigned long reserved1; /* reserved */
-      unsigned long reserved2; /* reserved */
-    };
+    /*
+     * A segment is made up of zero or more sections.  Non-MH_OBJECT files have
+     * all of their segments with the proper sections in each, and padded to the
+     * specified segment alignment when produced by the link editor.  The first
+     * segment of a MH_EXECUTE and MH_FVMLIB format file contains the mach_header
+     * and load commands of the object file before its first section.  The zero
+     * fill sections are always last in their segment (in all formats).  This
+     * allows the zeroed segment padding to be mapped into memory where zero fill
+     * sections might be.
+     *
+     * The MH_OBJECT format has all of its sections in one segment for
+     * compactness.  There is no padding to a specified segment boundary and the
+     * mach_header and load commands are not part of the segment.
+     *
+     * Sections with the same section name, sectname, going into the same segment,
+     * segname, are combined by the link editor.  The resulting section is aligned
+     * to the maximum alignment of the combined sections and is the new section's
+     * alignment.  The combined sections are aligned to their original alignment in
+     * the combined section.  Any padded bytes to get the specified alignment are
+     * zeroed.
+     *
+     * The format of the relocation entries referenced by the reloff and nreloc
+     * fields of the section structure for mach object files is described in the
+     * header file <reloc.h>.
+     */
+    struct section
+    {
+        char sectname[16]; /* name of this section */
+            char segname[16]; /* segment this section goes in */
+            unsigned long addr; /* memory address of this section */
+            unsigned long size; /* size in bytes of this section */
+            unsigned long offset; /* file offset of this section */
+            unsigned long align; /* section alignment (power of 2) */
+            unsigned long reloff; /* file offset of relocation entries */
+            unsigned long nreloc; /* number of relocation entries */
+            unsigned long flags; /* flags (section type and attributes)*/
+            unsigned long reserved1; /* reserved */
+            unsigned long reserved2; /* reserved */
+        };
 
 /*
  * The flags field of a section structure is separated into two parts a section
@@ -341,67 +341,67 @@ pointers for initialization*/
 #define	S_MOD_TERM_FUNC_POINTERS	0xa	/* section with only function
 pointers for termination */
 #define	S_COALESCED			0xb	/* section contains symbols that
-  are to be coalesced */
-  /*
-   * Constants for the section attributes part of the flags field of a section
-   * structure.
-   */
+    are to be coalesced */
+    /*
+     * Constants for the section attributes part of the flags field of a section
+     * structure.
+     */
 #define SECTION_ATTRIBUTES_USR	 0xff000000	/* User setable attributes */
 #define S_ATTR_PURE_INSTRUCTIONS 0x80000000	/* section contains only true
-  machine instructions */
+    machine instructions */
 #define S_ATTR_NO_TOC 		 0x40000000	/* section contains coalesced
-  symbols that are not to be
-  in a ranlib table of
-  contents */
+    symbols that are not to be
+    in a ranlib table of
+    contents */
 #define S_ATTR_STRIP_STATIC_SYMS 0x20000000	/* ok to strip static symbols
-  in this section in files
-  with the MH_DYLDLINK flag */
+    in this section in files
+    with the MH_DYLDLINK flag */
 #define SECTION_ATTRIBUTES_SYS	 0x00ffff00	/* system setable attributes */
 #define S_ATTR_SOME_INSTRUCTIONS 0x00000400	/* section contains some
-  machine instructions */
+    machine instructions */
 #define S_ATTR_EXT_RELOC	 0x00000200	/* section has external
-  relocation entries */
+    relocation entries */
 #define S_ATTR_LOC_RELOC	 0x00000100	/* section has local
-  relocation entries */
+    relocation entries */
 
 
-  /*
-   * The names of segments and sections in them are mostly meaningless to the
-   * link-editor.  But there are few things to support traditional UNIX
-   * executables that require the link-editor and assembler to use some names
-   * agreed upon by convention.
-   *
-   * The initial protection of the "__TEXT" segment has write protection turned
-   * off (not writeable).
-   *
-   * The link-editor will allocate common symbols at the end of the "__common"
-   * section in the "__DATA" segment.  It will create the section and segment
-   * if needed.
-   */
+    /*
+     * The names of segments and sections in them are mostly meaningless to the
+     * link-editor.  But there are few things to support traditional UNIX
+     * executables that require the link-editor and assembler to use some names
+     * agreed upon by convention.
+     *
+     * The initial protection of the "__TEXT" segment has write protection turned
+     * off (not writeable).
+     *
+     * The link-editor will allocate common symbols at the end of the "__common"
+     * section in the "__DATA" segment.  It will create the section and segment
+     * if needed.
+     */
 
-  /* The currently known segment names and the section names in those segments */
+    /* The currently known segment names and the section names in those segments */
 
 #define	SEG_PAGEZERO	"__PAGEZERO"	/* the pagezero segment which has no */
-  /* protections and catches NULL */
-  /* references for MH_EXECUTE files */
+    /* protections and catches NULL */
+    /* references for MH_EXECUTE files */
 
 
 #define	SEG_TEXT	"__TEXT"	/* the tradition UNIX text segment */
 #define	SECT_TEXT	"__text"	/* the real text part of the text */
-  /* section no headers, and no padding */
+    /* section no headers, and no padding */
 #define SECT_FVMLIB_INIT0 "__fvmlib_init0"	/* the fvmlib initialization */
-  /*  section */
+    /*  section */
 #define SECT_FVMLIB_INIT1 "__fvmlib_init1"	/* the section following the */
-  /*  fvmlib initialization */
-  /*  section */
+    /*  fvmlib initialization */
+    /*  section */
 
 #define	SEG_DATA	"__DATA"	/* the tradition UNIX data segment */
 #define	SECT_DATA	"__data"	/* the real initialized data section */
-  /* no padding, no bss overlap */
+    /* no padding, no bss overlap */
 #define	SECT_BSS	"__bss"		/* the real uninitialized data section*/
-  /* no padding */
+    /* no padding */
 #define SECT_COMMON	"__common"	/* the section common symbols are */
-  /* allocated in by the link editor */
+    /* allocated in by the link editor */
 
 #define	SEG_OBJC	"__OBJC"	/* objective-C runtime segment */
 #define SECT_OBJC_SYMBOLS "__symbol_table"	/* symbol table */
@@ -414,25 +414,25 @@ pointers for termination */
 #define	SECT_ICON_TIFF   "__tiff"	/* the icons in tiff format */
 
 #define	SEG_LINKEDIT	"__LINKEDIT"	/* the segment containing all structs */
-  /* created and maintained by the link */
-  /* editor.  Created with -seglinkedit */
-  /* option to ld(1) for MH_EXECUTE and */
-  /* FVMLIB file types only */
+    /* created and maintained by the link */
+    /* editor.  Created with -seglinkedit */
+    /* option to ld(1) for MH_EXECUTE and */
+    /* FVMLIB file types only */
 
 #define SEG_UNIXSTACK	"__UNIXSTACK"	/* the unix stack segment */
 
-  /*
-   * Fixed virtual memory shared libraries are identified by two things.  The
-   * target pathname (the name of the library as found for execution), and the
-   * minor version number.  The address of where the headers are loaded is in
-   * header_addr.
-   */
-  struct fvmlib
-  {
-    union lc_str name; /* library's target pathname */
-    unsigned long minor_version; /* library's minor version number */
-    unsigned long header_addr; /* library's header address */
-  };
+    /*
+     * Fixed virtual memory shared libraries are identified by two things.  The
+     * target pathname (the name of the library as found for execution), and the
+     * minor version number.  The address of where the headers are loaded is in
+     * header_addr.
+     */
+    struct fvmlib
+    {
+        union lc_str name; /* library's target pathname */
+        unsigned long minor_version; /* library's minor version number */
+        unsigned long header_addr; /* library's header address */
+    };
 
 /*
  * A fixed virtual shared library (filetype == MH_FVMLIB in the mach header)

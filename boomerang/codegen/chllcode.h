@@ -58,32 +58,32 @@ Comma						left to right	,
 
 /// Operator precedence
 enum PREC {
-  PREC_NONE=0,			///< Outer level (no parens required)
-  PREC_COMMA,				///< Comma
-  PREC_ASSIGN,			///< Assignment
-  PREC_COND,				///< Conditional
-  PREC_LOG_OR,			///< Logical OR
-  PREC_LOG_AND,			///< Logical AND
-  PREC_BIT_IOR,			///< Bitwise Inclusive OR
-  PREC_BIT_XOR,			///< Bitwise Exclusive OR
-  PREC_BIT_AND,			///< Bitwise AND
-  PREC_EQUAL,				///< Equality
-  PREC_REL,				///< Relational
-  PREC_BIT_SHIFT,			///< Bitwise Shift
-  PREC_ADD,				///< Additive
-  PREC_MULT,				///< Multiplicative
-  PREC_PTR_MEM,			///< C++ Pointer to Member
-  PREC_UNARY,				///< Unary
-  PREC_PRIM,				///< Primary
-  PREC_SCOPE				///< Primary scope resolution
+    PREC_NONE=0,			///< Outer level (no parens required)
+    PREC_COMMA,				///< Comma
+    PREC_ASSIGN,			///< Assignment
+    PREC_COND,				///< Conditional
+    PREC_LOG_OR,			///< Logical OR
+    PREC_LOG_AND,			///< Logical AND
+    PREC_BIT_IOR,			///< Bitwise Inclusive OR
+    PREC_BIT_XOR,			///< Bitwise Exclusive OR
+    PREC_BIT_AND,			///< Bitwise AND
+    PREC_EQUAL,				///< Equality
+    PREC_REL,				///< Relational
+    PREC_BIT_SHIFT,			///< Bitwise Shift
+    PREC_ADD,				///< Additive
+    PREC_MULT,				///< Multiplicative
+    PREC_PTR_MEM,			///< C++ Pointer to Member
+    PREC_UNARY,				///< Unary
+    PREC_PRIM,				///< Primary
+    PREC_SCOPE				///< Primary scope resolution
 };
 
 
 
 /// Outputs C code.
 class CHLLCode : public HLLCode
-  {
-  private:
+{
+private:
     /// The generated code.
     std::list<char *> lines;
 
@@ -94,12 +94,12 @@ class CHLLCode : public HLLCode
     /// Adds: (
     void openParen(std::ostringstream& str, PREC outer, PREC inner)
     {
-      if (inner < outer) str << "(";
+        if (inner < outer) str << "(";
     }
     /// Adds: )
     void closeParen(std::ostringstream& str, PREC outer, PREC inner)
     {
-      if (inner < outer) str << ")";
+        if (inner < outer) str << ")";
     }
 
     void appendLine(const std::ostringstream& ostr);
@@ -111,7 +111,7 @@ class CHLLCode : public HLLCode
     /// All used goto labels.
     std::set<int> usedLabels;
 
-  public:
+public:
     // constructor
     CHLLCode();
     CHLLCode(UserProc *p);
@@ -167,7 +167,7 @@ class CHLLCode : public HLLCode
     // sequential statements
     virtual void	AddAssignmentStatement(int indLevel, Assign *asgn);
     virtual void	AddCallStatement(int indLevel, Proc *proc, const char *name, StatementList& args,
-                                  StatementList* results);
+                                     StatementList* results);
     virtual void	AddIndCallStatement(int indLevel, Exp *exp, StatementList &args, StatementList* results);
     virtual void	AddReturnStatement(int indLevel, StatementList* rets);
 
@@ -177,9 +177,9 @@ class CHLLCode : public HLLCode
     virtual void	AddLocal(const char *name, Type *type, bool last = false);
     virtual void	AddGlobal(const char *name, Type *type, Exp *init = NULL);
     virtual void	AddPrototype(UserProc* proc);
-  private:
+private:
     void	AddProcDec(UserProc* proc, bool open);	// Implement AddProcStart and AddPrototype
-  public:
+public:
 
     // comments
     virtual void	AddLineComment(char* cmt);
@@ -188,6 +188,6 @@ class CHLLCode : public HLLCode
      * output functions
      */
     virtual void	print(std::ostream &os);
-  };
+};
 
 #endif

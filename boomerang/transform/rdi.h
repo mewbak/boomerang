@@ -16,12 +16,12 @@
 #define REMOVE_DOUBLE_INDIRECTION_H
 
 class RDIExpTransformer : public ExpTransformer
-  {
-  public:
+{
+public:
     RDIExpTransformer()
     { }
     virtual Exp *applyTo(Exp *e, bool &bMod);
-  };
+};
 
 #endif
 

@@ -39,98 +39,98 @@
 
 int main(int argc, char* argv[])
 {
-  // Usage
+    // Usage
 
-  if (argc != 2)
+    if (argc != 2)
     {
-      printf ("Usage: %s <filename>\n", argv[0]);
-      printf ("%s dumps the contents of the given executable file\n", argv[0]);
-      return 1;
+        printf ("Usage: %s <filename>\n", argv[0]);
+        printf ("%s dumps the contents of the given executable file\n", argv[0]);
+        return 1;
     }
 
-  // Load the file
+    // Load the file
 
-  BinaryFile *pbf = NULL;
-  BinaryFileFactory bff;
-  pbf = bff.Load(argv[1]);
+    BinaryFile *pbf = NULL;
+    BinaryFileFactory bff;
+    pbf = bff.Load(argv[1]);
 
-  if (pbf == NULL)
+    if (pbf == NULL)
     {
-      return 2;
+        return 2;
     }
 
-  // Display program and section information
-  // If the DisplayDetails() function has not been implemented
-  // in the derived class (ElfBinaryFile in this case), then
-  // uncomment the commented code below to display section information.
+    // Display program and section information
+    // If the DisplayDetails() function has not been implemented
+    // in the derived class (ElfBinaryFile in this case), then
+    // uncomment the commented code below to display section information.
 
-  pbf->DisplayDetails (argv[0]);
+    pbf->DisplayDetails (argv[0]);
 
-  // This is an alternative way of displaying binary-file information
-  // by using individual sections.  The above approach is more general.
-  /*
-  printf ("%d sections:\n", pbf->GetNumSections());
-  for (int i=0; i < pbf->GetNumSections(); i++)
-      {
-      SectionInfo* pSect = pbf->GetSectionInfo(i);
-      printf("  Section %s at %X\n", pSect->pSectionName, pSect->uNativeAddr);
-      }
-  printf("\n");
-  */
-
-  // Display the code section in raw hexadecimal notation
-  // Note: this is traditionally the ".text" section in Elf binaries.
-  // In the case of Prc files (Palm), the code section is named "code0".
-
-  for (int i=0; i < pbf->GetNumSections(); i++)
-    {
-      SectionInfo* pSect = pbf->GetSectionInfo(i);
-      if (pSect->bCode)
+    // This is an alternative way of displaying binary-file information
+    // by using individual sections.  The above approach is more general.
+    /*
+    printf ("%d sections:\n", pbf->GetNumSections());
+    for (int i=0; i < pbf->GetNumSections(); i++)
         {
-          printf("  Code section:\n");
-          ADDRESS a = pSect->uNativeAddr;
-          unsigned char* p = (unsigned char*) pSect->uHostAddr;
-          for (unsigned off = 0; off < pSect->uSectionSize; )
+        SectionInfo* pSect = pbf->GetSectionInfo(i);
+        printf("  Section %s at %X\n", pSect->pSectionName, pSect->uNativeAddr);
+        }
+    printf("\n");
+    */
+
+    // Display the code section in raw hexadecimal notation
+    // Note: this is traditionally the ".text" section in Elf binaries.
+    // In the case of Prc files (Palm), the code section is named "code0".
+
+    for (int i=0; i < pbf->GetNumSections(); i++)
+    {
+        SectionInfo* pSect = pbf->GetSectionInfo(i);
+        if (pSect->bCode)
+        {
+            printf("  Code section:\n");
+            ADDRESS a = pSect->uNativeAddr;
+            unsigned char* p = (unsigned char*) pSect->uHostAddr;
+            for (unsigned off = 0; off < pSect->uSectionSize; )
             {
-              printf("%04X: ", a);
-              for (int j=0; (j < 16) && (off < pSect->uSectionSize); j++)
+                printf("%04X: ", a);
+                for (int j=0; (j < 16) && (off < pSect->uSectionSize); j++)
                 {
-                  printf("%02X ", *p++);
-                  a++;
-                  off++;
+                    printf("%02X ", *p++);
+                    a++;
+                    off++;
                 }
-              printf("\n");
+                printf("\n");
             }
-          printf("\n");
+            printf("\n");
         }
     }
 
-  // Display the data section(s) in raw hexadecimal notation
+    // Display the data section(s) in raw hexadecimal notation
 
-  for (int i=0; i < pbf->GetNumSections(); i++)
+    for (int i=0; i < pbf->GetNumSections(); i++)
     {
-      SectionInfo* pSect = pbf->GetSectionInfo(i);
-      if (pSect->bData)
+        SectionInfo* pSect = pbf->GetSectionInfo(i);
+        if (pSect->bData)
         {
-          printf("  Data section: %s\n", pSect->pSectionName);
-          ADDRESS a = pSect->uNativeAddr;
-          unsigned char* p = (unsigned char*) pSect->uHostAddr;
-          for (unsigned off = 0; off < pSect->uSectionSize; )
+            printf("  Data section: %s\n", pSect->pSectionName);
+            ADDRESS a = pSect->uNativeAddr;
+            unsigned char* p = (unsigned char*) pSect->uHostAddr;
+            for (unsigned off = 0; off < pSect->uSectionSize; )
             {
-              printf("%04X: ", a);
-              for (int j=0; (j < 16) && (off < pSect->uSectionSize); j++)
+                printf("%04X: ", a);
+                for (int j=0; (j < 16) && (off < pSect->uSectionSize); j++)
                 {
-                  printf("%02X ", *p++);
-                  a++;
-                  off++;
+                    printf("%02X ", *p++);
+                    a++;
+                    off++;
                 }
-              printf("\n");
+                printf("\n");
             }
-          printf("\n");
+            printf("\n");
         }
     }
 
-  pbf->UnLoad();
-  return 0;
+    pbf->UnLoad();
+    return 0;
 }
 

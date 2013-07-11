@@ -20,23 +20,25 @@ class CallStatement;
 class PPCFrontEnd : public FrontEnd
 {
 public:
-				PPCFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
-	/**
-	 * Virtual destructor.
-	 */
-virtual ~PPCFrontEnd();
+    PPCFrontEnd(BinaryFile *pBF, Prog* prog, BinaryFileFactory* pbff);
+    /**
+     * Virtual destructor.
+     */
+    virtual ~PPCFrontEnd();
 
-virtual platform getFrontEndId() { return PLAT_PPC; }
+    virtual platform getFrontEndId() {
+        return PLAT_PPC;
+    }
 
-virtual bool		processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag = false,
-						bool spec = false);
+    virtual bool		processProc(ADDRESS uAddr, UserProc* pProc, std::ofstream &os, bool frag = false,
+                                    bool spec = false);
 
 
-virtual std::vector<Exp*> &getDefaultParams();
-virtual std::vector<Exp*> &getDefaultReturns();
+    virtual std::vector<Exp*> &getDefaultParams();
+    virtual std::vector<Exp*> &getDefaultReturns();
 
-virtual ADDRESS getMainEntryPoint( bool &gotMain );
-	
+    virtual ADDRESS getMainEntryPoint( bool &gotMain );
+
 };
 
 #endif

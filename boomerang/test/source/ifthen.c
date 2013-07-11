@@ -9,25 +9,25 @@
 
 void main(int argc)
 {
-  int x=0;
-  int a, b, c;
-  printf("Figure 19.2\n");        // Burn block number 0
+    int x=0;
+    int a, b, c;
+    printf("Figure 19.2\n");        // Burn block number 0
 
-  x = 1;
-  b = argc;
-  a = 0;
-  printf("1");
+    x = 1;
+    b = argc;
+    a = 0;
+    printf("1");
 
-  x = 2;
-  if (b < 4)
+    x = 2;
+    if (b < 4)
     {
 
-      x = 3;
-      a = b;
+        x = 3;
+        a = b;
     }
 
-  // In this block, there is no need for a phi-function for b
-  x = 4;
-  c = a+b;
-  printf("C is %d\n", c);
+    // In this block, there is no need for a phi-function for b
+    x = 4;
+    c = a+b;
+    printf("C is %d\n", c);
 }
