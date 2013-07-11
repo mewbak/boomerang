@@ -4,7 +4,7 @@
  *
  *============================================================================*/
 /*
- * $Revision: 1.3 $
+ * $Revision$
  * 17 Apr 02 - Trent: Created
  */
 %name TransformationParser

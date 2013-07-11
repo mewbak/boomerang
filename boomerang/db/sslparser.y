@@ -16,7 +16,7 @@
  *			   returns the list of SSL instruction and table definitions.
  *============================================================================*/
 
-/* $Revision: 1.35 $
+/* $Revision$
  * Updates:
  * Shane Sendall (original C version) Dec 1997
  * Doug Simon (C++ version) Jan 1998
