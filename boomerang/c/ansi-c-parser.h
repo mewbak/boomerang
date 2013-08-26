@@ -1,5 +1,7 @@
 #ifndef YY_AnsiCParser_h_included
 #define YY_AnsiCParser_h_included
+
+#line 1 "/opt/local/lib/bison.h"
 /* before anything */
 #ifdef c_plusplus
 #ifndef __cplusplus
@@ -13,6 +15,9 @@
 #else
 #endif
 #include <stdio.h>
+
+/* #line 14 "/opt/local/lib/bison.h" */
+#line 21 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
 #define YY_AnsiCParser_DEBUG  1
 #define YY_AnsiCParser_PARSE_PARAM  \
 	platform plat, callconv cc
@@ -30,6 +35,7 @@ public: \
 	std::list<Symbol*> symbols; \
 	std::list<SymbolRef*> refs;\
 	virtual ~AnsiCParser();
+#line 37 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
 
   #include <list>
   #include <string>
@@ -98,6 +104,7 @@ public: \
   };
 
 
+#line 129 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
 typedef union {
    int ival;
    char *str;
@@ -115,6 +122,8 @@ typedef union {
    callconv cc;
 } yy_AnsiCParser_stype;
 #define YY_AnsiCParser_STYPE yy_AnsiCParser_stype
+
+#line 14 "/opt/local/lib/bison.h"
  /* %{ and %header{ and %union, during decl */
 #ifndef YY_AnsiCParser_COMPATIBILITY
 #ifndef YY_USE_CLASS
@@ -164,13 +173,33 @@ typedef union {
 #endif
 
 #ifndef YY_AnsiCParser_PURE
+
+/* #line 63 "/opt/local/lib/bison.h" */
+#line 179 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
+
+#line 63 "/opt/local/lib/bison.h"
 /* YY_AnsiCParser_PURE */
 #endif
+
+/* #line 65 "/opt/local/lib/bison.h" */
+#line 186 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
+
+#line 65 "/opt/local/lib/bison.h"
 /* prefix */
 #ifndef YY_AnsiCParser_DEBUG
+
+/* #line 67 "/opt/local/lib/bison.h" */
+#line 193 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
+
+#line 67 "/opt/local/lib/bison.h"
 /* YY_AnsiCParser_DEBUG */
 #endif
 #ifndef YY_AnsiCParser_LSP_NEEDED
+
+/* #line 70 "/opt/local/lib/bison.h" */
+#line 201 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
+
+#line 70 "/opt/local/lib/bison.h"
  /* YY_AnsiCParser_LSP_NEEDED*/
 #endif
 /* DEFAULT LTYPE*/
@@ -244,6 +273,9 @@ typedef
 extern YY_AnsiCParser_STYPE YY_AnsiCParser_LVAL;
 #endif
 
+
+/* #line 143 "/opt/local/lib/bison.h" */
+#line 279 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
 #define	PREINCLUDE	258
 #define	PREDEFINE	259
 #define	PREIF	260
@@ -321,6 +353,8 @@ extern YY_AnsiCParser_STYPE YY_AnsiCParser_LVAL;
 #define	BREAK	332
 #define	RETURN	333
 
+
+#line 143 "/opt/local/lib/bison.h"
  /* #defines token */
 /* after #define tokens, before const tokens S5*/
 #else
@@ -360,6 +394,9 @@ class YY_AnsiCParser_CLASS YY_AnsiCParser_INHERIT
 public: 
 #if YY_AnsiCParser_USE_CONST_TOKEN != 0
 /* static const int token ... */
+
+/* #line 182 "/opt/local/lib/bison.h" */
+#line 400 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
 static const int PREINCLUDE;
 static const int PREDEFINE;
 static const int PREIF;
@@ -437,9 +474,14 @@ static const int CONTINUE;
 static const int BREAK;
 static const int RETURN;
 
+
+#line 182 "/opt/local/lib/bison.h"
  /* decl const */
 #else
 enum YY_AnsiCParser_ENUM_TOKEN { YY_AnsiCParser_NULL_TOKEN=0
+
+/* #line 185 "/opt/local/lib/bison.h" */
+#line 485 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
 	,PREINCLUDE=258
 	,PREDEFINE=259
 	,PREIF=260
@@ -517,6 +559,8 @@ enum YY_AnsiCParser_ENUM_TOKEN { YY_AnsiCParser_NULL_TOKEN=0
 	,BREAK=332
 	,RETURN=333
 
+
+#line 185 "/opt/local/lib/bison.h"
  /* enum token */
      }; /* end of enum declaration */
 #endif
@@ -568,4 +612,7 @@ public:
 
 #endif
 /* END */
+
+/* #line 236 "/opt/local/lib/bison.h" */
+#line 618 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.h"
 #endif
