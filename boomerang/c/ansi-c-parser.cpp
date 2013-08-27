@@ -1,6 +1,6 @@
 #define YY_AnsiCParser_h_included
 
-/*  A Bison++ parser, made from /Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y  */
+/*  A Bison++ parser, made from ansi-c.y  */
 
 /* with Bison++ version bison++ version 1.21-45, adapted from GNU Bison by coetmeur@icdc.fr
  */
@@ -81,7 +81,7 @@ void *alloca ();
 #define YYBISON 1
 
 /* #line 73 "/opt/local/lib/bison.cc" */
-#line 85 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 85 "ansi-c-parser.cpp"
 #define YY_AnsiCParser_DEBUG  1
 #define YY_AnsiCParser_PARSE_PARAM  \
 	platform plat, callconv cc
@@ -99,7 +99,7 @@ public: \
 	std::list<Symbol*> symbols; \
 	std::list<SymbolRef*> refs;\
 	virtual ~AnsiCParser();
-#line 37 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 37 "ansi-c.y"
 
 #include <list>
 #include <string>
@@ -174,7 +174,7 @@ public:
 };
 
 
-#line 129 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 129 "ansi-c.y"
 typedef union
 {
     int ival;
@@ -193,7 +193,7 @@ typedef union
     callconv cc;
 } yy_AnsiCParser_stype;
 #define YY_AnsiCParser_STYPE yy_AnsiCParser_stype
-#line 146 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 146 "ansi-c.y"
 
 #include "ansi-c-scanner.h"
 
@@ -244,7 +244,7 @@ typedef union
 #ifndef YY_AnsiCParser_PURE
 
 /* #line 117 "/opt/local/lib/bison.cc" */
-#line 241 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 241 "ansi-c-parser.cpp"
 
 #line 117 "/opt/local/lib/bison.cc"
 /*  YY_AnsiCParser_PURE */
@@ -253,14 +253,14 @@ typedef union
 /* section apres lecture def, avant lecture grammaire S2 */
 
 /* #line 121 "/opt/local/lib/bison.cc" */
-#line 250 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 250 "ansi-c-parser.cpp"
 
 #line 121 "/opt/local/lib/bison.cc"
 /* prefix */
 #ifndef YY_AnsiCParser_DEBUG
 
 /* #line 123 "/opt/local/lib/bison.cc" */
-#line 257 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 257 "ansi-c-parser.cpp"
 
 #line 123 "/opt/local/lib/bison.cc"
 /* YY_AnsiCParser_DEBUG */
@@ -270,7 +270,7 @@ typedef union
 #ifndef YY_AnsiCParser_LSP_NEEDED
 
 /* #line 128 "/opt/local/lib/bison.cc" */
-#line 267 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 267 "ansi-c-parser.cpp"
 
 #line 128 "/opt/local/lib/bison.cc"
 /* YY_AnsiCParser_LSP_NEEDED*/
@@ -383,7 +383,7 @@ but it seems better to be consistent.
 /* TOKEN C */
 
 /* #line 236 "/opt/local/lib/bison.cc" */
-#line 380 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 380 "ansi-c-parser.cpp"
 #define	PREINCLUDE	258
 #define	PREDEFINE	259
 #define	PREIF	260
@@ -509,7 +509,7 @@ public:
     /* static const int token ... */
 
     /* #line 280 "/opt/local/lib/bison.cc" */
-#line 506 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 506 "ansi-c-parser.cpp"
     static const int PREINCLUDE;
     static const int PREDEFINE;
     static const int PREIF;
@@ -594,7 +594,7 @@ public:
     enum YY_AnsiCParser_ENUM_TOKEN { YY_AnsiCParser_NULL_TOKEN=0
 
                                      /* #line 283 "/opt/local/lib/bison.cc" */
-#line 591 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 591 "ansi-c-parser.cpp"
                                      ,PREINCLUDE=258
                                              ,PREDEFINE=259
                                                      ,PREIF=260
@@ -707,7 +707,7 @@ public:
 #if YY_AnsiCParser_USE_CONST_TOKEN != 0
 
 /* #line 314 "/opt/local/lib/bison.cc" */
-#line 704 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 704 "ansi-c-parser.cpp"
 const int YY_AnsiCParser_CLASS::PREINCLUDE=258;
 const int YY_AnsiCParser_CLASS::PREDEFINE=259;
 const int YY_AnsiCParser_CLASS::PREIF=260;
@@ -800,7 +800,7 @@ YY_AnsiCParser_CLASS::YY_AnsiCParser_CLASS(YY_AnsiCParser_CONSTRUCTOR_PARAM) YY_
 #endif
 
 /* #line 325 "/opt/local/lib/bison.cc" */
-#line 797 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 797 "ansi-c-parser.cpp"
 
 
 #define	YYFINAL		154
@@ -1537,73 +1537,73 @@ YY_AnsiCParser_PARSE_PARAM_DEF
 
 
     /* #line 811 "/opt/local/lib/bison.cc" */
-#line 1531 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
+#line 1531 "ansi-c-parser.cpp"
 
     switch (yyn)
         {
 
         case 1:
-#line 169 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 169 "ansi-c.y"
         {
             ;
             break;
         }
         case 2:
-#line 173 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 173 "ansi-c.y"
         {
             ;
             break;
         }
         case 3:
-#line 175 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 175 "ansi-c.y"
         {
             ;
             break;
         }
         case 4:
-#line 179 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 179 "ansi-c.y"
         {
             ;
             break;
         }
         case 5:
-#line 181 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 181 "ansi-c.y"
         {
             ;
             break;
         }
         case 6:
-#line 183 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 183 "ansi-c.y"
         {
             ;
             break;
         }
         case 7:
-#line 185 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 185 "ansi-c.y"
         {
             ;
             break;
         }
         case 8:
-#line 190 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 190 "ansi-c.y"
         {
             yyval.cc = CONV_C; ;
             break;
         }
         case 9:
-#line 192 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 192 "ansi-c.y"
         {
             yyval.cc = CONV_PASCAL; ;
             break;
         }
         case 10:
-#line 194 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 194 "ansi-c.y"
         {
             yyval.cc = CONV_THISCALL; ;
             break;
         }
         case 11:
-#line 198 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 198 "ansi-c.y"
         {
             yyval.num_list = yyvsp[0].num_list;
             yyval.num_list->push_front(yyvsp[-2].ival);
@@ -1611,7 +1611,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 12:
-#line 202 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 202 "ansi-c.y"
         {
             yyval.num_list = new std::list<int>();
             yyval.num_list->push_back(yyvsp[0].ival);
@@ -1619,14 +1619,14 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 13:
-#line 206 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 206 "ansi-c.y"
         {
             yyval.num_list = new std::list<int>();
             ;
             break;
         }
         case 14:
-#line 211 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 211 "ansi-c.y"
         {
             yyval.param_list = yyvsp[0].param_list;
             yyval.param_list->push_front(yyvsp[-2].param);
@@ -1634,7 +1634,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 15:
-#line 215 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 215 "ansi-c.y"
         {
             yyval.param_list = new std::list<Parameter*>();
             yyval.param_list->push_back(yyvsp[0].param);
@@ -1642,19 +1642,19 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 16:
-#line 219 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 219 "ansi-c.y"
         {
             yyval.param_list = new std::list<Parameter*>();
             break;
         }
         case 17:
-#line 221 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 221 "ansi-c.y"
         {
             yyval.param_list = new std::list<Parameter*>();
             break;
         }
         case 18:
-#line 225 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 225 "ansi-c.y"
         {
             yyval.param = yyvsp[0].param;
             yyval.param->setExp(yyvsp[-2].exp);
@@ -1662,61 +1662,61 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 19:
-#line 229 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 229 "ansi-c.y"
         {
             yyval.param = yyvsp[0].param;
             ;
             break;
         }
         case 20:
-#line 234 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 234 "ansi-c.y"
         {
             yyval.exp = Location::regOf(yyvsp[-1].ival);
             ;
             break;
         }
         case 21:
-#line 237 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 237 "ansi-c.y"
         {
             yyval.exp = Location::memOf(yyvsp[-1].exp);
             ;
             break;
         }
         case 22:
-#line 240 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 240 "ansi-c.y"
         {
             yyval.exp = new Binary(opPlus, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 23:
-#line 243 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 243 "ansi-c.y"
         {
             yyval.exp = new Binary(opMinus, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 24:
-#line 246 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 246 "ansi-c.y"
         {
             yyval.exp = new Const(yyvsp[0].ival);
             ;
             break;
         }
         case 25:
-#line 251 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 251 "ansi-c.y"
         {
             yyval.bound = new Bound(0, yyvsp[-1].str); ;
             break;
         }
         case 26:
-#line 253 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 253 "ansi-c.y"
         {
             ;
             break;
         }
         case 27:
-#line 257 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 257 "ansi-c.y"
         {
             if (yyvsp[-1].type_ident->ty->isArray() ||
             (yyvsp[-1].type_ident->ty->isNamed() &&
@@ -1745,7 +1745,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 28:
-#line 278 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 278 "ansi-c.y"
         {
             Signature *sig = Signature::instantiate(plat, cc, NULL);
             sig->addReturn(yyvsp[-7].type);
@@ -1763,19 +1763,19 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 29:
-#line 292 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 292 "ansi-c.y"
         {
             yyval.param = new Parameter(new VoidType, "..."); ;
             break;
         }
         case 30:
-#line 296 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 296 "ansi-c.y"
         {
             Type::addNamedType(yyvsp[-1].type_ident->nam.c_str(), yyvsp[-1].type_ident->ty); ;
             break;
         }
         case 31:
-#line 298 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 298 "ansi-c.y"
         {
             Signature *sig = Signature::instantiate(plat, cc, NULL);
             sig->addReturn(yyvsp[-8].type);
@@ -1793,7 +1793,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 32:
-#line 312 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 312 "ansi-c.y"
         {
             Signature *sig = Signature::instantiate(plat, cc, yyvsp[-4].type_ident->nam.c_str());
             sig->addReturn(yyvsp[-4].type_ident->ty);
@@ -1811,7 +1811,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 33:
-#line 326 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 326 "ansi-c.y"
         {
             CompoundType *t = new CompoundType();
             for (std::list<TypeIdent*>::iterator it = yyvsp[-2].type_ident_list->begin();
@@ -1826,14 +1826,14 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 34:
-#line 338 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 338 "ansi-c.y"
         {
             signatures.push_back(yyvsp[-1].sig);
             ;
             break;
         }
         case 35:
-#line 342 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 342 "ansi-c.y"
         {
             yyvsp[-6].sig->setPreferedReturn(yyvsp[-4].type_ident->ty);
             yyvsp[-6].sig->setPreferedName(yyvsp[-4].type_ident->nam.c_str());
@@ -1846,7 +1846,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 36:
-#line 354 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 354 "ansi-c.y"
         {
             /* Use the passed calling convention (cc) */
             Signature *sig = Signature::instantiate(plat, cc, yyvsp[-3].type_ident->nam.c_str());
@@ -1865,7 +1865,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 37:
-#line 370 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 370 "ansi-c.y"
         {
             Signature *sig = Signature::instantiate(plat, yyvsp[-4].cc,
             yyvsp[-3].type_ident->nam.c_str());
@@ -1884,7 +1884,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 38:
-#line 385 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 385 "ansi-c.y"
         {
             CustomSignature *sig = new CustomSignature(yyvsp[-3].type_ident->nam.c_str());
             if (yyvsp[-4].custom_options->exp)
@@ -1907,7 +1907,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 39:
-#line 404 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 404 "ansi-c.y"
         {
             SymbolRef *ref = new SymbolRef(yyvsp[-2].ival, yyvsp[-1].str);
             refs.push_back(ref);
@@ -1915,7 +1915,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 40:
-#line 410 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 410 "ansi-c.y"
         {
             Symbol *sym = new Symbol(yyvsp[-2].ival);
             sym->nam = yyvsp[-1].type_ident->nam;
@@ -1925,7 +1925,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 41:
-#line 421 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 421 "ansi-c.y"
         {
             Symbol *sym = new Symbol(yyvsp[-3].ival);
             sym->sig = yyvsp[-1].sig;
@@ -1935,7 +1935,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 42:
-#line 429 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 429 "ansi-c.y"
         {
             yyval.mods = yyvsp[0].mods;
             yyval.mods->noDecode = true;
@@ -1943,7 +1943,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 43:
-#line 433 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 433 "ansi-c.y"
         {
             yyval.mods = yyvsp[0].mods;
             yyval.mods->incomplete = true;
@@ -1951,13 +1951,13 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 44:
-#line 437 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 437 "ansi-c.y"
         {
             yyval.mods = new SymbolMods(); ;
             break;
         }
         case 45:
-#line 441 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 441 "ansi-c.y"
         {
             yyval.custom_options = new CustomOptions();
             yyval.custom_options->exp = yyvsp[-1].exp;
@@ -1965,7 +1965,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 46:
-#line 444 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 444 "ansi-c.y"
         {
             yyval.custom_options = new CustomOptions();
             yyval.custom_options->sp = yyvsp[-1].ival;
@@ -1973,41 +1973,41 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 47:
-#line 447 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 447 "ansi-c.y"
         {
             yyval.custom_options = new CustomOptions(); ;
             break;
         }
         case 48:
-#line 451 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 451 "ansi-c.y"
         {
             yyval.type = new ArrayType(NULL, yyvsp[-1].ival);
             ;
             break;
         }
         case 49:
-#line 454 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 454 "ansi-c.y"
         {
             yyval.type = new ArrayType(NULL);
             ;
             break;
         }
         case 50:
-#line 457 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 457 "ansi-c.y"
         {
             yyval.type = new ArrayType(yyvsp[-3].type, yyvsp[-1].ival);
             ;
             break;
         }
         case 51:
-#line 460 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 460 "ansi-c.y"
         {
             yyval.type = new ArrayType(yyvsp[-2].type);
             ;
             break;
         }
         case 52:
-#line 465 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 465 "ansi-c.y"
         {
             yyval.type_ident = new TypeIdent();
             yyval.type_ident->ty = yyvsp[-1].type;
@@ -2016,7 +2016,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 53:
-#line 470 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 470 "ansi-c.y"
         {
             yyval.type_ident = new TypeIdent();
             ((ArrayType*)yyvsp[0].type)->fixBaseType(yyvsp[-2].type);
@@ -2026,7 +2026,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 54:
-#line 478 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 478 "ansi-c.y"
         {
             yyval.type_ident_list = yyvsp[0].type_ident_list;
             yyval.type_ident_list->push_front(yyvsp[-2].type_ident);
@@ -2034,7 +2034,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 55:
-#line 482 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 482 "ansi-c.y"
         {
             yyval.type_ident_list = new std::list<TypeIdent*>();
             yyval.type_ident_list->push_back(yyvsp[-1].type_ident);
@@ -2042,97 +2042,97 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 56:
-#line 488 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 488 "ansi-c.y"
         {
             yyval.type = new CharType(); ;
             break;
         }
         case 57:
-#line 490 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 490 "ansi-c.y"
         {
             yyval.type = new IntegerType(16, 1); ;
             break;
         }
         case 58:
-#line 492 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 492 "ansi-c.y"
         {
             yyval.type = new IntegerType(32, 1); ;
             break;
         }
         case 59:
-#line 494 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 494 "ansi-c.y"
         {
             yyval.type = new IntegerType(8, 0); ;
             break;
         }
         case 60:
-#line 496 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 496 "ansi-c.y"
         {
             yyval.type = new IntegerType(16, 0); ;
             break;
         }
         case 61:
-#line 498 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 498 "ansi-c.y"
         {
             yyval.type = new IntegerType(32, 0); ;
             break;
         }
         case 62:
-#line 500 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 500 "ansi-c.y"
         {
             yyval.type = new IntegerType(32, 0); ;
             break;
         }
         case 63:
-#line 502 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 502 "ansi-c.y"
         {
             yyval.type = new IntegerType(32, 0); ;
             break;
         }
         case 64:
-#line 504 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 504 "ansi-c.y"
         {
             yyval.type = new IntegerType(32, 1); ;
             break;
         }
         case 65:
-#line 506 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 506 "ansi-c.y"
         {
             yyval.type = new IntegerType(64, 1); ;
             break;
         }
         case 66:
-#line 508 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 508 "ansi-c.y"
         {
             yyval.type = new IntegerType(64, 0); ;
             break;
         }
         case 67:
-#line 510 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 510 "ansi-c.y"
         {
             yyval.type = new FloatType(32); ;
             break;
         }
         case 68:
-#line 512 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 512 "ansi-c.y"
         {
             yyval.type = new FloatType(64); ;
             break;
         }
         case 69:
-#line 514 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 514 "ansi-c.y"
         {
             yyval.type = new VoidType(); ;
             break;
         }
         case 70:
-#line 516 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 516 "ansi-c.y"
         {
             yyval.type = new PointerType(yyvsp[-1].type); ;
             break;
         }
         case 71:
-#line 518 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 518 "ansi-c.y"
         {
             // This isn't C, but it makes defining pointers to arrays easier
             yyval.type = new ArrayType(yyvsp[-3].type, yyvsp[-1].ival);
@@ -2140,7 +2140,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 72:
-#line 522 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 522 "ansi-c.y"
         {
             // This isn't C, but it makes defining pointers to arrays easier
             yyval.type = new ArrayType(yyvsp[-2].type);
@@ -2148,7 +2148,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 73:
-#line 526 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 526 "ansi-c.y"
         {
             //$$ = Type::getNamedType($1);
             //if ($$ == NULL)
@@ -2157,13 +2157,13 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 74:
-#line 531 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 531 "ansi-c.y"
         {
             yyval.type = yyvsp[0].type; ;
             break;
         }
         case 75:
-#line 533 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 533 "ansi-c.y"
         {
             char tmp[1024];
             sprintf(tmp, "struct %s", yyvsp[0].str);
@@ -2172,7 +2172,7 @@ YY_AnsiCParser_PARSE_PARAM_DEF
             break;
         }
         case 76:
-#line 539 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 539 "ansi-c.y"
         {
             CompoundType *t = new CompoundType();
             for (std::list<TypeIdent*>::iterator it = yyvsp[-1].type_ident_list->begin();
@@ -2388,8 +2388,8 @@ YY_AnsiCParser_PARSE_PARAM_DEF
 /* END */
 
 /* #line 1010 "/opt/local/lib/bison.cc" */
-#line 2223 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-parser.cpp"
-#line 548 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.y"
+#line 2223 "ansi-c-parser.cpp"
+#line 548 "ansi-c.y"
 
 #include <stdio.h>
 

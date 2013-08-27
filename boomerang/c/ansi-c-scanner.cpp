@@ -195,7 +195,7 @@ int read();
 
 
 /* % section 1 definitions go here */
-#line 1 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 1 "ansi-c.l"
 #define INITIAL 0
 /*==============================================================================
  * FILE:       ansi-c.l
@@ -207,8 +207,8 @@ int read();
  */
 #define YY_AnsiCScanner_FLEX_SCANNER
 /* ALlow ? and @ in identifiers, so we can use mangled names */
-#include "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c-scanner.h"
-#line 56 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#include "ansi-c-scanner.h"
+#line 56 "ansi-c.l"
 #line 196 "/opt/flexpp/lib/flexskel.cc"
 
 #define yy___stderr YY_AnsiCScanner_ERRFILE
@@ -880,447 +880,447 @@ do_action:      /* this label is used only to access EOF actions */
                 goto yy_find_action;
 
             case 1:
-#line 58 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 58 "ansi-c.l"
             { count(); return AnsiCParser::PREINCLUDE; }
             YY_BREAK
             case 2:
-#line 59 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 59 "ansi-c.l"
             { count(); return AnsiCParser::PREDEFINE; }
             YY_BREAK
             case 3:
-#line 60 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 60 "ansi-c.l"
             { count(); return AnsiCParser::PREIF; }
             YY_BREAK
             case 4:
-#line 61 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 61 "ansi-c.l"
             { count(); return AnsiCParser::PREIFDEF; }
             YY_BREAK
             case 5:
-#line 62 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 62 "ansi-c.l"
             { count(); return AnsiCParser::PREENDIF; }
             YY_BREAK
             case 6:
-#line 63 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 63 "ansi-c.l"
             { count(); return AnsiCParser::PRELINE; }
             YY_BREAK
             case 7:
-#line 65 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 65 "ansi-c.l"
             { comment(); }
             YY_BREAK
             case 8:
-#line 66 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 66 "ansi-c.l"
             { commentEOL(); }
             YY_BREAK
             case 9:
-#line 68 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 68 "ansi-c.l"
             { count(); return AnsiCParser::AUTO; }
             YY_BREAK
             case 10:
-#line 69 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 69 "ansi-c.l"
             { count(); return AnsiCParser::BREAK; }
             YY_BREAK
             case 11:
-#line 70 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 70 "ansi-c.l"
             { count(); return AnsiCParser::CASE; }
             YY_BREAK
             case 12:
-#line 71 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 71 "ansi-c.l"
             { count(); return AnsiCParser::CHAR; }
             YY_BREAK
             case 13:
-#line 72 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 72 "ansi-c.l"
             { count(); return AnsiCParser::CONST; }
             YY_BREAK
             case 14:
-#line 73 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 73 "ansi-c.l"
             { count(); return AnsiCParser::CONTINUE; }
             YY_BREAK
             case 15:
-#line 74 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 74 "ansi-c.l"
             { count(); return AnsiCParser::DEFAULT; }
             YY_BREAK
             case 16:
-#line 75 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 75 "ansi-c.l"
             { count(); return AnsiCParser::DO; }
             YY_BREAK
             case 17:
-#line 76 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 76 "ansi-c.l"
             { count(); return AnsiCParser::DOUBLE; }
             YY_BREAK
             case 18:
-#line 77 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 77 "ansi-c.l"
             { count(); return AnsiCParser::ELSE; }
             YY_BREAK
             case 19:
-#line 78 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 78 "ansi-c.l"
             { count(); return AnsiCParser::ENUM; }
             YY_BREAK
             case 20:
-#line 79 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 79 "ansi-c.l"
             { count(); return AnsiCParser::EXTERN; }
             YY_BREAK
             case 21:
-#line 80 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 80 "ansi-c.l"
             { count(); return AnsiCParser::FLOAT; }
             YY_BREAK
             case 22:
-#line 81 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 81 "ansi-c.l"
             { count(); return AnsiCParser::FOR; }
             YY_BREAK
             case 23:
-#line 82 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 82 "ansi-c.l"
             { count(); return AnsiCParser::GOTO; }
             YY_BREAK
             case 24:
-#line 83 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 83 "ansi-c.l"
             { count(); return AnsiCParser::IF; }
             YY_BREAK
             case 25:
-#line 84 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 84 "ansi-c.l"
             { count(); return AnsiCParser::INT; }
             YY_BREAK
             case 26:
-#line 85 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 85 "ansi-c.l"
             { count(); return AnsiCParser::LONG; }
             YY_BREAK
             case 27:
-#line 86 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 86 "ansi-c.l"
             { count(); return AnsiCParser::REGISTER; }
             YY_BREAK
             case 28:
-#line 87 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 87 "ansi-c.l"
             { count(); return AnsiCParser::RETURN; }
             YY_BREAK
             case 29:
-#line 88 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 88 "ansi-c.l"
             { count(); return AnsiCParser::SHORT; }
             YY_BREAK
             case 30:
-#line 89 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 89 "ansi-c.l"
             { count(); return AnsiCParser::SIGNED; }
             YY_BREAK
             case 31:
-#line 90 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 90 "ansi-c.l"
             { count(); return AnsiCParser::SIZEOF; }
             YY_BREAK
             case 32:
-#line 91 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 91 "ansi-c.l"
             { count(); return AnsiCParser::NODECODE; }
             YY_BREAK
             case 33:
-#line 92 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 92 "ansi-c.l"
             { count(); return AnsiCParser::INCOMPLETE; }
             YY_BREAK
             case 34:
-#line 93 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 93 "ansi-c.l"
             { count(); return AnsiCParser::CDECL; }
             YY_BREAK
             case 35:
-#line 94 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 94 "ansi-c.l"
             { count(); return AnsiCParser::PASCAL; }
             YY_BREAK
             case 36:
-#line 95 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 95 "ansi-c.l"
             { count(); return AnsiCParser::PASCAL; }
             YY_BREAK
             case 37:
-#line 96 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 96 "ansi-c.l"
             { count(); return AnsiCParser::CUSTOM; }
             YY_BREAK
             case 38:
-#line 97 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 97 "ansi-c.l"
             { count(); return AnsiCParser::THISCALL;}
             YY_BREAK
             case 39:
-#line 98 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 98 "ansi-c.l"
             { count(); return AnsiCParser::PREFER; }
             YY_BREAK
             case 40:
-#line 99 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 99 "ansi-c.l"
             { count(); return AnsiCParser::WITHSTACK; }
             YY_BREAK
             case 41:
-#line 100 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 100 "ansi-c.l"
             { count(); return AnsiCParser::SYMBOLREF; }
             YY_BREAK
             case 42:
-#line 101 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 101 "ansi-c.l"
             { count(); return AnsiCParser::STATIC; }
             YY_BREAK
             case 43:
-#line 102 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 102 "ansi-c.l"
             { count(); return AnsiCParser::STRUCT; }
             YY_BREAK
             case 44:
-#line 103 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 103 "ansi-c.l"
             { count(); return AnsiCParser::SWITCH; }
             YY_BREAK
             case 45:
-#line 104 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 104 "ansi-c.l"
             { count(); return AnsiCParser::TYPEDEF; }
             YY_BREAK
             case 46:
-#line 105 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 105 "ansi-c.l"
             { count(); return AnsiCParser::UNION; }
             YY_BREAK
             case 47:
-#line 106 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 106 "ansi-c.l"
             { count(); return AnsiCParser::UNSIGNED; }
             YY_BREAK
             case 48:
-#line 107 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 107 "ansi-c.l"
             { count(); return AnsiCParser::VOID; }
             YY_BREAK
             case 49:
-#line 108 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 108 "ansi-c.l"
             { count(); return AnsiCParser::VOLATILE; }
             YY_BREAK
             case 50:
-#line 109 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 109 "ansi-c.l"
             { count(); return AnsiCParser::WHILE; }
             YY_BREAK
             case 51:
-#line 110 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 110 "ansi-c.l"
             { count(); return AnsiCParser::REGOF; }
             YY_BREAK
             case 52:
-#line 111 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 111 "ansi-c.l"
             { count(); return AnsiCParser::MEMOF; }
             YY_BREAK
             case 53:
-#line 112 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 112 "ansi-c.l"
             { count(); return AnsiCParser::MAXBOUND; }
             YY_BREAK
             case 54:
-#line 114 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 114 "ansi-c.l"
             { count(); yylval.str = strdup(yytext); return check_type(); }
             YY_BREAK
             case 55:
-#line 116 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 116 "ansi-c.l"
             { count(); sscanf(yytext, "0x%x", &yylval.ival); return AnsiCParser::CONSTANT; }
             YY_BREAK
             case 56:
-#line 117 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 117 "ansi-c.l"
             { count(); return AnsiCParser::CONSTANT; }
             YY_BREAK
             case 57:
-#line 118 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 118 "ansi-c.l"
             { count(); sscanf(yytext, "%d", &yylval.ival); return AnsiCParser::CONSTANT; }
             YY_BREAK
             case 58:
-#line 119 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 119 "ansi-c.l"
             { count(); return AnsiCParser::CONSTANT; }
             YY_BREAK
             case 59:
-#line 121 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 121 "ansi-c.l"
             { count(); return AnsiCParser::CONSTANT; }
             YY_BREAK
             case 60:
-#line 122 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 122 "ansi-c.l"
             { count(); return AnsiCParser::CONSTANT; }
             YY_BREAK
             case 61:
-#line 123 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 123 "ansi-c.l"
             { count(); return AnsiCParser::CONSTANT; }
             YY_BREAK
             case 62:
-#line 125 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 125 "ansi-c.l"
             { count(); yylval.str = strdup(yytext); return AnsiCParser::STRING_LITERAL; }
             YY_BREAK
             case 63:
-#line 127 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 127 "ansi-c.l"
             { count(); return AnsiCParser::ELLIPSIS; }
             YY_BREAK
             case 64:
-#line 128 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 128 "ansi-c.l"
             { count(); return AnsiCParser::RIGHT_ASSIGN; }
             YY_BREAK
             case 65:
-#line 129 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 129 "ansi-c.l"
             { count(); return AnsiCParser::LEFT_ASSIGN; }
             YY_BREAK
             case 66:
-#line 130 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 130 "ansi-c.l"
             { count(); return AnsiCParser::ADD_ASSIGN; }
             YY_BREAK
             case 67:
-#line 131 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 131 "ansi-c.l"
             { count(); return AnsiCParser::SUB_ASSIGN; }
             YY_BREAK
             case 68:
-#line 132 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 132 "ansi-c.l"
             { count(); return AnsiCParser::MUL_ASSIGN; }
             YY_BREAK
             case 69:
-#line 133 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 133 "ansi-c.l"
             { count(); return AnsiCParser::DIV_ASSIGN; }
             YY_BREAK
             case 70:
-#line 134 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 134 "ansi-c.l"
             { count(); return AnsiCParser::MOD_ASSIGN; }
             YY_BREAK
             case 71:
-#line 135 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 135 "ansi-c.l"
             { count(); return AnsiCParser::AND_ASSIGN; }
             YY_BREAK
             case 72:
-#line 136 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 136 "ansi-c.l"
             { count(); return AnsiCParser::XOR_ASSIGN; }
             YY_BREAK
             case 73:
-#line 137 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 137 "ansi-c.l"
             { count(); return AnsiCParser::OR_ASSIGN; }
             YY_BREAK
             case 74:
-#line 138 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 138 "ansi-c.l"
             { count(); return AnsiCParser::RIGHT_OP; }
             YY_BREAK
             case 75:
-#line 139 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 139 "ansi-c.l"
             { count(); return AnsiCParser::LEFT_OP; }
             YY_BREAK
             case 76:
-#line 140 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 140 "ansi-c.l"
             { count(); return AnsiCParser::INC_OP; }
             YY_BREAK
             case 77:
-#line 141 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 141 "ansi-c.l"
             { count(); return AnsiCParser::DEC_OP; }
             YY_BREAK
             case 78:
-#line 142 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 142 "ansi-c.l"
             { count(); return AnsiCParser::PTR_OP; }
             YY_BREAK
             case 79:
-#line 143 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 143 "ansi-c.l"
             { count(); return AnsiCParser::AND_OP; }
             YY_BREAK
             case 80:
-#line 144 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 144 "ansi-c.l"
             { count(); return AnsiCParser::OR_OP; }
             YY_BREAK
             case 81:
-#line 145 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 145 "ansi-c.l"
             { count(); return AnsiCParser::LE_OP; }
             YY_BREAK
             case 82:
-#line 146 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 146 "ansi-c.l"
             { count(); return AnsiCParser::GE_OP; }
             YY_BREAK
             case 83:
-#line 147 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 147 "ansi-c.l"
             { count(); return AnsiCParser::EQ_OP; }
             YY_BREAK
             case 84:
-#line 148 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 148 "ansi-c.l"
             { count(); return AnsiCParser::NE_OP; }
             YY_BREAK
             case 85:
-#line 149 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 149 "ansi-c.l"
             { count(); return ';'; }
             YY_BREAK
             case 86:
-#line 150 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 150 "ansi-c.l"
             { count(); return '{'; }
             YY_BREAK
             case 87:
-#line 151 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 151 "ansi-c.l"
             { count(); return '}'; }
             YY_BREAK
             case 88:
-#line 152 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 152 "ansi-c.l"
             { count(); return ','; }
             YY_BREAK
             case 89:
-#line 153 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 153 "ansi-c.l"
             { count(); return ':'; }
             YY_BREAK
             case 90:
-#line 154 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 154 "ansi-c.l"
             { count(); return '='; }
             YY_BREAK
             case 91:
-#line 155 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 155 "ansi-c.l"
             { count(); return '('; }
             YY_BREAK
             case 92:
-#line 156 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 156 "ansi-c.l"
             { count(); return ')'; }
             YY_BREAK
             case 93:
-#line 157 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 157 "ansi-c.l"
             { count(); return '['; }
             YY_BREAK
             case 94:
-#line 158 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 158 "ansi-c.l"
             { count(); return ']'; }
             YY_BREAK
             case 95:
-#line 159 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 159 "ansi-c.l"
             { count(); return '.'; }
             YY_BREAK
             case 96:
-#line 160 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 160 "ansi-c.l"
             { count(); return '&'; }
             YY_BREAK
             case 97:
-#line 161 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 161 "ansi-c.l"
             { count(); return '!'; }
             YY_BREAK
             case 98:
-#line 162 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 162 "ansi-c.l"
             { count(); return '~'; }
             YY_BREAK
             case 99:
-#line 163 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 163 "ansi-c.l"
             { count(); return '-'; }
             YY_BREAK
             case 100:
-#line 164 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 164 "ansi-c.l"
             { count(); return '+'; }
             YY_BREAK
             case 101:
-#line 165 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 165 "ansi-c.l"
             { count(); return '*'; }
             YY_BREAK
             case 102:
-#line 166 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 166 "ansi-c.l"
             { count(); return '/'; }
             YY_BREAK
             case 103:
-#line 167 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 167 "ansi-c.l"
             { count(); return '%'; }
             YY_BREAK
             case 104:
-#line 168 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 168 "ansi-c.l"
             { count(); return '<'; }
             YY_BREAK
             case 105:
-#line 169 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 169 "ansi-c.l"
             { count(); return '>'; }
             YY_BREAK
             case 106:
-#line 170 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 170 "ansi-c.l"
             { count(); return '^'; }
             YY_BREAK
             case 107:
-#line 171 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 171 "ansi-c.l"
             { count(); return '|'; }
             YY_BREAK
             case 108:
-#line 172 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 172 "ansi-c.l"
             { count(); return '?'; }
             YY_BREAK
             case 109:
-#line 174 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 174 "ansi-c.l"
             { count(); }
             YY_BREAK
             case 110:
-#line 175 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 175 "ansi-c.l"
             { /* ignore bad characters */ }
             YY_BREAK
             case 111:
-#line 177 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 177 "ansi-c.l"
                 ECHO;
                 YY_BREAK
             case YY_STATE_EOF(INITIAL):
@@ -1923,7 +1923,7 @@ void YY_AnsiCScanner_CLASS::YY_AnsiCScanner_INIT_BUFFER( YY_BUFFER_STATE b, YY_A
 
     b->yy_eof_status = EOF_NOT_SEEN;
 }
-#line 177 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
+#line 177 "ansi-c.l"
 
 
 void AnsiCScanner::comment()

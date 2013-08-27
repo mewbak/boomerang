@@ -195,7 +195,7 @@ int read();
 
 
 /* % section 1 definitions go here */
-#line 1 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 1 "sslscanner.l"
 #define INITIAL 0
 /*
  * Copyright (C) 1997, Shane Sendall
@@ -220,7 +220,7 @@ int read();
  * 05 May 04 - Mike: ASSIGNSIZE replaced by ASSIGNTYPE (text)
  */
 #define YY_SSLScanner_FLEX_SCANNER
-#line 35 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 35 "sslscanner.l"
 #include <cassert>
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning(disable:4786)
@@ -228,8 +228,8 @@ int read();
 #if defined(_MSC_VER) && _MSC_VER >= 1400
 #pragma warning(disable:4996)		// Warnings about e.g. _strdup deprecated in VS 2005
 #endif
-#include "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.h"
-#line 63 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#include "sslscanner.h"
+#line 63 "sslscanner.l"
 #line 196 "/opt/flexpp/lib/flexskel.cc"
 
 #define yy___stderr YY_SSLScanner_ERRFILE
@@ -1111,125 +1111,125 @@ do_action:      /* this label is used only to access EOF actions */
             {
                 /* % actions go here */
             case 1:
-#line 66 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 66 "sslscanner.l"
             case 2:
-#line 66 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 66 "sslscanner.l"
             { return SSLParser::TOK_INTEGER; }
             YY_BREAK
             case 3:
-#line 68 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 68 "sslscanner.l"
             case 4:
-#line 68 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 68 "sslscanner.l"
             { return SSLParser::TOK_FLOAT; }
             YY_BREAK
             case 5:
-#line 69 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 69 "sslscanner.l"
             { return SSLParser::OPERAND; }
             YY_BREAK
             case 6:
-#line 71 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 71 "sslscanner.l"
             case 7:
-#line 71 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 71 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::ENDIANNESS;
             }
             YY_BREAK
             case 8:
-#line 76 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 76 "sslscanner.l"
             case 9:
-#line 76 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 76 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::BIG;
             }
             YY_BREAK
             case 10:
-#line 81 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 81 "sslscanner.l"
             case 11:
-#line 81 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 81 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::LITTLE;
             }
             YY_BREAK
             case 12:
-#line 85 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 85 "sslscanner.l"
             { return SSLParser::COVERS; }
             YY_BREAK
             case 13:
-#line 86 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 86 "sslscanner.l"
             { return SSLParser::SHARES; }
             YY_BREAK
             case 14:
-#line 87 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 87 "sslscanner.l"
             { return SSLParser::FAST; }
             YY_BREAK
             case 15:
-#line 88 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 88 "sslscanner.l"
             { return SSLParser::FETCHEXEC; }
             YY_BREAK
             case 16:
-#line 90 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 90 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::ASSIGNTYPE;
             }
             YY_BREAK
             case 17:
-#line 96 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 96 "sslscanner.l"
             case 18:
-#line 96 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 96 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::LOG_OP;
             }
             YY_BREAK
             case 19:
-#line 101 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 101 "sslscanner.l"
             case 20:
-#line 102 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 102 "sslscanner.l"
             case 21:
-#line 103 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 103 "sslscanner.l"
             case 22:
-#line 104 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 104 "sslscanner.l"
             case 23:
-#line 105 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 105 "sslscanner.l"
             case 24:
-#line 106 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 106 "sslscanner.l"
             case 25:
-#line 107 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 107 "sslscanner.l"
             case 26:
-#line 108 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 108 "sslscanner.l"
             case 27:
-#line 109 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 109 "sslscanner.l"
             case 28:
-#line 109 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 109 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::COND_OP;
             }
             YY_BREAK
             case 29:
-#line 115 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 115 "sslscanner.l"
             case 30:
-#line 116 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 116 "sslscanner.l"
             case 31:
-#line 117 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 117 "sslscanner.l"
             case 32:
-#line 118 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 118 "sslscanner.l"
             case 33:
-#line 119 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 119 "sslscanner.l"
             case 34:
-#line 120 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 120 "sslscanner.l"
             case 35:
-#line 121 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 121 "sslscanner.l"
             case 36:
-#line 122 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 122 "sslscanner.l"
             case 37:
-#line 123 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 123 "sslscanner.l"
             case 38:
-#line 123 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 123 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::BIT_OP;
@@ -1237,150 +1237,150 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 39:
-#line 129 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 129 "sslscanner.l"
             case 40:
-#line 130 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 130 "sslscanner.l"
             case 41:
-#line 131 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 131 "sslscanner.l"
             case 42:
-#line 132 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 132 "sslscanner.l"
             case 43:
-#line 133 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 133 "sslscanner.l"
             case 44:
-#line 134 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 134 "sslscanner.l"
             case 45:
-#line 135 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 135 "sslscanner.l"
             case 46:
-#line 135 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 135 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::ARITH_OP;
             }
             YY_BREAK
             case 47:
-#line 140 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 140 "sslscanner.l"
             case 48:
-#line 141 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 141 "sslscanner.l"
             case 49:
-#line 142 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 142 "sslscanner.l"
             case 50:
-#line 143 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 143 "sslscanner.l"
             case 51:
-#line 144 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 144 "sslscanner.l"
             case 52:
-#line 145 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 145 "sslscanner.l"
             case 53:
-#line 146 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 146 "sslscanner.l"
             case 54:
-#line 147 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 147 "sslscanner.l"
             case 55:
-#line 148 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 148 "sslscanner.l"
             case 56:
-#line 149 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 149 "sslscanner.l"
             case 57:
-#line 150 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 150 "sslscanner.l"
             case 58:
-#line 151 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 151 "sslscanner.l"
             case 59:
-#line 152 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 152 "sslscanner.l"
             case 60:
-#line 153 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 153 "sslscanner.l"
             case 61:
-#line 153 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 153 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::FARITH_OP;
             }
             YY_BREAK
             case 62:
-#line 157 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 157 "sslscanner.l"
             {
                 return SSLParser::NOT;
             }
             YY_BREAK
             case 63:
-#line 160 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 160 "sslscanner.l"
             {
                 return SSLParser::LNOT;
             }
             YY_BREAK
             case 64:
-#line 163 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 163 "sslscanner.l"
             {
                 return SSLParser::FNEG;
             }
             YY_BREAK
             case 65:
-#line 166 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 166 "sslscanner.l"
             {
                 return SSLParser::THEN;
             }
             YY_BREAK
             case 66:
-#line 169 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 169 "sslscanner.l"
             {
                 return SSLParser::INDEX;
             }
             YY_BREAK
             case 67:
-#line 172 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 172 "sslscanner.l"
             {
                 return SSLParser::EQUATE;
             }
             YY_BREAK
             case 68:
-#line 175 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 175 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::ASSIGN;
             }
             YY_BREAK
             case 69:
-#line 179 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 179 "sslscanner.l"
             {
                 return SSLParser::TO;
             }
             YY_BREAK
             case 70:
-#line 182 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 182 "sslscanner.l"
             {
                 return SSLParser::COLON;
             }
             YY_BREAK
             case 71:
-#line 185 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 185 "sslscanner.l"
             {
                 return SSLParser::S_E;
             }
             YY_BREAK
             case 72:
-#line 188 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 188 "sslscanner.l"
             {
                 return SSLParser::AT;
             }
             YY_BREAK
             case 73:
-#line 191 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 191 "sslscanner.l"
             {
                 return SSLParser::ADDR;
             }
             YY_BREAK
             case 74:
-#line 195 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 195 "sslscanner.l"
             case 75:
-#line 196 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 196 "sslscanner.l"
             case 76:
-#line 197 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 197 "sslscanner.l"
             case 77:
-#line 198 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 198 "sslscanner.l"
             case 78:
-#line 199 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 199 "sslscanner.l"
             case 79:
-#line 200 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 200 "sslscanner.l"
             case 80:
-#line 201 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 201 "sslscanner.l"
             case 81:
-#line 201 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 201 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 yylval.str[strlen(yylval.str)-1] = '\0';
@@ -1388,7 +1388,7 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 82:
-#line 206 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 206 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 yylval.str[strlen(yylval.str)-1] = '\0';
@@ -1396,7 +1396,7 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 83:
-#line 211 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 211 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 yylval.str[strlen(yylval.str)-1] = '\0';
@@ -1404,39 +1404,39 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 84:
-#line 217 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 217 "sslscanner.l"
             case 85:
-#line 217 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 217 "sslscanner.l"
             {
                 return SSLParser::FLAGMACRO;
             }
             YY_BREAK
             case 86:
-#line 220 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 220 "sslscanner.l"
             {	return SSLParser::FPOP; }
             YY_BREAK
             case 87:
-#line 221 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 221 "sslscanner.l"
             {	return SSLParser::FPUSH; }
             YY_BREAK
             case 88:
-#line 223 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 223 "sslscanner.l"
             case 89:
-#line 224 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 224 "sslscanner.l"
             case 90:
-#line 225 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 225 "sslscanner.l"
             case 91:
-#line 226 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 226 "sslscanner.l"
             case 92:
-#line 227 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 227 "sslscanner.l"
             case 93:
-#line 228 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 228 "sslscanner.l"
             case 94:
-#line 229 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 229 "sslscanner.l"
             case 95:
-#line 230 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 230 "sslscanner.l"
             case 96:
-#line 230 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 230 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 yylval.str[strlen(yylval.str)-1] = '\0';
@@ -1444,46 +1444,46 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 97:
-#line 236 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 236 "sslscanner.l"
             {
                 return SSLParser::SUCCESSOR;
             }
             YY_BREAK
             case 98:
-#line 240 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 240 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::TEMP;
             }
             YY_BREAK
             case 99:
-#line 245 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 245 "sslscanner.l"
             {	return SSLParser::REG_IDX; }
             YY_BREAK
             case 100:
-#line 246 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 246 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::REG_NUM;
             }
             YY_BREAK
             case 101:
-#line 248 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 248 "sslscanner.l"
             {	return SSLParser::MEM_IDX; }
             YY_BREAK
             case 102:
-#line 249 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 249 "sslscanner.l"
             {	return yytext[0];	}
             YY_BREAK
             case 103:
-#line 250 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 250 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::REG_ID;
             }
             YY_BREAK
             case 104:
-#line 254 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 254 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 yylval.str[strlen(yylval.str)-1] = '\0';
@@ -1491,7 +1491,7 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 105:
-#line 259 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 259 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 yylval.str[strlen(yylval.str)-1] = '\0';
@@ -1499,64 +1499,64 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 106:
-#line 264 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 264 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::NAME;
             }
             YY_BREAK
             case 107:
-#line 269 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 269 "sslscanner.l"
             case 108:
-#line 269 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 269 "sslscanner.l"
             {
                 yylval.str = strdup(yytext);
                 return SSLParser::DECOR;
             }
             YY_BREAK
             case 109:
-#line 273 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 273 "sslscanner.l"
             {	return yytext[0];	}
             YY_BREAK
             case 110:
-#line 274 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 274 "sslscanner.l"
             {	return yytext[0];	}
             YY_BREAK
             case 111:
-#line 275 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 275 "sslscanner.l"
             {	return yytext[0];	}
             YY_BREAK
             case 112:
-#line 276 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 276 "sslscanner.l"
             {	return yytext[0];	}
             YY_BREAK
             case 113:
-#line 277 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 277 "sslscanner.l"
             {	return yytext[0];	}
             YY_BREAK
             case 114:
-#line 278 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 278 "sslscanner.l"
             {
                 yylval.dbl = atof(yytext);
                 return SSLParser::FLOATNUM;
             }
             YY_BREAK
             case 115:
-#line 282 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 282 "sslscanner.l"
             {
                 yylval.num = strtol(yytext,0,10);
                 return SSLParser::NUM;
             }
             YY_BREAK
             case 116:
-#line 287 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 287 "sslscanner.l"
             {
                 yylval.num = strtol(yytext,0,16);
                 return SSLParser::NUM;
             }
             YY_BREAK
             case 117:
-#line 292 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 292 "sslscanner.l"
             {
                 // a power of two
                 int sign = (yytext[0] == '-' ? -1 : 1);
@@ -1570,19 +1570,19 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 118:
-#line 304 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 304 "sslscanner.l"
                 ;
                 YY_BREAK
             case 119:
-#line 305 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 305 "sslscanner.l"
                 ;	/* comment */
                 YY_BREAK
             case 120:
-#line 306 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 306 "sslscanner.l"
                 ;
                 YY_BREAK
             case 121:
-#line 307 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 307 "sslscanner.l"
             {
                 // funky print-next-line-for-debug token
                 if (yyleng > MAX_LINE)
@@ -1607,7 +1607,7 @@ do_action:      /* this label is used only to access EOF actions */
             }
             YY_BREAK
             case 122:
-#line 328 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 328 "sslscanner.l"
                 ECHO;
                 YY_BREAK
             case YY_STATE_EOF(INITIAL):
@@ -2197,5 +2197,5 @@ void YY_SSLScanner_CLASS::YY_SSLScanner_INIT_BUFFER( YY_BUFFER_STATE b, YY_SSLSc
 
     b->yy_eof_status = EOF_NOT_SEEN;
 }
-#line 328 "/Users/nietzsche/boomerang/trunk/boomerang/db/sslscanner.l"
+#line 328 "sslscanner.l"
 

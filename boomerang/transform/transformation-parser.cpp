@@ -1,6 +1,6 @@
 #define YY_TransformationParser_h_included
 
-/*  A Bison++ parser, made from /Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y  */
+/*  A Bison++ parser, made from transformation.y  */
 
 /* with Bison++ version bison++ version 1.21-45, adapted from GNU Bison by coetmeur@icdc.fr
  */
@@ -81,7 +81,7 @@ void *alloca ();
 #define YYBISON 1
 
 /* #line 73 "/opt/local/lib/bison.cc" */
-#line 85 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 85 "transformation-parser.cpp"
 #define YY_TransformationParser_DEBUG  1
 #define YY_TransformationParser_PARSE_PARAM
 #define YY_TransformationParser_CONSTRUCTOR_PARAM  \
@@ -95,7 +95,7 @@ private:        \
     TransformationScanner *theScanner; \
 public: \
     virtual ~TransformationParser();
-#line 32 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 32 "transformation.y"
 
 #include <cstring>
 #include <cstdlib>
@@ -115,7 +115,7 @@ public: \
 
 class TransformationScanner;
 
-#line 71 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 71 "transformation.y"
 typedef union
 {
     int ival;
@@ -124,7 +124,7 @@ typedef union
     Exp *exp;
 } yy_TransformationParser_stype;
 #define YY_TransformationParser_STYPE yy_TransformationParser_stype
-#line 78 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 78 "transformation.y"
 
 #include "transformation-scanner.h"
 
@@ -175,7 +175,7 @@ typedef union
 #ifndef YY_TransformationParser_PURE
 
 /* #line 117 "/opt/local/lib/bison.cc" */
-#line 178 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 178 "transformation-parser.cpp"
 
 #line 117 "/opt/local/lib/bison.cc"
 /*  YY_TransformationParser_PURE */
@@ -184,14 +184,14 @@ typedef union
 /* section apres lecture def, avant lecture grammaire S2 */
 
 /* #line 121 "/opt/local/lib/bison.cc" */
-#line 187 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 187 "transformation-parser.cpp"
 
 #line 121 "/opt/local/lib/bison.cc"
 /* prefix */
 #ifndef YY_TransformationParser_DEBUG
 
 /* #line 123 "/opt/local/lib/bison.cc" */
-#line 194 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 194 "transformation-parser.cpp"
 
 #line 123 "/opt/local/lib/bison.cc"
 /* YY_TransformationParser_DEBUG */
@@ -201,7 +201,7 @@ typedef union
 #ifndef YY_TransformationParser_LSP_NEEDED
 
 /* #line 128 "/opt/local/lib/bison.cc" */
-#line 204 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 204 "transformation-parser.cpp"
 
 #line 128 "/opt/local/lib/bison.cc"
 /* YY_TransformationParser_LSP_NEEDED*/
@@ -314,7 +314,7 @@ but it seems better to be consistent.
 /* TOKEN C */
 
 /* #line 236 "/opt/local/lib/bison.cc" */
-#line 317 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 317 "transformation-parser.cpp"
 #define	SIZEOF	258
 #define	KIND	259
 #define	POINTER	260
@@ -407,7 +407,7 @@ public:
     /* static const int token ... */
 
     /* #line 280 "/opt/local/lib/bison.cc" */
-#line 410 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 410 "transformation-parser.cpp"
     static const int SIZEOF;
     static const int KIND;
     static const int POINTER;
@@ -459,7 +459,7 @@ public:
     enum YY_TransformationParser_ENUM_TOKEN { YY_TransformationParser_NULL_TOKEN=0
 
             /* #line 283 "/opt/local/lib/bison.cc" */
-#line 462 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 462 "transformation-parser.cpp"
             ,SIZEOF=258
                     ,KIND=259
                           ,POINTER=260
@@ -539,7 +539,7 @@ public:
 #if YY_TransformationParser_USE_CONST_TOKEN != 0
 
 /* #line 314 "/opt/local/lib/bison.cc" */
-#line 542 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 542 "transformation-parser.cpp"
 const int YY_TransformationParser_CLASS::SIZEOF=258;
 const int YY_TransformationParser_CLASS::KIND=259;
 const int YY_TransformationParser_CLASS::POINTER=260;
@@ -599,7 +599,7 @@ YY_TransformationParser_CLASS::YY_TransformationParser_CLASS(YY_TransformationPa
 #endif
 
 /* #line 325 "/opt/local/lib/bison.cc" */
-#line 602 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 602 "transformation-parser.cpp"
 
 
 #define	YYFINAL		72
@@ -1280,162 +1280,162 @@ YY_TransformationParser_PARSE_PARAM_DEF
 
 
     /* #line 811 "/opt/local/lib/bison.cc" */
-#line 1280 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
+#line 1280 "transformation-parser.cpp"
 
     switch (yyn)
         {
 
         case 1:
-#line 90 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 90 "transformation.y"
         {
             ;
             break;
         }
         case 2:
-#line 92 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 92 "transformation.y"
         {
             ;
             break;
         }
         case 3:
-#line 96 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 96 "transformation.y"
         {
             new GenericExpTransformer(yyvsp[-3].exp, yyvsp[-2].exp, yyvsp[0].exp); ;
             break;
         }
         case 4:
-#line 100 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 100 "transformation.y"
         {
             yyval.exp = yyvsp[0].exp; ;
             break;
         }
         case 5:
-#line 102 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 102 "transformation.y"
         {
             yyval.exp = NULL; ;
             break;
         }
         case 6:
-#line 106 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 106 "transformation.y"
         {
             yyval.exp = Location::regOf(yyvsp[-1].ival);
             ;
             break;
         }
         case 7:
-#line 109 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 109 "transformation.y"
         {
             yyval.exp = Location::memOf(yyvsp[-1].exp);
             ;
             break;
         }
         case 8:
-#line 112 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 112 "transformation.y"
         {
             yyval.exp = new Unary(opAddrOf, yyvsp[-1].exp);
             ;
             break;
         }
         case 9:
-#line 115 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 115 "transformation.y"
         {
             yyval.exp = new Binary(opPlus, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 10:
-#line 118 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 118 "transformation.y"
         {
             yyval.exp = new Binary(opMinus, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 11:
-#line 121 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 121 "transformation.y"
         {
             yyval.exp = new Binary(opMult, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 12:
-#line 124 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 124 "transformation.y"
         {
             yyval.exp = new Binary(opBitAnd, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 13:
-#line 127 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 127 "transformation.y"
         {
             yyval.exp = new Binary(opBitOr, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 14:
-#line 130 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 130 "transformation.y"
         {
             yyval.exp = new Binary(opBitXor, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 15:
-#line 133 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 133 "transformation.y"
         {
             yyval.exp = new Binary(opDiv, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 16:
-#line 136 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 136 "transformation.y"
         {
             yyval.exp = new Binary(opAnd, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 17:
-#line 139 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 139 "transformation.y"
         {
             yyval.exp = new Binary(opOr, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 18:
-#line 142 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 142 "transformation.y"
         {
             yyval.exp = new Binary(opEquals, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 19:
-#line 145 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 145 "transformation.y"
         {
             yyval.exp = new Binary(opNotEqual, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 20:
-#line 148 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 148 "transformation.y"
         {
             yyval.exp = new Binary(opMemberAccess, yyvsp[-2].exp, yyvsp[0].exp);
             ;
             break;
         }
         case 21:
-#line 151 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 151 "transformation.y"
         {
             yyval.exp = new Const(yyvsp[0].ival);
             ;
             break;
         }
         case 22:
-#line 154 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 154 "transformation.y"
         {
             yyval.exp = new Binary(opFlagCall, new Const(yyvsp[-2].str), yyvsp[-1].exp);
             ;
             break;
         }
         case 23:
-#line 157 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 157 "transformation.y"
         {
             if (strlen(yyvsp[0].str) > 2 && yyvsp[0].str[0] == 'o' && yyvsp[0].str[1] == 'p')
                 yyval.exp = new Const(yyvsp[0].str); // treat op* as a string constant
@@ -1445,84 +1445,84 @@ YY_TransformationParser_PARSE_PARAM_DEF
             break;
         }
         case 24:
-#line 164 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 164 "transformation.y"
         {
             yyval.exp = yyvsp[-1].exp;
             ;
             break;
         }
         case 25:
-#line 167 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 167 "transformation.y"
         {
             yyval.exp = new Unary(opKindOf, yyvsp[-1].exp);
             ;
             break;
         }
         case 26:
-#line 170 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 170 "transformation.y"
         {
             yyval.exp = new Unary(opTypeOf, yyvsp[-1].exp);
             ;
             break;
         }
         case 27:
-#line 173 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 173 "transformation.y"
         {
             yyval.exp = new Unary(opNeg, yyvsp[0].exp);
             ;
             break;
         }
         case 28:
-#line 176 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 176 "transformation.y"
         {
             yyval.exp = new Unary(opLNot, yyvsp[0].exp);
             ;
             break;
         }
         case 29:
-#line 179 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 179 "transformation.y"
         {
             yyval.exp = new TypeVal(yyvsp[0].type);
             ;
             break;
         }
         case 30:
-#line 182 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 182 "transformation.y"
         {
             yyval.exp = new Binary(opList, yyvsp[-2].exp, new Binary(opList, yyvsp[0].exp, new Terminal(opNil)));
             ;
             break;
         }
         case 31:
-#line 185 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 185 "transformation.y"
         {
             yyval.exp = new Terminal(opTrue);
             ;
             break;
         }
         case 32:
-#line 188 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 188 "transformation.y"
         {
             yyval.exp = new Terminal(opFalse);
             ;
             break;
         }
         case 33:
-#line 193 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 193 "transformation.y"
         {
             yyval.type = new PointerType(yyvsp[-1].type);
             ;
             break;
         }
         case 34:
-#line 196 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 196 "transformation.y"
         {
             yyval.type = new CompoundType();
             ;
             break;
         }
         case 35:
-#line 199 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 199 "transformation.y"
         {
             yyval.type = new NamedType(yyvsp[0].str);
             ;
@@ -1732,8 +1732,8 @@ YY_TransformationParser_PARSE_PARAM_DEF
 /* END */
 
 /* #line 1010 "/opt/local/lib/bison.cc" */
-#line 1662 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-parser.cpp"
-#line 203 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.y"
+#line 1662 "transformation-parser.cpp"
+#line 203 "transformation.y"
 
 #include <stdio.h>
 

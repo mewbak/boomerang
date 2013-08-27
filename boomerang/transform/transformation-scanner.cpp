@@ -195,7 +195,7 @@ int read();
 
 
 /* % section 1 definitions go here */
-#line 1 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 1 "transformation.l"
 #define INITIAL 0
 /*==============================================================================
  * FILE:       transformation.l
@@ -207,8 +207,8 @@ int read();
  */
 #define YY_TransformationScanner_FLEX_SCANNER
 /* ALlow ? and @ in identifiers, so we can use mangled names */
-#include "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation-scanner.h"
-#line 56 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#include "transformation-scanner.h"
+#line 56 "transformation.l"
 #line 196 "/opt/flexpp/lib/flexskel.cc"
 
 #define yy___stderr YY_TransformationScanner_ERRFILE
@@ -780,295 +780,295 @@ do_action:      /* this label is used only to access EOF actions */
                 goto yy_find_action;
 
             case 1:
-#line 58 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 58 "transformation.l"
             { comment(); }
             YY_BREAK
             case 2:
-#line 60 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 60 "transformation.l"
             { count(); return TransformationParser::SIZEOF; }
             YY_BREAK
             case 3:
-#line 61 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 61 "transformation.l"
             { count(); return TransformationParser::WHERE; }
             YY_BREAK
             case 4:
-#line 62 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 62 "transformation.l"
             { count(); return TransformationParser::BECOMES; }
             YY_BREAK
             case 5:
-#line 63 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 63 "transformation.l"
             { count(); return TransformationParser::KIND; }
             YY_BREAK
             case 6:
-#line 64 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 64 "transformation.l"
             { count(); return TransformationParser::TYPE; }
             YY_BREAK
             case 7:
-#line 65 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 65 "transformation.l"
             { count(); return TransformationParser::POINTER; }
             YY_BREAK
             case 8:
-#line 66 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 66 "transformation.l"
             { count(); return TransformationParser::COMPOUND; }
             YY_BREAK
             case 9:
-#line 67 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 67 "transformation.l"
             { count(); return TransformationParser::ARRAY; }
             YY_BREAK
             case 10:
-#line 68 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 68 "transformation.l"
             { count(); return TransformationParser::REGOF; }
             YY_BREAK
             case 11:
-#line 69 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 69 "transformation.l"
             { count(); return TransformationParser::MEMOF; }
             YY_BREAK
             case 12:
-#line 70 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 70 "transformation.l"
             { count(); return TransformationParser::ADDROF; }
             YY_BREAK
             case 13:
-#line 71 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 71 "transformation.l"
             { count(); return TransformationParser::BOOL_TRUE; }
             YY_BREAK
             case 14:
-#line 72 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 72 "transformation.l"
             { count(); return TransformationParser::BOOL_FALSE; }
             YY_BREAK
             case 15:
-#line 73 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 73 "transformation.l"
             { count(); yylval.str = strdup(yytext); yylval.str[strlen(yylval.str)-1] = 0; return TransformationParser::FUNC; }
             YY_BREAK
             case 16:
-#line 75 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 75 "transformation.l"
             { count(); yylval.str = strdup(yytext); return TransformationParser::IDENTIFIER; }
             YY_BREAK
             case 17:
-#line 77 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 77 "transformation.l"
             { count(); sscanf(yytext, "0x%x", &yylval.ival); return TransformationParser::CONSTANT; }
             YY_BREAK
             case 18:
-#line 78 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 78 "transformation.l"
             { count(); return TransformationParser::CONSTANT; }
             YY_BREAK
             case 19:
-#line 79 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 79 "transformation.l"
             { count(); sscanf(yytext, "%d", &yylval.ival); return TransformationParser::CONSTANT; }
             YY_BREAK
             case 20:
-#line 80 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 80 "transformation.l"
             { count(); return TransformationParser::CONSTANT; }
             YY_BREAK
             case 21:
-#line 82 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 82 "transformation.l"
             { count(); return TransformationParser::CONSTANT; }
             YY_BREAK
             case 22:
-#line 83 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 83 "transformation.l"
             { count(); return TransformationParser::CONSTANT; }
             YY_BREAK
             case 23:
-#line 84 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 84 "transformation.l"
             { count(); return TransformationParser::CONSTANT; }
             YY_BREAK
             case 24:
-#line 86 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 86 "transformation.l"
             { count(); yylval.str = strdup(yytext); return TransformationParser::STRING_LITERAL; }
             YY_BREAK
             case 25:
-#line 88 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 88 "transformation.l"
             { count(); return TransformationParser::ELLIPSIS; }
             YY_BREAK
             case 26:
-#line 89 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 89 "transformation.l"
             { count(); return TransformationParser::RIGHT_ASSIGN; }
             YY_BREAK
             case 27:
-#line 90 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 90 "transformation.l"
             { count(); return TransformationParser::LEFT_ASSIGN; }
             YY_BREAK
             case 28:
-#line 91 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 91 "transformation.l"
             { count(); return TransformationParser::ADD_ASSIGN; }
             YY_BREAK
             case 29:
-#line 92 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 92 "transformation.l"
             { count(); return TransformationParser::SUB_ASSIGN; }
             YY_BREAK
             case 30:
-#line 93 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 93 "transformation.l"
             { count(); return TransformationParser::MUL_ASSIGN; }
             YY_BREAK
             case 31:
-#line 94 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 94 "transformation.l"
             { count(); return TransformationParser::DIV_ASSIGN; }
             YY_BREAK
             case 32:
-#line 95 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 95 "transformation.l"
             { count(); return TransformationParser::MOD_ASSIGN; }
             YY_BREAK
             case 33:
-#line 96 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 96 "transformation.l"
             { count(); return TransformationParser::AND_ASSIGN; }
             YY_BREAK
             case 34:
-#line 97 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 97 "transformation.l"
             { count(); return TransformationParser::XOR_ASSIGN; }
             YY_BREAK
             case 35:
-#line 98 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 98 "transformation.l"
             { count(); return TransformationParser::OR_ASSIGN; }
             YY_BREAK
             case 36:
-#line 99 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 99 "transformation.l"
             { count(); return TransformationParser::RIGHT_OP; }
             YY_BREAK
             case 37:
-#line 100 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 100 "transformation.l"
             { count(); return TransformationParser::LEFT_OP; }
             YY_BREAK
             case 38:
-#line 101 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 101 "transformation.l"
             { count(); return TransformationParser::INC_OP; }
             YY_BREAK
             case 39:
-#line 102 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 102 "transformation.l"
             { count(); return TransformationParser::DEC_OP; }
             YY_BREAK
             case 40:
-#line 103 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 103 "transformation.l"
             { count(); return TransformationParser::PTR_OP; }
             YY_BREAK
             case 41:
-#line 104 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 104 "transformation.l"
             { count(); return TransformationParser::AND_OP; }
             YY_BREAK
             case 42:
-#line 105 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 105 "transformation.l"
             { count(); return TransformationParser::OR_OP; }
             YY_BREAK
             case 43:
-#line 106 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 106 "transformation.l"
             { count(); return TransformationParser::LE_OP; }
             YY_BREAK
             case 44:
-#line 107 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 107 "transformation.l"
             { count(); return TransformationParser::GE_OP; }
             YY_BREAK
             case 45:
-#line 108 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 108 "transformation.l"
             { count(); return TransformationParser::EQ_OP; }
             YY_BREAK
             case 46:
-#line 109 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 109 "transformation.l"
             { count(); return TransformationParser::NE_OP; }
             YY_BREAK
             case 47:
-#line 110 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 110 "transformation.l"
             { count(); return ';'; }
             YY_BREAK
             case 48:
-#line 111 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 111 "transformation.l"
             { count(); return '{'; }
             YY_BREAK
             case 49:
-#line 112 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 112 "transformation.l"
             { count(); return '}'; }
             YY_BREAK
             case 50:
-#line 113 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 113 "transformation.l"
             { count(); return ','; }
             YY_BREAK
             case 51:
-#line 114 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 114 "transformation.l"
             { count(); return ':'; }
             YY_BREAK
             case 52:
-#line 115 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 115 "transformation.l"
             { count(); return '='; }
             YY_BREAK
             case 53:
-#line 116 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 116 "transformation.l"
             { count(); return '('; }
             YY_BREAK
             case 54:
-#line 117 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 117 "transformation.l"
             { count(); return ')'; }
             YY_BREAK
             case 55:
-#line 118 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 118 "transformation.l"
             { count(); return '['; }
             YY_BREAK
             case 56:
-#line 119 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 119 "transformation.l"
             { count(); return ']'; }
             YY_BREAK
             case 57:
-#line 120 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 120 "transformation.l"
             { count(); return '.'; }
             YY_BREAK
             case 58:
-#line 121 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 121 "transformation.l"
             { count(); return '&'; }
             YY_BREAK
             case 59:
-#line 122 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 122 "transformation.l"
             { count(); return '!'; }
             YY_BREAK
             case 60:
-#line 123 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 123 "transformation.l"
             { count(); return '~'; }
             YY_BREAK
             case 61:
-#line 124 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 124 "transformation.l"
             { count(); return '-'; }
             YY_BREAK
             case 62:
-#line 125 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 125 "transformation.l"
             { count(); return '+'; }
             YY_BREAK
             case 63:
-#line 126 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 126 "transformation.l"
             { count(); return '*'; }
             YY_BREAK
             case 64:
-#line 127 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 127 "transformation.l"
             { count(); return '/'; }
             YY_BREAK
             case 65:
-#line 128 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 128 "transformation.l"
             { count(); return '%'; }
             YY_BREAK
             case 66:
-#line 129 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 129 "transformation.l"
             { count(); return '<'; }
             YY_BREAK
             case 67:
-#line 130 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 130 "transformation.l"
             { count(); return '>'; }
             YY_BREAK
             case 68:
-#line 131 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 131 "transformation.l"
             { count(); return '^'; }
             YY_BREAK
             case 69:
-#line 132 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 132 "transformation.l"
             { count(); return '|'; }
             YY_BREAK
             case 70:
-#line 133 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 133 "transformation.l"
             { count(); return '?'; }
             YY_BREAK
             case 71:
-#line 135 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 135 "transformation.l"
             { count(); }
             YY_BREAK
             case 72:
-#line 136 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 136 "transformation.l"
             { /* ignore bad characters */ }
             YY_BREAK
             case 73:
-#line 138 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 138 "transformation.l"
                 ECHO;
                 YY_BREAK
             case YY_STATE_EOF(INITIAL):
@@ -1667,7 +1667,7 @@ void YY_TransformationScanner_CLASS::YY_TransformationScanner_INIT_BUFFER( YY_BU
 
     b->yy_eof_status = EOF_NOT_SEEN;
 }
-#line 138 "/Users/nietzsche/boomerang/trunk/boomerang/transform/transformation.l"
+#line 138 "transformation.l"
 
 
 void TransformationScanner::comment()
