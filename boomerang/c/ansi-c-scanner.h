@@ -55,6 +55,7 @@
 /* % here is the declaration from section1 %header{  */
 #line 21 "/Users/nietzsche/boomerang/trunk/boomerang/c/ansi-c.l"
 #include <stdio.h>
+#include <string.h>
 #include "ansi-c-parser.h"
 // For some reason, MSVC 5.00 complains about use of undefined type RTL a lot
 #if defined(_MSC_VER) && _MSC_VER <= 1100

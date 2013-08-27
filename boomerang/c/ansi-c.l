@@ -19,6 +19,7 @@ IS			(u|U|l|L)*
 
 %header{
 #include <stdio.h>
+#include <string.h>
 #include "ansi-c-parser.h"
 // For some reason, MSVC 5.00 complains about use of undefined type RTL a lot
 #if defined(_MSC_VER) && _MSC_VER <= 1100
