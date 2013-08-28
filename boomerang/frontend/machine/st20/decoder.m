@@ -94,7 +94,7 @@ DecodeResult& ST20Decoder::decodeInstruction (ADDRESS pc, int delta) {
 
 		| opr (oper) =>
 			total |= oper;
-			char* name = NULL;
+			const char* name = NULL;
 			bool isRet = false;
 			if (total >= 0) {
 				switch (total) {

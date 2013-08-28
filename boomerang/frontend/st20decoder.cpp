@@ -235,7 +235,7 @@ DecodeResult& ST20Decoder::decodeInstruction (ADDRESS pc, int delta)
 
                             total |= oper;
 
-                            char* name = NULL;
+                            const char* name = NULL;
 
                             bool isRet = false;
 
