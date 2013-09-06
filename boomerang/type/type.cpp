@@ -1598,6 +1598,10 @@ void DataIntervalMap::replaceComponents( ADDRESS addr, const char* name, Type* t
 {
     iterator it;
     unsigned pastLast = addr + ty->getSize()/8;		// This is the byte address just past the type to be inserted
+	// don't get confused by overflow
+	if (pastLast < addr) {
+		pastLast = 0;
+	}
     // First check that the new entry will be compatible with everything it will overlap
     if (ty->resolvesToCompound())
         {
