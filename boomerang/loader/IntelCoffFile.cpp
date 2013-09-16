@@ -2,84 +2,60 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <cstdio>
-#include <cassert>
+#include <unistd.h>
+#include <stdlib.h>
 #include <cstring>
-#include <cstdlib>
+#include <assert.h>
 #include "config.h"
 
-#ifdef _MSC_VER
-#pragma pack(push, 1)
-#endif
-struct struc_coff_sect
+struct struc_coff_sect          // segment information
 {
-    // segment information
     char  sch_sectname[8];
-    unsigned long sch_physaddr;
-    unsigned long sch_virtaddr;
-    unsigned long sch_sectsize;
-    unsigned long sch_sectptr;
-    unsigned long sch_relptr;
-    unsigned long sch_lineno_ptr;
-    unsigned short sch_nreloc;
-    unsigned short sch_nlineno;
-    unsigned long sch_flags;
-}
-PACKED;       // 40 bytes
-#ifdef _MSC_VER
-#pragma pack(pop)
-#endif
+    uint32_t sch_physaddr;
+    uint32_t sch_virtaddr;
+    uint32_t sch_sectsize;
+    uint32_t sch_sectptr;
+    uint32_t sch_relptr;
+    uint32_t sch_lineno_ptr;
+    uint16_t sch_nreloc;
+    uint16_t sch_nlineno;
+    uint32_t sch_flags;
+} PACKED;       // 40 bytes
 
-#ifdef _MSC_VER
-#pragma pack(push, 1)
-#endif
-struct coff_symbol
+struct coff_symbol      // symbol information
 {
-    // symbol information
     union
     {
         struct
         {
-            unsigned long zeros;
-            unsigned long offset;
-        }
-        e;
+            uint32_t zeros;
+            uint32_t offset;
+        } e;
         char name[8];
     } e;
 #define csym_name       e.name
 #define csym_zeros      e.e.zeros
 #define csym_offset     e.e.offset
 
-    unsigned long csym_value;
-    unsigned short csym_sectnum;
+    uint32_t csym_value;
+    uint16_t csym_sectnum;
 #define N_UNDEF 0
 
-    unsigned short csym_type;
+    uint16_t csym_type;
 #define T_FUNC  0x20
 
     unsigned char csym_loadclass;
     unsigned char csym_numaux;
-}
-PACKED;       // 18 bytes
-#ifdef _MSC_VER
-#pragma pack(pop)
-#endif
+} PACKED;       // 18 bytes
 
-#ifdef _MSC_VER
-#pragma pack(push, 1)
-#endif
 struct struct_coff_rel
 {
-    unsigned long   r_vaddr;
-    unsigned long   r_symndx;
-    unsigned short  r_type;
+    uint32_t   r_vaddr;
+    uint32_t   r_symndx;
+    uint16_t  r_type;
 #define RELOC_ADDR32    6
 #define RELOC_REL32     20
-}
-PACKED;
-#ifdef _MSC_VER
-#pragma pack(pop)
-#endif
+} PACKED;
 
 
 PSectionInfo IntelCoffFile::AddSection(PSectionInfo psi)
@@ -97,12 +73,12 @@ PSectionInfo IntelCoffFile::AddSection(PSectionInfo psi)
 IntelCoffFile::IntelCoffFile() : BinaryFile(false)
 {
     m_pFilename = NULL;
-    m_fd = NULL;
+    m_fd = -1;
 }
 
 IntelCoffFile::~IntelCoffFile()
 {
-    if ( m_fd != NULL ) fclose(m_fd);
+    if ( m_fd != -1 ) close(m_fd);
 }
 
 bool IntelCoffFile::Open(const char *sName)
@@ -116,12 +92,12 @@ bool IntelCoffFile::RealLoad(const char *sName)
     printf("IntelCoffFile::RealLoad('%s') called\n", sName);
 
     m_pFilename = sName;
-    m_fd = fopen (sName, "rb");
-    if (m_fd == NULL) return 0;
+    m_fd = open (sName, O_RDWR);
+    if (m_fd == -1) return 0;
 
     printf("IntelCoffFile opened successful.\n");
 
-    if ( sizeof m_Header != fread(&m_Header, sizeof m_Header,1,m_fd) )
+    if ( sizeof m_Header != read(m_fd, &m_Header, sizeof m_Header) )
         return false;
 
     printf("Read COFF header\n");
@@ -130,7 +106,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
     if ( m_Header.coff_opthead_size )
         {
             printf("Skipping optional header of %d bytes.\n", (int)m_Header.coff_opthead_size);
-            if ( (off_t)-1 == fseek(m_fd, m_Header.coff_opthead_size, SEEK_CUR) )
+            if ( (off_t)-1 == lseek(m_fd, m_Header.coff_opthead_size, SEEK_CUR) )
                 return false;
         }
 
@@ -138,13 +114,11 @@ bool IntelCoffFile::RealLoad(const char *sName)
     if ( !psh )
         return false;
 
-    size_t readSize = fread(psh, sizeof(*psh), m_Header.coff_sections, m_fd);
-    if (readSize != sizeof(*psh) * m_Header.coff_sections)
+    if ( static_cast<signed long>(sizeof *psh * m_Header.coff_sections) != read(m_fd, psh, sizeof *psh * m_Header.coff_sections) )
         {
             free(psh);
             return false;
         }
-
     for ( int iSection = 0; iSection < m_Header.coff_sections; iSection++ )
         {
 //		assert(0 == psh[iSection].sch_virtaddr);
@@ -202,40 +176,36 @@ bool IntelCoffFile::RealLoad(const char *sName)
 
             PSectionInfo psi = GetSectionInfo(psh[iSection].sch_physaddr);
 
-            if ( (off_t)psh[iSection].sch_sectptr != fseek(m_fd, (off_t)psh[iSection].sch_sectptr, SEEK_SET) )
+            if ( (off_t)psh[iSection].sch_sectptr != lseek(m_fd, (off_t)psh[iSection].sch_sectptr, SEEK_SET) )
                 return false;
 
             char *pData = (char*)psi->uHostAddr + psh[iSection].sch_virtaddr;
             if ( !(psh[iSection].sch_flags & 0x80) )
                 {
-                    readSize = fread(pData, psh[iSection].sch_sectsize, 1, m_fd);
-                    if ( readSize != psh[iSection].sch_sectsize )
+                    if ( static_cast<signed long>(psh[iSection].sch_sectsize) != read(m_fd, pData, psh[iSection].sch_sectsize) )
                         return false;
                 }
         }
 
     // Load the symbol table
     printf("Load symbol table\n");
-    if ( static_cast<signed long>(m_Header.coff_symtab_ofs) != fseek(m_fd, m_Header.coff_symtab_ofs, SEEK_SET) )
+    if ( static_cast<signed long>(m_Header.coff_symtab_ofs) != lseek(m_fd, m_Header.coff_symtab_ofs, SEEK_SET) )
         return false;
     struct coff_symbol *pSymbols = (struct coff_symbol *)malloc(m_Header.coff_num_syment * sizeof (struct coff_symbol));
     if ( !pSymbols )
         return false;
-    size_t num_to_read=static_cast<signed long>(m_Header.coff_num_syment * sizeof (struct coff_symbol));
-    if ( num_to_read != fread(pSymbols, sizeof (struct coff_symbol),m_Header.coff_num_syment,m_fd) )
+    if ( static_cast<signed long>(m_Header.coff_num_syment * sizeof (struct coff_symbol)) != read(m_fd, pSymbols, m_Header.coff_num_syment * sizeof (struct coff_symbol)) )
         return false;
 
     // TODO: Groesse des Abschnittes vorher bestimmen
     char *pStrings = (char*)malloc(0x8000);
-    readSize = fread(pStrings, 0x8000, 1, m_fd);
-    if(readSize != 0x8000)
-        return false;
+    read(m_fd, pStrings, 0x8000);
 
 
     // Run the symbol table
     ADDRESS fakeForImport = (ADDRESS)0xfffe0000;
 
-    printf("Size of one symbol: %lu\n", sizeof pSymbols[0]);
+    printf("Size of one symbol: %u\n", sizeof pSymbols[0]);
     for (unsigned int iSym = 0; iSym < m_Header.coff_num_syment; iSym += pSymbols[iSym].csym_numaux+1)
         {
             char tmp_name[9];
@@ -290,7 +260,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
                         }
 
                 }
-            printf("Symbol %d: %s %08lx\n", iSym, name, pSymbols[iSym].csym_value);
+            printf("Symbol %d: %s %08lx\n", iSym, name, (long)pSymbols[iSym].csym_value);
         }
 
     for ( int iSection = 0; iSection < m_Header.coff_sections; iSection++ )
@@ -302,21 +272,21 @@ bool IntelCoffFile::RealLoad(const char *sName)
             if ( !psh[iSection].sch_nreloc ) continue;
 
 //printf("Relocation table at %08lx\n", psh[iSection].sch_relptr);
-            if (static_cast<signed long>(psh[iSection].sch_relptr) != fseek(m_fd, psh[iSection].sch_relptr, SEEK_SET) )
+            if (static_cast<signed long>(psh[iSection].sch_relptr) != lseek(m_fd, psh[iSection].sch_relptr, SEEK_SET) )
                 return false;
 
             struct struct_coff_rel *pRel = (struct struct_coff_rel *)malloc(sizeof (struct struct_coff_rel) * psh[iSection].sch_nreloc);
             if ( !pRel )
                 return false;
-            size_t num_to_read = sizeof (struct struct_coff_rel) * psh[iSection].sch_nreloc;
-            if ( num_to_read != fread(pRel, sizeof (struct struct_coff_rel) , psh[iSection].sch_nreloc,m_fd ))
+
+            if (static_cast<signed long>(sizeof (struct struct_coff_rel) * psh[iSection].sch_nreloc) != read(m_fd, pRel, sizeof (struct struct_coff_rel) * psh[iSection].sch_nreloc) )
                 return false;
 
             for ( int iReloc = 0; iReloc < psh[iSection].sch_nreloc; iReloc++ )
                 {
                     struct struct_coff_rel *tRel = pRel + iReloc;
                     struct coff_symbol* pSym = pSymbols+tRel->r_symndx;
-                    unsigned long *pPatch = (unsigned long*)(pData + tRel->r_vaddr);
+                    uint32_t *pPatch = (uint32_t*)(pData + tRel->r_vaddr);
 //printf("Relocating at %08lx: type %d, dest %08lx\n", tRel->r_vaddr + psi->uNativeAddr + psh[iSection].sch_virtaddr, (int)tRel->r_type, pSym->csym_value);
 
                     switch ( tRel->r_type )
@@ -454,8 +424,7 @@ std::list<const char *> IntelCoffFile::getDependencyList()
     return dummy;	// TODO: How ever return this is ought to work out
 }
 
-extern "C"
-{
+extern "C" {
 #ifdef _WIN32
     __declspec(dllexport)
 #endif

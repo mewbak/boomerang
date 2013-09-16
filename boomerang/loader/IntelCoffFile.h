@@ -4,29 +4,19 @@
 #include <stdint.h>
 #include "BinaryFile.h"
 #include "SymTab.h"
-#ifdef _MSC_VER
-#define PACKED
-#else
-#define PACKED __attribute__((packed))
-#endif
 
-#ifdef _MSC_VER
-#pragma pack(push, 1)
-#endif
+#define PACKED __attribute__((packed))
+
 struct coff_header
 {
-    unsigned short  coff_magic;
-    unsigned short  coff_sections;
-    unsigned long   coff_timestamp;
-    unsigned long   coff_symtab_ofs;
-    unsigned long   coff_num_syment;
-    unsigned short  coff_opthead_size;
-    unsigned short  coff_flags;
-}
-PACKED;
-#ifdef _MSC_VER
-#pragma pack(pop)
-#endif
+    uint16_t  coff_magic;
+    uint16_t  coff_sections;
+    uint32_t  coff_timestamp;
+    uint32_t  coff_symtab_ofs;
+    uint32_t  coff_num_syment;
+    uint16_t  coff_opthead_size;
+    uint16_t  coff_flags;
+} PACKED;
 
 class IntelCoffFile : public BinaryFile
 {
@@ -72,7 +62,7 @@ private:
     // Internal stuff
     //
     const char *m_pFilename;
-    FILE *m_fd;
+    int m_fd;
     std::list<SectionInfo*> m_EntryPoints;
     std::list<ADDRESS> m_Relocations;
     struct coff_header m_Header;
