@@ -103,7 +103,7 @@ void ExpTransformer::loadAll()
             std::string sFile;
             ifs >> sFile;
             size_t j = sFile.find('#');
-            if (j != (size_t)-1)
+            if (j != std::string::npos)
                 sFile = sFile.substr(0, j);
             if (sFile.size() > 0 && sFile[sFile.size()-1] == '\n')
                 sFile = sFile.substr(0, sFile.size()-1);

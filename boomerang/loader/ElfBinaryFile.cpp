@@ -399,7 +399,7 @@ void ElfBinaryFile::AddSyms(int secIndex)
             if (name == 0) /* Silly symbols with no names */ continue;
             std::string str(GetStrPtr(strIdx, name));
             // Hack off the "@@GLIBC_2.0" of Linux, if present
-            unsigned pos;
+            size_t pos;
             if ((pos = str.find("@@")) != std::string::npos)
                 str.erase(pos);
             std::map<ADDRESS, std::string>::iterator aa = m_SymTab.find(val);
@@ -471,7 +471,7 @@ std::vector<ADDRESS> ElfBinaryFile::GetExportedAddresses(bool funcsOnly)
             if (name == 0) /* Silly symbols with no names */ continue;
             std::string str(GetStrPtr(strIdx, name));
             // Hack off the "@@GLIBC_2.0" of Linux, if present
-            unsigned pos;
+            size_t pos;
             if ((pos = str.find("@@")) != std::string::npos)
                 str.erase(pos);
             if (ELF32_ST_BIND(m_pSym[i].st_info) == STB_GLOBAL || ELF32_ST_BIND(m_pSym[i].st_info) == STB_WEAK)
@@ -528,7 +528,7 @@ void ElfBinaryFile::AddRelocsAsSyms(int relSecIdx)
             if (symIndex == 0) /* Silly symbols with no names */ continue;
             std::string str(GetStrPtr(strSecIdx, elfRead4(&m_pSym[symIndex].st_name)));
             // Hack off the "@@GLIBC_2.0" of Linux, if present
-            unsigned pos;
+            size_t pos;
             if ((pos = str.find("@@")) != std::string::npos)
                 str.erase(pos);
             std::map<ADDRESS, std::string>::iterator it;
@@ -1428,7 +1428,7 @@ const char *ElfBinaryFile::getFilenameSymbolFor(const char *sym)
             if (name == 0) /* Silly symbols with no names */ continue;
             std::string str(GetStrPtr(strIdx, name));
             // Hack off the "@@GLIBC_2.0" of Linux, if present
-            unsigned pos;
+            size_t pos;
             if ((pos = str.find("@@")) != std::string::npos)
                 str.erase(pos);
             if (ELF32_ST_TYPE(m_pSym[i].st_info) == STT_FILE)
@@ -1496,7 +1496,7 @@ void ElfBinaryFile::getFunctionSymbols(std::map<std::string, std::map<ADDRESS, s
             if (name == 0) /* Silly symbols with no names */ continue;
             std::string str(GetStrPtr(strIdx, name));
             // Hack off the "@@GLIBC_2.0" of Linux, if present
-            unsigned pos;
+            size_t pos;
             if ((pos = str.find("@@")) != std::string::npos)
                 str.erase(pos);
             if (ELF32_ST_TYPE(m_pSym[i].st_info) == STT_FILE)

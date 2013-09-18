@@ -89,7 +89,7 @@ std::string initCapital(const std::string& s)
 bool hasExt(const std::string& s, const char* ext)
 {
     std::string tailStr = std::string(".") + std::string(ext);
-    unsigned int i = s.rfind(tailStr);
+    size_t i = s.rfind(tailStr);
     if (i == std::string::npos)
         {
             return false;
@@ -136,11 +136,11 @@ std::string searchAndReplace( const std::string &in, const std::string &match,
                               const std::string &rep )
 {
     std::string result;
-    for ( int n = 0; n != -1; )
+    for ( size_t n = 0; n != std::string::npos; )
         {
-            int l = in.find(match,n);
-            result.append( in.substr(n,(l==-1?in.length() : l )-n) );
-            if ( l != -1 )
+            size_t l = in.find(match,n);
+            result.append( in.substr(n,(l==std::string::npos?in.length() : l )-n) );
+            if ( l != std::string::npos )
                 {
                     result.append( rep );
                     l+=match.length();
@@ -212,9 +212,9 @@ void escapeXMLChars(std::string &s)
     {
         "&lt;", "&gt;", "&amp;"
     };
-    for (unsigned i = 0; i < s.size(); i++)
+    for (size_t i = 0; i < s.size(); i++)
         {
-            unsigned n = bad.find(s[i]);
+            size_t n = bad.find(s[i]);
             if (n != std::string::npos)
                 {
                     s.replace(i, 1, replace[n]);

@@ -1241,7 +1241,7 @@ bool Prog::isProcLabel (ADDRESS addr)
  *============================================================================*/
 std::string Prog::getNameNoPath() const
 {
-    unsigned n = m_name.rfind("/");
+    size_t n = m_name.rfind("/");
     if (n == std::string::npos)
         {
             n = m_name.rfind("\\");
@@ -1255,7 +1255,7 @@ std::string Prog::getNameNoPath() const
 std::string Prog::getNameNoPathNoExt() const
 {
     std::string nopath = getNameNoPath();
-    unsigned n = nopath.rfind(".");
+    size_t n = nopath.rfind(".");
     if (n == std::string::npos)
         return nopath;
     return nopath.substr(0, n);

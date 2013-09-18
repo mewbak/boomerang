@@ -627,7 +627,7 @@ instr_name:
 			$$ = $1;
 		}
 	|	instr_name DECOR {
-			unsigned i;
+			size_t i;
 			InsNameElem *temp;
 			std::string nm = $2;
 			
@@ -635,12 +635,12 @@ instr_name:
 				nm.replace(0, 1, "");
 
 			// remove all " and _, from the decoration
-			while ((i = nm.find("\"")) != nm.npos)
+			while ((i = nm.find("\"")) != std::string::npos)
 				nm.replace(i,1,"");
 			// replace all '.' with '_'s from the decoration
-			while ((i = nm.find(".")) != nm.npos)
+			while ((i = nm.find(".")) != std::string::npos)
 				nm.replace(i,1,"_");
-			while ((i = nm.find("_")) != nm.npos)
+			while ((i = nm.find("_")) != std::string::npos)
 				nm.replace(i,1,"");
  
 			temp = new InsNameElem(nm.c_str());

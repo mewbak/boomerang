@@ -230,7 +230,7 @@ bool createDirectory(std::string dir)
 {
     std::string remainder(dir);
     std::string path;
-    uintptr_t i;
+    size_t i;
     while ((i = remainder.find('/')) != std::string::npos)
         {
             path += remainder.substr(0, i+1);
@@ -779,9 +779,9 @@ int Boomerang::commandLine(int argc, const char **argv)
     if (argc < 2) usage();
     progPath = argv[0];
     size_t j = progPath.rfind('/');			// Chop off after the last slash
-    if (j == (size_t)-1)
+    if (j == std::string::npos)
         j = progPath.rfind('\\');			// .. or reverse slash
-    if (j != (size_t)-1)
+    if (j != std::string::npos)
         {
             // Do the chop; keep the trailing slash or reverse slash
             progPath = progPath.substr(0, j+1);
