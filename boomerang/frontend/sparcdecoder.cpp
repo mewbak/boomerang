@@ -3158,7 +3158,7 @@ Exp* SparcDecoder::dis_RegRhs(unsigned r)
  * PARAMETERS:		pc - an address in the instruction stream
  * RETURNS:			the register or immediate at the given address
  *============================================================================*/
-Exp* SparcDecoder::dis_RegImm(unsigned pc)
+Exp* SparcDecoder::dis_RegImm(ADDRESS pc)
 {
 
 
@@ -3421,7 +3421,7 @@ SparcDecoder::SparcDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int SparcDecoder::decodeAssemblyInstruction(unsigned, int)
+int SparcDecoder::decodeAssemblyInstruction(ADDRESS, int)
 {
     return 0;
 }

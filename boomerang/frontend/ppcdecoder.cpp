@@ -9779,7 +9779,7 @@ PPCDecoder::PPCDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PPCDecoder::decodeAssemblyInstruction(unsigned, int)
+int PPCDecoder::decodeAssemblyInstruction(ADDRESS, int)
 {
     return 0;
 }
