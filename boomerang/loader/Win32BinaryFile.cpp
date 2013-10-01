@@ -44,7 +44,6 @@ namespace dbghelp
 
 #include "BinaryFile.h"
 #include "Win32BinaryFile.h"
-#include "config.h"
 #include <iostream>
 #include <sstream>
 #include <cassert>

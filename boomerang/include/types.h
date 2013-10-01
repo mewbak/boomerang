@@ -5,15 +5,59 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
+#include "config.h"
+#ifdef HAVE_STDDEF_H
+#include <stddef.h>
+#endif
+#ifdef HAVE_STDINT_H
 #include <stdint.h>
+#endif
+
+// int8_t
+#ifndef INT8_MAX
+typedef signed char			int8_t;
+typedef unsigned char		uint8_t;
+#endif
+
+// int16_t
+#ifndef INT16_MAX
+typedef short				int16_t;
+typedef unsigned short		uint16_t;
+#endif
+
+// int32_t
+#ifndef INT32_MAX
+#if SIZEOF_INT == 4
+typedef int					int32_t;
+typedef unsigned int		uint32_t;
+#else
+// die
+#endif
+#endif
+
+// int64_t
+#ifndef INT64_MAX
+#ifndef _MSC_VER
+#if SIZEOF_LONG_LONG == 8
+typedef long long			int64_t;
+typedef long unsigned long	uint64_t;
+#else
+// die
+#endif
+#else
+typedef __int64				int64_t;
+typedef unsigned __int64	uint64_t;
+#endif
+#endif
 
 // Machine types
-typedef unsigned char		Byte;		/* 8 bits */
-typedef unsigned short		SWord;		/* 16 bits */
-typedef unsigned int		DWord;		/* 32 bits */
-typedef unsigned int		dword;		/* 32 bits */
-typedef unsigned int		Word;		/* 32 bits */
-typedef unsigned int		ADDRESS;	/* 32-bit unsigned */
+typedef uint8_t				Byte;		/* 8 bits */
+typedef uint16_t			SWord;		/* 16 bits */
+typedef uint32_t			DWord;		/* 32 bits */
+typedef uint32_t			dword;		/* 32 bits */
+typedef uint32_t			Word;		/* 32 bits */
+typedef uint64_t			QWord;		/* 64 bits */
+typedef uintptr_t			ADDRESS;	/* same size as pointer */
 
 
 #define STD_SIZE	32					// Standard size
@@ -22,12 +66,6 @@ typedef unsigned int		ADDRESS;	/* 32-bit unsigned */
 #undef NO_ADDRESS
 #endif
 #define NO_ADDRESS ((ADDRESS)-1)		// For invalid ADDRESSes
-
-#ifndef _MSC_VER
-typedef long unsigned long QWord;		// 64 bits
-#else
-typedef unsigned __int64   QWord;
-#endif
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4390)

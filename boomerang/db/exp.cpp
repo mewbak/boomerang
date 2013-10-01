@@ -55,10 +55,25 @@ Const::Const(int i)		: Exp(opIntConst),	conscript(0), type(new VoidType)
 {
     u.i = i;
 }
-Const::Const(QWord ll)	: Exp(opLongConst),	conscript(0), type(new VoidType)
+Const::Const(unsigned int ui)		: Exp(opIntConst),	conscript(0), type(new VoidType)
 {
-    u.ll= ll;
+    u.ui = ui;
 }
+Const::Const(unsigned long l)		: Exp(opIntConst),	conscript(0), type(new VoidType)
+{
+    u.l = l;
+}
+#ifndef _MSC_VER
+Const::Const(long unsigned long ll)	: Exp(opLongConst),	conscript(0), type(new VoidType)
+{
+    u.ll = ll;
+}
+#else
+Const::Const(unsigned __int64 ll)	: Exp(opLongConst),	conscript(0), type(new VoidType)
+{
+    u.ll = ll;
+}
+#endif
 Const::Const(double d)	: Exp(opFltConst),	conscript(0), type(new VoidType)
 {
     u.d = d;
@@ -70,11 +85,6 @@ Const::Const(const char* p)	: Exp(opStrConst),	conscript(0), type(new VoidType)
 Const::Const(Proc* p)	: Exp(opFuncConst),	conscript(0), type(new VoidType)
 {
     u.pp = p;
-}
-/// \remark This is bad. We need a way of constructing true unsigned constants
-Const::Const(ADDRESS a)	: Exp(opIntConst),	conscript(0), type(new VoidType)
-{
-    u.a = a;
 }
 
 // Copy constructor

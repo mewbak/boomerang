@@ -80,6 +80,14 @@ Log &Log::operator<<(int i)
     return *this;
 }
 
+Log &Log::operator<<(unsigned int i)
+{
+    std::ostringstream st;
+    st << std::dec << i;
+    *this << st.str().c_str();
+    return *this;
+}
+
 Log &Log::operator<<(char c)
 {
     std::ostringstream st;
@@ -96,13 +104,31 @@ Log &Log::operator<<(double d)
     return *this;
 }
 
-Log &Log::operator<<(ADDRESS a)
+Log &Log::operator<<(unsigned long a)
 {
     std::ostringstream st;
     st << "0x" << std::hex << a;
     *this << st.str().c_str();
     return *this;
 }
+
+#ifndef _MSC_VER
+Log &Log::operator<<(long unsigned long a)
+{
+    std::ostringstream st;
+    st << "0x" << std::hex << a;
+    *this << st.str().c_str();
+    return *this;
+}
+#else
+Log &Log::operator<<(unsigned __int64 a)
+{
+    std::ostringstream st;
+    st << "0x" << std::hex << a;
+    *this << st.str().c_str();
+    return *this;
+}
+#endif
 
 #if 0		// Mac OS/X and 64 bit machines possibly need this, but better to just cast the size_t to unsigned
 Log &Log::operator<<(size_t s)

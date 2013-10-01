@@ -27,9 +27,15 @@ public:
     virtual Log &operator<<(Range &r);
     virtual Log &operator<<(RangeMap &r);
     virtual Log &operator<<(int i);
+    virtual Log &operator<<(unsigned int i);
     virtual Log &operator<<(char c);
     virtual Log &operator<<(double d);
-    virtual Log &operator<<(ADDRESS a);
+    virtual Log &operator<<(unsigned long a);
+#ifndef _MSC_VER
+    virtual Log &operator<<(long unsigned long a);
+#else
+	virtual Log &operator<<(unsigned __int64 a);
+#endif
     virtual Log &operator<<(LocationSet *l);
     Log &operator<<(std::string& s)
     {

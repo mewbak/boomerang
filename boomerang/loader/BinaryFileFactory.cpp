@@ -18,7 +18,6 @@
 #include "PalmBinaryFile.h"
 #include "HpSomBinaryFile.h"
 #include "ExeBinaryFile.h"
-#include "config.h"				// For HOST_OSX_10_2 etc
 
 #include <iostream>
 

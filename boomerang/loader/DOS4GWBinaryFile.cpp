@@ -26,7 +26,6 @@
 
 #include "BinaryFile.h"
 #include "DOS4GWBinaryFile.h"
-#include "config.h"
 #include <iostream>
 #include <sstream>
 #include <cassert>

@@ -543,10 +543,15 @@ class Const : public Exp
     union
     {
         int		i;			// Integer
-        // Note: although we have i and a as unions, both often use the same operator (opIntConst).
+        unsigned int ui;
+        // Note: although we have i and l as unions, both often use the same operator (opIntConst).
         // There is no opCodeAddr any more.
-        ADDRESS	a;			// void* conflated with unsigned int: needs fixing
-        QWord	ll;			// 64 bit integer
+        unsigned long	l;			// unsigned int
+#ifndef _MSC_VER
+        long unsigned long	ll;			// 64 bit integer
+#else
+        unsigned __int64	ll;			// 64 bit integer
+#endif
         double	d;			// Double precision float
         const char*	p;			// Pointer to string
         // Don't store string: function could be renamed
@@ -557,8 +562,13 @@ class Const : public Exp
 public:
     // Special constructors overloaded for the various constants
     Const(int i);
-    Const(QWord ll);
-    Const(ADDRESS a);
+    Const(unsigned int ui);
+    Const(unsigned long l);
+#ifndef _MSC_VER
+    Const(long unsigned long ll);
+#else
+    Const(unsigned __int64 ll);
+#endif
     Const(double d);
     Const(const char* p);
     Const(Proc* p);
@@ -580,10 +590,17 @@ public:
     {
         return u.i;
     }
-    QWord		getLong()
+#ifndef _MSC_VER
+    long unsigned long		getLong()
     {
         return u.ll;
     }
+#else
+    unsigned __int64		getLong()
+    {
+        return u.ll;
+    }
+#endif
     double		getFlt()
     {
         return u.d;
@@ -594,7 +611,11 @@ public:
     }
     ADDRESS		getAddr()
     {
-        return u.a;
+#if SIZEOF_INT_P == 4
+        return u.l;
+#elif SIZEOF_INT_P == 8
+        return u.ll;
+#endif
     }
     const char*	getFuncName();
 
@@ -603,10 +624,17 @@ public:
     {
         u.i = i;
     }
-    void		setLong(QWord ll)
+#ifndef _MSC_VER
+    void		setLong(long unsigned long ll)
     {
         u.ll = ll;
     }
+#else
+    void		setLong(unsigned __int64 ll)
+    {
+        u.ll = ll;
+    }
+#endif
     void		setFlt(double d)
     {
         u.d = d;
@@ -617,7 +645,11 @@ public:
     }
     void		setAddr(ADDRESS a)
     {
-        u.a = a;
+#if SIZEOF_INT_P == 4
+        u.l = a;
+#elif SIZEOF_INT_P == 8
+		u.ll = a;
+#endif
     }
 
     // Get and set the type

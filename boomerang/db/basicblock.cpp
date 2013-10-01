@@ -1412,7 +1412,7 @@ void BasicBlock::generateCode(HLLCode *hll, int indLevel, PBB latch,
                 {
                     Exp *cond = getCond();
                     if (cond == NULL)
-                        cond = new Const(0xfeedface);  // hack, but better than a crash
+                        cond = new Const((ADDRESS)0xfeedface);  // hack, but better than a crash
                     if (cType == IfElse)
                         {
                             cond = new Unary(opNot, cond->clone());

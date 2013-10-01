@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <cstring>
 #include <assert.h>
-#include "config.h"
 
 struct struc_coff_sect          // segment information
 {

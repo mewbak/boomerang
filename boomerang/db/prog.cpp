@@ -65,7 +65,6 @@
 #include "signature.h"
 #include "boomerang.h"
 #include "ansi-c-parser.h"
-#include "config.h"
 #include "managed.h"
 #include "log.h"
 
