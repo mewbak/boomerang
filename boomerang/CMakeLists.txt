@@ -67,7 +67,7 @@ CHECK_TYPE_SIZE("long double" SIZEOF_LONG_DOUBLE)
 CHECK_TYPE_SIZE("long long" SIZEOF_LONG_LONG)
 CHECK_TYPE_SIZE(short SIZEOF_SHORT)
 
-SET(VERSION "0.3.4")
+SET(VERSION "alpha 0.3.1 09/Sep/2006")
 # this creates config.h boomerang config.h in-place
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.cmake 
 				${CMAKE_CURRENT_SOURCE_DIR}/include/config.h)

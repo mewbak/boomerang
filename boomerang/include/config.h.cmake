@@ -139,7 +139,7 @@
 #undef STDC_HEADERS
 
 /* Version number of package */
-#undef VERSION
+#cmakedefine VERSION "@VERSION@"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
