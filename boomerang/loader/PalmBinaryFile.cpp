@@ -132,7 +132,7 @@ bool PalmBinaryFile::RealLoad(const char* sName)
             off = UINT4(p);
             p += 4;
             m_pSections[i].uNativeAddr = off;
-            m_pSections[i].uHostAddr = off + (ADDRESS)m_pImage;
+            m_pSections[i].uHostAddr = off + m_pImage;
 
             // Guess the length
             if (i > 0)
@@ -286,7 +286,7 @@ bool PalmBinaryFile::RealLoad(const char* sName)
 //p-(unsigned char*)pData->uHostAddr, pData->uSectionSize);
 
     // Replace the data pointer and size with the uncompressed versions
-    pData->uHostAddr = (ADDRESS)m_pData;
+    pData->uHostAddr = m_pData;
     pData->uSectionSize = sizeData;
     // May as well make the native address zero; certainly the offset in the
     // file is no longer appropriate (and is confusing)
@@ -489,7 +489,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
         return 0;               // Failed
     // Return the start of the code1 section
     SWord* startCode = (SWord*) pSect->uHostAddr;
-    int delta = pSect->uHostAddr - pSect->uNativeAddr;
+    int delta = (uintptr_t)pSect->uHostAddr - pSect->uNativeAddr;
 
     // First try the CW first jump pattern
     SWord* res = findPattern(startCode, CWFirstJump,

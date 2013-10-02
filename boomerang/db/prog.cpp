@@ -1357,7 +1357,7 @@ const void* Prog::getCodeInfo(ADDRESS uAddr, const char*& last, int& delta)
                 continue;
             if ((uAddr < pSect->uNativeAddr) || (uAddr >= pSect->uNativeAddr + pSect->uSectionSize))
                 continue;			// Try the next section
-            delta = pSect->uHostAddr - pSect->uNativeAddr;
+            delta = (uintptr_t)pSect->uHostAddr - pSect->uNativeAddr;
             last = (const char*) (pSect->uHostAddr + pSect->uSectionSize);
             const char* p = (const char *) (uAddr + delta);
             return p;

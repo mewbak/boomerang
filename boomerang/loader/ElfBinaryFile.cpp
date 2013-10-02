@@ -128,7 +128,7 @@ bool ElfBinaryFile::RealLoad(const char* sName)
     m_lImageSize = ftell(m_fd);
 
     // Allocate memory to hold the file
-    m_pImage = new char[m_lImageSize];
+    m_pImage = new unsigned char[m_lImageSize];
     if (m_pImage == 0)
         {
             fprintf(stderr, "Could not allocate %ld bytes for program image\n", m_lImageSize);
@@ -143,7 +143,7 @@ bool ElfBinaryFile::RealLoad(const char* sName)
         fprintf(stderr, "WARNING! Only read %lu of %ld bytes of binary file!\n", size, m_lImageSize);
 
     // Basic checks
-    if (strncmp(m_pImage, "\x7F""ELF", 4) != 0)
+    if (strncmp((char*)m_pImage, "\x7F""ELF", 4) != 0)
         {
             fprintf(stderr, "Incorrect header: %02X %02X %02X %02X\n",
                     pHeader->e_ident[0], pHeader->e_ident[1], pHeader->e_ident[2],
@@ -170,7 +170,7 @@ bool ElfBinaryFile::RealLoad(const char* sName)
     // NOTE: it does not appear that endianness affects shorts.. they are always in little endian format
     // Gerard: I disagree. I need the elfRead on linux/i386
     i = elfRead2(&pHeader->e_shstrndx); // pHeader->e_shstrndx;
-    if (i) m_pStrings = m_pImage + elfRead4(&m_pShdrs[i].sh_offset);
+    if (i) m_pStrings = (char*)(m_pImage + elfRead4(&m_pShdrs[i].sh_offset));
 
     i = 1; // counter - # sects. Start @ 1, total m_iNumSections
     char* pName; // Section's name
@@ -193,20 +193,20 @@ bool ElfBinaryFile::RealLoad(const char* sName)
         {
             // Get section information.
             Elf32_Shdr* pShdr = m_pShdrs + i;
-            if ((char*) pShdr > m_pImage + m_lImageSize)
+            if ((unsigned char*)pShdr > m_pImage + m_lImageSize)
                 {
                     std::cerr << "section " << i << " header is outside the image size\n";
                     return false;
                 }
             pName = m_pStrings + elfRead4(&pShdr->sh_name);
-            if (pName > m_pImage + m_lImageSize)
+            if ((unsigned char*)pName > m_pImage + m_lImageSize)
                 {
                     std::cerr << "name for section " << i << " is outside the image size\n";
                     return false;
                 }
             m_pSections[i].pSectionName = pName;
             int off = elfRead4(&pShdr->sh_offset);
-            if (off) m_pSections[i].uHostAddr = (ADDRESS) (m_pImage + off);
+            if (off) m_pSections[i].uHostAddr = m_pImage + off;
             m_pSections[i].uNativeAddr = elfRead4(&pShdr->sh_addr);
             m_pSections[i].uSectionSize = elfRead4(&pShdr->sh_size);
             if (m_pSections[i].uNativeAddr == 0 && strncmp(pName, ".rel", 4))
@@ -335,7 +335,7 @@ char *ElfBinaryFile::GetStrPtr(int idx, int offset)
 // A linear search will be needed. However, starting at offset i and searching backwards with wraparound should
 // typically minimise the number of entries to search
 
-ADDRESS ElfBinaryFile::findRelPltOffset(int i, ADDRESS addrRelPlt, int sizeRelPlt, int numRelPlt, ADDRESS addrPlt)
+ADDRESS ElfBinaryFile::findRelPltOffset(int i, unsigned char *addrRelPlt, int sizeRelPlt, int numRelPlt, ADDRESS addrPlt)
 {
     int first = i;
     if (first >= numRelPlt)
@@ -381,7 +381,7 @@ void ElfBinaryFile::AddSyms(int secIndex)
             siRelPlt = GetSectionInfoByName(".rela.plt");
             sizeRelPlt = 12; // Size of each entry in the .rela.plt table is 12 bytes
         }
-    ADDRESS addrRelPlt = 0;
+    unsigned char *addrRelPlt = NULL;
     int numRelPlt = 0;
     if (siRelPlt)
         {
@@ -808,9 +808,9 @@ ADDRESS ElfBinaryFile::GetEntryPoint()
 
 // FIXME: the below assumes a fixed delta
 
-ADDRESS ElfBinaryFile::NativeToHostAddress(ADDRESS uNative)
+unsigned char *ElfBinaryFile::NativeToHostAddress(ADDRESS uNative)
 {
-    if (m_iNumSections == 0) return 0;
+    if (m_iNumSections == 0) return NULL;
     return m_pSections[1].uHostAddr - m_pSections[1].uNativeAddr + uNative;
 }
 
@@ -897,13 +897,13 @@ std::list<const char *> ElfBinaryFile::getDependencyList()
 
     if (stringtab == NO_ADDRESS) /* No string table = no names */
         return result;
-    stringtab = NativeToHostAddress(stringtab);
+    unsigned char *stringtabPtr = NativeToHostAddress(stringtab);
 
     for (dyn = (Elf32_Dyn *) dynsect->uHostAddr; dyn->d_tag != DT_NULL; dyn++)
         {
             if (dyn->d_tag == DT_NEEDED)
                 {
-                    const char *need = (char *) stringtab + dyn->d_un.d_val;
+                    const char *need = (char *) stringtabPtr + dyn->d_un.d_val;
                     if (need != NULL)
                         result.push_back(need);
                 }
@@ -1006,7 +1006,7 @@ std::map<ADDRESS, const char*>* ElfBinaryFile::GetDynamicGlobalMap()
             return ret;
         }
 
-    unsigned p = pSect->uHostAddr;
+    unsigned char *p = pSect->uHostAddr;
     for (int i = 0; i < numEnt; i++)
         {
             // The ugly p[1] below is because it p might point to an Elf32_Rela struct, or an Elf32_Rel struct
@@ -1081,7 +1081,7 @@ int ElfBinaryFile::readNative1(ADDRESS nat)
         {
             si = GetSectionInfo(0);
         }
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     return *(char *) host;
 }
 
@@ -1091,7 +1091,7 @@ int ElfBinaryFile::readNative2(ADDRESS nat)
 {
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0) return 0;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     return elfRead2((short*) host);
 }
 
@@ -1101,7 +1101,7 @@ int ElfBinaryFile::readNative4(ADDRESS nat)
 {
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0) return 0;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     return elfRead4((int*) host);
 }
 
@@ -1109,7 +1109,7 @@ void ElfBinaryFile::writeNative4(ADDRESS nat, unsigned int n)
 {
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0) return;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     if (m_elfEndianness)
         {
             *(unsigned char*) host = (n >> 24) & 0xff;
@@ -1229,7 +1229,8 @@ void ElfBinaryFile::applyRelocations()
                             unsigned size = ps->uSectionSize;
                             // NOTE: the r_offset is different for .o files (E_REL in the e_type header field) than for exe's
                             // and shared objects!
-                            ADDRESS destNatOrigin = 0, destHostOrigin = 0;
+                            ADDRESS destNatOrigin = 0;
+							unsigned char *destHostOrigin = NULL;
                             if (e_type == E_REL)
                                 {
                                     int destSection = m_sh_info[i];
@@ -1354,7 +1355,8 @@ bool ElfBinaryFile::IsRelocationAt(ADDRESS uNative)
                             unsigned size = ps->uSectionSize;
                             // NOTE: the r_offset is different for .o files (E_REL in the e_type header field) than for exe's
                             // and shared objects!
-                            ADDRESS destNatOrigin = 0, destHostOrigin;
+                            ADDRESS destNatOrigin = 0;
+							unsigned char *destHostOrigin;
                             if (e_type == E_REL)
                                 {
                                     int destSection = m_sh_info[i];

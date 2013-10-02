@@ -248,7 +248,7 @@ public:
     virtual ADDRESS GetEntryPoint();
 
     bool IsDynamicLinkedProc(ADDRESS wNative);
-    ADDRESS NativeToHostAddress(ADDRESS uNative);
+    unsigned char *NativeToHostAddress(ADDRESS uNative);
     // Get a map from ADDRESS to const char*. This map contains the native addresses and symbolic names of global
     // data items (if any) which are shared with dynamically linked libraries. Example: __iob (basis for stdout).
     // The ADDRESS is the native address of a pointer to the real dynamic data object.
@@ -285,7 +285,7 @@ private:
     bool PostLoad(void* handle); // Called after archive member loaded
     // Search the .rel[a].plt section for an entry with symbol table index i.
     // If found, return the native address of the associated PLT entry.
-    ADDRESS findRelPltOffset(int i, ADDRESS addrRelPlt, int sizeRelPlt, int numRelPlt, ADDRESS addrPlt);
+    ADDRESS findRelPltOffset(int i, unsigned char *addrRelPlt, int sizeRelPlt, int numRelPlt, ADDRESS addrPlt);
 
     // Internal elf reading methods
     int elfRead2(short* ps) const; // Read a short with endianness care
@@ -294,7 +294,7 @@ private:
 
     FILE* m_fd; // File stream
     long m_lImageSize; // Size of image in bytes
-    char* m_pImage; // Pointer to the loaded image
+    unsigned char* m_pImage; // Pointer to the loaded image
     Elf32_Phdr* m_pPhdrs; // Pointer to program headers
     Elf32_Shdr* m_pShdrs; // Array of section header structs
     char* m_pStrings; // Pointer to the string section

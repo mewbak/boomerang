@@ -207,7 +207,7 @@ void BinaryFile::getTextLimits()
                     if (hiAddress > limitTextHigh)
                         limitTextHigh = hiAddress;
                     if (textDelta == 0)
-                        textDelta = pSect->uHostAddr - pSect->uNativeAddr;
+                        textDelta = (uintptr_t)pSect->uHostAddr - pSect->uNativeAddr;
                     else
                         {
                             if (textDelta != (int) (pSect->uHostAddr - pSect->uNativeAddr))

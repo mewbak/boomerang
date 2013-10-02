@@ -218,7 +218,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
         }
 
     // Find the main symbol table, if it exists
-    ADDRESS symPtr = (ADDRESS) m_pImage + UINT4(m_pImage + 0x5C);
+    unsigned char *symPtr = m_pImage + UINT4(m_pImage + 0x5C);
     unsigned numSym = UINT4(m_pImage + 0x60);
 
     // Find the DL Table, if it exists
@@ -243,7 +243,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
     // Section 0: header
     m_pSections[0].pSectionName = const_cast<char *> ("$HEADER$");
     m_pSections[0].uNativeAddr = 0; // Not applicable
-    m_pSections[0].uHostAddr = (ADDRESS) m_pImage;
+    m_pSections[0].uHostAddr = m_pImage;
     //  m_pSections[0].uSectionSize = AUXHDR(4);
     // There is nothing that appears in memory space here; to give this a size
     // is to invite GetSectionInfoByAddr to return this section!
@@ -258,7 +258,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
     // Section 1: text (code)
     m_pSections[1].pSectionName = const_cast<char *> ("$TEXT$");
     m_pSections[1].uNativeAddr = AUXHDR(3);
-    m_pSections[1].uHostAddr = (ADDRESS) m_pImage + AUXHDR(4);
+    m_pSections[1].uHostAddr = m_pImage + AUXHDR(4);
     m_pSections[1].uSectionSize = AUXHDR(2);
     m_pSections[1].uSectionEntrySize = 1; // Not applicable
     m_pSections[1].bCode = 1;
@@ -269,7 +269,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
     // Section 2: initialised data
     m_pSections[2].pSectionName = const_cast<char *> ("$DATA$");
     m_pSections[2].uNativeAddr = AUXHDR(6);
-    m_pSections[2].uHostAddr = (ADDRESS) m_pImage + AUXHDR(7);
+    m_pSections[2].uHostAddr = m_pImage + AUXHDR(7);
     m_pSections[2].uSectionSize = AUXHDR(5);
     m_pSections[2].uSectionEntrySize = 1; // Not applicable
     m_pSections[2].bCode = 0;
@@ -291,8 +291,8 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
 
     // Work through the imports, and find those for which there are stubs using that import entry.
     // Add the addresses of any such stubs.
-    int deltaText = m_pSections[1].uHostAddr - m_pSections[1].uNativeAddr;
-    int deltaData = m_pSections[2].uHostAddr - m_pSections[2].uNativeAddr;
+    int deltaText = (uintptr_t)m_pSections[1].uHostAddr - m_pSections[1].uNativeAddr;
+    int deltaData = (uintptr_t)m_pSections[2].uHostAddr - m_pSections[2].uNativeAddr;
     // The "end of data" where r27 points is not necessarily the same as
     // the end of the $DATA$ space. So we have to call getSubSpaceInfo
     std::pair<unsigned, int> pr = getSubspaceInfo("$GLOBAL$");

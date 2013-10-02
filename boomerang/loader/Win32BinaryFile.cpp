@@ -480,7 +480,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
     fread(&tmphdr, sizeof(tmphdr), 1, fp);
     // Note: all tmphdr fields will be little endian
 
-    base = (char *)malloc(LMMH(tmphdr.ImageSize));
+    base = (unsigned char *)malloc(LMMH(tmphdr.ImageSize));
 
     if (!base)
         {
@@ -522,7 +522,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
 //		if (!strcmp(sect.pSectionName, ".reloc"))
 //			reloc = &sect;
             sect.uNativeAddr=(ADDRESS)(LMMH(o->RVA) + LMMH(m_pPEHeader->Imagebase));
-            sect.uHostAddr=(ADDRESS)(LMMH(o->RVA) + base);
+            sect.uHostAddr=LMMH(o->RVA) + base;
             sect.uSectionSize=LMMH(o->VirtualSize);
             DWord Flags = LMMH(o->Flags);
             sect.bBss      = (Flags&IMAGE_SCN_CNT_UNINITIALIZED_DATA)?1:0;
@@ -543,7 +543,7 @@ bool Win32BinaryFile::RealLoad(const char* sName)
             // If any import table entry exists
             while (id->name != 0)
                 {
-                    char* dllName = LMMH(id->name) + base;
+                    char* dllName = (char*)(LMMH(id->name) + base);
                     unsigned thunk = id->originalFirstThunk ? id->originalFirstThunk : id->firstThunk;
                     unsigned* iat = (unsigned*)(LMMH(thunk) + base);
                     unsigned iatEntry = LMMH(*iat);
@@ -663,7 +663,7 @@ void Win32BinaryFile::findJumps(ADDRESS curr)
     if (sec == NULL) sec = GetSectionInfoByName("CODE");
     assert(sec);
     // Add to native addr to get host:
-    int delta = sec->uHostAddr - sec->uNativeAddr;
+    int delta = (uintptr_t)sec->uHostAddr - sec->uNativeAddr;
     while (cnt < 0x60)
         {
             // Max of 0x60 bytes without a match
@@ -994,7 +994,7 @@ int Win32BinaryFile::readNative1(ADDRESS nat)
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0)
         return -1;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     return *(char*)host;
 }
 
@@ -1003,7 +1003,7 @@ int Win32BinaryFile::readNative2(ADDRESS nat)
 {
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0) return 0;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     int n = win32Read2((short*)host);
     return n;
 }
@@ -1013,7 +1013,7 @@ int Win32BinaryFile::readNative4(ADDRESS nat)
 {
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0) return 0;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     int n = win32Read4((int*)host);
     return n;
 }
@@ -1095,7 +1095,7 @@ bool Win32BinaryFile::IsMinGWsAllocStack(ADDRESS uNative)
             PSectionInfo si = GetSectionInfoByAddr(uNative);
             if (si)
                 {
-                    ADDRESS host = si->uHostAddr - si->uNativeAddr + uNative;
+                    unsigned char *host = si->uHostAddr - si->uNativeAddr + uNative;
                     unsigned char pat[] = { 0x51, 0x89, 0xE1, 0x83, 0xC1, 0x08, 0x3D, 0x00,
                                             0x10, 0x00, 0x00, 0x72, 0x10, 0x81, 0xE9, 0x00,
                                             0x10, 0x00, 0x00, 0x83, 0x09, 0x00, 0x2D, 0x00,
@@ -1119,7 +1119,7 @@ bool Win32BinaryFile::IsMinGWsFrameInit(ADDRESS uNative)
             PSectionInfo si = GetSectionInfoByAddr(uNative);
             if (si)
                 {
-                    ADDRESS host = si->uHostAddr - si->uNativeAddr + uNative;
+                    unsigned char *host = si->uHostAddr - si->uNativeAddr + uNative;
                     unsigned char pat1[] = { 0x55, 0x89, 0xE5, 0x83, 0xEC, 0x18, 0x89, 0x7D,
                                              0xFC, 0x8B, 0x7D, 0x08, 0x89, 0x5D, 0xF4, 0x89,
                                              0x75, 0xF8
@@ -1150,7 +1150,7 @@ bool Win32BinaryFile::IsMinGWsFrameEnd(ADDRESS uNative)
             PSectionInfo si = GetSectionInfoByAddr(uNative);
             if (si)
                 {
-                    ADDRESS host = si->uHostAddr - si->uNativeAddr + uNative;
+                    unsigned char *host = si->uHostAddr - si->uNativeAddr + uNative;
                     unsigned char pat1[] = { 0x55, 0x89, 0xE5, 0x53, 0x83, 0xEC, 0x14, 0x8B, 0x45, 0x08, 0x8B, 0x18 };
                     if (memcmp((void*)host, pat1, sizeof(pat1)) == 0)
                         {
@@ -1175,7 +1175,7 @@ bool Win32BinaryFile::IsMinGWsCleanupSetup(ADDRESS uNative)
             PSectionInfo si = GetSectionInfoByAddr(uNative);
             if (si)
                 {
-                    ADDRESS host = si->uHostAddr - si->uNativeAddr + uNative;
+                    unsigned char *host = si->uHostAddr - si->uNativeAddr + uNative;
                     unsigned char pat1[] = { 0x55, 0x89, 0xE5, 0x53, 0x83, 0xEC, 0x04 };
                     if (memcmp((void*)host, pat1, sizeof(pat1)) == 0)
                         {
@@ -1203,7 +1203,7 @@ bool Win32BinaryFile::IsMinGWsMalloc(ADDRESS uNative)
             PSectionInfo si = GetSectionInfoByAddr(uNative);
             if (si)
                 {
-                    ADDRESS host = si->uHostAddr - si->uNativeAddr + uNative;
+                    unsigned char *host = si->uHostAddr - si->uNativeAddr + uNative;
                     unsigned char pat1[] = { 0x55, 0x89, 0xE5, 0x8D, 0x45, 0xF4, 0x83, 0xEC, 0x58, 0x89, 0x45, 0xE0, 0x8D, 0x45, 0xC0, 0x89,
                                              0x04, 0x24, 0x89, 0x5D, 0xF4, 0x89, 0x75, 0xF8, 0x89, 0x7D, 0xFC
                                            };

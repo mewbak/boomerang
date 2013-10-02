@@ -89,7 +89,7 @@ public:
 
     virtual bool isLibrary() const;
     virtual std::list<const char *> getDependencyList();
-    virtual ADDRESS getImageBase();
+    virtual ADDRESS	getImageBase();
     virtual size_t getImageSize();
 
     virtual char* SymbolByAddr(ADDRESS a);
@@ -112,7 +112,7 @@ private:
 
 
     exeHeader* m_pHeader; // Pointer to header
-    Byte* m_pImage; // Pointer to image
+    unsigned char* m_pImage; // Pointer to image
     int m_cbImage; // Size of image
     int m_cReloc; // Number of relocation entries
     DWord* m_pRelocTable; // The relocation table

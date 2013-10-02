@@ -143,7 +143,7 @@ private:
     void		findJumps(ADDRESS curr);// Find names for jumps to IATs
 
     struct mach_header *header;      // The Mach-O header
-    char *		base;					// Beginning of the loaded image
+    unsigned char *base;					// Beginning of the loaded image
     const char	*m_pFileName;
     ADDRESS		entrypoint, loaded_addr;
     unsigned	loaded_size;

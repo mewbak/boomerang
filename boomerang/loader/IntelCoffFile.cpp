@@ -162,7 +162,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
                     void *pData = malloc(psi->uSectionSize);
                     if ( !pData )
                         return false;
-                    psi->uHostAddr = (ADDRESS)pData;
+                    psi->uHostAddr = (unsigned char*)pData;
                     psi->uNativeAddr = a;
                     a += psi->uSectionSize;
                 }

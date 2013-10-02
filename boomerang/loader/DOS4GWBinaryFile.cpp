@@ -207,7 +207,7 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
 
     m_cbImage -= LMMH(m_pLXObjects[0].RelocBaseAddr);
 
-    base = (char *) malloc(m_cbImage);
+    base = (unsigned char *) malloc(m_cbImage);
 
     m_iNumSections = LMMH(m_pLXHeader->numobjsinmodule);
     m_pSections = new SectionInfo[m_iNumSections];
@@ -222,7 +222,7 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
                 m_pSections[n].pSectionName = new char[9];
                 sprintf(m_pSections[n].pSectionName, "seg%i", n); // no section names in LX
                 m_pSections[n].uNativeAddr = (ADDRESS) LMMH(m_pLXObjects[n].RelocBaseAddr);
-                m_pSections[n].uHostAddr = (ADDRESS) (LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr) + base);
+                m_pSections[n].uHostAddr = LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr) + base;
                 m_pSections[n].uSectionSize = LMMH(m_pLXObjects[n].VirtualSize);
                 DWord Flags = LMMH(m_pLXObjects[n].ObjectFlags);
                 m_pSections[n].bBss = 0; // TODO
@@ -231,7 +231,7 @@ bool DOS4GWBinaryFile::RealLoad(const char* sName)
                 m_pSections[n].bReadOnly = Flags & 0x1 ? 0 : 1;
 
                 fseek(fp, m_pLXHeader->datapagesoffset + (LMMH(m_pLXObjects[n].PageTblIdx) - 1) * LMMH(m_pLXHeader->pagesize), SEEK_SET);
-                char *p = base + LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr);
+                unsigned char *p = base + LMMH(m_pLXObjects[n].RelocBaseAddr) - LMMH(m_pLXObjects[0].RelocBaseAddr);
                 fread(p, LMMH(m_pLXObjects[n].NumPageTblEntries), LMMH(m_pLXHeader->pagesize), fp);
             }
 
@@ -460,7 +460,7 @@ int DOS4GWBinaryFile::readNative2(ADDRESS nat)
 {
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0) return 0;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     int n = dos4gwRead2((short*) host);
     return n;
 }
@@ -471,7 +471,7 @@ int DOS4GWBinaryFile::readNative4(ADDRESS nat)
 {
     PSectionInfo si = GetSectionInfoByAddr(nat);
     if (si == 0) return 0;
-    ADDRESS host = si->uHostAddr - si->uNativeAddr + nat;
+    unsigned char *host = si->uHostAddr - si->uNativeAddr + nat;
     int n = dos4gwRead4((int*) host);
     return n;
 }
