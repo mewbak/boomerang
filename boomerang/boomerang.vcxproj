@@ -142,6 +142,8 @@
     <ClCompile Include="db\insnameelem.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="db\managed.cpp" />
+    <ClCompile Include="frontend\mipsdecoder.cpp" />
+    <ClCompile Include="frontend\mipsfrontend.cpp" />
     <ClCompile Include="frontend\njmcDecoder.cpp" />
     <ClCompile Include="frontend\pentiumdecoder.cpp" />
     <ClCompile Include="frontend\pentiumfrontend.cpp">
