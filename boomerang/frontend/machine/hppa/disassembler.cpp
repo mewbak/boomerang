@@ -1747,7 +1747,7 @@ char* NJMCDecoder::dis_freg(int regNum)
 //    endmatch
 //}
 
-int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, int delta)
+int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, ptrdiff_t delta)
 {
     ADDRESS hostPC = pc + delta;
     *(apre = aprefix) = '\0';

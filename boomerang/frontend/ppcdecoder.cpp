@@ -111,7 +111,7 @@ void unused(char* x) {}
  * RETURNS:		   a DecodeResult structure containing all the information
  *					 gathered during decoding
  *============================================================================*/
-DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta)
+DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta)
 {
     static DecodeResult result;
     ADDRESS hostPC = pc+delta;
@@ -9779,7 +9779,7 @@ PPCDecoder::PPCDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PPCDecoder::decodeAssemblyInstruction(ADDRESS, int)
+int PPCDecoder::decodeAssemblyInstruction(ADDRESS, ptrdiff_t)
 {
     return 0;
 }

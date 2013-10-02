@@ -718,12 +718,12 @@ std::list<const char *> MachOBinaryFile::getDependencyList()
     return std::list<const char *>(); /* FIXME */
 }
 
-DWord MachOBinaryFile::getDelta()
+ptrdiff_t MachOBinaryFile::getDelta()
 {
     // Stupid function anyway: delta depends on section
     // This should work for the header only
     //	return (DWord)base - LMMH(m_pPEHeader->Imagebase);
-    return (DWord)base - (DWord)loaded_addr;
+    return base - loaded_addr;
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile

@@ -89,7 +89,7 @@ bool is_null(ADDRESS hostPC)
 }
 
 
-DecodeResult& NJMCDecoder::decodeInstruction (ADDRESS pc, int delta,
+DecodeResult& NJMCDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta,
     UserProc* proc /* = NULL */)
 { 
     static DecodeResult result;

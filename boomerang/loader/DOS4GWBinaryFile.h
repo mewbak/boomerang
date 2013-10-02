@@ -163,7 +163,7 @@ public:
     virtual std::list<SectionInfo*>& GetEntryPoints(const char* pEntry = "main");
     virtual ADDRESS GetMainEntryPoint();
     virtual ADDRESS GetEntryPoint();
-    DWord getDelta();
+    ptrdiff_t getDelta();
     virtual const char* SymbolByAddress(ADDRESS dwAddr); // Get sym from addr
     virtual ADDRESS GetAddressByName(const char* name,
                                      bool bNoTypeOK = false); // Find addr given name

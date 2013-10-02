@@ -196,7 +196,7 @@ MATCH_finished_e:
 }
 
 
-DecodeResult& NJMCDecoder::decodeInstruction (ADDRESS pc, int delta,
+DecodeResult& NJMCDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta,
         UserProc* proc /* = NULL */)
 {
     static DecodeResult result;

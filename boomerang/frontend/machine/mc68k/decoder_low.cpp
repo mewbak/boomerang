@@ -220,7 +220,7 @@ list<RT*>* NJMCDecoder::decodeLowLevelInstruction (ADDRESS hostPC, ADDRESS pc,
     result.numBytes = 0;
     prevIsTrap = IsTrap;            // Remember if last instr was a trap
     IsTrap = false;
-    int delta = hostPC - pc;
+    ptrdiff_t delta = hostPC - pc;
 
     // The list of instantiated RTs.
     list<RT*>* RTs = NULL;

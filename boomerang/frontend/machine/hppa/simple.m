@@ -89,7 +89,7 @@ printf("Name of typed constructor is %s\n", name);
     endmatch
 }
 
-int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, int delta)
+int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, ptrdiff_t delta)
 {
     char sCmplt[32];
     unsigned long r1,r2;

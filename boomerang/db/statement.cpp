@@ -1222,7 +1222,7 @@ bool Statement::propagateTo(bool& convert, std::map<Exp*, int, lessExpStar>* des
      *					negative)
      * RETURNS:			<nothing>
      *============================================================================*/
-    void GotoStatement::adjustFixedDest(int delta)
+    void GotoStatement::adjustFixedDest(ptrdiff_t delta)
     {
         // Ensure that the destination is fixed.
         if (pDest == 0 || pDest->getOper() != opIntConst)

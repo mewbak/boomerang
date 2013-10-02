@@ -63,7 +63,7 @@
  * RETURNS:        a DecodeResult structure containing all the information
  *                   gathered during decoding
  *============================================================================*/
-DecodeResult& NJMCDecoder::decodeInstruction (ADDRESS pc, int delta,
+DecodeResult& NJMCDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta,
 	UserProc* proc = NULL)
 {
 	static DecodeResult result;
@@ -825,7 +825,7 @@ SemStr* NJMCDecoder::pAIndex(int d8, int r, int iT, int iR, int iS, int size)
     return ret;
 }
 
-SemStr* NJMCDecoder::pPcDisp(ADDRESS label, int delta, int size)
+SemStr* NJMCDecoder::pPcDisp(ADDRESS label, ptrdiff_t delta, int size)
 {
     // Note: label is in the host address space, so need to subtract delta
     SemStr* ret = new SemStr(size);
@@ -950,7 +950,7 @@ SemStr* NJMCDecoder::alEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::amEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;
@@ -1032,7 +1032,7 @@ SemStr* NJMCDecoder::amEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::awlEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;
@@ -1106,7 +1106,7 @@ SemStr* NJMCDecoder::awlEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::cEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;
@@ -1165,7 +1165,7 @@ SemStr* NJMCDecoder::cEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::dEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;
@@ -1291,7 +1291,7 @@ SemStr* NJMCDecoder::daEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::dBEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;
@@ -1359,7 +1359,7 @@ SemStr* NJMCDecoder::dBEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::dWEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;
@@ -1471,7 +1471,7 @@ SemStr* NJMCDecoder::maEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::msEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;
@@ -1611,7 +1611,7 @@ SemStr* NJMCDecoder::mdEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
 
 
 SemStr* NJMCDecoder::mrEAX(ADDRESS eax, ADDRESS x, DecodeResult& result,
-    ADDRESS pc, int delta, int size)
+    ADDRESS pc, ptrdiff_t delta, int size)
 {
   SemStr* ret;
   int reg2, mode;

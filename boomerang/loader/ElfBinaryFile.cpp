@@ -776,7 +776,7 @@ std::list<SectionInfo*>& ElfBinaryFile::GetEntryPoints(
 {
     SectionInfo* pSect = GetSectionInfoByName(".text");
     ADDRESS uMain = GetAddressByName(pEntry, true);
-    ADDRESS delta = uMain - pSect->uNativeAddr;
+    ptrdiff_t delta = uMain - pSect->uNativeAddr;
     pSect->uNativeAddr += delta;
     pSect->uHostAddr += delta;
     // Adjust uSectionSize so uNativeAddr + uSectionSize still is end of sect

@@ -1089,7 +1089,7 @@ public:
     ADDRESS		getFixedDest();
 
     // Adjust the fixed destination by a given amount. Invalid for dynamic CTIs.
-    void		adjustFixedDest(int delta);
+    void		adjustFixedDest(ptrdiff_t delta);
 
     // Set and return whether the destination of this CTI is computed.
     // NOTE: These should really be removed, once CaseStatement and HLNwayCall are implemented properly.

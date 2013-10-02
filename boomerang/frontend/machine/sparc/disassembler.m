@@ -102,7 +102,7 @@ char* NJMCDecoder::dis_Eaddr (ADDRESS pc)
  *					(i.e. number of bytes processed)
  *============================================================================*/
 
-int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, int delta)
+int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, ptrdiff_t delta)
 {
 	ADDRESS hostPC = pc + delta; 
 	ADDRESS nextPC;

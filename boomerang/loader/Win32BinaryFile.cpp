@@ -663,7 +663,7 @@ void Win32BinaryFile::findJumps(ADDRESS curr)
     if (sec == NULL) sec = GetSectionInfoByName("CODE");
     assert(sec);
     // Add to native addr to get host:
-    int delta = (uintptr_t)sec->uHostAddr - sec->uNativeAddr;
+    ptrdiff_t delta = (uintptr_t)sec->uHostAddr - sec->uNativeAddr;
     while (cnt < 0x60)
         {
             // Max of 0x60 bytes without a match
@@ -1262,12 +1262,12 @@ std::list<const char *> Win32BinaryFile::getDependencyList()
     return std::list<const char *>(); /* FIXME */
 }
 
-DWord Win32BinaryFile::getDelta()
+ptrdiff_t Win32BinaryFile::getDelta()
 {
     // Stupid function anyway: delta depends on section
     // This should work for the header only
     //	return (DWord)base - LMMH(m_pPEHeader->Imagebase);
-    return (DWord)base - (DWord)m_pPEHeader->Imagebase;
+    return (uintptr_t)base - m_pPEHeader->Imagebase;
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile derived concrete object. After this object is

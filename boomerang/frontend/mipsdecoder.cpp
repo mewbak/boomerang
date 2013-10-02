@@ -61,7 +61,7 @@ MIPSDecoder::MIPSDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int MIPSDecoder::decodeAssemblyInstruction(ADDRESS, int)
+int MIPSDecoder::decodeAssemblyInstruction(ADDRESS, ptrdiff_t)
 {
     return 0;
 }
@@ -85,7 +85,7 @@ int MIPSDecoder::decodeAssemblyInstruction(ADDRESS, int)
  *********************************************************************************/
 
 // Stub from PPC...
-DecodeResult& MIPSDecoder::decodeInstruction(ADDRESS pc, int delta)
+DecodeResult& MIPSDecoder::decodeInstruction(ADDRESS pc, ptrdiff_t delta)
 {
     static DecodeResult result;
     ADDRESS hostPC = pc+delta;

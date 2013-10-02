@@ -489,7 +489,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
         return 0;               // Failed
     // Return the start of the code1 section
     SWord* startCode = (SWord*) pSect->uHostAddr;
-    int delta = (uintptr_t)pSect->uHostAddr - pSect->uNativeAddr;
+    ptrdiff_t delta = (uintptr_t)pSect->uHostAddr - pSect->uNativeAddr;
 
     // First try the CW first jump pattern
     SWord* res = findPattern(startCode, CWFirstJump,

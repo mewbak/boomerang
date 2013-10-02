@@ -291,8 +291,8 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
 
     // Work through the imports, and find those for which there are stubs using that import entry.
     // Add the addresses of any such stubs.
-    int deltaText = (uintptr_t)m_pSections[1].uHostAddr - m_pSections[1].uNativeAddr;
-    int deltaData = (uintptr_t)m_pSections[2].uHostAddr - m_pSections[2].uNativeAddr;
+    ptrdiff_t deltaText = (uintptr_t)m_pSections[1].uHostAddr - m_pSections[1].uNativeAddr;
+    ptrdiff_t deltaData = (uintptr_t)m_pSections[2].uHostAddr - m_pSections[2].uNativeAddr;
     // The "end of data" where r27 points is not necessarily the same as
     // the end of the $DATA$ space. So we have to call getSubSpaceInfo
     std::pair<unsigned, int> pr = getSubspaceInfo("$GLOBAL$");

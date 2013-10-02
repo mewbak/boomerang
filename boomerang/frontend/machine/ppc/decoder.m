@@ -107,7 +107,7 @@ void unused(char* x) {}
  * RETURNS:		   a DecodeResult structure containing all the information
  *					 gathered during decoding
  *============================================================================*/
-DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, int delta) { 
+DecodeResult& PPCDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta) { 
 	static DecodeResult result;
 	ADDRESS hostPC = pc+delta;
 
@@ -440,7 +440,7 @@ PPCDecoder::PPCDecoder(Prog* prog) : NJMCDecoder(prog)
 }
 
 // For now...
-int PPCDecoder::decodeAssemblyInstruction(ADDRESS, int)
+int PPCDecoder::decodeAssemblyInstruction(ADDRESS, ptrdiff_t)
 { return 0; }
 
 // Get an expression for a CR bit. For example, if bitNum is 6, return r65@[2:2]

@@ -340,7 +340,7 @@ public:
         return limitTextHigh;
     }
 
-    int			getTextDelta()
+    ptrdiff_t	getTextDelta()
     {
         return textDelta;
     }
@@ -377,7 +377,7 @@ protected:
     // Also the difference between the host and native addresses (host - native)
     // At this stage, we are assuming that the difference is the same for all
     // text sections of the BinaryFile image
-    int			textDelta;
+    ptrdiff_t	textDelta;
 
 };
 

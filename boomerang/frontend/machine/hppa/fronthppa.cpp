@@ -156,7 +156,7 @@ bool interferes(HRTL* delayRtl, HRTL* mainRtl)
  *                    branch is the delay slot of another delayed CTI
  * RETURNS:         can optimise away the delay instruction
  *============================================================================*/
-bool optimise_DelayCopy(ADDRESS src, ADDRESS dest, int delta, ADDRESS uUpper)
+bool optimise_DelayCopy(ADDRESS src, ADDRESS dest, ptrdiff_t delta, ADDRESS uUpper)
 {
     // Check that the destination is within the main test section; may not be
     // when we speculatively decode junk
@@ -433,7 +433,7 @@ bool case_CALL_NCT(ADDRESS& address, DecodeResult& inst,
  * SIDE EFFECTS:     address may change; BB_rtls may be appended to or set NULL
  * RETURNS:          <nothing>
  *============================================================================*/
-void case_SD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
+void case_SD_NCT(ADDRESS& address, ptrdiff_t delta, ADDRESS hiAddress,
                  DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
                  Cfg* cfg, TARGETS& targets, ofstream &os)
 {
@@ -507,7 +507,7 @@ void case_SD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
  * RETURNS:          true if next instruction is to be fetched sequentially from
  *                      this one
  *============================================================================*/
-bool case_DD_NCT(ADDRESS& address, int delta, DecodeResult& inst,
+bool case_DD_NCT(ADDRESS& address, ptrdiff_t delta, DecodeResult& inst,
                  DecodeResult& delay_inst, list<HRTL*>*& BB_rtls, Cfg* cfg,
                  TARGETS& targets, UserProc* proc, std::list<CallStatement*>& callList, int size)
 {
@@ -644,7 +644,7 @@ bool case_DD_NCT(ADDRESS& address, int delta, DecodeResult& inst,
  * RETURNS:          true if next instruction is to be fetched sequentially from
  *                      this one
  *============================================================================*/
-bool case_SCD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
+bool case_SCD_NCT(ADDRESS& address, ptrdiff_t delta, ADDRESS hiAddress,
                   DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
                   Cfg* cfg, TARGETS& targets)
 {
@@ -781,7 +781,7 @@ bool case_SCD_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
  * RETURNS:          true if next instruction is to be fetched sequentially from
  *                      this one
  *============================================================================*/
-bool case_SCDAN_NCT(ADDRESS& address, int delta, ADDRESS hiAddress,
+bool case_SCDAN_NCT(ADDRESS& address, ptrdiff_t delta, ADDRESS hiAddress,
                     DecodeResult& inst, DecodeResult& delay_inst, list<HRTL*>*& BB_rtls,
                     Cfg* cfg, TARGETS& targets)
 {

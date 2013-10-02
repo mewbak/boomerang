@@ -78,7 +78,7 @@ void SparcFrontEnd::warnDCTcouple(ADDRESS uAt, ADDRESS uDest)
  *					delayed CTI
  * RETURNS:			can optimise away the delay instruction
  *============================================================================*/
-bool SparcFrontEnd::optimise_DelayCopy(ADDRESS src, ADDRESS dest, int delta, ADDRESS uUpper)
+bool SparcFrontEnd::optimise_DelayCopy(ADDRESS src, ADDRESS dest, ptrdiff_t delta, ADDRESS uUpper)
 {
     // Check that the destination is within the main test section; may not be when we speculatively decode junk
     if ((dest - 4) > uUpper)
@@ -371,7 +371,7 @@ bool SparcFrontEnd::case_CALL(ADDRESS& address, DecodeResult& inst, DecodeResult
  * SIDE EFFECTS:	 address may change; BB_rtls may be appended to or set NULL
  * RETURNS:			 <nothing>
  *============================================================================*/
-void SparcFrontEnd::case_SD(ADDRESS& address, int delta, ADDRESS hiAddress, DecodeResult& inst,
+void SparcFrontEnd::case_SD(ADDRESS& address, ptrdiff_t delta, ADDRESS hiAddress, DecodeResult& inst,
                             DecodeResult& delay_inst, std::list<RTL*>*& BB_rtls, Cfg* cfg, TargetQueue& tq, std::ofstream &os)
 {
 
@@ -433,7 +433,7 @@ void SparcFrontEnd::case_SD(ADDRESS& address, int delta, ADDRESS hiAddress, Deco
  * SIDE EFFECTS:	 address may change; BB_rtls may be appended to or set NULL
  * RETURNS:			 true if next instruction is to be fetched sequentially from this one
  *============================================================================*/
-bool SparcFrontEnd::case_DD(ADDRESS& address, int delta, DecodeResult& inst, DecodeResult& delay_inst,
+bool SparcFrontEnd::case_DD(ADDRESS& address, ptrdiff_t delta, DecodeResult& inst, DecodeResult& delay_inst,
                             std::list<RTL*>*& BB_rtls, TargetQueue& tq, UserProc* proc, std::list<CallStatement*>& callList)
 {
 
@@ -544,7 +544,7 @@ bool SparcFrontEnd::case_DD(ADDRESS& address, int delta, DecodeResult& inst, Dec
  * SIDE EFFECTS:	 address may change; BB_rtls may be appended to or set NULL
  * RETURNS:			 true if next instruction is to be fetched sequentially from this one
  *============================================================================*/
-bool SparcFrontEnd::case_SCD(ADDRESS& address, int delta, ADDRESS hiAddress,
+bool SparcFrontEnd::case_SCD(ADDRESS& address, ptrdiff_t delta, ADDRESS hiAddress,
                              DecodeResult& inst, DecodeResult& delay_inst, std::list<RTL*>*& BB_rtls,
                              Cfg* cfg, TargetQueue& tq)
 {
@@ -662,7 +662,7 @@ bool SparcFrontEnd::case_SCD(ADDRESS& address, int delta, ADDRESS hiAddress,
  * SIDE EFFECTS:	address may change; BB_rtls may be appended to or set NULL
  * RETURNS:			true if next instruction is to be fetched sequentially from this one
  *============================================================================*/
-bool SparcFrontEnd::case_SCDAN(ADDRESS& address, int delta, ADDRESS hiAddress,
+bool SparcFrontEnd::case_SCDAN(ADDRESS& address, ptrdiff_t delta, ADDRESS hiAddress,
                                DecodeResult& inst, DecodeResult& delay_inst, std::list<RTL*>*& BB_rtls,
                                Cfg* cfg, TargetQueue& tq)
 {
@@ -840,7 +840,7 @@ bool SparcFrontEnd::processProc(ADDRESS address, UserProc* proc, std::ofstream &
                         {
                             std::cerr << "Invalid instruction at " << std::hex << address << ": ";
                             std::cerr << std::setfill('0') << std::setw(2);
-                            int delta = pBF->getTextDelta();
+                            ptrdiff_t delta = pBF->getTextDelta();
                             for (int j=0; j<inst.numBytes; j++)
                                 std::cerr << std::setfill('0') << std::setw(2) << (unsigned)*(unsigned char*)(address+delta + j) <<
                                           " " << std::setfill(' ') << std::setw(0) << "\n";

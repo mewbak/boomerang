@@ -377,7 +377,7 @@ void NJMCDecoder::dis_c_faddr(ADDRESS c_faddr)
     endmatch
 }
 
-int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, int delta)
+int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, ptrdiff_t delta)
 {
     char sCmplt[32];
     unsigned long r1,r2;

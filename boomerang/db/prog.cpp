@@ -1339,7 +1339,7 @@ UserProc* Prog::getNextUserProc(std::list<Proc*>::iterator& it)
  * RETURNS:		Host pointer if in range; NULL if not
  *				Also sets 2 reference parameters (see above)
  *============================================================================*/
-const void* Prog::getCodeInfo(ADDRESS uAddr, const char*& last, int& delta)
+const void* Prog::getCodeInfo(ADDRESS uAddr, const char*& last, ptrdiff_t& delta)
 {
     delta=0;
     last=0;

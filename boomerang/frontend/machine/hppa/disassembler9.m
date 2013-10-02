@@ -55,7 +55,7 @@ void NJMCDecoder::dis_flt_fmt(int fmt)
     }
 }
 
-int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, int delta)
+int NJMCDecoder::decodeAssemblyInstruction (ADDRESS pc, ptrdiff_t delta)
 {
     char sCmplt[32];
     unsigned long r1,r2;

@@ -1229,7 +1229,7 @@ void TargetQueue::dump()
  * NOTE:		  Only called from findCoverage()
  * RETURNS:		  a pointer to the decoded RTL
  *============================================================================*/
-RTL* decodeRtl(ADDRESS address, int delta, NJMCDecoder* decoder)
+RTL* decodeRtl(ADDRESS address, ptrdiff_t delta, NJMCDecoder* decoder)
 {
     DecodeResult inst =
         decoder->decodeInstruction(address, delta);

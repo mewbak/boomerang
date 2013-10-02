@@ -314,7 +314,7 @@ void		initFront();
 /*
  * Decode one RTL
  */
-RTL*		decodeRtl(ADDRESS address, int delta, NJMCDecoder* decoder);
+RTL*		decodeRtl(ADDRESS address, ptrdiff_t delta, NJMCDecoder* decoder);
 
 /*
  * This decodes a given procedure. It performs the analysis to recover switch statements, call

@@ -149,7 +149,7 @@ bool FrontEndSrc::processProc(ADDRESS uAddr, UserProc* pProc, ofstream &os,
  *                decoder - NJMCDecoder object
  * RETURNS:       <nothing>
  *============================================================================*/
-void processProc(ADDRESS uAddr, int delta, ADDRESS uUpper, UserProc* pProc,
+void processProc(ADDRESS uAddr, ptrdiff_t delta, ADDRESS uUpper, UserProc* pProc,
                  NJMCDecoder& decoder)
 {
     PBB pBB;                    // Pointer to the current basic block

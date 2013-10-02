@@ -563,12 +563,12 @@ std::list<const char *> DOS4GWBinaryFile::getDependencyList()
     return std::list<const char *>(); /* FIXME */
 }
 
-DWord DOS4GWBinaryFile::getDelta()
+ptrdiff_t DOS4GWBinaryFile::getDelta()
 {
     // Stupid function anyway: delta depends on section
     // This should work for the header only
     //	return (DWord)base - LMMH(m_pPEHeader->Imagebase);
-    return (DWord) base - (DWord) m_pLXObjects[0].RelocBaseAddr;
+    return (uintptr_t)base - m_pLXObjects[0].RelocBaseAddr;
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile
