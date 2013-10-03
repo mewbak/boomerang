@@ -113,7 +113,7 @@ private:
 
     exeHeader* m_pHeader; // Pointer to header
     unsigned char* m_pImage; // Pointer to image
-    int m_cbImage; // Size of image
+    size_t m_cbImage; // Size of image
     int m_cReloc; // Number of relocation entries
     DWord* m_pRelocTable; // The relocation table
     const char *m_pFileName;

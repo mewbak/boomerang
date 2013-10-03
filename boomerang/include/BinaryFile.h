@@ -72,8 +72,8 @@ struct IMPORT_BINARYFILE SectionInfo
     char*		pSectionName;		// Name of section
     ADDRESS		uNativeAddr;		// Logical or native load address
     unsigned char*	uHostAddr;			// Host or actual address of data
-    ADDRESS		uSectionSize;		// Size of section in bytes
-    ADDRESS		uSectionEntrySize;	// Size of one section entry (if applic)
+    size_t		uSectionSize;		// Size of section in bytes
+    size_t		uSectionEntrySize;	// Size of one section entry (if applic)
     unsigned	uType;				 // Type of section (format dependent)
 unsigned	bCode:
     1;			// Set if section contains instructions

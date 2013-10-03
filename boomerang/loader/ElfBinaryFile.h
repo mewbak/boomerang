@@ -293,7 +293,7 @@ private:
     void elfWrite4(int* pi, int val); // Write an int with endianness care
 
     FILE* m_fd; // File stream
-    long m_lImageSize; // Size of image in bytes
+    size_t m_lImageSize; // Size of image in bytes
     unsigned char* m_pImage; // Pointer to the loaded image
     Elf32_Phdr* m_pPhdrs; // Pointer to program headers
     Elf32_Shdr* m_pShdrs; // Array of section header structs

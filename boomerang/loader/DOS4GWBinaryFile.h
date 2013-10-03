@@ -210,7 +210,7 @@ private:
     LXHeader* m_pLXHeader; // Pointer to lx header
     LXObject* m_pLXObjects; // Pointer to lx objects
     LXPage* m_pLXPages; // Pointer to lx pages
-    int m_cbImage; // Size of image
+    size_t m_cbImage; // Size of image
     //int		m_cReloc;				// Number of relocation entries
     //DWord*	m_pRelocTable;			// The relocation table
     unsigned char *base; // Beginning of the loaded image

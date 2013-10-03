@@ -250,7 +250,7 @@ private:
 
     Header* 	m_pHeader;				// Pointer to header
     PEHeader* 	m_pPEHeader;			// Pointer to pe header
-    int			m_cbImage;				// Size of image
+    size_t		m_cbImage;				// Size of image
     int			m_cReloc;				// Number of relocation entries
     DWord*		m_pRelocTable;			// The relocation table
     unsigned char *base;					// Beginning of the loaded image
