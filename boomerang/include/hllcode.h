@@ -26,7 +26,7 @@
 #include <iostream>
 #include <vector>
 #include <assert.h>
-#include <statement.h>		// For CallStatement::RetLocs
+#include "statement.h"		// For CallStatement::RetLocs
 
 class BasicBlock;
 typedef BasicBlock *PBB;
