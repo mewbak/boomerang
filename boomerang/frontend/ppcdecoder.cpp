@@ -58,7 +58,7 @@ Exp*	crBit(int bitNum);	// Get an expression for a CR bit access
 #define DIS_NZRA	(dis_Reg(ra))
 #define DIS_NZRB	(dis_Reg(rb))
 #define DIS_ADDR	(new Const(addr))
-#define DIS_RELADDR	(new Const(reladdr - delta))
+#define DIS_RELADDR	(new Const((uintptr_t)reladdr - delta))
 #define DIS_CRBD	(crBit(crbD))
 #define DIS_CRBA	(crBit(crbA))
 #define DIS_CRBB	(crBit(crbB))

@@ -187,7 +187,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
     unsigned* maxAux = auxHeaders + sizeAux;
     while (auxHeaders < maxAux)
         {
-            if ((UINT4(m_pImage + (int) auxHeaders) & 0xFFFF) == 0x0004)
+            if ((UINT4(m_pImage + (uintptr_t) auxHeaders) & 0xFFFF) == 0x0004)
                 {
                     found = true;
                     break;
@@ -238,7 +238,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
 
     // A convenient macro for accessing the fields (0-11) of the auxilliary header
     // Fields 0, 1 are the header (flags, aux header type, and size)
-#define AUXHDR(idx) (UINT4(m_pImage + (int)(auxHeaders+idx)))
+#define AUXHDR(idx) (UINT4(m_pImage + (uintptr_t)(auxHeaders+idx)))
 
     // Section 0: header
     m_pSections[0].pSectionName = const_cast<char *> ("$HEADER$");

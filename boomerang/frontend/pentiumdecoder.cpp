@@ -16212,8 +16212,6 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta)
 #line 148 "frontend/machine/pentium/decoder.m"
 
 
-                                    unused((int) name);
-
                                     unconditionalJump(name, 5, relocd, delta, pc, stmts, result);
 
 
@@ -16242,8 +16240,6 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta)
 
 #line 154 "frontend/machine/pentium/decoder.m"
 
-
-                                    unused((int) name);
 
                                     unconditionalJump(name, 2, relocd, delta, pc, stmts, result);
 
@@ -29592,8 +29588,6 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta)
 
 #line 151 "frontend/machine/pentium/decoder.m"
 
-
-                                                    unused((int) name);
 
                                                     unconditionalJump(name, 3, relocd, delta, pc, stmts, result);
 

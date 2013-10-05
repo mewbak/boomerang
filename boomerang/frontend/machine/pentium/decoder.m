@@ -146,13 +146,10 @@ DecodeResult& PentiumDecoder::decodeInstruction (ADDRESS pc, ptrdiff_t delta)
 	 * Unconditional branches
 	 */
 	| JMP.Jvod(relocd) [name] =>
-		unused((int) name);
 		unconditionalJump(name, 5, relocd, delta, pc, stmts, result);
 	| JMP.Jvow(relocd) [name] =>
-		unused((int) name);
 		unconditionalJump(name, 3, relocd, delta, pc, stmts, result);
 	| JMP.Jb(relocd) [name] =>
-		unused((int) name);
 		unconditionalJump(name, 2, relocd, delta, pc, stmts, result);
 
 	/*

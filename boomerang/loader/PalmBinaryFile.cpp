@@ -498,7 +498,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
         {
             // We have the code warrior first jump. Get the addil operand
             int addilOp = (startCode[5] << 16) + startCode[6];
-            SWord* startupCode = (SWord*)((int)startCode + 10 + addilOp);
+            SWord* startupCode = (SWord*)((uintptr_t)startCode + 10 + addilOp);
             // Now check the next 60 SWords for the call to PilotMain
             res = findPattern(startupCode, CWCallMain,
                               sizeof(CWCallMain) / sizeof(SWord), 60);

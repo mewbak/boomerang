@@ -1678,7 +1678,7 @@ void Prog::printCallGraph()
         {
             Proc *p = procList.front();
             procList.erase(procList.begin());
-            if ((unsigned)p == NO_ADDRESS)
+            if ((uintptr_t)p == NO_ADDRESS)
                 continue;
             if (seen.find(p) == seen.end())
                 {
