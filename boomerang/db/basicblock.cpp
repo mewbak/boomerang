@@ -2670,7 +2670,7 @@ void BasicBlock::processSwitch(UserProc* proc)
         {
             char tmp[1024];
             count++;
-            sprintf(tmp, "before decoding fragment %i of %i (%x)", count, static_cast<int>(dests.size()), *dd);
+            sprintf(tmp, "before decoding fragment %i of %i (%lx)", count, static_cast<int>(dests.size()), *dd);
             Boomerang::get()->alert_decompile_debug_point(proc, tmp);
             prog->decodeFragment(proc, *dd);
         }

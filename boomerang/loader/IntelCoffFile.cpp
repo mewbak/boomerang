@@ -167,7 +167,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
                     a += psi->uSectionSize;
                 }
         }
-    printf("Allocated %d segments. a=%08x", m_iNumSections, a);
+    printf("Allocated %d segments. a=%08lx", m_iNumSections, a);
 
     for ( int iSection = 0; iSection < m_Header.coff_sections; iSection++ )
         {
@@ -204,7 +204,7 @@ bool IntelCoffFile::RealLoad(const char *sName)
     // Run the symbol table
     ADDRESS fakeForImport = (ADDRESS)0xfffe0000;
 
-    printf("Size of one symbol: %u\n", sizeof pSymbols[0]);
+    printf("Size of one symbol: %lu\n", sizeof pSymbols[0]);
     for (unsigned int iSym = 0; iSym < m_Header.coff_num_syment; iSym += pSymbols[iSym].csym_numaux+1)
         {
             char tmp_name[9];
@@ -404,7 +404,7 @@ ADDRESS IntelCoffFile::GetEntryPoint()
     if ( !*it )
         return NO_ADDRESS;
 
-    printf("IntelCoffFile::GetEntryPoint returning %08x\n", (*it)->uNativeAddr);
+    printf("IntelCoffFile::GetEntryPoint returning %08lx\n", (*it)->uNativeAddr);
     return (*it)->uNativeAddr;
 }
 
