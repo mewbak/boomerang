@@ -187,7 +187,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
     unsigned* maxAux = auxHeaders + sizeAux;
     while (auxHeaders < maxAux)
         {
-            if ((UINT4(m_pImage + (uintptr_t) auxHeaders) & 0xFFFF) == 0x0004)
+            if ((UINT4(m_pImage + (ptrdiff_t) auxHeaders) & 0xFFFF) == 0x0004)
                 {
                     found = true;
                     break;
@@ -238,7 +238,7 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
 
     // A convenient macro for accessing the fields (0-11) of the auxilliary header
     // Fields 0, 1 are the header (flags, aux header type, and size)
-#define AUXHDR(idx) (UINT4(m_pImage + (uintptr_t)(auxHeaders+idx)))
+#define AUXHDR(idx) (UINT4(m_pImage + (ptrdiff_t)(auxHeaders+idx)))
 
     // Section 0: header
     m_pSections[0].pSectionName = const_cast<char *> ("$HEADER$");
@@ -291,8 +291,8 @@ bool HpSomBinaryFile::RealLoad(const char* sName)
 
     // Work through the imports, and find those for which there are stubs using that import entry.
     // Add the addresses of any such stubs.
-    ptrdiff_t deltaText = (uintptr_t)m_pSections[1].uHostAddr - m_pSections[1].uNativeAddr;
-    ptrdiff_t deltaData = (uintptr_t)m_pSections[2].uHostAddr - m_pSections[2].uNativeAddr;
+    ptrdiff_t deltaText = m_pSections[1].uHostAddr - (unsigned char *)m_pSections[1].uNativeAddr;
+    ptrdiff_t deltaData = m_pSections[2].uHostAddr - (unsigned char *)m_pSections[2].uNativeAddr;
     // The "end of data" where r27 points is not necessarily the same as
     // the end of the $DATA$ space. So we have to call getSubSpaceInfo
     std::pair<unsigned, int> pr = getSubspaceInfo("$GLOBAL$");

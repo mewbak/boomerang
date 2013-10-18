@@ -489,7 +489,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
         return 0;               // Failed
     // Return the start of the code1 section
     SWord* startCode = (SWord*) pSect->uHostAddr;
-    ptrdiff_t delta = (uintptr_t)pSect->uHostAddr - pSect->uNativeAddr;
+    ptrdiff_t delta = pSect->uHostAddr - (unsigned char *)pSect->uNativeAddr;
 
     // First try the CW first jump pattern
     SWord* res = findPattern(startCode, CWFirstJump,
@@ -498,7 +498,7 @@ ADDRESS PalmBinaryFile::GetMainEntryPoint()
         {
             // We have the code warrior first jump. Get the addil operand
             int addilOp = (startCode[5] << 16) + startCode[6];
-            SWord* startupCode = (SWord*)((uintptr_t)startCode + 10 + addilOp);
+            SWord* startupCode = (SWord*)((unsigned char *)startCode + 10 + addilOp);
             // Now check the next 60 SWords for the call to PilotMain
             res = findPattern(startupCode, CWCallMain,
                               sizeof(CWCallMain) / sizeof(SWord), 60);

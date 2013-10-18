@@ -568,8 +568,8 @@ bool Win32BinaryFile::RealLoad(const char* sName)
                                     // Normal case (IMAGE_IMPORT_BY_NAME). Skip the useless hint (2 bytes)
                                     std::string name((const char*)(iatEntry+2+base));
                                     dlprocptrs[paddr] = name;
-                                    if (paddr != (uintptr_t)iat - (uintptr_t)base + LMMH(m_pPEHeader->Imagebase))
-                                        dlprocptrs[(uintptr_t)iat - (uintptr_t)base + LMMH(m_pPEHeader->Imagebase)]
+                                    if (paddr != (unsigned char *)iat - base + LMMH(m_pPEHeader->Imagebase))
+                                        dlprocptrs[(unsigned char *)iat - base + LMMH(m_pPEHeader->Imagebase)]
                                             = std::string("old_") + name; // add both possibilities
                                     // printf("Added symbol %s value %x\n", name.c_str(), paddr);
                                     // printf("Also added old_%s value %x\n", name.c_str(), (int)iat - (int)base +
@@ -663,7 +663,7 @@ void Win32BinaryFile::findJumps(ADDRESS curr)
     if (sec == NULL) sec = GetSectionInfoByName("CODE");
     assert(sec);
     // Add to native addr to get host:
-    ptrdiff_t delta = (uintptr_t)sec->uHostAddr - sec->uNativeAddr;
+    ptrdiff_t delta = sec->uHostAddr - (unsigned char *)sec->uNativeAddr;
     while (cnt < 0x60)
         {
             // Max of 0x60 bytes without a match
@@ -1267,7 +1267,7 @@ ptrdiff_t Win32BinaryFile::getDelta()
     // Stupid function anyway: delta depends on section
     // This should work for the header only
     //	return (DWord)base - LMMH(m_pPEHeader->Imagebase);
-    return (uintptr_t)base - m_pPEHeader->Imagebase;
+    return base - (unsigned char *)m_pPEHeader->Imagebase;
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile derived concrete object. After this object is

@@ -568,7 +568,7 @@ ptrdiff_t DOS4GWBinaryFile::getDelta()
     // Stupid function anyway: delta depends on section
     // This should work for the header only
     //	return (DWord)base - LMMH(m_pPEHeader->Imagebase);
-    return (uintptr_t)base - m_pLXObjects[0].RelocBaseAddr;
+    return base - (unsigned char *)m_pLXObjects[0].RelocBaseAddr;
 }
 
 // This function is called via dlopen/dlsym; it returns a new BinaryFile

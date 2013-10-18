@@ -1357,7 +1357,7 @@ const void* Prog::getCodeInfo(ADDRESS uAddr, const char*& last, ptrdiff_t& delta
                 continue;
             if ((uAddr < pSect->uNativeAddr) || (uAddr >= pSect->uNativeAddr + pSect->uSectionSize))
                 continue;			// Try the next section
-            delta = (uintptr_t)pSect->uHostAddr - pSect->uNativeAddr;
+            delta = pSect->uHostAddr - (unsigned char *)pSect->uNativeAddr;
             last = (const char*) (pSect->uHostAddr + pSect->uSectionSize);
             const char* p = (const char *) (uAddr + delta);
             return p;
@@ -1678,7 +1678,7 @@ void Prog::printCallGraph()
         {
             Proc *p = procList.front();
             procList.erase(procList.begin());
-            if ((uintptr_t)p == NO_ADDRESS)
+            if ((ADDRESS)p == NO_ADDRESS)
                 continue;
             if (seen.find(p) == seen.end())
                 {
