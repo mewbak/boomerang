@@ -10,6 +10,7 @@
 #	sed -f db/sslscanner.sed db/sslscanner.cpp > db/sslscanner.cpp1
 #	mv db/sslscanner.cpp1 db/sslscanner.cpp
 
+IF(BISONPP_EXECUTABLE)
 add_custom_command(
 	COMMENT "Building Parser - Bison++"
 	OUTPUT  ${CMAKE_CURRENT_SOURCE_DIR}/sslparser.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/sslparser.h
@@ -18,7 +19,9 @@ add_custom_command(
 	COMMAND sed -e "s/int __alloca_free_ptr/static int __alloca_free_ptr/" ${CMAKE_CURRENT_SOURCE_DIR}/sslparser.cpp > ${CMAKE_CURRENT_SOURCE_DIR}/sslparser.cpp.1
 	COMMAND mv ${CMAKE_CURRENT_SOURCE_DIR}/sslparser.cpp.1 ${CMAKE_CURRENT_SOURCE_DIR}/sslparser.cpp
 )
+ENDIF(BISONPP_EXECUTABLE)
 
+IF(FLEXPP_EXECUTABLE) 
 add_custom_command(
 	COMMENT "Building Scanner - Flex++"
 	OUTPUT  ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.h
@@ -27,6 +30,7 @@ add_custom_command(
 	COMMAND sed -f ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.sed ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp > ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp.1
 	COMMAND mv ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp.1 ${CMAKE_CURRENT_SOURCE_DIR}/sslscanner.cpp
 )
+ENDIF(FLEXPP_EXECUTABLE)
 
 
 SET(boomerang_db_sources

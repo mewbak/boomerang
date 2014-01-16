@@ -6,13 +6,16 @@
 #	# Fix warnings with same sed file
 #	sed -f db/sslscanner.sed transform/transformation-scanner.cpp1 > transform/transformation-scanner.cpp
 
+IF(BISONPP_EXECUTABLE)
 add_custom_command(
 	COMMENT "Building Parser - Bison++"
 	OUTPUT  ${CMAKE_CURRENT_SOURCE_DIR}/transformation-parser.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/transformation-parser.h
 	DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/transformation.y
 	COMMAND ${BISONPP_EXECUTABLE} -d -v -o${CMAKE_CURRENT_SOURCE_DIR}/transformation-parser.cpp -h${CMAKE_CURRENT_SOURCE_DIR}/transformation-parser.h ${CMAKE_CURRENT_SOURCE_DIR}/transformation.y
 )
+ENDIF(BISONPP_EXECUTABLE)
 
+IF(FLEXPP_EXECUTABLE)
 add_custom_command(
 	COMMENT "Building Scanner - Flex++"
 	OUTPUT  ${CMAKE_CURRENT_SOURCE_DIR}/transformation-scanner.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/transformation-scanner.h
@@ -21,6 +24,7 @@ add_custom_command(
 	COMMAND sed -f ${CMAKE_CURRENT_SOURCE_DIR}/transformation-scanner.sed ${CMAKE_CURRENT_SOURCE_DIR}/transformation-scanner.cpp > ${CMAKE_CURRENT_SOURCE_DIR}/transformation-scanner.cpp.1
 	COMMAND mv ${CMAKE_CURRENT_SOURCE_DIR}/transformation-scanner.cpp.1 ${CMAKE_CURRENT_SOURCE_DIR}/transformation-scanner.cpp
 )
+ENDIF(FLEXPP_EXECUTABLE)
 
 SET(boomerang_transform_sources
 		transformer.cpp

@@ -7,13 +7,16 @@
 #	sed -f db/ansi-c-scanner.sed c/ansi-c-scanner.cpp > c/ansi-c-scanner.cpp1
 #	mv c/ansi-c-scanner.cpp1 c/ansi-c-scanner.cpp
 
+IF(BISONPP_EXECUTABLE)
 add_custom_command(
 	COMMENT "Building Parser - Bison++"
 	OUTPUT  ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-parser.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-parser.h
 	DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c.y
 	COMMAND ${BISONPP_EXECUTABLE} -d -v -o${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-parser.cpp -h${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-parser.h ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c.y
 )
+ENDIF(BISONPP_EXECUTABLE)
 
+IF(FLEXPP_EXECUTABLE)
 add_custom_command(
 	COMMENT "Building Scanner - Flex++"
 	OUTPUT  ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-scanner.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-scanner.h
@@ -22,6 +25,7 @@ add_custom_command(
 	COMMAND sed -f ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-scanner.sed ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-scanner.cpp > ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-scanner.cpp.1
 	COMMAND mv ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-scanner.cpp.1 ${CMAKE_CURRENT_SOURCE_DIR}/ansi-c-scanner.cpp
 )
+ENDIF(FLEXPP_EXECUTABLE)
 
 SET(boomerang_DSLs_sources
 	ansi-c-parser.cpp
